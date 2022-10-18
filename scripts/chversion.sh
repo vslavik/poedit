@@ -43,8 +43,6 @@ replace_ver src/version.h \
             '\(POEDIT_VERSION *"\).*\("\)' "\1$VERSION\2"
 replace_ver src/version.h \
             '\(POEDIT_VERSION_WIN *\).*' "\1$VER_WIN"
-replace_ver .travis.yml \
-            '\(file: poedit-\).*\(.tar.gz\)' "\1$VERSION\2"
 replace_ver Poedit.xcodeproj/project.pbxproj \
             '\(POEDIT_VERSION = \).*\(;\)' "\1$VERSION\2"
 replace_ver snap/snapcraft.yaml \
