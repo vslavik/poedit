@@ -2,7 +2,9 @@
 
 set -e
 
-if [ -f /usr/local/bin/gsed ] ; then
+if [ -f /opt/homebrew/bin/gsed ] ; then
+    SED=/opt/homebrew/bin/gsed
+elif [ -f /usr/local/bin/gsed ] ; then
     SED=/usr/local/bin/gsed
 else
     SED=sed
