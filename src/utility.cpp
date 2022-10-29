@@ -302,10 +302,13 @@ bool TempOutputFileFor::ReplaceFile(const wxString& temp, const wxString& dest)
   #ifdef __UNIX__
     if (overwrite)
     {
-        if (chown(destPath, st.st_uid, st.st_gid) != 0)
-            return false;
-        if (chmod(destPath, st.st_mode) != 0)
-            return false;
+        // Preserve permissions/ownership on best-effort basis, but don't make
+        // it a failure if it can't be done. The stat() call above was already
+        // handled that way.
+        // E.g. in Snap chmod() call is blocked within the sandbox even when
+        // it noop "changes" ownership to self.
+        (void)chown(destPath, st.st_uid, st.st_gid);
+        (void)chmod(destPath, st.st_mode);
     }
   #endif
 
