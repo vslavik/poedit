@@ -146,6 +146,16 @@ void MenusManager::TweakOSXMenuBar(wxMenuBar *bar)
     Sparkle_AddMenuItem(apple->GetHMenu(), _(L"Check for Updates…").utf8_str());
 #endif
 
+    if (@available(macOS 13.0, *))
+    {
+        wxMenuItem *prefsItem = bar->FindItem(wxID_PREFERENCES);
+        if (prefsItem)
+        {
+            // TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
+            prefsItem->SetItemLabel(_(L"Settings…"));
+        }
+    }
+
     wxMenu *fileMenu = nullptr;
     wxMenuItem *fileCloseItem = bar->FindItem(wxID_CLOSE, &fileMenu);
     if (fileMenu && fileCloseItem)
