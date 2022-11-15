@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_PREREQ(2.59)
+AC_PREREQ([2.61])
 
 AC_INIT([poedit], [3.2.1], [help@poedit.net])
 
@@ -137,12 +137,12 @@ dnl ourselves:
 AC_MSG_CHECKING([if wxWidgets includes XRC])
 saved_CXXFLAGS="$CXXFLAGS"
 CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS"
-AC_TRY_COMPILE([#include <wx/defs.h>],
-               [
+AC_COMPILE_IFELSE(
+	[AC_LANG_PROGRAM([#include <wx/defs.h>], [
                 #if !defined(wxUSE_XRC) || !wxUSE_XRC
                     #error "XRC not compiled in"
                 #endif
-               ],
+               ])],
                [
                 AC_MSG_RESULT([yes])
                ],
@@ -173,12 +173,12 @@ PKG_CHECK_MODULES([ICU], [icu-uc icu-i18n >= 54],
 
 dnl we need GtkSpell and GTK+ >= 2 for this, check if we're compatible
 AC_MSG_CHECKING([if wxWidgets toolkit uses GTK+ 3])
-AC_TRY_COMPILE([#include <wx/defs.h>],
-    [
+AC_COMPILE_IFELSE(
+    [AC_LANG_PROGRAM([[#include <wx/defs.h>]], [
         #ifndef __WXGTK3__
             #error "not GTK+ 3"
         #endif
-    ],
+    ])],
     [
         AC_MSG_RESULT([yes])
         gtkspell_packages="gtkspell3-3.0 gtk+-3.0"
@@ -186,12 +186,12 @@ AC_TRY_COMPILE([#include <wx/defs.h>],
     [
         AC_MSG_RESULT([no])
         AC_MSG_CHECKING([if wxWidgets toolkit uses GTK+ 2])
-        AC_TRY_COMPILE([#include <wx/defs.h>],
-            [
+        AC_COMPILE_IFELSE(
+            [AC_LANG_PROGRAM([#include <wx/defs.h>], [
                 #ifndef __WXGTK20__
                     #error "not GTK+ 2"
                 #endif
-            ],
+            ])],
             [
                 AC_MSG_RESULT([yes])
                 gtkspell_packages="gtkspell-2.0 gtk+-2.0 >= 2.20"
