@@ -49,10 +49,11 @@ public:
     // Kind of the element to highlight
     enum TextKind
     {
-        LeadingWhitespace = 0x0001,
-        Escape            = 0x0002,
-        Markup            = 0x0004,
-        Placeholder       = 0x0008
+        LeadingWhitespace  = 0x0001,
+        Escape             = 0x0002,
+        Markup             = 0x0004,
+        Placeholder        = 0x0008,
+        EnforceFormatTag   = 0x0010
     };
 
     typedef std::function<void(int,int,TextKind)> CallbackType;

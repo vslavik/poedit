@@ -253,8 +253,16 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kin
     bool needsGenericPlaceholders = (kindsMask & Placeholder);
     if (needsGenericPlaceholders)
     {
-        needsGenericPlaceholders = std::regex_search(str::to_wstring(item.GetString()), REOBJ_COMMON_PLACEHOLDERS) ||
-                (item.HasPlural() && std::regex_search(str::to_wstring(item.GetPluralString()), REOBJ_COMMON_PLACEHOLDERS));
+        if ((kindsMask & EnforceFormatTag) && !fmt.empty())
+        {
+            // only use generic placeholders if no explicit format was provided, see https://github.com/vslavik/poedit/issues/777
+            needsGenericPlaceholders = false;
+        }
+        else
+        {
+            needsGenericPlaceholders = std::regex_search(str::to_wstring(item.GetString()), REOBJ_COMMON_PLACEHOLDERS) ||
+                    (item.HasPlural() && std::regex_search(str::to_wstring(item.GetPluralString()), REOBJ_COMMON_PLACEHOLDERS));
+        }
     }
 
     static auto basic = std::make_shared<BasicSyntaxHighlighter>();

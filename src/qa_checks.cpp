@@ -70,7 +70,7 @@ public:
         if (!item->IsTranslated())
             return false;
 
-        auto syntax = SyntaxHighlighter::ForItem(*item, SyntaxHighlighter::Placeholder);
+        auto syntax = SyntaxHighlighter::ForItem(*item, SyntaxHighlighter::Placeholder | SyntaxHighlighter::EnforceFormatTag);
         if (!syntax)
             return false;
 
