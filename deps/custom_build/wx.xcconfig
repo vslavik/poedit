@@ -5,7 +5,7 @@
 WXPLATFORM = __WXOSX_$(WXTOOLKITUPPER)__
 PRODUCT_NAME = wx_osx_$(WXTOOLKIT)
 
-OTHER_CFLAGS = -Wall -Wundef -fno-strict-aliasing -fno-common -fvisibility=hidden 
+OTHER_CFLAGS = -Wall -Wundef -Wno-unused-but-set-variable -fno-strict-aliasing -fno-common -fvisibility=hidden 
 OTHER_CPLUSPLUSFLAGS = $(OTHER_CFLAGS) -fvisibility-inlines-hidden
 
 GCC_PREFIX_HEADER = $(WXROOT)/include/wx/wxprec.h
