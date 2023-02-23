@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (https://poedit.net)
  *
- *  Copyright (C) 1999-2022 Vaclav Slavik
+ *  Copyright (C) 1999-2023 Vaclav Slavik
  *  Copyright (C) 2015 PrismJS (CSS parts)
  *  Copyright (c) 2013-2017 Cole Bemis (Feather Icons)
  *
