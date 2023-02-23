@@ -241,7 +241,7 @@ const wchar_t* RE_PASCAL_FORMAT = LR"(%(\*:|\d*:)?-?(\*|\d+)?(\.\*|\.\d+)?[dDuUx
 } // anonymous namespace
 
 
-SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kindsMask)
+SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kindsMask, int flags)
 {
     auto fmt = item.GetFormatFlag();
     bool needsHTML = (kindsMask & Markup);
@@ -253,7 +253,7 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kin
     bool needsGenericPlaceholders = (kindsMask & Placeholder);
     if (needsGenericPlaceholders)
     {
-        if ((kindsMask & EnforceFormatTag) && !fmt.empty())
+        if ((flags & EnforceFormatTag) && !fmt.empty())
         {
             // only use generic placeholders if no explicit format was provided, see https://github.com/vslavik/poedit/issues/777
             needsGenericPlaceholders = false;

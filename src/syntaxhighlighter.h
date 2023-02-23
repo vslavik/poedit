@@ -52,8 +52,13 @@ public:
         LeadingWhitespace  = 0x0001,
         Escape             = 0x0002,
         Markup             = 0x0004,
-        Placeholder        = 0x0008,
-        EnforceFormatTag   = 0x0010
+        Placeholder        = 0x0008
+    };
+
+    // Flags for ForItem
+    enum
+    {
+        EnforceFormatTag   = 0x0001
     };
 
     typedef std::function<void(int,int,TextKind)> CallbackType;
@@ -72,8 +77,9 @@ public:
 
         @param item      Translation item to highlight
         @param kindsMask Optionally specify only a subset of highlighters as TextKind or-combination
+        @param flags     Optional flags modifying behavior, e.g. EnforceFormatTag
      */
-    static SyntaxHighlighterPtr ForItem(const CatalogItem& item, int kindsMask = 0xffff);
+    static SyntaxHighlighterPtr ForItem(const CatalogItem& item, int kindsMask = 0xffff, int flags = 0);
 };
 
 #endif // Poedit_syntaxhighlighter_h
