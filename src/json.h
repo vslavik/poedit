@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (https://poedit.net)
  *
- *  Copyright (C) 2016-2017 Vaclav Slavik
+ *  Copyright (C) 2016-2023 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -28,6 +28,8 @@
 
 #include "str_helpers.h"
 
+#define JSON_USE_IMPLICIT_CONVERSIONS 0
+
 #ifdef HAVE_NLOHMANN_JSON_HPP
  #include <nlohmann/json.hpp>
 #else
@@ -48,7 +50,7 @@ inline T get_value(const json& j, const char *key, const T& defaultValue)
     auto i = j.find(key);
     if (i == j.end() || i->is_null())
         return defaultValue;
-    return *i;
+    return i->get<T>();
 }
 
 inline std::string get_value(const json& j, const char *key, const char *defaultValue)
