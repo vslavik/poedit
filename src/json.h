@@ -38,6 +38,27 @@
 
 using json = nlohmann::json;
 
+// Implement conversion to and from std::wstring:
+namespace nlohmann
+{
+
+template<>
+struct adl_serializer<std::wstring>
+{
+    static void to_json(json& j, const std::wstring& s)
+    {
+        j = str::to_utf8(s);
+    }
+
+    static void from_json(const json& j, std::wstring& s)
+    {
+        s = str::to_wstring(j.get<std::string>());
+    }
+};
+
+} // namespace nlohmann
+
+
 /**
     Helper to get value from JSON key falling back to @a default.
 
@@ -57,21 +78,5 @@ inline std::string get_value(const json& j, const char *key, const char *default
 {
     return get_value<std::string>(j, key, defaultValue);
 }
-
-
-namespace str
-{
-
-inline std::wstring to_wstring(const json& x)
-{
-    return to_wstring(x.get<std::string>());
-}
-
-inline std::wstring to_wstring(json&& x)
-{
-    return to_wstring(x.get<std::string>());
-}
-
-} // namespace str
 
 #endif // Poedit_json_h

@@ -194,7 +194,7 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
             wxLogTrace("poedit.crowdin", "Got user info: %s", r.dump().c_str());
             const json& d = r["data"];
             UserInfo u;
-            u.login = str::to_wstring(d["username"]);
+            d.at("username").get_to(u.login);
             u.avatar = d.value("avatarUrl", "");
             std::string fullName;
             try
@@ -244,7 +244,7 @@ dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetU
                 const json& i = d["data"];
                 all.push_back(
                 {
-                    str::to_wstring(i["name"]),
+                    i.at("name").get<std::wstring>(),
                     i.at("identifier").get<std::string>(),
                     i.at("id").get<int>()
                 });
@@ -269,7 +269,7 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
         if (get_value(d, "publicDownloads", false) == false)
             throw Exception(_("Downloading translations is disabled in this project."));
 
-        prj->name = str::to_wstring(d["name"]);
+        d.at("name").get_to(prj->name);
         d.at("id").get_to(prj->id);
         for (const auto& langCode: d.at("targetLanguageIds"))
             prj->languages.push_back(Language::FromLanguageTag(std::string(langCode)));
