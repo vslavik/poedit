@@ -316,6 +316,9 @@ std::string Language::Variant() const
 
 Language Language::TryParse(const std::wstring& s)
 {
+    if (s.empty())
+        return Language(); // invalid
+
     if (IsValidCode(s))
         return Language(s);
 
@@ -375,6 +378,9 @@ Language Language::TryParseWithValidation(const std::wstring& s)
 
 Language Language::FromLanguageTag(const std::string& tag)
 {
+    if (tag.empty())
+        return Language(); // invalid
+
     char locale[512];
     UErrorCode status = U_ZERO_ERROR;
     uloc_forLanguageTag(tag.c_str(), locale, 512, NULL, &status);
