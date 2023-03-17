@@ -319,7 +319,8 @@ class Catalog
         {
             PO,
             POT,
-            XLIFF
+            XLIFF,
+            JSON
         };
 
         /// Capabilities of the file type

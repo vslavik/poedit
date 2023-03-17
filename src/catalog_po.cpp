@@ -841,11 +841,12 @@ wxString POCatalog::GetPreferredExtension() const
         case Type::POT:
             return "pot";
 
-        case Type::XLIFF:
-            wxFAIL_MSG("not possible here"); 
+        default:
+            wxFAIL_MSG("not possible here");
+            return "po";
     }
 
-    return "";
+    return "po";
 }
 
 
@@ -1168,7 +1169,7 @@ bool POCatalog::Save(const wxString& po_file, bool save_mo,
                 m_header.CreationDate = currentTime;
             break;
 
-        case Type::XLIFF:
+        default:
             wxFAIL_MSG("not possible here");
             break;
     }
@@ -1709,7 +1710,7 @@ bool POCatalog::UpdateFromPOT(POCatalogPtr pot, bool replace_header)
             break;
         }
 
-        case Type::XLIFF:
+        default:
             wxFAIL_MSG("not possible here");
             break;
     }

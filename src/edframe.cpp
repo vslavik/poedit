@@ -627,6 +627,7 @@ void PoeditFrame::EnsureAppropriateContentView()
         {
             case Catalog::Type::PO:
             case Catalog::Type::XLIFF:
+            case Catalog::Type::JSON:
                 EnsureContentView(Content::PO);
                 break;
             case Catalog::Type::POT:
@@ -1493,6 +1494,7 @@ void PoeditFrame::EditCatalogProperties()
 
         // Only language can be changed for other file types:
         case Catalog::Type::XLIFF:
+        case Catalog::Type::JSON:
         {
             wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
             dlg->SetLang(m_catalog->GetLanguage());

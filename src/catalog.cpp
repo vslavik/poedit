@@ -27,6 +27,7 @@
 
 #include "catalog_po.h"
 #include "catalog_xliff.h"
+#include "catalog_json.h"
 
 #include "configuration.h"
 #include "errors.h"
@@ -610,6 +611,8 @@ wxString MaskForType(Catalog::Type t)
             return MaskForType("*.pot", _("POT Translation Templates"));
         case Catalog::Type::XLIFF:
             return MaskForType("*.xlf;*.xliff", _("XLIFF Translation Files"));
+        case Catalog::Type::JSON:
+            return MaskForType("*.json", _("JSON Translation Files"));
     }
     return ""; // silence stupid warning
 }
@@ -633,9 +636,9 @@ wxString Catalog::GetTypesFileMask(std::initializer_list<Type> types)
 
 wxString Catalog::GetAllTypesFileMask()
 {
-    return MaskForType("*.po;*.pot;*.xlf;*.xliff", _("All Translation Files"), /*showExt=*/false) +
+    return MaskForType("*.po;*.pot;*.xlf;*.xliff;*.json", _("All Translation Files"), /*showExt=*/false) +
            "|" +
-           GetTypesFileMask({Type::PO, Type::POT, Type::XLIFF});
+           GetTypesFileMask({Type::PO, Type::POT, Type::XLIFF, Type::JSON});
 }
 
 
@@ -1092,7 +1095,8 @@ CatalogPtr Catalog::Create(Type type)
             return std::make_shared<POCatalog>(type);
 
         case Type::XLIFF:
-            wxFAIL_MSG("empty XLIFF creation not implemented");
+        case Type::JSON:
+            wxFAIL_MSG("empty XLIFF/JSON creation not implemented");
             return CatalogPtr();
     }
 
@@ -1115,6 +1119,10 @@ CatalogPtr Catalog::Create(const wxString& filename, int flags)
     {
         cat = XLIFFCatalog::Open(filename);
     }
+    else if (JSONCatalog::CanLoadFile(ext))
+    {
+        cat = JSONCatalog::Open(filename);
+    }
 
     if (!cat)
         throw Exception(wxString::Format(_(L"File “%s” is in unsupported format."), filename));
@@ -1133,5 +1141,6 @@ bool Catalog::CanLoadFile(const wxString& extension_)
     auto extension = extension_.Lower();
 
     return POCatalog::CanLoadFile(extension) ||
-           XLIFFCatalog::CanLoadFile(extension);
+           XLIFFCatalog::CanLoadFile(extension) ||
+           JSONCatalog::CanLoadFile(extension);
 }
