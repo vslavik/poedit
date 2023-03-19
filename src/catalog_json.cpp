@@ -44,6 +44,43 @@
 namespace
 {
 
+// Try to determine JSON file's formatting, i.e. line endings and identation, by inspecting the
+// beginning of the file.
+void DetectFileFormatting(std::ifstream& f, int& indent, char& indent_char, bool& dos_line_endings)
+{
+    // fallback defaults: compact representation with no indentation
+    indent = -1;
+    indent_char = ' ';
+    dos_line_endings = false;
+
+    for (int counter = 0; counter < 100; ++counter)
+    {
+        auto c = f.get();
+        if (c == '\r' && f.peek() == '\n')
+        {
+            dos_line_endings = true;
+        }
+        else if (c == '\n')
+        {
+            // first newline found, indent=0 means "use newlines" in json::dump()
+            indent = 0;
+        }
+        else if (c == ' ' || c == '\t')
+        {
+            if (indent >= 0)
+            {
+                // we're past the newline, identifying whitespace leading to the first "
+                indent++;
+                indent_char = (char)c; // ignore weirdnesses like mixed whitespace
+            }
+        }
+        else if  (c == '"')
+        {
+            // reached first key-value content, which must be indented, so we're done
+            break;
+        }
+    }
+}
 
 } // anonymous namespace
 
@@ -83,14 +120,17 @@ std::shared_ptr<JSONCatalog> JSONCatalog::Open(const wxString& filename)
 {
     // FIXME: handle exceptions
 
-    std::ifstream f(filename.fn_str());
+    std::ifstream f(filename.fn_str(), std::ios::binary);
     auto data = json_t::parse(f);
 
     auto cat = CreateForJSON(std::move(data));
     if (!cat)
         throw JSONUnrecognizedFileException();
 
-    // TODO: detect line endings and indentation - see to the beginning of `f`, read 100 or so bytes, look for content after 1st {
+    f.clear();
+    f.seekg(0, std::ios::beg);
+    DetectFileFormatting(f, cat->m_formatting.indent, cat->m_formatting.indent_char, cat->m_formatting.dos_line_endings);
+
     cat->m_fileName = filename;
     cat->Parse();
 
@@ -112,7 +152,7 @@ bool JSONCatalog::Save(const wxString& filename, bool /*save_mo*/,
     TempOutputFileFor tempfile(filename);
 
     {
-        std::ofstream f(tempfile.FileName().fn_str());
+        std::ofstream f(tempfile.FileName().fn_str(), std::ios::binary);
         f << SaveToBuffer();
     }
 
@@ -129,8 +169,19 @@ bool JSONCatalog::Save(const wxString& filename, bool /*save_mo*/,
 
 std::string JSONCatalog::SaveToBuffer()
 {
-    // FIXME: Preserve detected formatting (line endings, indent characters as much as possible)
-    return m_doc.dump();
+    auto s = m_doc.dump(m_formatting.indent, m_formatting.indent_char, /*ensure_ascii=*/false);
+    if (s.empty())
+        return s; // shouldn't be possible...
+
+    // all POSIX text files must end in newline, but json::dump() doesn't produce it
+    if (s.back() != '\n')
+        s.push_back('\n');
+
+    if (m_formatting.dos_line_endings)
+    {
+        boost::replace_all(s, "\n", "\r\n");
+    }
+    return s;
 }
 
 

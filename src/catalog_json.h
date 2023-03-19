@@ -102,6 +102,14 @@ private:
 protected:
     json_t m_doc;
     Language m_language;
+
+    struct FormattingRules
+    {
+        int indent;
+        char indent_char;
+        bool dos_line_endings;
+    };
+    FormattingRules m_formatting;
 };
 
 
