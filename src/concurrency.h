@@ -70,6 +70,7 @@
 #include <atomic>
 #include <memory>
 #include <mutex>
+#include <type_traits>
 
 #include <wx/app.h>
 #include <wx/weakref.h>
@@ -266,9 +267,9 @@ struct future_unwrapper<dispatch::future<T>>
 };
 
 template<typename F, typename... Args>
-inline auto call_and_unwrap_if_future(F&& f, Args&&... args) -> typename future_unwrapper<typename std::result_of<F(Args...)>::type>::return_type
+inline auto call_and_unwrap_if_future(F&& f, Args&&... args) -> typename future_unwrapper<typename std::invoke_result<F, Args...>::type>::return_type
 {
-    return future_unwrapper<typename std::result_of<F(Args...)>::type>::call_and_unwrap(std::forward<F>(f), std::forward<Args>(args)...);
+    return future_unwrapper<typename std::invoke_result<F, Args...>::type>::call_and_unwrap(std::forward<F>(f), std::forward<Args>(args)...);
 }
 
 } // namespace detail
@@ -359,7 +360,7 @@ public:
     T get() { return this->f_.get(); }
 
     template<typename F>
-    auto then(F&& continuation) -> future<typename detail::future_unwrapper<typename std::result_of<F(typename detail::argument_type<F>::arg0_type)>::type>::type>
+    auto then(F&& continuation) -> future<typename detail::future_unwrapper<typename std::invoke_result<F, typename detail::argument_type<F>::arg0_type>::type>::type>
     {
         typedef detail::continuation_calling_helper<typename detail::argument_type<typename std::decay<F>::type>::arg0_type> cch;
         return this->f_.then(detail::background_queue_executor::get(),
@@ -369,7 +370,7 @@ public:
     }
 
     template<typename F>
-    auto then_on_main(F&& continuation) -> future<typename detail::future_unwrapper<typename std::result_of<F(typename detail::argument_type<F>::arg0_type)>::type>::type>
+    auto then_on_main(F&& continuation) -> future<typename detail::future_unwrapper<typename std::invoke_result<F, typename detail::argument_type<F>::arg0_type>::type>::type>
     {
         typedef detail::continuation_calling_helper<typename detail::argument_type<typename std::decay<F>::type>::arg0_type> cch;
         return this->f_.then(detail::main_thread_executor::get(),
@@ -379,7 +380,7 @@ public:
     }
 
     template<typename Window, typename F>
-    auto then_on_window(Window *self, F&& continuation) -> future<typename detail::future_unwrapper<typename std::result_of<F(T)>::type>::type>
+    auto then_on_window(Window *self, F&& continuation) -> future<typename detail::future_unwrapper<typename std::invoke_result<F, T>::type>::type>
     {
         typedef detail::continuation_calling_helper<typename detail::argument_type<typename std::decay<F>::type>::arg0_type> cch;
         wxWeakRef<Window> weak(self);
@@ -432,7 +433,7 @@ public:
     void get() { this->f_.get(); }
 
     template<typename F>
-    auto then(F&& continuation) -> future<typename detail::future_unwrapper<typename std::result_of<F()>::type>::type>
+    auto then(F&& continuation) -> future<typename detail::future_unwrapper<typename std::invoke_result<F>::type>::type>
     {
         typedef detail::continuation_calling_helper<typename detail::argument_type<typename std::decay<F>::type>::arg0_type> cch;
         return this->f_.then(detail::background_queue_executor::get(),
@@ -443,7 +444,7 @@ public:
     }
 
     template<typename F>
-    auto then_on_main(F&& continuation) -> future<typename detail::future_unwrapper<typename std::result_of<F()>::type>::type>
+    auto then_on_main(F&& continuation) -> future<typename detail::future_unwrapper<typename std::invoke_result<F>::type>::type>
     {
         typedef detail::continuation_calling_helper<typename detail::argument_type<typename std::decay<F>::type>::arg0_type> cch;
         return this->f_.then(detail::main_thread_executor::get(),
@@ -454,7 +455,7 @@ public:
 
     }
     template<typename Window, typename F>
-    auto then_on_window(Window *self, F&& continuation) -> future<typename detail::future_unwrapper<typename std::result_of<F()>::type>::type>
+    auto then_on_window(Window *self, F&& continuation) -> future<typename detail::future_unwrapper<typename std::invoke_result<F>::type>::type>
     {
         typedef detail::continuation_calling_helper<typename detail::argument_type<typename std::decay<F>::type>::arg0_type> cch;
         wxWeakRef<Window> weak(self);
@@ -572,7 +573,7 @@ void fulfill_promise_from_future(std::shared_ptr<promise<T>> p, future<T>&& f)
 
 /// Enqueue an operation for background processing.
 template<class F>
-inline auto async(F&& f) -> future<typename detail::future_unwrapper<typename std::result_of<F()>::type>::type>
+inline auto async(F&& f) -> future<typename detail::future_unwrapper<typename std::invoke_result<F>::type>::type>
 {
     return {boost::async(detail::background_queue_executor::get(), [f{std::forward<F>(f)}]() {
         return detail::call_and_unwrap_if_future(f);
@@ -582,7 +583,7 @@ inline auto async(F&& f) -> future<typename detail::future_unwrapper<typename st
 
 /// Run an operation on the main thread.
 template<class F>
-inline auto on_main(F&& f) -> future<typename detail::future_unwrapper<typename std::result_of<F()>::type>::type>
+inline auto on_main(F&& f) -> future<typename detail::future_unwrapper<typename std::invoke_result<F>::type>::type>
 {
     return {boost::async(detail::main_thread_executor::get(), [f{std::forward<F>(f)}]() {
         return detail::call_and_unwrap_if_future(f);
