@@ -64,7 +64,6 @@ AttentionBar::AttentionBar(wxWindow *parent)
               wxTAB_TRAVERSAL | wxBORDER_NONE)
 {
 #ifdef __WXOSX__
-    SetWindowVariant(wxWINDOW_VARIANT_SMALL);
     NSView *view = GetHandle();
     view.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
 #endif
@@ -87,8 +86,7 @@ AttentionBar::AttentionBar(wxWindow *parent)
     btnClose->SetToolTip(_("Hide this notification message"));
 
 #if defined(__WXOSX__) || defined(__WXMSW__)
-    wxFont boldFont = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
-    boldFont.SetWeight(wxFONTWEIGHT_BOLD);
+    wxFont boldFont = m_label->GetFont().MakeBold();
     m_label->SetFont(boldFont);
 #endif
 
@@ -102,7 +100,8 @@ AttentionBar::AttentionBar(wxWindow *parent)
 
     auto labelSizer = new wxBoxSizer(wxVERTICAL);
     labelSizer->Add(m_label, wxSizerFlags().Expand());
-    labelSizer->Add(m_explanation, wxSizerFlags().Expand().Border(wxTOP|wxRIGHT, PX(4)));
+    labelSizer->AddSpacer(PX(1));
+    labelSizer->Add(m_explanation, wxSizerFlags().Expand().Border(wxRIGHT, PX(4)));
     sizer->Add(labelSizer, wxSizerFlags(1).Center().PXDoubleBorder(wxALL));
     sizer->AddSpacer(PX(20));
     auto allButtonsSizer = new wxBoxSizer(wxHORIZONTAL);
