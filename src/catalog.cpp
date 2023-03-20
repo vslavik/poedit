@@ -937,6 +937,9 @@ wxString CatalogItem::GetFlags() const
 
 wxString CatalogItem::GetFormatFlag() const
 {
+    if (m_moreFlags.empty())
+        return wxString();
+
     auto pos = m_moreFlags.find(wxS("-format"));
     if (pos == wxString::npos)
         return wxString();
