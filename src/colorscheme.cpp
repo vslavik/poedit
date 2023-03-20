@@ -270,10 +270,12 @@ ColorScheme::Mode ColorScheme::GetAppMode()
             s_appMode = Light;
 #else
         auto colBg = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW);
-        if (colBg.Red() < 0x60 && colBg.Green() < 0x60 && colBg.Blue() < 0x60)
-            s_appMode = Dark;
-        else
-            s_appMode = Light;
+    #if wxCHECK_VERSION(3,1,3)
+        auto colFg = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT);
+        s_appMode = (colFg.GetLuminance() > colBg.GetLuminance()) ? Dark : Light;
+    #else
+        s_appMode = (colBg.Red() < 0x60 && colBg.Green() < 0x60 && colBg.Blue() < 0x60) ? Dark : Light;
+    #endif
 #endif
         s_appModeDetermined = true;
     }
@@ -288,13 +290,14 @@ ColorScheme::Mode ColorScheme::GetWindowMode(wxWindow *win)
     NSView *view = win->GetHandle();
     return IsDarkAppearance(view.effectiveAppearance) ? Dark : Light;
 #else
-    auto colBg = win->GetDefaultAttributes().colBg;
-
     // Use dark scheme for very dark backgrounds:
-    if (colBg.Red() < 0x60 && colBg.Green() < 0x60 && colBg.Blue() < 0x60)
-        return Dark;
-    else
-        return Light;
+    auto colBg = win->GetDefaultAttributes().colBg;
+  #if wxCHECK_VERSION(3,1,3)
+    auto colFg = win->GetDefaultAttributes().colFg;
+    return (colFg.GetLuminance() > colBg.GetLuminance()) ? Dark : Light;
+  #else
+    return (colBg.Red() < 0x60 && colBg.Green() < 0x60 && colBg.Blue() < 0x60) ? Dark : Light;
+  #endif
 #endif
 }
 
