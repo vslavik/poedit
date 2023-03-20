@@ -2101,6 +2101,8 @@ void PoeditFrame::OnToggleWarnings(wxCommandEvent& e)
         m_catalog->Validate();
         if (m_list && m_list->sortOrder().errorsFirst)
             m_list->Sort();
+        else
+            m_list->RefreshAllItems();
     }
 }
 
