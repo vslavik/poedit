@@ -408,6 +408,92 @@ protected:
 };
 
 
+class LocalazyCatalog : public JSONCatalog
+{
+public:
+    using JSONCatalog::JSONCatalog;
+
+    static bool SupportsFile(const json_t& doc)
+    {
+        return doc.value("generator", "") == "Localazy";
+    }
+
+    void Parse() override
+    {
+        m_sourceLanguage = Language::FromLanguageTag(m_doc.value("sourceLocale", ""));
+        m_language = Language::FromLanguageTag(m_doc.value("targetLocale", ""));
+
+        int id = 0;
+        for (auto& file : m_doc.at("files"))
+        {
+            auto filename = file.value("name", "");
+
+            for (auto& tr : file.at("translations"))
+            {
+                m_items.push_back(std::make_shared<Item>(++id, filename, tr));
+            }
+        }
+    }
+
+protected:
+    class Item : public JSONCatalogItem
+    {
+    public:
+        Item(int id, const std::string& filename, json_t& node)
+            : JSONCatalogItem(id, node), m_filename(filename)
+        {
+            m_string = str::to_wx(node.at("source").get<std::string>());
+            auto trans = str::to_wx(node.value("value", ""));
+            m_translations.push_back(trans);
+            m_isTranslated = !trans.empty();
+
+            if (node.contains("meta"))
+            {
+                auto& meta = node["meta"];
+                m_moreFlags = str::to_wx(meta.value("placeholders", ""));
+                if (meta.contains("key"))
+                    m_extractedComments.push_back("ID: " + str::to_wx(meta["key"].get<std::string>()));
+            }
+
+            if (node.contains("context"))
+            {
+                auto& ctxt = node["context"];
+                auto desc = ctxt.value("description", "");
+
+                if (ctxt.contains("description"))
+                    m_extractedComments.push_back(str::to_wx(ctxt.at("description").get<std::string>()));
+
+                if (ctxt.contains("screenshots"))
+                {
+                    if (!m_extractedComments.empty())
+                        m_extractedComments.push_back("");
+                    m_extractedComments.push_back(_("Screenshots:"));
+                    for (auto& link : ctxt.at("screenshots"))
+                        m_extractedComments.push_back(str::to_wx(link.get<std::string>()));
+                }
+            }
+        }
+
+        void UpdateInternalRepresentation() override
+        {
+            m_node["value"] = str::to_utf8(GetTranslation());
+        }
+
+        wxArrayString GetReferences() const override
+        {
+            wxArrayString refs;
+            if (!m_filename.empty())
+                refs.push_back(str::to_wx(m_filename));
+            return refs;
+        }
+
+    private:
+        std::string m_filename;
+    };
+
+};
+
+
 std::shared_ptr<JSONCatalog> JSONCatalog::CreateForJSON(json_t&& doc, const std::string& extension)
 {
     // try specialized implementations first:
@@ -415,6 +501,8 @@ std::shared_ptr<JSONCatalog> JSONCatalog::CreateForJSON(json_t&& doc, const std:
         return std::shared_ptr<JSONCatalog>(new FlutterCatalog(std::move(doc)));
     if (WebExtensionCatalog::SupportsFile(doc))
         return std::shared_ptr<JSONCatalog>(new WebExtensionCatalog(std::move(doc)));
+    if (LocalazyCatalog::SupportsFile(doc))
+        return std::shared_ptr<JSONCatalog>(new LocalazyCatalog(std::move(doc)));
 
     // then fall back to generic:
     if (GenericJSONCatalog::SupportsFile(doc))
