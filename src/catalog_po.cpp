@@ -600,25 +600,11 @@ class POLoadParser : public POCatalogParser
         POLoadParser(POCatalog& c, wxTextFile *f)
               : POCatalogParser(f),
                 FileIsValid(false),
-                m_catalog(c), m_nextId(1), m_seenHeaderAlready(false), m_collectMsgidText(true) {}
+                m_catalog(c), m_nextId(1), m_seenHeaderAlready(false) {}
 
         // true if the file is valid, i.e. has at least some data
         bool FileIsValid;
 
-        Language GetMsgidLanguage()
-        {
-            auto lang = GetSpecifiedMsgidLanguage();
-            if (lang.IsValid())
-                return lang;
-
-            auto utf8 = m_allMsgidText.utf8_str();
-            lang = Language::TryDetectFromText(utf8.data(), utf8.length());
-            if (!lang.IsValid())
-                lang = Language::English();  // gettext historically assumes English
-            return lang;
-        }
-
-    protected:
         Language GetSpecifiedMsgidLanguage()
         {
             auto x_srclang = m_catalog.Header().GetHeader("X-Source-Language");
@@ -633,6 +619,7 @@ class POLoadParser : public POCatalogParser
             return Language();
         }
 
+    protected:
         POCatalog& m_catalog;
 
         virtual bool OnEntry(const wxString& msgid,
@@ -660,10 +647,6 @@ class POLoadParser : public POCatalogParser
     private:
         int m_nextId;
         bool m_seenHeaderAlready;
-
-        // collected text of msgids, with newlines, for language detection
-        bool m_collectMsgidText;
-        wxString m_allMsgidText;
 };
 
 
@@ -691,7 +674,6 @@ bool POLoadParser::OnEntry(const wxString& msgid,
             // gettext header:
             m_catalog.m_header.FromString(mtranslations[0]);
             m_catalog.m_header.Comment = comment;
-            m_collectMsgidText = !GetSpecifiedMsgidLanguage().IsValid();
             m_seenHeaderAlready = true;
         }
         // else: ignore duplicate header in malformed files
@@ -724,18 +706,6 @@ bool POLoadParser::OnEntry(const wxString& msgid,
         }
         d->SetOldMsgid(msgid_old);
         m_catalog.AddItem(d);
-
-        // collect text for language detection:
-        if (m_collectMsgidText)
-        {
-            m_allMsgidText.append(msgid);
-            m_allMsgidText.append('\n');
-            if (!msgid_plural.empty())
-            {
-                m_allMsgidText.append(msgid_plural);
-                m_allMsgidText.append('\n');
-            }
-        }
     }
     return true;
 }
@@ -906,7 +876,7 @@ bool POCatalog::Load(const wxString& po_file, int flags)
         return false;
     }
 
-    m_sourceLanguage = parser.GetMsgidLanguage();
+    m_sourceLanguage = parser.GetSpecifiedMsgidLanguage();  // may be, and likely will, invalid
 
     // now that the catalog is loaded, update its items with the bookmarks
     for (unsigned i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
@@ -955,38 +925,6 @@ void POCatalog::FixupCommonIssues()
     if (m_fileType == Type::POT)
         return;
 
-    if (!m_header.Lang.IsValid())
-    {
-        if (!m_fileName.empty())
-        {
-            m_header.Lang = Language::TryGuessFromFilename(m_fileName);
-            wxLogTrace("poedit", "guessed language from filename '%s': %s", m_fileName, m_header.Lang.Code());
-        }
-
-        if (!m_header.Lang.IsValid())
-        {
-            // If all else fails, try to detect the language from content
-            wxString allText;
-            for (auto& i: items())
-            {
-                for (auto& s: i->GetTranslations())
-                {
-                    if (s.empty())
-                        continue;
-                    allText.append(s);
-                    allText.append('\n');
-                }
-            }
-            if (!allText.empty())
-            {
-                auto utf8 = allText.utf8_str();
-                m_header.Lang = Language::TryDetectFromText(utf8.data(), utf8.length());
-            }
-        }
-    }
-
-    wxLogTrace("poedit", "translation language is '%s'", GetLanguage().Code());
-
     if (m_header.GetHeader("Language-Team") == "LANGUAGE <LL@li.org>")
     {
         m_header.DeleteHeader("Language-Team");
@@ -1023,8 +961,6 @@ void POCatalog::FixupCommonIssues()
                 m_header.SetHeader("Plural-Forms", pluralForms);
         }
     }
-
-    // TODO: mark catalog as modified if any changes were made
 }
 
 

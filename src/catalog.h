@@ -587,6 +587,9 @@ class Catalog
     protected:
         Catalog(Type type);
 
+        /// Perform post-creation processing to e.g. fixup issues, detect missing language etc.
+        virtual void PostCreation();
+
     protected:
         CatalogItemArray m_items;
 

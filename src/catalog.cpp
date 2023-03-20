@@ -477,7 +477,6 @@ Catalog::HeaderData::Find(const wxString& key) const
 
 Catalog::Catalog(Type type)
 {
-    m_sourceLanguage = Language::English();
     m_fileType = type;
 
     m_isOk = true;
@@ -860,7 +859,8 @@ bool Catalog::HasPluralItems() const
 void Catalog::SetLanguage(Language lang)
 {
     m_header.Lang = lang;
-    m_header.SetHeaderNotEmpty("Plural-Forms", lang.DefaultPluralFormsExpr().str());
+    if (HasPluralItems())
+        m_header.SetHeaderNotEmpty("Plural-Forms", lang.DefaultPluralFormsExpr().str());
 }
 
 void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens,
@@ -1084,6 +1084,63 @@ wxString CatalogItem::GetOldMsgid() const
 }
 
 
+void Catalog::PostCreation()
+{
+    if (!m_sourceLanguage.IsValid())
+    {
+        // detect source language from the text (ignoring plurals for simplicity,
+        // as we don't need 100% of the text):
+        wxString allText;
+        for (auto& i: items())
+        {
+            allText.append(i->GetString());
+            allText.append('\n');
+        }
+        if (!allText.empty())
+        {
+            m_sourceLanguage = Language::TryDetectFromText(allText.utf8_str());
+            wxLogTrace("poedit", "detected source language is '%s'", m_sourceLanguage.Code());
+        }
+    }
+
+    // All the following fixups are for files that contain translations (i.e. not POTs)
+    if (!HasCapability(Cap::Translations))
+        return;
+
+    if (!GetLanguage().IsValid())
+    {
+        Language lang;
+        if (!m_fileName.empty())
+        {
+            lang = Language::TryGuessFromFilename(m_fileName);
+            wxLogTrace("poedit", "guessed translation language from filename '%s' is '%s'", m_fileName, lang.Code());
+        }
+
+        if (!lang.IsValid())
+        {
+            // If all else fails, try to detect the language from content
+            wxString allText;
+            for (auto& i: items())
+            {
+                if (!i->IsTranslated())
+                    continue;
+                allText.append(i->GetTranslation());
+                allText.append('\n');
+            }
+            if (!allText.empty())
+            {
+                lang = Language::TryDetectFromText(allText.utf8_str());
+                wxLogTrace("poedit", "detected translation language is '%s'", GetLanguage().Code());
+            }
+        }
+
+        if (lang.IsValid())
+            SetLanguage(lang);
+    }
+}
+
+
+
 // Catalog file creation factories:
 
 CatalogPtr Catalog::Create(Type type)
@@ -1134,6 +1191,7 @@ CatalogPtr Catalog::Create(const wxString& filename, int flags)
     }
 
     cat->SetFileName(filename);
+    cat->PostCreation();
 
     return cat;
 }
