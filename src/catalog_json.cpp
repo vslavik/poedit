@@ -131,7 +131,6 @@ std::shared_ptr<JSONCatalog> JSONCatalog::Open(const wxString& filename)
     f.seekg(0, std::ios::beg);
     DetectFileFormatting(f, cat->m_formatting.indent, cat->m_formatting.indent_char, cat->m_formatting.dos_line_endings);
 
-    cat->m_fileName = filename;
     cat->Parse();
 
     return cat;
@@ -162,7 +161,7 @@ bool JSONCatalog::Save(const wxString& filename, bool /*save_mo*/,
         return false;
     }
 
-    m_fileName = filename;
+    SetFileName(filename);
     return true;
 }
 

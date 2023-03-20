@@ -1368,7 +1368,7 @@ bool POCatalog::Save(const wxString& po_file, bool save_mo,
         }
     }
 
-    m_fileName = po_file;
+    SetFileName(po_file);
 
     return true;
 }

@@ -482,13 +482,13 @@ std::shared_ptr<XLIFFCatalog> XLIFFCatalog::Open(const wxString& filename)
     auto xliff_root = doc.child("xliff");
     std::string xliff_version = xliff_root.attribute("version").value();
     if (xliff_version == "1.0")
-        cat.reset(new XLIFF1Catalog(filename, std::move(doc), 0));
+        cat.reset(new XLIFF1Catalog(std::move(doc), 0));
     else if (xliff_version == "1.1")
-        cat.reset(new XLIFF1Catalog(filename, std::move(doc), 1));
+        cat.reset(new XLIFF1Catalog(std::move(doc), 1));
     else if (xliff_version == "1.2")
-        cat.reset(new XLIFF1Catalog(filename, std::move(doc), 2));
+        cat.reset(new XLIFF1Catalog(std::move(doc), 2));
     else if (xliff_version == "2.0" || xliff_version == "2.1")
-        cat.reset(new XLIFF2Catalog(filename, std::move(doc)));
+        cat.reset(new XLIFF2Catalog(std::move(doc)));
     else
         throw XLIFFReadException(filename, wxString::Format(_("unsupported XLIFF version (%s)"), xliff_version));
 
@@ -519,7 +519,7 @@ bool XLIFFCatalog::Save(const wxString& filename, bool /*save_mo*/,
         return false;
     }
 
-    m_fileName = filename;
+    SetFileName(filename);
     return true;
 }
 

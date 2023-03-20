@@ -1133,6 +1133,8 @@ CatalogPtr Catalog::Create(const wxString& filename, int flags)
             item->ClearTranslation();
     }
 
+    cat->SetFileName(filename);
+
     return cat;
 }
 
