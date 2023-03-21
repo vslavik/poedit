@@ -582,7 +582,7 @@ class Catalog
 
         /// Validates correctness of the translation by running msgfmt
         /// Returns number of errors (i.e. 0 if no errors).
-        virtual ValidationResults Validate(bool wasJustLoaded = false) = 0;
+        virtual ValidationResults Validate(const wxString& fileWithSameContent = wxString());
 
         void AttachCloudSync(std::shared_ptr<CloudSyncDestination> c) { m_cloudSync = c; }
         std::shared_ptr<CloudSyncDestination> GetCloudSync() const { return m_cloudSync; }

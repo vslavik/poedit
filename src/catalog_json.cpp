@@ -25,7 +25,6 @@
 
 #include "catalog_json.h"
 
-#include "qa_checks.h"
 #include "configuration.h"
 #include "str_helpers.h"
 #include "utility.h"
@@ -138,7 +137,7 @@ std::shared_ptr<JSONCatalog> JSONCatalog::Open(const wxString& filename)
 
 
 bool JSONCatalog::Save(const wxString& filename, bool /*save_mo*/,
-                        ValidationResults& /*validation_results*/,
+                        ValidationResults& validation_results,
                         CompilationStatus& /*mo_compilation_status*/)
 {
     if ( wxFileExists(filename) && !wxFile::Access(filename, wxFile::write) )
@@ -161,6 +160,8 @@ bool JSONCatalog::Save(const wxString& filename, bool /*save_mo*/,
         return false;
     }
 
+    validation_results = Validate();
+
     SetFileName(filename);
     return true;
 }
@@ -181,26 +182,6 @@ std::string JSONCatalog::SaveToBuffer()
         boost::replace_all(s, "\n", "\r\n");
     }
     return s;
-}
-
-
-Catalog::ValidationResults JSONCatalog::Validate(bool)
-{
-    // FIXME: move this elsewhere, remove #include "qa_checks.h", configuration.h
-
-    ValidationResults res;
-
-    for (auto& i: m_items)
-        i->ClearIssue();
-
-    res.errors = 0;
-
-#if wxUSE_GUI
-    if (Config::ShowWarnings())
-        res.warnings = QAChecker::GetFor(*this)->Check(*this);
-#endif
-
-    return res;
 }
 
 

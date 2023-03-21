@@ -173,7 +173,7 @@ public:
 
     std::string SaveToBuffer() override;
 
-    ValidationResults Validate(bool wasJustLoaded) override;
+    ValidationResults Validate(const wxString& fileWithSameContent) override;
 
     /// Compiles the catalog into binary MO file.
     bool CompileToMO(const wxString& mo_file,
@@ -225,7 +225,7 @@ protected:
     /// Fix commonly encountered fixable problems with loaded files
     void FixupCommonIssues();
 
-    ValidationResults DoValidate(const wxString& po_file);
+    void ValidateWithMsgfmt(ValidationResults& res, const wxString& po_file);
     bool DoSaveOnly(const wxString& po_file, wxTextFileType crlf);
     bool DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf);
 

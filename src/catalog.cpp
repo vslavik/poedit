@@ -1105,6 +1105,28 @@ wxString CatalogItem::GetOldMsgid() const
 }
 
 
+Catalog::ValidationResults Catalog::Validate(const wxString& /*fileWithSameContent*/)
+{
+    ValidationResults res;
+
+    for (auto& i: m_items)
+        i->ClearIssue();
+    res.errors = 0;
+
+    if (!HasCapability(Catalog::Cap::Translations))
+        return res; // no errors in POT files
+
+#if wxUSE_GUI
+    if (Config::ShowWarnings())
+    {
+        res.warnings = QAChecker::GetFor(*this)->Check(*this);
+    }
+#endif
+
+    return res;
+}
+
+
 void Catalog::PostCreation()
 {
     if (!m_sourceLanguage.IsValid())

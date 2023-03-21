@@ -25,7 +25,6 @@
 
 #include "catalog_xliff.h"
 
-#include "qa_checks.h"
 #include "configuration.h"
 #include "str_helpers.h"
 #include "utility.h"
@@ -499,7 +498,7 @@ std::shared_ptr<XLIFFCatalog> XLIFFCatalog::Open(const wxString& filename)
 
 
 bool XLIFFCatalog::Save(const wxString& filename, bool /*save_mo*/,
-                        ValidationResults& /*validation_results*/,
+                        ValidationResults& validation_results,
                         CompilationStatus& /*mo_compilation_status*/)
 {
     if ( wxFileExists(filename) && !wxFile::Access(filename, wxFile::write) )
@@ -519,6 +518,8 @@ bool XLIFFCatalog::Save(const wxString& filename, bool /*save_mo*/,
         return false;
     }
 
+    validation_results = Validate();
+
     SetFileName(filename);
     return true;
 }
@@ -531,25 +532,6 @@ std::string XLIFFCatalog::SaveToBuffer()
     return s.str();
 }
 
-
-Catalog::ValidationResults XLIFFCatalog::Validate(bool)
-{
-    // FIXME: move this elsewhere, remove #include "qa_checks.h", configuration.h
-
-    ValidationResults res;
-
-    for (auto& i: m_items)
-        i->ClearIssue();
-
-    res.errors = 0;
-
-#if wxUSE_GUI
-    if (Config::ShowWarnings())
-        res.warnings = QAChecker::GetFor(*this)->Check(*this);
-#endif
-
-    return res;
-}
 
 std::string XLIFFCatalog::GetXPathValue(const char* xpath) const
 {

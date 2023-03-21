@@ -2304,7 +2304,8 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
 #endif
         {
             wxLogNull null;  // don't report non-item warnings
-            cat->Validate(/*wasJustLoaded:*/true);
+            // the file was just loaded, it is identical to in-memory content and we can pass `fileWithSameContent`
+            cat->Validate(/*fileWithSameContent=*/cat->GetFileName());
         }
 
         m_catalog = cat;

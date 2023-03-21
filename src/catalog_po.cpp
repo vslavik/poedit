@@ -29,7 +29,6 @@
 #include "errors.h"
 #include "extractors/extractor.h"
 #include "gexecute.h"
-#include "qa_checks.h"
 #include "str_helpers.h"
 #include "utility.h"
 #include "version.h"
@@ -1126,7 +1125,7 @@ bool POCatalog::Save(const wxString& po_file, bool save_mo,
 
     try
     {
-        validation_results = DoValidate(po_file_temp);
+        validation_results = Validate(/*fileWithSameContent=*/po_file_temp);
     }
     catch (...)
     {
@@ -1356,7 +1355,7 @@ bool POCatalog::CompileToMO(const wxString& mo_file,
         return false;
     }
 
-    validation_results = DoValidate(po_file_temp);
+    validation_results = Validate(/*fileWithSameContent=*/po_file_temp);
 
     TempOutputFileFor mo_file_temp_obj(mo_file);
     const wxString mo_file_temp = mo_file_temp_obj.FileName();
@@ -1555,33 +1554,35 @@ bool POCatalog::FixDuplicateItems()
 }
 
 
-Catalog::ValidationResults POCatalog::Validate(bool wasJustLoaded)
+Catalog::ValidationResults POCatalog::Validate(const wxString& fileWithSameContent)
 {
-    if (!HasCapability(Catalog::Cap::Translations))
-        return ValidationResults();  // no errors in POT files
+    ValidationResults res = Catalog::Validate(fileWithSameContent);
 
-    if (wasJustLoaded)
+    if (!HasCapability(Catalog::Cap::Translations))
+        return res;  // no errors in POT files
+
+    if (!fileWithSameContent.empty())
     {
-        return DoValidate(GetFileName());
+        ValidateWithMsgfmt(res, fileWithSameContent);
     }
     else
     {
         TempDirectory tmpdir;
         if ( !tmpdir.IsOk() )
-            return ValidationResults();
+            return res;
 
         wxString tmp_po = tmpdir.CreateFileName("validated.po");
         if ( !DoSaveOnly(tmp_po, wxTextFileType_Unix) )
-            return ValidationResults();
+            return res;
 
-        return DoValidate(tmp_po);
+        ValidateWithMsgfmt(res, tmp_po);
     }
+
+    return res;
 }
 
-Catalog::ValidationResults POCatalog::DoValidate(const wxString& po_file)
+void POCatalog::ValidateWithMsgfmt(Catalog::ValidationResults& res, const wxString& po_file)
 {
-    ValidationResults res;
-
     GettextErrors err;
     ExecuteGettextAndParseOutput
     (
@@ -1589,15 +1590,7 @@ Catalog::ValidationResults POCatalog::DoValidate(const wxString& po_file)
         err
     );
 
-    for (auto& i: m_items)
-        i->ClearIssue();
-
-    res.errors = (int)err.size();
-
-#if wxUSE_GUI
-    if (Config::ShowWarnings())
-        res.warnings = QAChecker::GetFor(*this)->Check(*this);
-#endif
+    res.errors += (int)err.size();
 
     for ( GettextErrors::const_iterator i = err.begin(); i != err.end(); ++i )
     {
@@ -1613,8 +1606,6 @@ Catalog::ValidationResults POCatalog::DoValidate(const wxString& po_file)
         // if not matched to an item:
         wxLogError(i->text);
     }
-
-    return res;
 }
 
 

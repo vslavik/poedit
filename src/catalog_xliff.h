@@ -99,8 +99,6 @@ public:
 
     std::string SaveToBuffer() override;
 
-    ValidationResults Validate(bool wasJustLoaded) override;
-
     Language GetLanguage() const override { return m_language; }
     void SetLanguage(Language lang) override { m_language = lang; }
 
