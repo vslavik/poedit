@@ -76,6 +76,27 @@ wxString FixBrokenSearchPathValue(wxString p)
     return p;
 }
 
+// Detect whether source strings are just IDs instead of actual text
+bool DetectUseOfSymbolicIDs(Catalog& cat)
+{
+    // Employ a simple heuristic: IDs won't contain whitespace.
+    // This is not enough as is, because some (notably Asian) languages don't use
+    // whitespace, so also check for use of ASCII characters only. Typical non-symbolic
+    // files will fail at least one of the tests in most of their strings.
+    //
+    for (auto& i: cat.items())
+    {
+        for (auto c: i->GetString())
+        {
+            if (c == ' ' || c >= 0x80)
+                return false;
+        }
+    }
+
+    wxLogTrace("poedit", "detected use of symbolic IDs for source language");
+    return true;
+}
+
 } // anonymous namespace
 
 
@@ -1088,18 +1109,24 @@ void Catalog::PostCreation()
 {
     if (!m_sourceLanguage.IsValid())
     {
-        // detect source language from the text (ignoring plurals for simplicity,
-        // as we don't need 100% of the text):
-        wxString allText;
-        for (auto& i: items())
+        if (!m_sourceIsSymbolicID)
+            m_sourceIsSymbolicID = DetectUseOfSymbolicIDs(*this);
+
+        if (!m_sourceIsSymbolicID)
         {
-            allText.append(i->GetString());
-            allText.append('\n');
-        }
-        if (!allText.empty())
-        {
-            m_sourceLanguage = Language::TryDetectFromText(allText.utf8_str());
-            wxLogTrace("poedit", "detected source language is '%s'", m_sourceLanguage.Code());
+            // detect source language from the text (ignoring plurals for simplicity,
+            // as we don't need 100% of the text):
+            wxString allText;
+            for (auto& i: items())
+            {
+                allText.append(i->GetString());
+                allText.append('\n');
+            }
+            if (!allText.empty())
+            {
+                m_sourceLanguage = Language::TryDetectFromText(allText.utf8_str());
+                wxLogTrace("poedit", "detected source language is '%s'", m_sourceLanguage.Code());
+            }
         }
     }
 

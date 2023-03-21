@@ -553,6 +553,9 @@ class Catalog
 
         /// Change the catalog's language and update headers accordingly
         virtual void SetLanguage(Language lang);
+
+        /// Whether source text is just symbolic identifier and not actual text
+        bool UsesSymbolicIDsForSource() const { return m_sourceIsSymbolicID; }
             
         /// Returns true if the catalog contains obsolete entries (~.*)
         virtual bool HasDeletedItems() const = 0;
@@ -598,6 +601,7 @@ class Catalog
         wxString m_fileName;
         HeaderData m_header;
         Language m_sourceLanguage;
+        bool m_sourceIsSymbolicID = false;
 
         std::shared_ptr<CloudSyncDestination> m_cloudSync;
 };
