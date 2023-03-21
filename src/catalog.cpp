@@ -1119,7 +1119,9 @@ Catalog::ValidationResults Catalog::Validate(const wxString& /*fileWithSameConte
 #if wxUSE_GUI
     if (Config::ShowWarnings())
     {
-        res.warnings = QAChecker::GetFor(*this)->Check(*this);
+        // TODO: _some_ checks (e.g. plurals) do make sense even with symbolic IDs
+        if (!UsesSymbolicIDsForSource())
+            res.warnings = QAChecker::GetFor(*this)->Check(*this);
     }
 #endif
 
