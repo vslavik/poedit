@@ -279,30 +279,12 @@ bool g_focusToText = false;
     }
     else
     {
-        // NB: duplicated in ReadCatalog()
-        try
-        {
-            auto cat = Catalog::Create(filename);
-            if (!cat || !cat->IsOk())
-                throw Exception(_("The file may be either corrupted or in a format not recognized by Poedit."));
-
-            f = new PoeditFrame();
-            f->Show(true);
-            f->ReadCatalog(cat);
-        }
-        catch (...)
-        {
-            wxMessageDialog dlg
-            (
-                nullptr,
-                _("The file cannot be opened."),
-                _("Invalid file"),
-                wxOK | wxICON_ERROR
-            );
-            dlg.SetExtendedMessage(DescribeCurrentException());
-            dlg.ShowModal();
+        auto cat = PreOpenFileWithErrorsUI(filename, nullptr);
+        if (!cat || !cat->IsOk())
             return nullptr;
-        }
+
+        f = new PoeditFrame();
+        f->ReadCatalog(cat);
     }
 
     f->Show(true);
@@ -952,14 +934,45 @@ void PoeditFrame::OnCloseCmd(wxCommandEvent&)
 void PoeditFrame::OpenFile(const wxString& filename, int lineno)
 {
     DoIfCanDiscardCurrentDoc([=]{
-        DoOpenFile(filename, lineno);
+        auto cat = PreOpenFileWithErrorsUI(filename, this);
+        if (cat && cat->IsOk())
+            DoOpenFile(cat, lineno);
     });
 }
 
 
-void PoeditFrame::DoOpenFile(const wxString& filename, int lineno)
+// FIXME: This is ugly API and exists only to support InvokingWindowProxy hacks in edapp.cpp;
+//        Once that is cleaned up to always open in a new window even on Windows, remove all this
+CatalogPtr PoeditFrame::PreOpenFileWithErrorsUI(const wxString& filename, wxWindow *parent)
 {
-    ReadCatalog(filename);
+    wxBusyCursor bcur;
+
+    try
+    {
+        auto cat = Catalog::Create(filename);
+        if (!cat || !cat->IsOk())
+            throw Exception(_("The file may be either corrupted or in a format not recognized by Poedit."));
+        return cat;
+    }
+    catch (...)
+    {
+        wxMessageDialog dlg
+        (
+            parent,
+            _("The file cannot be opened."),
+            _("Invalid file"),
+            wxOK | wxICON_ERROR
+        );
+        dlg.SetExtendedMessage(DescribeCurrentException());
+        dlg.ShowModal();
+        return nullptr;
+    }
+}
+
+
+void PoeditFrame::DoOpenFile(CatalogPtr cat, int lineno)
+{
+    ReadCatalog(cat);
 
     // HACK: make sure this is called *after* the delayed call in PoeditListCtrl::CatalogChanged
     if (m_list)
@@ -989,14 +1002,22 @@ void PoeditFrame::ReloadFileIfChanged()
             dlg->ShowWindowModalThenDo([this,dlg](int retval)
             {
                 if (retval == wxID_YES)
-                    ReadCatalog(m_catalog->GetFileName());
+                {
+                    auto cat = PreOpenFileWithErrorsUI(m_catalog->GetFileName(), this);
+                    if (cat && cat->IsOk())
+                        ReadCatalog(cat);
+                }
                 m_fileMonitor->StopRespondingToEvent();
             });
         }
         else
         {
             // file not modified in Poedit yet, so just reload it from the disk
-            ReadCatalog(m_catalog->GetFileName());
+            // TODO: Don't display errors in this case and just silently ignore the file; load the file
+            //       above before the prompt on background thread.
+            auto cat = PreOpenFileWithErrorsUI(m_catalog->GetFileName(), this);
+            if (cat && cat->IsOk())
+                ReadCatalog(cat);
             m_fileMonitor->StopRespondingToEvent();
         }
     }
@@ -1129,14 +1150,6 @@ void PoeditFrame::OnCloseWindow(wxCloseEvent& event)
         Destroy();
     }
 }
-
-
-#ifdef HAVE_HTTP_CLIENT
-void PoeditFrame::NewFromCrowdin(const wxString& filename)
-{
-    DoOpenFile(filename);
-}
-#endif
 
 
 void PoeditFrame::OnSave(wxCommandEvent& event)
@@ -2262,35 +2275,6 @@ void PoeditFrame::UpdateToTextCtrl(int flags)
     m_editingArea->UpdateToTextCtrl(item, flags);
 
     GetMenuBar()->Check(XRCID("menu_fuzzy"), item->IsFuzzy());
-}
-
-
-
-void PoeditFrame::ReadCatalog(const wxString& catalog)
-{
-    wxBusyCursor bcur;
-
-    // NB: duplicated in PoeditFrame::Create()
-    try
-    {
-        auto cat = Catalog::Create(catalog);
-        if (!cat || !cat->IsOk())
-            throw Exception(_("The file may be either corrupted or in a format not recognized by Poedit."));
-
-        ReadCatalog(cat);
-    }
-    catch (...)
-    {
-        wxMessageDialog dlg
-        (
-            this,
-            _("The file cannot be opened."),
-            _("Invalid file"),
-            wxOK | wxICON_ERROR
-        );
-        dlg.SetExtendedMessage(DescribeCurrentException());
-        dlg.ShowModal();
-    }
 }
 
 

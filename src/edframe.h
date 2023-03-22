@@ -83,8 +83,10 @@ class PoeditFrame : public PoeditFrameBase
         /// if there's unsaved document.
         void OpenFile(const wxString& filename, int lineno = 0);
 
+        static CatalogPtr PreOpenFileWithErrorsUI(const wxString& filename, wxWindow *parent);
+
         // Opens given file in this frame, without asking user
-        void DoOpenFile(const wxString& filename, int lineno = 0);
+        void DoOpenFile(CatalogPtr cat, int lineno = 0);
 
         // Re-read the file from disk if it changed externally
         void ReloadFileIfChanged();
@@ -104,8 +106,6 @@ class PoeditFrame : public PoeditFrameBase
 
         ~PoeditFrame();
 
-        /// Reads catalog, refreshes controls, takes ownership of catalog.
-        void ReadCatalog(const wxString& catalog);
         /// Reads catalog, refreshes controls, takes ownership of catalog.
         void ReadCatalog(const CatalogPtr& cat);
         /// Writes catalog.
@@ -154,9 +154,6 @@ class PoeditFrame : public PoeditFrameBase
 
         void NewFromScratch();
         void NewFromPOT(POCatalogPtr pot, Language language = Language());
-#ifdef HAVE_HTTP_CLIENT
-        void NewFromCrowdin(const wxString& filename);
-#endif
 
     protected:
         // Don't show help in status bar, it's not common to do these days:

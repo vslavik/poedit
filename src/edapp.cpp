@@ -641,8 +641,9 @@ void PoeditApp::OpenNewFile()
     WelcomeWindow::GetAndActivate();
 }
 
-void PoeditApp::OpenFiles(const wxArrayString& names, int lineno)
+int PoeditApp::OpenFiles(const wxArrayString& names, int lineno)
 {
+    int opened = 0;
     for ( auto name: names )
     {
         // MO files cannot be opened directly in Poedit (yet), but they are
@@ -660,9 +661,15 @@ void PoeditApp::OpenFiles(const wxArrayString& names, int lineno)
             continue;
         }
 
-        WelcomeWindow::HideActive();
-        PoeditFrame::Create(name, lineno);
+        if (PoeditFrame::Create(name, lineno))
+        {
+            opened++;
+        }
     }
+
+    if (opened)
+        WelcomeWindow::HideActive();
+    return opened;
 }
 
 
@@ -1026,11 +1033,21 @@ void PoeditApp::OnOpen(wxCommandEvent& event)
     wxArrayString paths;
     dlg.GetPaths(paths);
 
-    win.GetActionTarget()->DoOpenFile(paths.front());
-    paths.erase(paths.begin());
+    // This is special treatment for Windows' opening in existing window
+    {
+        auto cat = PoeditFrame::PreOpenFileWithErrorsUI(paths.front(), win.GetParentWindowIfAny());
+        if (cat && cat->IsOk())
+            win.GetActionTarget()->DoOpenFile(cat);
+        else if (paths.size() == 1)
+            win.NotifyWasAborted();
+    }
 
+    paths.erase(paths.begin());
     if (!paths.empty())
-        OpenFiles(paths);
+    {
+        if (OpenFiles(paths) == 0)
+            win.NotifyWasAborted();
+    }
 }
 
 
@@ -1045,8 +1062,15 @@ void PoeditApp::OnOpenFromCrowdin(wxCommandEvent& event)
     win.NotifyIsStarting();
     CrowdinOpenFile(win.GetParentWindowIfAny(), [=](int retval, wxString filename)
     {
-        if (retval == wxID_OK)
-            win.GetActionTarget()->NewFromCrowdin(filename);
+        if (retval != wxID_OK)
+        {
+            win.NotifyWasAborted();
+            return;
+        }
+
+        auto cat = PoeditFrame::PreOpenFileWithErrorsUI(filename, win.GetParentWindowIfAny());
+        if (cat && cat->IsOk())
+            win.GetActionTarget()->DoOpenFile(cat);
         else
             win.NotifyWasAborted();
     });
@@ -1061,8 +1085,12 @@ void PoeditApp::OnOpenHist(wxCommandEvent& event)
     if (!win.IsPerformingActionAllowed())
         return;
 
-    win.NotifyIsStarting();
-    win.GetActionTarget()->DoOpenFile(event.GetString());
+    auto cat = PoeditFrame::PreOpenFileWithErrorsUI(event.GetString(), win.GetParentWindowIfAny());
+    if (cat && cat->IsOk())
+    {
+        win.NotifyIsStarting();
+        win.GetActionTarget()->DoOpenFile(cat);
+    }
 }
 
 
