@@ -906,7 +906,15 @@ struct InvokingWindowProxy
 #ifdef __WXMSW__
         m_actionTarget = dynamic_cast<PoeditFrame*>(win);
 #endif
+
+        m_exitAppOnFrameDelete = wxGetApp().GetExitOnFrameDelete();
+        wxGetApp().SetExitOnFrameDelete(false);
     }
+
+    ~InvokingWindowProxy()
+    {
+        wxGetApp().SetExitOnFrameDelete(m_exitAppOnFrameDelete);
+	}
 
     bool IsPerformingActionAllowed()
     {
@@ -948,6 +956,7 @@ private:
     bool m_isFromWelcomeWindow;
     wxWindow *m_invokingWindow;
     PoeditFrame *m_actionTarget;
+    bool m_exitAppOnFrameDelete;
 };
 
 } // anonymous namespace
