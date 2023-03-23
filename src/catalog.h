@@ -326,9 +326,10 @@ class Catalog
         /// Capabilities of the file type
         enum class Cap
         {
-            Translations,    // Can translations be added (e.g. POTs can't)?
-            LanguageSetting, // Is language code saved in the file?
-            UserComments,    // Can users add comments?
+            Translations,       // Can translations be added (e.g. POTs can't)?
+            LanguageSetting,    // Is language code saved in the file?
+            UserComments,       // Can users add comments?
+            FuzzyTranslations   // Can translations be marked as needing work?
         };
 
         /// Is this file capable of doing these things

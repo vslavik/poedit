@@ -173,7 +173,7 @@ class PoeditFrame : public PoeditFrameBase
         enum class Content
         {
             Invalid, // no content whatsoever
-            PO,
+            Translation,
             POT,
             Empty_PO
         };
@@ -314,6 +314,7 @@ private:
         void OnHasCatalogUpdate(wxUpdateUIEvent& event);
         void OnIsEditableUpdate(wxUpdateUIEvent& event);
         void OnEditCommentUpdate(wxUpdateUIEvent& event);
+        void OnFuzzyFlagUpdate(wxUpdateUIEvent& event);
 
 #if defined(__WXMSW__) || defined(__WXGTK__)
         void OnTextEditingCommand(wxCommandEvent& event);
@@ -336,7 +337,7 @@ private:
 
         void OnSize(wxSizeEvent& event);
 
-        void RecreatePluralTextCtrls();
+        void UpdateEditingUIAfterChange();
 
         template<typename TFunctor>
         void ReportValidationErrors(Catalog::ValidationResults validation,

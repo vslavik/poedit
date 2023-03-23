@@ -102,8 +102,8 @@ bool JSONCatalog::HasCapability(Catalog::Cap cap) const
         case Cap::LanguageSetting:
             return false; // FIXME: for now
         case Cap::UserComments:
+        case Cap::FuzzyTranslations:
             return false;
-        // FIXME: Need to show lack of support for fuzzy formats
     }
     return false; // silence VC++ warning
 }

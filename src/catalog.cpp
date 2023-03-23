@@ -509,19 +509,6 @@ Catalog::Catalog(Type type)
 }
 
 
-bool Catalog::HasCapability(Catalog::Cap cap) const
-{
-    switch (cap)
-    {
-        case Cap::Translations:
-        case Cap::LanguageSetting:
-        case Cap::UserComments:
-            return m_fileType == Type::PO;
-    }
-    return false; // silence VC++ warning
-}
-
-
 static inline wxString GetCurrentTimeString()
 {
     return wxDateTime::Now().Format("%Y-%m-%d %H:%M%z");

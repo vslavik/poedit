@@ -458,6 +458,8 @@ bool XLIFFCatalog::HasCapability(Catalog::Cap cap) const
             return false; // FIXME: for now
         case Cap::UserComments:
             return false; // FIXME: for now
+        case Cap::FuzzyTranslations:
+            return true;
     }
     return false; // silence VC++ warning
 }

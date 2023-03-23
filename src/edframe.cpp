@@ -399,7 +399,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_UPDATE_UI(XRCID("go_prev_pluralform"), PoeditFrame::OnSingleSelectionWithPluralsUpdate)
    EVT_UPDATE_UI(XRCID("go_next_pluralform"), PoeditFrame::OnSingleSelectionWithPluralsUpdate)
 
-   EVT_UPDATE_UI(XRCID("menu_fuzzy"),         PoeditFrame::OnSelectionUpdateEditable)
+   EVT_UPDATE_UI(XRCID("menu_fuzzy"),         PoeditFrame::OnFuzzyFlagUpdate)
    EVT_UPDATE_UI(XRCID("menu_clear"),         PoeditFrame::OnSelectionUpdateEditable)
    EVT_UPDATE_UI(XRCID("menu_copy_from_src"), PoeditFrame::OnSelectionUpdateEditable)
    EVT_UPDATE_UI(XRCID("menu_copy_from_singular"), PoeditFrame::OnSingleSelectionWithPluralsUpdate)
@@ -598,7 +598,7 @@ void PoeditFrame::EnsureContentView(Content type)
             m_contentView = CreateContentViewEmptyPO();
             break;
 
-        case Content::PO:
+        case Content::Translation:
         case Content::POT:
             m_contentView = CreateContentViewPO(type);
             break;
@@ -623,17 +623,10 @@ void PoeditFrame::EnsureAppropriateContentView()
     }
     else
     {
-        switch (m_catalog->GetFileType())
-        {
-            case Catalog::Type::PO:
-            case Catalog::Type::XLIFF:
-            case Catalog::Type::JSON:
-                EnsureContentView(Content::PO);
-                break;
-            case Catalog::Type::POT:
-                EnsureContentView(Content::POT);
-                break;
-        }
+        if (m_catalog->HasCapability(Catalog::Cap::Translations))
+            EnsureContentView(Content::Translation);
+        else
+            EnsureContentView(Content::POT);
     }
 }
 
@@ -670,7 +663,7 @@ wxWindow* PoeditFrame::CreateContentViewPO(Content type)
                             m_list,
                             type == Content::POT ? EditingArea::POT : EditingArea::Editing
                         );
-    m_editingArea->RecreatePluralTextCtrls(m_catalog);
+    m_editingArea->UpdateEditingUIForCatalog(m_catalog);
 
     m_editingArea->OnUpdatedFromTextCtrl = [=](CatalogItemPtr item, bool statsChanged){
         OnUpdatedFromTextCtrl(item, statsChanged);
@@ -1397,7 +1390,7 @@ void PoeditFrame::NewFromPOT(POCatalogPtr pot, Language language)
                 catalog->Header().SetHeaderNotEmpty("Plural-Forms", "nplurals=2; plural=(n != 1);");
         }
 
-        RecreatePluralTextCtrls();
+        UpdateEditingUIAfterChange();
         UpdateTitle();
         UpdateMenu();
         UpdateStatusBar();
@@ -1478,7 +1471,7 @@ void PoeditFrame::EditCatalogProperties()
 
                 dlg->TransferFrom(m_catalog);
                 m_modified = true;
-                RecreatePluralTextCtrls();
+                UpdateEditingUIAfterChange();
                 UpdateTitle();
                 UpdateMenu();
                 if (prevLang != m_catalog->GetLanguage())
@@ -1506,7 +1499,7 @@ void PoeditFrame::EditCatalogProperties()
                 {
                     m_catalog->SetLanguage(dlg->GetLang());
                     m_modified = true;
-                    RecreatePluralTextCtrls();
+                    UpdateEditingUIAfterChange();
 
                     UpdateTextLanguage();
                     // trigger resorting and language header update:
@@ -1533,7 +1526,7 @@ void PoeditFrame::EditCatalogPropertiesAndUpdateFromSources()
             dlg->TransferFrom(m_catalog);
             m_modified = true;
             if (m_list)
-                RecreatePluralTextCtrls();
+                UpdateEditingUIAfterChange();
             UpdateTitle();
             UpdateMenu();
             if (prevLang != m_catalog->GetLanguage())
@@ -2323,14 +2316,14 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
             // This must be done as soon as possible, otherwise the list would be
             // confused. GetCurrentItem() could return nullptr or something invalid,
             // causing crash in UpdateToTextCtrl() called from
-            // RecreatePluralTextCtrls() just few lines below.
+            // UpdateEditingUIAfterChange() just few lines below.
             NotifyCatalogChanged(m_catalog);
         }
 
         m_fileExistsOnDisk = true;
         m_modified = false;
 
-        RecreatePluralTextCtrls();
+        UpdateEditingUIAfterChange();
         RefreshControls(Refresh_NoCatalogChanged /*done right above*/);
         UpdateTitle();
         UpdateTextLanguage();
@@ -3031,12 +3024,12 @@ void PoeditFrame::OnSize(wxSizeEvent& event)
 }
 
 
-void PoeditFrame::RecreatePluralTextCtrls()
+void PoeditFrame::UpdateEditingUIAfterChange()
 {
     if (!m_catalog || !m_editingArea)
         return;
 
-    m_editingArea->RecreatePluralTextCtrls(m_catalog);
+    m_editingArea->UpdateEditingUIForCatalog(m_catalog);
 
     SetCustomFonts();
     UpdateTextLanguage();
@@ -3330,6 +3323,12 @@ void PoeditFrame::OnEditCommentUpdate(wxUpdateUIEvent& event)
 {
     event.Enable(m_catalog && m_list && m_list->HasSelection() &&
                  m_catalog->HasCapability(Catalog::Cap::UserComments));
+}
+
+void PoeditFrame::OnFuzzyFlagUpdate(wxUpdateUIEvent& event)
+{
+    event.Enable(m_catalog && m_list && m_list->HasSelection() &&
+                 m_catalog->HasCapability(Catalog::Cap::FuzzyTranslations));
 }
 
 #if defined(__WXMSW__) || defined(__WXGTK__)

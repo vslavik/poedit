@@ -731,6 +731,15 @@ void EditingArea::SetLanguage(Language lang)
 }
 
 
+void EditingArea::UpdateEditingUIForCatalog(CatalogPtr catalog)
+{
+    // TODO: ideally we'd do it at creation time
+    if (m_fuzzy)
+        m_fuzzy->Show(catalog->HasCapability(Catalog::Cap::FuzzyTranslations));
+
+    RecreatePluralTextCtrls(catalog);
+}
+
 void EditingArea::RecreatePluralTextCtrls(CatalogPtr catalog)
 {
     if (!m_pluralNotebook)

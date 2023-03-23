@@ -789,6 +789,7 @@ bool POCatalog::HasCapability(Catalog::Cap cap) const
         case Cap::Translations:
         case Cap::LanguageSetting:
         case Cap::UserComments:
+        case Cap::FuzzyTranslations:
             return m_fileType == Type::PO;
     }
     return false; // silence VC++ warning
