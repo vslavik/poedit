@@ -117,22 +117,27 @@ bool JSONCatalog::CanLoadFile(const wxString& extension)
 
 std::shared_ptr<JSONCatalog> JSONCatalog::Open(const wxString& filename)
 {
-    // FIXME: handle exceptions
+    try
+    {
+        std::ifstream f(filename.fn_str(), std::ios::binary);
+        auto data = json_t::parse(f);
 
-    std::ifstream f(filename.fn_str(), std::ios::binary);
-    auto data = json_t::parse(f);
+        auto cat = CreateForJSON(std::move(data));
+        if (!cat)
+            throw JSONUnrecognizedFileException();
 
-    auto cat = CreateForJSON(std::move(data));
-    if (!cat)
-        throw JSONUnrecognizedFileException();
+        f.clear();
+        f.seekg(0, std::ios::beg);
+        DetectFileFormatting(f, cat->m_formatting.indent, cat->m_formatting.indent_char, cat->m_formatting.dos_line_endings);
 
-    f.clear();
-    f.seekg(0, std::ios::beg);
-    DetectFileFormatting(f, cat->m_formatting.indent, cat->m_formatting.indent_char, cat->m_formatting.dos_line_endings);
+        cat->Parse();
 
-    cat->Parse();
-
-    return cat;
+        return cat;
+    }
+    catch (json::exception& e)
+    {
+        throw JSONFileException(wxString::Format(_("Reading file content failed with the following error: %s"), e.what()));
+    }
 }
 
 
