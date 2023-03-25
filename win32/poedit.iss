@@ -105,6 +105,10 @@ Source: "{#CONFIG}\Resources\*"; DestDir: "{app}\Resources"; Flags: recursesubdi
 Source: "{#CONFIG}\Translations\*"; DestDir: "{app}\Translations"; Flags: recursesubdirs
 Source: "{#CONFIG}\GettextTools\*"; DestDir: "{app}\GettextTools"; Flags: ignoreversion recursesubdirs
 
+[InstallDelete]
+; Remove all files from previous version to have known clean state
+Type: filesandordirs; Name: {group}\*;
+
 [Registry]
 ; Install global settings:
 Root: "HKLM"; Subkey: "Software\Vaclav Slavik\Poedit\WinSparkle"; ValueType: string; ValueName: "CheckForUpdates"; ValueData: "1"; Flags: noerror
