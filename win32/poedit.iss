@@ -121,23 +121,28 @@ Root: "HKCU"; Subkey: "Software\Vaclav Slavik"; Flags: uninsdeletekeyifempty don
 
 ; Associate files with Poedit:
 Root: "HKA"; Subkey: "Software\Classes\.po"; ValueType: string; ValueData: "Poedit.PO"; Flags: noerror
+Root: "HKA"; Subkey: "Software\Classes\.po\OpenWithProgids"; ValueType: string; ValueName: "Poedit.PO"; ValueData: ""; Flags: uninsdeletevalue
 Root: "HKA"; Subkey: "Software\Classes\Poedit.PO"; ValueType: string; ValueData: "PO Translation"; Flags: uninsdeletekey noerror
 Root: "HKA"; Subkey: "Software\Classes\Poedit.PO"; ValueType: string; ValueName: "FriendlyTypeName"; ValueData: "@{app}\Poedit.exe,-222"; Flags: uninsdeletekey noerror
 Root: "HKA"; Subkey: "Software\Classes\Poedit.PO\Shell\Open\Command"; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
 
 Root: "HKA"; Subkey: "Software\Classes\.mo"; ValueType: string; ValueData: "Poedit.MO"; Flags: noerror
+Root: "HKA"; Subkey: "Software\Classes\.mo\OpenWithProgids"; ValueType: string; ValueName: "Poedit.MO"; ValueData: ""; Flags: uninsdeletevalue noerror
 Root: "HKA"; Subkey: "Software\Classes\.gmo"; ValueType: string; ValueData: "Poedit.MO"; Flags: noerror
+Root: "HKA"; Subkey: "Software\Classes\.gmo\OpenWithProgids"; ValueType: string; ValueName: "Poedit.MO"; ValueData: ""; Flags: uninsdeletevalue noerror
 Root: "HKA"; Subkey: "Software\Classes\Poedit.MO"; ValueType: string; ValueData: "Compiled Translation"; Flags: uninsdeletekey noerror
 Root: "HKA"; Subkey: "Software\Classes\Poedit.MO"; ValueType: string; ValueName: "FriendlyTypeName"; ValueData: "@{app}\Poedit.exe,-223"; Flags: uninsdeletekey noerror
 Root: "HKA"; Subkey: "Software\Classes\Poedit.MO\Shell\Open\Command"; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
 
-Root: "HKA"; Subkey: "Software\Classes\.pot"; ValueType: string; ValueData: "Poedit.POT"; Flags: noerror
+Root: "HKA"; Subkey: "Software\Classes\.pot\OpenWithProgids"; ValueType: string; ValueName: "Poedit.POT"; ValueData: ""; Flags: uninsdeletevalue noerror
 Root: "HKA"; Subkey: "Software\Classes\Poedit.POT"; ValueType: string; ValueData: "Translation Template"; Flags: uninsdeletekey noerror
 Root: "HKA"; Subkey: "Software\Classes\Poedit.POT"; ValueType: string; ValueName: "FriendlyTypeName"; ValueData: "@{app}\Poedit.exe,-224"; Flags: uninsdeletekey noerror
 Root: "HKA"; Subkey: "Software\Classes\Poedit.POT\Shell\Open\Command"; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
 
-Root: "HKA"; Subkey: "Software\Classes\.xlf"; ValueType: string; ValueData: "Poedit.XLIFF"; Flags: noerror
-Root: "HKA"; Subkey: "Software\Classes\.xliff"; ValueType: string; ValueData: "Poedit.XLIFF"; Flags: noerror
+Root: "HKA"; Subkey: "Software\Classes\.xlf"; ValueType: string; ValueName: "Content Type"; ValueData: "application/x-xliff+xml"; Flags: noerror
+Root: "HKA"; Subkey: "Software\Classes\.xlf\OpenWithProgids"; ValueType: string; ValueName: "Poedit.XLIFF"; ValueData: ""; Flags: uninsdeletevalue noerror
+Root: "HKA"; Subkey: "Software\Classes\.xliff"; ValueType: string; ValueName: "Content Type"; ValueData: "application/x-xliff+xml"; Flags: noerror
+Root: "HKA"; Subkey: "Software\Classes\.xliff\OpenWithProgids"; ValueType: string; ValueName: "Poedit.XLIFF"; ValueData: ""; Flags: uninsdeletevalue noerror
 Root: "HKA"; Subkey: "Software\Classes\Poedit.XLIFF"; ValueType: string; ValueData: "XLIFF Translation"; Flags: uninsdeletekey noerror
 Root: "HKA"; Subkey: "Software\Classes\Poedit.XLIFF"; ValueType: string; ValueName: "FriendlyTypeName"; ValueData: "@{app}\Poedit.exe,-225"; Flags: uninsdeletekey noerror
 Root: "HKA"; Subkey: "Software\Classes\Poedit.XLIFF\Shell\Open\Command"; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
