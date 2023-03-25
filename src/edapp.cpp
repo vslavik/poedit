@@ -52,7 +52,6 @@
 #endif
 
 #ifdef __WXMSW__
-#include <wx/msw/registry.h>
 #include <wx/msw/wrapwin.h>
 #include <Shlwapi.h>
 #include <winsparkle.h>
@@ -461,10 +460,6 @@ bool PoeditApp::OnInit()
     // so that help menu is correctly merged with system-provided menu
     // (see http://sourceforge.net/tracker/index.php?func=detail&aid=1600747&group_id=9863&atid=309863)
     s_macHelpMenuTitleName = _("&Help");
-#endif
-
-#ifdef __WXMSW__
-    AssociateFileTypeIfNeeded();
 #endif
 
 #ifndef __WXOSX__
@@ -1215,34 +1210,6 @@ void PoeditApp::OnCloseWindowCommand(wxCommandEvent&)
 
 
 #ifdef __WXMSW__
-
-void PoeditApp::AssociateFileTypeIfNeeded()
-{
-    // If installed without admin privileges, the installer won't associate
-    // Poedit with .po extension. Self-associate with it here in per-user
-    // registry record in this case.
-
-    wchar_t buf[1000];
-    DWORD bufSize = WXSIZEOF(buf);
-    HRESULT hr = AssocQueryString(ASSOCF_INIT_IGNOREUNKNOWN,
-                                  ASSOCSTR_EXECUTABLE,
-                                  L".po", NULL,
-                                  buf, &bufSize);
-    if (SUCCEEDED(hr))
-        return; // already associated, nothing to do
-
-    auto poCmd = wxString::Format("\"%s\" \"%%1\"", wxStandardPaths::Get().GetExecutablePath());
-    wxRegKey key1(wxRegKey::HKCU, "Software\\Classes\\.po");
-    key1.Create();
-    key1.SetValue("", "Poedit.PO");
-    wxRegKey key2(wxRegKey::HKCU, "Software\\Classes\\Poedit.PO");
-    key2.Create();
-    key2.SetValue("", /*TRANSLATORS:File kind displayed in Finder/Explorer*/_("PO Translation"));
-    wxRegKey key3(wxRegKey::HKCU, "Software\\Classes\\Poedit.PO\\Shell\\Open\\Command");
-    key3.Create();
-    key3.SetValue("", poCmd);
-}
-
 
 void PoeditApp::OnWinsparkleCheck(wxCommandEvent& event)
 {
