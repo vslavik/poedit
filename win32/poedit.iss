@@ -105,16 +105,6 @@ Source: "{#CONFIG}\Resources\*"; DestDir: "{app}\Resources"; Flags: recursesubdi
 Source: "{#CONFIG}\Translations\*"; DestDir: "{app}\Translations"; Flags: recursesubdirs
 Source: "{#CONFIG}\GettextTools\*"; DestDir: "{app}\GettextTools"; Flags: ignoreversion recursesubdirs
 
-[InstallDelete]
-;Delete obsolete files from version 1.{67}:
-Type: files; Name: "{app}\icu*52*.d??"
-Type: files; Name: "{app}\icu*54*.d??"
-Type: files; Name: "{app}\icu*55*.d??"
-; Delete files from previous versions that are no longer needed (and in case of poedit.exe.manifest, actually harmful):
-Type: filesandordirs; Name: "{app}\bin"
-Type: filesandordirs; Name: "{app}\doc"
-Type: filesandordirs; Name: "{app}\share"
-
 [Registry]
 ; Install global settings:
 Root: "HKLM"; Subkey: "Software\Vaclav Slavik\Poedit\WinSparkle"; ValueType: string; ValueName: "CheckForUpdates"; ValueData: "1"; Flags: noerror
@@ -147,9 +137,6 @@ Root: "HKCR"; Subkey: ".xliff"; ValueType: string; ValueData: "Poedit.XLIFF"; Fl
 Root: "HKCR"; Subkey: "Poedit.XLIFF"; ValueType: string; ValueData: "XLIFF Translation"; Flags: uninsdeletekey noerror
 Root: "HKCR"; Subkey: "Poedit.XLIFF"; ValueType: string; ValueName: "FriendlyTypeName"; ValueData: "@{app}\Poedit.exe,-225"; Flags: uninsdeletekey noerror
 Root: "HKCR"; Subkey: "Poedit.XLIFF\Shell\Open\Command"; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
-
-; Remove old, incorrectly done, association keys when upgrading:
-Root: "HKCR"; Subkey: "GettextFile"; ValueType: none; Flags: uninsdeletekey noerror dontcreatekey deletekey
 
 ; URL protocol for poedit:// (various custom tasks such as OAuth)
 Root: HKCR; Subkey: "poedit"; ValueType: "string"; ValueData: "URL:Poedit Custom Protocol"; Flags: uninsdeletekey noerror
