@@ -40,7 +40,7 @@ namespace
 
 int g_mctrlInitialized = 0;
 
-const int MENUBAR_OFFSET = -2;
+#define MENUBAR_OFFSET  PX(2)
 
 } // anonymous namespace
 
@@ -166,7 +166,7 @@ wxSize Windows10MenubarMixin::MenuWindow::DoGetBestSize() const
     if (::SendMessage(m_mctrlHandle, TB_GETMAXSIZE, 0, (LPARAM) &size))
     {
         sizeBest.x = size.cx;
-        sizeBest.y = size.cy + 1;
+        sizeBest.y = size.cy + PX(3);
         CacheBestSize(sizeBest);
     }
     return sizeBest;
@@ -254,14 +254,14 @@ void WithWindows10Menubar<T>::PositionToolBar()
     // use the 'real' MSW position here, don't offset relatively to the
     // client area origin
     int mch = GetMenuWindow()->GetBestSize().y;
-    GetMenuWindow()->SetSize(0, y, width, mch, wxSIZE_NO_ADJUSTMENTS);
+    GetMenuWindow()->SetSize(PX(2), y, width, mch, wxSIZE_NO_ADJUSTMENTS);
     y += mch;
 
     wxToolBar *toolbar = GetToolBar();
     if (toolbar && toolbar->IsShown())
     {
         int tbh = toolbar->GetSize().y;
-        toolbar->SetSize(0, y, width + 8, tbh, wxSIZE_NO_ADJUSTMENTS);
+        toolbar->SetSize(0, y, width, tbh, wxSIZE_NO_ADJUSTMENTS);
     }
 }
 

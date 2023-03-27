@@ -90,8 +90,7 @@ public:
         auto label = new SecondaryLabel(this, title);
         auto sizer = new wxBoxSizer(wxVERTICAL);
         sizer->AddStretchSpacer();
-        sizer->Add(label, wxSizerFlags().Left().Border(wxLEFT, PX(10)));
-        //sizer->AddSpacer(PX(4));
+        sizer->Add(label, wxSizerFlags().Left().Border(wxLEFT, PX(8)));
         sizer->AddStretchSpacer();
         SetSizer(sizer);
     }
@@ -248,7 +247,7 @@ WelcomeWindow::WelcomeWindow()
 #ifdef __WXMSW__
     if (GetMenuWindow())
     {
-        leftoutersizer->Add(GetMenuWindow(), wxSizerFlags().Left());
+        leftoutersizer->Add(GetMenuWindow(), wxSizerFlags().Left().Border(wxALL, PX(4)));
     }
 #endif
 
