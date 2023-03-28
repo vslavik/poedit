@@ -43,7 +43,7 @@ public:
 class XLIFFReadException : public XLIFFException
 {
 public:
-    XLIFFReadException(const wxString& filename, const wxString& what);
+    XLIFFReadException(const wxString& what);
 };
 
 

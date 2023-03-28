@@ -444,8 +444,8 @@ protected:
 
 
 
-XLIFFReadException::XLIFFReadException(const wxString& filename, const wxString& what)
-    : XLIFFException(wxString::Format(_(L"Error loading file “%s”: %s."), filename, what))
+XLIFFReadException::XLIFFReadException(const wxString& what)
+    : XLIFFException(wxString::Format(_(L"Error while loading XLIFF file: %s"), what))
 {}
 
 
@@ -475,7 +475,7 @@ std::shared_ptr<XLIFFCatalog> XLIFFCatalog::Open(const wxString& filename)
     xml_document doc;
     auto result = doc.load_file(filename.fn_str(), PUGI_PARSE_FLAGS);
     if (!result)
-        throw XLIFFReadException(filename, result.description());
+        throw XLIFFReadException(result.description());
 
     std::shared_ptr<XLIFFCatalog> cat;
 
@@ -490,7 +490,7 @@ std::shared_ptr<XLIFFCatalog> XLIFFCatalog::Open(const wxString& filename)
     else if (xliff_version == "2.0" || xliff_version == "2.1")
         cat.reset(new XLIFF2Catalog(filename, std::move(doc)));
     else
-        throw XLIFFReadException(filename, wxString::Format(_("unsupported XLIFF version (%s)"), xliff_version));
+        throw XLIFFReadException(wxString::Format(_("unsupported version (%s)"), xliff_version));
 
     cat->Parse(xliff_root);
 

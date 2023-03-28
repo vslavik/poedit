@@ -809,7 +809,8 @@ POCatalog::POCatalog(const wxString& po_file, int flags) : Catalog(Type::PO)
     m_fileCRLF = wxTextFileType_None;
     m_fileWrappingWidth = DEFAULT_WRAPPING;
 
-    m_isOk = Load(po_file, flags);
+    Load(po_file, flags);
+    m_isOk = true;
 }
 
 
@@ -855,7 +856,7 @@ static inline wxString GetCurrentTimeString()
 }
 
 
-bool POCatalog::Load(const wxString& po_file, int flags)
+void POCatalog::Load(const wxString& po_file, int flags)
 {
     wxTextFile f;
 
@@ -874,7 +875,9 @@ bool POCatalog::Load(const wxString& po_file, int flags)
     /* Load the .po file: */
 
     if (!f.Open(po_file, wxConvISO8859_1))
-        return false;
+    {
+        throw Exception(_(L"Couldn’t load the file, it is probably damaged."));
+    }
 
     {
         wxLogNull null; // don't report parsing errors from here, report them later
@@ -886,7 +889,9 @@ bool POCatalog::Load(const wxString& po_file, int flags)
     f.Close();
     wxCSConv encConv(m_header.Charset);
     if (!f.Open(po_file, encConv))
-        return false;
+    {
+        throw Exception(_(L"Couldn’t load the file, it is probably damaged."));
+    }
 
     if (!VerifyFileCharset(f, po_file, m_header.Charset))
     {
@@ -898,11 +903,7 @@ bool POCatalog::Load(const wxString& po_file, int flags)
     parser.IgnoreTranslations(flags & CreationFlag_IgnoreTranslations);
     if (!parser.Parse())
     {
-        wxLogError(
-            wxString::Format(
-                _(L"Couldn’t load file %s, it is probably corrupted."),
-                po_file.c_str()));
-        return false;
+        throw Exception(_(L"Couldn’t load the file, it is probably damaged."));
     }
 
     m_sourceLanguage = parser.GetMsgidLanguage();
@@ -930,7 +931,9 @@ bool POCatalog::Load(const wxString& po_file, int flags)
 
     // If we didn't find any entries, the file must be invalid:
     if (!parser.FileIsValid)
-        return false;
+    {
+        throw Exception(_(L"Couldn’t load the file, it is probably damaged."));
+    }
 
     m_isOk = true;
 
@@ -940,8 +943,6 @@ bool POCatalog::Load(const wxString& po_file, int flags)
 
     if ( flags & CreationFlag_IgnoreHeader )
         CreateNewHeader();
-
-    return true;
 }
 
 
@@ -1628,9 +1629,9 @@ bool POCatalog::FixDuplicateItems()
     if (!wxFileName::FileExists(po_file_fixed))
         return false;
 
-    bool ok = Load(po_file_fixed);
+    Load(po_file_fixed);
     m_fileName = oldname;
-    return ok;
+    return true;
 }
 
 

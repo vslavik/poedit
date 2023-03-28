@@ -959,7 +959,7 @@ CatalogPtr PoeditFrame::PreOpenFileWithErrorsUI(const wxString& filename, wxWind
         wxMessageDialog dlg
         (
             parent,
-            _("The file cannot be opened."),
+            wxString::Format(_(L"The file “%s” couldn’t be opened."), wxFileName(filename).GetFullName()),
             _("Invalid file"),
             wxOK | wxICON_ERROR
         );
