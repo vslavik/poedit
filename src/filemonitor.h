@@ -44,6 +44,8 @@ public:
     {
         if (!m_file.IsOk())
             return false;
+        if (!m_file.FileExists())
+            return false;
         return m_loadTime != m_file.GetModificationTime();
     }
 

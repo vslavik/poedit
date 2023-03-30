@@ -921,6 +921,22 @@ void POCatalog::FixupCommonIssues()
     if (m_header.Project == "PACKAGE VERSION")
         m_header.Project.clear();
 
+    // In PHP use, strings with % (typically: 100%) get frequently mis-identified as php-format, because the
+    // format string allows space, so e.g. "100% complete" has a valid "% c" format flag in it. Work around
+    // this by removing the flag ourselves, as translators can rarely influence it:
+    for (auto& i: items())
+    {
+        if (i->GetFormatFlag() == wxS("php"))
+        {
+            auto s = i->GetString();
+            if (s.Contains(wxS("% ")) && !s.Contains(wxS("%% ")))
+            {
+                auto poi = std::dynamic_pointer_cast<POCatalogItem>(i);
+                poi->m_moreFlags.Replace("php-format", "no-php-format");
+            }
+        }
+    }
+
     // All the following fixups are specific to POs and should *not* be done in POTs:
     if (m_fileType == Type::POT)
         return;

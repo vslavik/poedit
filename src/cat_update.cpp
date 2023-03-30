@@ -326,6 +326,10 @@ bool PerformUpdateFromPOTWithUI(wxWindow *parent,
         return false;
     }
 
+    // Silently fix duplicates because they are common in WP world:
+    if (pot->HasDuplicateItems())
+        pot->FixDuplicateItems();
+
     bool cancelledByUser = false;
     if (ShowMergeSummary(parent, catalog, pot, &cancelledByUser))
     {
