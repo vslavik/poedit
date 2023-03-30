@@ -86,7 +86,8 @@ AttentionBar::AttentionBar(wxWindow *parent)
     btnClose->SetToolTip(_("Hide this notification message"));
 
 #if defined(__WXOSX__) || defined(__WXMSW__)
-    wxFont boldFont = m_label->GetFont().MakeBold();
+    wxFont boldFont = m_label->GetFont();
+    boldFont.SetWeight(MSW_OR_OTHER(wxFONTWEIGHT_BOLD, wxFONTWEIGHT_SEMIBOLD));
     m_label->SetFont(boldFont);
 #endif
 
