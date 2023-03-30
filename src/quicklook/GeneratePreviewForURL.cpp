@@ -55,14 +55,19 @@ CFDataRef CreateHTMLDataForURL(CFURLRef url, CFStringRef contentTypeUTI)
     if (!path)
         return NULL;
 
-    auto cat = Catalog::Create(path.AsString());
-    if (!cat || !cat->IsOk())
-        return NULL;
+    try
+    {
+        auto cat = Catalog::Create(path.AsString());
 
-    std::ostringstream s;
-    cat->ExportToHTML(s);
-    std::string data = s.str();
-    return CFDataCreate(NULL, (const UInt8*)data.data(), data.length());
+        std::ostringstream s;
+        cat->ExportToHTML(s);
+        std::string data = s.str();
+        return CFDataCreate(NULL, (const UInt8*)data.data(), data.length());
+    }
+    catch (...)
+    {
+        return NULL;
+    }
 }
 
 } // anonymous namespace

@@ -420,8 +420,12 @@ class Catalog
         /// Default ctor. Creates empty catalog, you have to call Load.
         static CatalogPtr Create(Type type = Type::PO);
 
-        /// Ctor that loads the catalog from \a po_file with Load.
-        /// \a flags is CreationFlags combination.
+        /**
+            Ctor that loads the catalog from \a po_file with Load.
+            \a flags is CreationFlags combination.
+
+            This function never returns nullptr. In throws on failure.
+         */
         static CatalogPtr Create(const wxString& filename, int flags = 0);
 
         static bool CanLoadFile(const wxString& extension);
@@ -539,11 +543,6 @@ class Catalog
         /// Does this catalog have any items with plural forms?
         bool HasPluralItems() const;
 
-        /** Returns status of catalog object: true if ok, false if damaged
-            (i.e. constructor or Load failed).
-         */
-        bool IsOk() const { return m_isOk; }
-
         /// Returns catalog's source language (may be invalid, but usually English).
         Language GetSourceLanguage() const { return m_sourceLanguage; }
 
@@ -589,7 +588,6 @@ class Catalog
     protected:
         CatalogItemArray m_items;
 
-        bool m_isOk;
         Type m_fileType;
         wxString m_fileName;
         HeaderData m_header;

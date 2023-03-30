@@ -636,8 +636,9 @@ void PoeditApp::OpenNewFile()
     WelcomeWindow::GetAndActivate();
 }
 
-void PoeditApp::OpenFiles(const wxArrayString& names, int lineno)
+int PoeditApp::OpenFiles(const wxArrayString& names, int lineno)
 {
+    int opened = 0;
     for ( auto name: names )
     {
         // MO files cannot be opened directly in Poedit (yet), but they are
@@ -655,9 +656,15 @@ void PoeditApp::OpenFiles(const wxArrayString& names, int lineno)
             continue;
         }
 
-        WelcomeWindow::HideActive();
-        PoeditFrame::Create(name, lineno);
+        if (PoeditFrame::Create(name, lineno))
+        {
+            opened++;
+        }
     }
+
+    if (opened)
+        WelcomeWindow::HideActive();
+    return opened;
 }
 
 
@@ -894,7 +901,15 @@ struct InvokingWindowProxy
 #ifdef __WXMSW__
         m_actionTarget = dynamic_cast<PoeditFrame*>(win);
 #endif
+
+        m_exitAppOnFrameDelete = wxGetApp().GetExitOnFrameDelete();
+        wxGetApp().SetExitOnFrameDelete(false);
     }
+
+    ~InvokingWindowProxy()
+    {
+        wxGetApp().SetExitOnFrameDelete(m_exitAppOnFrameDelete);
+	}
 
     bool IsPerformingActionAllowed()
     {
@@ -936,6 +951,7 @@ private:
     bool m_isFromWelcomeWindow;
     wxWindow *m_invokingWindow;
     PoeditFrame *m_actionTarget;
+    bool m_exitAppOnFrameDelete;
 };
 
 } // anonymous namespace
@@ -978,19 +994,29 @@ void PoeditApp::OnNewFromPOT(wxCommandEvent& event)
 
     wxConfig::Get()->Write("last_file_path", dlg.GetDirectory());
 
-    auto pot = std::make_shared<POCatalog>(dlg.GetPath(), Catalog::CreationFlag_IgnoreTranslations);
-    if (!pot->IsOk())
+    try
+    {
+        auto pot = std::make_shared<POCatalog>(dlg.GetPath(), Catalog::CreationFlag_IgnoreTranslations);
+
+        // Silently fix duplicates because they are common in WP world:
+        if (pot->HasDuplicateItems())
+            pot->FixDuplicateItems();
+
+        win.GetActionTarget()->NewFromPOT(pot);
+    }
+    catch (...)
     {
         win.NotifyWasAborted();
-        wxLogError(_(L"“%s” is not a valid POT file."), dlg.GetPath());
-        return;
+        wxMessageDialog errdlg
+        (
+            win.GetParentWindowIfAny(),
+            wxString::Format(_(L"The file “%s” couldn’t be opened."), wxFileName(dlg.GetPath()).GetFullName()),
+            _("Invalid file"),
+            wxOK | wxICON_ERROR
+        );
+        errdlg.SetExtendedMessage(DescribeCurrentException());
+        errdlg.ShowModal();
     }
-
-    // Silently fix duplicates because they are common in WP world:
-    if (pot->HasDuplicateItems())
-        pot->FixDuplicateItems();
-
-    win.GetActionTarget()->NewFromPOT(pot);
 }
 
 
@@ -1021,11 +1047,21 @@ void PoeditApp::OnOpen(wxCommandEvent& event)
     wxArrayString paths;
     dlg.GetPaths(paths);
 
-    win.GetActionTarget()->DoOpenFile(paths.front());
-    paths.erase(paths.begin());
+    // This is special treatment for Windows' opening in existing window
+    {
+        auto cat = PoeditFrame::PreOpenFileWithErrorsUI(paths.front(), win.GetParentWindowIfAny());
+        if (cat)
+            win.GetActionTarget()->DoOpenFile(cat);
+        else if (paths.size() == 1)
+            win.NotifyWasAborted();
+    }
 
+    paths.erase(paths.begin());
     if (!paths.empty())
-        OpenFiles(paths);
+    {
+        if (OpenFiles(paths) == 0)
+            win.NotifyWasAborted();
+    }
 }
 
 
@@ -1040,8 +1076,15 @@ void PoeditApp::OnOpenFromCrowdin(wxCommandEvent& event)
     win.NotifyIsStarting();
     CrowdinOpenFile(win.GetParentWindowIfAny(), [=](int retval, wxString filename)
     {
-        if (retval == wxID_OK)
-            win.GetActionTarget()->NewFromCrowdin(filename);
+        if (retval != wxID_OK)
+        {
+            win.NotifyWasAborted();
+            return;
+        }
+
+        auto cat = PoeditFrame::PreOpenFileWithErrorsUI(filename, win.GetParentWindowIfAny());
+        if (cat)
+            win.GetActionTarget()->DoOpenFile(cat);
         else
             win.NotifyWasAborted();
     });
@@ -1056,8 +1099,12 @@ void PoeditApp::OnOpenHist(wxCommandEvent& event)
     if (!win.IsPerformingActionAllowed())
         return;
 
-    win.NotifyIsStarting();
-    win.GetActionTarget()->DoOpenFile(event.GetString());
+    auto cat = PoeditFrame::PreOpenFileWithErrorsUI(event.GetString(), win.GetParentWindowIfAny());
+    if (cat)
+    {
+        win.NotifyIsStarting();
+        win.GetActionTarget()->DoOpenFile(cat);
+    }
 }
 
 

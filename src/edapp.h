@@ -62,8 +62,8 @@ class PoeditApp : public wxApp, public MenusManager
         bool IsBetaVersion() const;
         bool CheckForBetaUpdates() const;
 
-        // opens files in new frame
-        void OpenFiles(const wxArrayString& filenames, int lineno = 0);
+        // opens files in new frame, returns count of succesfully opened
+        int OpenFiles(const wxArrayString& filenames, int lineno = 0);
         // opens empty frame or catalogs manager
         void OpenNewFile();
 

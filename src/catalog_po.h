@@ -207,7 +207,7 @@ protected:
 
         @param flags CreationFlags combination.
      */
-    bool Load(const wxString& po_file, int flags = 0);
+    void Load(const wxString& po_file, int flags = 0);
 
     void Clear();
 

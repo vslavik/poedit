@@ -564,13 +564,22 @@ private:
             int step = 0;
             for (size_t i = 0; i < paths.size(); i++)
             {
-                auto cat = Catalog::Create(paths[i]);
-                if (!progress.Update(++step))
-                    break;
-                if (cat && cat->IsOk())
+                try
+                {
+                    auto cat = Catalog::Create(paths[i]);
+                    if (!progress.Update(++step))
+                        break;
                     tm->Insert(cat);
-                if (!progress.Update(++step))
-                    break;
+                    if (!progress.Update(++step))
+                        break;
+                }
+                catch (...)
+                {
+                    wxLogError(_(L"Error loading translation file “%s”."), paths[i]);
+                    progress.Update(++step);
+                    if (!progress.Update(++step))
+                        break;
+                }
             }
             progress.Pulse(_(L"Finalizing…"));
             tm->Commit();

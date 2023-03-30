@@ -479,7 +479,6 @@ Catalog::Catalog(Type type)
     m_sourceLanguage = Language::English();
     m_fileType = type;
 
-    m_isOk = true;
     m_header.BasePath = wxEmptyString;
     for(int i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
     {
@@ -757,9 +756,6 @@ bool Catalog::HasSourcesAvailable() const
 
 std::shared_ptr<SourceCodeSpec> Catalog::GetSourceCodeSpec() const
 {
-    if (!m_isOk)
-        return nullptr;
-
     auto path = GetSourcesBasePath();
     if (!path.empty())
     {
@@ -1120,7 +1116,7 @@ CatalogPtr Catalog::Create(const wxString& filename, int flags)
     }
 
     if (!cat)
-        throw Exception(wxString::Format(_(L"File “%s” is in unsupported format."), filename));
+        throw Exception(_("The file is in a format not recognized by Poedit."));
 
     if (flags & CreationFlag_IgnoreTranslations)
     {
