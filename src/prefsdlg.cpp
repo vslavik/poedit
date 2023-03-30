@@ -548,7 +548,9 @@ private:
             Catalog::GetAllTypesFileMask(),
             wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE));
 
-        dlg->ShowWindowModalThenDo([=](int retcode){
+        // dlg->ShowWindowModalThenDo([=](int retcode){
+        int retcode = dlg->ShowModal();
+        {
             if (retcode != wxID_OK)
                 return;
 
@@ -584,7 +586,7 @@ private:
             progress.Pulse(_(L"Finalizing…"));
             tm->Commit();
             UpdateStats();
-        });
+        }
     }
 
     void OnImportTMX(wxCommandEvent&)
@@ -599,7 +601,9 @@ private:
             wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE)
         );
 
-        dlg->ShowWindowModalThenDo([=](int retcode){
+        // dlg->ShowWindowModalThenDo([=](int retcode){
+        int retcode = dlg->ShowModal();
+        {
             if (retcode != wxID_OK)
                 return;
 
@@ -643,7 +647,7 @@ private:
                 }
             }
             UpdateStats();
-        });
+        }
     }
 
     void OnExportTMX(wxCommandEvent&)
@@ -658,7 +662,9 @@ private:
             wxFD_SAVE | wxFD_OVERWRITE_PROMPT)
         );
 
-        dlg->ShowWindowModalThenDo([=](int retcode){
+        // dlg->ShowWindowModalThenDo([=](int retcode){
+        int retcode = dlg->ShowModal();
+        {
             if (retcode != wxID_OK)
                 return;
 
@@ -689,7 +695,7 @@ private:
                 err->SetExtendedMessage(DescribeCurrentException());
                 err->ShowWindowModalThenDo([err](int){});
             }
-        });
+        }
     }
 
     void OnResetTM(wxCommandEvent&)

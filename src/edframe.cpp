@@ -1042,11 +1042,11 @@ void PoeditFrame::DoIfCanDiscardCurrentDoc(const TFunctor1& completionHandler, c
         // hide the dialog asap, WriteCatalog() may show another modal sheet
         dlg->Hide();
 #ifdef __WXOSX__
-        // Hide() alone is not sufficient on macOS, we need to destroy dlg
+        // Hide() alone is not sufficient on macOS (it is noop), we need to destroy dlg
         // shared_ptr and only then continue. Because this code is called
         // from event loop (and not this functions' caller) at an unspecified
         // time anyway, we can just as well defer it into the next idle time
-        // iteration.
+        // iteration. FIXME - should be fixed in wx
         CallAfter([this,retval,completionHandler,failureHandler]() {
 #endif
 
@@ -1293,7 +1293,7 @@ void PoeditFrame::OnCompileMO(wxCommandEvent&)
         {
             // Note: this may show window-modal window and because we may
             //       be called from such window too, run this in the next
-            //       event loop iteration.
+            //       event loop iteration. FIXME: should be fixed in wx
             CallAfter([=]{
                 ReportValidationErrors(validation_results, compilation_status, /*from_save=*/true, /*other_file_saved=*/false, []{});
             });
@@ -1322,13 +1322,15 @@ void PoeditFrame::OnExport(wxCommandEvent&)
                          wxString::Format("%s (*.html)|*.html", _("HTML Files")),
                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT));
 
-    dlg->ShowWindowModalThenDo([=](int retcode){
+    // dlg->ShowWindowModalThenDo([=](int retcode){
+    int retcode = dlg->ShowModal();
+    {
         if (retcode != wxID_OK)
             return;
         auto fn = dlg->GetPath();
         wxConfig::Get()->Write("last_file_path", wxPathOnly(fn));
         ExportCatalog(fn);
-    });
+    }
 }
 
 bool PoeditFrame::ExportCatalog(const wxString& filename)
@@ -1747,7 +1749,9 @@ void PoeditFrame::OnUpdateFromPOT(wxCommandEvent&)
                              Catalog::GetTypesFileMask({Catalog::Type::POT, Catalog::Type::PO}),
                              wxFD_OPEN | wxFD_FILE_MUST_EXIST));
 
-        dlg->ShowWindowModalThenDo([=](int retcode){
+        // dlg->ShowWindowModalThenDo([=](int retcode){
+        int retcode = dlg->ShowModal();
+        {
             if (retcode != wxID_OK)
                 return;
             auto pot_file = dlg->GetPath();
@@ -1774,7 +1778,7 @@ void PoeditFrame::OnUpdateFromPOT(wxCommandEvent&)
             {
                 wxLogError("%s", DescribeCurrentException());
             }
-        });
+        }
 
         RefreshControls();
     });
