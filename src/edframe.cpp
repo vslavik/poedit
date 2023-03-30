@@ -280,7 +280,7 @@ bool g_focusToText = false;
     else
     {
         auto cat = PreOpenFileWithErrorsUI(filename, nullptr);
-        if (!cat || !cat->IsOk())
+        if (!cat)
             return nullptr;
 
         f = new PoeditFrame();
@@ -935,7 +935,7 @@ void PoeditFrame::OpenFile(const wxString& filename, int lineno)
 {
     DoIfCanDiscardCurrentDoc([=]{
         auto cat = PreOpenFileWithErrorsUI(filename, this);
-        if (cat && cat->IsOk())
+        if (cat)
             DoOpenFile(cat, lineno);
     });
 }
@@ -949,10 +949,7 @@ CatalogPtr PoeditFrame::PreOpenFileWithErrorsUI(const wxString& filename, wxWind
 
     try
     {
-        auto cat = Catalog::Create(filename);
-        if (!cat || !cat->IsOk())
-            throw Exception(_("The file may be either corrupted or in a format not recognized by Poedit."));
-        return cat;
+        return Catalog::Create(filename);
     }
     catch (...)
     {
@@ -1004,7 +1001,7 @@ void PoeditFrame::ReloadFileIfChanged()
                 if (retval == wxID_YES)
                 {
                     auto cat = PreOpenFileWithErrorsUI(m_catalog->GetFileName(), this);
-                    if (cat && cat->IsOk())
+                    if (cat)
                         ReadCatalog(cat);
                 }
                 m_fileMonitor->StopRespondingToEvent();
@@ -1016,7 +1013,7 @@ void PoeditFrame::ReloadFileIfChanged()
             // TODO: Don't display errors in this case and just silently ignore the file; load the file
             //       above before the prompt on background thread.
             auto cat = PreOpenFileWithErrorsUI(m_catalog->GetFileName(), this);
-            if (cat && cat->IsOk())
+            if (cat)
                 ReadCatalog(cat);
             m_fileMonitor->StopRespondingToEvent();
         }
@@ -2280,7 +2277,7 @@ void PoeditFrame::UpdateToTextCtrl(int flags)
 
 void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
 {
-    wxASSERT( cat && cat->IsOk() );
+    wxASSERT( cat );
 
     {
 #ifdef __WXMSW__
@@ -2508,18 +2505,6 @@ void PoeditFrame::RefreshControls(int flags)
         return;
 
     m_hasObsoleteItems = false;
-    if (!m_catalog->IsOk())
-    {
-        wxLogError(_(L"Error loading translation file “%s”."), m_catalog->GetFileName());
-        m_fileExistsOnDisk = false;
-        UpdateMenu();
-        UpdateTitle();
-        m_catalog.reset();
-        m_pendingHumanEditedItem.reset();
-        m_navigationHistory.clear();
-        NotifyCatalogChanged(nullptr);
-        return;
-    }
 
     wxBusyCursor bcur;
     UpdateMenu();

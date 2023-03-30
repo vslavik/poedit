@@ -378,25 +378,30 @@ static void PostprocessDownloadedXLIFF(const wxString& filename)
 {
     // Crowdin XLIFF files have translations pre-filled with the source text if
     // not yet translated. Undo this as it is undesirable to translators.
-    auto cat = Catalog::Create(filename);
-    if (!cat->IsOk())
-        return;
-
-    bool modified = false;
-    for (auto& item: cat->items())
+    try
     {
-        if (item->IsFuzzy() && !item->HasPlural() && item->GetString() == item->GetTranslation())
+        auto cat = Catalog::Create(filename);
+
+        bool modified = false;
+        for (auto& item: cat->items())
         {
-            item->ClearTranslation();
-            modified = true;
+            if (item->IsFuzzy() && !item->HasPlural() && item->GetString() == item->GetTranslation())
+            {
+                item->ClearTranslation();
+                modified = true;
+            }
+        }
+
+        if (modified)
+        {
+            Catalog::ValidationResults dummy1;
+            Catalog::CompilationStatus dummy2;
+            cat->Save(filename, false, dummy1, dummy2);
         }
     }
-
-    if (modified)
+    catch (...)
     {
-        Catalog::ValidationResults dummy1;
-        Catalog::CompilationStatus dummy2;
-        cat->Save(filename, false, dummy1, dummy2);
+        return;
     }
 }
 

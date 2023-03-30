@@ -25,6 +25,7 @@
 
 #include "cat_update.h"
 
+#include "errors.h"
 #include "extractors/extractor.h"
 #include "progressinfo.h"
 #include "utility.h"
@@ -34,6 +35,7 @@
 #include <wx/intl.h>
 #include <wx/listbox.h>
 #include <wx/log.h>
+#include <wx/msgdlg.h>
 #include <wx/stattext.h>
 #include <wx/xrc/xmlres.h>
 
@@ -188,8 +190,6 @@ POCatalogPtr ExtractPOTFromSources(POCatalogPtr catalog, UpdateResultReason& rea
     Progress progress(1);
 
     reason = UpdateResultReason::Unspecified;
-    if (!catalog->IsOk())
-        return nullptr;
 
     auto spec = catalog->GetSourceCodeSpec();
     if (!spec)
@@ -212,12 +212,11 @@ POCatalogPtr ExtractPOTFromSources(POCatalogPtr catalog, UpdateResultReason& rea
             auto potFile = Extractor::ExtractWithAll(tmpdir, *spec, files);
             if (!potFile.empty())
             {
-                auto pot = std::make_shared<POCatalog>(potFile, Catalog::CreationFlag_IgnoreHeader);
-                if (pot->IsOk())
+                try
                 {
-                    return pot;
+                    return std::make_shared<POCatalog>(potFile, Catalog::CreationFlag_IgnoreHeader);
                 }
-                else
+                catch (...)
                 {
                     wxLogError(_("Failed to load file with extracted translations."));
                     reason = UpdateResultReason::Unspecified;
@@ -262,7 +261,7 @@ bool PerformUpdateFromSources(POCatalogPtr catalog, UpdateResultReason& reason)
     {
         Progress subtask(1, p, 90);
         pot = ExtractPOTFromSources(catalog, reason);
-        if (!pot || !pot->IsOk())
+        if (!pot)
             return false;
     }
     {
@@ -315,30 +314,38 @@ bool PerformUpdateFromPOTWithUI(wxWindow *parent,
                                 UpdateResultReason& reason)
 {
     reason = UpdateResultReason::Unspecified;
-    if (!catalog->IsOk())
-        return false;
 
-    auto pot = std::make_shared<POCatalog>(pot_file, Catalog::CreationFlag_IgnoreTranslations);
-
-    if (!pot->IsOk())
+    try
     {
-        wxLogError(_(L"“%s” is not a valid POT file."), pot_file.c_str());
-        return false;
+        auto pot = std::make_shared<POCatalog>(pot_file, Catalog::CreationFlag_IgnoreTranslations);
+
+        // Silently fix duplicates because they are common in WP world:
+        if (pot->HasDuplicateItems())
+            pot->FixDuplicateItems();
+
+        bool cancelledByUser = false;
+        if (ShowMergeSummary(parent, catalog, pot, &cancelledByUser))
+        {
+            return catalog->UpdateFromPOT(pot);
+        }
+        else
+        {
+            if (cancelledByUser)
+                reason = UpdateResultReason::CancelledByUser;
+            return false;
+        }
     }
-
-    // Silently fix duplicates because they are common in WP world:
-    if (pot->HasDuplicateItems())
-        pot->FixDuplicateItems();
-
-    bool cancelledByUser = false;
-    if (ShowMergeSummary(parent, catalog, pot, &cancelledByUser))
+    catch (...)
     {
-        return catalog->UpdateFromPOT(pot);
-    }
-    else
-    {
-        if (cancelledByUser)
-            reason = UpdateResultReason::CancelledByUser;
+        wxMessageDialog dlg
+        (
+            parent,
+            wxString::Format(_(L"The file “%s” couldn’t be opened."), wxFileName(pot_file).GetFullName()),
+            _("Invalid file"),
+            wxOK | wxICON_ERROR
+        );
+        dlg.SetExtendedMessage(DescribeCurrentException());
+        dlg.ShowModal();
         return false;
     }
 }

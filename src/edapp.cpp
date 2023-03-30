@@ -999,19 +999,29 @@ void PoeditApp::OnNewFromPOT(wxCommandEvent& event)
 
     wxConfig::Get()->Write("last_file_path", dlg.GetDirectory());
 
-    auto pot = std::make_shared<POCatalog>(dlg.GetPath(), Catalog::CreationFlag_IgnoreTranslations);
-    if (!pot->IsOk())
+    try
+    {
+        auto pot = std::make_shared<POCatalog>(dlg.GetPath(), Catalog::CreationFlag_IgnoreTranslations);
+
+        // Silently fix duplicates because they are common in WP world:
+        if (pot->HasDuplicateItems())
+            pot->FixDuplicateItems();
+
+        win.GetActionTarget()->NewFromPOT(pot);
+    }
+    catch (...)
     {
         win.NotifyWasAborted();
-        wxLogError(_(L"“%s” is not a valid POT file."), dlg.GetPath());
-        return;
+        wxMessageDialog errdlg
+        (
+            win.GetParentWindowIfAny(),
+            wxString::Format(_(L"The file “%s” couldn’t be opened."), wxFileName(dlg.GetPath()).GetFullName()),
+            _("Invalid file"),
+            wxOK | wxICON_ERROR
+        );
+        errdlg.SetExtendedMessage(DescribeCurrentException());
+        errdlg.ShowModal();
     }
-
-    // Silently fix duplicates because they are common in WP world:
-    if (pot->HasDuplicateItems())
-        pot->FixDuplicateItems();
-
-    win.GetActionTarget()->NewFromPOT(pot);
 }
 
 
@@ -1045,7 +1055,7 @@ void PoeditApp::OnOpen(wxCommandEvent& event)
     // This is special treatment for Windows' opening in existing window
     {
         auto cat = PoeditFrame::PreOpenFileWithErrorsUI(paths.front(), win.GetParentWindowIfAny());
-        if (cat && cat->IsOk())
+        if (cat)
             win.GetActionTarget()->DoOpenFile(cat);
         else if (paths.size() == 1)
             win.NotifyWasAborted();
@@ -1078,7 +1088,7 @@ void PoeditApp::OnOpenFromCrowdin(wxCommandEvent& event)
         }
 
         auto cat = PoeditFrame::PreOpenFileWithErrorsUI(filename, win.GetParentWindowIfAny());
-        if (cat && cat->IsOk())
+        if (cat)
             win.GetActionTarget()->DoOpenFile(cat);
         else
             win.NotifyWasAborted();
@@ -1095,7 +1105,7 @@ void PoeditApp::OnOpenHist(wxCommandEvent& event)
         return;
 
     auto cat = PoeditFrame::PreOpenFileWithErrorsUI(event.GetString(), win.GetParentWindowIfAny());
-    if (cat && cat->IsOk())
+    if (cat)
     {
         win.NotifyIsStarting();
         win.GetActionTarget()->DoOpenFile(cat);
