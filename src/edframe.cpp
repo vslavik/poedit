@@ -2688,8 +2688,8 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
         tmUpdateThread = dispatch::async([=]{
             try
             {
+                // Commit pending writes made in OnNewTranslationEntered():
                 auto tm = TranslationMemory::Get().GetWriter();
-                tm->Insert(m_catalog);
                 tm->Commit();
             }
             catch ( const Exception& e )
