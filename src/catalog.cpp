@@ -620,6 +620,9 @@ wxString MaskForType(Catalog::Type t)
             return MaskForType("*.xlf;*.xliff", _("XLIFF Translation Files"));
         case Catalog::Type::JSON:
             return MaskForType("*.json", _("JSON Translation Files"));
+        case Catalog::Type::JSON_FLUTTER:
+            // TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+            return MaskForType("*.arb", _("Flutter Translation Files"));
     }
     return ""; // silence stupid warning
 }
@@ -1194,6 +1197,7 @@ CatalogPtr Catalog::Create(Type type)
 
         case Type::XLIFF:
         case Type::JSON:
+        case Type::JSON_FLUTTER:
             wxFAIL_MSG("empty XLIFF/JSON creation not implemented");
             return CatalogPtr();
     }

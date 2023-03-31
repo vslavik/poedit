@@ -35,8 +35,8 @@
 #include <boost/algorithm/string.hpp>
 
 #include <fstream>
+#include <map>
 #include <memory>
-#include <set>
 #include <sstream>
 
 
@@ -111,7 +111,7 @@ bool JSONCatalog::HasCapability(Catalog::Cap cap) const
 
 bool JSONCatalog::CanLoadFile(const wxString& extension)
 {
-    return extension == "json";
+    return extension == "json" || extension == "arb";
 }
 
 
@@ -119,10 +119,11 @@ std::shared_ptr<JSONCatalog> JSONCatalog::Open(const wxString& filename)
 {
     try
     {
+        const auto ext = str::to_utf8(wxFileName(filename).GetExt().Lower());
         std::ifstream f(filename.fn_str(), std::ios::binary);
         auto data = json_t::parse(f);
 
-        auto cat = CreateForJSON(std::move(data));
+        auto cat = CreateForJSON(std::move(data), ext);
         if (!cat)
             throw JSONUnrecognizedFileException();
 
@@ -251,8 +252,116 @@ private:
 };
 
 
-std::shared_ptr<JSONCatalog> JSONCatalog::CreateForJSON(json_t&& doc)
+// Support for Flutter ARB files:
+// https://github.com/google/app-resource-bundle/wiki/ApplicationResourceBundleSpecification
+
+class FlutterItem : public GenericJSONItem
 {
+public:
+    FlutterItem(int id, const std::string& key, json_t& node, const json_t *metadata)
+        : GenericJSONItem(id, key, node), m_metadata(metadata)
+    {
+        m_string = str::to_wx(key);
+        auto trans = str::to_wx(node.get<std::string>());
+        m_translations.push_back(trans);
+        m_isTranslated = !trans.empty();
+
+        if (metadata)
+        {
+            if (metadata->contains("context"))
+            {
+                m_hasContext = true;
+                m_context = str::to_wx(metadata->at("context").get<std::string>());
+            }
+            if (metadata->contains("description"))
+            {
+                m_extractedComments.push_back(str::to_wx(metadata->at("description").get<std::string>()));
+            }
+        }
+    }
+
+    void UpdateInternalRepresentation() override
+    {
+        m_node = str::to_utf8(GetTranslation());
+    }
+
+protected:
+    const json_t *m_metadata;
+};
+
+
+class FlutterCatalog : public JSONCatalog
+{
+public:
+    using JSONCatalog::JSONCatalog;
+
+    static bool SupportsFile(const json_t& doc, const std::string& extension)
+    {
+        return extension == "arb" || doc.find("@@locale") != doc.end();
+    }
+
+    void SetLanguage(Language lang) override
+    {
+        JSONCatalog::SetLanguage(lang);
+        m_doc["@@locale"] = lang.LanguageTag();
+    }
+
+    void Parse() override
+    {
+        m_language = Language::FromLanguageTag(m_doc.value("@@locale", ""));
+
+        int id = 0;
+        ParseSubtree(id, m_doc, "");
+    }
+
+private:
+    void ParseSubtree(int& id, json_t& node, const std::string& prefix)
+    {
+        // find() is O(n) in ordered_json and so looking up @key metadata nodes in the
+        // main loop would result in O(n^2) complexity. Split the iteration into two and
+        // first find metadata, making the fuction O(n*log(n)). Using ordered_map would
+        // yield O(n), but with possibly high constant, so don't do that for now.
+        std::map<std::string, json_t*> metadata;
+        for (auto& el : node.items())
+        {
+            auto& key = el.key();
+            if (!key.empty() && key.front() == '@')
+                metadata.emplace(key.substr(1), &el.value());
+        }
+
+        for (auto& el : node.items())
+        {
+            auto& key = el.key();
+            if (key.empty() || key.front() == '@')
+                continue;
+
+            auto& val = el.value();
+            if (val.is_string())
+            {
+                auto mi = metadata.find(key);
+                auto meta = (mi != metadata.end()) ? mi->second : nullptr;
+                m_items.push_back(std::make_shared<FlutterItem>(++id, prefix + el.key(), el.value(), meta));
+            }
+            else if (val.is_object())
+            {
+                ParseSubtree(id, val, prefix + el.key() + ".");
+            }
+            else
+            {
+                throw JSONUnrecognizedFileException();
+            }
+        }
+    }
+};
+
+
+std::shared_ptr<JSONCatalog> JSONCatalog::CreateForJSON(json_t&& doc, const std::string& extension)
+{
+    // try specialized implementations first:
+    if (FlutterCatalog::SupportsFile(doc, extension))
+        return std::shared_ptr<JSONCatalog>(new FlutterCatalog(std::move(doc)));
+
+    // then fall back to generic:
     if (GenericJSONCatalog::SupportsFile(doc))
         return std::shared_ptr<JSONCatalog>(new GenericJSONCatalog(std::move(doc)));
 

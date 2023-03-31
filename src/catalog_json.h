@@ -81,7 +81,6 @@ public:
 
     std::string SaveToBuffer() override;
 
-    // FIXME: derive from filename too
     Language GetLanguage() const override { return m_language; }
     void SetLanguage(Language lang) override { m_language = lang; }
 
@@ -95,7 +94,7 @@ protected:
     virtual void Parse() = 0;
 
 private:
-    static std::shared_ptr<JSONCatalog> CreateForJSON(json_t&& doc);
+    static std::shared_ptr<JSONCatalog> CreateForJSON(json_t&& doc, const std::string& extension);
 
 protected:
     json_t m_doc;

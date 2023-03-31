@@ -320,7 +320,8 @@ class Catalog
             PO,
             POT,
             XLIFF,
-            JSON
+            JSON,
+            JSON_FLUTTER
         };
 
         /// Capabilities of the file type
