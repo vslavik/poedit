@@ -131,9 +131,17 @@ void Catalog::ExportToHTML(std::ostream& f)
             lang_tra += " dir='rtl'";
     }
 
-    auto thead_src = srclang.IsValid()
-                     ? (wxString::Format(_(L"Source text — %s"), srclang.DisplayName()))
-                     : _("Source text");
+    wxString thead_src;
+    if (UsesSymbolicIDsForSource())
+    {
+        thead_src = _("Source text ID");
+    }
+    else
+    {
+        thead_src = srclang.IsValid()
+                    ? (wxString::Format(_(L"Source text — %s"), srclang.DisplayName()))
+                    : _("Source text");
+    }
     auto thead_tra = wxString::Format(_(L"Translation — %s"),
                                       lang.IsValid() ? lang.DisplayName() : _("unknown language"));
 

@@ -746,9 +746,18 @@ void PoeditListCtrl::UpdateColumns()
     auto srclang = m_catalog->GetSourceLanguage();
     auto lang = m_catalog->GetLanguage();
 
-    wxString sourceTitle = srclang.IsValid()
-                             ? wxString::Format(_(L"Source text — %s"), srclang.DisplayName())
-                             : _("Source text");
+    wxString sourceTitle;
+    if (m_catalog->UsesSymbolicIDsForSource())
+    {
+        // TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+        sourceTitle = _("Source text ID");
+    }
+    else
+    {
+        sourceTitle = srclang.IsValid()
+                      ? wxString::Format(_(L"Source text — %s"), srclang.DisplayName())
+                      : _("Source text");
+    }
     m_colSource->SetTitle(sourceTitle);
 
 #ifdef __WXMSW__
