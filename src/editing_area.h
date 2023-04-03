@@ -80,7 +80,7 @@ public:
     bool InitSpellchecker(bool enabled, Language lang);
 
     void SetLanguage(Language lang);
-    void RecreatePluralTextCtrls(CatalogPtr catalog);
+    void UpdateEditingUIForCatalog(CatalogPtr catalog);
 
     void SetSingleSelectionMode();
     void SetMultipleSelectionMode();
@@ -115,6 +115,8 @@ public:
     TranslationTextCtrl *Ctrl_PluralTranslation(size_t index) const { return m_textTransPlural[index]; }
 
 private:
+    void RecreatePluralTextCtrls(CatalogPtr catalog);
+
     void UpdateAuxiliaryInfo(CatalogItemPtr item);
     void UpdateCharCounter(CatalogItemPtr item);
 

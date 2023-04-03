@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (https://poedit.net)
  *
- *  Copyright (C) 2016-2017 Vaclav Slavik
+ *  Copyright (C) 2016-2023 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -28,6 +28,8 @@
 
 #include "str_helpers.h"
 
+#define JSON_USE_IMPLICIT_CONVERSIONS 0
+
 #ifdef HAVE_NLOHMANN_JSON_HPP
  #include <nlohmann/json.hpp>
 #else
@@ -35,6 +37,28 @@
 #endif
 
 using json = nlohmann::json;
+using ordered_json = nlohmann::ordered_json;
+
+// Implement conversion to and from std::wstring:
+namespace nlohmann
+{
+
+template<>
+struct adl_serializer<std::wstring>
+{
+    static void to_json(json& j, const std::wstring& s)
+    {
+        j = str::to_utf8(s);
+    }
+
+    static void from_json(const json& j, std::wstring& s)
+    {
+        s = str::to_wstring(j.get<std::string>());
+    }
+};
+
+} // namespace nlohmann
+
 
 /**
     Helper to get value from JSON key falling back to @a default.
@@ -48,28 +72,12 @@ inline T get_value(const json& j, const char *key, const T& defaultValue)
     auto i = j.find(key);
     if (i == j.end() || i->is_null())
         return defaultValue;
-    return *i;
+    return i->get<T>();
 }
 
 inline std::string get_value(const json& j, const char *key, const char *defaultValue)
 {
     return get_value<std::string>(j, key, defaultValue);
 }
-
-
-namespace str
-{
-
-inline std::wstring to_wstring(const json& x)
-{
-    return to_wstring(x.get<std::string>());
-}
-
-inline std::wstring to_wstring(json&& x)
-{
-    return to_wstring(x.get<std::string>());
-}
-
-} // namespace str
 
 #endif // Poedit_json_h

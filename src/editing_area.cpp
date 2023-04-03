@@ -731,6 +731,20 @@ void EditingArea::SetLanguage(Language lang)
 }
 
 
+void EditingArea::UpdateEditingUIForCatalog(CatalogPtr catalog)
+{
+    // TODO: ideally we'd do all this at creation time
+    if (catalog->UsesSymbolicIDsForSource())
+        m_labelSource->SetLabel(_("Source text ID"));
+    else
+        m_labelSource->SetLabel(_("Source text"));
+
+    if (m_fuzzy)
+        m_fuzzy->Show(catalog->HasCapability(Catalog::Cap::FuzzyTranslations));
+
+    RecreatePluralTextCtrls(catalog);
+}
+
 void EditingArea::RecreatePluralTextCtrls(CatalogPtr catalog)
 {
     if (!m_pluralNotebook)

@@ -99,8 +99,6 @@ public:
 
     std::string SaveToBuffer() override;
 
-    ValidationResults Validate(bool wasJustLoaded) override;
-
     Language GetLanguage() const override { return m_language; }
     void SetLanguage(Language lang) override { m_language = lang; }
 
@@ -112,8 +110,8 @@ public:
     std::string GetXPathValue(const char* xpath) const;
 
 protected:
-    XLIFFCatalog(const wxString& filename, pugi::xml_document&& doc)
-        : Catalog(Type::XLIFF), m_doc(std::move(doc)) { m_fileName = filename; }
+    XLIFFCatalog(pugi::xml_document&& doc)
+        : Catalog(Type::XLIFF), m_doc(std::move(doc)) {}
 
     virtual void Parse(pugi::xml_node root) = 0;
 
@@ -126,8 +124,8 @@ protected:
 class XLIFF1Catalog : public XLIFFCatalog
 {
 public:
-    XLIFF1Catalog(const wxString& filename, pugi::xml_document&& doc, int subversion)
-        : XLIFFCatalog(filename, std::move(doc)),
+    XLIFF1Catalog(pugi::xml_document&& doc, int subversion)
+        : XLIFFCatalog(std::move(doc)),
           m_subversion(subversion)
     {}
 
@@ -143,8 +141,7 @@ protected:
 class XLIFF2Catalog : public XLIFFCatalog
 {
 public:
-    XLIFF2Catalog(const wxString& filename, pugi::xml_document&& doc)
-        : XLIFFCatalog(filename, std::move(doc)) {}
+    XLIFF2Catalog(pugi::xml_document&& doc) : XLIFFCatalog(std::move(doc)) {}
 
     void SetLanguage(Language lang) override;
 

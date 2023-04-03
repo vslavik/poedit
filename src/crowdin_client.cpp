@@ -97,7 +97,7 @@ protected:
             // Like e.g. on 400 here https://support.crowdin.com/api/v2/#operation/api.projects.getMany
             // where "key" is usually "error" as figured out while looking in responses with above code
             // on most API requests used here
-            return response.at("errors").at(0).at("error").at("errors").at(0).at("message");
+            return response.at("errors").at(0).at("error").at("errors").at(0).at("message").get<std::string>();
         }
         catch (...)
         {
@@ -105,7 +105,7 @@ protected:
             {
                 // Like e.g. on 401 here https://support.crowdin.com/api/v2/#operation/api.user.get
                 // as well as in most other requests on above error code
-                return response.at("error").at("message");
+                return response.at("error").at("message").get<std::string>();
             }
             catch (...)
             {
@@ -194,24 +194,24 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
             wxLogTrace("poedit.crowdin", "Got user info: %s", r.dump().c_str());
             const json& d = r["data"];
             UserInfo u;
-            u.login = str::to_wstring(d["username"]);
+            d.at("username").get_to(u.login);
             u.avatar = d.value("avatarUrl", "");
             std::string fullName;
             try
             {
-                fullName = d.at("fullName");
+                d.at("fullName").get_to(fullName);
                 // if individual (not enterprise) account
             }
             catch (...) // or enterpise otherwise
             {
                 try
                 {
-                    fullName = d.at("firstName");
+                    d.at("firstName").get_to(fullName);
                 }
                 catch (...) {}
                 try
                 {
-                    std::string lastName = d.at("lastName");
+                    auto lastName = d.at("lastName").get<std::string>();
                     if (!lastName.empty())
                     {
                         if (!fullName.empty())
@@ -244,9 +244,9 @@ dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetU
                 const json& i = d["data"];
                 all.push_back(
                 {
-                    str::to_wstring(i["name"]),
-                    i["identifier"],
-                    i["id"]
+                    i.at("name").get<std::wstring>(),
+                    i.at("identifier").get<std::string>(),
+                    i.at("id").get<int>()
                 });
             }
             return all;
@@ -269,9 +269,9 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
         if (get_value(d, "publicDownloads", false) == false)
             throw Exception(_("Downloading translations is disabled in this project."));
 
-        prj->name = str::to_wstring(d["name"]);
-        prj->id = d["id"];
-        for (const auto& langCode : d["targetLanguageIds"])
+        d.at("name").get_to(prj->name);
+        d.at("id").get_to(prj->id);
+        for (const auto& langCode: d.at("targetLanguageIds"))
             prj->languages.push_back(Language::FromLanguageTag(std::string(langCode)));
 
         //TODO: get more until all files gotten (if more than 500)
@@ -286,11 +286,11 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
             if (d["type"] != "assets")
             {
                 FileInfo f;
-                f.id = d["id"];
-                f.fullPath = '/' + std::string(d.at("name"));
+                d.at("id").get_to(f.id);
+                f.fullPath = '/' + d.at("name").get<std::string>();
                 f.dirId = get_value(d, "directoryId", NO_ID);
                 f.branchId = get_value(d, "branchId", NO_ID);
-                f.fileName = d.at("name");
+                d.at("name").get_to(f.fileName);
                 f.title = get_value(d, "title", f.fileName);
                 prj->files.push_back(std::move(f));
             }
@@ -312,14 +312,15 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
         {
             const json& d = i["data"];
             const json& parent = d["directoryId"];
-            std::string name = d.at("name");
+            std::string name;
+            d.at("name").get_to(name);
             dirs.insert(
             {
-                d.at("id"),
+                d.at("id").get<int>(),
                 {
                     name,
                     get_value(d, "title", name),
-                    parent.is_null() ? NO_ID : int(parent)
+                    parent.is_null() ? NO_ID : parent.get<int>()
                 }
             });
         }
@@ -352,12 +353,12 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
         };
         std::map<int, branch_info> branches;
 
-        for (const auto& i : r["data"])
+        for (const auto& i : r.at("data"))
         {
-            const json& d = i["data"];
-            const std::string name = d.at("name");
+            const json& d = i.at("data");
+            const auto name = d.at("name").get<std::string>();
             const std::string title = get_value(d, "title", name);
-            branches.insert({d.at("id"), {name, title}});
+            branches.insert({d.at("id").get<int>(), {name, title}});
         }
 
         for (auto& i : prj->files)
@@ -435,7 +436,7 @@ dispatch::future<void> CrowdinClient::DownloadFile(int project_id,
         .then([](json r)
         {
             wxLogTrace("poedit.crowdin", "Got file URL: %s", r.dump().c_str());
-            std::string url = r["data"]["url"];
+            auto url = r.at("data").at("url").get<std::string>();
             return http_client::download_from_anywhere(url);
         })
         .then([=](downloaded_file file)

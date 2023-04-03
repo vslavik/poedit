@@ -319,15 +319,18 @@ class Catalog
         {
             PO,
             POT,
-            XLIFF
+            XLIFF,
+            JSON,
+            JSON_FLUTTER
         };
 
         /// Capabilities of the file type
         enum class Cap
         {
-            Translations,    // Can translations be added (e.g. POTs can't)?
-            LanguageSetting, // Is language code saved in the file?
-            UserComments,    // Can users add comments?
+            Translations,       // Can translations be added (e.g. POTs can't)?
+            LanguageSetting,    // Is language code saved in the file?
+            UserComments,       // Can users add comments?
+            FuzzyTranslations   // Can translations be marked as needing work?
         };
 
         /// Is this file capable of doing these things
@@ -551,6 +554,9 @@ class Catalog
 
         /// Change the catalog's language and update headers accordingly
         virtual void SetLanguage(Language lang);
+
+        /// Whether source text is just symbolic identifier and not actual text
+        bool UsesSymbolicIDsForSource() const { return m_sourceIsSymbolicID; }
             
         /// Returns true if the catalog contains obsolete entries (~.*)
         virtual bool HasDeletedItems() const = 0;
@@ -577,13 +583,16 @@ class Catalog
 
         /// Validates correctness of the translation by running msgfmt
         /// Returns number of errors (i.e. 0 if no errors).
-        virtual ValidationResults Validate(bool wasJustLoaded = false) = 0;
+        virtual ValidationResults Validate(const wxString& fileWithSameContent = wxString());
 
         void AttachCloudSync(std::shared_ptr<CloudSyncDestination> c) { m_cloudSync = c; }
         std::shared_ptr<CloudSyncDestination> GetCloudSync() const { return m_cloudSync; }
 
     protected:
         Catalog(Type type);
+
+        /// Perform post-creation processing to e.g. fixup issues, detect missing language etc.
+        virtual void PostCreation();
 
     protected:
         CatalogItemArray m_items;
@@ -592,6 +601,7 @@ class Catalog
         wxString m_fileName;
         HeaderData m_header;
         Language m_sourceLanguage;
+        bool m_sourceIsSymbolicID = false;
 
         std::shared_ptr<CloudSyncDestination> m_cloudSync;
 };

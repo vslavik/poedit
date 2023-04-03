@@ -60,6 +60,8 @@
       <PrecompiledHeaderFile>Poedit-Prefix.pch</PrecompiledHeaderFile>
       <ForcedIncludeFiles>Poedit-Prefix.pch</ForcedIncludeFiles>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -89,6 +91,8 @@
       <PrecompiledHeaderFile>Poedit-Prefix.pch</PrecompiledHeaderFile>
       <ForcedIncludeFiles>Poedit-Prefix.pch</ForcedIncludeFiles>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -106,6 +110,7 @@
   <ItemGroup>
     <ClCompile Include="src\attentionbar.cpp" />
     <ClCompile Include="src\catalog.cpp" />
+    <ClCompile Include="src\catalog_json.cpp" />
     <ClCompile Include="src\catalog_po.cpp" />
     <ClCompile Include="src\catalog_xliff.cpp" />
     <ClCompile Include="src\cat_sorting.cpp" />
@@ -168,6 +173,7 @@
   <ItemGroup>
     <ClInclude Include="src\attentionbar.h" />
     <ClInclude Include="src\catalog.h" />
+    <ClInclude Include="src\catalog_json.h" />
     <ClInclude Include="src\catalog_po.h" />
     <ClInclude Include="src\catalog_xliff.h" />
     <ClInclude Include="src\cat_sorting.h" />

@@ -147,6 +147,17 @@ Root: "HKA"; Subkey: "Software\Classes\Poedit.XLIFF"; ValueType: string; ValueDa
 Root: "HKA"; Subkey: "Software\Classes\Poedit.XLIFF"; ValueType: string; ValueName: "FriendlyTypeName"; ValueData: "@{app}\Poedit.exe,-225"; Flags: uninsdeletekey noerror
 Root: "HKA"; Subkey: "Software\Classes\Poedit.XLIFF\Shell\Open\Command"; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
 
+Root: "HKA"; Subkey: "Software\Classes\.json"; ValueType: string; ValueName: "Content Type"; ValueData: "application/json"; Flags: noerror
+Root: "HKA"; Subkey: "Software\Classes\.json\OpenWithProgids"; ValueType: string; ValueName: "Poedit.JSON"; ValueData: ""; Flags: uninsdeletevalue noerror
+Root: "HKA"; Subkey: "Software\Classes\Poedit.JSON"; ValueType: string; ValueData: "JSON Document"; Flags: uninsdeletekey noerror
+Root: "HKA"; Subkey: "Software\Classes\Poedit.JSON"; ValueType: string; ValueName: "FriendlyTypeName"; ValueData: "@{app}\Poedit.exe,-226"; Flags: uninsdeletekey noerror
+Root: "HKA"; Subkey: "Software\Classes\Poedit.JSON\Shell\Open\Command"; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
+
+Root: "HKA"; Subkey: "Software\Classes\.arb\OpenWithProgids"; ValueType: string; ValueName: "Poedit.ARB"; ValueData: ""; Flags: uninsdeletevalue noerror
+Root: "HKA"; Subkey: "Software\Classes\Poedit.ARB"; ValueType: string; ValueData: "Flutter Translation"; Flags: uninsdeletekey noerror
+Root: "HKA"; Subkey: "Software\Classes\Poedit.ARB"; ValueType: string; ValueName: "FriendlyTypeName"; ValueData: "@{app}\Poedit.exe,-227"; Flags: uninsdeletekey noerror
+Root: "HKA"; Subkey: "Software\Classes\Poedit.ARB\Shell\Open\Command"; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
+
 ; URL protocol for poedit:// (various custom tasks such as OAuth)
 Root: HKA; Subkey: "Software\Classes\poedit"; ValueType: "string"; ValueData: "URL:Poedit Custom Protocol"; Flags: uninsdeletekey noerror
 Root: HKA; Subkey: "Software\Classes\poedit"; ValueType: "string"; ValueName: "URL Protocol"; ValueData: ""; Flags: uninsdeletekey noerror

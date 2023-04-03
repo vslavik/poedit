@@ -167,6 +167,12 @@ public:
     static Language TryDetectFromText(const char *buffer, size_t len,
                                       Language probableLanguage = Language());
 
+    template<typename T>
+    static Language TryDetectFromText(const T& str, Language probableLanguage = Language())
+    {
+        return TryDetectFromText(str.data(), str.length(), probableLanguage);
+    }
+
     /// Returns object for English language
     static Language English() { return Language("en"); }
 

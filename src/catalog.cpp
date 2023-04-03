@@ -27,6 +27,7 @@
 
 #include "catalog_po.h"
 #include "catalog_xliff.h"
+#include "catalog_json.h"
 
 #include "configuration.h"
 #include "errors.h"
@@ -73,6 +74,27 @@ wxString FixBrokenSearchPathValue(wxString p)
     if (p.Last() == '/')
         p.RemoveLast();
     return p;
+}
+
+// Detect whether source strings are just IDs instead of actual text
+bool DetectUseOfSymbolicIDs(Catalog& cat)
+{
+    // Employ a simple heuristic: IDs won't contain whitespace.
+    // This is not enough as is, because some (notably Asian) languages don't use
+    // whitespace, so also check for use of ASCII characters only. Typical non-symbolic
+    // files will fail at least one of the tests in most of their strings.
+    //
+    for (auto& i: cat.items())
+    {
+        for (auto c: i->GetString())
+        {
+            if (c == ' ' || c >= 0x80)
+                return false;
+        }
+    }
+
+    wxLogTrace("poedit", "detected use of symbolic IDs for source language");
+    return true;
 }
 
 } // anonymous namespace
@@ -476,7 +498,6 @@ Catalog::HeaderData::Find(const wxString& key) const
 
 Catalog::Catalog(Type type)
 {
-    m_sourceLanguage = Language::English();
     m_fileType = type;
 
     m_header.BasePath = wxEmptyString;
@@ -484,19 +505,6 @@ Catalog::Catalog(Type type)
     {
         m_header.Bookmarks[i] = -1;
     }
-}
-
-
-bool Catalog::HasCapability(Catalog::Cap cap) const
-{
-    switch (cap)
-    {
-        case Cap::Translations:
-        case Cap::LanguageSetting:
-        case Cap::UserComments:
-            return m_fileType == Type::PO;
-    }
-    return false; // silence VC++ warning
 }
 
 
@@ -609,6 +617,11 @@ wxString MaskForType(Catalog::Type t)
             return MaskForType("*.pot", _("POT Translation Templates"));
         case Catalog::Type::XLIFF:
             return MaskForType("*.xlf;*.xliff", _("XLIFF Translation Files"));
+        case Catalog::Type::JSON:
+            return MaskForType("*.json", _("JSON Translation Files"));
+        case Catalog::Type::JSON_FLUTTER:
+            // TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+            return MaskForType("*.arb", _("Flutter Translation Files"));
     }
     return ""; // silence stupid warning
 }
@@ -632,9 +645,9 @@ wxString Catalog::GetTypesFileMask(std::initializer_list<Type> types)
 
 wxString Catalog::GetAllTypesFileMask()
 {
-    return MaskForType("*.po;*.pot;*.xlf;*.xliff", _("All Translation Files"), /*showExt=*/false) +
+    return MaskForType("*.po;*.pot;*.xlf;*.xliff;*.json", _("All Translation Files"), /*showExt=*/false) +
            "|" +
-           GetTypesFileMask({Type::PO, Type::POT, Type::XLIFF});
+           GetTypesFileMask({Type::PO, Type::POT, Type::XLIFF, Type::JSON});
 }
 
 
@@ -853,7 +866,8 @@ bool Catalog::HasPluralItems() const
 void Catalog::SetLanguage(Language lang)
 {
     m_header.Lang = lang;
-    m_header.SetHeaderNotEmpty("Plural-Forms", lang.DefaultPluralFormsExpr().str());
+    if (HasPluralItems())
+        m_header.SetHeaderNotEmpty("Plural-Forms", lang.DefaultPluralFormsExpr().str());
 }
 
 void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens,
@@ -1080,6 +1094,93 @@ wxString CatalogItem::GetOldMsgid() const
 }
 
 
+Catalog::ValidationResults Catalog::Validate(const wxString& /*fileWithSameContent*/)
+{
+    ValidationResults res;
+
+    for (auto& i: m_items)
+        i->ClearIssue();
+    res.errors = 0;
+
+    if (!HasCapability(Catalog::Cap::Translations))
+        return res; // no errors in POT files
+
+#if wxUSE_GUI
+    if (Config::ShowWarnings())
+    {
+        // TODO: _some_ checks (e.g. plurals) do make sense even with symbolic IDs
+        if (!UsesSymbolicIDsForSource())
+            res.warnings = QAChecker::GetFor(*this)->Check(*this);
+    }
+#endif
+
+    return res;
+}
+
+
+void Catalog::PostCreation()
+{
+    if (!m_sourceLanguage.IsValid())
+    {
+        if (!m_sourceIsSymbolicID)
+            m_sourceIsSymbolicID = DetectUseOfSymbolicIDs(*this);
+
+        if (!m_sourceIsSymbolicID)
+        {
+            // detect source language from the text (ignoring plurals for simplicity,
+            // as we don't need 100% of the text):
+            wxString allText;
+            for (auto& i: items())
+            {
+                allText.append(i->GetString());
+                allText.append('\n');
+            }
+            if (!allText.empty())
+            {
+                m_sourceLanguage = Language::TryDetectFromText(allText.utf8_str());
+                wxLogTrace("poedit", "detected source language is '%s'", m_sourceLanguage.Code());
+            }
+        }
+    }
+
+    // All the following fixups are for files that contain translations (i.e. not POTs)
+    if (!HasCapability(Cap::Translations))
+        return;
+
+    if (!GetLanguage().IsValid())
+    {
+        Language lang;
+        if (!m_fileName.empty())
+        {
+            lang = Language::TryGuessFromFilename(m_fileName);
+            wxLogTrace("poedit", "guessed translation language from filename '%s' is '%s'", m_fileName, lang.Code());
+        }
+
+        if (!lang.IsValid())
+        {
+            // If all else fails, try to detect the language from content
+            wxString allText;
+            for (auto& i: items())
+            {
+                if (!i->IsTranslated())
+                    continue;
+                allText.append(i->GetTranslation());
+                allText.append('\n');
+            }
+            if (!allText.empty())
+            {
+                lang = Language::TryDetectFromText(allText.utf8_str());
+                wxLogTrace("poedit", "detected translation language is '%s'", GetLanguage().Code());
+            }
+        }
+
+        if (lang.IsValid())
+            SetLanguage(lang);
+    }
+}
+
+
+
 // Catalog file creation factories:
 
 CatalogPtr Catalog::Create(Type type)
@@ -1091,7 +1192,9 @@ CatalogPtr Catalog::Create(Type type)
             return std::make_shared<POCatalog>(type);
 
         case Type::XLIFF:
-            wxFAIL_MSG("empty XLIFF creation not implemented");
+        case Type::JSON:
+        case Type::JSON_FLUTTER:
+            wxFAIL_MSG("empty XLIFF/JSON creation not implemented");
             return CatalogPtr();
     }
 
@@ -1114,6 +1217,10 @@ CatalogPtr Catalog::Create(const wxString& filename, int flags)
     {
         cat = XLIFFCatalog::Open(filename);
     }
+    else if (JSONCatalog::CanLoadFile(ext))
+    {
+        cat = JSONCatalog::Open(filename);
+    }
 
     if (!cat)
         throw Exception(_("The file is in a format not recognized by Poedit."));
@@ -1124,6 +1231,9 @@ CatalogPtr Catalog::Create(const wxString& filename, int flags)
             item->ClearTranslation();
     }
 
+    cat->SetFileName(filename);
+    cat->PostCreation();
+
     return cat;
 }
 
@@ -1132,5 +1242,6 @@ bool Catalog::CanLoadFile(const wxString& extension_)
     auto extension = extension_.Lower();
 
     return POCatalog::CanLoadFile(extension) ||
-           XLIFFCatalog::CanLoadFile(extension);
+           XLIFFCatalog::CanLoadFile(extension) ||
+           JSONCatalog::CanLoadFile(extension);
 }

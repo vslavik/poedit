@@ -25,7 +25,6 @@
 
 #include "catalog_xliff.h"
 
-#include "qa_checks.h"
 #include "configuration.h"
 #include "str_helpers.h"
 #include "utility.h"
@@ -459,6 +458,8 @@ bool XLIFFCatalog::HasCapability(Catalog::Cap cap) const
             return false; // FIXME: for now
         case Cap::UserComments:
             return false; // FIXME: for now
+        case Cap::FuzzyTranslations:
+            return true;
     }
     return false; // silence VC++ warning
 }
@@ -482,13 +483,13 @@ std::shared_ptr<XLIFFCatalog> XLIFFCatalog::Open(const wxString& filename)
     auto xliff_root = doc.child("xliff");
     std::string xliff_version = xliff_root.attribute("version").value();
     if (xliff_version == "1.0")
-        cat.reset(new XLIFF1Catalog(filename, std::move(doc), 0));
+        cat.reset(new XLIFF1Catalog(std::move(doc), 0));
     else if (xliff_version == "1.1")
-        cat.reset(new XLIFF1Catalog(filename, std::move(doc), 1));
+        cat.reset(new XLIFF1Catalog(std::move(doc), 1));
     else if (xliff_version == "1.2")
-        cat.reset(new XLIFF1Catalog(filename, std::move(doc), 2));
+        cat.reset(new XLIFF1Catalog(std::move(doc), 2));
     else if (xliff_version == "2.0" || xliff_version == "2.1")
-        cat.reset(new XLIFF2Catalog(filename, std::move(doc)));
+        cat.reset(new XLIFF2Catalog(std::move(doc)));
     else
         throw XLIFFReadException(wxString::Format(_("unsupported version (%s)"), xliff_version));
 
@@ -499,7 +500,7 @@ std::shared_ptr<XLIFFCatalog> XLIFFCatalog::Open(const wxString& filename)
 
 
 bool XLIFFCatalog::Save(const wxString& filename, bool /*save_mo*/,
-                        ValidationResults& /*validation_results*/,
+                        ValidationResults& validation_results,
                         CompilationStatus& /*mo_compilation_status*/)
 {
     if ( wxFileExists(filename) && !wxFile::Access(filename, wxFile::write) )
@@ -519,7 +520,9 @@ bool XLIFFCatalog::Save(const wxString& filename, bool /*save_mo*/,
         return false;
     }
 
-    m_fileName = filename;
+    validation_results = Validate();
+
+    SetFileName(filename);
     return true;
 }
 
@@ -531,25 +534,6 @@ std::string XLIFFCatalog::SaveToBuffer()
     return s.str();
 }
 
-
-Catalog::ValidationResults XLIFFCatalog::Validate(bool)
-{
-    // FIXME: move this elsewhere, remove #include "qa_checks.h", configuration.h
-
-    ValidationResults res;
-
-    for (auto& i: m_items)
-        i->ClearIssue();
-
-    res.errors = 0;
-
-#if wxUSE_GUI
-    if (Config::ShowWarnings())
-        res.warnings = QAChecker::GetFor(*this)->Check(*this);
-#endif
-
-    return res;
-}
 
 std::string XLIFFCatalog::GetXPathValue(const char* xpath) const
 {
