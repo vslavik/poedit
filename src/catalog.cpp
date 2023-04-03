@@ -628,6 +628,13 @@ wxString MaskForType(Catalog::Type t)
 
 } // anonymous namespace
 
+wxString Catalog::GetAllTypesFileMask()
+{
+    return MaskForType("*.po;*.pot;*.xlf;*.xliff;*.json;*.arb", _("All Translation Files"), /*showExt=*/false) +
+        "|" +
+        GetTypesFileMask({ Type::PO, Type::POT, Type::XLIFF, Type::JSON, Type::JSON_FLUTTER });
+}
+
 wxString Catalog::GetTypesFileMask(std::initializer_list<Type> types)
 {
     if (types.size() == 0)
@@ -641,13 +648,6 @@ wxString Catalog::GetTypesFileMask(std::initializer_list<Type> types)
         out += MaskForType(*t);
     }
     return out;
-}
-
-wxString Catalog::GetAllTypesFileMask()
-{
-    return MaskForType("*.po;*.pot;*.xlf;*.xliff;*.json", _("All Translation Files"), /*showExt=*/false) +
-           "|" +
-           GetTypesFileMask({Type::PO, Type::POT, Type::XLIFF, Type::JSON});
 }
 
 
