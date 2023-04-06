@@ -374,7 +374,7 @@ public:
         if (m_isPerfect)
             m_isPerfect->GetContainingSizer()->Show(m_isPerfect, percent == 100);
 
-        auto text = wxControl::EscapeMnemonics(bidi::mark_direction(s.text, lang));
+        auto text = bidi::mark_direction(s.text, lang);
 
         m_text->SetLanguage(lang);
         m_text->SetAndWrapLabel(text);
