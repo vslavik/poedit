@@ -537,14 +537,7 @@ class Catalog
         /// Returns plural forms count: taken from Plural-Forms header if
         /// present, 0 otherwise (unless there are existing plural forms
         /// translations in the file)
-        unsigned GetPluralFormsCount() const;
-
-        /// Returns true if Plural-Forms header doesn't match plural forms
-        /// usage in catalog items
-        bool HasWrongPluralFormsCount() const;
-
-        /// Does this catalog have any items with plural forms?
-        bool HasPluralItems() const;
+        virtual unsigned GetPluralFormsCount() const;
 
         /// Returns catalog's source language (may be invalid, but usually English).
         Language GetSourceLanguage() const { return m_sourceLanguage; }

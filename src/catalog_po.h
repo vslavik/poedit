@@ -167,6 +167,9 @@ public:
     static bool CanLoadFile(const wxString& extension);
     wxString GetPreferredExtension() const override;
 
+    unsigned GetPluralFormsCount() const override;
+    void SetLanguage(Language lang) override;
+
     bool Save(const wxString& po_file, bool save_mo,
               ValidationResults& validation_results,
               CompilationStatus& mo_compilation_status) override;
@@ -179,6 +182,13 @@ public:
     bool CompileToMO(const wxString& mo_file,
                      ValidationResults& validation_results,
                      CompilationStatus& mo_compilation_status);
+
+    /// Returns true if Plural-Forms header doesn't match plural forms
+    /// usage in catalog items
+    bool HasWrongPluralFormsCount() const;
+
+    /// Does this catalog have any items with plural forms?
+    bool HasPluralItems() const;
 
     /// Detect a particular common breakage of catalogs.
     bool HasDuplicateItems() const;

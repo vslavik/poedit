@@ -2415,21 +2415,22 @@ void PoeditFrame::WarnAboutLanguageIssues()
 
     // check if plural forms header is correct (only if the language is set,
     // otherwise setting the language will fix this issue too):
-    if ( lang.IsValid() && m_catalog->HasPluralItems() )
+    auto po_cat = std::dynamic_pointer_cast<POCatalog>(m_catalog);
+    if ( po_cat && lang.IsValid() && po_cat->HasPluralItems() )
     {
         wxString err;
 
-        if ( m_catalog->Header().GetHeader("Plural-Forms").empty() )
+        if ( po_cat->Header().GetHeader("Plural-Forms").empty() )
         {
             err = _(L"This file has entries with plural forms, but doesn’t have Plural-Forms header configured.");
         }
-        else if ( m_catalog->HasWrongPluralFormsCount() )
+        else if ( po_cat->HasWrongPluralFormsCount() )
         {
             err = _(L"Entries in this file have different plural forms count from what the file’s Plural-Forms header says");
         }
 
         // FIXME: make this part of global error checking
-        PluralFormsExpr plForms(m_catalog->Header().GetHeader("Plural-Forms").ToStdString());
+        PluralFormsExpr plForms(po_cat->Header().GetHeader("Plural-Forms").ToStdString());
         if (!plForms)
         {
             if (plForms.str().empty())
