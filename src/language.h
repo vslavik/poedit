@@ -155,8 +155,11 @@ public:
     /**
         Try to guess the language from filename, if the filename follows some
         commonly used naming pattern.
+
+        If @a wildcard is provided, sets it to a wildcard matching different language files
+        on success, or empty if language can't be guessed.
      */
-    static Language TryGuessFromFilename(const wxString& filename);
+    static Language TryGuessFromFilename(const wxString& filename, wxString *wildcard = nullptr);
 
     /**
         Try to detect the language from UTF-8 text.
