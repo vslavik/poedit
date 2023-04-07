@@ -710,7 +710,10 @@ bool POLoadParser::OnEntry(const wxString& msgid,
             d->SetFlags(flags);
         d->SetString(msgid);
         if (has_plural)
+        {
+            m_catalog.m_hasPluralItems = true;
             d->SetPluralString(msgid_plural);
+        }
         if (has_context)
             d->SetContext(context);
         d->SetTranslations(mtranslations);
@@ -1576,16 +1579,6 @@ bool POCatalog::HasWrongPluralFormsCount() const
     if ( count > GetCountFromPluralFormsHeader(m_header) )
         return true;
 
-    return false;
-}
-
-bool POCatalog::HasPluralItems() const
-{
-    for (auto& i: m_items)
-    {
-        if ( i->HasPlural() )
-            return true;
-    }
     return false;
 }
 

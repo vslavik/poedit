@@ -188,7 +188,7 @@ public:
     bool HasWrongPluralFormsCount() const;
 
     /// Does this catalog have any items with plural forms?
-    bool HasPluralItems() const;
+    bool HasPluralItems() const { return m_hasPluralItems; }
 
     /// Detect a particular common breakage of catalogs.
     bool HasDuplicateItems() const;
@@ -254,6 +254,7 @@ protected:
 
     wxTextFileType m_fileCRLF;
     int m_fileWrappingWidth;
+    bool m_hasPluralItems = false;
 
     friend class POLoadParser;
 };
