@@ -210,6 +210,12 @@ bool set_node_text_with_metadata(xml_node node, std::string&& text, const XLIFFS
     }
 }
 
+/// Check if a string contains only digit (e.g. "42")
+inline bool is_numeric_only(const std::string& s)
+{
+    return std::all_of(s.begin(), s.end(), [](char c){ return c >= '0' && c <= '9'; });
+}
+
 
 
 class MetadataExtractor : public pugi::xml_tree_walker
@@ -563,13 +569,12 @@ public:
 
         m_string = str::to_wx(extractor.extractedText);
 
-        // TODO: switch to textual IDs in CatalogItem
         std::string id = node.attribute("resname").value();
         if (id.empty())
             id = node.attribute("id").value();
-        // some tools (e.g. Xcode, tool-id="com.apple.dt.xcode") use ID same as text
-        if (!id.empty() && id != m_string)
-            m_extractedComments.push_back("ID: " + str::to_wx(id));
+        // some tools (e.g. Xcode, tool-id="com.apple.dt.xcode") use ID same as text; numeric only is useless to translator too
+        if (!id.empty() && id != m_string && !is_numeric_only(id))
+            m_symbolicId = str::to_wx(id);
 
         auto target = node.child("target");
         if (target)
@@ -742,13 +747,12 @@ public:
 
         m_string = str::to_wx(extractor.extractedText);
 
-        // TODO: switch to textual IDs in CatalogItem
         std::string id = unit().attribute("name").value();
         if (id.empty())
             id = unit().attribute("id").value();
-        // some tools (e.g. Xcode, tool-id="com.apple.dt.xcode") use ID same as text
-        if (!id.empty() && id != m_string)
-            m_extractedComments.push_back("ID: " + str::to_wx(id));
+        // some tools (e.g. Xcode, tool-id="com.apple.dt.xcode") use ID same as text; numeric only is useless to translator too
+        if (!id.empty() && id != m_string && !is_numeric_only(id))
+            m_symbolicId = str::to_wx(id);
 
         auto target = node.child("target");
         if (target)

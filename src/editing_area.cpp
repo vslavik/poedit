@@ -415,7 +415,7 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
       m_labelPlural(nullptr),
       m_labelSource(nullptr),
       m_labelTrans(nullptr),
-      m_tagContext(nullptr),
+      m_tagIdOrContext(nullptr),
       m_tagFormat(nullptr),
       m_tagPretranslated(nullptr),
       m_issueLine(nullptr)
@@ -434,7 +434,7 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
 #endif
     m_labelSource->SetFont(m_labelSource->GetFont().Bold());
 
-    m_tagContext = new TagLabel(this, Color::TagContextFg, Color::TagContextBg);
+    m_tagIdOrContext = new TagLabel(this, Color::TagContextFg, Color::TagContextBg);
     m_tagFormat = new TagLabel(this, Color::TagSecondaryFg, Color::TagSecondaryBg);
 
     m_charCounter = new CharCounter(this, mode);
@@ -442,13 +442,13 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
     auto sourceLineSizer = new ShrinkableBoxSizer(wxHORIZONTAL);
     sourceLineSizer->Add(m_labelSource, wxSizerFlags().Center());
     sourceLineSizer->AddSpacer(PX(4));
-    sourceLineSizer->Add(m_tagContext, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
+    sourceLineSizer->Add(m_tagIdOrContext, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
     sourceLineSizer->Add(m_tagFormat, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
     sourceLineSizer->AddStretchSpacer(1);
     sourceLineSizer->Add(m_charCounter, wxSizerFlags().Center());
     sourceLineSizer->AddSpacer(PX(4));
-    sourceLineSizer->SetShrinkableWindow(m_tagContext);
-    sourceLineSizer->SetMinSize(-1, m_tagContext->GetBestSize().y);
+    sourceLineSizer->SetShrinkableWindow(m_tagIdOrContext);
+    sourceLineSizer->SetMinSize(-1, m_tagIdOrContext->GetBestSize().y);
 
     m_labelSingular = new wxStaticText(this, -1, _("Singular"));
     m_labelSingular->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
@@ -978,12 +978,20 @@ void EditingArea::UpdateToTextCtrl(CatalogItemPtr item, int flags)
         }
     } // !DontTouchText
 
-    ShowPart(m_tagContext, item->HasContext());
+    ShowPart(m_tagIdOrContext, item->HasContext() || item->HasSymbolicId());
     if (item->HasContext())
     {
-        m_tagContext->SetLabel(item->GetContext());
+        m_tagIdOrContext->SetColor(Color::TagContextFg, Color::TagContextBg);
+        m_tagIdOrContext->SetLabel(item->GetContext());
         // TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
-        m_tagContext->SetToolTip(wxString::Format(_("String context: %s"), item->GetContext()));
+        m_tagIdOrContext->SetToolTip(wxString::Format(_("String context: %s"), item->GetContext()));
+    }
+    else if (item->HasSymbolicId())
+    {
+        m_tagIdOrContext->SetColor(Color::TagSecondaryFg, Color::TagSecondaryBg);
+        m_tagIdOrContext->SetLabel(item->GetSymbolicId());
+        // TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+        m_tagIdOrContext->SetToolTip(wxString::Format(_("String identifier: %s"), item->GetSymbolicId()));
     }
 
     auto format = item->GetFormatFlag();
@@ -1153,5 +1161,5 @@ void EditingArea::ChangeFocusedPluralTab(int offset)
 
 int EditingArea::GetTopRowHeight() const
 {
-    return m_tagContext->GetContainingSizer()->GetSize().y;
+    return m_tagIdOrContext->GetContainingSizer()->GetSize().y;
 }

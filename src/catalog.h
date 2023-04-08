@@ -99,6 +99,10 @@ class CatalogItem
         /// Gets numeric, 1-based ID
         int GetId() const { return m_id; }
 
+        /// Get item's symbolic ID if used by the file
+        virtual wxString GetSymbolicId() const { return wxString(); }
+        bool HasSymbolicId() const { return !GetSymbolicId().empty(); }
+
         /// Returns the source string.
         const wxString& GetString() const { return m_string; }
 

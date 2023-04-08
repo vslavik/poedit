@@ -74,9 +74,12 @@ public:
         { m_id = id; }
     XLIFFCatalogItem(const CatalogItem&) = delete;
 
+    wxString GetSymbolicId() const override { return m_symbolicId; }
+
 protected:
     pugi::xml_node m_node;
     XLIFFStringMetadata m_metadata;
+    wxString m_symbolicId;
 };
 
 
