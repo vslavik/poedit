@@ -982,7 +982,8 @@ void EditingArea::UpdateToTextCtrl(CatalogItemPtr item, int flags)
     if (item->HasContext())
     {
         m_tagContext->SetLabel(item->GetContext());
-        m_tagContext->SetToolTip(item->GetContext());
+        // TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+        m_tagContext->SetToolTip(wxString::Format(_("String context: %s"), item->GetContext()));
     }
 
     auto format = item->GetFormatFlag();
