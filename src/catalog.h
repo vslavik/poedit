@@ -65,6 +65,34 @@ typedef enum
 } Bookmark;
 
 
+/**
+    Optional data attached to CatalogItem.
+
+    Used primarily in connection wiht UsesSymbolicIDsForSource() to provide
+    read source strings.
+ */
+struct SideloadedItemData
+{
+    /// Source string replacement
+    wxString source_string, source_plural_string;
+
+    /// Extracted comments / description (used by 
+    wxArrayString extracted_comments;
+};
+
+/**
+    Optional data attached to Catalog.
+
+    Used primarily in connection wiht UsesSymbolicIDsForSource() to provide
+    read source strings.
+ */
+struct SideloadedCatalogData
+{
+    CatalogPtr reference_file;
+    Language source_language;
+};
+
+
 /** This class holds information about one particular string.
     This includes source string and its occurrences in source code
     (so-called references), translation and translation's status
@@ -99,18 +127,23 @@ class CatalogItem
         /// Gets numeric, 1-based ID
         int GetId() const { return m_id; }
 
+        // Implementation for use in derived classes:
+        virtual wxString GetRawSymbolicId() const { return wxString(); }
+        const wxString& GetRawString() const { return m_string; }
+        const wxString& GetRawPluralString() const { return m_plural; }
+
         /// Get item's symbolic ID if used by the file
-        virtual wxString GetSymbolicId() const { return wxString(); }
+        wxString GetSymbolicId() const { return m_sideloaded ? GetRawString() : GetRawSymbolicId(); }
         bool HasSymbolicId() const { return !GetSymbolicId().empty(); }
 
         /// Returns the source string.
-        const wxString& GetString() const { return m_string; }
+        const wxString& GetString() const { return m_sideloaded ? m_sideloaded->source_string : GetRawString(); }
+
+        /// Returns the plural string.
+        const wxString& GetPluralString() const { return m_sideloaded ? m_sideloaded->source_plural_string : GetRawPluralString(); }
 
         /// Does this entry have a msgid_plural?
         bool HasPlural() const { return m_hasPlural; }
-
-        /// Returns the plural string.
-        const wxString& GetPluralString() const { return m_plural; }
 
         /// Does this entry have a msgctxt?
         bool HasContext() const { return m_hasContext; }
@@ -142,13 +175,13 @@ class CatalogItem
         const wxString& GetComment() const { return m_comment; }
 
         /// Returns array of all auto comments.
-        const wxArrayString& GetExtractedComments() const { return m_extractedComments; }
+        const wxArrayString& GetExtractedComments() const { return m_sideloaded ? m_sideloaded->extracted_comments : m_extractedComments; }
 
         /// Convenience function: does this entry has a comment?
         bool HasComment() const { return !m_comment.empty(); }
 
         /// Convenience function: does this entry has auto comments?
-        bool HasExtractedComments() const { return !m_extractedComments.empty(); }
+        bool HasExtractedComments() const { return !GetExtractedComments().empty(); }
 
         /// Gets gettext flags. \see SetFlags
         wxString GetFlags() const;
@@ -239,6 +272,8 @@ class CatalogItem
         void SetIssue(const Issue& issue) { m_issue = std::make_shared<Issue>(issue); }
         void SetIssue(Issue::Severity severity, const wxString& message) { m_issue = std::make_shared<Issue>(severity, message); }
 
+        void AttachSideloadedData(const std::shared_ptr<SideloadedItemData>& d) { m_sideloaded = d; }
+
     protected:
         // API for subclasses:
         virtual void UpdateInternalRepresentation() = 0;
@@ -304,6 +339,7 @@ class CatalogItem
         Bookmark m_bookmark;
 
         std::shared_ptr<Issue> m_issue;
+        std::shared_ptr<SideloadedItemData> m_sideloaded;
 };
 
 
@@ -544,7 +580,7 @@ class Catalog
         virtual unsigned GetPluralFormsCount() const;
 
         /// Returns catalog's source language (may be invalid, but usually English).
-        Language GetSourceLanguage() const { return m_sourceLanguage; }
+        Language GetSourceLanguage() const { return m_sideloaded ? m_sideloaded->source_language : m_sourceLanguage; }
 
         /// Returns catalog's language (may be invalid).
         virtual Language GetLanguage() const { return m_header.Lang; }
@@ -553,7 +589,7 @@ class Catalog
         virtual void SetLanguage(Language lang);
 
         /// Whether source text is just symbolic identifier and not actual text
-        bool UsesSymbolicIDsForSource() const { return m_sourceIsSymbolicID; }
+        bool UsesSymbolicIDsForSource() const { return m_sourceIsSymbolicID && !m_sideloaded; }
             
         /// Returns true if the catalog contains obsolete entries (~.*)
         virtual bool HasDeletedItems() const = 0;
@@ -585,6 +621,22 @@ class Catalog
         void AttachCloudSync(std::shared_ptr<CloudSyncDestination> c) { m_cloudSync = c; }
         std::shared_ptr<CloudSyncDestination> GetCloudSync() const { return m_cloudSync; }
 
+        /**
+            Attach source text data from another file to this one.
+
+            This is used to implement showing of actual source text when the in-file source is
+            just symbolic IDs. After calling this function, Get(Plural)String() will no longer
+            return the ID, but will instead return as source text the translation from @a ref
+            (typically you'll want that file to be for English).
+
+            Attaches data from the @a ref file to this one,
+         */
+        void SideloadSourceDataFromReferenceFile(CatalogPtr ref);
+
+        /// Whether the source text was replaced from another file
+        bool HasSideloadedReferenceFile() const { return m_sideloaded != nullptr; }
+        std::shared_ptr<SideloadedCatalogData> GetSideloadedSourceData() const { return m_sideloaded; }
+
     protected:
         Catalog(Type type);
 
@@ -601,6 +653,7 @@ class Catalog
         bool m_sourceIsSymbolicID = false;
 
         std::shared_ptr<CloudSyncDestination> m_cloudSync;
+        std::shared_ptr<SideloadedCatalogData> m_sideloaded;
 };
 
 #endif // Poedit_catalog_h
