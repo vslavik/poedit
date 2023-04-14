@@ -35,7 +35,6 @@
 #include <boost/algorithm/string.hpp>
 
 #include <memory>
-#include <mutex>
 #include <set>
 #include <sstream>
 
@@ -44,10 +43,6 @@ using namespace pugi;
 
 namespace
 {
-
-// FIXME: This should be per-document mutex in XLIFFCatalog, but that is
-//        currently not accessible from XLIFFCatalogItem, hence a global.
-std::mutex gs_documentMutex;
 
 // Flags required for correct parsing of XML files with no loss of information
 // FIXME: This includes parse_eol, which is undesirable: it converts files to Unix
@@ -448,6 +443,12 @@ XLIFFReadException::XLIFFReadException(const wxString& what)
 {}
 
 
+XLIFFCatalogItem::document_lock::document_lock(XLIFFCatalogItem *parent)
+    : std::lock_guard<std::mutex>(parent->m_owner.m_documentMutex)
+{
+}
+
+
 bool XLIFFCatalog::HasCapability(Catalog::Cap cap) const
 {
     switch (cap)
@@ -553,7 +554,7 @@ std::string XLIFFCatalog::GetXPathValue(const char* xpath) const
 class XLIFF12CatalogItem : public XLIFFCatalogItem
 {
 public:
-    XLIFF12CatalogItem(int itemId, xml_node node) : XLIFFCatalogItem(itemId, node)
+    XLIFF12CatalogItem(XLIFF1Catalog& owner, int itemId, xml_node node) : XLIFFCatalogItem(owner, itemId, node)
     {
         auto source = node.child("source");
 
@@ -605,7 +606,7 @@ public:
         wxASSERT( m_translations.size() == 1 ); // no plurals
 
         // modifications in the pugixml tree can affect other nodes, we must lock the entire document
-        std::lock_guard<std::mutex> lock(gs_documentMutex);
+        document_lock lock(this);
 
         auto target = m_node.child("target");
         if (!target)
@@ -707,9 +708,9 @@ void XLIFF1Catalog::Parse(pugi::xml_node root)
                 continue;
 
             if (m_subversion == 0)
-                m_items.push_back(std::make_shared<XLIFF10CatalogItem>(++id, node));
+                m_items.push_back(std::make_shared<XLIFF10CatalogItem>(*this, ++id, node));
             else
-                m_items.push_back(std::make_shared<XLIFF12CatalogItem>(++id, node));
+                m_items.push_back(std::make_shared<XLIFF12CatalogItem>(*this, ++id, node));
         }
     }
 }
@@ -732,7 +733,7 @@ void XLIFF1Catalog::SetLanguage(Language lang)
 class XLIFF2CatalogItem : public XLIFFCatalogItem
 {
 public:
-    XLIFF2CatalogItem(int itemId, xml_node node) : XLIFFCatalogItem(itemId, node)
+    XLIFF2CatalogItem(XLIFF2Catalog& owner, int itemId, xml_node node) : XLIFFCatalogItem(owner, itemId, node)
     {
         auto source = node.child("source");
 
@@ -781,7 +782,7 @@ public:
         wxASSERT( m_translations.size() == 1 ); // no plurals
 
         // modifications in the pugixml tree can affect other nodes, we must lock the entire document
-        std::lock_guard<std::mutex> lock(gs_documentMutex);
+        document_lock lock(this);
 
         auto target = m_node.child("target");
         if (!target)
@@ -845,7 +846,7 @@ void XLIFF2Catalog::Parse(pugi::xml_node root)
         if (strcmp(node.parent().attribute("translate").value(), "no") == 0)
             continue;
 
-        m_items.push_back(std::make_shared<XLIFF2CatalogItem>(++id, node));
+        m_items.push_back(std::make_shared<XLIFF2CatalogItem>(*this, ++id, node));
     }
 }
 

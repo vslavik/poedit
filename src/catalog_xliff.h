@@ -31,7 +31,11 @@
 
 #include "pugixml.h"
 
+#include <mutex>
 #include <vector>
+
+
+class XLIFFCatalog;
 
 
 class XLIFFException : public Exception
@@ -70,11 +74,18 @@ struct XLIFFStringMetadata
 class XLIFFCatalogItem : public CatalogItem
 {
 public:
-    XLIFFCatalogItem(int id, pugi::xml_node node) : m_node(node)
+    XLIFFCatalogItem(XLIFFCatalog& owner, int id, pugi::xml_node node) : m_owner(owner), m_node(node)
         { m_id = id; }
     XLIFFCatalogItem(const CatalogItem&) = delete;
 
 protected:
+    struct document_lock : public std::lock_guard<std::mutex>
+    {
+        document_lock(XLIFFCatalogItem *parent);
+    };
+
+protected:
+    XLIFFCatalog& m_owner;
     pugi::xml_node m_node;
     XLIFFStringMetadata m_metadata;
 };
@@ -82,7 +93,6 @@ protected:
 
 class XLIFFCatalog : public Catalog
 {
-
 public:
     ~XLIFFCatalog() {}
 
@@ -116,8 +126,11 @@ protected:
     virtual void Parse(pugi::xml_node root) = 0;
 
 protected:
+    std::mutex m_documentMutex;
     pugi::xml_document m_doc;
     Language m_language;
+
+    friend class XLIFFCatalogItem;
 };
 
 
