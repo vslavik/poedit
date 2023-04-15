@@ -758,6 +758,11 @@ void PoeditListCtrl::UpdateColumns()
                       ? wxString::Format(_(L"Source text — %s"), srclang.DisplayName())
                       : _("Source text");
     }
+    if (m_catalog->HasSideloadedReferenceFile())
+    {
+        wxFileName fn(m_catalog->GetSideloadedSourceData()->reference_file->GetFileName());
+        sourceTitle += wxString::Format(" [%s]", fn.GetFullName());
+    }
     m_colSource->SetTitle(sourceTitle);
 
 #ifdef __WXMSW__

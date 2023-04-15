@@ -2320,6 +2320,9 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
 
         if (cat->HasCapability(Catalog::Cap::Translations))
             WarnAboutLanguageIssues();
+
+        if (cat->UsesSymbolicIDsForSource())
+            OfferSideloadingSourceText();
     }
 
     // Can't do this with the window being frozen, because positioning the toolbar
@@ -2481,6 +2484,56 @@ void PoeditFrame::WarnAboutLanguageIssues()
             }
         }
     }
+}
+
+
+void PoeditFrame::OfferSideloadingSourceText()
+{
+    if (!m_catalog->UsesSymbolicIDsForSource())
+        return;
+
+    auto filename = m_catalog->GetFileName();
+    wxString wildcard;
+    if (!Language::TryGuessFromFilename(filename, &wildcard).IsValid())
+        return;
+
+    wildcard.Replace("*", "en");
+    wxFileName ref(wildcard);
+    if (!ref.FileExists() || wxFileName(filename) == ref)
+        return;
+
+    AttentionMessage msg
+        (
+            "sideload-symbolic-id-source",
+            AttentionMessage::Question,
+            _("Would you like to use English for source text?")
+        );
+    msg.SetExplanation(wxString::Format(_(L"This file uses string IDs instead of source text. Poedit can load English texts from the “%s” file for you."), ref.GetFullName()));
+    // TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+    msg.AddAction(_("Load English"),[=]{
+        try
+        {
+            auto refcat = Catalog::Create(wildcard);
+            m_catalog->SideloadSourceDataFromReferenceFile(refcat);
+            UpdateEditingUIAfterChange();
+            NotifyCatalogChanged(m_catalog);
+        }
+        catch (...)
+        {
+            wxMessageDialog dlg
+            (
+                this,
+                wxString::Format(_(L"The file “%s” couldn’t be opened."), ref.GetFullName()),
+                _("Invalid file"),
+                wxOK | wxICON_ERROR
+            );
+            dlg.SetExtendedMessage(DescribeCurrentException());
+            dlg.ShowModal();
+        }
+    });
+
+    m_attentionBar->ShowMessage(msg);
+
 }
 
 

@@ -116,6 +116,7 @@ class PoeditFrame : public PoeditFrameBase
 
         void FixDuplicatesIfPresent();
         void WarnAboutLanguageIssues();
+        void OfferSideloadingSourceText();
 
         /// Did the user modify the catalog?
         bool IsModified() const { return m_modified; }
