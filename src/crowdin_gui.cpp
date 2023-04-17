@@ -34,6 +34,7 @@
 #include "cloud_sync.h"
 #include "colorscheme.h"
 #include "concurrency.h"
+#include "configuration.h"
 #include "customcontrols.h"
 #include "errors.h"
 #include "hidpi.h"
@@ -570,14 +571,29 @@ private:
         m_project->Enable(!m_projects.empty());
 
         if (m_projects.empty())
+        {
             m_activity->StopWithError(_("No translation projects listed in your Crowdin account."));
+            return;
+        }
         else
+        {
             m_activity->Stop();
+        }
 
         if (m_projects.size() == 1)
         {
             m_project->SetSelection(1);
             OnProjectSelected();
+        }
+        else
+        {
+            auto last = Config::CrowdinLastProject();
+            auto lasti = last.empty()? m_projects.end() : std::find_if(m_projects.begin(), m_projects.end(), [=](const auto& p){ return p.identifier == last; });
+            if (lasti != m_projects.end())
+            {
+                m_project->SetSelection(1 + int(lasti - m_projects.begin()));
+                OnProjectSelected();
+            }
         }
     }
 
@@ -586,10 +602,12 @@ private:
         auto sel = m_project->GetSelection();
         if (sel > 0)
         {
+            auto& prj = m_projects[sel-1];
+            Config::CrowdinLastProject(prj.identifier);
             m_activity->Start();
             EnableAllChoices(false);
             m_files->ClearFiles();
-            CrowdinClient::Get().GetProjectInfo(m_projects[sel-1].id)
+            CrowdinClient::Get().GetProjectInfo(prj.id)
                 .then_on_window(this, &CrowdinOpenDialog::OnFetchedProjectInfo)
                 .catch_all([=](dispatch::exception_ptr e){
                     m_activity->HandleError(e);
