@@ -638,6 +638,7 @@ void SuggestionsSidebarBlock::ClearMessage()
     m_msgText->SetAndWrapLabel("");
     UpdateVisibility();
     m_suggestionsPanel->Layout();
+    m_panelSizer->Layout();
 }
 
 void SuggestionsSidebarBlock::SetMessage(const wxString& icon, const wxString& text)
@@ -647,6 +648,7 @@ void SuggestionsSidebarBlock::SetMessage(const wxString& icon, const wxString& t
     m_msgText->SetAndWrapLabel(text);
     UpdateVisibility();
     m_suggestionsPanel->Layout();
+    m_panelSizer->Layout();
 }
 
 void SuggestionsSidebarBlock::ReportError(SuggestionsBackend*, dispatch::exception_ptr e)
