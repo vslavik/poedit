@@ -78,6 +78,8 @@ public:
         { m_id = id; }
     XLIFFCatalogItem(const CatalogItem&) = delete;
 
+    wxString GetRawSymbolicId() const override { return m_symbolicId; }
+
 protected:
     struct document_lock : public std::lock_guard<std::mutex>
     {
@@ -88,6 +90,7 @@ protected:
     XLIFFCatalog& m_owner;
     pugi::xml_node m_node;
     XLIFFStringMetadata m_metadata;
+    wxString m_symbolicId;
 };
 
 

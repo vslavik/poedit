@@ -953,7 +953,7 @@ void POCatalog::FixupCommonIssues()
     {
         if (i->GetFormatFlag() == wxS("php"))
         {
-            auto s = i->GetString();
+            auto s = i->GetRawString();
             if (s.Contains(wxS("% ")) && !s.Contains(wxS("%% ")))
             {
                 auto poi = std::dynamic_pointer_cast<POCatalogItem>(i);
@@ -1487,11 +1487,11 @@ bool POCatalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
         {
             SaveMultiLines(f, wxS("msgctxt \"") + FormatStringForFile(data->GetContext()) + wxS("\""));
         }
-        dummy = FormatStringForFile(data->GetString());
+        dummy = FormatStringForFile(data->GetRawString());
         SaveMultiLines(f, wxS("msgid \"") + dummy + wxS("\""));
         if (data->HasPlural())
         {
-            dummy = FormatStringForFile(data->GetPluralString());
+            dummy = FormatStringForFile(data->GetRawPluralString());
             SaveMultiLines(f, wxS("msgid_plural \"") + dummy + wxS("\""));
 
             for (unsigned i = 0; i < pluralsCount; i++)
@@ -1589,7 +1589,7 @@ bool POCatalog::HasDuplicateItems() const
     std::set<MsgId> ids;
     for (auto& item: m_items)
     {
-        if (!ids.emplace(std::make_pair(item->GetContext(), item->GetString())).second)
+        if (!ids.emplace(std::make_pair(item->GetContext(), item->GetRawString())).second)
             return true;
     }
     return false;

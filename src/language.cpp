@@ -521,8 +521,11 @@ const std::vector<std::wstring>& Language::AllFormattedNames()
 }
 
 
-Language Language::TryGuessFromFilename(const wxString& filename)
+Language Language::TryGuessFromFilename(const wxString& filename, wxString *wildcard)
 {
+    if (wildcard)
+        wildcard->clear();
+
     wxFileName fn(filename);
     fn.MakeAbsolute();
 
@@ -532,8 +535,15 @@ Language Language::TryGuessFromFilename(const wxString& filename)
     //  - directory name (cs_CZ, cs.lproj, cs/LC_MESSAGES)
     std::wstring name = fn.GetName().ToStdWstring();
     Language lang = Language::TryParseWithValidation(name);
-            if (lang.IsValid())
-                return lang;
+    if (lang.IsValid())
+    {
+        if (wildcard)
+        {
+            fn.SetName("*");
+            *wildcard = fn.GetFullPath();
+        }
+        return lang;
+    }
 
     size_t pos = name.find_first_of(L".-_");
     while (pos != wxString::npos)
@@ -541,24 +551,49 @@ Language Language::TryGuessFromFilename(const wxString& filename)
         auto part = name.substr(pos+1);
         lang = Language::TryParseWithValidation(part);
         if (lang.IsValid())
+        {
+            if (wildcard)
+            {
+                name.replace(pos+1, std::wstring::npos, L"*");
+                fn.SetName(name);
+                *wildcard = fn.GetFullPath();
+            }
             return lang;
-         pos = name.find_first_of(L".-_",  pos+1);
+        }
+        pos = name.find_first_of(L".-_",  pos+1);
     }
 
     auto dirs = fn.GetDirs();
     if (!dirs.empty())
     {
-        auto d = dirs.rbegin();
-        if (d->IsSameAs("LC_MESSAGES", /*caseSensitive=*/false))
+        size_t i = dirs.size() - 1;
+        if (dirs[i].IsSameAs("LC_MESSAGES", /*caseSensitive=*/false))
         {
-            if (++d == dirs.rend())
+            if (i == 0)
                 return Language(); // failed to match
+            --i;
         }
-        wxString rest;
-        if (d->EndsWith(".lproj", &rest))
-            return Language::TryParseWithValidation(rest.ToStdWstring());
+        wxString rest, wmatch;
+        if (dirs[i].EndsWith(".lproj", &rest))
+        {
+            lang = Language::TryParseWithValidation(rest.ToStdWstring());
+            wmatch = "*.lproj";
+        }
         else
-            return Language::TryParseWithValidation(d->ToStdWstring());
+        {
+            lang = Language::TryParseWithValidation(dirs[i].ToStdWstring());
+            wmatch = "*";
+        }
+        if (lang.IsValid())
+        {
+            if (wildcard)
+            {
+                fn.RemoveDir(i);
+                fn.InsertDir(i, wmatch);
+                *wildcard = fn.GetFullPath();
+            }
+            return lang;
+        }
     }
 
     return Language(); // failed to match

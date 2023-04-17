@@ -150,7 +150,7 @@ private:
     wxStaticText *m_labelSingular, *m_labelPlural;
     wxStaticText *m_labelSource, *m_labelTrans;
 
-    TagLabel *m_tagContext;
+    TagLabel *m_tagIdOrContext;
     TagLabel *m_tagFormat;
     TagLabel *m_tagPretranslated;
 

@@ -86,7 +86,7 @@ bool DetectUseOfSymbolicIDs(Catalog& cat)
     //
     for (auto& i: cat.items())
     {
-        for (auto c: i->GetString())
+        for (auto c: i->GetRawString())
         {
             if (c == ' ' || c >= 0x80)
                 return false;
@@ -1077,7 +1077,7 @@ void Catalog::PostCreation()
             wxString allText;
             for (auto& i: items())
             {
-                allText.append(i->GetString());
+                allText.append(i->GetRawString());
                 allText.append('\n');
             }
             if (!allText.empty())
@@ -1189,4 +1189,34 @@ bool Catalog::CanLoadFile(const wxString& extension_)
     return POCatalog::CanLoadFile(extension) ||
            XLIFFCatalog::CanLoadFile(extension) ||
            JSONCatalog::CanLoadFile(extension);
+}
+
+
+void Catalog::SideloadSourceDataFromReferenceFile(CatalogPtr ref)
+{
+    std::map<wxString, CatalogItemPtr> refItems;
+
+    for (auto iref: ref->items())
+        refItems[iref->GetRawString()] = iref;
+
+    for (auto i: this->items())
+    {
+        auto ri = refItems.find(i->GetRawString());
+        if (ri == refItems.end())
+            continue;
+
+        auto& rdata = *ri->second;
+        auto d = std::make_shared<SideloadedItemData>();
+        d->source_string = rdata.GetTranslation();
+        if (rdata.HasPlural())
+            d->source_plural_string = rdata.GetTranslation(1);
+        if (rdata.HasExtractedComments())
+            d->extracted_comments = rdata.GetExtractedComments();
+
+        i->AttachSideloadedData(d);
+    }
+
+    m_sideloaded = std::make_shared<SideloadedCatalogData>();
+    m_sideloaded->reference_file = ref;
+    m_sideloaded->source_language = ref->GetLanguage();
 }
