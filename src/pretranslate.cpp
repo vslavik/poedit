@@ -151,6 +151,22 @@ int PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const PreTranslate
 
 void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list, CatalogPtr catalog, std::function<void()> onChangesMade)
 {
+    if (catalog->UsesSymbolicIDsForSource())
+    {
+        wxWindowPtr<wxMessageDialog> resultsDlg(
+            new wxMessageDialog
+                (
+                    window,
+                    _("Cannot pre-translate without source text."),
+                    _("Pre-translate"),
+                    wxOK | wxICON_ERROR
+                )
+        );
+        resultsDlg->SetExtendedMessage(_(L"Pre-translation requires that source text is available. It doesn’t work if only IDs without the actual text are used."));
+        resultsDlg->ShowWindowModalThenDo([resultsDlg](int){});
+        return;
+    }
+
     wxWindowPtr<wxDialog> dlg(new wxDialog(window, wxID_ANY, _("Pre-translate"), wxDefaultPosition, wxSize(PX(440), -1)));
     auto topsizer = new wxBoxSizer(wxVERTICAL);
     auto sizer = new wxBoxSizer(wxVERTICAL);

@@ -191,6 +191,7 @@ public:
     CatalogItemPtr GetSelectedItem() const { return m_selectedItem; }
     Language GetCurrentSourceLanguage() const;
     Language GetCurrentLanguage() const;
+    CatalogPtr GetCatalog() const { return m_catalog; }
     bool FileHasCapability(Catalog::Cap cap) const;
 
     /// Refreshes displayed content
