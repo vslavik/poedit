@@ -730,7 +730,7 @@ bool ExtractCrowdinMetadata(CatalogPtr cat,
     if (lang)
     {
         *lang = hdr.HasHeader("X-Crowdin-Language")
-                ? Language::TryParse(hdr.GetHeader("X-Crowdin-Language").ToStdWstring())
+                ? Language::FromLanguageTag(hdr.GetHeader("X-Crowdin-Language").ToStdString())
                 : cat->GetLanguage();
     }
 
