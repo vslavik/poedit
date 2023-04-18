@@ -408,7 +408,7 @@
 //
 // Recommended setting: 0 to remain compatible with the official builds of
 // wxWidgets.
-#define wxUSE_STD_STRING_CONV_IN_WXSTRING wxUSE_STL
+#define wxUSE_STD_STRING_CONV_IN_WXSTRING 0
 
 // VC++ 4.2 and above allows <iostream> and <iostream.h> but you can't mix
 // them. Set this option to 1 to use <iostream.h>, 0 to use <iostream>.
