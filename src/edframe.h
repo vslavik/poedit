@@ -116,6 +116,7 @@ class PoeditFrame : public PoeditFrameBase
 
         void FixDuplicatesIfPresent();
         void WarnAboutLanguageIssues();
+        void SideloadSourceTextFromFile(const wxFileName& fn);
         void OfferSideloadingSourceText();
 
         /// Did the user modify the catalog?

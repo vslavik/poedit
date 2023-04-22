@@ -1220,3 +1220,10 @@ void Catalog::SideloadSourceDataFromReferenceFile(CatalogPtr ref)
     m_sideloaded->reference_file = ref;
     m_sideloaded->source_language = ref->GetLanguage();
 }
+
+void Catalog::ClearSideloadedSourceData()
+{
+    m_sideloaded.reset();
+    for (auto i: this->items())
+        i->ClearSideloadedData();
+}

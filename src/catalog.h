@@ -273,6 +273,7 @@ class CatalogItem
         void SetIssue(Issue::Severity severity, const wxString& message) { m_issue = std::make_shared<Issue>(severity, message); }
 
         void AttachSideloadedData(const std::shared_ptr<SideloadedItemData>& d) { m_sideloaded = d; }
+        void ClearSideloadedData() { m_sideloaded.reset(); }
 
     protected:
         // API for subclasses:
@@ -632,6 +633,9 @@ class Catalog
             Attaches data from the @a ref file to this one,
          */
         void SideloadSourceDataFromReferenceFile(CatalogPtr ref);
+
+        /// Undo the effect of SideloadSourceDataFromReferenceFile()
+        void ClearSideloadedSourceData();
 
         /// Whether the source text was replaced from another file
         bool HasSideloadedReferenceFile() const { return m_sideloaded != nullptr; }
