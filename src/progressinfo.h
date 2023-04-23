@@ -27,6 +27,7 @@
 #define Poedit_progressinfo_h
 
 #include "concurrency.h"
+#include "errors.h"
 #include "titleless_window.h"
 
 #include <wx/string.h>
@@ -122,8 +123,17 @@ protected:
                 EndModal(wxID_OK);
                 wxLog::Resume();
             });
+        })
+        .catch_all([=](dispatch::exception_ptr e){
+            // make sure EndModal() is only called within event loop, i.e. not before
+            // Show*Modal() was called (which could happen if `bg` finished instantly):
+            CallAfter([=]{
+                // TODO: handle errors better -- show error inline, indicate to caller (possibly rethrow on main?)
+                wxLogError(DescribeException(e));
+                EndModal(wxID_CANCEL);
+                wxLog::Resume();
+            });
         });
-        // TODO: handle exceptions (can't just rethrow on main thread)
 
         if (forceModal || !GetParent())
         {
