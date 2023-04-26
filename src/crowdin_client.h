@@ -125,19 +125,20 @@ public:
                                       const std::string& file_content);
 
 private:
+    class crowdin_http_client;
+    class crowdin_token;
+
     CrowdinClient();
     ~CrowdinClient();
 
     // Initialize m_api for use with given authorization; must be called before use
-    void InitWithAuthToken(const std::string& authToken);
+    bool InitWithAuthToken(const crowdin_token& token);
 
     void SignInIfAuthorized();
     void SaveAndSetToken(const std::string& token);
-    std::string GetValidToken() const;
+    crowdin_token GetValidToken() const;
 
-    class crowdin_http_client;
-
-    mutable std::unique_ptr<std::string> m_cachedAuthToken;
+    mutable std::unique_ptr<crowdin_token> m_cachedAuthToken;
     std::unique_ptr<crowdin_http_client> m_api;
     std::shared_ptr<dispatch::promise<void>> m_authCallback;
     std::string m_authCallbackExpectedState;

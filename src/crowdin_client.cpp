@@ -62,6 +62,36 @@ namespace
 #define OAUTH_SCOPE                     "project"
 #define OAUTH_CALLBACK_URL_PREFIX       "poedit://auth/crowdin/"
 
+
+std::string base64_decode_json_part(const std::string &in)
+{
+    std::string out;
+    std::vector<int> t(256, -1);
+    {
+        static const char* b = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+        for (int i = 0; i < 64; i ++)
+            t[b[i]] = i;
+    }
+
+    int val = 0,
+        valb = -8;
+
+    for (uint8_t c : in)
+    {
+        if (t[c] == -1)
+            break;
+        val = (val << 6) + t[c];
+        valb += 6;
+        if (valb >= 0)
+        {
+            out.push_back(char(val >> valb & 0xFF));
+            valb -= 8;
+        }
+    }
+
+    return out;
+}
+
 } // anonymous namespace
 
 
@@ -127,6 +157,45 @@ protected:
     }
 
     CrowdinClient& m_owner;
+};
+
+
+class CrowdinClient::crowdin_token
+{
+public:
+    explicit crowdin_token(const std::string& jwt_token)
+    {
+        try
+        {
+            if (jwt_token.empty())
+                return;
+
+            auto token_json = json::parse(
+                base64_decode_json_part(std::string(
+                    wxString(jwt_token).AfterFirst('.').BeforeFirst('.').utf8_str()
+            )));
+            domain = get_value(token_json, "domain", "");
+            if (!domain.empty())
+                domain += '.';
+
+            time_t expiration = (time_t)get_value(token_json, "exp", 0.0);
+            m_valid = (expiration > time(NULL));
+            if (m_valid)
+                encoded = jwt_token;
+        }
+        catch (...)
+        {
+            wxLogTrace("poedit.crowdin", "Failed to decode token. Most probable invalid/corrupted or unknown/unsupported type", jwt_token.c_str());
+        }
+    }
+
+    bool is_valid() const { return m_valid; }
+
+    std::string domain;
+    std::string encoded;
+
+private:
+    bool m_valid = false;
 };
 
 
@@ -478,82 +547,43 @@ dispatch::future<void> CrowdinClient::UploadFile(int project_id,
 }
 
 
-static std::string base64_decode_json_part(const std::string &in)
+bool CrowdinClient::InitWithAuthToken(const crowdin_token& token)
 {
-    std::string out;
-    std::vector<int> t(256, -1);
-    {
-        static const char* b = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-        for (int i = 0; i < 64; i ++)
-            t[b[i]] = i;
-    }
+    wxLogTrace("poedit.crowdin", "Authorization: %s", token.encoded.c_str());
 
-    int val = 0,
-        valb = -8;
+    if (!token.is_valid())
+        return false;
 
-    for (uint8_t c : in)
-    {
-        if (t[c] == -1)
-            break;
-        val = (val << 6) + t[c];
-        valb += 6;
-        if (valb >= 0)
-        {
-            out.push_back(char(val >> valb & 0xFF));
-            valb -= 8;
-        }
-    }
-
-    return out;
-}
-
-
-void CrowdinClient::InitWithAuthToken(const std::string& token)
-{
-    wxLogTrace("poedit.crowdin", "Authorization: %s", token.c_str());
-
-    if (token.empty())
-        return;
-
-    try
-    {
-        auto token_json = json::parse(
-            base64_decode_json_part(std::string(
-                wxString(token).AfterFirst('.').BeforeFirst('.').utf8_str()
-        )));
-        std::string domain = get_value(token_json, "domain", "");
-        if (!domain.empty())
-            domain += '.';
-
-        m_api = std::make_unique<crowdin_http_client>(*this, "https://" + domain + "crowdin.com/api/v2/");
-        m_api->set_authorization("Bearer " + token);
-    }
-    catch (...)
-    {
-        wxLogTrace("poedit.crowdin", "Failed to decode token. Most probable invalid/corrupted or unknown/unsupported type", token.c_str());
-    }
-
+    m_api = std::make_unique<crowdin_http_client>(*this, "https://" + token.domain + "crowdin.com/api/v2/");
+    m_api->set_authorization("Bearer " + token.encoded);
+    return true;
 }
 
 
 bool CrowdinClient::IsSignedIn() const
 {
-    return m_api || !GetValidToken().empty();
+    return m_api || GetValidToken().is_valid();
 }
 
 
 void CrowdinClient::SignInIfAuthorized()
 {
     auto token = GetValidToken();
-    if (token.empty())
+    if (!token.is_valid())
         return;
 
-    InitWithAuthToken(token);
-    wxLogTrace("poedit.crowdin", "Token: %s", token.c_str());
+    if (InitWithAuthToken(token))
+    {
+        wxLogTrace("poedit.crowdin", "Token: %s", token.encoded.c_str());
+    }
+    else
+    {
+        wxLogTrace("poedit.crowdin", "Token was invalid/expired");
+    }
 }
 
 
-std::string CrowdinClient::GetValidToken() const
+CrowdinClient::crowdin_token CrowdinClient::GetValidToken() const
 {
     if (m_cachedAuthToken)
         return *m_cachedAuthToken;
@@ -572,16 +602,21 @@ std::string CrowdinClient::GetValidToken() const
         token.clear();
     }
 
-    m_cachedAuthToken = std::make_unique<std::string>(token);
-    return token;
+    crowdin_token ct(token);
+    m_cachedAuthToken = std::make_unique<crowdin_token>(ct);
+    return ct;
 }
 
 
 void CrowdinClient::SaveAndSetToken(const std::string& token)
 {
-    m_cachedAuthToken = std::make_unique<std::string>(token);
-    keytar::AddPassword("Crowdin", "", "2:" + token);
-    InitWithAuthToken(token);
+    crowdin_token ct(token);
+    if (!ct.is_valid())
+        return;
+
+    m_cachedAuthToken = std::make_unique<crowdin_token>(ct);
+    if (InitWithAuthToken(ct))
+        keytar::AddPassword("Crowdin", "", "2:" + ct.encoded);
 }
 
 
