@@ -140,7 +140,7 @@ protected:
             catch (...)
             {
                 std::string msg;
-                msg = _("JSON request error").utf8_str();
+                msg = _("Unknown Crowdin error.").utf8_str();
                 return msg;
             }
         }
