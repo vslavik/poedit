@@ -312,15 +312,9 @@ wxString PoeditApp::GetAppBuildNumber() const
 #endif
 }
 
-bool PoeditApp::IsBetaVersion() const
-{
-    return false;
-}
-
 bool PoeditApp::CheckForBetaUpdates() const
 {
-    return IsBetaVersion() ||
-           wxConfigBase::Get()->ReadBool("check_for_beta_updates", false);
+    return wxConfigBase::Get()->ReadBool("check_for_beta_updates", false);
 }
 
 

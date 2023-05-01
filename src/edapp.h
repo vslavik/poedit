@@ -59,7 +59,6 @@ class PoeditApp : public wxApp, public MenusManager
         /// Returns Poedit version string.
         wxString GetAppVersion() const;
         wxString GetAppBuildNumber() const;
-        bool IsBetaVersion() const;
         bool CheckForBetaUpdates() const;
 
         // opens files in new frame, returns count of succesfully opened

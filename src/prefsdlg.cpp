@@ -1131,8 +1131,6 @@ public:
         m_updates->SetValue(win_sparkle_get_automatic_check_for_updates() != 0);
 #endif
         m_beta->SetValue(wxGetApp().CheckForBetaUpdates());
-        if (wxGetApp().IsBetaVersion())
-            m_beta->Disable();
     }
 
     void SaveValues(wxConfigBase& cfg) override
@@ -1140,10 +1138,7 @@ public:
 #ifdef __WXMSW__
         win_sparkle_set_automatic_check_for_updates(m_updates->GetValue());
 #endif
-        if (!wxGetApp().IsBetaVersion())
-        {
-            cfg.Write("check_for_beta_updates", m_beta->GetValue());
-        }
+        cfg.Write("check_for_beta_updates", m_beta->GetValue());
 #ifdef USE_SPARKLE
         UserDefaults_SetBoolValue("SUEnableAutomaticChecks", m_updates->GetValue());
 #endif
