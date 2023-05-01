@@ -285,7 +285,7 @@ WelcomeWindow::WelcomeWindow()
 
     leftsizer->Add(new ActionButton(
                        this, XRCID("menu_new_from_pot"), "CreateTranslation",
-                       _(L"Create new…"),
+                       _("Create new"),
                        _("Create new translation from POT template.")),
                wxSizerFlags().Border(wxTOP, PX(2)).Expand());
 
