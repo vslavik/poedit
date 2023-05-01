@@ -478,14 +478,11 @@ bool PoeditApp::OnInit()
 #endif // USE_SPARKLE
 
 #ifdef __WXMSW__
-    wxString appcast = "https://poedit.net/updates_v2/win/appcast";
-    if ( CheckForBetaUpdates() )
-    {
-        // Beta versions use unstable feed.
-        appcast = "https://poedit.net/updates_v2/win/appcast/beta";
-    }
-
-    win_sparkle_set_appcast_url(appcast.utf8_str());
+    if (CheckForBetaUpdates())
+        win_sparkle_set_appcast_url("https://poedit.net/updates_v2/win/appcast/beta");
+    else
+        win_sparkle_set_appcast_url("https://poedit.net/updates_v2/win/appcast");
+ 
     win_sparkle_set_can_shutdown_callback(&PoeditApp::WinSparkle_CanShutdown);
     win_sparkle_set_shutdown_request_callback(&PoeditApp::WinSparkle_Shutdown);
     auto buildnum = GetAppBuildNumber();

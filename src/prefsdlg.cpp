@@ -1135,10 +1135,15 @@ public:
 
     void SaveValues(wxConfigBase& cfg) override
     {
+        cfg.Write("check_for_beta_updates", m_beta->GetValue());
 #ifdef __WXMSW__
         win_sparkle_set_automatic_check_for_updates(m_updates->GetValue());
+        // FIXME: don't duplicate this code from PoeditApp::OnInit()
+        if (m_beta->GetValue())
+            win_sparkle_set_appcast_url("https://poedit.net/updates_v2/win/appcast/beta");
+        else
+            win_sparkle_set_appcast_url("https://poedit.net/updates_v2/win/appcast");
 #endif
-        cfg.Write("check_for_beta_updates", m_beta->GetValue());
 #ifdef USE_SPARKLE
         UserDefaults_SetBoolValue("SUEnableAutomaticChecks", m_updates->GetValue());
 #endif
