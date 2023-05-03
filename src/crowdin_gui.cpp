@@ -695,8 +695,9 @@ private:
         std::replace_if(fileName.begin(), fileName.end(), boost::is_any_of("\\/:\"<>|?*"), '_');
         std::replace_if(projectName.begin(), projectName.end(), boost::is_any_of("\\/:\"<>|?*"), '_');
 
+        // NB: sync this with ExtractCrowdinMetadata()
         const wxString dir = GetCrowdinCacheDir() + projectName + " - " + lang.Code();
-        wxFileName localFileName(dir + "/Crowdin." << projectId << '.' << fileId << ' ' << fileName);
+        wxFileName localFileName(dir + wxString::Format("/Crowdin.%d.%d.%s %s", projectId, fileId, lang.LanguageTag(), fileName));
 
         auto ext = localFileName.GetExt().Lower();
         if (ext == "po")
@@ -744,12 +745,19 @@ bool ExtractCrowdinMetadata(CatalogPtr cat,
                             std::string *xliffRemoteFilename = nullptr)
 {
     auto& hdr = cat->Header();
+    bool crowdinSpecificLangUsed = false;
 
     if (lang)
     {
-        *lang = hdr.HasHeader("X-Crowdin-Language")
-                ? Language::FromLanguageTag(hdr.GetHeader("X-Crowdin-Language").ToStdString())
-                : cat->GetLanguage();
+        if (hdr.HasHeader("X-Crowdin-Language"))
+        {
+            *lang = Language::FromLanguageTag(hdr.GetHeader("X-Crowdin-Language").ToStdString());
+            crowdinSpecificLangUsed = true;
+        }
+        else
+        {
+            *lang = cat->GetLanguage();
+        }
     }
 
     const auto xliff = std::dynamic_pointer_cast<XLIFFCatalog>(cat);
@@ -783,7 +791,8 @@ bool ExtractCrowdinMetadata(CatalogPtr cat,
         return true;
     }
 
-    static const std::wregex RE_CROWDIN_FILE(L"^Crowdin\\.([0-9]+)\\.([0-9]+) .*");
+    // NB: sync this with CreateLocalFilename()
+    static const std::wregex RE_CROWDIN_FILE(L"^Crowdin\\.([0-9]+)\\.([0-9]+)(\\.([a-zA-Z-]+))? .*");
     auto name = wxFileName(cat->GetFileName()).GetName().ToStdWstring();
 
     std::wsmatch m;
@@ -793,6 +802,8 @@ bool ExtractCrowdinMetadata(CatalogPtr cat,
             *projectId = std::stoi(m.str(1));
         if (fileId)
             *fileId = std::stoi(m.str(2));
+        if (lang && !crowdinSpecificLangUsed && m[4].matched)
+            *lang = Language::FromLanguageTag(str::to_utf8(m[4].str()));
         return true;
     }
 
