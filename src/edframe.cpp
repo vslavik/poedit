@@ -2657,14 +2657,12 @@ void PoeditFrame::UpdateTitle()
     wxString subtitle = m_catalog->Header().Project;
 
 #ifdef __WXOSX__
-  #if __MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_16
     if (@available(macOS 11.0, *))
     {
         NSWindow *win = GetWXWindow();
         win.subtitle = subtitle.empty() ? @"" : str::to_NS(subtitle);
     }
     else
-  #endif
 #endif // __WXOSX__
     if (!subtitle.empty())
     {

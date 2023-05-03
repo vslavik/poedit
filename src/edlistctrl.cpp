@@ -682,10 +682,8 @@ void PoeditListCtrl::CreateColumns()
 #ifdef __WXOSX__
     NSTableView *tableView = (NSTableView*)[((NSScrollView*)GetHandle()) documentView];
     [tableView setIntercellSpacing:NSMakeSize(3.0, 0.0)];
-  #if __MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_16
     if (@available(macOS 11.0, *))
         tableView.style = NSTableViewStyleFullWidth;
-  #endif
 #endif
 
     m_colID = m_colIcon = m_colSource = m_colTrans = nullptr;
@@ -835,10 +833,8 @@ void PoeditListCtrl::SizeColumns()
                 visibleCols++;
         }
         w -= 3 * visibleCols;
-  #if __MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_16
         if (@available(macOS 11.0, *))
             w -= 9;
-  #endif
     }
 #elif defined(__WXGTK__)
     w -= 2;
