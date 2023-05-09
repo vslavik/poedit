@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2022-11-30 17:55+0100\n"
-"PO-Revision-Date: 2022-11-30 16:54\n"
+"POT-Creation-Date: 2023-05-09 17:49+0200\n"
+"PO-Revision-Date: 2023-05-09 15:48\n"
 "Last-Translator: \n"
 "Language-Team: Danish\n"
 "Language: da_DK\n"
@@ -46,8 +46,11 @@ msgid "Updating translations"
 msgstr "Opdaterer oversættelser"
 
 #, c-format
-msgid "“%s” is not a valid POT file."
-msgstr "\"%s\" er ikke en gyldig POT-fil."
+msgid "The file “%s” couldn’t be opened."
+msgstr "Filen “%s” kunne ikke åbnes."
+
+msgid "Invalid file"
+msgstr "Ugyldig fil"
 
 #, c-format
 msgid "Malformed header: “%s”"
@@ -62,12 +65,39 @@ msgstr "POT-oversættelsesskabeloner"
 msgid "XLIFF Translation Files"
 msgstr "XLIFF-oversættelsesfiler"
 
+msgid "JSON Translation Files"
+msgstr "JSON-oversættelsesfiler"
+
+#. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+msgid "Flutter Translation Files"
+msgstr "Flutter-oversættelsesfiler"
+
 msgid "All Translation Files"
 msgstr "Alle oversættelsesfiler"
 
+msgid "The file is in a format not recognized by Poedit."
+msgstr "Filen har et af Poedit ukendt format."
+
+msgid ""
+"This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgstr ""
+"Denne JSON-fil er ikke en oversættelsesfil og kan ikke redigeres i Poedit."
+
 #, c-format
-msgid "File “%s” is in unsupported format."
-msgstr "Filen \"%s\" er i et uunderstøttet format."
+msgid "Reading file content failed with the following error: %s"
+msgstr "Læsning af filindhold mislykkedes med flg. fejl: %s"
+
+#, c-format
+msgid ""
+"File “%s” is read-only and cannot be saved.\n"
+"Please save it under different name."
+msgstr ""
+"Filen “%s” er skrivebeskyttet og kan ikke gemmes.\n"
+"Gem den med et andet navn."
+
+#, c-format
+msgid "Couldn’t save file %s."
+msgstr "Kunne ikke gemme filen %s."
 
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
@@ -85,28 +115,15 @@ msgstr "PO-filfejl: Entalsform msgstr anvendt sammen med msgid_plural"
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr "PO-filfejl: Flertalsform msgstr anvendt uden msgid_plural"
 
+msgid "Couldn’t load the file, it is probably damaged."
+msgstr "Kunne ikke indlæse filen, den er sandsynligvis ødelagt."
+
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
 "Fejl under indlæsning af filen. Visse data kan som følge heraf mangle eller "
 "være ødelagte."
-
-#, c-format
-msgid "Couldn’t load file %s, it is probably corrupted."
-msgstr "Kunne ikke indlæse filen %s; den er sandsynligvis ødelagt."
-
-#, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
-"Please save it under different name."
-msgstr ""
-"Filen “%s” er skrivebeskyttet og kan ikke gemmes.\n"
-"Gem den med et andet navn."
-
-#, c-format
-msgid "Couldn’t save file %s."
-msgstr "Kunne ikke gemme filen %s."
 
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
@@ -128,12 +145,16 @@ msgid "Error saving file"
 msgstr "Fejl under lagring af fil"
 
 #, c-format
-msgid "Error loading file “%s”: %s."
-msgstr "Fejl under indlæsning af filen \"%s\": %s."
+msgid "“%s” is not a valid POT file."
+msgstr "\"%s\" er ikke en gyldig POT-fil."
 
 #, c-format
-msgid "unsupported XLIFF version (%s)"
-msgstr "uunderstøttet XLIFF-version (%s)"
+msgid "Error while loading XLIFF file: %s"
+msgstr "En fejl opstod under indlæsningen af XLIFF-filen %s"
+
+#, c-format
+msgid "unsupported version (%s)"
+msgstr "uunderstøttet version (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
@@ -170,8 +191,8 @@ msgstr "Synkfejl"
 msgid "Add"
 msgstr "Tilføj"
 
-msgid "JSON request error"
-msgstr "JSON-forespørgselsfejl"
+msgid "Unknown Crowdin error."
+msgstr "Ukendt Crowdin-fejl."
 
 msgid "Not authorized, please sign in again."
 msgstr "Ikke godkendt, log venligst ind igen."
@@ -287,21 +308,6 @@ msgstr "Vælg oversættelsesfil"
 
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit er et letanvendeligt oversættelsesværktøj."
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "PO-oversættelse"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr ""
-"Filen kan enten være ødelagt eller i et format, der ikke genkendes af Poedit."
-
-msgid "The file cannot be opened."
-msgstr "Filen kan ikke åbnes."
-
-msgid "Invalid file"
-msgstr "Ugyldig fil"
 
 msgid "You can’t drop more than one file on Poedit window."
 msgstr "Maks. én fil kan droppes i Poedit-vinduet."
@@ -585,9 +591,20 @@ msgstr "Flertalsformudtryk, der bruges af filen, er usædvanligt for %s."
 msgid "Review"
 msgstr "Korrektur"
 
+msgid "Would you like to use English for source text?"
+msgstr "Vil du bruge engelsk som kildetekst?"
+
 #, c-format
-msgid "Error loading translation file “%s”."
-msgstr "Fejl ved indlæsning af oversættelsesfilen “%s”."
+msgid ""
+"This file uses string IDs instead of source text. Poedit can load English "
+"texts from the “%s” file for you."
+msgstr ""
+"Denne fil bruger streng-ID'er i stedet for kildetekst. Poedit kan indlæse "
+"engelske tekster fra filen \"%s\" for dig."
+
+#. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+msgid "Load English"
+msgstr "Indlæs engelsk"
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
@@ -755,6 +772,10 @@ msgstr "Opret ny oversættelse"
 msgid "Make a new translation from this POT file."
 msgstr "Lav en ny oversættelse fra denne POT-fil."
 
+#. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+msgid "Source text ID"
+msgstr "Kildetekst-ID"
+
 msgid "Everything"
 msgstr "Alt"
 
@@ -777,6 +798,16 @@ msgstr "To"
 
 msgid "Other"
 msgstr "Andet"
+
+#. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#, c-format
+msgid "String context: %s"
+msgstr "Strengkontekst: %s"
+
+#. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#, c-format
+msgid "String identifier: %s"
+msgstr "Strengidentifikator: %s"
 
 #, c-format
 msgid "%s Format"
@@ -1225,6 +1256,10 @@ msgstr "Oversættelseshukommelse"
 msgid "Importing translations…"
 msgstr "Importerer oversættelser…"
 
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "Fejl ved indlæsning af oversættelsesfilen “%s”."
+
 msgid "Finalizing…"
 msgstr "Færdiggører…"
 
@@ -1363,6 +1398,9 @@ msgstr[1] "For-oversat %u strenge"
 msgid "Pre-translating…"
 msgstr "Præ-oversætter…"
 
+msgid "Cannot pre-translate without source text."
+msgstr "Kan ikke præoversætte uden kildetekst."
+
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
 #. strings you're translating as the first step, followed by correcting,
@@ -1375,6 +1413,13 @@ msgstr "Præ-oversætter…"
 #. *before* actual translation.
 msgid "Pre-translate"
 msgstr "Præ-oversæt"
+
+msgid ""
+"Pre-translation requires that source text is available. It doesn’t work if "
+"only IDs without the actual text are used."
+msgstr ""
+"Præoversættelse kræver at kildetekst er tilgængelig. Det virker ikke, hvis "
+"kun id'er uden den egentlige tekst bruges."
 
 msgid "Only fill in exact matches"
 msgstr "Udfyld kun nøjagtige overensstemmelser"
@@ -2099,6 +2144,13 @@ msgstr "Ingen fundet"
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Denne streng blev fundet i Poedit's oversættelseshukommelse."
 
+msgid ""
+"Translation suggestions require that source text is available. They don’t "
+"work if only IDs without the actual text are used."
+msgstr ""
+"Oversættelsesforslag kræver, at kildetekst er tilgængelig. De virker ikke, "
+"hvis kun id'er uden selve teksten bruges."
+
 msgid "The TMX file is malformed."
 msgstr "TMX filen er forkert udformet."
 
@@ -2164,8 +2216,8 @@ msgstr "Konfigurér kildekode-udtrækning i Egenskaber."
 msgid "Version %s"
 msgstr "Version %s"
 
-msgid "Create new…"
-msgstr "Opret ny…"
+msgid "Create new"
+msgstr "Opret ny"
 
 msgid "Create new translation from POT template."
 msgstr "Opret ny oversættelse fra POT-skabelon."

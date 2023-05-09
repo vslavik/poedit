@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2022-11-30 17:55+0100\n"
-"PO-Revision-Date: 2022-11-30 16:54\n"
+"POT-Creation-Date: 2023-05-09 17:49+0200\n"
+"PO-Revision-Date: 2023-05-09 15:48\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -47,8 +47,11 @@ msgid "Updating translations"
 msgstr "התרגומים מתעדכנים"
 
 #, c-format
-msgid "“%s” is not a valid POT file."
-msgstr "“%s” אינו קובץ POT חוקי."
+msgid "The file “%s” couldn’t be opened."
+msgstr "אי אפשר לפתוח את הקובץ „%s”."
+
+msgid "Invalid file"
+msgstr "קובץ שגוי"
 
 #, c-format
 msgid "Malformed header: “%s”"
@@ -63,12 +66,38 @@ msgstr "תבניות תרגום POT"
 msgid "XLIFF Translation Files"
 msgstr "קובצי תרגום מסוג XLIFF"
 
+msgid "JSON Translation Files"
+msgstr "קובצי תרגום JSON"
+
+#. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+msgid "Flutter Translation Files"
+msgstr "קובצי תרגום Flutter"
+
 msgid "All Translation Files"
 msgstr "כל קובצי התרגום"
 
+msgid "The file is in a format not recognized by Poedit."
+msgstr "הקובץ הוא במבנה שאינו מזוהה על ידי Poedit."
+
+msgid ""
+"This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgstr "קובץ ה־JSON אינו קובץ תרגומים ואי אפשר לערוך אותו ב־Poedit."
+
 #, c-format
-msgid "File “%s” is in unsupported format."
-msgstr "הקובץ ”%s” הוא במבנה בלתי נתמך."
+msgid "Reading file content failed with the following error: %s"
+msgstr "קריאת תוכן הקובץ נכשלה עקב השגיאה הבאה: %s"
+
+#, c-format
+msgid ""
+"File “%s” is read-only and cannot be saved.\n"
+"Please save it under different name."
+msgstr ""
+"הקובץ “%s” הינו לקריאה בלבד ולא ניתן לשמור אותו.\n"
+"יש לשמור אותו תחת שם אחר."
+
+#, c-format
+msgid "Couldn’t save file %s."
+msgstr "לא ניתן לשמור את הקובץ %s."
 
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
@@ -88,27 +117,14 @@ msgstr "קובץ PO פגום: msgstr של צורת יחיד בשימוש יחד 
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr "קובץ PO פגום: msgstr של צורת ריבוי בשימוש בלי mdgid_plural"
 
+msgid "Couldn’t load the file, it is probably damaged."
+msgstr "לא ניתן לטעון את הקובץ, הוא ככל הנראה פגום."
+
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
 "אירעו שגיאות בעת טעינת הקובץ. כתוצאה מכך, ייתכן שחלק מהמידע חסר או פגום."
-
-#, c-format
-msgid "Couldn’t load file %s, it is probably corrupted."
-msgstr "לא ניתן לטעון את הקובץ %s, הוא ככל הנראה פגום."
-
-#, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
-"Please save it under different name."
-msgstr ""
-"הקובץ “%s” הינו לקריאה בלבד ולא ניתן לשמור אותו.\n"
-"יש לשמור אותו תחת שם אחר."
-
-#, c-format
-msgid "Couldn’t save file %s."
-msgstr "לא ניתן לשמור את הקובץ %s."
 
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
@@ -129,12 +145,16 @@ msgid "Error saving file"
 msgstr "שגיאה בשמירת הקובץ"
 
 #, c-format
-msgid "Error loading file “%s”: %s."
-msgstr "שגיאה בטעינת הקובץ ”%s”:‏ %s."
+msgid "“%s” is not a valid POT file."
+msgstr "“%s” אינו קובץ POT חוקי."
 
 #, c-format
-msgid "unsupported XLIFF version (%s)"
-msgstr "גרסת XLIFF בלתי נתמכת (%s)"
+msgid "Error while loading XLIFF file: %s"
+msgstr "שגיאה בטעינת קובץ XLIFF‏: %s"
+
+#, c-format
+msgid "unsupported version (%s)"
+msgstr "גרסה בלתי־נתמכת (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
@@ -171,8 +191,8 @@ msgstr "שגיאת סנכרון"
 msgid "Add"
 msgstr "הוספה"
 
-msgid "JSON request error"
-msgstr "שגיאה בבקשת JSON"
+msgid "Unknown Crowdin error."
+msgstr "שגיאת Crowdin לא ידועה."
 
 msgid "Not authorized, please sign in again."
 msgstr "לא מורשה, נא להתחבר שנית."
@@ -185,7 +205,7 @@ msgid ""
 "translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
 msgstr ""
 "Crowdin היא מערכת ניהול לוקליזציה מקוונת וכלי תרגום שיתופי. Poedit יכול "
-"לסנכרן קובצי PO המנוהלים ב-Crowdin בצורה חלקה."
+"לסנכרן קובצי PO המנוהלים ב־Crowdin בצורה חלקה."
 
 msgid "Sign In"
 msgstr "התחברות"
@@ -287,20 +307,6 @@ msgstr "בחירת קובץ תרגום"
 
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit הינו עורך תרגומים פשוט לתפעול."
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "תרגום PO"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr "יתכן שהקובץ פגום או מכיל פורמט שלא מזוהה ע״י Poedit."
-
-msgid "The file cannot be opened."
-msgstr "לא ניתן לפתוח את הקובץ."
-
-msgid "Invalid file"
-msgstr "קובץ שגוי"
 
 msgid "You can’t drop more than one file on Poedit window."
 msgstr "לא ניתן לשחרר יותר מקובץ אחד בחלון של Poedit."
@@ -575,9 +581,20 @@ msgstr "ביטוי צורות הריבוי שמשמש את הקובץ הוא ח�
 msgid "Review"
 msgstr "סקירה"
 
+msgid "Would you like to use English for source text?"
+msgstr "האם ברצונך להשתמש באנגלית עבור טקסט המקור?"
+
 #, c-format
-msgid "Error loading translation file “%s”."
-msgstr "שגיאה בטעינת קובץ התרגום “%s”."
+msgid ""
+"This file uses string IDs instead of source text. Poedit can load English "
+"texts from the “%s” file for you."
+msgstr ""
+"הקובץ משתמש במזהי מחרוזות במקום בטקסט המקור. ל־Poedit יש אפשרות לטעון את "
+"הטקסטים באנגלית מהקובץ „%s” בשבילך."
+
+#. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+msgid "Load English"
+msgstr "טעינת אנגלית"
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
@@ -748,6 +765,10 @@ msgstr "יצירת תרגום חדש"
 msgid "Make a new translation from this POT file."
 msgstr "יצירת תרגום חדש מקובץ POT זה."
 
+#. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+msgid "Source text ID"
+msgstr "מזהה טקסט מקור"
+
 msgid "Everything"
 msgstr "הכל"
 
@@ -770,6 +791,16 @@ msgstr "שתיים"
 
 msgid "Other"
 msgstr "אחר"
+
+#. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#, c-format
+msgid "String context: %s"
+msgstr "הקשר המחרוזת: %s"
+
+#. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#, c-format
+msgid "String identifier: %s"
+msgstr "מזהה המחרוזת: %s"
 
 #, c-format
 msgid "%s Format"
@@ -1216,6 +1247,10 @@ msgstr "זיכרון תרגום"
 msgid "Importing translations…"
 msgstr "מייבא תרגומים…"
 
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "שגיאה בטעינת קובץ התרגום “%s”."
+
 msgid "Finalizing…"
 msgstr "מתבצעת סגירה…"
 
@@ -1355,6 +1390,9 @@ msgstr[3] "%u מחרוזות מתורגמות מראש"
 msgid "Pre-translating…"
 msgstr "מבצע תרגום מראש…"
 
+msgid "Cannot pre-translate without source text."
+msgstr "לא ניתן לתרגם מראש ללא טקסט מקור."
+
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
 #. strings you're translating as the first step, followed by correcting,
@@ -1367,6 +1405,13 @@ msgstr "מבצע תרגום מראש…"
 #. *before* actual translation.
 msgid "Pre-translate"
 msgstr "תרגום מראש"
+
+msgid ""
+"Pre-translation requires that source text is available. It doesn’t work if "
+"only IDs without the actual text are used."
+msgstr ""
+"תרגום מראש דורש שטקסט המקור יהיה זמין. זה לא עובד אם נעשה שימוש במזהים בלבד "
+"ללא הטקסט עצמו."
 
 msgid "Only fill in exact matches"
 msgstr "השלם רק התאמות מדויקות"
@@ -2086,6 +2131,13 @@ msgstr "לא נמצאו התאמות"
 msgid "This string was found in Poedit’s translation memory."
 msgstr "מחרוזת זו אותרה בזיכרון התרגום של Poedit."
 
+msgid ""
+"Translation suggestions require that source text is available. They don’t "
+"work if only IDs without the actual text are used."
+msgstr ""
+"הצעות תרגומים דורשות שטקסט המקור יהיה זמין. הן לא עובדות אם נעשה שימוש "
+"במזהים בלבד ללא הטקסט עצמו."
+
 msgid "The TMX file is malformed."
 msgstr "קובץ ה־TMX פגום."
 
@@ -2149,8 +2201,8 @@ msgstr "ניתן להגדיר את חילוץ קוד המקור במאפייני
 msgid "Version %s"
 msgstr "גרסה %s"
 
-msgid "Create new…"
-msgstr "ליצור חדש…"
+msgid "Create new"
+msgstr "ליצור חדש"
 
 msgid "Create new translation from POT template."
 msgstr "יצירת תרגום חדש מתבנית POT."

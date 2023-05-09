@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2022-11-30 17:55+0100\n"
-"PO-Revision-Date: 2022-11-30 16:54\n"
+"POT-Creation-Date: 2023-05-09 17:49+0200\n"
+"PO-Revision-Date: 2023-05-09 15:48\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -46,8 +46,11 @@ msgid "Updating translations"
 msgstr "번역 업데이트 중"
 
 #, c-format
-msgid "“%s” is not a valid POT file."
-msgstr "“%s” 파일은 정상적인 POT 파일이 아닙니다."
+msgid "The file “%s” couldn’t be opened."
+msgstr "\"%s\" 파일을 열 수 없습니다."
+
+msgid "Invalid file"
+msgstr "잘못된 파일"
 
 #, c-format
 msgid "Malformed header: “%s”"
@@ -62,12 +65,38 @@ msgstr "POT 번역 양식"
 msgid "XLIFF Translation Files"
 msgstr "XLIFF 번역 파일"
 
+msgid "JSON Translation Files"
+msgstr "JSON 번역 파일"
+
+#. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+msgid "Flutter Translation Files"
+msgstr "플루터 번역 파일"
+
 msgid "All Translation Files"
 msgstr "모든 번역 파일"
 
+msgid "The file is in a format not recognized by Poedit."
+msgstr "Poedit에서 인식할 수 없는 파일 형식입니다."
+
+msgid ""
+"This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgstr "이 JSON 파일은 번역 파일이 아니므로 Poedit에서 편집할 수 없습니다."
+
 #, c-format
-msgid "File “%s” is in unsupported format."
-msgstr "“%s” 파일의 형식은 지원하지 않습니다."
+msgid "Reading file content failed with the following error: %s"
+msgstr "다음 오류로 인해 파일 내용 읽기에 실패했습니다: %s"
+
+#, c-format
+msgid ""
+"File “%s” is read-only and cannot be saved.\n"
+"Please save it under different name."
+msgstr ""
+"“%s” 파일은 읽기 전용이며 저장할 수 없습니다.\n"
+"다른 이름으로 저장하세요."
+
+#, c-format
+msgid "Couldn’t save file %s."
+msgstr "%s 파일을 저장할 수 없습니다."
 
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
@@ -85,6 +114,9 @@ msgstr "PO 파일 오류: msgid_plural을 사용한 단수 형식의 msgstr"
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr "PO 파일 오류: msgid_plural 없이 사용한 복수 형식의 msgstr"
 
+msgid "Couldn’t load the file, it is probably damaged."
+msgstr "파일을 불러오지 못했습니다. 손상되었을 수 있습니다."
+
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
@@ -92,25 +124,10 @@ msgstr ""
 "파일을 불러올 때 오류가 있었습니다. 데이터 일부가 빠지거나 깨졌을 수도 있습니"
 "다."
 
-#, c-format
-msgid "Couldn’t load file %s, it is probably corrupted."
-msgstr "%s 파일을 불러오지 못했습니다. 손상되었을 수 있습니다."
-
-#, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
-"Please save it under different name."
-msgstr ""
-"“%s” 파일은 읽기 전용이며 저장할 수 없습니다.\n"
-"다른 이름으로 저장하세요."
-
-#, c-format
-msgid "Couldn’t save file %s."
-msgstr "%s 파일을 저장할 수 없습니다."
-
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
-msgstr "파일 형식을 붙이는 중 문제가 발생했으나 저장은 성공했습니다."
+msgstr ""
+"파일 구조를 다듬는 중 문제가 발생했습니다(하지만 문제 없이 저장했습니다)."
 
 #, c-format
 msgid ""
@@ -127,12 +144,16 @@ msgid "Error saving file"
 msgstr "파일 저장 오류"
 
 #, c-format
-msgid "Error loading file “%s”: %s."
-msgstr "“%s” 파일 불러오는 중 오류: %s."
+msgid "“%s” is not a valid POT file."
+msgstr "“%s” 파일은 정상적인 POT 파일이 아닙니다."
 
 #, c-format
-msgid "unsupported XLIFF version (%s)"
-msgstr "지원하지 않는 XLIFF 버전(%s)"
+msgid "Error while loading XLIFF file: %s"
+msgstr "XLIFF 파일 불러오기 오류: %s"
+
+#, c-format
+msgid "unsupported version (%s)"
+msgstr "지원하지 않는 버전 (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
@@ -169,11 +190,11 @@ msgstr "동기화 오류"
 msgid "Add"
 msgstr "추가"
 
-msgid "JSON request error"
-msgstr "JSON 요청 오류"
+msgid "Unknown Crowdin error."
+msgstr "알 수 없는 Crowdin 오류."
 
 msgid "Not authorized, please sign in again."
-msgstr "인증되지 않았습니다. 다시 로그인하십시오."
+msgstr "인증하지 않았습니다. 다시 로그인하십시오."
 
 msgid "Downloading translations is disabled in this project."
 msgstr "이 프로젝트에서는 번역을 다운로드할 수 없습니다."
@@ -222,7 +243,7 @@ msgid "Language:"
 msgstr "언어:"
 
 msgid "Signed in as:"
-msgstr "다음 사용자로 로그인 함:"
+msgstr "로그인 사용자:"
 
 msgid "No translation projects listed in your Crowdin account."
 msgstr "Crowdin 계정에 번역 프로젝트가 없습니다."
@@ -231,7 +252,7 @@ msgid "Downloading latest translations…"
 msgstr "최신 번역 다운로드 중…"
 
 msgid "Syncing with Crowdin failed."
-msgstr "Crowdin 동기화에 실패했습니다."
+msgstr "Crowdin과 동기화에 실패했습니다."
 
 msgid "Crowdin error"
 msgstr "Crowdin 오류"
@@ -262,7 +283,7 @@ msgstr ""
 "트합니다."
 
 msgid "don’t delete temporary files (for debugging)"
-msgstr "임시 파일을 삭제하지 마세요 (디버깅용)"
+msgstr "임시 파일 삭제 안함 (디버깅용)"
 
 msgid "handle a poedit:// URI"
 msgstr "poedit:// URI 처리"
@@ -285,20 +306,6 @@ msgstr "번역 파일 선택"
 
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit는 사용하기 쉬운 번역 편집기입니다."
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "PO 번역"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr "파일이 손상되었거나 Poedit에서 인식할 수 없는 형식입니다."
-
-msgid "The file cannot be opened."
-msgstr "파일을 열 수 없습니다."
-
-msgid "Invalid file"
-msgstr "잘못된 파일"
 
 msgid "You can’t drop more than one file on Poedit window."
 msgstr "Poedit 윈도우에 하나를 초과하는 항목을 드롭할 수 없습니다."
@@ -352,7 +359,7 @@ msgid "The file has been modified. Do you want to save changes?"
 msgstr "파일의 내용을 수정했습니다. 바뀐 내용을 저장하시겠습니까?"
 
 msgid "Save changes"
-msgstr "변경 사항 저장"
+msgstr "바뀐 내용 저장"
 
 msgid "Your changes will be lost if you don’t save them."
 msgstr "저장하지 않으면 바뀐 내용을 잃어버립니다."
@@ -361,7 +368,7 @@ msgid "Save"
 msgstr "저장"
 
 msgid "Do&n’t save"
-msgstr "저장하지 않음"
+msgstr "저장하지 않음(&N)"
 
 msgid "Don’t Save"
 msgstr "저장하지 않음"
@@ -398,7 +405,7 @@ msgid "In: %s"
 msgstr "파일 위치: %s"
 
 msgid "Source code not available."
-msgstr "소스 코드가 존재하지 않습니다."
+msgstr "소스 코드가 없습니다."
 
 msgid "Updating failed"
 msgstr "업데이트 실패"
@@ -411,13 +418,13 @@ msgstr ""
 "수 없습니다."
 
 msgid "Permission denied."
-msgstr "권한이 거부되었습니다."
+msgstr "권한을 거부했습니다."
 
 msgid ""
 "You don’t have permission to read source code files from the location "
 "specified in the file’s Properties."
 msgstr ""
-"파일 속성의 지정한 위치에서 소스 코드 파일을 불러올 수 있는 권한이 없습니다."
+"파일 속성의 지정 위치에서 소스 코드 파일을 불러올 수 있는 권한이 없습니다."
 
 #. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
 msgid ""
@@ -447,7 +454,7 @@ msgstr "번역 양식 열기"
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
-msgstr[0] "번역에서 %d개의 문제점을 찾았습니다."
+msgstr[0] "번역에서 문제 %d개를 찾았습니다."
 
 msgid "Validation results"
 msgstr "검증 결과"
@@ -489,8 +496,7 @@ msgstr "번역에 문제가 없습니다."
 msgid "The translation is ready for use, but %d entry is not translated yet."
 msgid_plural ""
 "The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] ""
-"번역을 사용할 준비가 되었지만, 아직 %d개의 항목을 번역하지 않았습니다."
+msgstr[0] "번역을 사용할 준비가 되지만, 아직 항목 %d개를 번역하지 않았습니다."
 
 msgid "The translation is ready for use."
 msgstr "번역을 사용할 준비가 되었습니다."
@@ -505,12 +511,12 @@ msgid ""
 "should review translations of any items marked as needing work and correct "
 "them if necessary."
 msgstr ""
-"PO 파일에서 허용되지 않는 중복 항목이 있어 파일 활용에 문제가 생길 수 있습니"
-"다. Poedit이 해당 문제를 해결했지만 필요한 경우 작업할 항목을 표시해둔 부분"
-"의 번역을 검토해야 합니다."
+"PO 파일에서 허용하지 않는 중복 항목이 있어 파일 활용을 막았습니다. Poedit에"
+"서 문제를 해결했지만 필요한 경우 작업할 항목을 표시해둔 부분의 번역을 검토해"
+"야합니다."
 
 msgid "Language of the translation isn’t set."
-msgstr "번역 언어가 설정되지 않았습니다."
+msgstr "번역 언어를 설정하지 않았습니다."
 
 msgid "Set Language"
 msgstr "언어 설정"
@@ -553,7 +559,7 @@ msgstr "필요한 Plural-Forms 헤더가 빠졌습니다."
 
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
-msgstr "Plural-Forms 헤더에 문법 오류가 있습니다. (\"%s\")"
+msgstr "Plural-Forms 헤더(\"%s\")에 문법 오류."
 
 msgid "Fix the Header"
 msgstr "헤더 수정"
@@ -572,9 +578,20 @@ msgstr "파일에서 사용하는 %s 언어의 서수 형식 표현이 잘못되
 msgid "Review"
 msgstr "검토"
 
+msgid "Would you like to use English for source text?"
+msgstr "영어를 원문 언어로 사용하시겠습니까?"
+
 #, c-format
-msgid "Error loading translation file “%s”."
-msgstr "“%s” 번역 파일 불러오는 중 오류가 있습니다."
+msgid ""
+"This file uses string IDs instead of source text. Poedit can load English "
+"texts from the “%s” file for you."
+msgstr ""
+"파일이 원문 대신 문자열 ID를 이용하고 있습니다. Poedit에서 \"%s\" 파일의 영"
+"어 텍스트를 불러올 수 있습니다."
+
+#. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+msgid "Load English"
+msgstr "영어 불러오기"
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
@@ -615,8 +632,8 @@ msgid ""
 "permanently removed. You will have to translate them again if they are added "
 "back in the future."
 msgstr ""
-"계속 제거를 진행하면 삭제한 것으로 표시한 모든 번역을 완전히 제거합니다. 다음"
-"에 다시 추가하면 다시 번역해야 합니다."
+"계속 제거를 진행하면 삭제 표시한 모든 번역을 완전히 제거합니다. 다음에 다시 "
+"추가하면 다시 번역해야 합니다."
 
 msgid "Keep"
 msgstr "그대로 유지"
@@ -739,6 +756,10 @@ msgstr "새 번역 만들기"
 msgid "Make a new translation from this POT file."
 msgstr "이 POT 파일로 새 번역을 작성합니다."
 
+#. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+msgid "Source text ID"
+msgstr "원문 ID"
+
 msgid "Everything"
 msgstr "모두"
 
@@ -762,9 +783,19 @@ msgstr "둘"
 msgid "Other"
 msgstr "기타"
 
+#. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#, c-format
+msgid "String context: %s"
+msgstr "문자열 문맥: %s"
+
+#. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#, c-format
+msgid "String identifier: %s"
+msgstr "문자열 ID: %s"
+
 #, c-format
 msgid "%s Format"
-msgstr "%s Format"
+msgstr "%s 형식"
 
 #. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
 #, c-format
@@ -787,7 +818,7 @@ msgstr "알 수 없는 언어"
 
 #, c-format
 msgid "Failed command: %s"
-msgstr "오류 발생: %s"
+msgstr "명령 실패: %s"
 
 msgid "Failed to merge gettext catalogs."
 msgstr "gettext 카탈로그 병합에 실패했습니다."
@@ -837,7 +868,7 @@ msgstr "바꾸기"
 
 #. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
 msgid "Options"
-msgstr "설정"
+msgstr "옵션"
 
 msgid "Ignore case"
 msgstr "대소문자 무시"
@@ -1204,6 +1235,10 @@ msgstr "번역 기억 장소(TM)"
 msgid "Importing translations…"
 msgstr "번역 가져오는 중…"
 
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "“%s” 번역 파일 불러오는 중 오류가 있습니다."
+
 msgid "Finalizing…"
 msgstr "마무리 중…"
 
@@ -1339,6 +1374,9 @@ msgstr[0] "사전 번역한 문자열 %u개"
 msgid "Pre-translating…"
 msgstr "사전 번역 중…"
 
+msgid "Cannot pre-translate without source text."
+msgstr "원문 없이는 사전 번역을 진행할 수 없습니다."
+
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
 #. strings you're translating as the first step, followed by correcting,
@@ -1351,6 +1389,13 @@ msgstr "사전 번역 중…"
 #. *before* actual translation.
 msgid "Pre-translate"
 msgstr "사전 번역"
+
+msgid ""
+"Pre-translation requires that source text is available. It doesn’t work if "
+"only IDs without the actual text are used."
+msgstr ""
+"원문이 주어져야 사전 번역 기능을 이용할 수 있습니다. 실제 텍스트가 아닌 ID만 "
+"있는 경우 작업을 실행할 수 없습니다."
 
 msgid "Only fill in exact matches"
 msgstr "정확하게 일치하는 내용만 채우기"
@@ -2071,6 +2116,13 @@ msgstr "일치하는 결과 없음"
 msgid "This string was found in Poedit’s translation memory."
 msgstr "이 문자열은 Poedit의 번역 기억 장소에 있습니다."
 
+msgid ""
+"Translation suggestions require that source text is available. They don’t "
+"work if only IDs without the actual text are used."
+msgstr ""
+"원문이 주어져야 번역 제안 기능을 이용할 수 있습니다. 실제 텍스트가 아닌 ID만 "
+"있는 경우 작업을 실행할 수 없습니다."
+
 msgid "The TMX file is malformed."
 msgstr "TMX 파일이 잘못되었습니다."
 
@@ -2133,8 +2185,8 @@ msgstr "속성에서 소스 코드 추출을 설정합니다."
 msgid "Version %s"
 msgstr "버전 %s"
 
-msgid "Create new…"
-msgstr "새로 만들기…"
+msgid "Create new"
+msgstr "새로 만들기"
 
 msgid "Create new translation from POT template."
 msgstr "POT 양식에서 새 번역을 만듭니다."

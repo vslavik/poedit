@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2022-11-30 17:55+0100\n"
-"PO-Revision-Date: 2022-11-30 16:55\n"
+"POT-Creation-Date: 2023-05-09 17:49+0200\n"
+"PO-Revision-Date: 2023-05-09 15:49\n"
 "Last-Translator: \n"
 "Language-Team: Serbian (Cyrillic)\n"
 "Language: sr_SP\n"
@@ -32,13 +32,13 @@ msgid "(New: %i, obsolete: %i)"
 msgstr "(нових: %i, застарелих: %i)"
 
 msgid "Collecting source files…"
-msgstr "Прикупљање фајлова са изворним кодом…"
+msgstr "Прикупљање датотека са изворним кодом…"
 
 msgid "Extracting translatable strings…"
 msgstr "Издвајање стрингова за превод…"
 
 msgid "Failed to load file with extracted translations."
-msgstr "Није успело учитавање датотеке са извезеним преводима."
+msgstr "Није могуће учитати датотеку са издвојеним преводима."
 
 msgid "Merging differences…"
 msgstr "Обједињавање разлика…"
@@ -47,60 +47,45 @@ msgid "Updating translations"
 msgstr "Ажурирање превода"
 
 #, c-format
-msgid "“%s” is not a valid POT file."
-msgstr "„%s” је неважећи POT фајл."
+msgid "The file “%s” couldn’t be opened."
+msgstr "Није могуће отворити датотеку „%s”."
+
+msgid "Invalid file"
+msgstr "Неважећа датотека"
 
 #, c-format
 msgid "Malformed header: “%s”"
-msgstr "Неправилно заглавље: „%s”"
+msgstr "Неисправан формат заглавља: „%s”"
 
 msgid "PO Translation Files"
-msgstr "PO фајлови превода"
+msgstr "PO датотеке превода"
 
 msgid "POT Translation Templates"
 msgstr "POT шаблони превода"
 
 msgid "XLIFF Translation Files"
-msgstr "XLIFF фајлови превода"
+msgstr "XLIFF датотеке превода"
+
+msgid "JSON Translation Files"
+msgstr "JSON датотеке превода"
+
+#. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+msgid "Flutter Translation Files"
+msgstr "Flutter датотеке превода"
 
 msgid "All Translation Files"
-msgstr "Сви фајлови превода"
+msgstr "Све датотеке превода"
 
-#, c-format
-msgid "File “%s” is in unsupported format."
-msgstr "Формат фајла „%s” није подржан."
-
-#, c-format
-msgid "%i line of file “%s” was not loaded correctly."
-msgid_plural "%i lines of file “%s” were not loaded correctly."
-msgstr[0] "%i ред фајла „%s” није исправно учитан."
-msgstr[1] "%i реда фајла „%s” нису исправно учитана."
-msgstr[2] "%i редова фајла „%s” није исправно учитано."
-
-#, c-format
-msgid "Line %d of file “%s” is corrupted (not valid %s data)."
-msgstr "Ред %d датотеке „%s” је неправилан (неважећи подаци у %s)."
-
-msgid "Broken PO file: singular form msgstr used together with msgid_plural"
-msgstr ""
-"Неисправна PO датотека: облик за једнину из msgstr је коришћен заједно са "
-"msgid_plural"
-
-msgid "Broken PO file: plural form msgstr used without msgid_plural"
-msgstr ""
-"Неисправна PO датотека: облик за множину из msgstr је коришћен без "
-"msgid_plural"
+msgid "The file is in a format not recognized by Poedit."
+msgstr "Датотека је у формату који Poedit не препознаје."
 
 msgid ""
-"There were errors when loading the file. Some data may be missing or "
-"corrupted as the result."
-msgstr ""
-"Дошло је до грешака приликом учитавања датотеке. Неки подаци су изгубљени "
-"или оштећени."
+"This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgstr "Ова JSON датотека не садржи преводе и не може се уређивати у Poedit-у."
 
 #, c-format
-msgid "Couldn’t load file %s, it is probably corrupted."
-msgstr "Није могуће учитати датотеку „%s” јер је оштећена."
+msgid "Reading file content failed with the following error: %s"
+msgstr "Дошло је до следеће грешке при читању датотеке: %s"
 
 #, c-format
 msgid ""
@@ -114,6 +99,33 @@ msgstr ""
 msgid "Couldn’t save file %s."
 msgstr "Није могуће сачувати датотеку „%s”."
 
+#, c-format
+msgid "%i line of file “%s” was not loaded correctly."
+msgid_plural "%i lines of file “%s” were not loaded correctly."
+msgstr[0] "%i ред у датотеци „%s” није исправно учитан."
+msgstr[1] "%i реда у датотеци „%s” нису исправно учитана."
+msgstr[2] "%i редова у датотеци „%s” није исправно учитано."
+
+#, c-format
+msgid "Line %d of file “%s” is corrupted (not valid %s data)."
+msgstr "Ред %d у датотеци „%s” је оштећен (неважећи подаци у %s)."
+
+msgid "Broken PO file: singular form msgstr used together with msgid_plural"
+msgstr "PO датотека је оштећена: користи се msgstr за једнину уз msgid_plural"
+
+msgid "Broken PO file: plural form msgstr used without msgid_plural"
+msgstr "PO датотека је оштећена: користи се msgstr за множину без msgid_plural"
+
+msgid "Couldn’t load the file, it is probably damaged."
+msgstr "Није могуће учитати датотеку. Вероватно је оштећена."
+
+msgid ""
+"There were errors when loading the file. Some data may be missing or "
+"corrupted as the result."
+msgstr ""
+"Дошло је до грешака при учитавању датотеке. Због тога су неки подаци "
+"изгубљени или оштећени."
+
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
 msgstr ""
@@ -126,22 +138,25 @@ msgid ""
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"Датотеку није могуће сачувати у „%s“ формату како је наведено у поставкама "
-"превода.\n"
+"Није могуће сачувати датотеку у кодирању „%s”, како је наведено у "
+"подешавањима превода.\n"
 "\n"
-"Уместо тога, сачувана је у UTF-8 формату, док су поставке промењене у складу "
-"са тим."
+"Сачувана је у UTF-8 формату, а подешавање је измењено сходно томе."
 
 msgid "Error saving file"
-msgstr "Грешка при чувању фајла"
+msgstr "Грешка при чувању датотеке"
 
 #, c-format
-msgid "Error loading file “%s”: %s."
-msgstr "Грешка при учитавању датотеке „%s”: %s."
+msgid "“%s” is not a valid POT file."
+msgstr "„%s” је неважећа POT датотека."
 
 #, c-format
-msgid "unsupported XLIFF version (%s)"
-msgstr "неподржана верзија XLIFF-а (%s)"
+msgid "Error while loading XLIFF file: %s"
+msgstr "Дошло је до грешке при учитавању XLIFF датотеке: %s"
+
+#, c-format
+msgid "unsupported version (%s)"
+msgstr "неподржана верзија (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
@@ -154,7 +169,7 @@ msgid "Language selection"
 msgstr "Избор језика"
 
 msgid "Select your preferred language"
-msgstr "Избор жељеног језика"
+msgstr "Изаберите жељени језик"
 
 msgid "You must restart Poedit for this change to take effect."
 msgstr ""
@@ -166,21 +181,21 @@ msgstr "Синхронизација"
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
 msgid "Syncing with %s…"
-msgstr "Синхронизовање са %s…"
+msgstr "Синхронизовање са услугом %s…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
 msgid "Syncing with %s failed."
-msgstr "Није могуће синхронизовати са %s."
+msgstr "Синхронизација са услугом %s није успела."
 
 msgid "Syncing error"
 msgstr "Грешка при синхронизовању"
 
 msgid "Add"
-msgstr "Додај"
+msgstr "&Додај"
 
-msgid "JSON request error"
-msgstr "Грешка приликом захтева JSON-a"
+msgid "Unknown Crowdin error."
+msgstr "Непозната грешка у Crowdin-у."
 
 msgid "Not authorized, please sign in again."
 msgstr "Немате овлашћења. Поново се пријавите."
@@ -192,11 +207,11 @@ msgid ""
 "Crowdin is an online localization management platform and collaborative "
 "translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
 msgstr ""
-"Crowdin је онлајн платформа за заједничку локализацију и превод. Poedit може "
-"без проблема да синхронизује PO датотеке са Crowdin-ом."
+"Crowdin је онлајн платформа за заједничку локализацију и превод. Poedit са "
+"лакоћом може да синхронизује PO датотеке са Crowdin-ом."
 
 msgid "Sign In"
-msgstr "Пријави ме"
+msgstr "Пријавите се"
 
 msgid "Sign in"
 msgstr "Пријави ме"
@@ -208,7 +223,7 @@ msgid "Sign out"
 msgstr "Одјави ме"
 
 msgid "Waiting for authentication…"
-msgstr "Чекање на потврду идентитета…"
+msgstr "Чека се потврда идентитета…"
 
 msgid "Updating user information…"
 msgstr "Ажурирање информација о кориснику…"
@@ -223,7 +238,7 @@ msgid "File"
 msgstr "Датотека"
 
 msgid "Open Crowdin translation"
-msgstr "Отвори превод са Crowdin-а"
+msgstr "Отварање превода из Crowdin-а"
 
 msgid "Project:"
 msgstr "Пројекат:"
@@ -235,7 +250,7 @@ msgid "Signed in as:"
 msgstr "Пријављени сте као:"
 
 msgid "No translation projects listed in your Crowdin account."
-msgstr "Нема преводилачких пројеката на вашем налогу на Crowdin-у."
+msgstr "Нема преводилачких пројеката на вашем Crowdin налогу."
 
 msgid "Downloading latest translations…"
 msgstr "Преузимање најновијих превода…"
@@ -244,10 +259,10 @@ msgid "Syncing with Crowdin failed."
 msgstr "Синхронизација са Crowdin-ом није успела."
 
 msgid "Crowdin error"
-msgstr "Грешка на Crowdin-у"
+msgstr "Грешка у Crowdin-у"
 
 msgid "Uploading translations…"
-msgstr "Отпремање превода…"
+msgstr "Преводи се отпремају…"
 
 msgid "&Copy"
 msgstr "&Копирај"
@@ -256,7 +271,7 @@ msgid "Learn more"
 msgstr "Сазнајте више"
 
 msgid "&Help"
-msgstr "&Помоћ"
+msgstr "По&моћ"
 
 msgid "MO files can’t be directly edited in Poedit."
 msgstr "MO датотеке се не могу директно уређивати у Poedit-у."
@@ -268,8 +283,8 @@ msgid ""
 "Please open and edit the corresponding PO file instead. When you save it, "
 "the MO file will be updated as well."
 msgstr ""
-"Отворите и уређујте одговарајућу PO датотеку. Када је сачувате, ажурираће се "
-"и MO датотека."
+"Уместо тога отворите и уређујте одговарајућу PO датотеку. Када је сачувате, "
+"ажурираће се и MO датотека."
 
 msgid "don’t delete temporary files (for debugging)"
 msgstr "не бриши привремене датотеке (ради отклањања грешака)"
@@ -278,48 +293,34 @@ msgid "handle a poedit:// URI"
 msgstr "обрада URI адресе poedit://"
 
 msgid "go to item at given line number"
-msgstr "иди на ставку у задатом реду"
+msgstr "иди на ставку у наведеном реду"
 
 msgid "Failed to communicate with Poedit process."
-msgstr "Није могуће комуницирати са процесом Poedit-а."
+msgstr "Није могуће комуницирати са Poedit-овим процесом."
 
 #, c-format
 msgid "Unhandled exception occurred: %s"
 msgstr "Дошло је до неочекиваног изузетка: %s"
 
 msgid "Select translation template"
-msgstr "Изаберите шаблон превода"
+msgstr "Избор шаблона превода"
 
 msgid "Select translation file"
-msgstr "Изаберите фајл превода"
+msgstr "Избор датотеке превода"
 
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit је једноставан алат за превођење."
 
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "PO превод"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr "Фајл је оштећен или је у непознатом формату."
-
-msgid "The file cannot be opened."
-msgstr "Није могуће отворити фајл."
-
-msgid "Invalid file"
-msgstr "Неважећи фајл"
-
 msgid "You can’t drop more than one file on Poedit window."
-msgstr "У прозор Poedit-а можете превући само један фајл."
+msgstr "У Poedit-ов прозор можете превући само једну датотеку."
 
 #, c-format
 msgid "File “%s” is not a translation file."
-msgstr "„%s” није фајл превода."
+msgstr "„%s” није датотека превода."
 
 #, c-format
 msgid "File “%s” doesn’t exist."
-msgstr "Фајл „%s” не постоји."
+msgstr "Датотека „%s” не постоји."
 
 msgid "Poedit"
 msgstr "Poedit"
@@ -341,35 +342,35 @@ msgstr "Инсталирај"
 
 #, c-format
 msgid "The file “%s” has been changed by another application."
-msgstr "Фајл „%s” је променила друга апликација."
+msgstr "Датотеку „%s” је променила друга апликација."
 
 msgid "Reload file"
-msgstr "Поново учитај фајл"
+msgstr "Поново учитај датотеку"
 
 msgid ""
 "Do you want to reload the file from disk? Your unsaved edits in Poedit will "
 "be lost if you do."
 msgstr ""
-"Желите ли да поново учитате фајл са диска? Тиме ћете изгубити све несачуване "
-"промене у Poedit-у."
+"Желите ли да поново учитате датотеку са диска? Тиме ћете изгубити све "
+"несачуване промене у Poedit-у."
 
 msgid "Ignore"
 msgstr "Занемари"
 
 msgid "Reload File"
-msgstr "Поново учитај фајл"
+msgstr "Поново учитај датотеку"
 
 msgid "The file has been modified. Do you want to save changes?"
-msgstr "Фајл је измењен. Желите ли да сачувате промене?"
+msgstr "Датотека је измењена. Желите ли да сачувате промене?"
 
 msgid "Save changes"
 msgstr "Чување промена"
 
 msgid "Your changes will be lost if you don’t save them."
-msgstr "Ваше промене ће бити изгубљене ако их не сачувате."
+msgstr "Изгубићете све промене ако их не сачувате."
 
 msgid "Save"
-msgstr "&Сачувај"
+msgstr "Сачувај"
 
 msgid "Do&n’t save"
 msgstr "&Не чувај"
@@ -394,16 +395,16 @@ msgid "Save as…"
 msgstr "Сачувај као…"
 
 msgid "Compile to…"
-msgstr "Компајлирај у…"
+msgstr "Компајлирање у…"
 
 msgid "Compiled Translation Files"
-msgstr "Компајлирани фајлови превода"
+msgstr "Компајлиране датотеке превода"
 
 msgid "Export as…"
 msgstr "Извези као…"
 
 msgid "HTML Files"
-msgstr "HTML фајлови"
+msgstr "HTML датотеке"
 
 #, c-format
 msgid "In: %s"
@@ -420,7 +421,7 @@ msgid ""
 "found in the location specified in the file’s Properties."
 msgstr ""
 "Није могуће ажурирати преводе из изворног кода, јер није пронађен кôд на "
-"локацији која је наведена у својствима фајла."
+"локацији која је наведена у својствима датотеке."
 
 msgid "Permission denied."
 msgstr "Забрањен приступ"
@@ -429,91 +430,91 @@ msgid ""
 "You don’t have permission to read source code files from the location "
 "specified in the file’s Properties."
 msgstr ""
-"Немате дозволу за читање фајлова са изворним кодом на локацији која је "
-"наведена у својствима фајла."
+"Немате дозволу за читање датотека са изворним кодом на локацији која је "
+"наведена у својствима датотеке."
 
 #. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
 msgid ""
 "If you previously denied access to your files, you can allow it in System "
 "Settings > Privacy & Security > Files & Folders."
 msgstr ""
-"Уколико сте раније одбили приступ вашим датотекама, можете да га одобрите у "
-"Системске поставке > Приватност и безбедност > Датотеке и фасцикле."
+"Ако сте раније забранили приступ датотекама, то можете променити у System "
+"Settings → Privacy & Security → Files & Folders."
 
 #. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
 msgid ""
 "If you previously denied access to your files, you can allow it in System "
 "Preferences > Security & Privacy > Privacy > Files & Folders."
 msgstr ""
-"Ако сте раније забранили приступ фајловима, то можете променити у System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
+"Ако сте раније забранили приступ датотекама, то можете променити у System "
+"Preferences → Security & Privacy → Privacy → Files & Folders."
 
 msgid "Translation entries in the file are probably incorrect."
-msgstr "Вероватно су уноси у фајлу нетачни."
+msgstr "Вероватно су уноси у датотеци нетачни."
 
 msgid "Updating the file failed. Click on 'Details >>' for details."
 msgstr ""
-"Није могуће ажурирати фајл. Кликните на „Детаљи >>” за више информација."
+"Није могуће ажурирати датотеку. Кликните на „Детаљи >>” за више информација."
 
 msgid "Open translation template"
-msgstr "Отвори шаблон превода"
+msgstr "Отварање шаблона превода"
 
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
-msgstr[0] "Пронађен је %d проблем са преводом."
-msgstr[1] "Пронађена су %d проблема са преводом."
-msgstr[2] "Пронађено је %d проблема са преводом."
+msgstr[0] "Пронађен је %d проблем у преводу."
+msgstr[1] "Пронађена су %d проблема у преводу."
+msgstr[2] "Пронађено је %d проблема у преводу."
 
 msgid "Validation results"
-msgstr "Резултати валидације"
+msgstr "Резултати провере ваљаности"
 
 msgid ""
 "Entries with errors were marked in red in the list. Details of the error "
 "will be shown when you select such an entry."
 msgstr ""
 "Уноси са грешкама су означени црвеном бојом.\n"
-"Када изаберете такав унос, приказаће се детаљи грешке."
+"Када изаберете такав унос, приказаће се детаљи о грешци."
 
 msgid "The file was saved safely."
-msgstr "Фајл је сачуван."
+msgstr "Датотека је сачувана."
 
 msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
 msgstr ""
-"Фајл је сачуван и компајлиран у MO формат, али вероватно неће исправно "
+"Датотека је сачувана и компајлирана у MO формат, али вероватно неће исправно "
 "радити."
 
 msgid ""
 "The file was saved safely, but it cannot be compiled into the MO format and "
 "used."
 msgstr ""
-"Фајл је сачуван, али се не може компајлирати у MO формат за даље коришћење."
+"Датотека је сачувана, али се не може компајлирати у MO формат за даље "
+"коришћење."
 
 msgid ""
 "The file was compiled into the MO format, but it will probably not work "
 "correctly."
-msgstr "Фајл је компајлиран у MO формат, али вероватно неће исправно радити."
+msgstr ""
+"Датотека је компајлирана у MO формат, али вероватно неће исправно радити."
 
 msgid "The file cannot be compiled into the MO format and used."
-msgstr "Фајл се не може компајлирати у MO формат за даље коришћење."
+msgstr "Датотека се не може компајлирати у MO формат за даље коришћење."
 
 msgid "No problems with the translation found."
-msgstr "Нису пронађени проблеми са преводом."
+msgstr "Нису пронађени проблеми у преводу."
 
 #, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
 msgid_plural ""
 "The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] "Превод је спреман за коришћење, али %d унос још увек није преведен."
-msgstr[1] ""
-"Превод је спреман за коришћење, али %d уноса још увек нису преведена."
-msgstr[2] ""
-"Превод је спреман за коришћење, али %d уноса још увек није преведено."
+msgstr[0] "Превод је спреман за коришћење, али %d унос још није преведен."
+msgstr[1] "Превод је спреман за коришћење, али %d уноса још нису преведена."
+msgstr[2] "Превод је спреман за коришћење, али %d уноса још није преведено."
 
 msgid "The translation is ready for use."
-msgstr "Превод је спреман за коришћење."
+msgstr "Спреман је за коришћење."
 
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
@@ -525,9 +526,9 @@ msgid ""
 "should review translations of any items marked as needing work and correct "
 "them if necessary."
 msgstr ""
-"Фајл је садржао дупликате, што није дозвољено. Poedit је исправио проблем, "
-"али је пожељно да проверите и исправите све преводе који су означени за "
-"дораду."
+"Датотека је садржала дупликате, што није дозвољено. Poedit је исправио "
+"проблем, али је пожељно да проверите и исправите све преводе који су "
+"означени за дораду."
 
 msgid "Language of the translation isn’t set."
 msgstr "Није наведен језик превода."
@@ -559,22 +560,22 @@ msgid ""
 "This file has entries with plural forms, but doesn’t have Plural-Forms "
 "header configured."
 msgstr ""
-"Овај фајл садржи уносе са множинским облицима, али му недостаје заглавље са "
-"правилом за множину."
+"Ова датотека садржи уносе са множинским облицима, али јој недостаје заглавље "
+"са правилом за множину."
 
 msgid ""
 "Entries in this file have different plural forms count from what the file’s "
 "Plural-Forms header says"
 msgstr ""
 "Број множинских облика у уносима се разликује од онога што пише у заглављу "
-"фајла"
+"датотеке"
 
 msgid "Required header Plural-Forms is missing."
 msgstr "У заглављу недостаје образац за множинске облике."
 
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
-msgstr "Синтактичка грешка у заглављу код обрасца за множинске облике („%s”)."
+msgstr "Синтаксна грешка у заглављу код обрасца облика множине („%s”)."
 
 msgid "Fix the Header"
 msgstr "Исправи заглавље"
@@ -588,16 +589,27 @@ msgstr "Исправи заглавље"
 #, c-format
 msgid "Plural forms expression used by the file is unusual for %s."
 msgstr ""
-"Правило за множинске облике које је наведено у фајлу није уобичајено за %s "
-"језик."
+"Правило за множинске облике које је наведено у датотеци није уобичајено за "
+"%s језик."
 
 #. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
 msgid "Review"
 msgstr "Прегледај"
 
+msgid "Would you like to use English for source text?"
+msgstr "Желите ли да енглески буде изворни текст?"
+
 #, c-format
-msgid "Error loading translation file “%s”."
-msgstr "Грешка при учитавању фајла превода „%s”."
+msgid ""
+"This file uses string IDs instead of source text. Poedit can load English "
+"texts from the “%s” file for you."
+msgstr ""
+"Ова датотека користи идентификаторе уместо изворног текста. Poedit може да "
+"учита енглески текст из датотеке „%s”."
+
+#. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+msgid "Load English"
+msgstr "Учитај енглески"
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
@@ -629,10 +641,10 @@ msgstr " (измењено)"
 
 #, c-format
 msgid "Failed to update translation memory: %s"
-msgstr "Није могуће ажурирати преводилачку меморију: %s"
+msgstr "Нисам успео освежити преводилачку меморију: %s"
 
 msgid "Purge deleted translations"
-msgstr "Чишћење избрисаних превода"
+msgstr "Очисти избрисане преводе"
 
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr "Желите ли да уклоните све преводе који се више не користе?"
@@ -642,20 +654,20 @@ msgid ""
 "permanently removed. You will have to translate them again if they are added "
 "back in the future."
 msgstr ""
-"Ако наставите, трајно ћете уклонити све стрингове означене као избрисане. "
-"Мораћете их поново превести ако буду додати у будућности."
+"Ако наставите, трајно ћете уклонити све преводе означене као избрисане. "
+"Мораћете да поново преведете стрингове ако буду додати у будућности."
 
 msgid "Keep"
-msgstr "&Задржи"
+msgstr "Задржи"
 
 msgid "Purge"
 msgstr "&Обриши"
 
 msgid "Copy from source text"
-msgstr "&Копирај из изворног текста"
+msgstr "Копирај из из&ворног текста"
 
 msgid "Copy from Source Text"
-msgstr "&Копирај из изворног текста"
+msgstr "Копирај из из&ворног текста"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
@@ -663,13 +675,13 @@ msgid "Ctrl+"
 msgstr "Ctrl+"
 
 msgid "Clear translation"
-msgstr "&Обриши превод"
+msgstr "Обри&ши превод"
 
 msgid "Clear Translation"
-msgstr "&Обриши превод"
+msgstr "Обри&ши превод"
 
 msgid "Edit comment"
-msgstr "Уређивање коментара"
+msgstr "Уреди коментар"
 
 msgid "Edit Comment"
 msgstr "Уреди коментар"
@@ -704,19 +716,19 @@ msgstr "Додај обележивач %i"
 
 #, c-format
 msgid "Go to Bookmark %i"
-msgstr "Иди на обележивач %i"
+msgstr "Иди на забелешку %i"
 
 msgid "Hide Sidebar"
 msgstr "Сакриј бочну траку"
 
 msgid "Show Sidebar"
-msgstr "Бочна трака"
+msgstr "&Бочна трака"
 
 msgid "Hide Status Bar"
 msgstr "Сакриј статусну траку"
 
 msgid "Show Status Bar"
-msgstr "Статусна трака"
+msgstr "&Статусна трака"
 
 msgid "String length in characters: translation | source"
 msgstr "Дужина стринга у знаковима: превод | извор"
@@ -757,14 +769,18 @@ msgid ""
 "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
 msgstr ""
-"POT фајлови су само шаблони без превода.\n"
-"Да бисте израдили превод, направите нови PO фајл према шаблону."
+"POT датотеке су само шаблони без превода.\n"
+"Да бисте започели превод, направите нову PO датотеку према шаблону."
 
 msgid "Create new translation"
 msgstr "Направи нови превод"
 
 msgid "Make a new translation from this POT file."
-msgstr "Направите нови превод из POT фајла."
+msgstr "Направите нови превод из POT датотеке."
+
+#. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+msgid "Source text ID"
+msgstr "ID изворног текста"
 
 msgid "Everything"
 msgstr "Све"
@@ -789,6 +805,16 @@ msgstr "Два"
 msgid "Other"
 msgstr "Друго"
 
+#. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#, c-format
+msgid "String context: %s"
+msgstr "Контекст стринга: %s"
+
+#. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#, c-format
+msgid "String identifier: %s"
+msgstr "Идентификатор стринга: %s"
+
 #, c-format
 msgid "%s Format"
 msgstr "%s формат"
@@ -800,14 +826,14 @@ msgstr "%s формат"
 
 #, c-format
 msgid "Translation — %s"
-msgstr "Превод — %s"
+msgstr "Превод – %s"
 
 msgid "ID"
 msgstr "ID"
 
 #, c-format
 msgid "Source text — %s"
-msgstr "Изворни текст — %s"
+msgstr "Изворни текст – %s"
 
 msgid "unknown language"
 msgstr "непознат језик"
@@ -829,7 +855,7 @@ msgid ""
 "No information about this string’s occurrences in the source code is "
 "provided in the file."
 msgstr ""
-"У фајлу није наведена информација о појављивањима овог стринга у изворном "
+"У датотеци није наведена информација о појављивањима овог стринга у изворном "
 "коду."
 
 msgid "No usage information"
@@ -850,19 +876,19 @@ msgid ""
 "either not available in the referenced location or it is a symbolic "
 "reference that doesn’t point to a real file."
 msgstr ""
-"Poedit не може да прикаже изворни кôд у ком се стринг користи, јер фајл није "
-"доступан на наведеној локацији или се ради о симболичној референци која не "
-"упућује на стварни фајл."
+"Poedit не може да прикаже изворни кôд у ком се стринг користи, јер датотека "
+"није доступна на наведеној локацији или се ради о симболичкој референци која "
+"не упућује на стварну датотеку."
 
 msgid "File cannot be opened"
-msgstr "Није могуће отворити фајл"
+msgstr "Није могуће отворити датотеку"
 
 #, c-format
 msgid "Poedit was unable to open the “%s” file."
-msgstr "Poedit не може да отвори фајл „%s”."
+msgstr "Poedit не може да отвори датотеку „%s”."
 
 msgid "Find"
-msgstr "П&ронађи"
+msgstr "Пронађи"
 
 msgid "Replace"
 msgstr "Замени"
@@ -872,37 +898,37 @@ msgid "Options"
 msgstr "Опције"
 
 msgid "Ignore case"
-msgstr "Занемари величину слова"
+msgstr "Не разликуј велика и мала слова"
 
 msgid "Wrap around"
 msgstr "Тражи укруг"
 
 msgid "Whole words only"
-msgstr "&Само целе речи"
+msgstr "Само целе речи"
 
 msgid "Find in source texts"
-msgstr "&Изворни текст"
+msgstr "Изворни текст"
 
 msgid "Find in translations"
-msgstr "&Преводи"
+msgstr "Преводи"
 
 msgid "Find in comments"
-msgstr "&Коментари"
+msgstr "Коментари"
 
 msgid "Close"
 msgstr "&Затвори"
 
 msgid "Replace &All"
-msgstr "Замени &све"
+msgstr "З&амени све"
 
 msgid "Replace &all"
-msgstr "Замени &све"
+msgstr "З&амени све"
 
 msgid "&Replace"
-msgstr "&Замени"
+msgstr "За&мени"
 
 msgid "< &Previous"
-msgstr "< П&ретходно"
+msgstr "< &Претходно"
 
 msgid "&Next >"
 msgstr "&Следеће >"
@@ -927,7 +953,7 @@ msgid "Language of the translation:"
 msgstr "Језик превода:"
 
 msgid "Poedit - Catalogs manager"
-msgstr "Poedit – менаџер каталога"
+msgstr "Поедит – управник збирака превода"
 
 msgid "Edit…"
 msgstr "Уреди…"
@@ -964,13 +990,13 @@ msgid "Last modified"
 msgstr "Последња измена"
 
 msgid "Select directory"
-msgstr "Избор фасцикле"
+msgstr "Избор фолдера"
 
 msgid "Directories:"
-msgstr "Фасцикле:"
+msgstr "Фолдери:"
 
 msgid "<unnamed>"
-msgstr "<неименовано>"
+msgstr "<неименован>"
 
 #, c-format
 msgid "Do you want to delete project “%s”?"
@@ -980,26 +1006,26 @@ msgid "Delete project"
 msgstr "Избриши пројекат"
 
 msgid "Deleting the project will not delete any translation files."
-msgstr "Брисањем пројекта нећете избрисати фајлове превода."
+msgstr "Брисањем пројекта нећете избрисати датотеке превода."
 
 msgid "Confirmation"
 msgstr "Потврда"
 
 msgid "Update all catalogs in this project?"
-msgstr "Желите ли да ажурирате све каталоге у овом пројекту?"
+msgstr "Желите ли да ажурирате све каталоге у пројекту?"
 
 msgid "Performs update from source code on all files in the project."
-msgstr "Ажурира све фајлове у пројекту из изворног кода."
+msgstr "Ажурираћете све датотеке у пројекту из изворног кода."
 
 msgid "Catalogs Manager"
 msgstr "Менаџер каталога"
 
 msgid "Check for Updates…"
-msgstr "Потражи ажурирања…"
+msgstr "Потр&ажи ажурирања"
 
 #. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
 msgid "Settings…"
-msgstr "Поставке…"
+msgstr "Подешавања…"
 
 msgid "&Edit"
 msgstr "&Уређивање"
@@ -1116,7 +1142,7 @@ msgid "Your Name"
 msgstr "Ваше име"
 
 msgid "Email:"
-msgstr "Имејл:"
+msgstr "&Имејл:"
 
 msgid "you@example.com"
 msgstr "imejl@domen.rs"
@@ -1126,22 +1152,22 @@ msgid ""
 "of GNU gettext files."
 msgstr ""
 "Ваше име и имејл-адреса се користе само при постављању последњег преводиоца "
-"у заглављу GNU gettext фајлова."
+"у заглављу GNU gettext датотека."
 
 msgid "Editing"
 msgstr "Уређивање"
 
 msgid "Automatically compile MO file when saving"
-msgstr "Аутоматски компајлирај MO фајл при чувању"
+msgstr "Аутоматски компајлирај MO датотеку при чувању"
 
 msgid "Show summary after updating files"
-msgstr "Прикажи резиме након ажурирања фајлова"
+msgstr "Прикажи резиме након ажурирања датотека"
 
 msgid "Check spelling"
 msgstr "Проверавај правопис"
 
 msgid "Always change focus to text input field"
-msgstr "Увек пребаци &фокус на поље за унос текста"
+msgstr "Увек пребаци фокус на поље за унос текста"
 
 msgid ""
 "Never let the list of strings take focus. If enabled, you must use Ctrl-"
@@ -1162,28 +1188,28 @@ msgid "Use custom text fields font:"
 msgstr "Фонт за текстуална поља:"
 
 msgid "Change UI language"
-msgstr "&Промени језик интерфејса"
+msgstr "Промените језик интерфејса"
 
 #. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
 msgid "(requires Windows 8 or newer)"
-msgstr "(Windows 8 или новији)"
+msgstr "(захтева Windows 8 или новији)"
 
 msgid "General"
 msgstr "Опште"
 
 msgid "Use translation memory"
-msgstr "&Преводилачка меморија"
+msgstr "Користи преводилачку меморију"
 
 msgid "Manage…"
 msgstr "Управљај…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
 msgid "When updating from sources"
-msgstr "При ажурирању из извора"
+msgstr "При ажурирању из изворног кода"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
 msgid "fuzzy match within the file"
-msgstr "нејасно поклапање у датотеци"
+msgstr "користи сличне преводе из датотеке"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
 msgid "pre-translate from TM"
@@ -1195,10 +1221,10 @@ msgid ""
 "effective if it’s near-empty, but it will get better as you add more "
 "translations to it."
 msgstr ""
-"Поедит може покушати да попуни нове ставке само из претходних превода у "
-"датотеци или из целе преводилачке меморије. Употреба преводилачке меморије "
-"неће имати много учинка ако је скоро празна, али ће бити све боље како "
-"додајете више превода у њу."
+"Poedit може покушати да попуни нове уносе само из претходних превода у "
+"датотеци или из читаве преводилачке меморије. Употреба преводилачке меморије "
+"неће имати много учинка ако је слабо попуњена, али ће бити све боља како "
+"додајете нове преводе."
 
 msgid "Stored translations:"
 msgstr "Сачуваних превода:"
@@ -1207,10 +1233,10 @@ msgid "Database size on disk:"
 msgstr "Величина базе на диску:"
 
 msgid "Import Translation Files…"
-msgstr "Увези фајлове превода…"
+msgstr "Увези датотеке превода…"
 
 msgid "Import translation files…"
-msgstr "Увези фајлове превода…"
+msgstr "Увези датотеке превода…"
 
 msgid "Import From TMX…"
 msgstr "Увези из TMX-а…"
@@ -1226,7 +1252,7 @@ msgstr "Извези у TMX…"
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
 msgid "Reset"
-msgstr "Обриши"
+msgstr "Поништи"
 
 msgid "Select translation files to import"
 msgstr "Избор датотеке превода за увоз"
@@ -1237,14 +1263,18 @@ msgstr "Преводилачка меморија"
 msgid "Importing translations…"
 msgstr "Увоз превода…"
 
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "Грешка при учитавању датотеке превода „%s”."
+
 msgid "Finalizing…"
 msgstr "Завршавање…"
 
 msgid "Select TMX files to import"
-msgstr "Избор ТМХ фајлова за увоз"
+msgstr "Избор ТМХ датотека за увоз"
 
 msgid "TMX Files"
-msgstr "TMX фајлови"
+msgstr "TMX датотеке"
 
 #, c-format
 msgid "Importing translation memory from “%s” failed."
@@ -1264,16 +1294,16 @@ msgid "Export error"
 msgstr "Грешка при извозу"
 
 msgid "Reset translation memory"
-msgstr "Испразни преводилачку меморију"
+msgstr "Ресетовање преводилачке меморије"
 
 msgid "Are you sure you want to reset the translation memory?"
-msgstr "Желите ли да испразните преводилачку меморију?"
+msgstr "Желите ли заиста да ресетујете преводилачку меморију?"
 
 msgid ""
 "Resetting the translation memory will irrevocably delete all stored "
 "translations from it. You can’t undo this operation."
 msgstr ""
-"Избрисаћете све преводе у преводилачкој меморији. Ова радња је неповратна."
+"Обрисаћете све преводе у преводилачкој меморији. Ова радња је неповратна."
 
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
@@ -1295,14 +1325,14 @@ msgid "Custom extractors:"
 msgstr "Прилагођени издвајачи:"
 
 msgid "GNU gettext"
-msgstr "GNU gettext"
+msgstr "ГНУ-геттекст"
 
 msgid ""
 "Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
 "+, C#, Perl, Python, Java, JavaScript and others)."
 msgstr ""
-"Подржава све програмске језике признате од алата ГНУ-геттекст ( PHP, C/C++, "
-"C#, Python, Java, JavaScript и друге)."
+"Подржава све програмске језике које препознају GNU gettext алатке (PHP, C/C+"
+"+, C#, Python, Java, JavaScript и друге)."
 
 msgid "Delete extractor"
 msgstr "Избриши издвајач"
@@ -1318,27 +1348,27 @@ msgid "Accounts"
 msgstr "Налози"
 
 msgid "Automatically check for updates"
-msgstr "Аутоматски тражи ажурирања"
+msgstr "Самостално тражи освежења"
 
 msgid "Include beta versions"
-msgstr "Укључи &бета верзије"
+msgstr "Укључи бета верзије"
 
 msgid ""
 "Beta versions contain the latest new features and improvements, but may be a "
 "bit less stable."
 msgstr ""
-"Бета верзије садрже најновије функције и побољшања, али могу бити мање "
+"Бета-издања садрже најновије могућности и побољшања, али могу бити мање "
 "стабилне."
 
 msgid "Updates"
-msgstr "Ажурирања"
+msgstr "Освежења"
 
 msgid ""
 "These settings affect internal formatting of PO files. Adjust them if you "
 "have specific requirements e.g. because of version control."
 msgstr ""
-"Ова подешавања утичу на унутрашње форматирање PO датотека. Прилагодите их "
-"својим потребама, нпр. ако користите систем за управљање изворним кодом."
+"Ова подешавања утичу на форматирање PO датотека. Прилагодите их својим "
+"потребама, нпр. ако користите систем за управљање изворним кодом."
 
 msgid "Line endings:"
 msgstr "Завршеци редова:"
@@ -1360,20 +1390,23 @@ msgid "Advanced"
 msgstr "Напредно"
 
 msgid "Preparing strings…"
-msgstr "Припрема низова…"
+msgstr "Припрема стрингова…"
 
 msgid "Pre-translating from translation memory…"
-msgstr "Прелиминарно превођење из преводилачке меморије…"
+msgstr "Прелиминарно превођење помоћу преводилачке меморије…"
 
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
-msgstr[0] "Прелиминарно је преведена %u ставка"
-msgstr[1] "Прелиминарно су преведене %u ставке"
-msgstr[2] "Прелиминарно је преведено %u ставки"
+msgstr[0] "%u стринг је попуњен прелиминарним преводом"
+msgstr[1] "%u стринга су попуњена прелиминарним преводом"
+msgstr[2] "%u стрингова је попуњено прелиминарним преводом"
 
 msgid "Pre-translating…"
-msgstr "Унос прелиминарног превода…"
+msgstr "Прелиминарно превођење…"
+
+msgid "Cannot pre-translate without source text."
+msgstr "Није могуће обавити прелиминарни превод без изворног текста."
 
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
@@ -1386,7 +1419,14 @@ msgstr "Унос прелиминарног превода…"
 #. experience). "Pre-translate" nicely expresses that it's only the step done
 #. *before* actual translation.
 msgid "Pre-translate"
-msgstr "Прелиминарни превод"
+msgstr "Предпреведи"
+
+msgid ""
+"Pre-translation requires that source text is available. It doesn’t work if "
+"only IDs without the actual text are used."
+msgstr ""
+"За прелиминарни превод је потребан изворни текст. Ова функција неће радити "
+"само са идентификаторима."
 
 msgid "Only fill in exact matches"
 msgstr "Само потпуна подударања"
@@ -1395,41 +1435,41 @@ msgid ""
 "By default, inaccurate results are filled in as well and marked as needing "
 "work. Check this option to only include accurate matches."
 msgstr ""
-"Приближни резултати ће подразумевано бити попуњени и означени као непотпуни. "
-"Изаберите ову опцију да бисте попунили само потпуна подударања."
+"Подразумевано се преузимају и приближни резултати и означавају за дораду. "
+"Изаберите ову опцију да бисте користили само потпуна подударања."
 
 msgid "Don’t mark exact matches as needing work"
-msgstr "Потпуним подударањима не стављај ознаку „потребна дорада”"
+msgstr "Потпуна подударања не означавај за дораду"
 
 msgid ""
 "Only enable if you trust the quality of your TM. By default, all matches "
 "from the TM are marked as needing work and should be reviewed before use."
 msgstr ""
 "Укључите ову опцију само ако сте сигурни у квалитет ваше преводилачке "
-"меморије. Према подразумеваним подешавањима, свим подударањима се додељује "
-"ознака „потребна дорада” и такве стрингове би требало проверити."
+"меморије. Подразумевано се свим подударањима додељује ознака „потребна "
+"дорада” и такве стрингове би требало проверити."
 
 msgid ""
 "Pre-translation automatically finds exact or fuzzy matches for untranslated "
 "strings in the translation memory and fills in their translations."
 msgstr ""
-"Прелиминарни превод самостално налази потпуно или нејасно поклапање за "
-"непреведене ниске у преводилачкој меморији и попуњава у својим преводима."
+"Прелиминарни превод аутоматски проналази потпуна или приближна подударања за "
+"непреведене стрингове у преводилачкој меморији и попуњава њихове преводе."
 
 #, c-format
 msgid "%d entry was pre-translated."
 msgid_plural "%d entries were pre-translated."
-msgstr[0] "%d ставка је прелиминарно преведена."
-msgstr[1] "%d ставке су прелиминарно преведене."
-msgstr[2] "%d ставки је прелиминарно преведено."
+msgstr[0] "%d унос је попуњен прелиминарним преводом."
+msgstr[1] "%d уноса су попуњена прелиминарним преводом."
+msgstr[2] "%d уноса је попуњено прелиминарним преводом."
 
 msgid ""
 "The translations were marked as needing work, because they may be "
 "inaccurate. You should review them for correctness."
-msgstr "Преводи су означени као непотпуни. Проверите њихову исправност."
+msgstr "Преводи су означени за дораду. Проверите њихову исправност."
 
 msgid "No entries could be pre-translated."
-msgstr "Нема стрингова који могу бити попуњени прелиминарним преводом."
+msgstr "Ниједан унос се не може попунити прелиминарним преводом."
 
 msgid ""
 "The TM doesn’t contain any strings similar to the content of this file. It "
@@ -1444,16 +1484,16 @@ msgid "Cancelling…"
 msgstr "Отказивање…"
 
 msgid "Drag Folders or Files Here"
-msgstr "Овде превуците фолдере или фајлове"
+msgstr "Овде превуците фолдере или датотеке"
 
 msgid "Drag folders or files here"
-msgstr "Овде превуците фолдере или фајлове"
+msgstr "Овде превуците фолдере или датотеке"
 
 msgid "Add Folders…"
-msgstr "Додај фасцикле…"
+msgstr "Додај фолдере…"
 
 msgid "Add folders…"
-msgstr "Додај фасцикле…"
+msgstr "Додај фолдере…"
 
 msgid "Add Files…"
 msgstr "Додај датотеке…"
@@ -1488,13 +1528,13 @@ msgid "Advanced extraction settings"
 msgstr "Напредна подешавања издвајања"
 
 msgid "Extract notes for translators from:"
-msgstr "Извуци преводилачке белешке из:"
+msgstr "Издвој напомене преводиоцима:"
 
 msgid "Comments prefixed with:"
-msgstr "Коментари који почињу са:"
+msgstr "Из коментара који почињу са:"
 
 msgid "All comments"
-msgstr "Сви коментари"
+msgstr "Из свих коментара"
 
 msgid "Additional xgettext flags:"
 msgstr "Додатне xgettext ознаке:"
@@ -1503,10 +1543,10 @@ msgid "Additional keywords"
 msgstr "Додатне кључне речи"
 
 msgid "Name of the project the translation is for"
-msgstr "Име пројекта за који је намењен превод"
+msgstr "Назив пројекта за који је намењен превод"
 
 msgid "Team name and email address or URL"
-msgstr "Име тима и адреса е-поште или УРЛ"
+msgstr "Назив групе и имејл-адреса или URL"
 
 msgid "e.g. nplurals=2; plural=(n > 1);"
 msgstr "нпр. nplurals=2; plural=(n > 1);"
@@ -1519,15 +1559,15 @@ msgstr ""
 "Прво сачувајте датотеку. Овај одељак се не може уређивати док то не урадите."
 
 msgid "Placeholders correctness"
-msgstr "Исправност у постављању променљивих"
+msgstr "Исправност чувара места"
 
 #, c-format
 msgid "Placeholder “%s” is missing from translation."
-msgstr "Променљива „%s“ недостаје у преводу."
+msgstr "У преводу недостаје чувар места „%s”."
 
 #, c-format
 msgid "Superfluous placeholder “%s” that isn’t in source text."
-msgstr "Постављена је променљива „%s“ која не постоји у изворном тексту."
+msgstr "Непотребан чувар места „%s” који не постоји у изворном тексту."
 
 msgid "Plural form translations"
 msgstr "Преводи множинских облика"
@@ -1539,7 +1579,7 @@ msgid "Inconsistent upper/lower case"
 msgstr "Недоследност при употреби великих и малих слова"
 
 msgid "The translation should start as a sentence."
-msgstr "Превод мора почињати као реченица."
+msgstr "Превод мора почињати великим словом."
 
 msgid "The translation should start with a lowercase character."
 msgstr "Превод мора почињати малим словом."
@@ -1581,10 +1621,10 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr "Превод се завршава знаком „%s”, а изворни текст знаком „%s”."
 
 msgid "Clear Menu"
-msgstr "Обриши мени"
+msgstr "Обриши листу"
 
 msgid "Clear menu"
-msgstr "Обриши мени"
+msgstr "Обриши листу"
 
 msgid "Comment:"
 msgstr "Коментар:"
@@ -1593,7 +1633,7 @@ msgid "Update"
 msgstr "Ажурирај"
 
 msgid "&Delete"
-msgstr "&Избриши"
+msgstr "Из&бриши"
 
 msgid "Delete the comment"
 msgstr "Избриши коментар"
@@ -1602,13 +1642,13 @@ msgid "Edit project"
 msgstr "Уређивање пројекта"
 
 msgid "Project name:"
-msgstr "Име пројекта:"
+msgstr "Назив пројекта:"
 
 msgid "Browse"
-msgstr "&Потражи…"
+msgstr "&Прегледај…"
 
 msgid "Add directory to the list"
-msgstr "Додајте фасциклу на списак."
+msgstr "Додајте фолдер на листу"
 
 msgid "OK"
 msgstr "&У реду"
@@ -1620,37 +1660,37 @@ msgid "&New…"
 msgstr "&Ново…"
 
 msgid "New from &POT/PO file…"
-msgstr "Ново из &ПОТ/ПО датотеке…"
+msgstr "Но&во из POT/PO датотеке…"
 
 msgid "New From &POT/PO File…"
-msgstr "Ново из &ПОТ/ПО датотеке…"
+msgstr "Но&во из POT/PO датотеке…"
 
 msgid "&Open…"
 msgstr "&Отвори…"
 
 msgid "Open Recent"
-msgstr "Отвори недавне датотеке"
+msgstr "Отвори &недавне"
 
 msgid "Open recent"
-msgstr "Отвори недавне ставке"
+msgstr "Отвори &недавне"
 
 msgid "Open from Crowdin…"
-msgstr "Отвори из Crowdin…"
+msgstr "О&твори из Crowdin-а…"
 
 msgid "Open From Crowdin…"
-msgstr "Отвори из Crowdin…"
+msgstr "О&твори из Crowdin-а…"
 
 msgid "&Start window"
-msgstr "&Покрени прозор"
+msgstr "&Уводни прозор"
 
 msgid "&Start Window"
-msgstr "&Покрени прозор"
+msgstr "&Уводни прозор"
 
 msgid "Catalogs &manager"
-msgstr "&Менаџер каталога"
+msgstr "Управник& збирака"
 
 msgid "Catalogs &Manager"
-msgstr "&Менаџер каталога"
+msgstr "Управник& збирака"
 
 msgid "&Close"
 msgstr "&Затвори"
@@ -1665,13 +1705,13 @@ msgid "Save &As…"
 msgstr "Сачувај &као…"
 
 msgid "Compile to MO…"
-msgstr "Претвори у MO…"
+msgstr "Ко&мпајлирај у MO…"
 
 msgid "E&xport as HTML…"
-msgstr "Извези& као HTML…"
+msgstr "И&звези као HTML…"
 
 msgid "Check for updates…"
-msgstr "Потражи исправке…"
+msgstr "Потр&ажи ажурирања…"
 
 msgid "&Preferences…"
 msgstr "&Подешавања…"
@@ -1680,35 +1720,35 @@ msgid "E&xit"
 msgstr "&Изађи"
 
 msgid "Quit"
-msgstr "Изађи"
+msgstr "Напусти"
 
 msgid "Copy from singular"
-msgstr "Копирај једнину"
+msgstr "Копирај из &једнине"
 
 msgid "Copy From Singular"
-msgstr "Копирај једнину"
+msgstr "Копирај из &једнине"
 
 msgid "Translation needs &work"
-msgstr "Превод захтева &дораду"
+msgstr "Означи превод за &дораду"
 
 msgid "Translation Needs &Work"
-msgstr "Превод захтева &дораду"
+msgstr "Означи превод за &дораду"
 
 msgid "Edit &comment"
-msgstr "Уреди &коментар"
+msgstr "Уреди ко&ментар"
 
 msgid "Edit &Comment"
-msgstr "Уреди &коментар"
+msgstr "Уреди ко&ментар"
 
 #. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
 msgid "Suggestions"
 msgstr "Предлози"
 
 msgid "&Find…"
-msgstr "&Пронађи…"
+msgstr "П&ронађи…"
 
 msgid "Replace…"
-msgstr "Замени…"
+msgstr "&Замени…"
 
 msgid "Find next"
 msgstr "Пронађи &следеће"
@@ -1729,16 +1769,16 @@ msgid "&Preferences"
 msgstr "&Подешавања"
 
 msgid "Show string &ID"
-msgstr "&ID стринга"
+msgstr "ID &стринга"
 
 msgid "Show String &ID"
-msgstr "&ID стринга"
+msgstr "ID &стринга"
 
 msgid "Show warnings"
-msgstr "Упозорења"
+msgstr "&Упозорења"
 
 msgid "Show Warnings"
-msgstr "Прикажи упозорења"
+msgstr "&Упозорења"
 
 msgid "Sort by &file order"
 msgstr "Сортирај као у &датотеци"
@@ -1747,16 +1787,16 @@ msgid "Sort by &File Order"
 msgstr "Сортирај као у &датотеци"
 
 msgid "Sort by &source"
-msgstr "Сортирај по &изворном тексту"
+msgstr "Сортирај према &изворном тексту"
 
 msgid "Sort by &Source"
-msgstr "Сортирај по &изворном тексту"
+msgstr "Сортирај према &изворном тексту"
 
 msgid "Sort by &translation"
-msgstr "Сортирај по &преводу"
+msgstr "Сортирај према п&реводу"
 
 msgid "Sort by &Translation"
-msgstr "Сортирај по &преводу"
+msgstr "Сортирај према п&реводу"
 
 msgid "&Group by context"
 msgstr "&Групиши по контексту"
@@ -1771,10 +1811,10 @@ msgid "Entries with Errors First"
 msgstr "Прво уноси са грешкама"
 
 msgid "&Untranslated entries first"
-msgstr "Прво н&епреведени уноси"
+msgstr "Прво &непреведени уноси"
 
 msgid "&Untranslated Entries First"
-msgstr "Прво н&епреведени уноси"
+msgstr "Прво &непреведени уноси"
 
 msgid "&Show code occurrences"
 msgstr "Појављивања у &коду"
@@ -1783,13 +1823,13 @@ msgid "&Show Code Occurrences"
 msgstr "Појављивања у &коду"
 
 msgid "Show sidebar"
-msgstr "Бочна трака"
+msgstr "&Бочна трака"
 
 msgid "Show status bar"
-msgstr "Статусна трака"
+msgstr "&Статусна трака"
 
 msgid "&Translation"
-msgstr "&Превод"
+msgstr "П&ревод"
 
 msgid "&Update from source code"
 msgstr "&Ажурирај из изворног кода"
@@ -1798,13 +1838,13 @@ msgid "&Update from Source Code"
 msgstr "&Ажурирај из изворног кода"
 
 msgid "Update from &POT file…"
-msgstr "Ажурирај из &POT датотеке…"
+msgstr "А&журирај из POT датотеке…"
 
 msgid "Update from &POT File…"
-msgstr "Ажурирај из &POT датотеке…"
+msgstr "А&журирај из POT датотеке…"
 
 msgid "Sync with Crowdin"
-msgstr "Синхронизуј са Crowdin-ом"
+msgstr "&Синхронизуј са Crowdin-ом"
 
 msgid "Pre-&translate…"
 msgstr "&Прелиминарни превод…"
@@ -1816,25 +1856,25 @@ msgid "&Purge Deleted Translations"
 msgstr "&Очисти избрисане преводе"
 
 msgid "&Validate translations"
-msgstr "Провери &ваљаност превода"
+msgstr "П&ровери ваљаност превода"
 
 msgid "&Validate Translations"
-msgstr "Провери &ваљаност превода"
+msgstr "П&ровери ваљаност превода"
 
 msgid "&Properties…"
-msgstr "&Својства…"
+msgstr "С&војства"
 
 msgid "&Done and next"
-msgstr "Заврши и &настави"
+msgstr "&Заврши и настави"
 
 msgid "&Done and Next"
-msgstr "Заврши и &настави"
+msgstr "&Заврши и настави"
 
 msgid "Previously edited"
-msgstr "Раније уређено"
+msgstr "Претходна &измена"
 
 msgid "Previously Edited"
-msgstr "Раније уређено"
+msgstr "Претходна &измена"
 
 msgid "&Previous translation"
 msgstr "&Претходни превод"
@@ -1849,43 +1889,43 @@ msgid "&Next Translation"
 msgstr "&Следећи превод"
 
 msgid "P&revious unfinished"
-msgstr "П&ретходни незавршени"
+msgstr "П&ретходни недовршени"
 
 msgid "P&revious Unfinished"
-msgstr "П&ретходни незавршени"
+msgstr "П&ретходни недовршени"
 
 msgid "Ne&xt unfinished"
-msgstr "С&ледећи незавршени"
+msgstr "С&ледећи недовршени"
 
 msgid "Ne&xt Unfinished"
-msgstr "С&ледећи незавршени"
+msgstr "С&ледећи недовршени"
 
 msgid "Previous plural form"
-msgstr "Претходни множински облик"
+msgstr "Пр&етходни множински облик"
 
 msgid "Previous Plural Form"
-msgstr "Претходни множински облик"
+msgstr "Пр&етходни множински облик"
 
 msgid "Next plural form"
-msgstr "Следећи множински облик"
+msgstr "Сле&дећи множински облик"
 
 msgid "Next Plural Form"
-msgstr "Следећи множински облик"
+msgstr "Сле&дећи множински облик"
 
 msgid "&Online help"
-msgstr "&Помоћ на интернету"
+msgstr "О&нлајн помоћ"
 
 msgid "&Online Help"
-msgstr "&Помоћ на интернету"
+msgstr "О&нлајн помоћ"
 
 msgid "&GNU gettext manual"
-msgstr "Приручник за &GNU gettext"
+msgstr "П&риручник за GNU gettext"
 
 msgid "&GNU gettext Manual"
-msgstr "Приручник за &GNU gettext"
+msgstr "П&риручник за GNU gettext"
 
 msgid "&About Poedit"
-msgstr "&О Poedit-у"
+msgstr "&О Поедиту"
 
 msgid "&About"
 msgstr "&О програму"
@@ -1894,10 +1934,10 @@ msgid "Extractor setup"
 msgstr "Подешавање издвајача"
 
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
-msgstr "Списак екстензија одвојених тачка-зарезом (нпр. *.cpp;*.h):"
+msgstr "Листа екстензија раздвојених тачка-зарезом (нпр. *.cpp;*.h):"
 
 msgid "Invocation:"
-msgstr "Позивање"
+msgstr "Позивање:"
 
 msgid "Command to extract translations:"
 msgstr "Команда за издвајање превода:"
@@ -1909,47 +1949,49 @@ msgid ""
 "%C to charset flag (see below)."
 msgstr ""
 "Ова команда покреће издвајач.\n"
-"%o означава име излазне датотеке, %K – списак\n"
-"кључних речи, %F – списак улазних датотека,\n"
+"%o – назив излазне датотеке,\n"
+"%K – листа кључних речи,\n"
+"%F – листа улазних датотека,\n"
 "%C – кодирање (в. испод)."
 
 msgid "An item in keywords list:"
-msgstr "Ставка у списку кључних речи:"
+msgstr "Ставка у листи кључних речи:"
 
 msgid ""
 "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
 msgstr ""
-"Ово ће бити додато командној линији једном\n"
-"за сваку кључну реч. Ознака %k представља кључну реч."
+"Ово ће бити додато у командну линију за сваку кључну реч.\n"
+"Параметар %k означава кључну реч."
 
 msgid "An item in input files list:"
-msgstr "Ставка у списку улазних датотека:"
+msgstr "Ставка у листи улазних датотека:"
 
 #, c-format
 msgid ""
 "This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
 msgstr ""
-"Ово ће бити додато командној линији једном\n"
-"за сваку улазну датотеку. Ознака %f представља име датотеке."
+"Ово ће бити додато у командну линију за сваку улазну датотеку.\n"
+"Параметар %f означава назив датотеке."
 
 msgid "Source code charset:"
-msgstr "Кодирање изворног кода:"
+msgstr "Скуп знакова изворног кôда:"
 
 #, c-format
 msgid ""
 "This will be attached to the command line\n"
 "only if source code charset was given. %c expands to charset value."
 msgstr ""
-"Ово ће бити додато командној линији\n"
-"само ако је наведено кодирање извора. Ознака %c представља вредност кодирања."
+"Ово ће бити додато у командну линију само ако је наведено кодирање изворног "
+"кода.\n"
+"Параметар %c означава кодирање."
 
 msgid "Translation Properties"
 msgstr "Својства превода"
 
 msgid "Project name and version:"
-msgstr "Име пројекта и верзија:"
+msgstr "Назив пројекта и верзија:"
 
 msgid "Language team:"
 msgstr "Тим преводилаца:"
@@ -1961,10 +2003,10 @@ msgid "Use default rules for this language"
 msgstr "&Подразумевана правила за овај језик"
 
 msgid "Use custom expression"
-msgstr "Прилагођени &израз:"
+msgstr "Прилагођени израз"
 
 msgid "Learn about plural forms"
-msgstr "Више о множинским облицима"
+msgstr "Сазнајте више о множинским облицима"
 
 msgid "Charset:"
 msgstr "Кодирање:"
@@ -1979,58 +2021,58 @@ msgid "Translation properties"
 msgstr "Својства превода"
 
 msgid "Sources Paths"
-msgstr "Путање до извора"
+msgstr "Путање до изворних фајлова"
 
 msgid "Sources paths"
-msgstr "Фасцикле са изворним датотекама"
+msgstr "Путање до изворних фајлова"
 
 msgid "Extract text from source files in the following directories:"
-msgstr "Издвој текст из изворних датотека у следеће фасцикле:"
+msgstr "Издвој текст из изворних датотека у следеће фолдере:"
 
 msgid "Base path:"
 msgstr "Основна путања:"
 
 msgid "Sources Keywords"
-msgstr "Кључне речи извора"
+msgstr "Кључне речи изворних фајлова"
 
 msgid "Sources keywords"
-msgstr "Кључне речи извора"
+msgstr "Кључне речи изворних фајлова"
 
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files:"
 msgstr ""
 "Тражи стрингове за превод у изворним датотекама према овим кључним речима "
-"(именима функција):"
+"(називима функција):"
 
 msgid "Also use default keywords for supported languages"
-msgstr "Такође користи подразумеване кључне речи за подржане језике"
+msgstr "Користи и подразумеване кључне речи за подржане језике"
 
 msgid "Learn about gettext keywords"
-msgstr "Више о кључним речима gettext-а"
+msgstr "Сазнајте више о кључним речима gettext-а"
 
 msgid "Update summary"
-msgstr "Резиме ажурирања"
+msgstr "Освежи сажетак"
 
 msgid ""
 "These strings were found in the sources but were not in the file.\n"
 "Poedit will add them to the file now."
 msgstr ""
-"Следећи текстови су пронађени на извору, али нису у датотеци.\n"
-"Poedit ће их одмах додати у датотеку."
+"Ови стрингови су пронађени у изворима, али нису у датотеци.\n"
+"Poedit ће их сада додати у њу."
 
 msgid "New strings"
-msgstr "Нови стрингови"
+msgstr "Нове ниске"
 
 msgid ""
 "These strings are no longer in the source code.\n"
 "Poedit will remove them from the file now."
 msgstr ""
-"Овај текст се више не налази у изворном кôду.\n"
-"Poedit ће га одмах уклонити из датотеке."
+"Ови стрингови се више не налазе у изворном коду.\n"
+"Poedit ће их сада уклонити из датотеке."
 
 msgid "Obsolete strings"
-msgstr "Застарели стрингови"
+msgstr "Застареле ниске"
 
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 нових, 0 застарелих)"
@@ -2039,10 +2081,10 @@ msgid "Open"
 msgstr "Отвори"
 
 msgid "Open file"
-msgstr "Отвори фајл"
+msgstr "Отвори датотеку"
 
 msgid "Save file"
-msgstr "Сачувај фајл"
+msgstr "Сачувај датотеку"
 
 msgid "Validate"
 msgstr "Провери ваљаност"
@@ -2054,7 +2096,7 @@ msgid "Update from code"
 msgstr "Ажурирај из кода"
 
 msgid "Update from Code"
-msgstr "Ажурирај из кода"
+msgstr "Ажурирај из кôда"
 
 msgid "Update from source code"
 msgstr "Ажурирај из изворног кода"
@@ -2063,7 +2105,7 @@ msgid "Sidebar"
 msgstr "Бочна трака"
 
 msgid "Show or hide the sidebar"
-msgstr "Прикажите или сакријте бочну траку."
+msgstr "Прикажи или сакриј бочну траку"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
 msgid "Previous source text"
@@ -2093,7 +2135,7 @@ msgid "Delete from translation memory"
 msgstr "Избриши из преводилачке меморије"
 
 msgid "Translation suggestions"
-msgstr "Предлози превода"
+msgstr "Предложени преводи"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
 msgid "No matches found"
@@ -2104,10 +2146,17 @@ msgid "No Matches Found"
 msgstr "Нема резултата"
 
 msgid "This string was found in Poedit’s translation memory."
-msgstr "Овај стринг је пронађен у Poedit-овој преводилачкој меморији."
+msgstr "Овај текст је пронађен у Poedit преводилачкој меморији."
+
+msgid ""
+"Translation suggestions require that source text is available. They don’t "
+"work if only IDs without the actual text are used."
+msgstr ""
+"За предложене преводе је потребан изворни текст. Ова функција неће радити "
+"само са идентификаторима."
 
 msgid "The TMX file is malformed."
-msgstr "Неисправан формат TMX фајла."
+msgstr "Неисправан формат TMX датотеке."
 
 msgid "No translations were found in the TMX file."
 msgstr "У TMX датотеци нису пронађени преводи."
@@ -2121,10 +2170,10 @@ msgid "Translation memory error: %s (%d)."
 msgstr "Грешка у преводилачкој меморији: %s (%d)."
 
 msgid "Cannot create temporary directory."
-msgstr "Не могу да креирам привремену фасциклу."
+msgstr "Није могуће направити привремени фолдер."
 
 msgid "There are no translations. That’s unusual."
-msgstr "Нема превода. То је необично."
+msgstr "Нема уноса. То је необично."
 
 msgid ""
 "Translatable entries aren’t added manually in the Gettext system, but are "
@@ -2133,37 +2182,36 @@ msgid ""
 "Translators typically use PO template files (POTs) prepared for them by the "
 "developer."
 msgstr ""
-"Преводиви уноси нису додати ручно у Gettext систем, него су самостално "
-"издвојени\n"
-"из изворног кôда. На тај начин они остају свежи и прецизни.\n"
-"Преводиоци обично користе PO датотеке шаблона (POT-ове) које им припреме "
-"развојни инжењери."
+"У систему gettext, уноси за превод се не додају ручно, већ се аутоматски "
+"издвајају\n"
+"из изворног кода. Тако остају ажурни и прецизни.\n"
+"Преводиоци обично користе шаблоне (POT датотеке) које им припреми програмер."
 
 msgid "(Learn more about GNU gettext)"
-msgstr "Сазнајте више о GNU gettext-у"
+msgstr "(Сазнајте више о ГНУ геттексту)"
 
 msgid ""
 "The simplest way to fill this file with translations is to update it from a "
 "POT:"
 msgstr ""
-"Најједноставнији начин да попуните ову датотеку са преводима јесте да је "
-"ажурирате путем POT датотеке:"
+"Најједноставнији начин да попуните ову датотеку преводима јесте да је "
+"ажурирате помоћу POT датотеке:"
 
 msgid "Update from POT"
-msgstr "Ажурирање помоћу POT датотеке"
+msgstr "Ажурирај помоћу POT фајла"
 
 msgid "Take translatable strings from an existing POT template."
-msgstr "Копирајте стрингове за превођење из постојећег POT шаблона."
+msgstr "Преузмите стрингове за превод из постојећег POT шаблона."
 
 msgid ""
 "You can also extract translatable strings directly from the source code:"
-msgstr "Стрингове за превођење можете издвојити и директно из изворног кода:"
+msgstr "Стрингове за превод можете да издвојите и директно из изворног кода:"
 
 msgid "Extract from sources"
-msgstr "Издвајање из извора"
+msgstr "Издвој из изворног кода"
 
 msgid "Configure source code extraction in Properties."
-msgstr "Конфигуришите издвајање из изворног кода у одељку „Својства”."
+msgstr "Подесите издвајање из изворног кода у својствима."
 
 #. TRANSLATORS: This is version information in about dialog, "%s" will be
 #. version number when used
@@ -2171,32 +2219,32 @@ msgstr "Конфигуришите издвајање из изворног ко
 msgid "Version %s"
 msgstr "Верзија %s"
 
-msgid "Create new…"
-msgstr "Направи нови…"
+msgid "Create new"
+msgstr "Направи нови"
 
 msgid "Create new translation from POT template."
 msgstr "Направите нови превод помоћу POT шаблона."
 
 msgid "Browse files"
-msgstr "Потражи фајлове"
+msgstr "Прегледај датотеке"
 
 msgid "Open and edit translation files."
-msgstr "Отворите и уређујте фајлове превода."
+msgstr "Отворите и уређујте датотеке превода."
 
 msgid "Translate Crowdin project"
-msgstr "Превод Crowdin пројекта"
+msgstr "Преведи пројекат на Crowdin-у"
 
 msgid "Collaborate with others in a Crowdin project."
-msgstr "Сарађујте са другима на Crowdin пројекту."
+msgstr "Сарађујте са другима на пројекту на Crowdin-у."
 
 msgid "Recent files"
-msgstr "Недавни фајлови"
+msgstr "Недавне датотеке"
 
 msgid "Sync"
-msgstr "Синхронизација"
+msgstr "Синхронизуј"
 
 msgid "Synchronize the translation with Crowdin"
-msgstr "Синхронизујте превод са Crowdin-ом"
+msgstr "Синхронизуј превод са Crowdin-ом"
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
@@ -2271,13 +2319,13 @@ msgid "Copy"
 msgstr "Копирај"
 
 msgid "Cu&t"
-msgstr "И&сеци"
+msgstr "&Исеци"
 
 msgid "Cut"
 msgstr "Исеци"
 
 msgid "Edit"
-msgstr "&Уреди"
+msgstr "Уреди"
 
 msgid "&Quit"
 msgstr "&Изађи"

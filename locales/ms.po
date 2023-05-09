@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2022-11-30 17:55+0100\n"
-"PO-Revision-Date: 2023-02-23 14:13\n"
+"POT-Creation-Date: 2023-05-09 17:49+0200\n"
+"PO-Revision-Date: 2023-05-09 15:48\n"
 "Last-Translator: \n"
 "Language-Team: Malay\n"
 "Language: ms_MY\n"
@@ -46,8 +46,11 @@ msgid "Updating translations"
 msgstr "Mengemas kini terjemahan"
 
 #, c-format
-msgid "“%s” is not a valid POT file."
-msgstr "\"%s\" bukanlah fail POT yang sah."
+msgid "The file “%s” couldn’t be opened."
+msgstr "Fail \"%s\" gagal dibuka."
+
+msgid "Invalid file"
+msgstr "Fail tidak sah"
 
 #, c-format
 msgid "Malformed header: “%s”"
@@ -62,12 +65,40 @@ msgstr "Templat Terjemahan POT"
 msgid "XLIFF Translation Files"
 msgstr "Fail Terjemahan XLIFF"
 
+msgid "JSON Translation Files"
+msgstr "Fail Terjemahan JSON"
+
+#. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+msgid "Flutter Translation Files"
+msgstr "Fail Terjemahan Flutter"
+
 msgid "All Translation Files"
 msgstr "Semua Fail Terjemahan"
 
+msgid "The file is in a format not recognized by Poedit."
+msgstr "Fail ini dalam format yang tidak dikenal pasti oleh Poedit."
+
+msgid ""
+"This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgstr ""
+"Fail JSON ini bukan sebuah fail terjemahan dan tidak dapat disunting dengan "
+"Poedit."
+
 #, c-format
-msgid "File “%s” is in unsupported format."
-msgstr "Fail “%s” adalah dalam format tidak disokong."
+msgid "Reading file content failed with the following error: %s"
+msgstr "Gagal membaca kandungan fail dengan ralat berikut: %s"
+
+#, c-format
+msgid ""
+"File “%s” is read-only and cannot be saved.\n"
+"Please save it under different name."
+msgstr ""
+"Fail \"%s\" adalah baca-sahaja dan tidak boleh disimpan.\n"
+"Sila simpan ia dengan nama berbeza."
+
+#, c-format
+msgid "Couldn’t save file %s."
+msgstr "Tidak dapat menyimpan fail %s."
 
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
@@ -85,28 +116,15 @@ msgstr ""
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr "Fail katalog rosak: msgstr bentuk jamak digunakan tanpa msgid_plural"
 
+msgid "Couldn’t load the file, it is probably damaged."
+msgstr "Tidak dapat memuatkan fail, ia berkemungkinan telah rosak."
+
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
 "Terdapat ralat ketika memuat fail. Hasilnya, beberapa data mungkin hilang "
 "atau rosak."
-
-#, c-format
-msgid "Couldn’t load file %s, it is probably corrupted."
-msgstr "Tidak dapat memuatkan fail %s, ia berkemungkinan telah rosak."
-
-#, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
-"Please save it under different name."
-msgstr ""
-"Fail \"%s\" adalah baca-sahaja dan tidak boleh disimpan.\n"
-"Sila simpan ia dengan nama berbeza."
-
-#, c-format
-msgid "Couldn’t save file %s."
-msgstr "Tidak dapat menyimpan fail %s."
 
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
@@ -131,12 +149,16 @@ msgid "Error saving file"
 msgstr "Ralat menyimpan fail"
 
 #, c-format
-msgid "Error loading file “%s”: %s."
-msgstr "Ralat memuatkan fail “%s”: %s."
+msgid "“%s” is not a valid POT file."
+msgstr "\"%s\" bukanlah fail POT yang sah."
 
 #, c-format
-msgid "unsupported XLIFF version (%s)"
-msgstr "versi XLIFF tidak disokong (%s)"
+msgid "Error while loading XLIFF file: %s"
+msgstr "Ralat ketika memuatkan fail XLIFF: %s"
+
+#, c-format
+msgid "unsupported version (%s)"
+msgstr "versi tidak disokong (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
@@ -173,8 +195,8 @@ msgstr "Ralat menyegerak"
 msgid "Add"
 msgstr "Tambah"
 
-msgid "JSON request error"
-msgstr "Ralat memohon JSON"
+msgid "Unknown Crowdin error."
+msgstr ""
 
 msgid "Not authorized, please sign in again."
 msgstr "Tidak diizinkan, sila daftar masuk sekali lagi."
@@ -290,22 +312,6 @@ msgstr "Pilih fail terjemahan"
 
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit ialah sebuah penyunting terjemahan yang mudah digunakan."
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "Terjemahan PO"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr ""
-"Fail sama ada telah rosak atau dalam satu format tidak dikenal pasti oleh "
-"Poedit."
-
-msgid "The file cannot be opened."
-msgstr "Fail tidak dapat dibuka."
-
-msgid "Invalid file"
-msgstr "Fail tidak sah"
 
 msgid "You can’t drop more than one file on Poedit window."
 msgstr "Anda tidak boleh lepas lebih daripada satu fail pada tetingkap Poedit."
@@ -588,9 +594,18 @@ msgstr ""
 msgid "Review"
 msgstr "Kaji semula"
 
+msgid "Would you like to use English for source text?"
+msgstr ""
+
 #, c-format
-msgid "Error loading translation file “%s”."
-msgstr "Ralat memuatkan fail terjemahan \"%s”."
+msgid ""
+"This file uses string IDs instead of source text. Poedit can load English "
+"texts from the “%s” file for you."
+msgstr ""
+
+#. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+msgid "Load English"
+msgstr ""
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
@@ -756,6 +771,10 @@ msgstr "Cipta terjemahan baru"
 msgid "Make a new translation from this POT file."
 msgstr "Buat satu terjemahan baharu menerusi fail POT ini."
 
+#. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+msgid "Source text ID"
+msgstr "ID teks sumber"
+
 msgid "Everything"
 msgstr "Kesemuanya"
 
@@ -778,6 +797,16 @@ msgstr "Dua"
 
 msgid "Other"
 msgstr "Lain-lain"
+
+#. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#, c-format
+msgid "String context: %s"
+msgstr ""
+
+#. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#, c-format
+msgid "String identifier: %s"
+msgstr ""
 
 #, c-format
 msgid "%s Format"
@@ -1225,6 +1254,10 @@ msgstr "Ingatan Terjemahan"
 msgid "Importing translations…"
 msgstr "Mengimport terjemahan…"
 
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "Ralat memuatkan fail terjemahan \"%s”."
+
 msgid "Finalizing…"
 msgstr "Memuktamadkan…"
 
@@ -1362,6 +1395,9 @@ msgstr[0] "Pra-terjemah %u rentetan"
 msgid "Pre-translating…"
 msgstr "Pra-menterjemah…"
 
+msgid "Cannot pre-translate without source text."
+msgstr ""
+
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
 #. strings you're translating as the first step, followed by correcting,
@@ -1374,6 +1410,11 @@ msgstr "Pra-menterjemah…"
 #. *before* actual translation.
 msgid "Pre-translate"
 msgstr "Pra-terjemah"
+
+msgid ""
+"Pre-translation requires that source text is available. It doesn’t work if "
+"only IDs without the actual text are used."
+msgstr ""
 
 msgid "Only fill in exact matches"
 msgstr "Hanya isi padanan tepat"
@@ -2101,6 +2142,11 @@ msgstr "Tiada Padanan Ditemui"
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Rentetan ini telah ditemui dalam ingatan terjemahan Poedit."
 
+msgid ""
+"Translation suggestions require that source text is available. They don’t "
+"work if only IDs without the actual text are used."
+msgstr ""
+
 msgid "The TMX file is malformed."
 msgstr "Fail TMX adalah cacat."
 
@@ -2168,8 +2214,8 @@ msgstr "Konfigur pengekstrakan kod sumber dalam Sifat."
 msgid "Version %s"
 msgstr "Versi %s"
 
-msgid "Create new…"
-msgstr "Cipta baharu…"
+msgid "Create new"
+msgstr "Cipta baharu"
 
 msgid "Create new translation from POT template."
 msgstr "Cipta terjemahan baharu daripada templat POT."

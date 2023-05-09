@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2022-11-30 17:55+0100\n"
-"PO-Revision-Date: 2022-11-30 16:55\n"
+"POT-Creation-Date: 2023-05-09 17:49+0200\n"
+"PO-Revision-Date: 2023-05-09 15:48\n"
 "Last-Translator: \n"
 "Language-Team: Croatian\n"
 "Language: hr_HR\n"
@@ -47,8 +47,11 @@ msgid "Updating translations"
 msgstr "Aktualiziranje prijevoda"
 
 #, c-format
-msgid "“%s” is not a valid POT file."
-msgstr "„%s” nije valjana POT datoteka."
+msgid "The file “%s” couldn’t be opened."
+msgstr "Datoteku „%s“ nije moguće otvoriti."
+
+msgid "Invalid file"
+msgstr "Nevažeća datoteka"
 
 #, c-format
 msgid "Malformed header: “%s”"
@@ -63,12 +66,38 @@ msgstr "POT predlošci prijevoda"
 msgid "XLIFF Translation Files"
 msgstr "XLIFF datoteke prijevoda"
 
+msgid "JSON Translation Files"
+msgstr "JSON datoteke prijevoda"
+
+#. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+msgid "Flutter Translation Files"
+msgstr "Flutter datoteke prijevoda"
+
 msgid "All Translation Files"
 msgstr "Sve datoteke prijevoda"
 
+msgid "The file is in a format not recognized by Poedit."
+msgstr "Datoteka je u formatu koji je nepoznat Poedit-u."
+
+msgid ""
+"This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgstr "Ova JSON datoteka nije prijevod i Poedit je ne može uređivati."
+
 #, c-format
-msgid "File “%s” is in unsupported format."
-msgstr "Format datoteke „%s” nije podržan."
+msgid "Reading file content failed with the following error: %s"
+msgstr "Čitanje sadržaja datoteke nije uspjelo uz sljedeću pogrešku: %s"
+
+#, c-format
+msgid ""
+"File “%s” is read-only and cannot be saved.\n"
+"Please save it under different name."
+msgstr ""
+"Datoteka „%s” je zaštićena i ne może se spremiti.\n"
+"Spremi je pod drugim imenom."
+
+#, c-format
+msgid "Couldn’t save file %s."
+msgstr "Nije bilo moguće spremiti datoteku %s."
 
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
@@ -90,28 +119,15 @@ msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr ""
 "Neispravna PO datoteka: msgstr oblika množine koristi se bez msgid_plural"
 
+msgid "Couldn’t load the file, it is probably damaged."
+msgstr "Nije moguće učitati datoteku, vjerojatno je oštećena."
+
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
 "Došlo je do grešaka prilikom učitavanja datoteke. Zbog toga neki podaci "
 "možda nedostaju ili su oštećeni."
-
-#, c-format
-msgid "Couldn’t load file %s, it is probably corrupted."
-msgstr "Nije moguće učitati datoteku %s, vjerojatno je oštećena."
-
-#, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
-"Please save it under different name."
-msgstr ""
-"Datoteka „%s” je zaštićena i ne może se spremiti.\n"
-"Spremi je pod drugim imenom."
-
-#, c-format
-msgid "Couldn’t save file %s."
-msgstr "Nije bilo moguće spremiti datoteku %s."
 
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
@@ -135,12 +151,16 @@ msgid "Error saving file"
 msgstr "Greška prilikom spremanja datoteke"
 
 #, c-format
-msgid "Error loading file “%s”: %s."
-msgstr "Greška prilikom učitavanja datoteke „%s”: %s."
+msgid "“%s” is not a valid POT file."
+msgstr "„%s” nije valjana POT datoteka."
 
 #, c-format
-msgid "unsupported XLIFF version (%s)"
-msgstr "nepodržana XLIFF verzija (%s)"
+msgid "Error while loading XLIFF file: %s"
+msgstr "Greška kod učitavanja XLIFF datoteke: %s"
+
+#, c-format
+msgid "unsupported version (%s)"
+msgstr "nepodržana verzija (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
@@ -177,8 +197,8 @@ msgstr "Greška prilikom sinkronizacije"
 msgid "Add"
 msgstr "Dodaj"
 
-msgid "JSON request error"
-msgstr "Greška JSON zahtijeva"
+msgid "Unknown Crowdin error."
+msgstr "Nepoznata Crowdin greška."
 
 msgid "Not authorized, please sign in again."
 msgstr "Nemaš potrebna prava. Prijavi se ponovo."
@@ -294,20 +314,6 @@ msgstr "Odaberi prevodilačku datoteku"
 
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit je jednostavan program za uređivanje prijevoda."
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "PO prijevod"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr "Datoteka je oštećena ili u formatu koji Poedit ne prepoznaje."
-
-msgid "The file cannot be opened."
-msgstr "Nije moguće otvoriti datoteku."
-
-msgid "Invalid file"
-msgstr "Nevažeća datoteka"
 
 msgid "You can’t drop more than one file on Poedit window."
 msgstr "Ne možeš povući više od jedne datoteke u Poedit prozor."
@@ -592,9 +598,20 @@ msgstr "Izraz oblika množine korišten u datoteci nije uobičajen za %s."
 msgid "Review"
 msgstr "Pregledaj"
 
+msgid "Would you like to use English for source text?"
+msgstr "Želite li koristiti engleski izvorni tekst?"
+
 #, c-format
-msgid "Error loading translation file “%s”."
-msgstr "Greška prilikom učitavanja prevodilačke datoteke „%s”."
+msgid ""
+"This file uses string IDs instead of source text. Poedit can load English "
+"texts from the “%s” file for you."
+msgstr ""
+"Ova datoteka koristi stringove ID-ove umjesto izvornog teksta. Poedit može "
+"za vas učitati tekst iz datoteke \"%s."
+
+#. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+msgid "Load English"
+msgstr "Učitaj engleski"
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
@@ -764,6 +781,10 @@ msgstr "Izradi novi prijevod"
 msgid "Make a new translation from this POT file."
 msgstr "Izradi novi prijevod iz ove POT datoteke."
 
+#. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+msgid "Source text ID"
+msgstr "ID izvornog teksta"
+
 msgid "Everything"
 msgstr "Sve"
 
@@ -786,6 +807,16 @@ msgstr "Dva"
 
 msgid "Other"
 msgstr "Ostalo"
+
+#. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#, c-format
+msgid "String context: %s"
+msgstr "Kontekst stringa: %s"
+
+#. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#, c-format
+msgid "String identifier: %s"
+msgstr "Identifikator stringa: %s"
 
 #, c-format
 msgid "%s Format"
@@ -1235,6 +1266,10 @@ msgstr "Prevodilačka memorija"
 msgid "Importing translations…"
 msgstr "Uvoz prijevoda …"
 
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "Greška prilikom učitavanja prevodilačke datoteke „%s”."
+
 msgid "Finalizing…"
 msgstr "Završavanje …"
 
@@ -1374,6 +1409,9 @@ msgstr[2] "Pretprevedeno je %u izraza"
 msgid "Pre-translating…"
 msgstr "Pretprevođenje …"
 
+msgid "Cannot pre-translate without source text."
+msgstr "Nije moguće unaprijed prevesti bez izvornog teksta."
+
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
 #. strings you're translating as the first step, followed by correcting,
@@ -1386,6 +1424,13 @@ msgstr "Pretprevođenje …"
 #. *before* actual translation.
 msgid "Pre-translate"
 msgstr "Pretprevedi"
+
+msgid ""
+"Pre-translation requires that source text is available. It doesn’t work if "
+"only IDs without the actual text are used."
+msgstr ""
+"Predhodni prijevod zahtijeva da je izvorni tekst dostupan. Ne funkcionira "
+"ako se koriste samo ID-ovi bez stvarnog teksta."
 
 msgid "Only fill in exact matches"
 msgstr "Preuzmi samo jednake izraze"
@@ -2110,6 +2155,13 @@ msgstr "Nema poklapanja"
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Ovaj je izraz nađen u prevodilačkoj memoriji Poedita."
 
+msgid ""
+"Translation suggestions require that source text is available. They don’t "
+"work if only IDs without the actual text are used."
+msgstr ""
+"Prijedlozi prijevoda zahtijevaju da je izvorni tekst dostupan. Ne rade ako "
+"se koriste samo ID-ovi bez stvarnog teksta."
+
 msgid "The TMX file is malformed."
 msgstr "Nevaljani oblik TMX datoteke."
 
@@ -2174,8 +2226,8 @@ msgstr "Konfiguriraj izdvajanje izvornog koda u svojstvima."
 msgid "Version %s"
 msgstr "Verzija %s"
 
-msgid "Create new…"
-msgstr "Stvori novi prijevod …"
+msgid "Create new"
+msgstr "Stvori novi prijevod"
 
 msgid "Create new translation from POT template."
 msgstr "Stvori novi prijevod iz POT predloška."

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2022-11-30 17:55+0100\n"
-"PO-Revision-Date: 2023-02-23 14:13\n"
+"POT-Creation-Date: 2023-05-09 17:49+0200\n"
+"PO-Revision-Date: 2023-05-09 15:48\n"
 "Last-Translator: \n"
 "Language-Team: Icelandic\n"
 "Language: is_IS\n"
@@ -46,8 +46,11 @@ msgid "Updating translations"
 msgstr "Uppfæri þýðingar"
 
 #, c-format
-msgid "“%s” is not a valid POT file."
-msgstr "“%s\" er ógild POT skrá."
+msgid "The file “%s” couldn’t be opened."
+msgstr "Skrána “%s” var ekki hægt að opna."
+
+msgid "Invalid file"
+msgstr "Ógild skrá"
 
 #, c-format
 msgid "Malformed header: “%s”"
@@ -62,12 +65,39 @@ msgstr "POT þýðingasniðmát"
 msgid "XLIFF Translation Files"
 msgstr "XLIFF-þýðingaskrár"
 
+msgid "JSON Translation Files"
+msgstr "JSON-þýðingaskrár"
+
+#. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+msgid "Flutter Translation Files"
+msgstr "Flutter-þýðingaskrár"
+
 msgid "All Translation Files"
 msgstr "Allar þýðingaskrár"
 
+msgid "The file is in a format not recognized by Poedit."
+msgstr "Skráin er ekki á sniði sem Poedit þekkir."
+
+msgid ""
+"This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgstr ""
+"Þessi JSON-skrá er ekki þýðingaskrár og er því ekki hægt að breyta í Poedit."
+
 #, c-format
-msgid "File “%s” is in unsupported format."
-msgstr "Skráin “%s” er á óstuddu sniði."
+msgid "Reading file content failed with the following error: %s"
+msgstr "Mistókst að lesa efni skrárinnar með eftirfarandi villumeldingu: %s"
+
+#, c-format
+msgid ""
+"File “%s” is read-only and cannot be saved.\n"
+"Please save it under different name."
+msgstr ""
+"Skráin '%s' er einungis lesanleg og er ekki hægt að vista hana.\n"
+"Vistaðu hana með öðru heiti."
+
+#, c-format
+msgid "Couldn’t save file %s."
+msgstr "Gat ekki vistað skrána %s."
 
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
@@ -85,28 +115,15 @@ msgstr "Skemmd PO-þýðingaskrá: eintöluform msgstr notað með msgid_plural"
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr "Skemmd PO-þýðingaskrá: fleirtöluform msgstr notað án msgid_plural"
 
+msgid "Couldn’t load the file, it is probably damaged."
+msgstr "Get ekki hlaðið inn skránni, líklega er hún skemmd."
+
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
 "Það komu upp villur við að hlaða inn skránni. Einhver gögn gæti vantað eða "
 "hafa skemmst við þetta."
-
-#, c-format
-msgid "Couldn’t load file %s, it is probably corrupted."
-msgstr "Gat ekki lesið skrána %s, hún er líklega skemmd."
-
-#, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
-"Please save it under different name."
-msgstr ""
-"Skráin '%s' er einungis lesanleg og er ekki hægt að vista hana.\n"
-"Vistaðu hana með öðru heiti."
-
-#, c-format
-msgid "Couldn’t save file %s."
-msgstr "Gat ekki vistað skrána %s."
 
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
@@ -129,12 +146,16 @@ msgid "Error saving file"
 msgstr "Villa við að vista skrá"
 
 #, c-format
-msgid "Error loading file “%s”: %s."
-msgstr "Villa við að sækja skrána “%s”: %s."
+msgid "“%s” is not a valid POT file."
+msgstr "“%s\" er ógild POT skrá."
 
 #, c-format
-msgid "unsupported XLIFF version (%s)"
-msgstr "óstudd útgáfa XLIFF (%s)"
+msgid "Error while loading XLIFF file: %s"
+msgstr "Villa við að hlaða inn XLIFF-skrá: %s"
+
+#, c-format
+msgid "unsupported version (%s)"
+msgstr "óstudd útgáfa (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
@@ -171,8 +192,8 @@ msgstr "Villa í samstillingu"
 msgid "Add"
 msgstr "Bæta við"
 
-msgid "JSON request error"
-msgstr "Villa við JSON-beiðni"
+msgid "Unknown Crowdin error."
+msgstr "Óþekkt Crowdin-villa."
 
 msgid "Not authorized, please sign in again."
 msgstr "Ekki leyfilegt, skráðu þig aftur inn."
@@ -288,20 +309,6 @@ msgstr "Veldu þýðingaskrá"
 
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit er auðveldur þýðingaritill."
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "PO þýðing"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr "Skráin gæti verið skemmd eða á sniði sem Poedit þekkir ekki."
-
-msgid "The file cannot be opened."
-msgstr "Ekki hægt að opna þessa skrá."
-
-msgid "Invalid file"
-msgstr "Ógild skrá"
 
 msgid "You can’t drop more than one file on Poedit window."
 msgstr "Þú getur ekki sleppt fleiri en einni skrá í Poedit glugga."
@@ -587,9 +594,20 @@ msgstr "Fleirtöluformssniðið sem notað er í þýðingaskránni er óvenjule
 msgid "Review"
 msgstr "Yfirfara"
 
+msgid "Would you like to use English for source text?"
+msgstr "Myndir þú vilja nota ensku fyrir frumtexta?"
+
 #, c-format
-msgid "Error loading translation file “%s”."
-msgstr "Villa við að hlaða inn þýðingaskrá: “%s”."
+msgid ""
+"This file uses string IDs instead of source text. Poedit can load English "
+"texts from the “%s” file for you."
+msgstr ""
+"Þessi skrá notar auðkenni strengja í stað frumtexta. Poedit getur hlaðið inn "
+"fyrir þig enskum textum úr “%s” skránni."
+
+#. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+msgid "Load English"
+msgstr "Hlaða inn ensku"
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
@@ -757,6 +775,10 @@ msgstr "Búa til nýja þýðingu"
 msgid "Make a new translation from this POT file."
 msgstr "Útbúa nýja þýðingaskrá úr þessari POT-skrá."
 
+#. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+msgid "Source text ID"
+msgstr "Auðkenni frumtexta"
+
 msgid "Everything"
 msgstr "Allt"
 
@@ -779,6 +801,16 @@ msgstr "Tveir"
 
 msgid "Other"
 msgstr "Annað"
+
+#. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#, c-format
+msgid "String context: %s"
+msgstr "Samhengi strengs: %s"
+
+#. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#, c-format
+msgid "String identifier: %s"
+msgstr "Auðkenni strengs: %s"
 
 #, c-format
 msgid "%s Format"
@@ -1228,6 +1260,10 @@ msgstr "Þýðingaminni"
 msgid "Importing translations…"
 msgstr "Flyt inn þýðingar…"
 
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "Villa við að hlaða inn þýðingaskrá: “%s”."
+
 msgid "Finalizing…"
 msgstr "Geng frá…"
 
@@ -1367,6 +1403,9 @@ msgstr[1] "Forþýddi %u strengi"
 msgid "Pre-translating…"
 msgstr "Forþýðing…"
 
+msgid "Cannot pre-translate without source text."
+msgstr "Get ekki forþýtt án frumtexta."
+
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
 #. strings you're translating as the first step, followed by correcting,
@@ -1379,6 +1418,13 @@ msgstr "Forþýðing…"
 #. *before* actual translation.
 msgid "Pre-translate"
 msgstr "Forþýða"
+
+msgid ""
+"Pre-translation requires that source text is available. It doesn’t work if "
+"only IDs without the actual text are used."
+msgstr ""
+"Forþýðingar krefjast þess að frumtexti sé til staðar. Þær virka ekki ef "
+"einungis auðkenni eru notuð án raunverulegs texta."
 
 msgid "Only fill in exact matches"
 msgstr "Einungis fylla inn nákvæmar samsvaranir"
@@ -2105,6 +2151,13 @@ msgstr "Engar samsvaranir fundust"
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Þessi strengur fannst í þýðingaminni Poedit."
 
+msgid ""
+"Translation suggestions require that source text is available. They don’t "
+"work if only IDs without the actual text are used."
+msgstr ""
+"Tillögur að þýðingum krefjast þess að frumtexti sé til staðar. Þær virka "
+"ekki ef einungis auðkenni eru notuð án raunverulegs texta."
+
 msgid "The TMX file is malformed."
 msgstr "TMX-skráin er gölluð."
 
@@ -2169,8 +2222,8 @@ msgstr "Stilla útdrátt/þáttun upprunakóða í kjörstillingum."
 msgid "Version %s"
 msgstr "Útgáfa %s"
 
-msgid "Create new…"
-msgstr "Búa til nýtt…"
+msgid "Create new"
+msgstr "Búa til nýtt"
 
 msgid "Create new translation from POT template."
 msgstr "Búa til nýja þýðingu út frá POT-sniðmáti."

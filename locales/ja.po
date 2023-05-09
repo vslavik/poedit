@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2022-11-30 17:55+0100\n"
-"PO-Revision-Date: 2022-11-30 16:54\n"
+"POT-Creation-Date: 2023-05-09 17:49+0200\n"
+"PO-Revision-Date: 2023-05-09 15:48\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -46,8 +46,11 @@ msgid "Updating translations"
 msgstr "翻訳をアップデートしています"
 
 #, c-format
-msgid "“%s” is not a valid POT file."
-msgstr "“%s” は有効な POT ファイルではありません。"
+msgid "The file “%s” couldn’t be opened."
+msgstr "ファイル \"%s\" を開くことができませんでした。"
+
+msgid "Invalid file"
+msgstr "不正なファイル"
 
 #, c-format
 msgid "Malformed header: “%s”"
@@ -62,12 +65,39 @@ msgstr "POT 翻訳テンプレート"
 msgid "XLIFF Translation Files"
 msgstr "XLIFF 翻訳ファイル"
 
+msgid "JSON Translation Files"
+msgstr "JSON 翻訳ファイル"
+
+#. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+msgid "Flutter Translation Files"
+msgstr "Flutter 翻訳ファイル"
+
 msgid "All Translation Files"
 msgstr "すべての翻訳ファイル"
 
+msgid "The file is in a format not recognized by Poedit."
+msgstr "ファイルは Poedit が認識できないフォーマットです。"
+
+msgid ""
+"This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgstr ""
+"この JSON ファイルは翻訳ファイルではないため、Poedit では編集できません。"
+
 #, c-format
-msgid "File “%s” is in unsupported format."
-msgstr "ファイル \"%s\" はサポートされていない形式です。"
+msgid "Reading file content failed with the following error: %s"
+msgstr "ファイルの読み込みに失敗しました： %s"
+
+#, c-format
+msgid ""
+"File “%s” is read-only and cannot be saved.\n"
+"Please save it under different name."
+msgstr ""
+"ファイル “%s” は読み出し専用のため保存できません。\n"
+"別のファイル名で保存してください。"
+
+#, c-format
+msgid "Couldn’t save file %s."
+msgstr "ファイル %s を保存できません。"
 
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
@@ -88,29 +118,15 @@ msgstr ""
 "PO ファイルが破損しています。複数形表記の msgstr が使われていますが、"
 "msgid_plural の指定がありません。"
 
+msgid "Couldn’t load the file, it is probably damaged."
+msgstr "ファイルが読み込めません"
+
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
 "ファイルを読み出す際にエラーが発生しました。このため一部のデータが失われたり"
 "破損したりしている可能性があります。"
-
-#, c-format
-msgid "Couldn’t load file %s, it is probably corrupted."
-msgstr ""
-"ファイル %s を読み込めませんでした。データが破損している可能性があります。"
-
-#, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
-"Please save it under different name."
-msgstr ""
-"ファイル “%s” は読み出し専用のため保存できません。\n"
-"別のファイル名で保存してください。"
-
-#, c-format
-msgid "Couldn’t save file %s."
-msgstr "ファイル %s を保存できません。"
 
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
@@ -132,12 +148,16 @@ msgid "Error saving file"
 msgstr "ファイルの保存中にエラーが発生しました"
 
 #, c-format
-msgid "Error loading file “%s”: %s."
-msgstr "ファイル “%s” の読み込みエラー: %s。"
+msgid "“%s” is not a valid POT file."
+msgstr "“%s” は有効な POT ファイルではありません。"
 
 #, c-format
-msgid "unsupported XLIFF version (%s)"
-msgstr "サポートされていない XLIFF バージョン (%s)"
+msgid "Error while loading XLIFF file: %s"
+msgstr "XLIFFファイルの読み込み中にエラーが発生しました： %s"
+
+#, c-format
+msgid "unsupported version (%s)"
+msgstr "(%s) ではサポートされていません。"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
@@ -174,8 +194,8 @@ msgstr "同期エラー"
 msgid "Add"
 msgstr "追加"
 
-msgid "JSON request error"
-msgstr "JSON リクエストエラー"
+msgid "Unknown Crowdin error."
+msgstr ""
 
 msgid "Not authorized, please sign in again."
 msgstr "未認証です。もう一度ログインしてください。"
@@ -291,20 +311,6 @@ msgstr "翻訳ファイルを選択"
 
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit は使いやすい翻訳エディタです。"
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "PO 翻訳"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr "ファイルが破損しているか、Poedit が認識できない形式のようです。"
-
-msgid "The file cannot be opened."
-msgstr "ファイルを開けません。"
-
-msgid "Invalid file"
-msgstr "不正なファイル"
 
 msgid "You can’t drop more than one file on Poedit window."
 msgstr "Poedit へドロップできるのは1回につき1ファイルのみです。"
@@ -584,9 +590,20 @@ msgstr ""
 msgid "Review"
 msgstr "レビュー"
 
+msgid "Would you like to use English for source text?"
+msgstr "翻訳言語を英語に指定しますか？"
+
 #, c-format
-msgid "Error loading translation file “%s”."
-msgstr "翻訳ファイル “%s” の読み込み中にエラーが発生しました。"
+msgid ""
+"This file uses string IDs instead of source text. Poedit can load English "
+"texts from the “%s” file for you."
+msgstr ""
+"このファイルはソーステキストの代わりに文字列IDを使用します。Poedit を使って"
+"「%s」ファイルから英語のテキストを読み込んでください。"
+
+#. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+msgid "Load English"
+msgstr "英文を読み込む"
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
@@ -752,6 +769,10 @@ msgstr "翻訳プロジェクトを新規作成する"
 msgid "Make a new translation from this POT file."
 msgstr "この POT ファイルから新しい翻訳を作成します。"
 
+#. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+msgid "Source text ID"
+msgstr ""
+
 msgid "Everything"
 msgstr "すべて"
 
@@ -774,6 +795,16 @@ msgstr "2"
 
 msgid "Other"
 msgstr "その他"
+
+#. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#, c-format
+msgid "String context: %s"
+msgstr "文字列のコンテキスト：%s"
+
+#. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#, c-format
+msgid "String identifier: %s"
+msgstr "文字列の識別子： %s"
 
 #, c-format
 msgid "%s Format"
@@ -985,7 +1016,7 @@ msgstr "アップデートの確認…"
 
 #. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
 msgid "Settings…"
-msgstr ""
+msgstr "設定中"
 
 msgid "&Edit"
 msgstr "編集 (&E)"
@@ -1221,6 +1252,10 @@ msgstr "翻訳メモリ"
 msgid "Importing translations…"
 msgstr "翻訳をインポート中…"
 
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "翻訳ファイル “%s” の読み込み中にエラーが発生しました。"
+
 msgid "Finalizing…"
 msgstr "完了処理中…"
 
@@ -1356,6 +1391,9 @@ msgstr[0] "%u件の文字列を翻訳"
 msgid "Pre-translating…"
 msgstr "事前翻訳中…"
 
+msgid "Cannot pre-translate without source text."
+msgstr ""
+
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
 #. strings you're translating as the first step, followed by correcting,
@@ -1368,6 +1406,11 @@ msgstr "事前翻訳中…"
 #. *before* actual translation.
 msgid "Pre-translate"
 msgstr "事前翻訳"
+
+msgid ""
+"Pre-translation requires that source text is available. It doesn’t work if "
+"only IDs without the actual text are used."
+msgstr ""
 
 msgid "Only fill in exact matches"
 msgstr "完全な一致のみ採用する"
@@ -2086,6 +2129,11 @@ msgstr "一致するものが見つかりませんでした"
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Poedit の翻訳メモリにこの文字列が見つかりました。"
 
+msgid ""
+"Translation suggestions require that source text is available. They don’t "
+"work if only IDs without the actual text are used."
+msgstr ""
+
 msgid "The TMX file is malformed."
 msgstr "TMX ファイルの形式が正しくありません。"
 
@@ -2149,8 +2197,8 @@ msgstr "設定画面でソースコード抽出を設定できます。"
 msgid "Version %s"
 msgstr "バージョン %s"
 
-msgid "Create new…"
-msgstr "新規作成..."
+msgid "Create new"
+msgstr "新規作成"
 
 msgid "Create new translation from POT template."
 msgstr "POT テンプレートから新しい翻訳を作成します。"

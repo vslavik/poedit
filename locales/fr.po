@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2022-11-30 17:55+0100\n"
-"PO-Revision-Date: 2022-11-30 16:54\n"
+"POT-Creation-Date: 2023-05-09 17:49+0200\n"
+"PO-Revision-Date: 2023-05-09 15:48\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -46,8 +46,11 @@ msgid "Updating translations"
 msgstr "Mise à jour des traductions"
 
 #, c-format
-msgid "“%s” is not a valid POT file."
-msgstr "« %s » n’est pas un fichier POT valide."
+msgid "The file “%s” couldn’t be opened."
+msgstr "Le fichier « %s » n’a pas pu être ouvert."
+
+msgid "Invalid file"
+msgstr "Fichier non valide"
 
 #, c-format
 msgid "Malformed header: “%s”"
@@ -62,12 +65,40 @@ msgstr "Modèles de traduction POT"
 msgid "XLIFF Translation Files"
 msgstr "Fichiers de traduction XLIFF"
 
+msgid "JSON Translation Files"
+msgstr "Fichiers de traduction JSON"
+
+#. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+msgid "Flutter Translation Files"
+msgstr "Fichiers de traduction Flutter"
+
 msgid "All Translation Files"
 msgstr "Tous les fichiers de traduction"
 
+msgid "The file is in a format not recognized by Poedit."
+msgstr "Le fichier est dans un format non reconnu par Poedit."
+
+msgid ""
+"This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgstr ""
+"Ce fichier JSON n‘est pas un fichier de traduction et ne peut pas être "
+"modifié dans Poedit."
+
 #, c-format
-msgid "File “%s” is in unsupported format."
-msgstr "Le fichier « %s » est un format non pris en charge."
+msgid "Reading file content failed with the following error: %s"
+msgstr "La lecture du contenu du fichier a échoué avec l‘erreur suivante : %s"
+
+#, c-format
+msgid ""
+"File “%s” is read-only and cannot be saved.\n"
+"Please save it under different name."
+msgstr ""
+"Le fichier « %s » est en lecture seule et ne peut être enregistré.\n"
+"Veuillez l’enregistrer sous un nom différent."
+
+#, c-format
+msgid "Couldn’t save file %s."
+msgstr "Impossible d’enregistrer le fichier %s."
 
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
@@ -88,28 +119,15 @@ msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr ""
 "Fichier PO corrompu : forme plurielle msgstr utilisée sans msgid_plural"
 
+msgid "Couldn’t load the file, it is probably damaged."
+msgstr "Échec du chargement du fichier, il est probablement endommagé."
+
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
 "Il y a eu des erreurs lors du chargement du fichier. Il se pourrait que des "
 "données soient manquantes ou corrompues."
-
-#, c-format
-msgid "Couldn’t load file %s, it is probably corrupted."
-msgstr "Échec du chargement du fichier %s : il est probablement corrompu."
-
-#, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
-"Please save it under different name."
-msgstr ""
-"Le fichier « %s » est en lecture seule et ne peut être enregistré.\n"
-"Veuillez l’enregistrer sous un nom différent."
-
-#, c-format
-msgid "Couldn’t save file %s."
-msgstr "Impossible d’enregistrer le fichier %s."
 
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
@@ -134,12 +152,16 @@ msgid "Error saving file"
 msgstr "Erreur d’enregistrement du fichier"
 
 #, c-format
-msgid "Error loading file “%s”: %s."
-msgstr "Erreur lors du chargement du fichier « %s » : %s."
+msgid "“%s” is not a valid POT file."
+msgstr "« %s » n’est pas un fichier POT valide."
 
 #, c-format
-msgid "unsupported XLIFF version (%s)"
-msgstr "version XLIFF non supportée (%s)"
+msgid "Error while loading XLIFF file: %s"
+msgstr "Erreur lors du chargement du fichier XLIFF : %s"
+
+#, c-format
+msgid "unsupported version (%s)"
+msgstr "version non prise en charge (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
@@ -176,8 +198,8 @@ msgstr "Erreur de synchronisation"
 msgid "Add"
 msgstr "Ajouter"
 
-msgid "JSON request error"
-msgstr "Erreur de requête JSON"
+msgid "Unknown Crowdin error."
+msgstr "Erreur Crowdin inconnue."
 
 msgid "Not authorized, please sign in again."
 msgstr "Non autorisé, veuillez vous connecter à nouveau."
@@ -266,8 +288,8 @@ msgid ""
 "Please open and edit the corresponding PO file instead. When you save it, "
 "the MO file will be updated as well."
 msgstr ""
-"Veuillez ouvrir et éditer le fichier PO correspondant. Lorsque vous "
-"l'enregistrerez, le fichier MO sera également mis à jour."
+"Veuillez ouvrir et modifier le fichier PO correspondant. Lorsque vous "
+"l‘enregistrerez, le fichier MO sera également mis à jour."
 
 msgid "don’t delete temporary files (for debugging)"
 msgstr "ne pas supprimer les fichiers temporaires (à des fins de débogage)"
@@ -293,21 +315,6 @@ msgstr "Sélectionner le fichier de traduction"
 
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit est un logiciel de traduction simple à utiliser."
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "Traduction PO"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr ""
-"Le fichier est peut-être corrompu ou dans un format non reconnu par Poedit."
-
-msgid "The file cannot be opened."
-msgstr "Le fichier ne peut pas être ouvert."
-
-msgid "Invalid file"
-msgstr "Fichier non valide"
 
 msgid "You can’t drop more than one file on Poedit window."
 msgstr ""
@@ -608,9 +615,21 @@ msgstr ""
 msgid "Review"
 msgstr "Réviser"
 
+msgid "Would you like to use English for source text?"
+msgstr "Aimeriez-vous utiliser l'anglais pour le texte source ?"
+
 #, c-format
-msgid "Error loading translation file “%s”."
-msgstr "Erreur lors du chargement du fichier de traduction « %s »."
+msgid ""
+"This file uses string IDs instead of source text. Poedit can load English "
+"texts from the “%s” file for you."
+msgstr ""
+"Ce fichier utilise des identifiants de chaîne au lieu du texte source. "
+"Poedit peut charger des textes en anglais à partir du fichier \"%s\" pour "
+"vous."
+
+#. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+msgid "Load English"
+msgstr "Charger Anglais"
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
@@ -780,6 +799,10 @@ msgstr "Créer une nouvelle traduction"
 msgid "Make a new translation from this POT file."
 msgstr "Faire une nouvelle traduction à partir de ce fichier POT."
 
+#. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+msgid "Source text ID"
+msgstr "ID du texte source"
+
 msgid "Everything"
 msgstr "Tout"
 
@@ -802,6 +825,16 @@ msgstr "Deux"
 
 msgid "Other"
 msgstr "Autre"
+
+#. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#, c-format
+msgid "String context: %s"
+msgstr "Contexte de chaîne : %s"
+
+#. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#, c-format
+msgid "String identifier: %s"
+msgstr "Identifiant de chaîne : %s"
 
 #, c-format
 msgid "%s Format"
@@ -1014,7 +1047,7 @@ msgstr "Rechercher des mises à jour…"
 
 #. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
 msgid "Settings…"
-msgstr "Paramètres …"
+msgstr "Paramètres…"
 
 msgid "&Edit"
 msgstr "&Édition"
@@ -1253,6 +1286,10 @@ msgstr "Mémoire de traduction"
 msgid "Importing translations…"
 msgstr "Importation des traductions…"
 
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "Erreur lors du chargement du fichier de traduction « %s »."
+
 msgid "Finalizing…"
 msgstr "Finalisation…"
 
@@ -1392,6 +1429,9 @@ msgstr[1] "%u chaînes pré-traduites"
 msgid "Pre-translating…"
 msgstr "Pré-traduction…"
 
+msgid "Cannot pre-translate without source text."
+msgstr "Impossible de pré-traduire sans texte source."
+
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
 #. strings you're translating as the first step, followed by correcting,
@@ -1404,6 +1444,13 @@ msgstr "Pré-traduction…"
 #. *before* actual translation.
 msgid "Pre-translate"
 msgstr "Pré-traduction"
+
+msgid ""
+"Pre-translation requires that source text is available. It doesn’t work if "
+"only IDs without the actual text are used."
+msgstr ""
+"La pré-traduction nécessite que le texte source soit disponible. Elle ne "
+"fonctionne pas si seuls les identifiants, sans le texte réel, sont utilisés."
 
 msgid "Only fill in exact matches"
 msgstr "Remplir uniquement les correspondances exactes"
@@ -1543,11 +1590,11 @@ msgstr "Exactitude des espaces réservés"
 
 #, c-format
 msgid "Placeholder “%s” is missing from translation."
-msgstr "L'espace réservé \"%s\" est absent de la traduction."
+msgstr "Il manque l‘espace réservé « %s » de la traduction."
 
 #, c-format
 msgid "Superfluous placeholder “%s” that isn’t in source text."
-msgstr "Espace réservé superflu “%s” qui n'est pas dans le texte source."
+msgstr "Espace réservé superflu « %s » qui n‘est pas dans le texte source."
 
 msgid "Plural form translations"
 msgstr "Traductions de formes plurielles"
@@ -1556,7 +1603,7 @@ msgid "Not all plural forms are translated."
 msgstr "Toutes les formes plurielles ne sont pas traduites."
 
 msgid "Inconsistent upper/lower case"
-msgstr "Majuscule/minuscule incohérente"
+msgstr "Incohérence majuscule/minuscule"
 
 msgid "The translation should start as a sentence."
 msgstr "La traduction devrait commencer comme une phrase."
@@ -1853,10 +1900,10 @@ msgid "&Done and Next"
 msgstr "&Appliquer et continuer"
 
 msgid "Previously edited"
-msgstr "Précédemment édité"
+msgstr "Modifié précédemment"
 
 msgid "Previously Edited"
-msgstr "Précédemment Édité"
+msgstr "Modifié précédemment"
 
 msgid "&Previous translation"
 msgstr "Traduction &précédente"
@@ -2077,13 +2124,13 @@ msgid "Check for errors in the translation"
 msgstr "Vérifier les erreurs dans la traduction"
 
 msgid "Update from code"
-msgstr "Mise à jour depuis le code"
+msgstr "Mettre à jour depuis le code"
 
 msgid "Update from Code"
-msgstr "Mise à jour du code"
+msgstr "Mettre à jour depuis le code"
 
 msgid "Update from source code"
-msgstr "Mise à jour depuis le code source"
+msgstr "Mettre à jour depuis le code source"
 
 msgid "Sidebar"
 msgstr "Panneau latéral"
@@ -2134,8 +2181,16 @@ msgstr "Aucune correspondance trouvée"
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Cette chaîne a été trouvée dans la mémoire de traduction de Poedit."
 
+msgid ""
+"Translation suggestions require that source text is available. They don’t "
+"work if only IDs without the actual text are used."
+msgstr ""
+"Les suggestions de traduction nécessitent que le texte source soit "
+"disponible. Elles ne fonctionnent pas si seuls des ID, sans texte réel, sont "
+"utilisés."
+
 msgid "The TMX file is malformed."
-msgstr "Le fichier TMX est incorrect."
+msgstr "Le fichier TMX est mal formé."
 
 msgid "No translations were found in the TMX file."
 msgstr "Aucune traduction n’a été trouvée dans le fichier TMX."
@@ -2176,7 +2231,7 @@ msgid ""
 "POT:"
 msgstr ""
 "La façon la plus simple de remplir ce fichier avec des traductions est de le "
-"mettre à jour à partir d'un POT :"
+"mettre à jour à partir d‘un fichier POT :"
 
 msgid "Update from POT"
 msgstr "Mettre à jour depuis un POT"
@@ -2202,8 +2257,8 @@ msgstr "Configurer l’extraction du code source dans les Propriétés."
 msgid "Version %s"
 msgstr "Version %s"
 
-msgid "Create new…"
-msgstr "Créer un nouveau…"
+msgid "Create new"
+msgstr "Créer une nouvelle"
 
 msgid "Create new translation from POT template."
 msgstr "Créer une nouvelle traduction à partir d’un modèle POT."
@@ -2212,13 +2267,13 @@ msgid "Browse files"
 msgstr "Parcourir les fichiers"
 
 msgid "Open and edit translation files."
-msgstr "Ouvrir et éditer les fichiers de traduction."
+msgstr "Ouvrir et modifier les fichiers de traduction."
 
 msgid "Translate Crowdin project"
 msgstr "Traduire un projet Crowdin"
 
 msgid "Collaborate with others in a Crowdin project."
-msgstr "Collaborez avec d’autres dans un projet Crowdin."
+msgstr "Collaborer avec d’autres dans un projet Crowdin."
 
 msgid "Recent files"
 msgstr "Fichiers récents"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2022-11-30 17:55+0100\n"
-"PO-Revision-Date: 2022-11-30 16:55\n"
+"POT-Creation-Date: 2023-05-09 17:49+0200\n"
+"PO-Revision-Date: 2023-05-01 07:27\n"
 "Last-Translator: \n"
 "Language-Team: Latvian\n"
 "Language: lv_LV\n"
@@ -46,8 +46,11 @@ msgid "Updating translations"
 msgstr "Jaunināt tulkojumus"
 
 #, c-format
-msgid "“%s” is not a valid POT file."
-msgstr "“%s” nav derīgs POT fails."
+msgid "The file “%s” couldn’t be opened."
+msgstr ""
+
+msgid "Invalid file"
+msgstr "Nederīgs fails"
 
 #, c-format
 msgid "Malformed header: “%s”"
@@ -62,12 +65,38 @@ msgstr "POT tulkojumu faili"
 msgid "XLIFF Translation Files"
 msgstr "XLIFF tulkojumu datnes"
 
+msgid "JSON Translation Files"
+msgstr ""
+
+#. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+msgid "Flutter Translation Files"
+msgstr ""
+
 msgid "All Translation Files"
 msgstr "Visi tulkojumu faili"
 
+msgid "The file is in a format not recognized by Poedit."
+msgstr ""
+
+msgid ""
+"This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgstr ""
+
 #, c-format
-msgid "File “%s” is in unsupported format."
-msgstr "Datnes \"%s\" formāts netiek atbalstīts."
+msgid "Reading file content failed with the following error: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"File “%s” is read-only and cannot be saved.\n"
+"Please save it under different name."
+msgstr ""
+"Fails \"%s\" ir tikai lasāms un nevar tikt saglabāts.\n"
+"Lūdzu saglabājiet to ar citu nosaukumu."
+
+#, c-format
+msgid "Couldn’t save file %s."
+msgstr "Nevarēja saglabāt failu %s."
 
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
@@ -86,28 +115,15 @@ msgstr "Bojāts PO fails: vienskaitļa forma msgstr lietota kopā ar msgid_plura
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr "Bojāts PO fails: daudzskaitļa forma msgstr lietota bez msgid_plural"
 
+msgid "Couldn’t load the file, it is probably damaged."
+msgstr ""
+
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
 "Radās kļūdas ielādējot failu. Rezultātā daži dati varētu būt bojāti vai "
 "varētu iztrūkt."
-
-#, c-format
-msgid "Couldn’t load file %s, it is probably corrupted."
-msgstr "Nevar ielādēt failu %s, iespējams, ka tas ir bojāts."
-
-#, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
-"Please save it under different name."
-msgstr ""
-"Fails \"%s\" ir tikai lasāms un nevar tikt saglabāts.\n"
-"Lūdzu saglabājiet to ar citu nosaukumu."
-
-#, c-format
-msgid "Couldn’t save file %s."
-msgstr "Nevarēja saglabāt failu %s."
 
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
@@ -129,12 +145,16 @@ msgid "Error saving file"
 msgstr "Kļūda saglabājot failu"
 
 #, c-format
-msgid "Error loading file “%s”: %s."
-msgstr "Kļūda ielādējot failu \"%s\":%s."
+msgid "“%s” is not a valid POT file."
+msgstr "“%s” nav derīgs POT fails."
 
 #, c-format
-msgid "unsupported XLIFF version (%s)"
-msgstr "neatbalstīta XLIFF versija (%s)"
+msgid "Error while loading XLIFF file: %s"
+msgstr ""
+
+#, c-format
+msgid "unsupported version (%s)"
+msgstr ""
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
@@ -171,8 +191,8 @@ msgstr "Sinhronizācijas kļūda"
 msgid "Add"
 msgstr "Pievienot"
 
-msgid "JSON request error"
-msgstr "JSON pieprasījuma kļūda"
+msgid "Unknown Crowdin error."
+msgstr ""
 
 msgid "Not authorized, please sign in again."
 msgstr "Noraidīts, lūdzu pierakstīties no jauna."
@@ -287,20 +307,6 @@ msgstr ""
 
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit ir vienkārši izmantojams tulkojumu redaktors."
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "PO tulkojums"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr "Fails varētu būt bojāts vai Poedit neatpazīstamā formātā."
-
-msgid "The file cannot be opened."
-msgstr "Fails nav atverams."
-
-msgid "Invalid file"
-msgstr "Nederīgs fails"
 
 msgid "You can’t drop more than one file on Poedit window."
 msgstr ""
@@ -568,8 +574,17 @@ msgstr ""
 msgid "Review"
 msgstr "Skatīt"
 
+msgid "Would you like to use English for source text?"
+msgstr ""
+
 #, c-format
-msgid "Error loading translation file “%s”."
+msgid ""
+"This file uses string IDs instead of source text. Poedit can load English "
+"texts from the “%s” file for you."
+msgstr ""
+
+#. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+msgid "Load English"
 msgstr ""
 
 #, c-format
@@ -740,6 +755,10 @@ msgstr "Izveidot jaunu tulkojumu"
 msgid "Make a new translation from this POT file."
 msgstr ""
 
+#. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+msgid "Source text ID"
+msgstr ""
+
 msgid "Everything"
 msgstr "Visi"
 
@@ -762,6 +781,16 @@ msgstr "Divi"
 
 msgid "Other"
 msgstr "Cits"
+
+#. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#, c-format
+msgid "String context: %s"
+msgstr ""
+
+#. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#, c-format
+msgid "String identifier: %s"
+msgstr ""
 
 #, c-format
 msgid "%s Format"
@@ -1200,6 +1229,10 @@ msgstr "Tulkojumu atmiņa"
 msgid "Importing translations…"
 msgstr "Importē tulkojumus…"
 
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr ""
+
 msgid "Finalizing…"
 msgstr ""
 
@@ -1333,6 +1366,9 @@ msgstr[2] ""
 msgid "Pre-translating…"
 msgstr ""
 
+msgid "Cannot pre-translate without source text."
+msgstr ""
+
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
 #. strings you're translating as the first step, followed by correcting,
@@ -1344,6 +1380,11 @@ msgstr ""
 #. experience). "Pre-translate" nicely expresses that it's only the step done
 #. *before* actual translation.
 msgid "Pre-translate"
+msgstr ""
+
+msgid ""
+"Pre-translation requires that source text is available. It doesn’t work if "
+"only IDs without the actual text are used."
 msgstr ""
 
 msgid "Only fill in exact matches"
@@ -2046,6 +2087,11 @@ msgstr "Nav atrasta neviena atbilstība"
 msgid "This string was found in Poedit’s translation memory."
 msgstr ""
 
+msgid ""
+"Translation suggestions require that source text is available. They don’t "
+"work if only IDs without the actual text are used."
+msgstr ""
+
 msgid "The TMX file is malformed."
 msgstr ""
 
@@ -2104,7 +2150,7 @@ msgstr ""
 msgid "Version %s"
 msgstr "Versija %s"
 
-msgid "Create new…"
+msgid "Create new"
 msgstr ""
 
 msgid "Create new translation from POT template."

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2022-11-30 17:55+0100\n"
-"PO-Revision-Date: 2022-11-30 16:55\n"
+"POT-Creation-Date: 2023-05-09 17:49+0200\n"
+"PO-Revision-Date: 2023-05-09 15:48\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -46,8 +46,11 @@ msgid "Updating translations"
 msgstr "正在更新翻譯"
 
 #, c-format
-msgid "“%s” is not a valid POT file."
-msgstr "「%s」是無效的 POT 檔。"
+msgid "The file “%s” couldn’t be opened."
+msgstr "無法開啟檔案「%s」。"
+
+msgid "Invalid file"
+msgstr "檔案無效"
 
 #, c-format
 msgid "Malformed header: “%s”"
@@ -62,12 +65,38 @@ msgstr "POT 譯文模本"
 msgid "XLIFF Translation Files"
 msgstr "XLIFF 翻譯檔"
 
+msgid "JSON Translation Files"
+msgstr "JSON 翻譯檔"
+
+#. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+msgid "Flutter Translation Files"
+msgstr "Flutter 翻譯檔"
+
 msgid "All Translation Files"
 msgstr "全部譯文檔案"
 
+msgid "The file is in a format not recognized by Poedit."
+msgstr "Poedit 不認識這個檔案格式。"
+
+msgid ""
+"This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgstr "本 JSON 檔案不是翻譯檔案，故無法在 Poedit 編輯。"
+
 #, c-format
-msgid "File “%s” is in unsupported format."
-msgstr "「%s」檔案是未支援格式。"
+msgid "Reading file content failed with the following error: %s"
+msgstr "讀取檔案內容時發生錯誤，錯誤為：%s"
+
+#, c-format
+msgid ""
+"File “%s” is read-only and cannot be saved.\n"
+"Please save it under different name."
+msgstr ""
+"檔案 %s 因設定為唯讀而無法儲存。\n"
+"請以不同檔名儲存檔案。"
+
+#, c-format
+msgid "Couldn’t save file %s."
+msgstr "無法儲存檔案 %s。"
 
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
@@ -84,26 +113,13 @@ msgstr "損毀的 PO 檔：單數形式的 msgstr 跟 msgid_plural 一同使用"
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr "損毀的 PO 檔：沒有 msgid_plural，卻使用複數形式的 msgstr"
 
+msgid "Couldn’t load the file, it is probably damaged."
+msgstr "無法載入檔案，檔案可能損壞。"
+
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr "載入檔案時發生錯誤，因此可能導致部分資料遺失或是損毀。"
-
-#, c-format
-msgid "Couldn’t load file %s, it is probably corrupted."
-msgstr "無法載入檔案 %s，檔案可能已損毀。"
-
-#, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
-"Please save it under different name."
-msgstr ""
-"檔案 %s 因設定為唯讀而無法儲存。\n"
-"請以不同檔名儲存檔案。"
-
-#, c-format
-msgid "Couldn’t save file %s."
-msgstr "無法儲存檔案 %s。"
 
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
@@ -124,12 +140,16 @@ msgid "Error saving file"
 msgstr "儲存檔案時發生錯誤"
 
 #, c-format
-msgid "Error loading file “%s”: %s."
-msgstr "「%s」檔案載入時發生錯誤：%s。"
+msgid "“%s” is not a valid POT file."
+msgstr "「%s」是無效的 POT 檔。"
 
 #, c-format
-msgid "unsupported XLIFF version (%s)"
-msgstr "未支援的 XLIFF 版本 (%s)"
+msgid "Error while loading XLIFF file: %s"
+msgstr "載入 XLIFF 檔案時發生錯誤：%s"
+
+#, c-format
+msgid "unsupported version (%s)"
+msgstr "不支援的版本 (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
@@ -166,8 +186,8 @@ msgstr "同步發生錯誤"
 msgid "Add"
 msgstr "加入"
 
-msgid "JSON request error"
-msgstr "JSON 請求發生錯誤"
+msgid "Unknown Crowdin error."
+msgstr "未知的 Crowdin 錯誤。"
 
 msgid "Not authorized, please sign in again."
 msgstr "尚未獲得授權，請重新登入。"
@@ -280,20 +300,6 @@ msgstr "選擇翻譯檔案"
 
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit 是個易用的翻譯編輯器。"
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "PO 翻譯"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr "檔案可能損毀，或是採用 Poedit 無法辨認的格式。"
-
-msgid "The file cannot be opened."
-msgstr "無法開啟檔案。"
-
-msgid "Invalid file"
-msgstr "檔案無效"
 
 msgid "You can’t drop more than one file on Poedit window."
 msgstr "請不要拖放超過一個檔案至 Poedit 視窗中。"
@@ -553,9 +559,19 @@ msgstr "檔案所採用的複數形式表述式，對%s來說不常見。"
 msgid "Review"
 msgstr "校閱"
 
+msgid "Would you like to use English for source text?"
+msgstr "您要使用英文作為來源文字嗎？"
+
 #, c-format
-msgid "Error loading translation file “%s”."
-msgstr "載入「%s」翻譯檔時發生錯誤。"
+msgid ""
+"This file uses string IDs instead of source text. Poedit can load English "
+"texts from the “%s” file for you."
+msgstr ""
+"此檔案使用字串 ID 而非來源文字。Poedit 可以為您從「%s」檔案載入英文文字。"
+
+#. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+msgid "Load English"
+msgstr "載入英文"
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
@@ -720,6 +736,10 @@ msgstr "建立新譯文"
 msgid "Make a new translation from this POT file."
 msgstr "從這個 POT 檔案建立新翻譯。"
 
+#. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+msgid "Source text ID"
+msgstr "來源文字 ID"
+
 msgid "Everything"
 msgstr "單複數合併譯文"
 
@@ -742,6 +762,16 @@ msgstr "複數"
 
 msgid "Other"
 msgstr "其他"
+
+#. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#, c-format
+msgid "String context: %s"
+msgstr "字串上下文：%s"
+
+#. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#, c-format
+msgid "String identifier: %s"
+msgstr "字串識別碼：%s"
 
 #, c-format
 msgid "%s Format"
@@ -1183,6 +1213,10 @@ msgstr "譯文記憶庫"
 msgid "Importing translations…"
 msgstr "正在匯入譯文…"
 
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "載入「%s」翻譯檔時發生錯誤。"
+
 msgid "Finalizing…"
 msgstr "正在完成…"
 
@@ -1315,6 +1349,9 @@ msgstr[0] "已前置翻譯 %u 筆字串"
 msgid "Pre-translating…"
 msgstr "正在進行前置翻譯…"
 
+msgid "Cannot pre-translate without source text."
+msgstr "無法在沒有來源文字時進行預先翻譯。"
+
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
 #. strings you're translating as the first step, followed by correcting,
@@ -1327,6 +1364,13 @@ msgstr "正在進行前置翻譯…"
 #. *before* actual translation.
 msgid "Pre-translate"
 msgstr "前置翻譯"
+
+msgid ""
+"Pre-translation requires that source text is available. It doesn’t work if "
+"only IDs without the actual text are used."
+msgstr ""
+"預先翻譯需要可供使用的來源文字。如果僅使用沒有實際文字的 ID，預先翻譯將無法運"
+"作。"
 
 msgid "Only fill in exact matches"
 msgstr "僅代入完全相符的譯文"
@@ -2038,6 +2082,13 @@ msgstr "找不到符合條件的項目"
 msgid "This string was found in Poedit’s translation memory."
 msgstr "這個字串已儲存於 Poedit 的譯文記憶庫。"
 
+msgid ""
+"Translation suggestions require that source text is available. They don’t "
+"work if only IDs without the actual text are used."
+msgstr ""
+"翻譯建議需要可供使用的來源文字。如果僅使用沒有實際文字的 ID，翻譯建議將無法運"
+"作。"
+
 msgid "The TMX file is malformed."
 msgstr "TMX 檔案格式錯誤。"
 
@@ -2099,8 +2150,8 @@ msgstr "在「屬性」中設定原始碼抽出項目。"
 msgid "Version %s"
 msgstr "版本 %s"
 
-msgid "Create new…"
-msgstr "建立新的⋯"
+msgid "Create new"
+msgstr "建立新的"
 
 msgid "Create new translation from POT template."
 msgstr "從 POT 模板建立新翻譯。"

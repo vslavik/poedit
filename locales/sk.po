@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2022-11-30 17:55+0100\n"
-"PO-Revision-Date: 2022-11-30 16:55\n"
+"POT-Creation-Date: 2023-05-09 17:49+0200\n"
+"PO-Revision-Date: 2023-05-09 15:49\n"
 "Last-Translator: \n"
 "Language-Team: Slovak\n"
 "Language: sk_SK\n"
@@ -46,8 +46,11 @@ msgid "Updating translations"
 msgstr "Aktualizácia prekladu"
 
 #, c-format
-msgid "“%s” is not a valid POT file."
-msgstr "Súbor „%s\" nie je platný POT súbor."
+msgid "The file “%s” couldn’t be opened."
+msgstr "Súbor „%s” nemožno otvoriť."
+
+msgid "Invalid file"
+msgstr "Neplatný súbor"
 
 #, c-format
 msgid "Malformed header: “%s”"
@@ -62,12 +65,40 @@ msgstr "Šablóny prekladov POT"
 msgid "XLIFF Translation Files"
 msgstr "Súbory prekladu XLIFF"
 
+msgid "JSON Translation Files"
+msgstr "Prekladové súbory JSON"
+
+#. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+msgid "Flutter Translation Files"
+msgstr "Prekladové súbory Flutter"
+
 msgid "All Translation Files"
 msgstr "Všetky prekladové súbory"
 
+msgid "The file is in a format not recognized by Poedit."
+msgstr "Formát súboru nebol rozoznaný programom Poedit."
+
+msgid ""
+"This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgstr ""
+"Tento súbor JSON nie je prekladový súbor a nemožno ho upravovať v programe "
+"Poedit."
+
 #, c-format
-msgid "File “%s” is in unsupported format."
-msgstr "Súbor „%s\" je v nepodporovanom formáte."
+msgid "Reading file content failed with the following error: %s"
+msgstr "Načítanie obsahu súboru zlyhalo s nasledujúcou chybou: %s"
+
+#, c-format
+msgid ""
+"File “%s” is read-only and cannot be saved.\n"
+"Please save it under different name."
+msgstr ""
+"Súbor “%s” je iba na čítanie a nemôže byť uložený.\n"
+"Prosím, uložte ho pod iným názvom."
+
+#, c-format
+msgid "Couldn’t save file %s."
+msgstr "Súbor %s nie je možné uložiť."
 
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
@@ -88,28 +119,15 @@ msgstr ""
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr "Chybný PO súbor: tvar množného čísla msgstr použitý bez msgid_plural"
 
+msgid "Couldn’t load the file, it is probably damaged."
+msgstr "Súbor sa nepodarilo načítať, pravdepodobne je poškodený."
+
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
 "Nastala chyba pri načítavaní súboru. Niektoré údaje vo výsledku môžu chýbať "
 "alebo byť poškodené."
-
-#, c-format
-msgid "Couldn’t load file %s, it is probably corrupted."
-msgstr "Nemožno načítať súbor %s, pravdepodobne je poškodený."
-
-#, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
-"Please save it under different name."
-msgstr ""
-"Súbor “%s” je iba na čítanie a nemôže byť uložený.\n"
-"Prosím, uložte ho pod iným názvom."
-
-#, c-format
-msgid "Couldn’t save file %s."
-msgstr "Súbor %s nie je možné uložiť."
 
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
@@ -133,12 +151,16 @@ msgid "Error saving file"
 msgstr "Chyba pri ukladaní súboru"
 
 #, c-format
-msgid "Error loading file “%s”: %s."
-msgstr "Chyba pri načítavaní súboru „%s\": %s."
+msgid "“%s” is not a valid POT file."
+msgstr "Súbor „%s\" nie je platný POT súbor."
 
 #, c-format
-msgid "unsupported XLIFF version (%s)"
-msgstr "nepodporovaná verzia XLIFF (%s)"
+msgid "Error while loading XLIFF file: %s"
+msgstr "Chyba pri načítaní súboru XLIFF: %s"
+
+#, c-format
+msgid "unsupported version (%s)"
+msgstr "nepodporovaná verzia (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
@@ -175,8 +197,8 @@ msgstr "Chyba synchronizácie"
 msgid "Add"
 msgstr "Pridať"
 
-msgid "JSON request error"
-msgstr "Chyba požiadavky JSON"
+msgid "Unknown Crowdin error."
+msgstr "Neznáma chyba Crowdinu."
 
 msgid "Not authorized, please sign in again."
 msgstr "Vyskytla sa chyba pri autorizácii, skúste sa prihlásiť znova."
@@ -293,21 +315,6 @@ msgstr "Vybrte súbor prekladu"
 
 msgid "Poedit is an easy to use translation editor."
 msgstr "Program Poedit je jednoducho použiteľný editor prekladov."
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "PO preklad"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr ""
-"Súbor môže byť poškodený alebo formát nebol rozoznaný programom Poedit."
-
-msgid "The file cannot be opened."
-msgstr "Súbor nemožno otvoriť."
-
-msgid "Invalid file"
-msgstr "Neplatný súbor"
 
 msgid "You can’t drop more than one file on Poedit window."
 msgstr "Nemôžete vložiť viac ako jeden súbor do okna Poedit."
@@ -599,9 +606,20 @@ msgstr "Tvar množného čísla použitého súborom je neobvyklý pre jazyk %s.
 msgid "Review"
 msgstr "Posúdiť"
 
+msgid "Would you like to use English for source text?"
+msgstr "Chcete použiť anglický zdrojový text?"
+
 #, c-format
-msgid "Error loading translation file “%s”."
-msgstr "Vyskytla sa pri načítaní súboru prekladu „%s”."
+msgid ""
+"This file uses string IDs instead of source text. Poedit can load English "
+"texts from the “%s” file for you."
+msgstr ""
+"V tomto súbore sa namiesto zdrojového textu používajú ID reťazce. Poedit "
+"môže za vás načítať anglické texty zo súboru “%s”."
+
+#. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+msgid "Load English"
+msgstr "Načítať anglicky"
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
@@ -773,6 +791,10 @@ msgstr "Vytvoriť nový preklad"
 msgid "Make a new translation from this POT file."
 msgstr "Vytvoriť nový preklad z tohto POT súboru."
 
+#. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+msgid "Source text ID"
+msgstr "ID zdrojového textu"
+
 msgid "Everything"
 msgstr "Všetko"
 
@@ -795,6 +817,16 @@ msgstr "Dva"
 
 msgid "Other"
 msgstr "Ostatné"
+
+#. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#, c-format
+msgid "String context: %s"
+msgstr "Kontext reťazca: %s"
+
+#. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#, c-format
+msgid "String identifier: %s"
+msgstr "Identifikátor reťazca: %s"
 
 #, c-format
 msgid "%s Format"
@@ -1244,6 +1276,10 @@ msgstr "Pamäť prekladov"
 msgid "Importing translations…"
 msgstr "Importovanie prekladov…"
 
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "Vyskytla sa pri načítaní súboru prekladu „%s”."
+
 msgid "Finalizing…"
 msgstr "Dokončovanie…"
 
@@ -1384,6 +1420,9 @@ msgstr[3] "Pred-preložených %u reťazcov"
 msgid "Pre-translating…"
 msgstr "Prebieha pred-preklad…"
 
+msgid "Cannot pre-translate without source text."
+msgstr "Nemožno pred-prekladať bez zdrojového textu."
+
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
 #. strings you're translating as the first step, followed by correcting,
@@ -1396,6 +1435,13 @@ msgstr "Prebieha pred-preklad…"
 #. *before* actual translation.
 msgid "Pre-translate"
 msgstr "Pred-preložiť"
+
+msgid ""
+"Pre-translation requires that source text is available. It doesn’t work if "
+"only IDs without the actual text are used."
+msgstr ""
+"Predbežný preklad si vyžaduje, aby bol k dispozícii zdrojový text. "
+"Nefunguje, ak sa použijú len ID bez skutočného textu."
 
 msgid "Only fill in exact matches"
 msgstr "Vyplniť iba presné zhody"
@@ -2121,6 +2167,13 @@ msgstr "Nenašli sa žiadne zhody"
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Tento reťazec bol nájdený v Pamäti prekladov programu Poedit."
 
+msgid ""
+"Translation suggestions require that source text is available. They don’t "
+"work if only IDs without the actual text are used."
+msgstr ""
+"Návrhy na preklad vyžadujú, aby bol k dispozícii zdrojový text. Nefungujú, "
+"ak sa použijú len ID bez skutočného textu."
+
 msgid "The TMX file is malformed."
 msgstr "Súbor Výmennej pamäte prekladov (TMX) je poškodený."
 
@@ -2186,8 +2239,8 @@ msgstr "Nastaviť vytiahnutie zdrojového kódu v Nastaveniach."
 msgid "Version %s"
 msgstr "Verzia %s"
 
-msgid "Create new…"
-msgstr "Vytvoriť nový…"
+msgid "Create new"
+msgstr "Vytvoriť nový"
 
 msgid "Create new translation from POT template."
 msgstr "Vytvoriť nový preklad z POT šablóny."

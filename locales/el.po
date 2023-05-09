@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2022-11-30 17:55+0100\n"
-"PO-Revision-Date: 2023-02-23 14:13\n"
+"POT-Creation-Date: 2023-05-09 17:49+0200\n"
+"PO-Revision-Date: 2023-05-09 15:48\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -46,8 +46,11 @@ msgid "Updating translations"
 msgstr "Ενημέρωση μεταφράσεων"
 
 #, c-format
-msgid "“%s” is not a valid POT file."
-msgstr "Το “%s” δεν είναι έγκυρο αρχείο POT."
+msgid "The file “%s” couldn’t be opened."
+msgstr "Το αρχείο \"%s\" δεν ήταν δυνατόν να ανοιχθεί."
+
+msgid "Invalid file"
+msgstr "Μη έγκυρο αρχείο"
 
 #, c-format
 msgid "Malformed header: “%s”"
@@ -62,12 +65,38 @@ msgstr "Πρότυπα μετάφρασης POT"
 msgid "XLIFF Translation Files"
 msgstr "Αρχεία μετάφρασης XLIFF"
 
+msgid "JSON Translation Files"
+msgstr "Αρχεία Μετάφρασης JSON"
+
+#. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+msgid "Flutter Translation Files"
+msgstr "Αρχεία Μετάφρασης Flutter"
+
 msgid "All Translation Files"
 msgstr "Όλα τα αρχεία μετάφρασης"
 
+msgid "The file is in a format not recognized by Poedit."
+msgstr ""
+
+msgid ""
+"This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgstr ""
+
 #, c-format
-msgid "File “%s” is in unsupported format."
-msgstr "Το αρχείο «%s» είναι σε μη υποστηριζόμενη μορφή."
+msgid "Reading file content failed with the following error: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"File “%s” is read-only and cannot be saved.\n"
+"Please save it under different name."
+msgstr ""
+"Αρχείο %s είναι μόνο για ανάγνωση και δεν μπορεί να αποθηκευτεί.\n"
+" Παρακαλώ αποθηκεύστε το με διαφορετικό όνομα."
+
+#, c-format
+msgid "Couldn’t save file %s."
+msgstr "Αδυναμία αποθήκευσης του αρχείου %s."
 
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
@@ -89,28 +118,15 @@ msgstr ""
 "Κατεστραμμένο αρχείο PO: το msgstr μορφής πληθυντικού χρησιμοποιείται χωρίς "
 "msgid_plural"
 
+msgid "Couldn’t load the file, it is probably damaged."
+msgstr ""
+
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
 "Προέκυψαν σφάλματα κατά τη φόρτωση του αρχείου. Κατά συνέπεια, ορισμένα "
 "δεδομένα ενδέχεται να έχουν χαθεί ή αλλοιωθεί."
-
-#, c-format
-msgid "Couldn’t load file %s, it is probably corrupted."
-msgstr "Αδυναμία φόρτωσης αρχείου %s, είναι πιθανόν κατεστραμμένο."
-
-#, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
-"Please save it under different name."
-msgstr ""
-"Αρχείο %s είναι μόνο για ανάγνωση και δεν μπορεί να αποθηκευτεί.\n"
-" Παρακαλώ αποθηκεύστε το με διαφορετικό όνομα."
-
-#, c-format
-msgid "Couldn’t save file %s."
-msgstr "Αδυναμία αποθήκευσης του αρχείου %s."
 
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
@@ -134,12 +150,16 @@ msgid "Error saving file"
 msgstr "Σφάλμα αποθήκευσης αρχείου"
 
 #, c-format
-msgid "Error loading file “%s”: %s."
-msgstr "Σφάλμα φόρτωσης αρχείου \"%s\": %s."
+msgid "“%s” is not a valid POT file."
+msgstr "Το “%s” δεν είναι έγκυρο αρχείο POT."
 
 #, c-format
-msgid "unsupported XLIFF version (%s)"
-msgstr "μη υποστηριζόμενη έκδοση του XLIFF (%s)"
+msgid "Error while loading XLIFF file: %s"
+msgstr ""
+
+#, c-format
+msgid "unsupported version (%s)"
+msgstr ""
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
@@ -177,8 +197,8 @@ msgstr "Σφάλμα συγχρονισμού"
 msgid "Add"
 msgstr "Προσθήκη"
 
-msgid "JSON request error"
-msgstr "Σφάλμα αιτήματος JSON"
+msgid "Unknown Crowdin error."
+msgstr "Άγνωστο σφάλμα Crowdin."
 
 msgid "Not authorized, please sign in again."
 msgstr "Δεν επιτρέπεται, Παρακαλούμε συνδεθείτε ξανά."
@@ -294,22 +314,6 @@ msgstr "Επιλογή αρχείου μετάφρασης"
 
 msgid "Poedit is an easy to use translation editor."
 msgstr "Το Poedit είναι ένας εύκολος στη χρήση επεξεργαστής μεταφράσεων."
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "Μετάφραση PO"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr ""
-"Το αρχείο μπορεί είτε να είναι φθαρμένο, είτε να είναι σε μορφή που δεν "
-"αναγνωρίζεται από το Poedit."
-
-msgid "The file cannot be opened."
-msgstr "Το αρχείο δεν μπορεί να να ανοιχτεί."
-
-msgid "Invalid file"
-msgstr "Μη έγκυρο αρχείο"
 
 msgid "You can’t drop more than one file on Poedit window."
 msgstr "Δεν μπορείτε να σύρετε παραπάνω από ένα αρχείο στο παράθυρο Poedit."
@@ -607,9 +611,18 @@ msgstr ""
 msgid "Review"
 msgstr "Επισκόπηση"
 
+msgid "Would you like to use English for source text?"
+msgstr ""
+
 #, c-format
-msgid "Error loading translation file “%s”."
-msgstr "Σφάλμα φόρτωσης αρχείου μετάφρασης “%s”."
+msgid ""
+"This file uses string IDs instead of source text. Poedit can load English "
+"texts from the “%s” file for you."
+msgstr ""
+
+#. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+msgid "Load English"
+msgstr ""
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
@@ -781,6 +794,10 @@ msgstr "Δημιουργία νέας μετάφρασης"
 msgid "Make a new translation from this POT file."
 msgstr "Δημιουργία νέας μετάφρασης από αυτό το αρχείο POT."
 
+#. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+msgid "Source text ID"
+msgstr ""
+
 msgid "Everything"
 msgstr "Τα πάντα"
 
@@ -803,6 +820,16 @@ msgstr "Δύο"
 
 msgid "Other"
 msgstr "Άλλο"
+
+#. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#, c-format
+msgid "String context: %s"
+msgstr ""
+
+#. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#, c-format
+msgid "String identifier: %s"
+msgstr ""
 
 #, c-format
 msgid "%s Format"
@@ -1254,6 +1281,10 @@ msgstr "Μεταφραστική μνήμη"
 msgid "Importing translations…"
 msgstr "Εισαγωγή μεταφράσεων…"
 
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "Σφάλμα φόρτωσης αρχείου μετάφρασης “%s”."
+
 msgid "Finalizing…"
 msgstr "Ολοκλήρωση…"
 
@@ -1395,6 +1426,9 @@ msgstr[1] "Προ-μεταφρασμένες συμβολοσειρές %u"
 msgid "Pre-translating…"
 msgstr "Προ-μετάφραση…"
 
+msgid "Cannot pre-translate without source text."
+msgstr ""
+
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
 #. strings you're translating as the first step, followed by correcting,
@@ -1407,6 +1441,11 @@ msgstr "Προ-μετάφραση…"
 #. *before* actual translation.
 msgid "Pre-translate"
 msgstr "Προ-μετάφραση"
+
+msgid ""
+"Pre-translation requires that source text is available. It doesn’t work if "
+"only IDs without the actual text are used."
+msgstr ""
 
 msgid "Only fill in exact matches"
 msgstr "Συμπληρώστε μόνο ακριβείς αντιστοιχίες"
@@ -2138,6 +2177,11 @@ msgstr "Δεν βρέθηκαν αντιστοιχίες"
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Αυτή η συμβολοσειρά βρέθηκε στη μεταφραστική μνήμη του Poedit."
 
+msgid ""
+"Translation suggestions require that source text is available. They don’t "
+"work if only IDs without the actual text are used."
+msgstr ""
+
 msgid "The TMX file is malformed."
 msgstr "Το αρχείο TMX είναι παραμορφωμένο."
 
@@ -2206,8 +2250,8 @@ msgstr "Ρύθμισε την εξαγωγή του πηγαίου κώδικα 
 msgid "Version %s"
 msgstr "Έκδοση %s"
 
-msgid "Create new…"
-msgstr "Δημιουργία νέας…"
+msgid "Create new"
+msgstr "Δημιουργία νέας"
 
 msgid "Create new translation from POT template."
 msgstr "Δημιουργία νέας μετάφρασης από πρότυπο POT."

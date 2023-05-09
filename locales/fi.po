@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2022-11-30 17:55+0100\n"
-"PO-Revision-Date: 2022-11-30 16:54\n"
+"POT-Creation-Date: 2023-05-09 17:49+0200\n"
+"PO-Revision-Date: 2023-05-01 07:27\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -46,8 +46,11 @@ msgid "Updating translations"
 msgstr "Päivitetään käännöksiä"
 
 #, c-format
-msgid "“%s” is not a valid POT file."
-msgstr "”%s” ei ole kelvollinen POT-tiedosto."
+msgid "The file “%s” couldn’t be opened."
+msgstr "Tiedostoa \"%s\" ei voitu avata."
+
+msgid "Invalid file"
+msgstr "Virheellinen tiedosto"
 
 #, c-format
 msgid "Malformed header: “%s”"
@@ -62,12 +65,39 @@ msgstr "POT-käännöspohjat"
 msgid "XLIFF Translation Files"
 msgstr "XLIFF-käännöstiedostot"
 
+msgid "JSON Translation Files"
+msgstr "JSON-käännöstiedostot"
+
+#. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+msgid "Flutter Translation Files"
+msgstr "Flutter-käännöstiedostot"
+
 msgid "All Translation Files"
 msgstr "Kaikki käännöstiedostot"
 
+msgid "The file is in a format not recognized by Poedit."
+msgstr "Tiedosto on muodossa, jota Poedit ei tunnista."
+
+msgid ""
+"This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgstr ""
+"Tämä JSON-tiedosto ei ole käännöstiedosto eikä sitä voida muokata Poeditillä."
+
 #, c-format
-msgid "File “%s” is in unsupported format."
-msgstr "Tiedosto ”%s” on muodossa, jota ei tueta."
+msgid "Reading file content failed with the following error: %s"
+msgstr "Tiedoston sisällön luku epäonnistui: %s"
+
+#, c-format
+msgid ""
+"File “%s” is read-only and cannot be saved.\n"
+"Please save it under different name."
+msgstr ""
+"Tiedostoa ”%s” voidaan vain lukea, mutta ei tallentaa.\n"
+"Tallenna se toisella nimellä."
+
+#, c-format
+msgid "Couldn’t save file %s."
+msgstr "Tiedostoa %s ei voitu tallentaa."
 
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
@@ -89,28 +119,15 @@ msgstr ""
 "Rikkinäinen PO-tiedosto: monikkomuotoista msgstr:ää käytetty ilman "
 "msgid_plural:ia"
 
+msgid "Couldn’t load the file, it is probably damaged."
+msgstr "Tiedostoa ei voitu ladata. Se on todennäköisesti vioittunut."
+
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
 "Tiedostoa ladattaessa kohdattiin virheitä. Osa tiedosta saattaa sen "
 "seurauksena puuttua tai olla vioittunutta."
-
-#, c-format
-msgid "Couldn’t load file %s, it is probably corrupted."
-msgstr "Tiedostoa %s ei voitu ladata, se on todennäköisesti vioittunut."
-
-#, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
-"Please save it under different name."
-msgstr ""
-"Tiedostoa ”%s” voidaan vain lukea, mutta ei tallentaa.\n"
-"Tallenna se toisella nimellä."
-
-#, c-format
-msgid "Couldn’t save file %s."
-msgstr "Tiedostoa %s ei voitu tallentaa."
 
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
@@ -133,12 +150,16 @@ msgid "Error saving file"
 msgstr "Virhe tallennettaessa tiedostoa"
 
 #, c-format
-msgid "Error loading file “%s”: %s."
-msgstr "Virhe tiedoston ”%s” lataamisessa: %s."
+msgid "“%s” is not a valid POT file."
+msgstr "”%s” ei ole kelvollinen POT-tiedosto."
 
 #, c-format
-msgid "unsupported XLIFF version (%s)"
-msgstr "XLIFF-versio (%s) ei ole tuettu"
+msgid "Error while loading XLIFF file: %s"
+msgstr "Virhe ladattaessa XLIF-tiedostoa: %s."
+
+#, c-format
+msgid "unsupported version (%s)"
+msgstr "ei-tuettu versio (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
@@ -175,8 +196,8 @@ msgstr "Synkronointivirhe"
 msgid "Add"
 msgstr "Lisää"
 
-msgid "JSON request error"
-msgstr "JSON-pyynnön virhe"
+msgid "Unknown Crowdin error."
+msgstr "Tuntematon Crowdin-virhe."
 
 msgid "Not authorized, please sign in again."
 msgstr "Ei valtuutusta; kirjaudu uudelleen."
@@ -292,20 +313,6 @@ msgstr "Valitse käännöstiedosto"
 
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit on helppokäyttöinen käännöseditori."
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "PO-käännös"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr "Tiedosto voi olla joko vioittunut tai muodossa, jota Poedit ei tunne."
-
-msgid "The file cannot be opened."
-msgstr "Tiedostoa ei voi avata."
-
-msgid "Invalid file"
-msgstr "Virheellinen tiedosto"
 
 msgid "You can’t drop more than one file on Poedit window."
 msgstr "Poedit-ikkunaan voi pudottaa vain yhden tiedoston."
@@ -591,9 +598,20 @@ msgstr "Tiedostossa käytetty monikkomuotolauseke on epätavallinen kielelle %s.
 msgid "Review"
 msgstr "Katselmointi"
 
+msgid "Would you like to use English for source text?"
+msgstr "Haluatko käyttää englanninkielistä lähdetekstiä?"
+
 #, c-format
-msgid "Error loading translation file “%s”."
-msgstr "Virhe ladattaessa käännöstiedostoa “%s”."
+msgid ""
+"This file uses string IDs instead of source text. Poedit can load English "
+"texts from the “%s” file for you."
+msgstr ""
+"Tämä tiedosto käyttää lähdetekstin sijaan merkkijonojen tunnisteita. Poedit "
+"voi puolestasi ladata englanninkieliset tekstit \"%s\" tiedostosta."
+
+#. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+msgid "Load English"
+msgstr "Lataa englanti"
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
@@ -761,6 +779,10 @@ msgstr "Luo uusi käännös"
 msgid "Make a new translation from this POT file."
 msgstr "Luo uusi käännös tästä POT-tiedostosta."
 
+#. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+msgid "Source text ID"
+msgstr "Lähdetekstin ID"
+
 msgid "Everything"
 msgstr "Kaikki"
 
@@ -783,6 +805,16 @@ msgstr "Kaksi"
 
 msgid "Other"
 msgstr "Muut"
+
+#. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#, c-format
+msgid "String context: %s"
+msgstr "Merkkijonon konteksti: %s"
+
+#. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#, c-format
+msgid "String identifier: %s"
+msgstr "Merkkijonon tunniste: %s"
 
 #, c-format
 msgid "%s Format"
@@ -1230,6 +1262,10 @@ msgstr "Käännösmuisti"
 msgid "Importing translations…"
 msgstr "Tuodaan käännöksiä…"
 
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "Virhe ladattaessa käännöstiedostoa “%s”."
+
 msgid "Finalizing…"
 msgstr "Viimeistellään…"
 
@@ -1369,6 +1405,9 @@ msgstr[1] "Esikäännettiin %u tekstiä"
 msgid "Pre-translating…"
 msgstr "Esikäännetään…"
 
+msgid "Cannot pre-translate without source text."
+msgstr "Esikääntäminen ei ole mahdollista ilman lähdetekstiä."
+
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
 #. strings you're translating as the first step, followed by correcting,
@@ -1381,6 +1420,13 @@ msgstr "Esikäännetään…"
 #. *before* actual translation.
 msgid "Pre-translate"
 msgstr "Esikäännä"
+
+msgid ""
+"Pre-translation requires that source text is available. It doesn’t work if "
+"only IDs without the actual text are used."
+msgstr ""
+"Esikäännös edellyttää, että varsinainen lähdeteksti on käytettävissä. Se ei "
+"toimi, jos käytetään vain tunnisteita ilman varsinaista tekstiä."
 
 msgid "Only fill in exact matches"
 msgstr "Täytä vain tarkat täsmäävyydet"
@@ -2104,6 +2150,14 @@ msgstr "Vastaavuuksia ei löydy"
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Tämä teksti löytyi Poeditin käännösmuistista."
 
+msgid ""
+"Translation suggestions require that source text is available. They don’t "
+"work if only IDs without the actual text are used."
+msgstr ""
+"Käännösehdotukset edellyttävät, että varsinainen lähdeteksti on "
+"käytettävissä. Se ei toimi, jos käytetään vain tunnisteita ilman varsinaista "
+"tekstiä."
+
 msgid "The TMX file is malformed."
 msgstr "TMX-tiedosto on viallinen."
 
@@ -2169,8 +2223,8 @@ msgstr "Konfiguroi lähdekoodista poimiminen asetuksissa."
 msgid "Version %s"
 msgstr "Versio %s"
 
-msgid "Create new…"
-msgstr "Luo uusi…"
+msgid "Create new"
+msgstr "Luo uusi"
 
 msgid "Create new translation from POT template."
 msgstr "Luo uusi käännös POT-pohjasta."

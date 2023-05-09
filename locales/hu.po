@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2022-11-30 17:55+0100\n"
-"PO-Revision-Date: 2022-11-30 16:54\n"
+"POT-Creation-Date: 2023-05-09 17:49+0200\n"
+"PO-Revision-Date: 2023-05-09 15:48\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -46,8 +46,11 @@ msgid "Updating translations"
 msgstr "Fordítások frissítése"
 
 #, c-format
-msgid "“%s” is not a valid POT file."
-msgstr "A(z) „%s” nem érvényes POT fájl."
+msgid "The file “%s” couldn’t be opened."
+msgstr "A(z) „%s” fájl nem nyitható meg."
+
+msgid "Invalid file"
+msgstr "Érvénytelen fájl"
 
 #, c-format
 msgid "Malformed header: “%s”"
@@ -62,12 +65,38 @@ msgstr "POT fordítási sablonok"
 msgid "XLIFF Translation Files"
 msgstr "XLIFF fordítási fájlok"
 
+msgid "JSON Translation Files"
+msgstr "JSON fordítási fájlok"
+
+#. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+msgid "Flutter Translation Files"
+msgstr "Flutter fordítási fájlok"
+
 msgid "All Translation Files"
 msgstr "Minden fordítási fájl"
 
+msgid "The file is in a format not recognized by Poedit."
+msgstr "A fájl formátumát a Poedit nem ismeri fel."
+
+msgid ""
+"This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgstr "Ez a JSON fájl nem fordítási fájl, és nem szerkeszthető a Poedittel."
+
 #, c-format
-msgid "File “%s” is in unsupported format."
-msgstr "A(z) „%s” fájl formátuma nem támogatott."
+msgid "Reading file content failed with the following error: %s"
+msgstr "A fájl tartalmának olvasása sikertelen a következő hibával: %s"
+
+#, c-format
+msgid ""
+"File “%s” is read-only and cannot be saved.\n"
+"Please save it under different name."
+msgstr ""
+"A(z) „%s” fájl csak olvasható és nem lehet menteni.\n"
+"Mentse el a fájlt más néven."
+
+#, c-format
+msgid "Couldn’t save file %s."
+msgstr "A(z) %s fájl mentése nem sikerült."
 
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
@@ -87,28 +116,15 @@ msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr ""
 "Sérült katalógus fájl: többes számú msgstr van használva msgid_plural nélkül"
 
+msgid "Couldn’t load the file, it is probably damaged."
+msgstr "A fájl nem tölthető be, valószínűleg sérült."
+
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
 "Hibák történtek a fájl betöltése közben. Eredményeként néhány adat "
 "hiányozhat vagy megsérülhetett."
-
-#, c-format
-msgid "Couldn’t load file %s, it is probably corrupted."
-msgstr "A(z) %s fájl betöltése nem sikerült, valószínűleg sérült."
-
-#, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
-"Please save it under different name."
-msgstr ""
-"A(z) „%s” fájl csak olvasható és nem lehet menteni.\n"
-"Mentse el a fájlt más néven."
-
-#, c-format
-msgid "Couldn’t save file %s."
-msgstr "A(z) %s fájl mentése nem sikerült."
 
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
@@ -132,12 +148,16 @@ msgid "Error saving file"
 msgstr "Hiba a fájl mentése során"
 
 #, c-format
-msgid "Error loading file “%s”: %s."
-msgstr "Hiba a(z) „%s” fájl betöltésekor: %s."
+msgid "“%s” is not a valid POT file."
+msgstr "A(z) „%s” nem érvényes POT fájl."
 
 #, c-format
-msgid "unsupported XLIFF version (%s)"
-msgstr "nem támogatott XLIFF verzió (%s)"
+msgid "Error while loading XLIFF file: %s"
+msgstr "Hiba az XLIFF-fájl betöltése során: %s"
+
+#, c-format
+msgid "unsupported version (%s)"
+msgstr "nem támogatott verzió (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
@@ -174,8 +194,8 @@ msgstr "Szinkronizálási hiba"
 msgid "Add"
 msgstr "Hozzáadás"
 
-msgid "JSON request error"
-msgstr "JSON kérés hiba"
+msgid "Unknown Crowdin error."
+msgstr ""
 
 msgid "Not authorized, please sign in again."
 msgstr "Nem engedélyezett, kérjük jelentkezzen be újra."
@@ -291,21 +311,6 @@ msgstr "Fordítási fájl kiválasztása"
 
 msgid "Poedit is an easy to use translation editor."
 msgstr "A Poedit egy könnyen használható fordítás szerkesztő."
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "PO fordítás"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr ""
-"A fájl lehet hogy sérült vagy olyan formátumú melyet a Poedit nem ismer fel."
-
-msgid "The file cannot be opened."
-msgstr "A fájlt nem lehet megnyitni."
-
-msgid "Invalid file"
-msgstr "Érvénytelen fájl"
 
 msgid "You can’t drop more than one file on Poedit window."
 msgstr "A Poedit ablakára egyszerre több fájlt nem lehet ráhúzni."
@@ -595,9 +600,20 @@ msgstr ""
 msgid "Review"
 msgstr "Felülvizsgálat"
 
+msgid "Would you like to use English for source text?"
+msgstr "Szeretné az angolt használni forrásszövegként?"
+
 #, c-format
-msgid "Error loading translation file “%s”."
-msgstr "Hiba “%s” fordítási fájl betöltésekor."
+msgid ""
+"This file uses string IDs instead of source text. Poedit can load English "
+"texts from the “%s” file for you."
+msgstr ""
+"Ez a fájl szöveges azonosítókat használ forrásszöveg helyett. A Poedit be "
+"tudja tölteni az angol szövegeket a következő fájlból: „%s”."
+
+#. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+msgid "Load English"
+msgstr "Angol betöltése"
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
@@ -765,6 +781,10 @@ msgstr "Új fordítási projekt létrehozása"
 msgid "Make a new translation from this POT file."
 msgstr "Készítsen új fordítást ebből a POT fájlból."
 
+#. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+msgid "Source text ID"
+msgstr "Forrásszöveg-azonosító"
+
 msgid "Everything"
 msgstr "Minden"
 
@@ -787,6 +807,16 @@ msgstr "Kettő"
 
 msgid "Other"
 msgstr "Egyéb"
+
+#. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#, c-format
+msgid "String context: %s"
+msgstr "Karakterlánc szövegösszefüggése: %s"
+
+#. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#, c-format
+msgid "String identifier: %s"
+msgstr "Karakterláncazonosító: %s"
 
 #, c-format
 msgid "%s Format"
@@ -972,7 +1002,7 @@ msgstr "<névtelen>"
 
 #, c-format
 msgid "Do you want to delete project “%s”?"
-msgstr "Biztos törölni akarod ezt a projectet “%s”?"
+msgstr "Biztos, hogy törli ezt a projektet: „%s”?"
 
 msgid "Delete project"
 msgstr "Projekt törlése"
@@ -990,7 +1020,7 @@ msgid "Performs update from source code on all files in the project."
 msgstr "A forráskódból frissítést hajt végre a projekt összes fájlján."
 
 msgid "Catalogs Manager"
-msgstr "&Katalóguskezelő"
+msgstr "Katalóguskezelő"
 
 msgid "Check for Updates…"
 msgstr "Frissítések keresése…"
@@ -1009,7 +1039,7 @@ msgid "Redo"
 msgstr "Mégis"
 
 msgid "Paste and Match Style"
-msgstr "Beillesztés és stílus egyeztetés"
+msgstr "Beillesztés és stílus egyeztetése"
 
 msgid "Delete"
 msgstr "Törlés"
@@ -1021,7 +1051,7 @@ msgid "Show Spelling and Grammar"
 msgstr "Helyesírás és nyelvhelyesség megjelenítése"
 
 msgid "Check Document Now"
-msgstr "Dokumentum ellenőrzése"
+msgstr "Dokumentum ellenőrzése most"
 
 msgid "Check Spelling While Typing"
 msgstr "Helyesírás-ellenőrzés beíráskor"
@@ -1117,7 +1147,7 @@ msgid "Email:"
 msgstr "E-mail:"
 
 msgid "you@example.com"
-msgstr "nev@pelda.hu"
+msgstr "nev@example.com"
 
 msgid ""
 "Your name and email address are only used to set the Last-Translator header "
@@ -1235,6 +1265,10 @@ msgstr "Fordítási memória"
 msgid "Importing translations…"
 msgstr "Fordítások importálása…"
 
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "Hiba “%s” fordítási fájl betöltésekor."
+
 msgid "Finalizing…"
 msgstr "Befejezés…"
 
@@ -1301,7 +1335,7 @@ msgid ""
 "Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
 "+, C#, Perl, Python, Java, JavaScript and others)."
 msgstr ""
-"Támogatja az összes a GNU gettext eszközök által ismert programozási nyelvet "
+"Támogatja az összes, GNU gettext eszközök által ismert programozási nyelvet "
 "(PHP, C/C++, C#, Perl, Python, Java, JavaScript és mások)."
 
 msgid "Delete extractor"
@@ -1374,6 +1408,9 @@ msgstr[1] "%u sor előfordítva"
 msgid "Pre-translating…"
 msgstr "Előfordítás…"
 
+msgid "Cannot pre-translate without source text."
+msgstr "A forrásszöveg nélkül nem lehet előfordítani."
+
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
 #. strings you're translating as the first step, followed by correcting,
@@ -1386,6 +1423,13 @@ msgstr "Előfordítás…"
 #. *before* actual translation.
 msgid "Pre-translate"
 msgstr "Előfordítás"
+
+msgid ""
+"Pre-translation requires that source text is available. It doesn’t work if "
+"only IDs without the actual text are used."
+msgstr ""
+"Az előfordításhoz szükséges a forrásszöveg megléte. Nem működik csak "
+"azonosítókkal, a valódi szöveg használata nélkül."
 
 msgid "Only fill in exact matches"
 msgstr "Kitöltés csak pontos egyezés esetén"
@@ -1508,7 +1552,7 @@ msgid "Name of the project the translation is for"
 msgstr "A projekt megnevezése, amelyhez a fordítás tartozik"
 
 msgid "Team name and email address or URL"
-msgstr "Csapat neve és e-mail címe vagy URL-e"
+msgstr "Csapat neve és e-mail-címe vagy webcíme"
 
 msgid "e.g. nplurals=2; plural=(n > 1);"
 msgstr "például nplurals=2; plural=(n > 1);"
@@ -1537,7 +1581,7 @@ msgid "Not all plural forms are translated."
 msgstr "Nincs az összes többes számú alak lefordítva."
 
 msgid "Inconsistent upper/lower case"
-msgstr "Inkonzisztens nagy / kisbetű"
+msgstr "Inkonzisztens nagy- és kisbetűk"
 
 msgid "The translation should start as a sentence."
 msgstr "A fordítást mondatként kell kezdeni."
@@ -2109,6 +2153,13 @@ msgstr "Nincs találat"
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Ez a karakterlánc a Poedit fordítási memóriájában lett találva."
 
+msgid ""
+"Translation suggestions require that source text is available. They don’t "
+"work if only IDs without the actual text are used."
+msgstr ""
+"A fordítási javaslatokhoz szükséges a forrásszöveg megléte. Nem működnek "
+"csak azonosítókkal, a valódi szöveg használata nélkül."
+
 msgid "The TMX file is malformed."
 msgstr "A TMX fájl formátuma hibás."
 
@@ -2174,8 +2225,8 @@ msgstr "Forráskódkinyerés beállítása a Tulajdonságokban."
 msgid "Version %s"
 msgstr "%s verzió"
 
-msgid "Create new…"
-msgstr "Új készítése…"
+msgid "Create new"
+msgstr "Új készítése"
 
 msgid "Create new translation from POT template."
 msgstr "Új fordítás készítése POT sablonból."

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2022-11-30 17:55+0100\n"
-"PO-Revision-Date: 2022-11-30 16:54\n"
+"POT-Creation-Date: 2023-05-09 17:49+0200\n"
+"PO-Revision-Date: 2023-05-09 15:48\n"
 "Last-Translator: \n"
 "Language-Team: Irish\n"
 "Language: ga_IE\n"
@@ -47,8 +47,11 @@ msgid "Updating translations"
 msgstr "Aistriúcháin á nuashonrú"
 
 #, c-format
-msgid "“%s” is not a valid POT file."
-msgstr "Ní comhad POT ceart é “%s”."
+msgid "The file “%s” couldn’t be opened."
+msgstr "Níorbh fhéidir comhad “%s” a oscailt."
+
+msgid "Invalid file"
+msgstr "Comhad neamhbhailí"
 
 #, c-format
 msgid "Malformed header: “%s”"
@@ -63,12 +66,41 @@ msgstr "Teimpléid Aistriúcháin POT"
 msgid "XLIFF Translation Files"
 msgstr "Comhaid Aistriúcháin XLIFF"
 
+msgid "JSON Translation Files"
+msgstr "Comhaid Aistriúcháin JSON"
+
+#. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+msgid "Flutter Translation Files"
+msgstr "Comhaid Aistriúcháin Flutter"
+
 msgid "All Translation Files"
 msgstr "Gach Comhad Aistriúcháin"
 
+msgid "The file is in a format not recognized by Poedit."
+msgstr "Ní aithníonn Poedit formáid an chomhaid seo."
+
+msgid ""
+"This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgstr ""
+"Ní comhad aistriúcháin é an comhad JSON seo, agus ní féidir é a chur in "
+"eagar in Poedit."
+
 #, c-format
-msgid "File “%s” is in unsupported format."
-msgstr "Ní thugtar tacaíocht don chomhad \"%s\"."
+msgid "Reading file content failed with the following error: %s"
+msgstr ""
+"Níorbh fhéidir ábhar an chomhaid a léamh agus fuarthas an earráid seo: %s"
+
+#, c-format
+msgid ""
+"File “%s” is read-only and cannot be saved.\n"
+"Please save it under different name."
+msgstr ""
+"Is comhad inléite-amháin é “%s” agus ní féidir é a chur i dtaisce.\n"
+"Cuir i dtaisce é faoi ainm eile."
+
+#, c-format
+msgid "Couldn’t save file %s."
+msgstr "Níorbh fhéidir comhad %s a shábháil."
 
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
@@ -91,28 +123,15 @@ msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr ""
 "Comhad PO briste: baineadh úsáid as leagan iolra msgstr gan msgid_plural"
 
+msgid "Couldn’t load the file, it is probably damaged."
+msgstr "Níorbh fhéidir comhad a lódáil, is dóigh go bhfuil sé damáistithe."
+
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
 "Tharla botúin i rith luchtú an chomhaid. D'fhéadfadh sonraí bheith in "
 "easnamh nó truaillithe dá bharr."
-
-#, c-format
-msgid "Couldn’t load file %s, it is probably corrupted."
-msgstr "Níorbh fhéidir comhad %s a lódáil, is dóigh go bhfuil sé truaillithe."
-
-#, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
-"Please save it under different name."
-msgstr ""
-"Is comhad inléite-amháin é “%s” agus ní féidir é a chur i dtaisce.\n"
-"Cuir i dtaisce é faoi ainm eile."
-
-#, c-format
-msgid "Couldn’t save file %s."
-msgstr "Níorbh fhéidir comhad %s a shábháil."
 
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
@@ -132,12 +151,16 @@ msgid "Error saving file"
 msgstr "Earráid agus an comhad á shábháil"
 
 #, c-format
-msgid "Error loading file “%s”: %s."
-msgstr "Tharla earráid fad agus a bhí an comhad \"%s\" á luchtú: %s."
+msgid "“%s” is not a valid POT file."
+msgstr "Ní comhad POT ceart é “%s”."
 
 #, c-format
-msgid "unsupported XLIFF version (%s)"
-msgstr "leagan XLIFF (%s) nach dtugtar tacaíocht dó"
+msgid "Error while loading XLIFF file: %s"
+msgstr "Earráid agus comhad XLIFF á lódáil: %s"
+
+#, c-format
+msgid "unsupported version (%s)"
+msgstr "leagan nach dtugtar tacaíocht dó (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
@@ -174,7 +197,7 @@ msgstr "Earráid le linn sioncronaithe"
 msgid "Add"
 msgstr "Cuir leis"
 
-msgid "JSON request error"
+msgid "Unknown Crowdin error."
 msgstr ""
 
 msgid "Not authorized, please sign in again."
@@ -290,21 +313,6 @@ msgstr "Roghnaigh comhad aistriúcháin"
 
 msgid "Poedit is an easy to use translation editor."
 msgstr "Is eagarthóir aistriúcháin é Poedit atá furasta feidhm a bhaint as."
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "Aistriúchán PO"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr ""
-"Seans go bhfuil an comhad truaillithe, nó ní aithníonn Poedit an fhormáid."
-
-msgid "The file cannot be opened."
-msgstr "Ní féidir an comhad a oscailt."
-
-msgid "Invalid file"
-msgstr "Comhad neamhbhailí"
 
 msgid "You can’t drop more than one file on Poedit window."
 msgstr ""
@@ -584,9 +592,18 @@ msgstr ""
 msgid "Review"
 msgstr "Athbhreithniú"
 
+msgid "Would you like to use English for source text?"
+msgstr ""
+
 #, c-format
-msgid "Error loading translation file “%s”."
-msgstr "Earráid agus comhad aistriúcháin “%s” á luchtú."
+msgid ""
+"This file uses string IDs instead of source text. Poedit can load English "
+"texts from the “%s” file for you."
+msgstr ""
+
+#. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+msgid "Load English"
+msgstr ""
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
@@ -762,6 +779,10 @@ msgstr "Cruthaigh aistriúchán nua"
 msgid "Make a new translation from this POT file."
 msgstr ""
 
+#. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+msgid "Source text ID"
+msgstr "ID an téacs fhoinsigh"
+
 msgid "Everything"
 msgstr "Gach Rud"
 
@@ -784,6 +805,16 @@ msgstr "Dó"
 
 msgid "Other"
 msgstr "Eile"
+
+#. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#, c-format
+msgid "String context: %s"
+msgstr ""
+
+#. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#, c-format
+msgid "String identifier: %s"
+msgstr ""
 
 #, c-format
 msgid "%s Format"
@@ -1232,6 +1263,10 @@ msgstr "Cuimhne Aistriúcháin"
 msgid "Importing translations…"
 msgstr "Aistriúcháin á n-iompórtáil…"
 
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "Earráid agus comhad aistriúcháin “%s” á luchtú."
+
 msgid "Finalizing…"
 msgstr "Á chríochnú…"
 
@@ -1376,6 +1411,9 @@ msgstr[4] "%u teaghrán réamhaistrithe"
 msgid "Pre-translating…"
 msgstr "Réamhaistriúchán ar siúl…"
 
+msgid "Cannot pre-translate without source text."
+msgstr ""
+
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
 #. strings you're translating as the first step, followed by correcting,
@@ -1388,6 +1426,11 @@ msgstr "Réamhaistriúchán ar siúl…"
 #. *before* actual translation.
 msgid "Pre-translate"
 msgstr "Réamhaistriúchán"
+
+msgid ""
+"Pre-translation requires that source text is available. It doesn’t work if "
+"only IDs without the actual text are used."
+msgstr ""
 
 msgid "Only fill in exact matches"
 msgstr "Ná húsáid ach meaitseálacha cruinne"
@@ -2117,6 +2160,11 @@ msgstr "Gan Torthaí"
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Aimsíodh an teaghrán seo i gcuimhne aistriúcháin Poedit."
 
+msgid ""
+"Translation suggestions require that source text is available. They don’t "
+"work if only IDs without the actual text are used."
+msgstr ""
+
 msgid "The TMX file is malformed."
 msgstr "Tá an comhad TMX míchumtha."
 
@@ -2183,8 +2231,8 @@ msgstr "Cumraigh an próiseas bailithe teaghrán ó bhunchód sna hAiríonna."
 msgid "Version %s"
 msgstr "Leagan %s"
 
-msgid "Create new…"
-msgstr "Cruthaigh nua…"
+msgid "Create new"
+msgstr "Cruthaigh nua"
 
 msgid "Create new translation from POT template."
 msgstr "Cruthaigh aistriúchán nua ó theimpléad POT."
