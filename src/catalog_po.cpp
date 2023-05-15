@@ -1623,6 +1623,8 @@ bool POCatalog::FixDuplicateItems()
 
     Load(po_file_fixed);
     m_fileName = oldname;
+    PostCreation();
+
     return true;
 }
 
@@ -1709,6 +1711,9 @@ bool POCatalog::UpdateFromPOT(POCatalogPtr pot, bool replace_header)
         case Type::POT:
         {
             m_items = pot->m_items;
+            m_sourceLanguage = pot->m_sourceLanguage;
+            m_sourceIsSymbolicID = pot->m_sourceIsSymbolicID;
+            m_hasPluralItems = pot->m_hasPluralItems;
             break;
         }
 
@@ -1770,6 +1775,8 @@ bool POCatalog::Merge(const POCatalogPtr& refcat)
         const wxString charset = m_header.Charset;
 
         Load(tmp3);
+        m_fileName = oldname;
+        PostCreation();
 
         // msgmerge doesn't always preserve the charset, it tends to pick
         // the most generic one of the charsets used, so if we are merging with
