@@ -151,7 +151,7 @@ int PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const PreTranslate
 
 void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list, CatalogPtr catalog, std::function<void()> onChangesMade)
 {
-    if (catalog->UsesSymbolicIDsForSource())
+    if (catalog->UsesSymbolicIDsForSource() || !catalog->GetSourceLanguage().IsValid())
     {
         wxWindowPtr<wxMessageDialog> resultsDlg(
             new wxMessageDialog

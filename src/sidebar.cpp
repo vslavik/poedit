@@ -876,7 +876,7 @@ void SuggestionsSidebarBlock::UpdateSuggestionsForItem(CatalogItemPtr item)
     m_pendingQueries = 0;
 
     // FIXME: Get catalog info from `item` once present there
-    if (m_parent->GetCatalog()->UsesSymbolicIDsForSource())
+    if (m_parent->GetCatalog()->UsesSymbolicIDsForSource() || !m_parent->GetCatalog()->GetSourceLanguage().IsValid())
     {
         SetMessage("SuggestionErrorTemplate", _(L"Translation suggestions require that source text is available. They don’t work if only IDs without the actual text are used."));
         return;
