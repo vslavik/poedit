@@ -69,6 +69,7 @@ exception_ptr dispatch::current_exception()
 #if defined(HAVE_HTTP_CLIENT) && !defined(__WXOSX__)
     CATCH_AND_WRAP(web::http::http_exception)
 #endif
+    CATCH_AND_WRAP(Exception)
     CATCH_AND_WRAP(std::runtime_error)
     CATCH_AND_WRAP(std::logic_error)
     CATCH_AND_WRAP(std::exception)
