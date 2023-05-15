@@ -29,6 +29,7 @@
 #include "str_helpers.h"
 
 #define JSON_USE_IMPLICIT_CONVERSIONS 0
+#define JSON_THROW_USER(exception) boost::throw_exception(exception)
 
 #ifdef HAVE_NLOHMANN_JSON_HPP
  #include <nlohmann/json.hpp>
