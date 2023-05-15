@@ -210,7 +210,7 @@ POCatalogPtr ExtractPOTFromSources(POCatalogPtr catalog, UpdateResultReason& rea
             {
                 try
                 {
-                    return std::make_shared<POCatalog>(potFile, Catalog::CreationFlag_IgnoreHeader);
+                    auto pot = POCatalog::Create(potFile, Catalog::CreationFlag_IgnoreHeader);
                 }
                 catch (...)
                 {
@@ -313,7 +313,7 @@ bool PerformUpdateFromPOTWithUI(wxWindow *parent,
 
     try
     {
-        auto pot = std::make_shared<POCatalog>(pot_file, Catalog::CreationFlag_IgnoreTranslations);
+        auto pot = POCatalog::Create(pot_file, Catalog::CreationFlag_IgnoreTranslations);
 
         // Silently fix duplicates because they are common in WP world:
         if (pot->HasDuplicateItems())

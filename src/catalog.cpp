@@ -1134,7 +1134,7 @@ CatalogPtr Catalog::Create(Type type)
     {
         case Type::PO:
         case Type::POT:
-            return std::make_shared<POCatalog>(type);
+            return CatalogPtr(new POCatalog(type));
 
         case Type::XLIFF:
         case Type::JSON:
@@ -1155,7 +1155,7 @@ CatalogPtr Catalog::Create(const wxString& filename, int flags)
     CatalogPtr cat;
     if (POCatalog::CanLoadFile(ext))
     {
-        cat = std::make_shared<POCatalog>(filename, flags);
+        cat.reset(new POCatalog(filename, flags));
         flags = 0; // don't do the stuff below that is already handled by POCatalog's parser
     }
     else if (XLIFFCatalog::CanLoadFile(ext))

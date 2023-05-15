@@ -148,17 +148,28 @@ typedef std::vector<POCatalogDeletedData> POCatalogDeletedDataArray;
 
 class POCatalog : public Catalog
 {
+protected:
+    /// Default ctor. Creates empty catalog, you have to call Load.
+    explicit POCatalog(Type type);
+
+    /// Ctor that loads the catalog from \a po_file with Load.
+    /// \a flags is CreationFlags combination.
+    explicit POCatalog(const wxString& po_file, int flags = 0);
+
 public:
     // Common wrapping values
     static const int NO_WRAPPING = -1;
     static const int DEFAULT_WRAPPING = -2;
 
-    /// Default ctor. Creates empty catalog, you have to call Load.
-    explicit POCatalog(Type type = Type::PO);
+    static POCatalogPtr Create(Type type)
+    {
+        return std::dynamic_pointer_cast<POCatalog>(Catalog::Create(type));
+    }
 
-    /// Ctor that loads the catalog from \a po_file with Load.
-    /// \a flags is CreationFlags combination.
-    explicit POCatalog(const wxString& po_file, int flags = 0);
+    static POCatalogPtr Create(const wxString& filename, int flags = 0)
+    {
+        return std::dynamic_pointer_cast<POCatalog>(Catalog::Create(filename, flags));
+    }
 
     ~POCatalog() {}
 
@@ -257,6 +268,7 @@ protected:
     bool m_hasPluralItems = false;
 
     friend class POLoadParser;
+    friend class Catalog;
 };
 
 

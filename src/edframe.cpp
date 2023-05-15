@@ -1433,7 +1433,7 @@ void PoeditFrame::NewFromPOT(POCatalogPtr pot, Language language)
 
 void PoeditFrame::NewFromScratch()
 {
-    auto catalog = std::make_shared<POCatalog>();
+    auto catalog = POCatalog::Create(Catalog::Type::PO);
     catalog->CreateNewHeader();
 
     m_catalog = catalog;

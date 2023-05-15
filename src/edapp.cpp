@@ -987,7 +987,7 @@ void PoeditApp::OnNewFromPOT(wxCommandEvent& event)
 
     try
     {
-        auto pot = std::make_shared<POCatalog>(dlg.GetPath(), Catalog::CreationFlag_IgnoreTranslations);
+        auto pot = POCatalog::Create(dlg.GetPath(), Catalog::CreationFlag_IgnoreTranslations);
 
         // Silently fix duplicates because they are common in WP world:
         if (pot->HasDuplicateItems())

@@ -462,7 +462,7 @@ class Catalog
         };
 
         /// Default ctor. Creates empty catalog, you have to call Load.
-        static CatalogPtr Create(Type type = Type::PO);
+        static CatalogPtr Create(Type type);
 
         /**
             Ctor that loads the catalog from \a po_file with Load.

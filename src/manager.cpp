@@ -590,7 +590,7 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent&)
                 {
                     Progress subtask(1, progress, 1);
 
-                    auto cat = std::make_shared<POCatalog>(f);
+                    auto cat = POCatalog::Create(f);
                     UpdateResultReason reason;
                     if (PerformUpdateFromSources(cat, reason))
                     {

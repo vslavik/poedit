@@ -1686,7 +1686,7 @@ bool POCatalog::UpdateFromPOT(const wxString& pot_file, bool replace_header)
 {
     try
     {
-        POCatalogPtr pot = std::make_shared<POCatalog>(pot_file, CreationFlag_IgnoreTranslations);
+        POCatalogPtr pot = std::dynamic_pointer_cast<POCatalog>(Catalog::Create(pot_file, CreationFlag_IgnoreTranslations));
         return UpdateFromPOT(pot, replace_header);
     }
     catch (...) // FIXME
@@ -1725,7 +1725,7 @@ bool POCatalog::UpdateFromPOT(POCatalogPtr pot, bool replace_header)
 
 POCatalogPtr POCatalog::CreateFromPOT(POCatalogPtr pot)
 {
-    POCatalogPtr c = std::make_shared<POCatalog>();
+    POCatalogPtr c(new POCatalog(Type::PO));
     if (c->UpdateFromPOT(pot, /*replace_header=*/true))
         return c;
     else
