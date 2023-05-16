@@ -28,6 +28,8 @@
 
 #include "str_helpers.h"
 
+#include <boost/throw_exception.hpp>
+
 #define JSON_USE_IMPLICIT_CONVERSIONS 0
 #define JSON_THROW_USER(exception) boost::throw_exception(exception)
 
