@@ -876,9 +876,14 @@ void SuggestionsSidebarBlock::UpdateSuggestionsForItem(CatalogItemPtr item)
     m_pendingQueries = 0;
 
     // FIXME: Get catalog info from `item` once present there
-    if (m_parent->GetCatalog()->UsesSymbolicIDsForSource() || !m_parent->GetCatalog()->GetSourceLanguage().IsValid())
+    if (m_parent->GetCatalog()->UsesSymbolicIDsForSource())
     {
         SetMessage("SuggestionErrorTemplate", _(L"Translation suggestions require that source text is available. They don’t work if only IDs without the actual text are used."));
+        return;
+    }
+    else if (!m_parent->GetCatalog()->GetSourceLanguage().IsValid())
+    {
+        SetMessage("SuggestionErrorTemplate", _(L"Translation suggestions require that source text’s language is known. Poedit couldn’t detect it in this file."));
         return;
     }
 

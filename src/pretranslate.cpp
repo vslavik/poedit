@@ -151,7 +151,7 @@ int PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const PreTranslate
 
 void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list, CatalogPtr catalog, std::function<void()> onChangesMade)
 {
-    if (catalog->UsesSymbolicIDsForSource() || !catalog->GetSourceLanguage().IsValid())
+    if (catalog->UsesSymbolicIDsForSource())
     {
         wxWindowPtr<wxMessageDialog> resultsDlg(
             new wxMessageDialog
@@ -163,6 +163,21 @@ void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list, CatalogPtr catal
                 )
         );
         resultsDlg->SetExtendedMessage(_(L"Pre-translation requires that source text is available. It doesn’t work if only IDs without the actual text are used."));
+        resultsDlg->ShowWindowModalThenDo([resultsDlg](int){});
+        return;
+    }
+    else if (!catalog->GetSourceLanguage().IsValid())
+    {
+        wxWindowPtr<wxMessageDialog> resultsDlg(
+            new wxMessageDialog
+                (
+                    window,
+                    _("Cannot pre-translate from unknown language."),
+                    _("Pre-translate"),
+                    wxOK | wxICON_ERROR
+                )
+        );
+        resultsDlg->SetExtendedMessage(_(L"Pre-translation requires that source text’s language is known. Poedit couldn’t detect it in this file."));
         resultsDlg->ShowWindowModalThenDo([resultsDlg](int){});
         return;
     }
