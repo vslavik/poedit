@@ -296,6 +296,8 @@ void set_current_exception(boost::promise<T>& pr)
 template<typename T>
 void set_current_exception(std::shared_ptr<boost::promise<T>> pr) { set_current_exception(*pr); }
 
+#define RETHROW_WITH_BOOST_EXCEPTION_PTR_SUPPORT() catch ( ... ) { boost::rethrow_exception(dispatch::current_exception()); }
+
 
 template<typename T, typename FutureType>
 class future_base
@@ -365,7 +367,11 @@ public:
         typedef detail::continuation_calling_helper<typename detail::argument_type<typename std::decay<F>::type>::arg0_type> cch;
         return this->f_.then(detail::background_queue_executor::get(),
                              [f{std::move(continuation)}](boost::future<T> x){
-                                 return detail::call_and_unwrap_if_future(f, cch::unpack_arg(std::move(x)));
+                                 try
+                                 {
+                                     return detail::call_and_unwrap_if_future(f, cch::unpack_arg(std::move(x)));
+                                 }
+                                 RETHROW_WITH_BOOST_EXCEPTION_PTR_SUPPORT();
                              });
     }
 
@@ -375,7 +381,11 @@ public:
         typedef detail::continuation_calling_helper<typename detail::argument_type<typename std::decay<F>::type>::arg0_type> cch;
         return this->f_.then(detail::main_thread_executor::get(),
                              [f{std::move(continuation)}](boost::future<T> x) {
-                                 return detail::call_and_unwrap_if_future(f, cch::unpack_arg(std::move(x)));
+                                 try
+                                 {
+                                     return detail::call_and_unwrap_if_future(f, cch::unpack_arg(std::move(x)));
+                                 }
+                                 RETHROW_WITH_BOOST_EXCEPTION_PTR_SUPPORT();
                              });
     }
 
@@ -386,11 +396,15 @@ public:
         wxWeakRef<Window> weak(self);
         return this->f_.then(detail::main_thread_executor::get(),
                              [weak, f{std::move(continuation)}](boost::future<T> x){
-                                 if (weak)
-                                     return detail::call_and_unwrap_if_future(f, cch::unpack_arg(std::move(x)));
-                                 else
-                                     BOOST_THROW_EXCEPTION(detail::window_dismissed());
-                             });
+                                 try
+                                 {
+                                     if (weak)
+                                         return detail::call_and_unwrap_if_future(f, cch::unpack_arg(std::move(x)));
+                                     else
+                                         BOOST_THROW_EXCEPTION(detail::window_dismissed());
+                                 }
+                                 RETHROW_WITH_BOOST_EXCEPTION_PTR_SUPPORT();
+                            });
     };
 
     template<typename Window>
@@ -438,8 +452,12 @@ public:
         typedef detail::continuation_calling_helper<typename detail::argument_type<typename std::decay<F>::type>::arg0_type> cch;
         return this->f_.then(detail::background_queue_executor::get(),
                              [f{std::move(continuation)}](boost::future<void> x){
-                                 cch::touch_arg(x);
-                                 return detail::call_and_unwrap_if_future(f);
+                                 try
+                                 {
+                                     cch::touch_arg(x);
+                                     return detail::call_and_unwrap_if_future(f);
+                                 }
+                                 RETHROW_WITH_BOOST_EXCEPTION_PTR_SUPPORT();
                              });
     }
 
@@ -449,8 +467,12 @@ public:
         typedef detail::continuation_calling_helper<typename detail::argument_type<typename std::decay<F>::type>::arg0_type> cch;
         return this->f_.then(detail::main_thread_executor::get(),
                              [f{std::move(continuation)}](boost::future<void> x){
-                                 cch::touch_arg(x);
-                                 detail::call_and_unwrap_if_future(f);
+                                 try
+                                 {
+                                     cch::touch_arg(x);
+                                     detail::call_and_unwrap_if_future(f);
+                                 }
+                                 RETHROW_WITH_BOOST_EXCEPTION_PTR_SUPPORT();
                              });
 
     }
@@ -461,14 +483,17 @@ public:
         wxWeakRef<Window> weak(self);
         return this->f_.then(detail::main_thread_executor::get(),
                              [weak, f{std::move(continuation)}](boost::future<void> x){
-                                 if (weak)
+                                 try
                                  {
-                                     cch::touch_arg(x);
-                                     detail::call_and_unwrap_if_future(f);
+                                     if (weak)
+                                     {
+                                         cch::touch_arg(x);
+                                         detail::call_and_unwrap_if_future(f);
+                                     }
+                                     else
+                                         BOOST_THROW_EXCEPTION(detail::window_dismissed());
                                  }
-                                 else
-                                     BOOST_THROW_EXCEPTION(detail::window_dismissed());
-
+                                 RETHROW_WITH_BOOST_EXCEPTION_PTR_SUPPORT();
                              });
     };
 
@@ -497,7 +522,11 @@ auto future_base<T, FutureType>::catch_ex(F&& continuation) -> future<void>
         }
         catch (Ex& ex)
         {
-            f(ex);
+            try
+            {
+                f(ex);
+            }
+            RETHROW_WITH_BOOST_EXCEPTION_PTR_SUPPORT();
         }
     });
 }
@@ -517,7 +546,11 @@ auto future_base<T, FutureType>::catch_all(F&& continuation) -> future<void>
         }
         catch (...)
         {
-            f(dispatch::current_exception());
+            try
+            {
+                f(dispatch::current_exception());
+            }
+            RETHROW_WITH_BOOST_EXCEPTION_PTR_SUPPORT();
         }
     });
 }
@@ -576,7 +609,11 @@ template<class F>
 inline auto async(F&& f) -> future<typename detail::future_unwrapper<typename std::invoke_result<F>::type>::type>
 {
     return {boost::async(detail::background_queue_executor::get(), [f{std::forward<F>(f)}]() {
-        return detail::call_and_unwrap_if_future(f);
+        try
+        {
+            return detail::call_and_unwrap_if_future(f);
+        }
+        RETHROW_WITH_BOOST_EXCEPTION_PTR_SUPPORT();
     })};
 }
 
@@ -586,7 +623,11 @@ template<class F>
 inline auto on_main(F&& f) -> future<typename detail::future_unwrapper<typename std::invoke_result<F>::type>::type>
 {
     return {boost::async(detail::main_thread_executor::get(), [f{std::forward<F>(f)}]() {
-        return detail::call_and_unwrap_if_future(f);
+        try
+        {
+            return detail::call_and_unwrap_if_future(f);
+        }
+        RETHROW_WITH_BOOST_EXCEPTION_PTR_SUPPORT();
     })};
 }
 
