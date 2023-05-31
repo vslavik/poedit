@@ -1553,7 +1553,8 @@ bool POCatalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
 void POCatalog::SetLanguage(Language lang)
 {
     Catalog::SetLanguage(lang);
-    if (HasPluralItems())
+    // don't add unneeded header, but always update it if already present:
+    if (HasPluralItems() || m_header.HasHeader("Plural-Forms"))
         m_header.SetHeaderNotEmpty("Plural-Forms", lang.DefaultPluralFormsExpr().str());
 }
 

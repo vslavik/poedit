@@ -551,6 +551,8 @@ void Catalog::CreateNewHeader(const Catalog::HeaderData& pot_header)
     dt.Lang = Language();
     if (dt.LanguageTeam == "LANGUAGE <LL@li.org>")
         dt.LanguageTeam.clear();
+    if (dt.GetHeader("Plural-Forms") == "nplurals=INTEGER; plural=EXPRESSION;")
+        dt.DeleteHeader("Plural-Forms");
 
     // translator should be pre-filled & not the default "FULL NAME <EMAIL@ADDRESS>"
     dt.DeleteHeader("Last-Translator");
