@@ -261,11 +261,6 @@ public:
     FlutterItem(int id, const std::string& key, json_t& node, const json_t *metadata)
         : GenericJSONItem(id, key, node), m_metadata(metadata)
     {
-        m_string = str::to_wx(key);
-        auto trans = str::to_wx(node.get<std::string>());
-        m_translations.push_back(trans);
-        m_isTranslated = !trans.empty();
-
         if (metadata)
         {
             if (metadata->contains("context"))
@@ -278,11 +273,6 @@ public:
                 m_extractedComments.push_back(str::to_wx(metadata->at("description").get<std::string>()));
             }
         }
-    }
-
-    void UpdateInternalRepresentation() override
-    {
-        m_node = str::to_utf8(GetTranslation());
     }
 
 protected:
