@@ -345,11 +345,76 @@ private:
 };
 
 
+// Support for WebExtension messages.json:
+// https://developer.chrome.com/docs/extensions/mv3/i18n-messages/
+// https://developer.chrome.com/docs/extensions/reference/i18n/
+// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Internationalization
+// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/i18n/Locale-Specific_Message_reference
+
+class WebExtensionCatalog : public JSONCatalog
+{
+public:
+    using JSONCatalog::JSONCatalog;
+
+    static bool SupportsFile(const json_t& doc)
+    {
+        if (!doc.is_object() || doc.empty())
+            return false;
+
+        auto first = doc.begin().value();
+        return first.is_object() && first.contains("message");
+    }
+
+    void Parse() override
+    {
+        int id = 0;
+        for (auto& el : m_doc.items())
+        {
+            auto& val = el.value();
+            if (!val.is_object())
+                throw JSONUnrecognizedFileException();
+
+            m_items.push_back(std::make_shared<Item>(++id, el.key(), val));
+        }
+
+        if (m_items.empty())
+            throw JSONUnrecognizedFileException();
+    }
+
+protected:
+    class Item : public JSONCatalogItem
+    {
+    public:
+        Item(int id, const std::string& key, json_t& node) : JSONCatalogItem(id, node)
+        {
+            m_string = str::to_wx(key);
+
+            auto trans = str::to_wx(node.value("message", ""));
+            m_translations.push_back(trans);
+            m_isTranslated = !trans.empty();
+
+            auto desc = node.value("description", "");
+            if (!desc.empty())
+                m_extractedComments.push_back(str::to_wx(desc));
+        }
+
+        void UpdateInternalRepresentation() override
+        {
+            m_node["message"] = str::to_utf8(GetTranslation());
+        }
+
+        std::string GetInternalFormatFlag() const override { return "ph-dollars"; }
+    };
+};
+
+
 std::shared_ptr<JSONCatalog> JSONCatalog::CreateForJSON(json_t&& doc, const std::string& extension)
 {
     // try specialized implementations first:
     if (FlutterCatalog::SupportsFile(doc, extension))
         return std::shared_ptr<JSONCatalog>(new FlutterCatalog(std::move(doc)));
+    if (WebExtensionCatalog::SupportsFile(doc))
+        return std::shared_ptr<JSONCatalog>(new WebExtensionCatalog(std::move(doc)));
 
     // then fall back to generic:
     if (GenericJSONCatalog::SupportsFile(doc))

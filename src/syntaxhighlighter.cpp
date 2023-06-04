@@ -206,6 +206,8 @@ std::wregex REOBJ_COMMON_PLACEHOLDERS(
                 //
                 RegexSyntaxHighlighter::flags);
 
+// WebExtension-like $foo$ placeholders
+std::wregex REOBJ_DOLLAR_PLACEHOLDERS(LR"(\$[A-Za-z0-9_]+\$)", RegexSyntaxHighlighter::flags);
 
 // php-format per http://php.net/manual/en/function.sprintf.php plus positionals
 const wchar_t* RE_PHP_FORMAT = LR"(%(\d+\$)?[-+]{0,2}([ 0]|'.)?-?\d*(\..?\d+)?[%bcdeEfFgGosuxX])";
@@ -244,6 +246,9 @@ const wchar_t* RE_PASCAL_FORMAT = LR"(%(\*:|\d*:)?-?(\*|\d+)?(\.\*|\.\d+)?[dDuUx
 SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kindsMask, int flags)
 {
     auto fmt = item.GetFormatFlag();
+    if (fmt.empty())
+        fmt = item.GetInternalFormatFlag();
+
     bool needsHTML = (kindsMask & Markup);
     if (needsHTML)
     {
@@ -336,6 +341,11 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kin
         {
             static auto pascal_format = std::make_shared<RegexSyntaxHighlighter>(RE_PASCAL_FORMAT, TextKind::Placeholder);
             all->Add(pascal_format);
+        }
+        else if (fmt == "ph-dollars")
+        {
+            static auto dollars_format = std::make_shared<RegexSyntaxHighlighter>(REOBJ_DOLLAR_PLACEHOLDERS, TextKind::Placeholder);
+            all->Add(dollars_format);
         }
     }
 

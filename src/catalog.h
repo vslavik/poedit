@@ -190,6 +190,9 @@ class CatalogItem
         // empty string otherwise
         wxString GetFormatFlag() const;
 
+        /// Like GetFormatFlags(), but only for internal uses (e.g. fileformat-specific highlighting)
+        virtual std::string GetInternalFormatFlag() const { return std::string(); }
+
         /// Gets value of fuzzy flag.
         bool IsFuzzy() const { return m_isFuzzy; }
         /// Gets value of translated flag.
