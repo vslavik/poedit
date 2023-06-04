@@ -287,7 +287,7 @@ public:
 
     static bool SupportsFile(const json_t& doc, const std::string& extension)
     {
-        return extension == "arb" || doc.find("@@locale") != doc.end();
+        return extension == "arb" || (doc.is_object() && doc.contains("@@locale"));
     }
 
     void SetLanguage(Language lang) override
