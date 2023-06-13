@@ -156,6 +156,8 @@ protected:
     /// \a flags is CreationFlags combination.
     explicit POCatalog(const wxString& po_file, int flags = 0);
 
+    void PostCreation() override;
+
 public:
     // Common wrapping values
     static const int NO_WRAPPING = -1;

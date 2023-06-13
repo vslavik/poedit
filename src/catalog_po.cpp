@@ -809,6 +809,15 @@ POCatalog::POCatalog(const wxString& po_file, int flags) : Catalog(Type::PO)
     Load(po_file, flags);
 }
 
+void POCatalog::PostCreation()
+{
+    Catalog::PostCreation();
+    
+    // gettext historically assumes English:
+    if (!m_sourceLanguage.IsValid() && !m_sourceIsSymbolicID)
+        m_sourceLanguage = Language::English();
+}
+
 
 bool POCatalog::HasCapability(Catalog::Cap cap) const
 {
