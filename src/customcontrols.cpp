@@ -603,3 +603,105 @@ void AvatarIcon::OnPaint(wxPaintEvent&)
     gc->SetPen(wxPen(outline, PX(2)));
     gc->DrawEllipse(r.x + 0.5, r.y + 0.5, r.width, r.height);
 }
+
+
+
+class IconAndSubtitleListCtrl::MultilineTextRenderer : public wxDataViewTextRenderer
+{
+public:
+    MultilineTextRenderer() : wxDataViewTextRenderer()
+    {
+#if wxCHECK_VERSION(3,1,1)
+        EnableMarkup();
+#endif
+    }
+
+#ifdef __WXMSW__
+    bool Render(wxRect rect, wxDC *dc, int state)
+    {
+        int flags = 0;
+        if ( state & wxDATAVIEW_CELL_SELECTED )
+            flags |= wxCONTROL_SELECTED;
+
+        for (auto& line: wxSplit(m_text, '\n'))
+        {
+            wxItemMarkupText markup(line);
+            markup.Render(GetView(), *dc, rect, flags, GetEllipsizeMode());
+            rect.y += rect.height / 2;
+        }
+
+        return true;
+    }
+
+    wxSize GetSize() const
+    {
+        if (m_text.empty())
+            return wxSize(wxDVC_DEFAULT_RENDERER_SIZE,wxDVC_DEFAULT_RENDERER_SIZE);
+
+        auto size = wxDataViewTextRenderer::GetSize();
+        size.y *= 2; // approximation enough for our needs
+        return size;
+    }
+#endif // __WXMSW__
+};
+
+
+// TODO: merge with CrowdinFileList which is very similar and has lot of duplicated code
+IconAndSubtitleListCtrl::IconAndSubtitleListCtrl(wxWindow *parent, const wxString& columnTitle, long style)
+    : wxDataViewListCtrl(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDV_NO_HEADER | style)
+{
+#ifdef __WXOSX__
+    NSScrollView *scrollView = (NSScrollView*)GetHandle();
+    NSTableView *tableView = (NSTableView*)[scrollView documentView];
+    [tableView setIntercellSpacing:NSMakeSize(0.0, 0.0)];
+    if (@available(macOS 11.0, *))
+        tableView.style = NSTableViewStyleFullWidth;
+
+    const int icon_column_width = PX(32 + 12);
+#else // !__WXOSX__
+    const int icon_column_width = wxSystemSettings::GetMetric(wxSYS_ICON_X) + PX(12);
+#endif
+
+#if wxCHECK_VERSION(3,1,1)
+    SetRowHeight(GetDefaultRowHeight());
+#endif
+
+    AppendBitmapColumn("", 0, wxDATAVIEW_CELL_INERT, icon_column_width);
+    auto renderer = new MultilineTextRenderer();
+    auto column = new wxDataViewColumn(columnTitle, renderer, 1, -1, wxALIGN_NOT, wxDATAVIEW_COL_RESIZABLE);
+    AppendColumn(column, "string");
+}
+
+int IconAndSubtitleListCtrl::GetDefaultRowHeight() const
+{
+    return PX(46);
+}
+
+wxString IconAndSubtitleListCtrl::FormatItemText(const wxString& title, const wxString& description) const
+{
+#ifdef __WXGTK__
+    auto secondaryFormatting = "alpha='50%'";
+#else
+    auto secondaryFormatting = wxString::Format("foreground='%s'", ColorScheme::Get(Color::SecondaryLabel).GetAsString(wxC2S_HTML_SYNTAX));
+#endif
+
+#if wxCHECK_VERSION(3,1,1)
+    return wxString::Format
+    (
+        "%s\n<small><span %s>%s</span></small>",
+        EscapeMarkup(title),
+        secondaryFormatting,
+        EscapeMarkup(description)
+    );
+#else
+    return title;
+#endif
+}
+
+void IconAndSubtitleListCtrl::AppendFormattedItem(const wxBitmap& icon, const wxString& title, const wxString& description)
+{
+    wxVector<wxVariant> data;
+    data.push_back(wxVariant(icon));
+    data.push_back(FormatItemText(title, description));
+    AppendItem(data);
+}

@@ -31,6 +31,7 @@
 #include "language.h"
 
 #include <wx/bmpbuttn.h>
+#include <wx/dataview.h>
 #include <wx/statbmp.h>
 #include <wx/stattext.h>
 #include <wx/hyperlink.h>
@@ -254,6 +255,22 @@ private:
     wxRegion m_clipping;
     wxBitmap m_bitmap;
     wxString m_placeholder;
+};
+
+
+/// wxDataViewListCtrl with icon and two-line content
+class IconAndSubtitleListCtrl : public wxDataViewListCtrl
+{
+public:
+    IconAndSubtitleListCtrl(wxWindow *parent, const wxString& columnTitle, long style = wxBORDER_NONE);
+
+    void AppendFormattedItem(const wxBitmap& icon, const wxString& title, const wxString& description);
+
+protected:
+    int GetDefaultRowHeight() const;
+    wxString FormatItemText(const wxString& title, const wxString& description) const;
+
+    class MultilineTextRenderer;
 };
 
 

@@ -501,45 +501,6 @@ void RecentFiles::MacTransferMenuTo(wxMenuBar *bar)
 
 
 
-class RecentFilesCtrl::MultilineTextRenderer : public wxDataViewTextRenderer
-{
-public:
-    MultilineTextRenderer() : wxDataViewTextRenderer()
-    {
-#if wxCHECK_VERSION(3,1,1)
-        EnableMarkup();
-#endif
-    }
-
-#ifdef __WXMSW__
-    bool Render(wxRect rect, wxDC *dc, int state)
-    {
-        int flags = 0;
-        if ( state & wxDATAVIEW_CELL_SELECTED )
-            flags |= wxCONTROL_SELECTED;
-
-        for (auto& line: wxSplit(m_text, '\n'))
-        {
-            wxItemMarkupText markup(line);
-            markup.Render(GetView(), *dc, rect, flags, GetEllipsizeMode());
-            rect.y += rect.height / 2;
-        }
-
-        return true;
-    }
-
-    wxSize GetSize() const
-    {
-        if (m_text.empty())
-            return wxSize(wxDVC_DEFAULT_RENDERER_SIZE,wxDVC_DEFAULT_RENDERER_SIZE);
-
-        auto size = wxDataViewTextRenderer::GetSize();
-        size.y *= 2; // approximation enough for our needs
-        return size;
-    }
-#endif // __WXMSW__
-};
-
 struct RecentFilesCtrl::data
 {
     std::vector<wxFileName> files;
@@ -551,17 +512,18 @@ struct RecentFilesCtrl::data
 
 // TODO: merge with CrowdinFileList which is very similar and has lot of duplicated code
 RecentFilesCtrl::RecentFilesCtrl(wxWindow *parent)
-    : wxDataViewListCtrl(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDV_NO_HEADER | wxBORDER_NONE),
+    : IconAndSubtitleListCtrl(parent, _("File")),
       m_data(new data)
 {
 #ifdef __WXOSX__
     NSScrollView *scrollView = (NSScrollView*)GetHandle();
-    scrollView.automaticallyAdjustsContentInsets = NO;
-
     NSTableView *tableView = (NSTableView*)[scrollView documentView];
+    scrollView.automaticallyAdjustsContentInsets = NO;
     tableView.selectionHighlightStyle = NSTableViewSelectionHighlightStyleSourceList;
-    [tableView setIntercellSpacing:NSMakeSize(0.0, 0.0)];
-    const int icon_column_width = PX(32 + 12);
+    if (@available(macOS 11.0, *))
+        tableView.style = NSTableViewStyleSourceList;
+
+    SetRowHeight(GetDefaultRowHeight());
 #else // !__WXOSX__
     ColorScheme::SetupWindowColors(this, [=]
     {
@@ -569,17 +531,7 @@ RecentFilesCtrl::RecentFilesCtrl(wxWindow *parent)
     });
 
     m_data->icons_cache = RecentFiles::Get().m_impl->GetIconsCache();
-    const int icon_column_width = wxSystemSettings::GetMetric(wxSYS_ICON_X) + PX(12);
 #endif
-
-#if wxCHECK_VERSION(3,1,1)
-    SetRowHeight(PX(46));
-#endif
-
-    AppendBitmapColumn("", 0, wxDATAVIEW_CELL_INERT, icon_column_width);
-    auto renderer = new MultilineTextRenderer();
-    auto column = new wxDataViewColumn(_("File"), renderer, 1, -1, wxALIGN_NOT, wxDATAVIEW_COL_RESIZABLE);
-    AppendColumn(column, "string");
 
     ColorScheme::SetupWindowColors(this, [=]{ RefreshContent(); });
 
@@ -593,12 +545,6 @@ RecentFilesCtrl::RecentFilesCtrl(wxWindow *parent)
 
 void RecentFilesCtrl::RefreshContent()
 {
-#ifdef __WXGTK__
-    auto secondaryFormatting = "alpha='50%'";
-#else
-    auto secondaryFormatting = wxString::Format("foreground='%s'", ColorScheme::Get(Color::SecondaryLabel).GetAsString(wxC2S_HTML_SYNTAX));
-#endif
-
     DeleteAllItems();
 
     m_data->files = RecentFiles::Get().GetRecentFiles();
@@ -608,27 +554,13 @@ void RecentFilesCtrl::RefreshContent()
         f.ReplaceHomeDir();
 #endif
 
-#if wxCHECK_VERSION(3,1,1)
-        wxString text = wxString::Format
-        (
-            "%s\n<small><span %s>%s</span></small>",
-            EscapeMarkup(f.GetFullName()),
-            secondaryFormatting,
-            EscapeMarkup(f.GetPath())
-        );
-#else
-        wxString text = f.GetFullPath();
-#endif
-
 #ifdef __WXOSX__
         wxBitmap icon([[NSWorkspace sharedWorkspace] iconForFileType:str::to_NS(f.GetExt())]);
 #else
         wxBitmap icon(m_data->icons_cache->get_large(f.GetExt()));
 #endif
-        wxVector<wxVariant> data;
-        data.push_back(wxVariant(icon));
-        data.push_back(text);
-        AppendItem(data);
+
+        AppendFormattedItem(icon, f.GetFullName(), f.GetPath());
     }
 }
 
