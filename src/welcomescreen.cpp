@@ -298,8 +298,8 @@ WelcomeWindow::WelcomeWindow()
 #ifdef HAVE_HTTP_CLIENT
     leftsizer->Add(new ActionButton(
                        this, XRCID("menu_open_crowdin"), "Collaborate",
-                       _("Translate Crowdin project"),
-                       _("Collaborate with others in a Crowdin project.")),
+                       _("Translate online project"),
+                       _("Collaborate with others in an online project.")),
                wxSizerFlags().Border(wxTOP|wxBOTTOM, PX(2)).Expand());
 #endif // HAVE_HTTP_CLIENT
 
