@@ -382,7 +382,7 @@ ActivityIndicator::ActivityIndicator(wxWindow *parent, int flags)
     if (flags & Centered)
         sizer->AddStretchSpacer();
     sizer->Add(m_spinner, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
-    sizer->Add(m_label, wxSizerFlags(1).Center());
+    sizer->Add(m_label, wxSizerFlags().Center());
     if (flags & Centered)
         sizer->AddStretchSpacer();
 
