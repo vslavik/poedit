@@ -211,6 +211,7 @@ POCatalogPtr ExtractPOTFromSources(POCatalogPtr catalog, UpdateResultReason& rea
                 try
                 {
                     auto pot = POCatalog::Create(potFile, Catalog::CreationFlag_IgnoreHeader);
+                    return pot;
                 }
                 catch (...)
                 {
