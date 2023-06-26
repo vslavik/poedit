@@ -830,7 +830,7 @@ public:
             //        be rendered correctly, so we just use normal background for now:
             if (ColorScheme::GetWindowMode(this) == ColorScheme::Dark)
             {
-                listPanel->SetBackgroundColour(listPanel->GetDefaultAttributes().colBg);
+                listPanel->SetBackgroundColour(wxNullColour);
             }
             else
 #endif
