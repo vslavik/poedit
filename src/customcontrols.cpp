@@ -670,6 +670,10 @@ IconAndSubtitleListCtrl::IconAndSubtitleListCtrl(wxWindow *parent, const wxStrin
     auto renderer = new MultilineTextRenderer();
     auto column = new wxDataViewColumn(columnTitle, renderer, 1, -1, wxALIGN_NOT, wxDATAVIEW_COL_RESIZABLE);
     AppendColumn(column, "string");
+
+#ifndef __WXGTK__
+    ColorScheme::SetupWindowColors(this, [=]{ OnColorChange(); });
+#endif
 }
 
 int IconAndSubtitleListCtrl::GetDefaultRowHeight() const
@@ -677,12 +681,12 @@ int IconAndSubtitleListCtrl::GetDefaultRowHeight() const
     return PX(46);
 }
 
-wxString IconAndSubtitleListCtrl::FormatItemText(const wxString& title, const wxString& description) const
+wxString IconAndSubtitleListCtrl::FormatItemText(const wxString& title, const wxString& description)
 {
 #ifdef __WXGTK__
     auto secondaryFormatting = "alpha='50%'";
 #else
-    auto secondaryFormatting = wxString::Format("foreground='%s'", ColorScheme::Get(Color::SecondaryLabel).GetAsString(wxC2S_HTML_SYNTAX));
+    auto secondaryFormatting = GetSecondaryFormatting();
 #endif
 
 #if wxCHECK_VERSION(3,1,1)
@@ -698,10 +702,40 @@ wxString IconAndSubtitleListCtrl::FormatItemText(const wxString& title, const wx
 #endif
 }
 
+#ifndef __WXGTK__
+wxString IconAndSubtitleListCtrl::GetSecondaryFormatting()
+{
+    auto secondaryFormatting = wxString::Format("foreground='%s'", ColorScheme::Get(Color::SecondaryLabel).GetAsString(wxC2S_HTML_SYNTAX));
+    m_secondaryFormatting[ColorScheme::GetAppMode()] = secondaryFormatting;
+    return secondaryFormatting;
+}
+
+void IconAndSubtitleListCtrl::OnColorChange()
+{
+    auto otherMode = (ColorScheme::GetAppMode() == ColorScheme::Light) ? ColorScheme::Dark : ColorScheme::Light;
+    auto repl_from = m_secondaryFormatting[otherMode];
+    auto repl_to = GetSecondaryFormatting();
+    if (repl_from.empty() || repl_to.empty())
+        return;
+
+    for (auto row = 0; row < GetItemCount(); row++)
+    {
+        auto text = GetTextValue(row, 1);
+        text.Replace(repl_from, repl_to);
+        SetTextValue(text, row, 1);
+    }
+}
+#endif // !__WXGTK__
+
 void IconAndSubtitleListCtrl::AppendFormattedItem(const wxBitmap& icon, const wxString& title, const wxString& description)
 {
     wxVector<wxVariant> data;
     data.push_back(wxVariant(icon));
     data.push_back(FormatItemText(title, description));
     AppendItem(data);
+}
+
+void IconAndSubtitleListCtrl::UpdateFormattedItem(int row, const wxString& title, const wxString& description)
+{
+    SetTextValue(FormatItemText(title, description), row, 1);
 }

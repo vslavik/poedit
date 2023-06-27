@@ -533,8 +533,6 @@ RecentFilesCtrl::RecentFilesCtrl(wxWindow *parent)
     m_data->icons_cache = RecentFiles::Get().m_impl->GetIconsCache();
 #endif
 
-    ColorScheme::SetupWindowColors(this, [=]{ RefreshContent(); });
-
     Bind(wxEVT_DATAVIEW_ITEM_ACTIVATED, &RecentFilesCtrl::OnActivate, this);
 
     wxGetTopLevelParent(parent)->Bind(wxEVT_SHOW, [=](wxShowEvent& e){

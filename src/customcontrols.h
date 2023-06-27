@@ -265,10 +265,18 @@ public:
     IconAndSubtitleListCtrl(wxWindow *parent, const wxString& columnTitle, long style = wxBORDER_NONE);
 
     void AppendFormattedItem(const wxBitmap& icon, const wxString& title, const wxString& description);
+    void UpdateFormattedItem(int row, const wxString& title, const wxString& description);
 
 protected:
     int GetDefaultRowHeight() const;
-    wxString FormatItemText(const wxString& title, const wxString& description) const;
+    wxString FormatItemText(const wxString& title, const wxString& description);
+
+private:
+#ifndef __WXGTK__
+    void OnColorChange();
+    wxString GetSecondaryFormatting();
+    wxString m_secondaryFormatting[2];
+#endif
 
     class MultilineTextRenderer;
 };
