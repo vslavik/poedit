@@ -265,7 +265,7 @@ public:
     IconAndSubtitleListCtrl(wxWindow *parent, const wxString& columnTitle, long style = wxBORDER_NONE);
 
     void AppendFormattedItem(const wxBitmap& icon, const wxString& title, const wxString& description);
-    void UpdateFormattedItem(int row, const wxString& title, const wxString& description);
+    void UpdateFormattedItem(unsigned row, const wxString& title, const wxString& description);
 
 protected:
     int GetDefaultRowHeight() const;

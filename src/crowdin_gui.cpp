@@ -107,20 +107,22 @@ void SortAlphabetically(std::vector<T>& items, Key func)
 
 
 CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
-    : wxPanel(parent, wxID_ANY),
+    : AccountDetailPanel(parent),
       m_state(State::Uninitialized),
       m_activity(nullptr)
 {
-    wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-    sizer->SetMinSize(PX(400), -1);
-    SetSizer(sizer);
+    wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
+    SetSizer(topsizer);
 
-    sizer->AddSpacer(PX(10));
+    wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
+    sizer->SetMinSize(PX(300), -1);
+    topsizer->Add(sizer, wxSizerFlags(1).Expand().Border(wxALL, PX(16)));
+
     auto logo = new StaticBitmap(this, "CrowdinLogoTemplate");
     logo->SetCursor(wxCURSOR_HAND);
     logo->Bind(wxEVT_LEFT_UP, [](wxMouseEvent&){ wxLaunchDefaultBrowser(CrowdinClient::AttributeLink("/")); });
     sizer->Add(logo, wxSizerFlags().PXDoubleBorder(wxBOTTOM));
-    auto explain = new ExplanationLabel(this, _("Crowdin is an online localization management platform and collaborative translation tool. Poedit can seamlessly sync PO files managed at Crowdin."));
+    auto explain = new ExplanationLabel(this, _("Crowdin is an online localization management platform and collaborative translation tool."));
     sizer->Add(explain, wxSizerFlags().Expand());
 
     m_loginInfo = new wxBoxSizer(wxHORIZONTAL);
@@ -130,7 +132,7 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
     loginInfoContainer->Add(m_loginInfo, wxSizerFlags().Center());
     loginInfoContainer->AddStretchSpacer();
 
-    sizer->Add(loginInfoContainer, wxSizerFlags().Expand().ReserveSpaceEvenIfHidden().Border(wxTOP|wxBOTTOM, PX(10)));
+    sizer->Add(loginInfoContainer, wxSizerFlags().Expand().ReserveSpaceEvenIfHidden().Border(wxTOP|wxBOTTOM, PX(16)));
 
     m_signIn = new wxButton(this, wxID_ANY, MSW_OR_OTHER(_("Sign in"), _("Sign In")));
     m_signIn->Bind(wxEVT_BUTTON, &CrowdinLoginPanel::OnSignIn, this);
@@ -184,6 +186,21 @@ void CrowdinLoginPanel::ChangeState(State state)
     sizer->Layout();
 
     CreateLoginInfoControls(state);
+
+    switch (state)
+    {
+        case State::SignedIn:
+        case State::SignedOut:
+            if (OnContentChanged)
+                OnContentChanged();
+            break;
+
+        case State::Authenticating:
+        case State::UpdatingInfo:
+        case State::Uninitialized:
+            // not relevant for UI changes
+            break;
+    }
 }
 
 void CrowdinLoginPanel::CreateLoginInfoControls(State state)
@@ -303,7 +320,7 @@ public:
         auto topsizer = new wxBoxSizer(wxHORIZONTAL);
         auto panel = new Panel(this);
         panel->SetClientSize(panel->GetBestSize());
-        topsizer->Add(panel, wxSizerFlags(1).Expand().Border(wxALL, PX(15)));
+        topsizer->Add(panel, wxSizerFlags(1).Expand());
         SetSizerAndFit(topsizer);
         CenterOnParent();
     }

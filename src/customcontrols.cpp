@@ -735,7 +735,7 @@ void IconAndSubtitleListCtrl::AppendFormattedItem(const wxBitmap& icon, const wx
     AppendItem(data);
 }
 
-void IconAndSubtitleListCtrl::UpdateFormattedItem(int row, const wxString& title, const wxString& description)
+void IconAndSubtitleListCtrl::UpdateFormattedItem(unsigned row, const wxString& title, const wxString& description)
 {
     SetTextValue(FormatItemText(title, description), row, 1);
 }

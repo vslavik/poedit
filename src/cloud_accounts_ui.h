@@ -23,15 +23,40 @@
  *
  */
 
-#ifndef Poedit_accounts_ui_h
-#define Poedit_accounts_ui_h
+#ifndef Poedit_cloud_accounts_ui_h
+#define Poedit_cloud_accounts_ui_h
 
 #ifdef HAVE_HTTP_CLIENT
 
+#include <functional>
+#include <vector>
+
 #include <wx/panel.h>
 
-class CrowdinLoginPanel;
+class WXDLLIMPEXP_FWD_CORE wxSimplebook;
+class WXDLLIMPEXP_FWD_CORE wxDataViewEvent;
 
+class IconAndSubtitleListCtrl;
+
+
+/// Base class for account login views (Crowdin etc.)
+class AccountDetailPanel : public wxPanel
+{
+public:
+    AccountDetailPanel(wxWindow *parent) : wxPanel(parent, wxID_ANY) {}
+
+    /// Call this when the window is first shown
+    virtual void EnsureInitialized() = 0;
+
+    /// Notification function called when content (e.g. login name, state) changes
+    std::function<void()> OnContentChanged;
+
+    virtual bool IsSignedIn() const = 0;
+    virtual wxString GetLoginName() const = 0;
+};
+
+
+/// Window showing all supported accounts in a list-detail view
 class AccountsPanel : public wxPanel
 {
 public:
@@ -45,10 +70,16 @@ public:
      */
     void InitializeAfterShown();
 
+protected:
+    void AddAccount(const wxString& name, const wxString& iconId, AccountDetailPanel *panel);
+    void OnSelectAccount(wxDataViewEvent& event);
+
 private:
-    CrowdinLoginPanel *m_crowdin;
+    IconAndSubtitleListCtrl *m_list;
+    wxSimplebook *m_panelsBook;
+    std::vector<AccountDetailPanel*> m_panels;
 };
 
 #endif // !HAVE_HTTP_CLIENT
 
-#endif // Poedit_accounts_ui_h
+#endif // Poedit_cloud_accounts_ui_h

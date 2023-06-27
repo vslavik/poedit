@@ -30,6 +30,7 @@
 
 #ifdef HAVE_HTTP_CLIENT
 
+#include "cloud_accounts_ui.h"
 #include "cloud_sync.h"
 #include "customcontrols.h"
 
@@ -42,7 +43,7 @@ class WXDLLIMPEXP_FWD_CORE wxButton;
 /**
     Panel used to sign in into Crowdin.
  */
-class CrowdinLoginPanel : public wxPanel
+class CrowdinLoginPanel : public AccountDetailPanel
 {
 public:
     enum Flags
@@ -52,8 +53,9 @@ public:
 
     CrowdinLoginPanel(wxWindow *parent, int flags = 0);
 
-    /// Call this when the window is first shown
-    void EnsureInitialized();
+    void EnsureInitialized() override;
+    bool IsSignedIn() const override { return m_state == State::SignedIn; }
+    wxString GetLoginName() const override { return m_userLogin; }
 
 protected:
     enum class State

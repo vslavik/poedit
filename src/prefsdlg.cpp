@@ -56,10 +56,10 @@
     #define CenterVertical() Center()
 #endif
 
-#include "accounts_ui.h"
 #include "edapp.h"
 #include "edframe.h"
 #include "catalog.h"
+#include "cloud_accounts_ui.h"
 #include "configuration.h"
 #include "crowdin_gui.h"
 #include "hidpi.h"
