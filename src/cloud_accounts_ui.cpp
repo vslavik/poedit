@@ -28,8 +28,8 @@
 #ifdef HAVE_HTTP_CLIENT
 
 #include "customcontrols.h"
-#include "crowdin_client.h"
 #include "crowdin_gui.h"
+#include "localazy_gui.h"
 #include "utility.h"
 
 #include <wx/simplebook.h>
@@ -55,7 +55,11 @@ AccountsPanel::AccountsPanel(wxWindow *parent) : wxPanel(parent, wxID_ANY)
 
     sizer->Add(m_panelsBook, wxSizerFlags(1).Expand());
 
+    // FIXME: introductory panel
+    m_panelsBook->AddPage(new wxPanel(m_panelsBook, wxID_ANY, wxDefaultPosition, wxDefaultSize), "");
+
     AddAccount("Crowdin", "AccountCrowdin", new CrowdinLoginPanel(m_panelsBook));
+    AddAccount("Localazy", "AccountLocalazy", new LocalazyLoginPanel(m_panelsBook));
 
     m_list->SetMinSize(wxSize(PX(180), -1));
     m_panelsBook->SetMinSize(wxSize(PX(320), -1));
@@ -92,7 +96,7 @@ void AccountsPanel::OnSelectAccount(wxDataViewEvent& event)
     if (index == wxNOT_FOUND || index >= (int)m_panels.size())
         return;
 
-    m_panelsBook->SetSelection(index);
+    m_panelsBook->SetSelection(1 + index);
 }
 
 

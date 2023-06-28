@@ -70,6 +70,9 @@ public:
     static std::string CrowdinLastProject() { return Read("/crowdin_last_project", std::string()); }
     static void CrowdinLastProject(const std::string& prj) { return Write("/crowdin_last_project", prj); }
 
+    static std::string LocalazyMetadata() { return Read("/accounts/localazy/metadata", std::string()); }
+    static void LocalazyMetadata(const std::string& prj) { return Write("/accounts/localazy/metadata", prj); }
+
 private:
     template<typename T>
     static T Read(const std::string& key, T defval)

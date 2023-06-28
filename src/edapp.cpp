@@ -73,6 +73,8 @@
 #include "concurrency.h"
 #include "configuration.h"
 #include "crowdin_gui.h"
+#include "crowdin_client.h"
+#include "localazy_client.h"
 #include "edapp.h"
 #include "edframe.h"
 #include "extractors/extractor_legacy.h"
@@ -93,7 +95,6 @@
 #include "prefsdlg.h"
 #include "errors.h"
 #include "language.h"
-#include "crowdin_client.h"
 #include "welcomescreen.h"
 
 #ifdef __WXOSX__
@@ -532,6 +533,7 @@ int PoeditApp::OnExit()
 
 #ifdef HAVE_HTTP_CLIENT
     CrowdinClient::CleanUp();
+    LocalazyClient::CleanUp();
 #endif
 
     dispatch::cleanup();
@@ -798,6 +800,12 @@ void PoeditApp::HandleCustomURI(const wxString& uri)
     if (CrowdinClient::IsOAuthCallback(uri.ToStdString()))
     {
         CrowdinClient::Get().HandleOAuthCallback(uri.ToStdString());
+        return;
+    }
+
+    if (LocalazyClient::IsAuthCallback(uri.ToStdString()))
+    {
+        LocalazyClient::Get().HandleAuthCallback(uri.ToStdString());
         return;
     }
 #endif
