@@ -795,9 +795,8 @@ void PoeditApp::HandleCustomURI(const wxString& uri)
         return;
 
 #ifdef HAVE_HTTP_CLIENT
-    if (CrowdinClient::Get().IsOAuthCallback(uri.ToStdString()))
+    if (CrowdinClient::IsOAuthCallback(uri.ToStdString()))
     {
-        wxConfig::Get()->Write("/6p/crowdin_logged_in", true);
         CrowdinClient::Get().HandleOAuthCallback(uri.ToStdString());
         return;
     }

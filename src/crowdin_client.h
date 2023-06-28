@@ -61,7 +61,7 @@ public:
      */
     dispatch::future<void> Authenticate();
     void HandleOAuthCallback(const std::string& uri);
-    bool IsOAuthCallback(const std::string& uri);
+    static bool IsOAuthCallback(const std::string& uri);
 
     /// Sign out of Crowdin, forget the token
     void SignOut();
