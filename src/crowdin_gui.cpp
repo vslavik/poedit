@@ -616,6 +616,8 @@ private:
 
     void OnFetchedProjectInfo(CrowdinClient::ProjectInfo prj)
     {
+        auto previouslySelectedLanguage = m_language->GetStringSelection(); // may be empty
+
         m_info = prj;
         SortAlphabetically(m_info.languages, [](const auto& l){ return l.DisplayName(); });
 
@@ -635,15 +637,18 @@ private:
         }
         else
         {
-            auto preferred = LanguageDialog::GetLastChosen();
-            if (preferred.IsValid())
+            if (previouslySelectedLanguage.empty() || !m_language->SetStringSelection(previouslySelectedLanguage))
             {
-                for (size_t i = 0; i < m_info.languages.size(); i++)
+                auto preferred = LanguageDialog::GetLastChosen();
+                if (preferred.IsValid())
                 {
-                    if (m_info.languages[i] == preferred)
+                    for (size_t i = 0; i < m_info.languages.size(); i++)
                     {
-                        m_language->SetSelection(1 + int(i));
-                        break;
+                        if (m_info.languages[i] == preferred)
+                        {
+                            m_language->SetSelection(1 + int(i));
+                            break;
+                        }
                     }
                 }
             }
