@@ -30,14 +30,14 @@
 
 #include <memory>
 
-#include "concurrency.h"
+#include "cloud_accounts.h"
 #include "language.h"
 
 
 /**
     Client to the Crowdin platform.
  */
-class CrowdinClient
+class CrowdinClient : public CloudAccountClient
 {
 public:
     /// Return singleton instance of the client.
@@ -46,8 +46,11 @@ public:
     /// Destroys the singleton, must be called (only) on app shutdown.
     static void CleanUp();
 
+    static constexpr const char* SERVICE_ID = "crowdin";
+    const char *GetServiceID() const override { return SERVICE_ID; }
+
     /// Is the user currently signed into Crowdin?
-    bool IsSignedIn() const;
+    bool IsSignedIn() const override;
 
     /// Wrap relative Crowdin URL to absolute URL with attribution
     static std::string AttributeLink(std::string page);
@@ -64,29 +67,13 @@ public:
     static bool IsOAuthCallback(const std::string& uri);
 
     /// Sign out of Crowdin, forget the token
-    void SignOut();
-
-    /// Information about logged-in user
-    struct UserInfo
-    {
-        std::wstring name;
-        std::wstring login;
-        std::string avatar;
-    };
+    void SignOut() override;
 
     /// Retrieve information about the current user asynchronously
-    dispatch::future<UserInfo> GetUserInfo();
-
-    /// Project listing info
-    struct ProjectListing
-    {
-        std::wstring name;
-        std::string identifier;
-        int id;
-    };
+    dispatch::future<UserInfo> GetUserInfo() override;
 
     /// Retrieve listing of projects accessible to the user
-    dispatch::future<std::vector<ProjectListing>> GetUserProjects();
+    dispatch::future<std::vector<ProjectInfo>> GetUserProjects() override;
 
     /// File information
     struct FileInfo
@@ -98,7 +85,7 @@ public:
     };
 
     /// Project detailed information
-    struct ProjectInfo
+    struct ProjectDetails
     {
         std::wstring name;
         int id;
@@ -107,7 +94,7 @@ public:
     };
 
     /// Retrieve listing of projects accessible to the user
-    dispatch::future<ProjectInfo> GetProjectInfo(const int project_id);
+    dispatch::future<ProjectDetails> GetProjectDetails(const ProjectInfo& project);
 
     /// Asynchronously download specific Crowdin file into @a output_file.
     dispatch::future<void> DownloadFile(int project_id,

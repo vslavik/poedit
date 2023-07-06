@@ -268,7 +268,7 @@ void CrowdinLoginPanel::UpdateUserInfo()
         .then_on_window(this, [=](CrowdinClient::UserInfo u) {
             m_userName = u.name;
             m_userLogin = u.login;
-            m_userAvatar = u.avatar;
+            m_userAvatar = u.avatarUrl;
             ChangeState(State::SignedIn);
         })
         .catch_all(m_activity->HandleError);
@@ -541,13 +541,13 @@ private:
         {
             m_loginText->SetLabel(_("Signed in as:") + " " + u.name);
             m_loginImage->SetUserName(u.name);
-            if (u.avatar.empty())
+            if (u.avatarUrl.empty())
             {
                 m_loginImage->Show();
             }
             else
             {
-                http_client::download_from_anywhere(u.avatar)
+                http_client::download_from_anywhere(u.avatarUrl)
                 .then_on_window(this, [=](downloaded_file f)
                 {
                     m_loginImage->LoadIcon(f.filename());
@@ -575,7 +575,7 @@ private:
             .catch_all(m_activity->HandleError);
     }
 
-    void OnFetchedProjects(std::vector<CrowdinClient::ProjectListing> prjs)
+    void OnFetchedProjects(std::vector<CrowdinClient::ProjectInfo> prjs)
     {
         m_projects = prjs;
         SortAlphabetically(m_projects, [](const auto& p){ return p.name; });
@@ -603,7 +603,7 @@ private:
         else
         {
             auto last = Config::CrowdinLastProject();
-            auto lasti = last.empty()? m_projects.end() : std::find_if(m_projects.begin(), m_projects.end(), [=](const auto& p){ return p.identifier == last; });
+            auto lasti = last.empty()? m_projects.end() : std::find_if(m_projects.begin(), m_projects.end(), [=](const auto& p){ return p.slug == last; });
             if (lasti != m_projects.end())
             {
                 m_project->SetSelection(1 + int(lasti - m_projects.begin()));
@@ -618,11 +618,11 @@ private:
         if (sel > 0)
         {
             auto& prj = m_projects[sel-1];
-            Config::CrowdinLastProject(prj.identifier);
+            Config::CrowdinLastProject(prj.slug);
             m_activity->Start();
             EnableAllChoices(false);
             m_files->ClearFiles();
-            CrowdinClient::Get().GetProjectInfo(prj.id)
+            CrowdinClient::Get().GetProjectDetails(prj)
                 .then_on_window(this, &CrowdinOpenDialog::OnFetchedProjectInfo)
                 .catch_all([=](dispatch::exception_ptr e){
                     m_activity->HandleError(e);
@@ -631,7 +631,7 @@ private:
         }
     }
 
-    void OnFetchedProjectInfo(CrowdinClient::ProjectInfo prj)
+    void OnFetchedProjectInfo(CrowdinClient::ProjectDetails prj)
     {
         auto previouslySelectedLanguage = m_language->GetStringSelection(); // may be empty
 
@@ -754,8 +754,8 @@ private:
     CrowdinFileList *m_files;
     ActivityIndicator *m_activity;
 
-    std::vector<CrowdinClient::ProjectListing> m_projects;
-    CrowdinClient::ProjectInfo m_info;
+    std::vector<CrowdinClient::ProjectInfo> m_projects;
+    CrowdinClient::ProjectDetails m_info;
 };
 
 

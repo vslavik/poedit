@@ -255,7 +255,7 @@ bool CrowdinClient::IsOAuthCallback(const std::string& uri)
 //      and handle errors since now Poedit just crashes
 //      in case of some of expected keys missing
 
-dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
+dispatch::future<CloudAccountClient::UserInfo> CrowdinClient::GetUserInfo()
 {
     return m_api->get("user")
         .then([](json r)
@@ -263,8 +263,9 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
             wxLogTrace("poedit.crowdin", "Got user info: %s", r.dump().c_str());
             const json& d = r["data"];
             UserInfo u;
+            u.service = SERVICE_ID;
             d.at("username").get_to(u.login);
-            u.avatar = d.value("avatarUrl", "");
+            u.avatarUrl = d.value("avatarUrl", "");
             std::string fullName;
             try
             {
@@ -291,7 +292,7 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
                 catch (...) {}
             }
             if (fullName.empty())
-                u.name = u.login;
+                u.name = str::to_wstring(u.login);
             else
                 u.name = str::to_wstring(fullName);
             return u;
@@ -299,7 +300,7 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
 }
 
 
-dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetUserProjects()
+dispatch::future<std::vector<CloudAccountClient::ProjectInfo>> CrowdinClient::GetUserProjects()
 {
     // TODO: handle pagination if projects more than 500
     //       (what is quite rare case I guess)
@@ -307,15 +308,17 @@ dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetU
         .then([](json r)
         {
             wxLogTrace("poedit.crowdin", "Got projects: %s", r.dump().c_str());
-            std::vector<ProjectListing> all;
+            std::vector<ProjectInfo> all;
             for (const auto& d : r["data"])
             {
                 const json& i = d["data"];
                 all.push_back(
                 {
+                    SERVICE_ID,
+                    i.at("id").get<int>(),
                     i.at("name").get<std::wstring>(),
                     i.at("identifier").get<std::string>(),
-                    i.at("id").get<int>()
+                    std::string() // avatarUrl
                 });
             }
             return all;
@@ -323,10 +326,12 @@ dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetU
 }
 
 
-dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const int project_id)
+dispatch::future<CrowdinClient::ProjectDetails> CrowdinClient::GetProjectDetails(const CrowdinClient::ProjectInfo& project)
 {
+    auto project_id = std::get<int>(project.internalID);
+
     auto url = "projects/" + std::to_string(project_id);
-    auto prj = std::make_shared<ProjectInfo>();
+    auto prj = std::make_shared<ProjectDetails>();
     static const int NO_ID = -1;
 
     return m_api->get(url)

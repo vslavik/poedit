@@ -13,7 +13,7 @@ WX_BACKPORT_SRC = wx_backports/wx_gtk_activityindicator.cpp \
 if HAVE_CPPREST
 CROWDIN_SUPPORT_SRC = \
                  http_client.h http_client.cpp http_client_casablanca.cpp \
-                 cloud_accounts_ui.h cloud_accounts_ui.cpp \
+                 cloud_accounts.h cloud_accounts_ui.h cloud_accounts_ui.cpp \
                  crowdin_client.h crowdin_client.cpp \
                  crowdin_gui.h crowdin_gui.cpp \
                  keychain/keytar_posix.cc keychain/keytar.h \
