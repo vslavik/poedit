@@ -284,6 +284,9 @@ ProgressWindow::ProgressWindow(wxWindow *parent, const wxString& title, dispatch
 
 void ProgressWindow::update_message(const wxString& text)
 {
+    if (m_cancellationToken && m_cancellationToken->is_cancelled())
+        return;
+
     dispatch::on_main([=]
     {
         m_message->SetLabel(text);
