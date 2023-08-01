@@ -168,6 +168,9 @@ private:
             fullname << ';' << loc.GetIndex();
         }
 #endif
+        // suppress logging of icon loading errors beyond our control:
+        wxLogNull nolog;
+
         wxIcon icon(fullname, wxBITMAP_TYPE_ICO, desiredSize, desiredSize);
         if (!icon.IsOk())
             icon.LoadFile(fullname, wxBITMAP_TYPE_ICO);
