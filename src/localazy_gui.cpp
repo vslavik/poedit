@@ -75,11 +75,11 @@ LocalazyLoginPanel::LocalazyLoginPanel(wxWindow *parent, int flags)
     sizer->SetMinSize(PX(350), -1);
     topsizer->Add(sizer, wxSizerFlags(1).Expand().Border(wxALL, PX(16)));
 
-    auto logo = new StaticBitmap(this, "LocalazyLogo");
+    auto logo = new StaticBitmap(this, GetServiceLogo());
     logo->SetCursor(wxCURSOR_HAND);
-    logo->Bind(wxEVT_LEFT_UP, [](wxMouseEvent&){ wxLaunchDefaultBrowser(LocalazyClient::AttributeLink("/")); });
+    logo->Bind(wxEVT_LEFT_UP, [this](wxMouseEvent&){ wxLaunchDefaultBrowser(GetServiceLearnMoreURL()); });
     sizer->Add(logo, wxSizerFlags().PXDoubleBorder(wxBOTTOM));
-    auto explain = new ExplanationLabel(this, _("Localazy is an online localization management platform and collaborative translation tool."));
+    auto explain = new ExplanationLabel(this, GetServiceDescription());
     sizer->Add(explain, wxSizerFlags().Expand());
 
     m_loginInfo = new wxBoxSizer(wxHORIZONTAL);
@@ -105,7 +105,8 @@ LocalazyLoginPanel::LocalazyLoginPanel(wxWindow *parent, int flags)
     m_signOut= new wxButton(this, wxID_ANY, MSW_OR_OTHER(_("Sign out"), _("Sign Out")));
     m_signOut->Bind(wxEVT_BUTTON, &LocalazyLoginPanel::OnSignOut, this);
 
-    auto learnMore = new LearnAboutLocalazyLink(this);
+    // TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+    auto learnMore = new LearnMoreLink(this, GetServiceLearnMoreURL(), wxString::Format(_("Learn more about %s"), "Localazy"));
 
     auto buttons = new wxBoxSizer(wxHORIZONTAL);
     sizer->Add(buttons, wxSizerFlags().Expand().Border(wxBOTTOM, 1));
@@ -127,6 +128,16 @@ LocalazyLoginPanel::LocalazyLoginPanel(wxWindow *parent, int flags)
     }
 
     ChangeState(State::Uninitialized);
+}
+
+wxString LocalazyLoginPanel::GetServiceDescription() const
+{
+    return _("Localazy is an online localization management platform and collaborative translation tool.");
+}
+
+wxString LocalazyLoginPanel::GetServiceLearnMoreURL() const
+{
+    return LocalazyClient::AttributeLink("/");
 }
 
 void LocalazyLoginPanel::EnsureInitialized()
@@ -157,8 +168,8 @@ void LocalazyLoginPanel::ChangeState(State state)
     {
         case State::SignedIn:
         case State::SignedOut:
-            if (OnContentChanged)
-                OnContentChanged();
+            if (NotifyContentChanged)
+                NotifyContentChanged();
             break;
 
         case State::Authenticating:
@@ -297,11 +308,18 @@ void LocalazyLoginPanel::UpdateUserInfo()
         .catch_all(m_activity->HandleError);
 }
 
-void LocalazyLoginPanel::OnSignIn(wxCommandEvent&)
+void LocalazyLoginPanel::SignIn()
 {
     ChangeState(State::Authenticating);
     LocalazyClient::Get().Authenticate()
         .then_on_window(this, &LocalazyLoginPanel::OnUserSignedIn);
+    if (NotifyShouldBeRaised)
+        NotifyShouldBeRaised();
+}
+
+void LocalazyLoginPanel::OnSignIn(wxCommandEvent&)
+{
+    SignIn();
 }
 
 void LocalazyLoginPanel::OnAddProject(wxCommandEvent&)
@@ -315,18 +333,12 @@ void LocalazyLoginPanel::OnUserSignedIn()
 {
     UpdateUserInfo();
     Raise();
+    if (NotifyShouldBeRaised)
+        NotifyShouldBeRaised();
 }
 
 void LocalazyLoginPanel::OnSignOut(wxCommandEvent&)
 {
     LocalazyClient::Get().SignOut();
     ChangeState(State::SignedOut);
-}
-
-
-LearnAboutLocalazyLink::LearnAboutLocalazyLink(wxWindow *parent, const wxString& text)
-    : LearnMoreLink(parent,
-                    LocalazyClient::AttributeLink("/"),
-                    text.empty() ? (_("Learn more about Localazy")) : text)
-{
 }

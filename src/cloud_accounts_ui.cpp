@@ -34,6 +34,46 @@
 
 #include <wx/simplebook.h>
 #include <wx/sizer.h>
+#include <wx/statline.h>
+
+
+ServiceSelectionPanel::ServiceSelectionPanel(wxWindow *parent) : wxPanel(parent, wxID_ANY)
+{
+    auto topsizer = new wxBoxSizer(wxVERTICAL);
+    SetSizer(topsizer);
+    m_sizer = new wxBoxSizer(wxVERTICAL);
+    topsizer->AddStretchSpacer();
+    topsizer->Add(m_sizer, wxSizerFlags().Expand().Border(wxALL, PX(16)));
+    topsizer->AddStretchSpacer();
+}
+
+
+void ServiceSelectionPanel::AddService(AccountDetailPanel *account)
+{
+    if (!GetChildren().empty())
+        m_sizer->Add(new wxStaticLine(this, wxID_ANY), wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(24)));
+
+    auto logo = new StaticBitmap(this, account->GetServiceLogo());
+    logo->SetCursor(wxCURSOR_HAND);
+    logo->Bind(wxEVT_LEFT_UP, [=](wxMouseEvent&){ wxLaunchDefaultBrowser(account->GetServiceLearnMoreURL()); });
+    m_sizer->Add(logo, wxSizerFlags().PXDoubleBorder(wxBOTTOM));
+    auto explain = new ExplanationLabel(this, account->GetServiceDescription());
+    m_sizer->Add(explain, wxSizerFlags().Expand());
+
+    auto signIn = new wxButton(this, wxID_ANY, MSW_OR_OTHER(_("Add account"), _("Add Account")));
+    signIn->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){ account->SignIn(); });
+
+    auto learnMore = new LearnMoreLink(this,
+                                       account->GetServiceLearnMoreURL(),
+                                       // TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+                                       wxString::Format(_("Learn more about %s"), account->GetServiceName()));
+
+    auto buttons = new wxBoxSizer(wxHORIZONTAL);
+    m_sizer->Add(buttons, wxSizerFlags().Expand().Border(wxTOP, PX(16)));
+    buttons->Add(learnMore, wxSizerFlags().Center().Border(wxLEFT, PX(LearnMoreLink::EXTRA_INDENT)));
+    buttons->AddStretchSpacer();
+    buttons->Add(signIn, wxSizerFlags());
+}
 
 
 AccountsPanel::AccountsPanel(wxWindow *parent) : wxPanel(parent, wxID_ANY)
@@ -55,8 +95,8 @@ AccountsPanel::AccountsPanel(wxWindow *parent) : wxPanel(parent, wxID_ANY)
 
     sizer->Add(m_panelsBook, wxSizerFlags(1).Expand());
 
-    // FIXME: introductory panel
-    m_panelsBook->AddPage(new wxPanel(m_panelsBook, wxID_ANY, wxDefaultPosition, wxDefaultSize), "");
+    m_introPanel = new ServiceSelectionPanel(m_panelsBook);
+    m_panelsBook->AddPage(m_introPanel, "");
 
     AddAccount("Crowdin", "AccountCrowdin", new CrowdinLoginPanel(m_panelsBook));
     AddAccount("Localazy", "AccountLocalazy", new LocalazyLoginPanel(m_panelsBook));
@@ -72,6 +112,7 @@ void AccountsPanel::InitializeAfterShown()
 {
     for (auto& p: m_panels)
         p->EnsureInitialized();
+    m_list->SetFocus();
 }
 
 
@@ -81,11 +122,19 @@ void AccountsPanel::AddAccount(const wxString& name, const wxString& iconId, Acc
     m_panels.push_back(panel);
     m_panelsBook->AddPage(panel, "");
 
+    m_introPanel->AddService(panel);
+
     m_list->AppendFormattedItem(wxArtProvider::GetBitmap(iconId), name, " ... ");
 
-    panel->OnContentChanged = [=]{
+    panel->NotifyContentChanged = [=]{
         wxString desc = panel->IsSignedIn() ? panel->GetLoginName() : _("(not signed in)");
         m_list->UpdateFormattedItem(pos, name, desc);
+        // select 1st available signed-in service if we can and hide the intro panel:
+        if (m_list->GetSelectedRow() == wxNOT_FOUND && panel->IsSignedIn())
+            m_list->SelectRow(pos);
+    };
+    panel->NotifyShouldBeRaised = [=]{
+        m_list->SelectRow(pos);
     };
 }
 

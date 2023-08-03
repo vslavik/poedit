@@ -53,9 +53,16 @@ public:
 
     CrowdinLoginPanel(wxWindow *parent, int flags = 0);
 
+    wxString GetServiceName() const override { return "Crowdin"; }
+    wxString GetServiceLogo() const override { return "CrowdinLogoTemplate"; }
+    wxString GetServiceDescription() const override;
+    wxString GetServiceLearnMoreURL() const override;
+
     void EnsureInitialized() override;
     bool IsSignedIn() const override { return m_state == State::SignedIn; }
     wxString GetLoginName() const override { return m_userLogin; }
+
+    void SignIn() override;
 
 protected:
     enum class State
@@ -90,14 +97,6 @@ public:
     wxString GetName() const override { return "Crowdin"; }
     bool AuthIfNeeded(wxWindow* parent) override;
     dispatch::future<void> Upload(CatalogPtr file) override;
-};
-
-
-/// Link to learn about Crowdin
-class LearnAboutCrowdinLink : public LearnMoreLink
-{
-public:
-    LearnAboutCrowdinLink(wxWindow *parent, const wxString& text = "");
 };
 
 

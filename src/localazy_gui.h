@@ -54,9 +54,16 @@ public:
 
     LocalazyLoginPanel(wxWindow *parent, int flags = 0);
 
+    wxString GetServiceName() const override { return "Localazy"; }
+    wxString GetServiceLogo() const override { return "LocalazyLogo"; }
+    wxString GetServiceDescription() const override;
+    wxString GetServiceLearnMoreURL() const override;
+
     void EnsureInitialized() override;
     bool IsSignedIn() const override { return m_state == State::SignedIn; }
     wxString GetLoginName() const override { return m_userLogin; }
+
+    void SignIn() override;
 
 protected:
     enum class State
@@ -84,14 +91,6 @@ protected:
     wxDataViewListCtrl *m_projects;
     wxString m_userName, m_userLogin;
     std::string m_userAvatar;
-};
-
-
-/// Link to learn about Localazy
-class LearnAboutLocalazyLink : public LearnMoreLink
-{
-public:
-    LearnAboutLocalazyLink(wxWindow *parent, const wxString& text = "");
 };
 
 #endif // HAVE_HTTP_CLIENT

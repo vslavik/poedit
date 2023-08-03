@@ -33,6 +33,7 @@
 
 #include <wx/panel.h>
 
+class WXDLLIMPEXP_FWD_CORE wxBoxSizer;
 class WXDLLIMPEXP_FWD_CORE wxSimplebook;
 class WXDLLIMPEXP_FWD_CORE wxDataViewEvent;
 
@@ -45,14 +46,40 @@ class AccountDetailPanel : public wxPanel
 public:
     AccountDetailPanel(wxWindow *parent) : wxPanel(parent, wxID_ANY) {}
 
+    // Get service name for UI (e.g. "Crowdin") and other metadata:
+    virtual wxString GetServiceName() const = 0;
+    virtual wxString GetServiceLogo() const = 0;
+    virtual wxString GetServiceDescription() const = 0;
+    virtual wxString GetServiceLearnMoreURL() const = 0;
+
     /// Call this when the window is first shown
     virtual void EnsureInitialized() = 0;
 
     /// Notification function called when content (e.g. login name, state) changes
-    std::function<void()> OnContentChanged;
+    std::function<void()> NotifyContentChanged;
+
+    /// Notification function called when content should be made visible to user (e.g. while signing in, after signing in finished)
+    std::function<void()> NotifyShouldBeRaised;
 
     virtual bool IsSignedIn() const = 0;
     virtual wxString GetLoginName() const = 0;
+
+    /// Perform signing-in action, including any UI changes; directly corresponds to pressing "Sign in" button
+    virtual void SignIn() = 0;
+};
+
+
+/// Panel for choosing a service if the user doesn't have any yet
+class ServiceSelectionPanel : public wxPanel
+{
+public:
+    ServiceSelectionPanel(wxWindow *parent);
+
+    /// Add service information
+    void AddService(AccountDetailPanel *account);
+
+private:
+    wxBoxSizer *m_sizer;
 };
 
 
@@ -77,6 +104,7 @@ protected:
 private:
     IconAndSubtitleListCtrl *m_list;
     wxSimplebook *m_panelsBook;
+    ServiceSelectionPanel *m_introPanel;
     std::vector<AccountDetailPanel*> m_panels;
 };
 

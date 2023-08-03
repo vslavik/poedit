@@ -118,11 +118,11 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
     sizer->SetMinSize(PX(300), -1);
     topsizer->Add(sizer, wxSizerFlags(1).Expand().Border(wxALL, PX(16)));
 
-    auto logo = new StaticBitmap(this, "CrowdinLogoTemplate");
+    auto logo = new StaticBitmap(this, GetServiceLogo());
     logo->SetCursor(wxCURSOR_HAND);
-    logo->Bind(wxEVT_LEFT_UP, [](wxMouseEvent&){ wxLaunchDefaultBrowser(CrowdinClient::AttributeLink("/")); });
+    logo->Bind(wxEVT_LEFT_UP, [this](wxMouseEvent&){ wxLaunchDefaultBrowser(GetServiceLearnMoreURL()); });
     sizer->Add(logo, wxSizerFlags().PXDoubleBorder(wxBOTTOM));
-    auto explain = new ExplanationLabel(this, _("Crowdin is an online localization management platform and collaborative translation tool."));
+    auto explain = new ExplanationLabel(this, GetServiceDescription());
     sizer->Add(explain, wxSizerFlags().Expand());
 
     m_loginInfo = new wxBoxSizer(wxHORIZONTAL);
@@ -140,7 +140,7 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
     m_signOut= new wxButton(this, wxID_ANY, MSW_OR_OTHER(_("Sign out"), _("Sign Out")));
     m_signOut->Bind(wxEVT_BUTTON, &CrowdinLoginPanel::OnSignOut, this);
 
-    auto learnMore = new LearnAboutCrowdinLink(this);
+    auto learnMore = new LearnMoreLink(this, GetServiceLearnMoreURL(), _("Learn more about Crowdin"));
 
     auto buttons = new wxBoxSizer(wxHORIZONTAL);
     sizer->Add(buttons, wxSizerFlags().Expand().Border(wxBOTTOM, 1));
@@ -162,6 +162,16 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
     }
 
     ChangeState(State::Uninitialized);
+}
+
+wxString CrowdinLoginPanel::GetServiceDescription() const
+{
+    return _("Crowdin is an online localization management platform and collaborative translation tool.");
+}
+
+wxString CrowdinLoginPanel::GetServiceLearnMoreURL() const
+{
+    return CrowdinClient::AttributeLink("/");
 }
 
 void CrowdinLoginPanel::EnsureInitialized()
@@ -192,8 +202,8 @@ void CrowdinLoginPanel::ChangeState(State state)
     {
         case State::SignedIn:
         case State::SignedOut:
-            if (OnContentChanged)
-                OnContentChanged();
+            if (NotifyContentChanged)
+                NotifyContentChanged();
             break;
 
         case State::Authenticating:
@@ -275,17 +285,26 @@ void CrowdinLoginPanel::UpdateUserInfo()
         .catch_all(m_activity->HandleError);
 }
 
-void CrowdinLoginPanel::OnSignIn(wxCommandEvent&)
+void CrowdinLoginPanel::SignIn()
 {
     ChangeState(State::Authenticating);
     CrowdinClient::Get().Authenticate()
         .then_on_window(this, &CrowdinLoginPanel::OnUserSignedIn);
+    if (NotifyShouldBeRaised)
+        NotifyShouldBeRaised();
+}
+
+void CrowdinLoginPanel::OnSignIn(wxCommandEvent&)
+{
+    SignIn();
 }
 
 void CrowdinLoginPanel::OnUserSignedIn()
 {
     UpdateUserInfo();
     Raise();
+    if (NotifyShouldBeRaised)
+        NotifyShouldBeRaised();
 }
 
 void CrowdinLoginPanel::OnSignOut(wxCommandEvent&)
@@ -293,15 +312,6 @@ void CrowdinLoginPanel::OnSignOut(wxCommandEvent&)
     CrowdinClient::Get().SignOut();
     ChangeState(State::SignedOut);
 }
-
-
-LearnAboutCrowdinLink::LearnAboutCrowdinLink(wxWindow *parent, const wxString& text)
-    : LearnMoreLink(parent,
-                    CrowdinClient::AttributeLink("/"),
-                    text.empty() ? (_("Learn more about Crowdin")) : text)
-{
-}
-
 
 
 namespace
