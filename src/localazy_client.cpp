@@ -50,13 +50,13 @@
 std::string LocalazyClient::AttributeLink(std::string page)
 {
     static const char *base_url = "https://localazy.com";
-    static const char *utm = "utm_source=poedit.net&utm_medium=referral&utm_campaign=poedit";
+    static const char *ref = "ref=a9PjgZZmxYvt-12r";
 
     if (!boost::starts_with(page, "http"))
         page = base_url + page;
 
     page += page.find('?') == std::string::npos ? '?' : '&';
-    page += utm;
+    page += ref;
 
     return page;
 }
@@ -202,7 +202,7 @@ dispatch::future<void> LocalazyClient::Authenticate()
 {
     m_authCallback.reset(new dispatch::promise<void>);
 
-    auto url = "https://localazy.com/extauth/oauth/poedit";
+    auto url = "https://localazy.com/extauth/oauth/poedit?ref=a9PjgZZmxYvt-12r";
 
     wxLaunchDefaultBrowser(AttributeLink(url));
     return m_authCallback->get_future();
