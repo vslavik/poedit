@@ -75,26 +75,14 @@ public:
     /// Retrieve listing of projects accessible to the user
     dispatch::future<std::vector<ProjectInfo>> GetUserProjects() override;
 
-    /// File information
-    struct FileInfo
-    {
-        std::string title;
-        std::string fileName, dirName, branchName;
-        std::string fullPath;
-        int id, dirId, branchId;
-    };
+    /// Retrieve details about given project
+    dispatch::future<ProjectDetails> GetProjectDetails(const ProjectInfo& project) override;
 
-    /// Project detailed information
-    struct ProjectDetails
-    {
-        std::wstring name;
-        int id;
-        std::vector<Language> languages;
-        std::vector<FileInfo> files;
-    };
+    /// Create filename on local filesystem suitable for the remote file
+    std::wstring CreateLocalFilename(const ProjectInfo& project, const ProjectFile& file, const Language& lang) const override;
 
-    /// Retrieve listing of projects accessible to the user
-    dispatch::future<ProjectDetails> GetProjectDetails(const ProjectInfo& project);
+    /// Asynchronously download specific Crowdin file into @a output_file.
+    dispatch::future<void> DownloadFile(const std::wstring& output_file, const ProjectInfo& project, const ProjectFile& file, const Language& lang) override;
 
     /// Asynchronously download specific Crowdin file into @a output_file.
     dispatch::future<void> DownloadFile(int project_id,
@@ -114,6 +102,13 @@ public:
 private:
     class crowdin_http_client;
     class crowdin_token;
+
+    struct FileInternal : public ProjectFile::Internal
+    {
+        std::string fileName, dirName;
+        std::string fullPath;
+        int id, dirId, branchId;
+    };
 
     CrowdinClient();
     ~CrowdinClient();

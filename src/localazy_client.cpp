@@ -183,6 +183,11 @@ public:
         m_tokens[project] = token;
     }
 
+    std::string get(const std::string& project) const
+    {
+        return m_tokens.at(project);
+    }
+
     bool is_valid() const { return !m_tokens.empty(); }
 
 private:
@@ -298,6 +303,13 @@ void LocalazyClient::SaveMetadataAndTokens()
 }
 
 
+std::string LocalazyClient::GetAuthorization(const std::string& project_id) const
+{
+    std::lock_guard<std::mutex> guard(m_mutex);
+    return "Bearer " + m_tokens->get(project_id);
+}
+
+
 dispatch::future<CloudAccountClient::UserInfo> LocalazyClient::GetUserInfo()
 {
     std::lock_guard<std::mutex> guard(m_mutex);
@@ -331,6 +343,92 @@ dispatch::future<std::vector<CloudAccountClient::ProjectInfo>> LocalazyClient::G
     }
 
     return dispatch::make_ready_future(std::move(all));
+}
+
+
+dispatch::future<CloudAccountClient::ProjectDetails> LocalazyClient::GetProjectDetails(const ProjectInfo& project)
+{
+    auto project_id = std::get<std::string>(project.internalID);
+    http_client::headers headers {{"Authorization", GetAuthorization(project_id)}};
+
+    return m_api->get("/projects?languages=true", headers)
+           .then([project_id](json r)
+           {
+               for (auto prj: r)
+               {
+                   auto id = prj.at("id");
+                   if (id == project_id)
+                   {
+                       ProjectDetails details;
+
+                       // there's only one "file" in Localazy projects:
+                       ProjectFile f;
+                       auto internal = std::make_shared<FileInternal>();
+                       f.internal = internal;
+                       f.title = _("All strings");
+                       prj.at("url").get_to(f.description);
+                       details.files.push_back(f);
+
+                       for (auto lang: prj.at("languages"))
+                       {
+                           auto code = lang.at("code").get<std::string>();
+                           auto tag = code;
+
+                           // Localazy uses non-standard codes such as zh_CN#Hans, we need to convert it to
+                           // a language tag (zh-Hans-CN). We assume that the format is lang_region#script.
+                           static const std::regex re_locale("([a-z]+)(_([A-Z0-9]+))?(#([A-Z][a-z]*))?");
+                           std::smatch m;
+                           if (std::regex_search(code, m, re_locale))
+                           {
+                               tag = m[1].str();
+                               if (m[5].matched)
+                                   tag += "-" + m[5].str();
+                               if (m[3].matched)
+                                   tag += "-" + m[3].str();
+                           }
+
+                           internal->tagToLocale[tag] = code;
+
+                           auto l = Language::FromLanguageTag(tag);
+                           if (l.IsValid())
+                               details.languages.push_back(l);
+                       }
+
+                       return details;
+                   }
+               }
+
+               throw Exception(_(L"Couldn’t download Localazy project details."));
+           });
+}
+
+
+std::wstring LocalazyClient::CreateLocalFilename(const ProjectInfo& project, const ProjectFile& /*file*/, const Language& lang) const
+{
+    auto project_name = project.name;
+    // sanitize to be safe filenames:
+    std::replace_if(project_name.begin(), project_name.end(), boost::is_any_of("\\/:\"<>|?*"), '_');
+
+    return project_name + L"." + str::to_wstring(lang.LanguageTag()) + L".json";
+}
+
+
+dispatch::future<void> LocalazyClient::DownloadFile(const std::wstring& output_file, const ProjectInfo& project, const ProjectFile& file, const Language& lang)
+{
+    auto project_id = std::get<std::string>(project.internalID);
+    auto internal = std::static_pointer_cast<FileInternal>(file.internal);
+
+    auto locale = internal->tagToLocale.at(lang.LanguageTag());
+    boost::replace_all(locale, "#", "%23"); // urlencode
+
+    http_client::headers headers {{"Authorization", GetAuthorization(project_id)}};
+
+    return m_api->download("/projects/" + project_id + "/exchange/export/" + locale, headers)
+            .then([=](downloaded_file file)
+            {
+                wxString outfile(output_file);
+                file.move_to(outfile);
+            });
 }
 
 

@@ -31,6 +31,7 @@
 #include "concurrency.h"
 #include "language.h"
 
+#include <memory>
 #include <string>
 #include <variant>
 
@@ -88,6 +89,38 @@ public:
 
     /// Retrieve listing of projects accessible to the user
     virtual dispatch::future<std::vector<ProjectInfo>> GetUserProjects() = 0;
+
+    /// Information about a specific file within a project.
+    struct ProjectFile
+    {
+        std::wstring title;
+        std::wstring description;
+
+        /// Implementation-specific internal data
+        struct Internal
+        {
+            virtual ~Internal() {}
+        };
+        std::shared_ptr<Internal> internal;
+    };
+
+    /// Project detailed information not included in ProjectInfo
+    struct ProjectDetails
+    {
+        /// Languages supported by the project
+        std::vector<Language> languages;
+        /// All files in the project.
+        std::vector<ProjectFile> files;
+    };
+
+    /// Retrieve details about given project
+    virtual dispatch::future<ProjectDetails> GetProjectDetails(const ProjectInfo& project) = 0;
+
+    /// Create filename on local filesystem suitable for the remote file
+    virtual std::wstring CreateLocalFilename(const ProjectInfo& project, const ProjectFile& file, const Language& lang) const = 0;
+
+    /// Asynchronously download specific file into @a output_file.
+    virtual dispatch::future<void> DownloadFile(const std::wstring& output_file, const ProjectInfo& project, const ProjectFile& file, const Language& lang) = 0;
 
 protected:
     CloudAccountClient() {}

@@ -343,8 +343,6 @@ dispatch::future<CrowdinClient::ProjectDetails> CrowdinClient::GetProjectDetails
         if (get_value(d, "publicDownloads", false) == false)
             throw Exception(_("Downloading translations is disabled in this project."));
 
-        d.at("name").get_to(prj->name);
-        d.at("id").get_to(prj->id);
         for (const auto& langCode: d.at("targetLanguageIds"))
             prj->languages.push_back(Language::FromLanguageTag(std::string(langCode)));
 
@@ -359,13 +357,16 @@ dispatch::future<CrowdinClient::ProjectDetails> CrowdinClient::GetProjectDetails
             const json& d = i["data"];
             if (d["type"] != "assets")
             {
-                FileInfo f;
-                d.at("id").get_to(f.id);
-                f.fullPath = '/' + d.at("name").get<std::string>();
-                f.dirId = get_value(d, "directoryId", NO_ID);
-                f.branchId = get_value(d, "branchId", NO_ID);
-                d.at("name").get_to(f.fileName);
-                f.title = get_value(d, "title", f.fileName);
+                ProjectFile f;
+                auto internal = std::make_shared<FileInternal>();
+                f.internal = internal;
+
+                d.at("id").get_to(internal->id);
+                internal->fullPath = '/' + d.at("name").get<std::string>();
+                internal->dirId = get_value(d, "directoryId", NO_ID);
+                internal->branchId = get_value(d, "branchId", NO_ID);
+                d.at("name").get_to(internal->fileName);
+                f.title = str::to_wstring(get_value(d, "title", internal->fileName));
                 prj->files.push_back(std::move(f));
             }
         }
@@ -401,16 +402,17 @@ dispatch::future<CrowdinClient::ProjectDetails> CrowdinClient::GetProjectDetails
 
         for (auto& i : prj->files)
         {
+            auto internal = std::static_pointer_cast<FileInternal>(i.internal);
             std::list<std::string> path;
-            int dirId = i.dirId;
+            int dirId = internal->dirId;
             while (dirId != NO_ID)
             {
                 const auto& dir = dirs[dirId];
                 path.push_front(dir.title);
-                i.fullPath.insert(0, '/' + dir.name);
+                internal->fullPath.insert(0, '/' + dir.name);
                 dirId = dir.parentId;
             }
-            i.dirName = boost::join(path, "/");
+            internal->dirName = boost::join(path, "/");
         }
     })
     .then([this, url]()
@@ -437,15 +439,62 @@ dispatch::future<CrowdinClient::ProjectDetails> CrowdinClient::GetProjectDetails
 
         for (auto& i : prj->files)
         {
-            if (i.branchId != NO_ID)
+            auto internal = std::static_pointer_cast<FileInternal>(i.internal);
+            std::wstring branchName;
+
+            if (internal->branchId != NO_ID)
             {
-                i.branchName = branches[i.branchId].title;
-                i.fullPath.insert(0, '/' + branches[i.branchId].name);
+                branchName = str::to_wstring(branches[internal->branchId].title);
+                internal->fullPath.insert(0, '/' + branches[internal->branchId].name);
             }
+
+            if (!branchName.empty())
+                i.description += branchName + L" → ";
+            i.description += str::to_wstring(internal->fullPath);
         }
 
-        return *prj;
+        return std::move(*prj);
     });
+}
+
+
+std::wstring CrowdinClient::CreateLocalFilename(const ProjectInfo& project, const ProjectFile& file, const Language& lang) const
+{
+    auto internal = std::static_pointer_cast<FileInternal>(file.internal);
+    auto project_id = std::get<int>(project.internalID);
+    auto project_name = project.name;
+    auto file_title = file.title;
+
+    // sanitize to be safe filenames:
+    std::replace_if(project_name.begin(), project_name.end(), boost::is_any_of("\\/:\"<>|?*"), '_');
+    std::replace_if(file_title.begin(), file_title.end(), boost::is_any_of("\\/:\"<>|?*"), '_');
+
+    // NB: sync this with ExtractCrowdinMetadata()
+    const wxString dir = project_name + " - " + lang.Code();
+    wxFileName localFileName(dir + wxString::Format("/Crowdin.%d.%d.%s %s", project_id, internal->id, lang.LanguageTag(), file_title));
+
+    auto ext = localFileName.GetExt().Lower();
+    if (ext == "po")
+    {
+        // natively supported file format, will be opened as-is
+    }
+    else if (ext == "pot")
+    {
+        // POT files are natively supported, but need to be opened as PO to see translations
+        localFileName.SetExt("po");
+    }
+    else if (ext == "xliff" || ext == "xlf")
+    {
+        // Do nothing, we don't want to use double-extension like .xliff.xliff
+    }
+    else
+    {
+        // Everything else is exported as XLIFF and we do want, at least for now, to keep
+        // the old extension for clarity, e.g. *.strings.xliff or *.rc.xliff
+        localFileName.SetFullName(localFileName.GetFullName() + ".xliff");
+    }
+
+    return str::to_wstring(localFileName.GetFullPath());
 }
 
 
@@ -521,6 +570,16 @@ dispatch::future<void> CrowdinClient::DownloadFile(int project_id,
             if (isXLIFFNative || isXLIFFConverted)
                 PostprocessDownloadedXLIFF(outfile);
         });
+}
+
+
+dispatch::future<void> CrowdinClient::DownloadFile(const std::wstring& output_file, const ProjectInfo& project, const ProjectFile& file, const Language& lang)
+{
+    auto internal = std::static_pointer_cast<FileInternal>(file.internal);
+    auto project_id = std::get<int>(project.internalID);
+    auto ext = std::string(wxFileName(internal->fileName, wxPATH_UNIX).GetExt().utf8_str());
+
+    return DownloadFile(project_id, lang, internal->id, ext, /*forceExportAsXliff=*/false, output_file);
 }
 
 

@@ -28,6 +28,7 @@
 
 #ifdef HAVE_HTTP_CLIENT
 
+#include <map>
 #include <memory>
 #include <mutex>
 
@@ -75,6 +76,14 @@ public:
     /// Retrieve listing of projects accessible to the user
     dispatch::future<std::vector<ProjectInfo>> GetUserProjects() override;
 
+    /// Retrieve details about given project
+    dispatch::future<ProjectDetails> GetProjectDetails(const ProjectInfo& project) override;
+
+    /// Create filename on local filesystem suitable for the remote file
+    std::wstring CreateLocalFilename(const ProjectInfo& project, const ProjectFile& file, const Language& lang) const override;
+
+    /// Asynchronously download specific file into @a output_file.
+    dispatch::future<void> DownloadFile(const std::wstring& output_file, const ProjectInfo& project, const ProjectFile& file, const Language& lang) override;
 
 private:
     /**
@@ -83,6 +92,15 @@ private:
         After exchange, updates stored tokens and project metadata and saves them.
      */
     dispatch::future<void> ExchangeTemporaryToken(const std::string& token);
+
+    /// Get authorization header for given project
+    std::string GetAuthorization(const std::string& project_id) const;
+
+    struct FileInternal : public ProjectFile::Internal
+    {
+        // Localazy uses non-standard language codes that we need to remap
+        std::map<std::string, std::string> tagToLocale;
+    };
 
 private:
     class localazy_http_client;
