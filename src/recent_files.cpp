@@ -510,7 +510,7 @@ struct RecentFilesCtrl::data
 };
 
 
-// TODO: merge with CrowdinFileList which is very similar and has lot of duplicated code
+// TODO: merge with CloudFileList which is very similar and has lot of duplicated code
 RecentFilesCtrl::RecentFilesCtrl(wxWindow *parent)
     : IconAndSubtitleListCtrl(parent, _("File")),
       m_data(new data)

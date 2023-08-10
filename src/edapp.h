@@ -104,7 +104,7 @@ class PoeditApp : public wxApp, public MenusManager
         void OnNewFromScratch(wxCommandEvent& event);
         void OnNewFromPOT(wxCommandEvent& event);
         void OnOpen(wxCommandEvent& event);
-        void OnOpenFromCrowdin(wxCommandEvent& event);
+        void OnOpenOnlineTranslation(wxCommandEvent& event);
         void OnOpenHist(wxCommandEvent& event);
         void OnAbout(wxCommandEvent& event);
         void OnWelcomeWindow(wxCommandEvent& event);

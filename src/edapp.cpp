@@ -72,7 +72,7 @@
 #include "colorscheme.h"
 #include "concurrency.h"
 #include "configuration.h"
-#include "crowdin_gui.h"
+#include "cloud_accounts_ui.h"
 #include "crowdin_client.h"
 #include "localazy_client.h"
 #include "edapp.h"
@@ -847,7 +847,7 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
    EVT_MENU           (XRCID("menu_new_from_pot"),PoeditApp::OnNewFromPOT)
    EVT_MENU           (wxID_OPEN,                 PoeditApp::OnOpen)
  #ifdef HAVE_HTTP_CLIENT
-   EVT_MENU           (XRCID("menu_open_crowdin"),PoeditApp::OnOpenFromCrowdin)
+   EVT_MENU           (XRCID("menu_open_cloud"),PoeditApp::OnOpenOnlineTranslation)
  #endif
    EVT_COMMAND        (wxID_ANY, EVT_OPEN_RECENT_FILE, PoeditApp::OnOpenHist)
    EVT_MENU           (wxID_ABOUT,                PoeditApp::OnAbout)
@@ -1064,7 +1064,7 @@ void PoeditApp::OnOpen(wxCommandEvent& event)
 
 
 #ifdef HAVE_HTTP_CLIENT
-void PoeditApp::OnOpenFromCrowdin(wxCommandEvent& event)
+void PoeditApp::OnOpenOnlineTranslation(wxCommandEvent& event)
 {
     InvokingWindowProxy win(event);
 
@@ -1072,7 +1072,7 @@ void PoeditApp::OnOpenFromCrowdin(wxCommandEvent& event)
         return;
 
     win.NotifyIsStarting();
-    CrowdinOpenFile(win.GetParentWindowIfAny(), [=](int retval, wxString filename)
+    CloudOpenFile(win.GetParentWindowIfAny(), [=](int retval, wxString filename)
     {
         if (retval != wxID_OK)
         {

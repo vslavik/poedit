@@ -108,6 +108,15 @@ private:
     std::vector<AccountDetailPanel*> m_panels;
 };
 
+
+/**
+    Let the user choose a remote cloud file, download it and open in Poedit.
+
+    @param parent    PoeditFrame the UI should be shown under.
+    @param onDone    Called with the dialog return value (wxID_OK/CANCEL) and name of loaded PO file.
+ */
+void CloudOpenFile(wxWindow *parent, std::function<void(int, wxString)> onDone);
+
 #endif // !HAVE_HTTP_CLIENT
 
 #endif // Poedit_cloud_accounts_ui_h

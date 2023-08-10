@@ -107,14 +107,6 @@ bool CanSyncWithCrowdin(CatalogPtr cat);
 bool ShouldSyncToCrowdinAutomatically(CatalogPtr cat);
 
 /**
-    Let the user choose a Crowdin file, download it and open in Poedit.
-    
-    @param parent    PoeditFrame the UI should be shown under.
-    @param onDone    Called with the dialog return value (wxID_OK/CANCEL) and name of loaded PO file.
- */
-void CrowdinOpenFile(wxWindow *parent, std::function<void(int, wxString)> onDone);
-
-/**
     Synces the catalog with Crowdin, uploading and downloading translations.
 
     @param parent    PoeditFrame the UI should be shown under.

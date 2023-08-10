@@ -646,7 +646,7 @@ public:
 };
 
 
-// TODO: merge with CrowdinFileList which is very similar and has lot of duplicated code
+// TODO: merge with CloudFileList which is very similar and has lot of duplicated code
 IconAndSubtitleListCtrl::IconAndSubtitleListCtrl(wxWindow *parent, const wxString& columnTitle, long style)
     : wxDataViewListCtrl(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDV_NO_HEADER | style)
 {
