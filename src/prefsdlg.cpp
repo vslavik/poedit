@@ -1041,17 +1041,11 @@ class AccountsPageWindow : public PrefsPanel
 public:
     AccountsPageWindow(wxWindow *parent) : PrefsPanel(parent)
     {
-        wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
-
         wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->Add(sizer, wxSizerFlags(1).Expand().PXDoubleBorderAll());
-        SetSizer(topsizer);
-
-        sizer->Add(new ExplanationLabel(this, _("Connect Poedit with supported online localization platforms to seamlessly sync translations managed on them.")),
-                   wxSizerFlags().Expand().PXDoubleBorder(wxBOTTOM));
+        SetSizer(sizer);
 
         m_accounts = new AccountsPanel(this);
-        sizer->Add(m_accounts, wxSizerFlags(1).Expand());
+        sizer->Add(m_accounts, wxSizerFlags(1).Expand().PXDoubleBorderAll());
 
     #ifdef __WXOSX__
         // This window was possibly created on demand (pre-macOS 11), possibly

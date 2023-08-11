@@ -113,8 +113,14 @@ void ServiceSelectionPanel::AddService(AccountDetailPanel *account)
 
 AccountsPanel::AccountsPanel(wxWindow *parent) : wxPanel(parent, wxID_ANY)
 {
+    wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
+    SetSizer(topsizer);
+
+    topsizer->Add(new ExplanationLabel(this, _("Connect Poedit with supported online localization platforms to seamlessly sync translations managed on them.")),
+                  wxSizerFlags().Expand().PXDoubleBorder(wxBOTTOM));
+
     wxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
-    SetSizer(sizer);
+    topsizer->Add(sizer, wxSizerFlags(1).Expand());
 
     m_list = new IconAndSubtitleListCtrl(this, _("Account"), MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN));
     sizer->Add(m_list, wxSizerFlags().Expand().Border(wxRIGHT, PX(10)));
