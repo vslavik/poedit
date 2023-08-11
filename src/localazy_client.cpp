@@ -316,7 +316,7 @@ dispatch::future<CloudAccountClient::UserInfo> LocalazyClient::GetUserInfo()
 
     auto user = m_metadata->user();
     UserInfo info;
-    info.service = SERVICE_ID;
+    info.service = SERVICE_NAME;
     user.at("slug").get_to(info.login);
     user.at("image").get_to(info.avatarUrl);
     info.name = str::to_wstring(user.at("name").get<std::string>());
@@ -334,7 +334,7 @@ dispatch::future<std::vector<CloudAccountClient::ProjectInfo>> LocalazyClient::G
     {
         all.push_back(
         {
-            SERVICE_ID,
+            SERVICE_NAME,
             p.at("id").get<std::string>(),
             p.at("name").get<std::wstring>(),
             p.at("slug").get<std::string>(),

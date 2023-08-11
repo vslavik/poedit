@@ -45,9 +45,9 @@ public:
     virtual ~CloudAccountClient() {}
 
     /// Returns identifier of the account's service
-    virtual const char *GetServiceID() const = 0; // { return SERVICE_ID; }
+    virtual const char *GetServiceName() const = 0; // { return SERVICE_NAME; }
     // Informal protocol: should be present in every derived class
-    // static constexpr const char* SERVICE_ID = "something";
+    // static constexpr const char* SERVICE_NAME = "Something";
 
     /// Is the user logged into this account?
     virtual bool IsSignedIn() const = 0;

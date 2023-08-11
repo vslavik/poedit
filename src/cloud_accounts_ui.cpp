@@ -604,7 +604,7 @@ private:
         auto account = AccountFor(project);
         auto filename = account->CreateLocalFilename(project, file, lang);
 
-        wxFileName localFileName(wxString::Format("%s/%s/%s", CloudSyncDestination::GetCacheDir(), account->GetServiceID(), filename));
+        wxFileName localFileName(wxString::Format("%s/%s/%s", CloudSyncDestination::GetCacheDir(), account->GetServiceName(), filename));
 
         if (!wxFileName::DirExists(localFileName.GetPath()))
             wxFileName::Mkdir(localFileName.GetPath(), wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
@@ -618,7 +618,7 @@ private:
     {
         for (auto acc : m_accounts)
         {
-            if (acc->GetServiceID() == x.service)
+            if (acc->GetServiceName() == x.service)
                 return acc;
         }
         wxFAIL_MSG("logic error - no matching account");

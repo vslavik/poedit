@@ -263,7 +263,7 @@ dispatch::future<CloudAccountClient::UserInfo> CrowdinClient::GetUserInfo()
             wxLogTrace("poedit.crowdin", "Got user info: %s", r.dump().c_str());
             const json& d = r["data"];
             UserInfo u;
-            u.service = SERVICE_ID;
+            u.service = SERVICE_NAME;
             d.at("username").get_to(u.login);
             u.avatarUrl = d.value("avatarUrl", "");
             std::string fullName;
@@ -314,7 +314,7 @@ dispatch::future<std::vector<CloudAccountClient::ProjectInfo>> CrowdinClient::Ge
                 const json& i = d["data"];
                 all.push_back(
                 {
-                    SERVICE_ID,
+                    SERVICE_NAME,
                     i.at("id").get<int>(),
                     i.at("name").get<std::wstring>(),
                     i.at("identifier").get<std::string>(),

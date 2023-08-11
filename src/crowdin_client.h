@@ -46,8 +46,8 @@ public:
     /// Destroys the singleton, must be called (only) on app shutdown.
     static void CleanUp();
 
-    static constexpr const char* SERVICE_ID = "crowdin";
-    const char *GetServiceID() const override { return SERVICE_ID; }
+    static constexpr const char* SERVICE_NAME = "Crowdin";
+    const char *GetServiceName() const override { return SERVICE_NAME; }
 
     /// Is the user currently signed into Crowdin?
     bool IsSignedIn() const override;
