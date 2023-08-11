@@ -54,6 +54,23 @@
     #define CenterVertical() Center()
 #endif
 
+namespace
+{
+
+inline std::vector<CloudAccountClient*> GetSignedInAccounts()
+{
+    std::vector<CloudAccountClient*> all;
+
+    if (CrowdinClient::Get().IsSignedIn())
+        all.push_back(&CrowdinClient::Get());
+    if (LocalazyClient::Get().IsSignedIn())
+        all.push_back(&LocalazyClient::Get());
+
+    return all;
+}
+
+} // anonymous namespace
+
 
 ServiceSelectionPanel::ServiceSelectionPanel(wxWindow *parent) : wxPanel(parent, wxID_ANY)
 {
@@ -354,10 +371,7 @@ class CloudOpenDialog : public wxDialog
 public:
     CloudOpenDialog(wxWindow *parent) : wxDialog(parent, wxID_ANY, _("Open online translation"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
     {
-        if (CrowdinClient::Get().IsSignedIn())
-            m_accounts.push_back(&CrowdinClient::Get());
-        if (LocalazyClient::Get().IsSignedIn())
-            m_accounts.push_back(&LocalazyClient::Get());
+        m_accounts = GetSignedInAccounts();
 
         auto topsizer = new wxBoxSizer(wxVERTICAL);
         topsizer->SetMinSize(PX(400), -1);
@@ -369,6 +383,8 @@ public:
         m_loginImage = new AvatarIcon(this, wxSize(PX(24), PX(24)));
         loginSizer->Add(m_loginText, wxSizerFlags().ReserveSpaceEvenIfHidden().Center().Border(wxRIGHT, PX(5)));
         loginSizer->Add(m_loginImage, wxSizerFlags().ReserveSpaceEvenIfHidden().Center());
+        m_loginText->Hide();
+        m_loginImage->Hide();
 
         auto pickers = new wxFlexGridSizer(2, wxSize(PX(5),PX(6)));
         pickers->AddGrowableCol(1);
@@ -412,21 +428,30 @@ public:
     void LoadFromCloud()
     {
         FetchProjects();
-        FetchLoginInfo();
+        if (m_accounts.size() == 1)
+            FetchLoginInfo(m_accounts[0]);
     }
 
     wxString OutLocalFilename;
 
 private:
-    void FetchLoginInfo()
+    void FetchLoginInfo(CloudAccountClient *account)
     {
-        m_loginText->Hide();
-        m_loginImage->Hide();
+        if (account == m_loginAccountShown)
+            return;
+        m_loginAccountShown = account;
 
-        CrowdinClient::Get().GetUserInfo()
+        account->GetUserInfo()
         .then_on_window(this, [=](CrowdinClient::UserInfo u)
         {
-            m_loginText->SetLabel(_("Signed in as:") + " " + u.name);
+            if (account != m_loginAccountShown)
+                return;  // user changed selection since invocation, there's another pending async call
+
+            wxString text = _("Signed in as:") + " " + u.name;
+            if (m_accounts.size() > 1)
+                text += wxString::Format(" (%s)", account->GetServiceName());
+
+            m_loginText->SetLabel(text);
             m_loginImage->SetUserName(u.name);
             if (u.avatarUrl.empty())
             {
@@ -515,16 +540,19 @@ private:
         if (sel > 0)
         {
             m_currentProject = m_projects[sel-1];
+            auto account = AccountFor(m_currentProject);
+
             Config::CloudLastProject(m_currentProject.slug);
             m_activity->Start();
             EnableAllChoices(false);
             m_files->ClearFiles();
-            AccountFor(m_currentProject)->GetProjectDetails(m_currentProject)
+            account->GetProjectDetails(m_currentProject)
                 .then_on_window(this, &CloudOpenDialog::OnFetchedProjectInfo)
                 .catch_all([=](dispatch::exception_ptr e){
                     m_activity->HandleError(e);
                     EnableAllChoices(true);
                 });
+            FetchLoginInfo(account);
         }
     }
 
@@ -628,6 +656,8 @@ private:
 private:
     SecondaryLabel *m_loginText;
     AvatarIcon *m_loginImage;
+    CloudAccountClient *m_loginAccountShown = nullptr;
+
     wxButton *m_ok;
     wxChoice *m_project, *m_language;
     CloudFileList *m_files;
@@ -647,11 +677,7 @@ void CloudOpenFile(wxWindow *parent, std::function<void(int, wxString)> onDone)
 {
     wxWindowPtr<CloudOpenDialog> dlg(new CloudOpenDialog(parent));
 
-    if (CrowdinClient::Get().IsSignedIn())
-    {
-        dlg->LoadFromCloud();
-    }
-    else
+    if (GetSignedInAccounts().empty())
     {
         // FIXME: use some kind of wizard UI with going to next page instead?
         // We need to show this window-modal after the ShowModal() call below is
@@ -667,6 +693,10 @@ void CloudOpenFile(wxWindow *parent, std::function<void(int, wxString)> onDone)
                     dlg->EndModal(wxID_CANCEL);
             });
         });
+    }
+    else
+    {
+        dlg->LoadFromCloud();
     }
 
     auto retval = dlg->ShowModal(); // FIXME: Use global modal-less dialog
