@@ -551,7 +551,6 @@ private:
             Config::CloudLastProject(m_currentProject.slug);
             m_activity->Start();
             EnableAllChoices(false);
-            m_files->ClearFiles();
             account->GetProjectDetails(m_currentProject)
                 .then_on_window(this, &CloudOpenDialog::OnFetchedProjectInfo)
                 .catch_all([=](dispatch::exception_ptr e){
