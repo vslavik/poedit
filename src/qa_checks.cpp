@@ -204,12 +204,24 @@ public:
 
     bool CheckString(CatalogItemPtr item, const wxString& source, const wxString& translation) override
     {
-        if (source.length() < 2)
+        int t_len = source.length();
+        if (t_len < 2)
             return false;
+
+        bool allUpper;
+        
+        // check for source in all upper-case, those likely don't lead to a sentence start
+        allUpper = true;
+        while (t_len >= 0) {
+            if (u_islower(source[pos])) {
+                allUpper = false;
+                break;
+            }
+        }
 
         // Detect that the source string is a sentence: should have 1st letter uppercase and 2nd lowercase,
         // as checking just the 1st letter would lead to false positives (consider e.g. "MSP430 built-in"):
-        if (u_isupper(source[0]) && u_islower(source[1]) && u_islower(translation[0]))
+        if (!allUpper && u_isupper(source[0]) && u_islower(source[1]) && u_islower(translation[0]))
         {
             item->SetIssue(CatalogItem::Issue::Warning, _("The translation should start as a sentence."));
             return true;
@@ -217,12 +229,24 @@ public:
 
         if (u_islower(source[0]) && u_isupper(translation[0]))
         {
-            if (m_lang != "de")
+
+            // check for words in all upper-case, those are likely intended as-is
+            t_len = translation.length();
+            allUpper = true;
+            while (t_len >= 0) {
+                if (u_islower(translation[pos])) {
+                    allUpper = false;
+                    break;
+                }
+            }
+            
+            if (!allUpper && m_lang != "de")
             {
                 item->SetIssue(CatalogItem::Issue::Warning, _("The translation should start with a lowercase character."));
                 return true;
             }
             // else: German nouns start uppercased, this would cause too many false positives
+            //       also: ignore words that are in all upper are likely done that way on purpose
         }
 
         return false;
