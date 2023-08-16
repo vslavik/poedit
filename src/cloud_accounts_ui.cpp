@@ -111,7 +111,7 @@ void ServiceSelectionPanel::AddService(AccountDetailPanel *account)
 }
 
 
-AccountsPanel::AccountsPanel(wxWindow *parent) : wxPanel(parent, wxID_ANY)
+AccountsPanel::AccountsPanel(wxWindow *parent, int flags) : wxPanel(parent, wxID_ANY)
 {
     wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
     SetSizer(topsizer);
@@ -145,6 +145,13 @@ AccountsPanel::AccountsPanel(wxWindow *parent) : wxPanel(parent, wxID_ANY)
     m_list->SetMinSize(wxSize(PX(180), -1));
     m_panelsBook->SetMinSize(wxSize(PX(320), -1));
 
+    if (flags & AddCancelButton)
+    {
+        auto cancel = new wxButton(this, wxID_CANCEL);
+        topsizer->Add(cancel, wxSizerFlags().Right().Border(wxTOP, PX(16)));
+        topsizer->AddSpacer(PX(2));
+    }
+
     m_list->Bind(wxEVT_DATAVIEW_SELECTION_CHANGED, &AccountsPanel::OnSelectAccount, this);
 }
 
@@ -152,7 +159,7 @@ AccountsPanel::AccountsPanel(wxWindow *parent) : wxPanel(parent, wxID_ANY)
 void AccountsPanel::InitializeAfterShown()
 {
     for (auto& p: m_panels)
-        p->EnsureInitialized();
+        p->InitializeAfterShown();
     m_list->SetFocus();
 }
 
@@ -173,10 +180,28 @@ void AccountsPanel::AddAccount(const wxString& name, const wxString& iconId, Acc
         // select 1st available signed-in service if we can and hide the intro panel:
         if (m_list->GetSelectedRow() == wxNOT_FOUND && panel->IsSignedIn())
             m_list->SelectRow(pos);
+
+        if (NotifyContentChanged)
+            NotifyContentChanged();
     };
+
     panel->NotifyShouldBeRaised = [=]{
         m_list->SelectRow(pos);
+
+        if (NotifyShouldBeRaised)
+            NotifyShouldBeRaised();
     };
+}
+
+
+bool AccountsPanel::IsSignedIn() const
+{
+    for (auto& p: m_panels)
+    {
+        if (p->IsSignedIn())
+            return true;
+    }
+    return false;
 }
 
 
@@ -220,40 +245,6 @@ void SortAlphabetically(std::vector<T>& items, Key func)
         }
     );
 }
-
-
-class CrowdinLoginDialog : public wxDialog
-{
-public:
-    CrowdinLoginDialog(wxWindow *parent) : wxDialog(parent, wxID_ANY, _("Sign in to Crowdin"))
-    {
-        auto topsizer = new wxBoxSizer(wxHORIZONTAL);
-        auto panel = new Panel(this);
-        panel->SetClientSize(panel->GetBestSize());
-        topsizer->Add(panel, wxSizerFlags(1).Expand());
-        SetSizerAndFit(topsizer);
-        CenterOnParent();
-    }
-
-private:
-    class Panel : public CrowdinLoginPanel
-    {
-    public:
-        Panel(CrowdinLoginDialog *parent) : CrowdinLoginPanel(parent, DialogButtons), m_owner(parent)
-        {
-            EnsureInitialized();
-        }
-
-    protected:
-        void OnUserSignedIn() override
-        {
-            m_owner->Raise();
-            m_owner->EndModal(wxID_OK);
-        }
-
-        CrowdinLoginDialog *m_owner;
-    };
-};
 
 
 class CloudFileList : public wxDataViewListCtrl
@@ -377,8 +368,6 @@ class CloudOpenDialog : public wxDialog
 public:
     CloudOpenDialog(wxWindow *parent) : wxDialog(parent, wxID_ANY, _("Open online translation"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
     {
-        m_accounts = GetSignedInAccounts();
-
         auto topsizer = new wxBoxSizer(wxVERTICAL);
         topsizer->SetMinSize(PX(400), -1);
 
@@ -433,6 +422,8 @@ public:
 
     void LoadFromCloud()
     {
+        m_accounts = GetSignedInAccounts();
+
         FetchProjects();
         if (m_accounts.size() == 1)
             FetchLoginInfo(m_accounts[0]);
@@ -689,7 +680,9 @@ void CloudOpenFile(wxWindow *parent, std::function<void(int, wxString)> onDone)
         // executed. Use CallAfter() to delay:
         dlg->CallAfter([=]
         {
-            wxWindowPtr<CrowdinLoginDialog> login(new CrowdinLoginDialog(dlg.get()));
+            typedef CloudLoginDialog<AccountsPanel> LoginDialog;
+
+            wxWindowPtr<LoginDialog> login(new LoginDialog(dlg.get(), MSW_OR_OTHER(_("Sign in to online account"), _("Sign in to Online Account"))));
             login->ShowWindowModalThenDo([dlg,login](int retval)
             {
                 if (retval == wxID_OK)

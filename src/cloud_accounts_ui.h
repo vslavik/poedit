@@ -28,9 +28,13 @@
 
 #ifdef HAVE_HTTP_CLIENT
 
+#include "hidpi.h"
+
 #include <functional>
 #include <vector>
 
+#include <wx/dialog.h>
+#include <wx/sizer.h>
 #include <wx/panel.h>
 
 class WXDLLIMPEXP_FWD_CORE wxBoxSizer;
@@ -40,26 +44,49 @@ class WXDLLIMPEXP_FWD_CORE wxDataViewEvent;
 class IconAndSubtitleListCtrl;
 
 
-/// Base class for account login views (Crowdin etc.)
-class AccountDetailPanel : public wxPanel
+// Abstract base class with unified interface both for single-account panels and
+// the one for picking from multiple accounts
+class AnyAccountPanelBase
 {
 public:
-    AccountDetailPanel(wxWindow *parent) : wxPanel(parent, wxID_ANY) {}
+    virtual ~AnyAccountPanelBase() {}
 
-    // Get service name for UI (e.g. "Crowdin") and other metadata:
-    virtual wxString GetServiceName() const = 0;
-    virtual wxString GetServiceLogo() const = 0;
-    virtual wxString GetServiceDescription() const = 0;
-    virtual wxString GetServiceLearnMoreURL() const = 0;
+    /// Constructor flags
+    enum Flags
+    {
+        /// Add wxID_CANCEL dialog button to the panel
+        AddCancelButton = 1,
+        SlimBorders = 2
+    };
 
-    /// Call this when the window is first shown
-    virtual void EnsureInitialized() = 0;
+    /**
+        Call to initalize logged-in accounts.
+
+        This can be a little bit lengthy and may prompt the user for permission,
+        so should be called lazily.
+     */
+    virtual void InitializeAfterShown() = 0;
 
     /// Notification function called when content (e.g. login name, state) changes
     std::function<void()> NotifyContentChanged;
 
     /// Notification function called when content should be made visible to user (e.g. while signing in, after signing in finished)
     std::function<void()> NotifyShouldBeRaised;
+};
+
+
+/// Base class for account login views (Crowdin etc.)
+class AccountDetailPanel : public wxPanel, public AnyAccountPanelBase
+{
+public:
+    // flags is unused, it is there to force derived classes to implement it
+    AccountDetailPanel(wxWindow *parent, int /*flags*/) : wxPanel(parent, wxID_ANY) {}
+
+    // Get service name for UI (e.g. "Crowdin") and other metadata:
+    virtual wxString GetServiceName() const = 0;
+    virtual wxString GetServiceLogo() const = 0;
+    virtual wxString GetServiceDescription() const = 0;
+    virtual wxString GetServiceLearnMoreURL() const = 0;
 
     virtual bool IsSignedIn() const = 0;
     virtual wxString GetLoginName() const = 0;
@@ -84,10 +111,10 @@ private:
 
 
 /// Window showing all supported accounts in a list-detail view
-class AccountsPanel : public wxPanel
+class AccountsPanel : public wxPanel, public AnyAccountPanelBase
 {
 public:
-    AccountsPanel(wxWindow *parent);
+    AccountsPanel(wxWindow *parent, int flags = 0);
 
     /**
         Call to initalize logged-in accounts.
@@ -95,7 +122,10 @@ public:
         This can be a little bit lengthy and may prompt the user for permission,
         so should be called lazily.
      */
-    void InitializeAfterShown();
+    void InitializeAfterShown() override;
+
+    /// Is at least one account signed in?
+    bool IsSignedIn() const;
 
 protected:
     void AddAccount(const wxString& name, const wxString& iconId, AccountDetailPanel *panel);
@@ -106,6 +136,48 @@ private:
     wxSimplebook *m_panelsBook;
     ServiceSelectionPanel *m_introPanel;
     std::vector<AccountDetailPanel*> m_panels;
+};
+
+
+/**
+    A dialog for logging into cloud accounts.
+
+    It can be used either for logging into any account (T=AccountsPanel, for initial setup)
+    or just into a single provider (e.g. T=CrowdinLoginPanel) e.g. when syncing a file and
+    credentials expired.
+ */
+template<typename T>
+class CloudLoginDialog : public wxDialog
+{
+public:
+    typedef T LoginPanel;
+
+    CloudLoginDialog(wxWindow *parent, const wxString& title) : wxDialog(parent, wxID_ANY, title)
+    {
+        auto topsizer = new wxBoxSizer(wxHORIZONTAL);
+        m_panel = new LoginPanel(this, LoginPanel::AddCancelButton | LoginPanel::SlimBorders);
+        m_panel->SetClientSize(m_panel->GetBestSize());
+        topsizer->Add(m_panel, wxSizerFlags(1).Expand().Border(wxALL, PX(16)));
+        SetSizerAndFit(topsizer);
+        CenterOnParent();
+
+        m_panel->InitializeAfterShown();
+
+        m_panel->NotifyContentChanged = [=]{
+            if (m_panel->IsSignedIn())
+            {
+                Raise();
+                EndModal(wxID_OK);
+            }
+        };
+
+        m_panel->NotifyShouldBeRaised = [=]{
+            Raise();
+        };
+    }
+
+private:
+    LoginPanel *m_panel;
 };
 
 

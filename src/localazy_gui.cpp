@@ -64,7 +64,7 @@
 
 
 LocalazyLoginPanel::LocalazyLoginPanel(wxWindow *parent, int flags)
-    : AccountDetailPanel(parent),
+    : AccountDetailPanel(parent, flags),
       m_state(State::Uninitialized),
       m_activity(nullptr)
 {
@@ -73,7 +73,7 @@ LocalazyLoginPanel::LocalazyLoginPanel(wxWindow *parent, int flags)
 
     wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
     sizer->SetMinSize(PX(350), -1);
-    topsizer->Add(sizer, wxSizerFlags(1).Expand().Border(wxALL, PX(16)));
+    topsizer->Add(sizer, wxSizerFlags(1).Expand().Border(wxALL, (flags & SlimBorders) ? PX(0) : PX(16)));
 
     auto logo = new StaticBitmap(this, GetServiceLogo());
     logo->SetCursor(wxCURSOR_HAND);
@@ -111,17 +111,18 @@ LocalazyLoginPanel::LocalazyLoginPanel(wxWindow *parent, int flags)
     auto buttons = new wxBoxSizer(wxHORIZONTAL);
     sizer->Add(buttons, wxSizerFlags().Expand().Border(wxBOTTOM, 1));
     buttons->Add(learnMore, wxSizerFlags().Center().Border(wxLEFT, PX(LearnMoreLink::EXTRA_INDENT)));
+    buttons->AddSpacer(PX(60));
     buttons->AddStretchSpacer();
     buttons->Add(m_signIn, wxSizerFlags());
     buttons->Add(m_signOut, wxSizerFlags());
 
-    if (flags & DialogButtons)
+    if (flags & AddCancelButton)
     {
         auto cancel = new wxButton(this, wxID_CANCEL);
 #ifdef __WXMSW__
         buttons->Add(cancel, wxSizerFlags().Border(wxLEFT, PX(3)));
 #else
-        buttons->Insert(2, cancel, wxSizerFlags().Border(wxRIGHT, PX(6)));
+        buttons->Insert(3, cancel, wxSizerFlags().Border(wxRIGHT, PX(6)));
 #endif
         m_signIn->SetDefault();
         m_signIn->SetFocus();
@@ -140,7 +141,7 @@ wxString LocalazyLoginPanel::GetServiceLearnMoreURL() const
     return LocalazyClient::AttributeLink("/");
 }
 
-void LocalazyLoginPanel::EnsureInitialized()
+void LocalazyLoginPanel::InitializeAfterShown()
 {
     if (m_state != State::Uninitialized)
         return;
@@ -340,5 +341,6 @@ void LocalazyLoginPanel::OnUserSignedIn()
 void LocalazyLoginPanel::OnSignOut(wxCommandEvent&)
 {
     LocalazyClient::Get().SignOut();
+    m_projects->DeleteAllItems();
     ChangeState(State::SignedOut);
 }

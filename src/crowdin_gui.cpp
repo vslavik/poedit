@@ -60,7 +60,7 @@
 
 
 CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
-    : AccountDetailPanel(parent),
+    : AccountDetailPanel(parent, flags),
       m_state(State::Uninitialized),
       m_activity(nullptr)
 {
@@ -69,7 +69,7 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
 
     wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
     sizer->SetMinSize(PX(300), -1);
-    topsizer->Add(sizer, wxSizerFlags(1).Expand().Border(wxALL, PX(16)));
+    topsizer->Add(sizer, wxSizerFlags(1).Expand().Border(wxALL, (flags & SlimBorders) ? PX(0) : PX(16)));
 
     auto logo = new StaticBitmap(this, GetServiceLogo());
     logo->SetCursor(wxCURSOR_HAND);
@@ -98,17 +98,18 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
     auto buttons = new wxBoxSizer(wxHORIZONTAL);
     sizer->Add(buttons, wxSizerFlags().Expand().Border(wxBOTTOM, 1));
     buttons->Add(learnMore, wxSizerFlags().Center().Border(wxLEFT, PX(LearnMoreLink::EXTRA_INDENT)));
+    buttons->AddSpacer(PX(60));
     buttons->AddStretchSpacer();
     buttons->Add(m_signIn, wxSizerFlags());
     buttons->Add(m_signOut, wxSizerFlags());
 
-    if (flags & DialogButtons)
+    if (flags & AddCancelButton)
     {
         auto cancel = new wxButton(this, wxID_CANCEL);
 #ifdef __WXMSW__
         buttons->Add(cancel, wxSizerFlags().Border(wxLEFT, PX(3)));
 #else
-        buttons->Insert(2, cancel, wxSizerFlags().Border(wxRIGHT, PX(6)));
+        buttons->Insert(3, cancel, wxSizerFlags().Border(wxRIGHT, PX(6)));
 #endif
         m_signIn->SetDefault();
         m_signIn->SetFocus();
@@ -127,7 +128,7 @@ wxString CrowdinLoginPanel::GetServiceLearnMoreURL() const
     return CrowdinClient::AttributeLink("/");
 }
 
-void CrowdinLoginPanel::EnsureInitialized()
+void CrowdinLoginPanel::InitializeAfterShown()
 {
     if (m_state != State::Uninitialized)
         return;
@@ -270,44 +271,11 @@ void CrowdinLoginPanel::OnSignOut(wxCommandEvent&)
 namespace
 {
 
+#warning "get rid of this"
 inline wxString GetCrowdinCacheDir()
 {
     return CloudSyncDestination::GetCacheDir() + wxFILE_SEP_PATH + "Crowdin" + wxFILE_SEP_PATH;
 }
-
-
-class CrowdinLoginDialog : public wxDialog
-{
-public:
-    CrowdinLoginDialog(wxWindow *parent) : wxDialog(parent, wxID_ANY, _("Sign in to Crowdin"))
-    {
-        auto topsizer = new wxBoxSizer(wxHORIZONTAL);
-        auto panel = new Panel(this);
-        panel->SetClientSize(panel->GetBestSize());
-        topsizer->Add(panel, wxSizerFlags(1).Expand());
-        SetSizerAndFit(topsizer);
-        CenterOnParent();
-    }
-
-private:
-    class Panel : public CrowdinLoginPanel
-    {
-    public:
-        Panel(CrowdinLoginDialog *parent) : CrowdinLoginPanel(parent, DialogButtons), m_owner(parent)
-        {
-            EnsureInitialized();
-        }
-
-    protected:
-        void OnUserSignedIn() override
-        {
-            m_owner->Raise();
-            m_owner->EndModal(wxID_OK);
-        }
-
-        CrowdinLoginDialog *m_owner;
-    };
-};
 
 
 bool ExtractCrowdinMetadata(CatalogPtr cat,
@@ -381,6 +349,8 @@ bool ExtractCrowdinMetadata(CatalogPtr cat,
     return false;
 }
 
+typedef CloudLoginDialog<CrowdinLoginPanel> CrowdinLoginDialog;
+
 } // anonymous namespace
 
 
@@ -404,7 +374,7 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
 {
     if (!CrowdinClient::Get().IsSignedIn())
     {
-        wxWindowPtr<CrowdinLoginDialog> login(new CrowdinLoginDialog(parent));
+        wxWindowPtr<CrowdinLoginDialog> login(new CrowdinLoginDialog(parent, _("Sign in to Crowdin")));
         login->ShowWindowModalThenDo([login,parent,catalog,onDone](int retval){
             if (retval == wxID_OK)
                 CrowdinSyncFile(parent, catalog, onDone);
@@ -489,7 +459,7 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
 
 bool CrowdinSyncDestination::AuthIfNeeded(wxWindow* parent) {
     return CrowdinClient::Get().IsSignedIn()
-            || CrowdinLoginDialog(parent).ShowModal() == wxID_OK;
+            || CrowdinLoginDialog(parent, _("Sign in to Crowdin")).ShowModal() == wxID_OK;
 }
 
 dispatch::future<void> CrowdinSyncDestination::Upload(CatalogPtr file)

@@ -59,7 +59,7 @@ public:
     wxString GetServiceDescription() const override;
     wxString GetServiceLearnMoreURL() const override;
 
-    void EnsureInitialized() override;
+    void InitializeAfterShown() override;
     bool IsSignedIn() const override { return m_state == State::SignedIn; }
     wxString GetLoginName() const override { return m_userLogin; }
 
@@ -82,7 +82,7 @@ protected:
     void OnSignIn(wxCommandEvent&);
     void OnAddProject(wxCommandEvent&);
     void OnSignOut(wxCommandEvent&);
-    virtual void OnUserSignedIn();
+    void OnUserSignedIn();
 
     State m_state;
     ActivityIndicator *m_activity;
