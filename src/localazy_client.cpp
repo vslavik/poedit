@@ -74,22 +74,12 @@ protected:
 
         try
         {
-            return response.at("error").get<std::string>();
+            return response.at("message").get<std::string>();
         }
         catch (...)
         {
             return std::string();
         }
-    }
-
-    void on_error_response(int& statusCode, std::string& message) override
-    {
-        if (statusCode == 401/*Unauthorized*/)
-        {
-            // message is e.g. "The access token provided is invalid"
-            message = _("Not authorized, please sign in again.").utf8_str();
-        }
-        wxLogTrace("poedit.localazy", "JSON error: %s", message.c_str());
     }
 };
 
