@@ -111,7 +111,8 @@ private:
     ~LocalazyClient();
 
     void InitMetadataAndTokens();
-    void SaveMetadataAndTokens();
+    // can only be called if m_mutex is held:
+    void SaveMetadataAndTokens(std::lock_guard<std::mutex>& acquiredLock);
 
     std::unique_ptr<project_tokens> m_tokens;
     std::unique_ptr<metadata> m_metadata;

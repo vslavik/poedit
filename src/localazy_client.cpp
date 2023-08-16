@@ -259,9 +259,10 @@ dispatch::future<void> LocalazyClient::ExchangeTemporaryToken(const std::string&
                auto user = r.at("user");
                auto projectId = project.at("id").get<std::string>();
 
+               std::lock_guard<std::mutex> guard(m_mutex);
                m_metadata->add(projectId, project, user);
                m_tokens->add(projectId, token);
-               SaveMetadataAndTokens();
+               SaveMetadataAndTokens(guard);
            });
 }
 
@@ -289,10 +290,8 @@ void LocalazyClient::InitMetadataAndTokens()
 }
 
 
-void LocalazyClient::SaveMetadataAndTokens()
+void LocalazyClient::SaveMetadataAndTokens(std::lock_guard<std::mutex>& /*acquiredLock - just to make sure caller holds it*/)
 {
-    std::lock_guard<std::mutex> guard(m_mutex);
-
     Config::LocalazyMetadata(m_metadata->to_string());
 
     auto encoded_tokens = m_tokens->to_string();
@@ -445,7 +444,7 @@ void LocalazyClient::SignOut()
 
     m_metadata->clear();
     m_tokens->clear();
-    SaveMetadataAndTokens();
+    SaveMetadataAndTokens(guard);
 }
 
 
