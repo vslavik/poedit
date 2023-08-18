@@ -532,8 +532,7 @@ int PoeditApp::OnExit()
     TranslationMemory::CleanUp();
 
 #ifdef HAVE_HTTP_CLIENT
-    CrowdinClient::CleanUp();
-    LocalazyClient::CleanUp();
+    CloudAccountClient::CleanUp();
 #endif
 
     dispatch::cleanup();

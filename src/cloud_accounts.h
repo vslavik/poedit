@@ -44,6 +44,16 @@ class Catalog;
 class CloudAccountClient
 {
 public:
+    /// Return singleton instance of specific client.
+    static CloudAccountClient& Get(const std::string& service_name);
+
+    /// Get singleton instance for given metadata object.
+    template<typename T>
+    static CloudAccountClient& GetFor(const T& obj) { return Get(obj.service); }
+
+    /// Destroys all singletons, must be called (only) on app shutdown.
+    static void CleanUp();
+
     virtual ~CloudAccountClient() {}
 
     /// Returns identifier of the account's service
