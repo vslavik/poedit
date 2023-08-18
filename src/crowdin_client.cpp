@@ -596,22 +596,20 @@ std::shared_ptr<CrowdinClient::FileSyncMetadata> CrowdinClient::ExtractSyncMetad
 }
 
 
-dispatch::future<void> CrowdinClient::DownloadFile(int project_id,
-                                                   const Language& lang,
-                                                   int file_id,
-                                                   const std::string& file_extension,
-                                                   bool forceExportAsXliff,
-                                                   const std::wstring& output_file)
+dispatch::future<void> CrowdinClient::DownloadFile(const std::wstring& output_file, std::shared_ptr<FileSyncMetadata> meta_)
 {
-    wxLogTrace("poedit.crowdin", "DownloadFile(project_id=%d, lang=%s, file_id=%d, file_extension=%s, output_file=%S)", project_id, lang.LanguageTag(), file_id, file_extension.c_str(), output_file.c_str());
+    auto meta = std::dynamic_pointer_cast<CrowdinSyncMetadata>(meta_);
+    auto const forceExportAsXliff = !meta->xliffRemoteFilename.empty();
 
-    wxString ext(file_extension);
+    wxLogTrace("poedit.crowdin", "DownloadFile(project_id=%d, lang=%s, file_id=%d, file_extension=%s, output_file=%S)", meta->projectId, meta->lang.LanguageTag(), meta->fileId, meta->extension.c_str(), output_file.c_str());
+
+    wxString ext(meta->extension);
     ext.MakeLower();
     const bool isXLIFFNative = (ext == "xliff" || ext == "xlf") && !forceExportAsXliff;
     const bool isXLIFFConverted = (!isXLIFFNative && ext != "po" && ext != "pot") || forceExportAsXliff;
 
     json options({
-        { "targetLanguageId", lang.LanguageTag() },
+        { "targetLanguageId", meta->lang.LanguageTag() },
         // for XLIFF and PO files should be exported "as is" so set to `false`
         { "exportAsXliff", isXLIFFConverted },
         // ensure that XLIFF files contain not-yet-translated entries, see https://github.com/vslavik/poedit/pull/648
@@ -619,7 +617,7 @@ dispatch::future<void> CrowdinClient::DownloadFile(int project_id,
     });
 
     return m_api->post(
-        "projects/" + std::to_string(project_id) + "/translations/builds/files/" + std::to_string(file_id),
+        "projects/" + std::to_string(meta->projectId) + "/translations/builds/files/" + std::to_string(meta->fileId),
         json_data(options)
         )
         .then([](json r)
@@ -642,33 +640,37 @@ dispatch::future<void> CrowdinClient::DownloadFile(int project_id,
 dispatch::future<void> CrowdinClient::DownloadFile(const std::wstring& output_file, const ProjectInfo& project, const ProjectFile& file, const Language& lang)
 {
     auto internal = std::static_pointer_cast<FileInternal>(file.internal);
-    auto project_id = std::get<int>(project.internalID);
-    auto ext = std::string(wxFileName(internal->fileName, wxPATH_UNIX).GetExt().utf8_str());
 
-    return DownloadFile(project_id, lang, internal->id, ext, /*forceExportAsXliff=*/false, output_file);
+    auto meta = std::make_shared<CrowdinSyncMetadata>();
+    meta->lang = lang;
+    meta->projectId = std::get<int>(project.internalID);
+    meta->fileId = internal->id;
+    meta->extension = wxFileName(internal->fileName, wxPATH_UNIX).GetExt().utf8_str();
+    meta->xliffRemoteFilename.clear(); // -> forceExportAsXliff=false
+
+    return DownloadFile(output_file, meta);
 }
 
 
-dispatch::future<void> CrowdinClient::UploadFile(int project_id,
-                                                 const Language& lang,
-                                                 int file_id,
-                                                 const std::string& file_extension,
-                                                 const std::string& file_content)
+dispatch::future<void> CrowdinClient::UploadFile(const std::string& file_buffer, std::shared_ptr<CrowdinClient::FileSyncMetadata> meta_)
 {
-    wxLogTrace("poedit.crowdin", "UploadFile(project_id=%d, lang=%s, file_id=%d, file_extension=%s)", project_id, lang.LanguageTag().c_str(), file_id, file_extension.c_str());
+    auto meta = std::dynamic_pointer_cast<CrowdinSyncMetadata>(meta_);
+
+    wxLogTrace("poedit.crowdin", "UploadFile(project_id=%d, lang=%s, file_id=%d, file_extension=%s)", meta->projectId, meta->lang.LanguageTag().c_str(), meta->fileId, meta->extension.c_str());
+
     return m_api->post(
             "storages",
-            octet_stream_data(file_content),
-            { { "Crowdin-API-FileName", "crowdin." + file_extension } }
+            octet_stream_data(file_buffer),
+            { { "Crowdin-API-FileName", "crowdin." + meta->extension } }
         )
-        .then([this, project_id, file_id, lang] (json r) {
+        .then([this, meta] (json r) {
             wxLogTrace("poedit.crowdin", "File uploaded to temporary storage: %s", r.dump().c_str());
             const auto storageId = r["data"]["id"];
             return m_api->post(
-                "projects/" + std::to_string(project_id) + "/translations/" + lang.LanguageTag(),
+                "projects/" + std::to_string(meta->projectId) + "/translations/" + meta->lang.LanguageTag(),
                 json_data({
                     { "storageId", storageId },
-                    { "fileId", file_id }
+                    { "fileId", meta->fileId }
                 }))
                 .then([](json r) {
                     wxLogTrace("poedit.crowdin", "File uploaded: %s", r.dump().c_str());

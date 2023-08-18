@@ -314,10 +314,7 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
 
     wxWindowPtr<CloudSyncProgressWindow> dlg(new CloudSyncProgressWindow(parent));
 
-    Language crowdinLang;
-    int projectId, fileId;
-    std::string xliffRemoteFilename;
-    ExtractCrowdinMetadata(catalog, &crowdinLang, &projectId, &fileId, &xliffRemoteFilename);
+    auto meta = CrowdinClient::Get().ExtractSyncMetadata(*catalog);
 
     auto handle_error = [=](dispatch::exception_ptr e){
         dispatch::on_main([=]{
@@ -339,47 +336,30 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
     // TODO: nicer API for this.
     // This must be done right after entering the modal loop (on non-OSX)
     dlg->CallAfter([=]{
-        CrowdinClient::Get().UploadFile(
-                projectId,
-                crowdinLang,
-                fileId,
-                std::string(wxFileName(catalog->GetFileName()).GetExt().utf8_str()),
-                catalog->SaveToBuffer()
-            )
-            .then([=]
-            {
-                wxFileName filename = catalog->GetFileName();
-                auto tmpdir = std::make_shared<TempDirectory>();
-                auto outfile = tmpdir->CreateFileName("crowdin." + filename.GetExt());
+        CrowdinClient::Get().UploadFile(catalog->SaveToBuffer(), meta)
+        .then([=]
+        {
+            auto tmpdir = std::make_shared<TempDirectory>();
+            auto outfile = tmpdir->CreateFileName("crowdin." + wxFileName(catalog->GetFileName()).GetExt());
 
-                dispatch::on_main([=]{
-                    dlg->Activity->Start(_(L"Downloading latest translations…"));
-                });
+            dispatch::on_main([=]{
+                dlg->Activity->Start(_(L"Downloading latest translations…"));
+            });
 
-                if (!xliffRemoteFilename.empty())
-                    filename.Assign(xliffRemoteFilename, wxPATH_UNIX);
+            return CrowdinClient::Get().DownloadFile(outfile.ToStdWstring(), meta)
+                .then_on_main([=]
+                {
+                    auto newcat = Catalog::Create(outfile);
+                    newcat->SetFileName(catalog->GetFileName());
 
-                return CrowdinClient::Get().DownloadFile(
-                        projectId,
-                        crowdinLang,
-                        fileId,
-                        std::string(filename.GetExt().utf8_str()),
-                        /*forceExportAsXliff=*/!xliffRemoteFilename.empty(),
-                        outfile.ToStdWstring()
-                    )
-                    .then_on_main([=]
-                    {
-                        auto newcat = Catalog::Create(outfile);
-                        newcat->SetFileName(catalog->GetFileName());
+                    tmpdir->Clear();
+                    dlg->EndModal(wxID_OK);
 
-                        tmpdir->Clear();
-                        dlg->EndModal(wxID_OK);
-
-                        onDone(newcat);
-                    })
-                    .catch_all(handle_error);
-            })
-            .catch_all(handle_error);
+                    onDone(newcat);
+                })
+                .catch_all(handle_error);
+        })
+        .catch_all(handle_error);
     });
 
     dlg->ShowWindowModal();
@@ -394,16 +374,6 @@ dispatch::future<void> CrowdinSyncDestination::Upload(CatalogPtr file)
 {
     wxLogTrace("poedit.crowdin", "Uploading file: %s", file->GetFileName().c_str());
 
-    Language crowdinLang;
-    int projectId, fileId;
-    ExtractCrowdinMetadata(file, &crowdinLang, &projectId, &fileId);
-
-    return CrowdinClient::Get().UploadFile
-            (
-                projectId,
-                crowdinLang,
-                fileId,
-                std::string(wxFileName(file->GetFileName()).GetExt().utf8_str()),
-                file->SaveToBuffer()
-            );
+    auto meta = CrowdinClient::Get().ExtractSyncMetadata(*file);
+    return CrowdinClient::Get().UploadFile(file->SaveToBuffer(), meta);
 }

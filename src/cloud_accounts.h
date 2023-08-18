@@ -140,6 +140,16 @@ public:
     /// Asynchronously download specific file into @a output_file.
     virtual dispatch::future<void> DownloadFile(const std::wstring& output_file, const ProjectInfo& project, const ProjectFile& file, const Language& lang) = 0;
 
+    /// Asynchronously download specific file into @a output_file, using data from ExtractSyncMetadata().
+    virtual dispatch::future<void> DownloadFile(const std::wstring& output_file, std::shared_ptr<FileSyncMetadata> meta) = 0;
+
+    /**
+        Asynchronously upload a file.
+
+        The file is stored in a memory buffer and the destination information is provided by ExtractSyncMetadata().
+     */
+    virtual dispatch::future<void> UploadFile(const std::string& file_buffer, std::shared_ptr<FileSyncMetadata> meta) = 0;
+
 protected:
     CloudAccountClient() {}
 };

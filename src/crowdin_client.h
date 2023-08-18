@@ -87,19 +87,10 @@ public:
     dispatch::future<void> DownloadFile(const std::wstring& output_file, const ProjectInfo& project, const ProjectFile& file, const Language& lang) override;
 
     /// Asynchronously download specific Crowdin file into @a output_file.
-    dispatch::future<void> DownloadFile(int project_id,
-                                        const Language& lang,
-                                        int file_id,
-                                        const std::string& file_extension,
-                                        bool forceExportAsXliff,
-                                        const std::wstring& output_file);
+    dispatch::future<void> DownloadFile(const std::wstring& output_file, std::shared_ptr<FileSyncMetadata> meta) override;
 
     /// Asynchronously upload specific Crowdin file data.
-    dispatch::future<void> UploadFile(int project_id,
-                                      const Language& lang,
-                                      int file_id,
-                                      const std::string& file_extension,
-                                      const std::string& file_content);
+    dispatch::future<void> UploadFile(const std::string& file_buffer, std::shared_ptr<FileSyncMetadata> meta) override;
 
 private:
     class crowdin_http_client;
