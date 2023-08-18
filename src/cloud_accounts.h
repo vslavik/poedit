@@ -35,6 +35,8 @@
 #include <string>
 #include <variant>
 
+class Catalog;
+
 
 /**
     Base class for a cloud account client (e.g. Crowdin).
@@ -116,8 +118,24 @@ public:
     /// Retrieve details about given project
     virtual dispatch::future<ProjectDetails> GetProjectDetails(const ProjectInfo& project) = 0;
 
+    /// Metadata needed for uploading/downloading files
+    struct FileSyncMetadata
+    {
+        virtual ~FileSyncMetadata() {}
+
+        /// Service (Crowdin etc.) the account is for
+        std::string service;
+    };
+
     /// Create filename on local filesystem suitable for the remote file
     virtual std::wstring CreateLocalFilename(const ProjectInfo& project, const ProjectFile& file, const Language& lang) const = 0;
+
+    /**
+        Extract sync metadata from a file if present.
+
+        Returns nullptr if @a catalog is not from this cloud account or is missing metadata.
+      */
+    virtual std::shared_ptr<FileSyncMetadata> ExtractSyncMetadata(Catalog& catalog) = 0;
 
     /// Asynchronously download specific file into @a output_file.
     virtual dispatch::future<void> DownloadFile(const std::wstring& output_file, const ProjectInfo& project, const ProjectFile& file, const Language& lang) = 0;

@@ -27,6 +27,7 @@
 #include "crowdin_client.h"
 
 #include "catalog.h"
+#include "catalog_xliff.h"
 #include "errors.h"
 #include "http_client.h"
 #include "keychain/keytar.h"
@@ -469,7 +470,7 @@ std::wstring CrowdinClient::CreateLocalFilename(const ProjectInfo& project, cons
     std::replace_if(project_name.begin(), project_name.end(), boost::is_any_of("\\/:\"<>|?*"), '_');
     std::replace_if(file_title.begin(), file_title.end(), boost::is_any_of("\\/:\"<>|?*"), '_');
 
-    // NB: sync this with ExtractCrowdinMetadata()
+    // NB: sync this with ExtractMetadata()
     const wxString dir = project_name + " - " + lang.Code();
     wxFileName localFileName(dir + wxString::Format("/Crowdin.%d.%d.%s %s", project_id, internal->id, lang.LanguageTag(), file_title));
 
@@ -527,6 +528,71 @@ static void PostprocessDownloadedXLIFF(const wxString& filename)
     {
         return;
     }
+}
+
+
+std::shared_ptr<CrowdinClient::FileSyncMetadata> CrowdinClient::ExtractSyncMetadata(Catalog& catalog)
+{
+    auto meta = std::make_shared<CrowdinSyncMetadata>();
+    meta->service = SERVICE_NAME;
+
+    wxFileName fn(catalog.GetFileName());
+    meta->extension = fn.GetExt().utf8_str();
+
+    auto& hdr = catalog.Header();
+    bool crowdinSpecificLangUsed = false;
+
+    if (hdr.HasHeader("X-Crowdin-Language"))
+    {
+        meta->lang = Language::FromLanguageTag(hdr.GetHeader("X-Crowdin-Language").ToStdString());
+        crowdinSpecificLangUsed = true;
+    }
+    else
+    {
+        meta->lang = catalog.GetLanguage();
+    }
+
+    const auto xliff = dynamic_cast<XLIFFCatalog*>(&catalog);
+    if (xliff)
+    {
+        if (xliff->GetXPathValue("file/header/tool//@tool-id") == "crowdin")
+        {
+            try
+            {
+                meta->projectId = std::stoi(xliff->GetXPathValue("file/@*[local-name()='project-id']"));
+                meta->fileId = std::stoi(xliff->GetXPathValue("file/@*[local-name()='id']"));
+                meta->xliffRemoteFilename = xliff->GetXPathValue("file/@*[local-name()='original']");
+                return meta;
+            }
+            catch(...)
+            {
+                wxLogTrace("poedit.crowdin", "Missing or malformatted Crowdin project and/or file ID");
+            }
+        }
+    }
+
+    if (hdr.HasHeader("X-Crowdin-Project-ID") && hdr.HasHeader("X-Crowdin-File-ID"))
+    {
+        meta->projectId = std::stoi(hdr.GetHeader("X-Crowdin-Project-ID").ToStdString());
+        meta->fileId = std::stoi(hdr.GetHeader("X-Crowdin-File-ID").ToStdString());
+        return meta;
+    }
+
+    // NB: sync this with CreateLocalFilename()
+    static const std::wregex RE_CROWDIN_FILE(L"^Crowdin\\.([0-9]+)\\.([0-9]+)(\\.([a-zA-Z-]+))? .*");
+    auto name = fn.GetName().ToStdWstring();
+
+    std::wsmatch m;
+    if (std::regex_match(name, m, RE_CROWDIN_FILE))
+    {
+        meta->projectId = std::stoi(m.str(1));
+        meta->fileId = std::stoi(m.str(2));
+        if (!crowdinSpecificLangUsed && m[4].matched)
+            meta->lang = Language::FromLanguageTag(str::to_utf8(m[4].str()));
+        return meta;
+    }
+
+    return nullptr;
 }
 
 

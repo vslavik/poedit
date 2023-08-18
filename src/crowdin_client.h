@@ -81,6 +81,8 @@ public:
     /// Create filename on local filesystem suitable for the remote file
     std::wstring CreateLocalFilename(const ProjectInfo& project, const ProjectFile& file, const Language& lang) const override;
 
+    std::shared_ptr<FileSyncMetadata> ExtractSyncMetadata(Catalog& catalog) override;
+
     /// Asynchronously download specific Crowdin file into @a output_file.
     dispatch::future<void> DownloadFile(const std::wstring& output_file, const ProjectInfo& project, const ProjectFile& file, const Language& lang) override;
 
@@ -108,6 +110,14 @@ private:
         std::string fileName, dirName;
         std::string fullPath;
         int id, dirId, branchId;
+    };
+
+    struct CrowdinSyncMetadata : public FileSyncMetadata
+    {
+        Language lang;
+        int projectId, fileId;
+        std::string xliffRemoteFilename;
+        std::string extension;
     };
 
     CrowdinClient();

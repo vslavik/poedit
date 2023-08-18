@@ -277,78 +277,6 @@ inline wxString GetCrowdinCacheDir()
     return CloudSyncDestination::GetCacheDir() + wxFILE_SEP_PATH + "Crowdin" + wxFILE_SEP_PATH;
 }
 
-
-bool ExtractCrowdinMetadata(CatalogPtr cat,
-                            Language *lang = nullptr,
-                            int *projectId = nullptr, int *fileId = nullptr,
-                            std::string *xliffRemoteFilename = nullptr)
-{
-    auto& hdr = cat->Header();
-    bool crowdinSpecificLangUsed = false;
-
-    if (lang)
-    {
-        if (hdr.HasHeader("X-Crowdin-Language"))
-        {
-            *lang = Language::FromLanguageTag(hdr.GetHeader("X-Crowdin-Language").ToStdString());
-            crowdinSpecificLangUsed = true;
-        }
-        else
-        {
-            *lang = cat->GetLanguage();
-        }
-    }
-
-    const auto xliff = std::dynamic_pointer_cast<XLIFFCatalog>(cat);
-    if (xliff)
-    {
-        if (xliff->GetXPathValue("file/header/tool//@tool-id") == "crowdin")
-        {
-            try
-            {
-                if (projectId)
-                    *projectId = std::stoi(xliff->GetXPathValue("file/@*[local-name()='project-id']"));
-                if (fileId)
-                    *fileId = std::stoi(xliff->GetXPathValue("file/@*[local-name()='id']"));
-                if (xliffRemoteFilename)
-                    *xliffRemoteFilename = xliff->GetXPathValue("file/@*[local-name()='original']");
-                return true;
-            }
-            catch(...)
-            {
-                wxLogTrace("poedit.crowdin", "Missing or malformatted Crowdin project and/or file ID");
-            }
-        }
-    }
-    
-    if (hdr.HasHeader("X-Crowdin-Project-ID") && hdr.HasHeader("X-Crowdin-File-ID"))
-    {
-        if (projectId)
-            *projectId = std::stoi(hdr.GetHeader("X-Crowdin-Project-ID").ToStdString());
-        if (fileId)
-            *fileId = std::stoi(hdr.GetHeader("X-Crowdin-File-ID").ToStdString());
-        return true;
-    }
-
-    // NB: sync this with CreateLocalFilename()
-    static const std::wregex RE_CROWDIN_FILE(L"^Crowdin\\.([0-9]+)\\.([0-9]+)(\\.([a-zA-Z-]+))? .*");
-    auto name = wxFileName(cat->GetFileName()).GetName().ToStdWstring();
-
-    std::wsmatch m;
-    if (std::regex_match(name, m, RE_CROWDIN_FILE))
-    {
-        if (projectId)
-            *projectId = std::stoi(m.str(1));
-        if (fileId)
-            *fileId = std::stoi(m.str(2));
-        if (lang && !crowdinSpecificLangUsed && m[4].matched)
-            *lang = Language::FromLanguageTag(str::to_utf8(m[4].str()));
-        return true;
-    }
-
-    return false;
-}
-
 typedef CloudLoginDialog<CrowdinLoginPanel> CrowdinLoginDialog;
 
 } // anonymous namespace
@@ -356,7 +284,7 @@ typedef CloudLoginDialog<CrowdinLoginPanel> CrowdinLoginDialog;
 
 bool CanSyncWithCrowdin(CatalogPtr cat)
 {
-    return ExtractCrowdinMetadata(cat, nullptr);
+    return (bool)CrowdinClient::Get().ExtractSyncMetadata(*cat);
 }
 
 
