@@ -420,7 +420,7 @@ public:
 
     void Parse() override
     {
-        m_sourceLanguage = Language::FromLanguageTag(m_doc.value("sourceLocale", ""));
+        m_header.SetHeader("X-Generator", m_doc.value("generator", ""));
         m_language = Language::FromLanguageTag(m_doc.value("targetLocale", ""));
 
         int id = 0;

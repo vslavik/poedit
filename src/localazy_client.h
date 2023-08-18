@@ -82,8 +82,14 @@ public:
     /// Create filename on local filesystem suitable for the remote file
     std::wstring CreateLocalFilename(const ProjectInfo& project, const ProjectFile& file, const Language& lang) const override;
 
+    std::shared_ptr<FileSyncMetadata> ExtractSyncMetadata(Catalog& catalog) override;
+
     /// Asynchronously download specific file into @a output_file.
     dispatch::future<void> DownloadFile(const std::wstring& output_file, const ProjectInfo& project, const ProjectFile& file, const Language& lang) override;
+
+    dispatch::future<void> DownloadFile(const std::wstring& output_file, std::shared_ptr<FileSyncMetadata> meta) override;
+
+    dispatch::future<void> UploadFile(const std::string& file_buffer, std::shared_ptr<FileSyncMetadata> meta) override;
 
 private:
     /**
@@ -100,6 +106,12 @@ private:
     {
         // Localazy uses non-standard language codes that we need to remap
         std::map<std::string, std::string> tagToLocale;
+    };
+
+    struct LocalazySyncMetadata : public FileSyncMetadata
+    {
+        std::string langCode;
+        std::string projectId;
     };
 
 private:

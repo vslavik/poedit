@@ -32,16 +32,21 @@
 #include "keychain/keytar.h"
 #include "str_helpers.h"
 
+#include <chrono>
 #include <functional>
 #include <mutex>
 #include <stack>
 #include <iostream>
 #include <ctime>
 #include <regex>
+#include <thread>
 
 #include <boost/algorithm/string.hpp>
 
 #include <iostream>
+
+using namespace std::chrono_literals;
+
 
 // ----------------------------------------------------------------
 // Implementation
@@ -402,22 +407,101 @@ std::wstring LocalazyClient::CreateLocalFilename(const ProjectInfo& project, con
 }
 
 
-dispatch::future<void> LocalazyClient::DownloadFile(const std::wstring& output_file, const ProjectInfo& project, const ProjectFile& file, const Language& lang)
+std::shared_ptr<LocalazyClient::FileSyncMetadata> LocalazyClient::ExtractSyncMetadata(Catalog& catalog)
 {
-    auto project_id = std::get<std::string>(project.internalID);
-    auto internal = std::static_pointer_cast<FileInternal>(file.internal);
+    if (catalog.Header().GetHeader("X-Generator") != "Localazy")
+        return nullptr;
 
-    auto locale = internal->tagToLocale.at(lang.LanguageTag());
+    auto meta = std::make_shared<LocalazySyncMetadata>();
+    meta->service = SERVICE_NAME;
+    meta->langCode = catalog.GetLanguage().LanguageTag();
+
+    // extract project information from filename in the form of ProjectName.lang.json:
+    auto name = wxFileName(catalog.GetFileName()).GetName().BeforeLast('.').ToStdWstring();
+    std::lock_guard<std::mutex> guard(m_mutex);
+    for (auto p : m_metadata->projects())
+    {
+        auto pname = p.at("name").get<std::wstring>();
+        if (name == pname)
+        {
+            p.at("id").get_to(meta->projectId);
+            return meta;
+        }
+    }
+
+    // no matching project found in the loop above
+    return nullptr;
+}
+
+
+dispatch::future<void> LocalazyClient::DownloadFile(const std::wstring& output_file, std::shared_ptr<FileSyncMetadata> meta_)
+{
+    auto meta = std::dynamic_pointer_cast<LocalazySyncMetadata>(meta_);
+
+    auto locale = meta->langCode;
+    boost::replace_all(meta->langCode, "-", "_");
     boost::replace_all(locale, "#", "%23"); // urlencode
 
-    http_client::headers headers {{"Authorization", GetAuthorization(project_id)}};
+    http_client::headers headers {{"Authorization", GetAuthorization(meta->projectId)}};
 
-    return m_api->download("/projects/" + project_id + "/exchange/export/" + locale, headers)
+    return m_api->download("/projects/" + meta->projectId + "/exchange/export/" + locale, headers)
             .then([=](downloaded_file file)
             {
                 wxString outfile(output_file);
                 file.move_to(outfile);
             });
+}
+
+
+dispatch::future<void> LocalazyClient::DownloadFile(const std::wstring& output_file, const ProjectInfo& project, const ProjectFile& file, const Language& lang)
+{
+    auto internal = std::static_pointer_cast<FileInternal>(file.internal);
+
+    auto meta = std::make_shared<LocalazySyncMetadata>();
+    meta->projectId = std::get<std::string>(project.internalID);
+    meta->langCode = internal->tagToLocale.at(lang.LanguageTag());
+
+    return DownloadFile(output_file, meta);
+}
+
+
+dispatch::future<void> LocalazyClient::UploadFile(const std::string& file_buffer, std::shared_ptr<FileSyncMetadata> meta_)
+{
+    class upload_json_data : public octet_stream_data
+    {
+    public:
+        using octet_stream_data::octet_stream_data;
+        std::string content_type() const override { return "application/json"; };
+    };
+
+    auto meta = std::dynamic_pointer_cast<LocalazySyncMetadata>(meta_);
+
+    std::string prefix("/projects/" + meta->projectId + "/exchange");
+    http_client::headers headers {{"Authorization", GetAuthorization(meta->projectId)}};
+
+    return m_api->post(prefix + "/import", upload_json_data(file_buffer), headers)
+        .then([this,prefix,headers] (json r) {
+            auto ok = r.at("result").get<bool>();
+            if (!ok)
+            {
+                throw Exception(_(L"There was an error when uploading translations to Localazy."));
+            }
+
+            auto status_url = prefix + "/status/" + r.at("statusId").get<std::string>();
+            // wait until processing finishes, by polling status:
+            while (true)
+            {
+                std::this_thread::sleep_for(500ms);
+                auto status = m_api->get(status_url, headers).get();
+                auto text = status.at("status").get<std::string>();
+                if (text == "done")
+                    return;
+                if (text != "in_progress" && text != "scheduled")
+                {
+                    throw Exception(_(L"There was an error when uploading translations to Localazy."));
+                }
+            };
+        });
 }
 
 
