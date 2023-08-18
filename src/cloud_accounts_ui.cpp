@@ -33,6 +33,7 @@
 #include "str_helpers.h"
 #include "utility.h"
 
+#include "cloud_sync.h"
 #include "crowdin_client.h"
 #include "crowdin_gui.h"
 #include "localazy_client.h"
@@ -247,6 +248,12 @@ void SortAlphabetically(std::vector<T>& items, Key func)
 }
 
 
+inline wxString GetCacheDir()
+{
+    return CloudSyncDestination::GetCacheDir("Cloud");
+}
+
+
 class CloudFileList : public wxDataViewListCtrl
 {
 public:
@@ -439,7 +446,7 @@ private:
         m_loginAccountShown = account;
 
         account->GetUserInfo()
-        .then_on_window(this, [=](CrowdinClient::UserInfo u)
+        .then_on_window(this, [=](CloudAccountClient::UserInfo u)
         {
             if (account != m_loginAccountShown)
                 return;  // user changed selection since invocation, there's another pending async call
@@ -628,7 +635,7 @@ private:
         auto account = AccountFor(project);
         auto filename = account->CreateLocalFilename(project, file, lang);
 
-        wxFileName localFileName(wxString::Format("%s/%s/%s", CloudSyncDestination::GetCacheDir(), account->GetServiceName(), filename));
+        wxFileName localFileName(wxString::Format("%s/%s/%s", GetCacheDir(), account->GetServiceName(), filename));
 
         if (!wxFileName::DirExists(localFileName.GetPath()))
             wxFileName::Mkdir(localFileName.GetPath(), wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
@@ -666,6 +673,46 @@ private:
     CloudAccountClient::ProjectInfo m_currentProject;
 };
 
+
+class CloudAccountSyncDestinationBase : public CloudSyncDestination
+{
+public:
+    CloudAccountSyncDestinationBase(std::shared_ptr<CloudAccountClient::FileSyncMetadata> meta)
+        :  m_meta(meta), m_account(CloudAccountClient::GetFor(*meta))
+    {
+    }
+
+    wxString GetName() const override { return m_account.GetServiceName(); }
+
+    dispatch::future<void> Upload(CatalogPtr file) override
+    {
+        return m_account.UploadFile(file->SaveToBuffer(), m_meta);
+    }
+
+protected:
+    std::shared_ptr<CloudAccountClient::FileSyncMetadata> m_meta;
+    CloudAccountClient& m_account;
+};
+
+template<typename T>
+class CloudAccountSyncDestination : public CloudAccountSyncDestinationBase
+{
+public:
+    typedef CloudLoginDialog<T> LoginDialog;
+
+    using CloudAccountSyncDestinationBase::CloudAccountSyncDestinationBase;
+
+    bool AuthIfNeeded(wxWindow* parent) override
+    {
+        if (m_account.IsSignedIn())
+            return true;
+
+        // TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+        LoginDialog dlg(parent, wxString::Format(_("Sign in to %s"), GetName()));
+        return dlg.ShowModal() == wxID_OK;
+    }
+};
+
 } // anonymous namespace
 
 
@@ -701,5 +748,32 @@ void CloudOpenFile(wxWindow *parent, std::function<void(int, wxString)> onDone)
     onDone(retval, dlg->OutLocalFilename);
 }
 
+
+bool ShouldSyncToCloudAutomatically(CatalogPtr catalog)
+{
+    auto root = wxFileName::DirName(GetCacheDir());
+    root.Normalize();
+
+    wxFileName f(catalog->GetFileName());
+    f.Normalize();
+
+    return f.GetFullPath().starts_with(root.GetFullPath());
+}
+
+
+void SetupCloudSyncIfShouldBeDoneAutomatically(CatalogPtr catalog)
+{
+    if (!ShouldSyncToCloudAutomatically(catalog))
+        return;
+
+    auto meta = CloudAccountClient::ExtractSyncMetadataIfAny(*catalog);
+    if (!meta)
+        return;
+
+    if (meta->service == CrowdinClient::SERVICE_NAME)
+        catalog->AttachCloudSync(std::make_shared<CloudAccountSyncDestination<CrowdinLoginPanel>>(meta));
+    else if (meta->service == LocalazyClient::SERVICE_NAME)
+        catalog->AttachCloudSync(std::make_shared<CloudAccountSyncDestination<LocalazyLoginPanel>>(meta));
+}
 
 #endif // #ifdef HAVE_HTTP_CLIENT

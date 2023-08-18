@@ -93,20 +93,8 @@ protected:
 };
 
 
-class CrowdinSyncDestination : public CloudSyncDestination
-{
-public:
-    wxString GetName() const override { return "Crowdin"; }
-    bool AuthIfNeeded(wxWindow* parent) override;
-    dispatch::future<void> Upload(CatalogPtr file) override;
-};
-
-
 /// Can given file by synced to Crowdin, i.e. does it come from Crowdin and does it have required metadata?
 bool CanSyncWithCrowdin(CatalogPtr cat);
-
-/// Was the file opened directly from Crowdin and should be synced when the user saves it?
-bool ShouldSyncToCrowdinAutomatically(CatalogPtr cat);
 
 /**
     Synces the catalog with Crowdin, uploading and downloading translations.

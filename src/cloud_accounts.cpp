@@ -48,4 +48,18 @@ void CloudAccountClient::CleanUp()
     LocalazyClient::CleanUp();
 }
 
+
+std::shared_ptr<CloudAccountClient::FileSyncMetadata> CloudAccountClient::ExtractSyncMetadataIfAny(Catalog& catalog)
+{
+    std::shared_ptr<CloudAccountClient::FileSyncMetadata> meta;
+    meta = CrowdinClient::Get().ExtractSyncMetadata(catalog);
+    if (meta)
+        return meta;
+    meta = LocalazyClient::Get().ExtractSyncMetadata(catalog);
+    if (meta)
+        return meta;
+    return nullptr;
+}
+
+
 #endif // #ifdef HAVE_HTTP_CLIENT

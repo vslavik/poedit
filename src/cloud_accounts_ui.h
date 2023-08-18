@@ -28,6 +28,7 @@
 
 #ifdef HAVE_HTTP_CLIENT
 
+#include "catalog.h"
 #include "hidpi.h"
 
 #include <functional>
@@ -188,6 +189,13 @@ private:
     @param onDone    Called with the dialog return value (wxID_OK/CANCEL) and name of loaded PO file.
  */
 void CloudOpenFile(wxWindow *parent, std::function<void(int, wxString)> onDone);
+
+/// Was the file opened directly from a cloud account and should be synced when the user saves it?
+bool ShouldSyncToCloudAutomatically(CatalogPtr catalog);
+
+/// Configure file, if it was opened directly from a cloud account, to be sync when the user saves is.
+void SetupCloudSyncIfShouldBeDoneAutomatically(CatalogPtr catalog);
+
 
 #endif // !HAVE_HTTP_CLIENT
 

@@ -147,6 +147,9 @@ public:
       */
     virtual std::shared_ptr<FileSyncMetadata> ExtractSyncMetadata(Catalog& catalog) = 0;
 
+    /// Extract sync metadata from a file if present, trying all cloud accounts.
+    static std::shared_ptr<FileSyncMetadata> ExtractSyncMetadataIfAny(Catalog& catalog);
+
     /// Asynchronously download specific file into @a output_file.
     virtual dispatch::future<void> DownloadFile(const std::wstring& output_file, const ProjectInfo& project, const ProjectFile& file, const Language& lang) = 0;
 

@@ -271,12 +271,6 @@ void CrowdinLoginPanel::OnSignOut(wxCommandEvent&)
 namespace
 {
 
-#warning "get rid of this"
-inline wxString GetCrowdinCacheDir()
-{
-    return CloudSyncDestination::GetCacheDir() + wxFILE_SEP_PATH + "Crowdin" + wxFILE_SEP_PATH;
-}
-
 typedef CloudLoginDialog<CrowdinLoginPanel> CrowdinLoginDialog;
 
 } // anonymous namespace
@@ -285,15 +279,6 @@ typedef CloudLoginDialog<CrowdinLoginPanel> CrowdinLoginDialog;
 bool CanSyncWithCrowdin(CatalogPtr cat)
 {
     return (bool)CrowdinClient::Get().ExtractSyncMetadata(*cat);
-}
-
-
-bool ShouldSyncToCrowdinAutomatically(CatalogPtr cat)
-{
-    // TODO: This check is fragile and breaks of the path is non-normalized,
-    //       e.g. uses different case or is relative or differently normalized.
-    //       Good for use with files from Recent Files, but not much else
-    return cat->GetFileName().StartsWith(GetCrowdinCacheDir());
 }
 
 
@@ -363,17 +348,4 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
     });
 
     dlg->ShowWindowModal();
-}
-
-bool CrowdinSyncDestination::AuthIfNeeded(wxWindow* parent) {
-    return CrowdinClient::Get().IsSignedIn()
-            || CrowdinLoginDialog(parent, _("Sign in to Crowdin")).ShowModal() == wxID_OK;
-}
-
-dispatch::future<void> CrowdinSyncDestination::Upload(CatalogPtr file)
-{
-    wxLogTrace("poedit.crowdin", "Uploading file: %s", file->GetFileName().c_str());
-
-    auto meta = CrowdinClient::Get().ExtractSyncMetadata(*file);
-    return CrowdinClient::Get().UploadFile(file->SaveToBuffer(), meta);
 }

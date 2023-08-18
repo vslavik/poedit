@@ -90,7 +90,7 @@ public:
         return std::make_shared<Dest>(name, std::move(func));
     }
 
-    static const wxString& GetCacheDir()
+    static wxString GetCacheDir(const wxString& category)
     {
         static wxString localBaseDir;
 
@@ -107,7 +107,7 @@ public:
         #endif
         }
 
-        return localBaseDir;
+        return localBaseDir + wxFILE_SEP_PATH + category;
     }
 };
 
