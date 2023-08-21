@@ -134,7 +134,7 @@ public:
         : CloudSyncProgressWindow(parent)
     {
         // TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
-        Activity->Start(wxString::Format(_(L"Syncing with %s…"), dest->GetName()));
+        Activity->Start(wxString::Format(_(L"Uploading translations to %s…"), dest->GetName()));
     }
 
     ActivityIndicator *Activity;
@@ -178,7 +178,7 @@ public:
             (
                     parent,
                     // TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
-                    wxString::Format(_("Syncing with %s failed."), dest->GetName()),
+                    wxString::Format(_("Uploading translations to %s failed."), dest->GetName()),
                     _("Syncing error"),
                     wxOK | wxICON_ERROR
                 ));
