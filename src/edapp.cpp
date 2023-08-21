@@ -323,6 +323,7 @@ bool PoeditApp::CheckForBetaUpdates() const
 static wxArrayString gs_filesToOpen;
 #endif
 static int gs_lineToOpen = 0;
+static wxString gs_uriToHandle;
 
 extern void InitXmlResource();
 
@@ -457,23 +458,6 @@ bool PoeditApp::OnInit()
     s_macHelpMenuTitleName = _("&Help");
 #endif
 
-#ifndef __WXOSX__
-    // NB: opening files or creating empty window is handled differently on
-    //     Macs, using MacOpenFiles() and MacNewFile(), so don't create empty
-    //     window if no files are given on command line; but still support
-    //     passing files on command line
-    if (!gs_filesToOpen.empty())
-    {
-        OpenFiles(gs_filesToOpen, gs_lineToOpen);
-        gs_filesToOpen.clear();
-        gs_lineToOpen = 0;
-    }
-    else
-    {
-        OpenNewFile();
-    }
-#endif // !__WXOSX__
-
 #ifdef USE_SPARKLE
     m_nativeMacAppData->sparkleDelegate = Sparkle_Initialize();
 #endif // USE_SPARKLE
@@ -491,6 +475,30 @@ bool PoeditApp::OnInit()
         win_sparkle_set_app_build_version(buildnum.wc_str());
     win_sparkle_init();
 #endif
+
+#ifndef __WXOSX__
+    // NB: opening files or creating empty window is handled differently on
+    //     Macs, using MacOpenFiles() and MacNewFile(), so don't create empty
+    //     window if no files are given on command line; but still support
+    //     passing files on command line
+    if (!gs_filesToOpen.empty())
+    {
+        OpenFiles(gs_filesToOpen, gs_lineToOpen);
+        gs_filesToOpen.clear();
+        gs_lineToOpen = 0;
+    }
+    else if (!gs_uriToHandle.empty())
+    {
+        HandleCustomURI(gs_uriToHandle);
+        gs_uriToHandle.clear();
+        // don't terminate event loop right away on Windows as HandleCustomURI() is async:
+        return true;
+    }
+    else
+    {
+        OpenNewFile();
+    }
+#endif // !__WXOSX__
 
 #ifndef __WXOSX__
     // If we failed to open any window during startup (e.g. because the user
@@ -625,6 +633,15 @@ wxLayoutDirection PoeditApp::GetLayoutDirection() const
 
 void PoeditApp::OpenNewFile()
 {
+#ifdef __WXOSX__
+    // this must be done here rather than in OnInit on macOS
+    if (!gs_uriToHandle.empty())
+    {
+        HandleCustomURI(gs_uriToHandle);
+        gs_uriToHandle.clear();
+        return;
+    }
+#endif
     WelcomeWindow::GetAndActivate();
 }
 
@@ -759,8 +776,7 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
     wxString poeditURI;
     if (parser.Found(CL_HANDLE_POEDIT_URI, &poeditURI))
     {
-        // handling the URI shows UI, so do it after OnInit() initialization:
-        CallAfter([=]{ HandleCustomURI(poeditURI); });
+        gs_uriToHandle = poeditURI;
     }
 
 #ifdef __WXOSX__
@@ -772,7 +788,7 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
         auto fn = parser.GetParam(i);
         if (fn.StartsWith("poedit://"))
         {
-            CallAfter([=]{ HandleCustomURI(fn); });
+            gs_uriToHandle = fn;
         }
         else
         {
