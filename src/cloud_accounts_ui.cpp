@@ -427,13 +427,23 @@ public:
         EnableAllChoices(false);
     }
 
-    void LoadFromCloud()
+    // Load data. If project is not null, only show that project
+    void LoadFromCloud(std::shared_ptr<CloudAccountClient::ProjectInfo> project)
     {
-        m_accounts = GetSignedInAccounts();
-
-        FetchProjects();
-        if (m_accounts.size() == 1)
+        if (project)
+        {
+            m_accounts = {&CloudAccountClient::GetFor(*project)};
+            m_projects = {*project};
+            InitializeProjects();
             FetchLoginInfo(m_accounts[0]);
+        }
+        else
+        {
+            m_accounts = GetSignedInAccounts();
+            FetchProjects();
+            if (m_accounts.size() == 1)
+                FetchLoginInfo(m_accounts[0]);
+        }
     }
 
     wxString OutLocalFilename;
@@ -504,6 +514,11 @@ private:
         if (--m_projectsPendingLoad > 0)
             return; // wait for other loads to finish
 
+        InitializeProjects();
+    }
+
+    void InitializeProjects()
+    {
         SortAlphabetically(m_projects, [](const auto& p){ return p.name; });
 
         m_project->Append("");
@@ -550,7 +565,9 @@ private:
             m_activity->Start();
             EnableAllChoices(false);
             account->GetProjectDetails(m_currentProject)
-                .then_on_window(this, &CloudOpenDialog::OnFetchedProjectInfo)
+                .then_on_window(this, [=](CloudAccountClient::ProjectDetails prj){
+                    this->OnFetchedProjectInfo(prj);
+                })
                 .catch_all([=](dispatch::exception_ptr e){
                     m_activity->HandleError(e);
                     EnableAllChoices(true);
@@ -716,7 +733,9 @@ public:
 } // anonymous namespace
 
 
-void CloudOpenFile(wxWindow *parent, std::function<void(int, wxString)> onDone)
+void CloudOpenFile(wxWindow *parent,
+                   std::shared_ptr<CloudAccountClient::ProjectInfo> project,
+                   std::function<void(int, wxString)> onDone)
 {
     wxWindowPtr<CloudOpenDialog> dlg(new CloudOpenDialog(parent));
 
@@ -730,10 +749,10 @@ void CloudOpenFile(wxWindow *parent, std::function<void(int, wxString)> onDone)
             typedef CloudLoginDialog<AccountsPanel> LoginDialog;
 
             wxWindowPtr<LoginDialog> login(new LoginDialog(dlg.get(), MSW_OR_OTHER(_("Sign in to online account"), _("Sign in to Online Account"))));
-            login->ShowWindowModalThenDo([dlg,login](int retval)
+            login->ShowWindowModalThenDo([dlg,login,project](int retval)
             {
                 if (retval == wxID_OK)
-                    dlg->LoadFromCloud();
+                    dlg->LoadFromCloud(project);
                 else
                     dlg->EndModal(wxID_CANCEL);
             });
@@ -741,7 +760,7 @@ void CloudOpenFile(wxWindow *parent, std::function<void(int, wxString)> onDone)
     }
     else
     {
-        dlg->LoadFromCloud();
+        dlg->LoadFromCloud(project);
     }
 
     auto retval = dlg->ShowModal(); // FIXME: Use global modal-less dialog

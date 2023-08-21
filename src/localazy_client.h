@@ -64,7 +64,15 @@ public:
         called after receiving the auth token.
      */
     dispatch::future<void> Authenticate();
-    void HandleAuthCallback(const std::string& uri);
+
+    /**
+        Handles auth callback, i.e. invocation of poedit://localazy/... URL.
+
+        If the verb in the URL is "open", returns information about the project that
+        should be immediately opened. Otherwise (auth only), returns nullptr.
+     */
+    dispatch::future<std::shared_ptr<ProjectInfo>> HandleAuthCallback(const std::string& uri);
+
     static bool IsAuthCallback(const std::string& uri);
 
     /// Sign out of Localazy, forget the tokens
@@ -97,7 +105,7 @@ private:
 
         After exchange, updates stored tokens and project metadata and saves them.
      */
-    dispatch::future<void> ExchangeTemporaryToken(const std::string& token);
+    dispatch::future<ProjectInfo> ExchangeTemporaryToken(const std::string& token);
 
     /// Get authorization header for given project
     std::string GetAuthorization(const std::string& project_id) const;

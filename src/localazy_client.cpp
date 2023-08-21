@@ -215,26 +215,38 @@ bool LocalazyClient::IsAuthCallback(const std::string& uri)
 }
 
 
-void LocalazyClient::HandleAuthCallback(const std::string& uri)
+dispatch::future<std::shared_ptr<LocalazyClient::ProjectInfo>> LocalazyClient::HandleAuthCallback(const std::string& uri)
 {
     wxLogTrace("poedit.localazy", "Callback URI %s", uri.c_str());
 
-    if (!m_authCallback)
-        return;
-
     std::smatch m;
-    if (!(std::regex_search(uri, m, std::regex("//localazy/oauth/([^&]+)")) && m.size() > 1))
-        return;
+    if (!(std::regex_search(uri, m, std::regex("//localazy/(open|oauth)/([^&]+)")) && m.size() > 2))
+        return dispatch::make_ready_future(std::shared_ptr<ProjectInfo>());
 
-    ExchangeTemporaryToken(m.str(1))
-    .then_on_main([=](){
-        m_authCallback->set_value();
-        m_authCallback.reset();
+    std::string verb(m.str(1));
+    std::string tempToken(m.str(2));
+
+    // direct opening needs to work even when unexpected, but in-app auth shouldn't:
+    if (!m_authCallback && verb != "open")
+        return dispatch::make_ready_future(std::shared_ptr<ProjectInfo>());
+
+    return
+    ExchangeTemporaryToken(tempToken)
+    .then_on_main([=](ProjectInfo prjInfo){
+        if (m_authCallback)
+        {
+            m_authCallback->set_value();
+            m_authCallback.reset();
+        }
+        if (verb == "open")
+            return std::make_shared<ProjectInfo>(prjInfo);
+        else
+            return std::shared_ptr<ProjectInfo>();
     });
 }
 
 
-dispatch::future<void> LocalazyClient::ExchangeTemporaryToken(const std::string& token)
+dispatch::future<LocalazyClient::ProjectInfo> LocalazyClient::ExchangeTemporaryToken(const std::string& token)
 {
     // http_client requires that all requests are relative to the provided prefix
     // (this is a C++REST SDK limitation enforced on some platforms), so we need
@@ -254,10 +266,20 @@ dispatch::future<void> LocalazyClient::ExchangeTemporaryToken(const std::string&
                auto user = r.at("user");
                auto projectId = project.at("id").get<std::string>();
 
+               ProjectInfo prjInfo {
+                   SERVICE_NAME,
+                   projectId,
+                   project.at("name").get<std::wstring>(),
+                   project.at("slug").get<std::string>(),
+                   project.at("image").get<std::string>()
+               };
+
                std::lock_guard<std::mutex> guard(m_mutex);
                m_metadata->add(projectId, project, user);
                m_tokens->add(projectId, token);
                SaveMetadataAndTokens(guard);
+
+               return prjInfo;
            });
 }
 

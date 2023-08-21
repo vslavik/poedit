@@ -820,7 +820,16 @@ void PoeditApp::HandleCustomURI(const wxString& uri)
 
     if (LocalazyClient::IsAuthCallback(uri.ToStdString()))
     {
-        LocalazyClient::Get().HandleAuthCallback(uri.ToStdString());
+        LocalazyClient::Get().HandleAuthCallback(uri.ToStdString())
+            .then_on_main([=](std::shared_ptr<LocalazyClient::ProjectInfo> projectToOpen){
+                if (projectToOpen)
+                {
+                    // this shows UI, so do it after OnInit() initialization:
+                    CallAfter([=]{
+                        OpenOnlineTranslation(projectToOpen);
+                    });
+                }
+            });
         return;
     }
 #endif
@@ -1079,6 +1088,23 @@ void PoeditApp::OnOpen(wxCommandEvent& event)
 
 
 #ifdef HAVE_HTTP_CLIENT
+template<typename T>
+void PoeditApp::OpenOnlineTranslation(T preopen)
+{
+    CloudOpenFile(nullptr, preopen, [=](int retval, wxString filename)
+    {
+        if (retval != wxID_OK)
+            return;
+
+        auto cat = PoeditFrame::PreOpenFileWithErrorsUI(filename, nullptr);
+        if (!cat)
+            return;
+
+        auto frame = PoeditFrame::CreateEmpty();
+        frame->DoOpenFile(cat);
+    });
+}
+
 void PoeditApp::OnOpenOnlineTranslation(wxCommandEvent& event)
 {
     InvokingWindowProxy win(event);
@@ -1087,7 +1113,7 @@ void PoeditApp::OnOpenOnlineTranslation(wxCommandEvent& event)
         return;
 
     win.NotifyIsStarting();
-    CloudOpenFile(win.GetParentWindowIfAny(), [=](int retval, wxString filename)
+    CloudOpenFile(win.GetParentWindowIfAny(), nullptr, [=](int retval, wxString filename)
     {
         if (retval != wxID_OK)
         {

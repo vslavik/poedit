@@ -29,6 +29,7 @@
 #ifdef HAVE_HTTP_CLIENT
 
 #include "catalog.h"
+#include "cloud_accounts.h"
 #include "hidpi.h"
 
 #include <functional>
@@ -186,9 +187,10 @@ private:
     Let the user choose a remote cloud file, download it and open in Poedit.
 
     @param parent    PoeditFrame the UI should be shown under.
+    @param project   Optional project to preselect, otherwise nullptr
     @param onDone    Called with the dialog return value (wxID_OK/CANCEL) and name of loaded PO file.
  */
-void CloudOpenFile(wxWindow *parent, std::function<void(int, wxString)> onDone);
+void CloudOpenFile(wxWindow *parent, std::shared_ptr<CloudAccountClient::ProjectInfo> project, std::function<void(int, wxString)> onDone);
 
 /// Was the file opened directly from a cloud account and should be synced when the user saves it?
 bool ShouldSyncToCloudAutomatically(CatalogPtr catalog);
