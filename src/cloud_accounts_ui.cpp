@@ -43,6 +43,7 @@
 #include <boost/algorithm/string.hpp>
 
 #include <wx/choice.h>
+#include <wx/renderer.h>
 #include <wx/simplebook.h>
 #include <wx/sizer.h>
 #include <wx/statline.h>

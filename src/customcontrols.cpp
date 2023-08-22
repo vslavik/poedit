@@ -37,10 +37,15 @@
 #include <wx/dcclient.h>
 #include <wx/graphics.h>
 #include <wx/menu.h>
+#include <wx/renderer.h>
 #include <wx/settings.h>
 #include <wx/sizer.h>
 #include <wx/weakref.h>
 #include <wx/wupdlock.h>
+
+#ifdef __WXMSW__
+#include <wx/generic/private/markuptext.h>
+#endif
 
 #if wxCHECK_VERSION(3,1,0)
     #include <wx/activityindicator.h>

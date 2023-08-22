@@ -46,10 +46,6 @@
 #include <wx/weakref.h>
 #include <wx/xrc/xmlres.h>
 
-#ifdef __WXMSW__
-#include <wx/generic/private/markuptext.h>
-#endif
-
 #include <memory>
 #include <mutex>
 #include <map>
