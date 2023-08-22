@@ -132,6 +132,7 @@ public:
 protected:
     void AddAccount(const wxString& name, const wxString& iconId, AccountDetailPanel *panel);
     void OnSelectAccount(wxDataViewEvent& event);
+    void SelectAccount(unsigned index);
 
 private:
     IconAndSubtitleListCtrl *m_list;

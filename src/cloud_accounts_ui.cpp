@@ -181,14 +181,14 @@ void AccountsPanel::AddAccount(const wxString& name, const wxString& iconId, Acc
         m_list->UpdateFormattedItem(pos, name, desc);
         // select 1st available signed-in service if we can and hide the intro panel:
         if (m_list->GetSelectedRow() == wxNOT_FOUND && panel->IsSignedIn())
-            m_list->SelectRow(pos);
+            SelectAccount(pos);
 
         if (NotifyContentChanged)
             NotifyContentChanged();
     };
 
     panel->NotifyShouldBeRaised = [=]{
-        m_list->SelectRow(pos);
+        SelectAccount(pos);
 
         if (NotifyShouldBeRaised)
             NotifyShouldBeRaised();
@@ -213,7 +213,13 @@ void AccountsPanel::OnSelectAccount(wxDataViewEvent& event)
     if (index == wxNOT_FOUND || index >= (int)m_panels.size())
         return;
 
-    m_panelsBook->SetSelection(1 + index);
+    SelectAccount(index);
+}
+
+void AccountsPanel::SelectAccount(unsigned index)
+{
+	m_list->SelectRow(index);
+	m_panelsBook->SetSelection(1 + index);
 }
 
 
