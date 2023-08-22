@@ -263,7 +263,7 @@ void LocalazyLoginPanel::UpdateUserInfo()
     LocalazyClient::Get().GetUserProjects()
         .then_on_window(m_projects, [=](std::vector<LocalazyClient::ProjectInfo> projects){
             m_projects->DeleteAllItems();
-            auto dummyIcon = wxArtProvider::GetIcon("AccountLocalazy");
+            auto dummyIcon = wxArtProvider::GetIcon("AccountLocalazy", wxART_OTHER, wxSize(PX(16), PX(16)));
 
             unsigned idx = 0;
             for (auto p : projects)
@@ -286,7 +286,10 @@ void LocalazyLoginPanel::UpdateUserInfo()
                         wxLogNull null;
                         wxImage img(f.filename().GetFullPath());
                         if (img.IsOk())
+                        {
+                            img.Rescale(PX(16), PX(16));
                             bitmap = wxBitmap(img);
+                        }
                     #endif
                         if (bitmap.IsOk())
                         {
