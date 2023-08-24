@@ -133,7 +133,7 @@ LocalazyLoginPanel::LocalazyLoginPanel(wxWindow *parent, int flags)
 
 wxString LocalazyLoginPanel::GetServiceDescription() const
 {
-    return _("Localazy is an online localization management platform and collaborative translation tool.");
+    return _("Localazy is a highly automated localization platform allowing anyone to translate their products and content into multiple languages easily.");
 }
 
 wxString LocalazyLoginPanel::GetServiceLearnMoreURL() const
