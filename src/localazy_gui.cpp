@@ -72,7 +72,7 @@ LocalazyLoginPanel::LocalazyLoginPanel(wxWindow *parent, int flags)
     SetSizer(topsizer);
 
     wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-    sizer->SetMinSize(PX(350), -1);
+    sizer->SetMinSize(PX(350), PX(320));
     topsizer->Add(sizer, wxSizerFlags(1).Expand().Border(wxALL, (flags & SlimBorders) ? PX(0) : PX(16)));
 
     auto logo = new StaticBitmap(this, GetServiceLogo());
