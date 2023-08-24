@@ -87,15 +87,29 @@ ServiceSelectionPanel::ServiceSelectionPanel(wxWindow *parent) : wxPanel(parent,
 
 void ServiceSelectionPanel::AddService(AccountDetailPanel *account)
 {
-    if (!GetChildren().empty())
-        m_sizer->Add(new wxStaticLine(this, wxID_ANY), wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(24)));
+    bool isFirst = GetChildren().empty();
+    auto content = CreateServiceContent(account);
+    size_t pos = (!isFirst && time(NULL) % 2 == 0 /* aka rand() w/o need to seed */)
+                 ? m_sizer->GetItemCount()
+                 : 0;
+    size_t posLine = (pos == 0) ? 1 : pos;
+
+    m_sizer->Insert(pos, content, wxSizerFlags(1).Expand());
+    if (!isFirst)
+        m_sizer->Insert(posLine, new wxStaticLine(this, wxID_ANY), wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(24)));
+}
+
+
+wxSizer *ServiceSelectionPanel::CreateServiceContent(AccountDetailPanel *account)
+{
+    auto sizer = new wxBoxSizer(wxVERTICAL);
 
     auto logo = new StaticBitmap(this, account->GetServiceLogo());
     logo->SetCursor(wxCURSOR_HAND);
     logo->Bind(wxEVT_LEFT_UP, [=](wxMouseEvent&){ wxLaunchDefaultBrowser(account->GetServiceLearnMoreURL()); });
-    m_sizer->Add(logo, wxSizerFlags().PXDoubleBorder(wxBOTTOM));
+    sizer->Add(logo, wxSizerFlags().PXDoubleBorder(wxBOTTOM));
     auto explain = new ExplanationLabel(this, account->GetServiceDescription());
-    m_sizer->Add(explain, wxSizerFlags().Expand());
+    sizer->Add(explain, wxSizerFlags().Expand());
 
     auto signIn = new wxButton(this, wxID_ANY, MSW_OR_OTHER(_("Add account"), _("Add Account")));
     signIn->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){ account->SignIn(); });
@@ -106,10 +120,12 @@ void ServiceSelectionPanel::AddService(AccountDetailPanel *account)
                                        wxString::Format(_("Learn more about %s"), account->GetServiceName()));
 
     auto buttons = new wxBoxSizer(wxHORIZONTAL);
-    m_sizer->Add(buttons, wxSizerFlags().Expand().Border(wxTOP, PX(16)));
+    sizer->Add(buttons, wxSizerFlags().Expand().Border(wxTOP, PX(16)));
     buttons->Add(learnMore, wxSizerFlags().Center().Border(wxLEFT, PX(LearnMoreLink::EXTRA_INDENT)));
     buttons->AddStretchSpacer();
     buttons->Add(signIn, wxSizerFlags());
+
+    return sizer;
 }
 
 

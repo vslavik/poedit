@@ -107,6 +107,9 @@ public:
     /// Add service information
     void AddService(AccountDetailPanel *account);
 
+protected:
+    wxSizer *CreateServiceContent(AccountDetailPanel *account);
+
 private:
     wxBoxSizer *m_sizer;
 };
