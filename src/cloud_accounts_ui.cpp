@@ -170,6 +170,13 @@ AccountsPanel::AccountsPanel(wxWindow *parent, int flags) : wxPanel(parent, wxID
         topsizer->AddSpacer(PX(2));
     }
 
+    // don't show the list yet if no account was signed in:
+    if (!IsSignedIn())
+    {
+        SetMinSize(GetBestSize());
+        sizer->Hide(m_list);
+    }
+
     m_list->Bind(wxEVT_DATAVIEW_SELECTION_CHANGED, &AccountsPanel::OnSelectAccount, this);
 }
 
@@ -204,6 +211,12 @@ void AccountsPanel::AddAccount(const wxString& name, const wxString& iconId, Acc
     };
 
     panel->NotifyShouldBeRaised = [=]{
+        if (!m_list->IsShown())
+        {
+            m_list->GetContainingSizer()->Show(m_list);
+            Layout();
+        }
+
         SelectAccount(pos);
 
         if (NotifyShouldBeRaised)
