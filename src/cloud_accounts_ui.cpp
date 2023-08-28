@@ -135,7 +135,11 @@ AccountsPanel::AccountsPanel(wxWindow *parent, int flags) : wxPanel(parent, wxID
     SetSizer(topsizer);
 
     topsizer->Add(new ExplanationLabel(this, _("Connect Poedit with supported online localization platforms to seamlessly sync translations managed on them.")),
-                  wxSizerFlags().Expand().PXDoubleBorder(wxBOTTOM));
+                  wxSizerFlags().Expand().Border(wxBOTTOM, PX(2)));
+
+    auto learn = new LearnMoreLink(this, "https://poedit.net/cloud-sync", _("How does cloud sync work?"));
+    topsizer->Add(learn, wxSizerFlags().Left().Border(wxLEFT, PX(LearnMoreLink::EXTRA_INDENT)));
+    topsizer->AddSpacer(2 * PXDefaultBorder);
 
     wxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
     topsizer->Add(sizer, wxSizerFlags(1).Expand());
