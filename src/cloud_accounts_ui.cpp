@@ -209,6 +209,9 @@ void AccountsPanel::AddAccount(const wxString& name, const wxString& iconId, Acc
         if (NotifyShouldBeRaised)
             NotifyShouldBeRaised();
     };
+
+    if (m_list->GetSelectedRow() == wxNOT_FOUND && panel->IsSignedIn())
+        SelectAccount(pos);
 }
 
 
@@ -227,7 +230,10 @@ void AccountsPanel::OnSelectAccount(wxDataViewEvent& event)
 {
     auto index = m_list->ItemToRow(event.GetItem());
     if (index == wxNOT_FOUND || index >= (int)m_panels.size())
+    {
+        m_panelsBook->SetSelection(0);
         return;
+    }
 
     SelectAccount(index);
 }

@@ -146,10 +146,15 @@ void LocalazyLoginPanel::InitializeAfterShown()
     if (m_state != State::Uninitialized)
         return;
 
-    if (LocalazyClient::Get().IsSignedIn())
+    if (IsSignedIn())
         UpdateUserInfo();
     else
         ChangeState(State::SignedOut);
+}
+
+bool LocalazyLoginPanel::IsSignedIn() const
+{
+    return LocalazyClient::Get().IsSignedIn();
 }
 
 void LocalazyLoginPanel::ChangeState(State state)

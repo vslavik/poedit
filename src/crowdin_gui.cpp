@@ -133,10 +133,15 @@ void CrowdinLoginPanel::InitializeAfterShown()
     if (m_state != State::Uninitialized)
         return;
 
-    if (CrowdinClient::Get().IsSignedIn())
+    if (IsSignedIn())
         UpdateUserInfo();
     else
         ChangeState(State::SignedOut);
+}
+
+bool CrowdinLoginPanel::IsSignedIn() const
+{
+    return CrowdinClient::Get().IsSignedIn();
 }
 
 void CrowdinLoginPanel::ChangeState(State state)

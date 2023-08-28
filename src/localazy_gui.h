@@ -60,7 +60,7 @@ public:
     wxString GetServiceLearnMoreURL() const override;
 
     void InitializeAfterShown() override;
-    bool IsSignedIn() const override { return m_state == State::SignedIn; }
+    bool IsSignedIn() const override;
     wxString GetLoginName() const override { return m_userLogin; }
 
     void SignIn() override;
