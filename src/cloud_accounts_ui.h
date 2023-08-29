@@ -145,20 +145,14 @@ private:
 };
 
 
-/**
-    A dialog for logging into cloud accounts.
-
-    It can be used either for logging into any account (T=AccountsPanel, for initial setup)
-    or just into a single provider (e.g. T=CrowdinLoginPanel) e.g. when syncing a file and
-    credentials expired.
- */
+/// See CloudLoginDialog, except this one doesn't close automatically
 template<typename T>
-class CloudLoginDialog : public wxDialog
+class CloudEditLoginDialog : public wxDialog
 {
 public:
     typedef T LoginPanel;
 
-    CloudLoginDialog(wxWindow *parent, const wxString& title) : wxDialog(parent, wxID_ANY, title)
+    CloudEditLoginDialog(wxWindow *parent, const wxString& title) : wxDialog(parent, wxID_ANY, title)
     {
         auto topsizer = new wxBoxSizer(wxHORIZONTAL);
         m_panel = new LoginPanel(this, LoginPanel::AddCancelButton | LoginPanel::SlimBorders);
@@ -169,21 +163,38 @@ public:
 
         m_panel->InitializeAfterShown();
 
-        m_panel->NotifyContentChanged = [=]{
-            if (m_panel->IsSignedIn())
-            {
-                Raise();
-                EndModal(wxID_OK);
-            }
-        };
-
         m_panel->NotifyShouldBeRaised = [=]{
             Raise();
         };
     }
 
-private:
+protected:
     LoginPanel *m_panel;
+};
+
+/**
+    A dialog for logging into cloud accounts.
+
+    It can be used either for logging into any account (T=AccountsPanel, for initial setup)
+    or just into a single provider (e.g. T=CrowdinLoginPanel) e.g. when syncing a file and
+    credentials expired.
+
+    Unlike CloudEditLoginDialog, closes automatically upon successful login.
+ */
+template<typename T>
+class CloudLoginDialog : public CloudEditLoginDialog<T>
+{
+public:
+    CloudLoginDialog(wxWindow *parent, const wxString& title) : CloudEditLoginDialog<T>(parent, title)
+    {
+        this->m_panel->NotifyContentChanged = [=]{
+            if (this->m_panel->IsSignedIn())
+            {
+                this->Raise();
+                this->EndModal(wxID_OK);
+            }
+        };
+    }
 };
 
 

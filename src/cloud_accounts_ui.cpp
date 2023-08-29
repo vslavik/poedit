@@ -425,12 +425,14 @@ public:
         topsizer->SetMinSize(PX(400), -1);
 
         auto loginSizer = new wxBoxSizer(wxHORIZONTAL);
-        topsizer->AddSpacer(PX(6));
+        topsizer->AddSpacer(PX(8));
         topsizer->Add(loginSizer, wxSizerFlags().Right().PXDoubleBorder(wxLEFT|wxRIGHT));
-        m_loginText = new SecondaryLabel(this, "");
         m_loginImage = new AvatarIcon(this, wxSize(PX(24), PX(24)));
-        loginSizer->Add(m_loginText, wxSizerFlags().ReserveSpaceEvenIfHidden().Center().Border(wxRIGHT, PX(5)));
+        m_loginText = new SecondaryLabel(this, "");
         loginSizer->Add(m_loginImage, wxSizerFlags().ReserveSpaceEvenIfHidden().Center());
+        loginSizer->Add(m_loginText, wxSizerFlags().ReserveSpaceEvenIfHidden().Center().Border(wxLEFT, PX(2)));
+        auto manageLink = new LearnMoreLink(this, "", _("Manage accounts"));
+        loginSizer->Add(manageLink, wxSizerFlags().Center().Border(wxRIGHT, PX(LearnMoreLink::EXTRA_INDENT)));
         m_loginText->Hide();
         m_loginImage->Hide();
 
@@ -468,6 +470,7 @@ public:
         m_project->Bind(wxEVT_CHOICE, [=](wxCommandEvent&){ OnProjectSelected(); });
         ok->Bind(wxEVT_UPDATE_UI, &CloudOpenDialog::OnUpdateOK, this);
         ok->Bind(wxEVT_BUTTON, &CloudOpenDialog::OnOK, this);
+        manageLink->Bind(wxEVT_HYPERLINK, &CloudOpenDialog::OnManageAccounts, this);
 
         ok->Disable();
         EnableAllChoices(false);
@@ -492,6 +495,17 @@ public:
         }
     }
 
+    // Show account management UI for logging in
+    template<typename TLoginDialog, typename TFunc>
+    void ManageAccounts(TFunc thenDo)
+    {
+        wxWindowPtr<TLoginDialog> login(new TLoginDialog(this, MSW_OR_OTHER(_("Sign in to online account"), _("Sign in to Online Account"))));
+        login->ShowWindowModalThenDo([login,thenDo](int retval)
+        {
+            thenDo(retval == wxID_OK);
+        });
+    }
+
     wxString OutLocalFilename;
 
 private:
@@ -507,9 +521,10 @@ private:
             if (account != m_loginAccountShown)
                 return;  // user changed selection since invocation, there's another pending async call
 
-            wxString text = _("Signed in as:") + " " + u.name;
+            wxString text = u.name;
             if (m_accounts.size() > 1)
                 text += wxString::Format(" (%s)", account->GetServiceName());
+            text += L"  •  ";
 
             m_loginText->SetLabel(text);
             m_loginImage->SetUserName(u.name);
@@ -694,6 +709,14 @@ private:
             .catch_all(m_activity->HandleError);
     }
 
+    void OnManageAccounts(wxHyperlinkEvent&)
+    {
+        ManageAccounts<CloudEditLoginDialog<AccountsPanel>>([=](bool ok){
+            if (ok)
+                LoadFromCloud(nullptr);
+        });
+    }
+
     wxString CreateLocalFilename(const CloudAccountClient::ProjectInfo& project, const CloudAccountClient::ProjectFile& file, const Language& lang)
     {
         auto account = AccountFor(project);
@@ -793,12 +816,9 @@ void CloudOpenFile(wxWindow *parent,
         // executed. Use CallAfter() to delay:
         dlg->CallAfter([=]
         {
-            typedef CloudLoginDialog<AccountsPanel> LoginDialog;
-
-            wxWindowPtr<LoginDialog> login(new LoginDialog(dlg.get(), MSW_OR_OTHER(_("Sign in to online account"), _("Sign in to Online Account"))));
-            login->ShowWindowModalThenDo([dlg,login,project](int retval)
+            dlg->ManageAccounts<CloudLoginDialog<AccountsPanel>>([dlg,project](bool ok)
             {
-                if (retval == wxID_OK)
+                if (ok)
                     dlg->LoadFromCloud(project);
                 else
                     dlg->EndModal(wxID_CANCEL);
