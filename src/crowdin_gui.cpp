@@ -92,6 +92,10 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
     m_signIn->Bind(wxEVT_BUTTON, &CrowdinLoginPanel::OnSignIn, this);
     m_signOut= new wxButton(this, wxID_ANY, MSW_OR_OTHER(_("Sign out"), _("Sign Out")));
     m_signOut->Bind(wxEVT_BUTTON, &CrowdinLoginPanel::OnSignOut, this);
+#ifdef __WXMSW__
+    m_signIn->SetBackgroundColour(GetBackgroundColour());
+    m_signOut->SetBackgroundColour(GetBackgroundColour());
+#endif
 
     auto learnMore = new LearnMoreLink(this, GetServiceLearnMoreURL(), _("Learn more about Crowdin"));
 

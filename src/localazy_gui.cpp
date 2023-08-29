@@ -104,6 +104,10 @@ LocalazyLoginPanel::LocalazyLoginPanel(wxWindow *parent, int flags)
     m_signIn->Bind(wxEVT_BUTTON, &LocalazyLoginPanel::OnSignIn, this);
     m_signOut= new wxButton(this, wxID_ANY, MSW_OR_OTHER(_("Sign out"), _("Sign Out")));
     m_signOut->Bind(wxEVT_BUTTON, &LocalazyLoginPanel::OnSignOut, this);
+#ifdef __WXMSW__
+    m_signIn->SetBackgroundColour(GetBackgroundColour());
+    m_signOut->SetBackgroundColour(GetBackgroundColour());
+#endif
 
     // TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
     auto learnMore = new LearnMoreLink(this, GetServiceLearnMoreURL(), wxString::Format(_("Learn more about %s"), "Localazy"));
@@ -231,6 +235,9 @@ void LocalazyLoginPanel::CreateLoginInfoControls(State state)
             auto addPrj = new wxButton(this, wxID_ANY, MSW_OR_OTHER(_("Add project"), _("Add Project")));
 #ifdef __WXOSX__
             addPrj->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
+#ifdef __WXMSW__
+            addPrj->SetBackgroundColour(GetBackgroundColour());
 #endif
             addPrj->Bind(wxEVT_BUTTON, &LocalazyLoginPanel::OnAddProject, this);
             sizer->Add(addPrj, wxSizerFlags().Center().Border(wxALL, PX(6)));

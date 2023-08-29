@@ -113,6 +113,9 @@ wxSizer *ServiceSelectionPanel::CreateServiceContent(AccountDetailPanel *account
 
     auto signIn = new wxButton(this, wxID_ANY, MSW_OR_OTHER(_("Add account"), _("Add Account")));
     signIn->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){ account->SignIn(); });
+#ifdef __WXMSW__
+    signIn->SetBackgroundColour(GetBackgroundColour());
+#endif
 
     auto learnMore = new LearnMoreLink(this,
                                        account->GetServiceLearnMoreURL(),
