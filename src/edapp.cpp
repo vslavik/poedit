@@ -826,7 +826,7 @@ void PoeditApp::HandleCustomURI(const wxString& uri)
                 {
                     // this shows UI, so do it after OnInit() initialization:
                     CallAfter([=]{
-                        OpenOnlineTranslation(projectToOpen);
+                        OpenCloudTranslation(projectToOpen);
                     });
                 }
             });
@@ -871,7 +871,7 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
    EVT_MENU           (XRCID("menu_new_from_pot"),PoeditApp::OnNewFromPOT)
    EVT_MENU           (wxID_OPEN,                 PoeditApp::OnOpen)
  #ifdef HAVE_HTTP_CLIENT
-   EVT_MENU           (XRCID("menu_open_cloud"),PoeditApp::OnOpenOnlineTranslation)
+   EVT_MENU           (XRCID("menu_open_cloud"),PoeditApp::OnOpenCloudTranslation)
  #endif
    EVT_COMMAND        (wxID_ANY, EVT_OPEN_RECENT_FILE, PoeditApp::OnOpenHist)
    EVT_MENU           (wxID_ABOUT,                PoeditApp::OnAbout)
@@ -1089,7 +1089,7 @@ void PoeditApp::OnOpen(wxCommandEvent& event)
 
 #ifdef HAVE_HTTP_CLIENT
 template<typename T>
-void PoeditApp::OpenOnlineTranslation(T preopen)
+void PoeditApp::OpenCloudTranslation(T preopen)
 {
     CloudOpenFile(nullptr, preopen, [=](int retval, wxString filename)
     {
@@ -1105,7 +1105,7 @@ void PoeditApp::OpenOnlineTranslation(T preopen)
     });
 }
 
-void PoeditApp::OnOpenOnlineTranslation(wxCommandEvent& event)
+void PoeditApp::OnOpenCloudTranslation(wxCommandEvent& event)
 {
     InvokingWindowProxy win(event);
 

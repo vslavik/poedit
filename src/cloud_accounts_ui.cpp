@@ -137,7 +137,7 @@ AccountsPanel::AccountsPanel(wxWindow *parent, int flags) : wxPanel(parent, wxID
     wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
     SetSizer(topsizer);
 
-    topsizer->Add(new ExplanationLabel(this, _("Connect Poedit with supported online localization platforms to seamlessly sync translations managed on them.")),
+    topsizer->Add(new ExplanationLabel(this, _("Connect Poedit with supported cloud localization platforms to seamlessly sync translations managed on them.")),
                   wxSizerFlags().Expand().Border(wxBOTTOM, PX(2)));
 
     auto learn = new LearnMoreLink(this, "https://poedit.net/cloud-sync", _("How does cloud sync work?"));
@@ -422,7 +422,7 @@ private:
 class CloudOpenDialog : public wxDialog
 {
 public:
-    CloudOpenDialog(wxWindow *parent) : wxDialog(parent, wxID_ANY, _("Open online translation"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+    CloudOpenDialog(wxWindow *parent) : wxDialog(parent, wxID_ANY, _("Open cloud translation"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
     {
         auto topsizer = new wxBoxSizer(wxVERTICAL);
         topsizer->SetMinSize(PX(400), -1);
@@ -502,7 +502,7 @@ public:
     template<typename TLoginDialog, typename TFunc>
     void ManageAccounts(TFunc thenDo)
     {
-        wxWindowPtr<TLoginDialog> login(new TLoginDialog(this, MSW_OR_OTHER(_("Sign in to online account"), _("Sign in to Online Account"))));
+        wxWindowPtr<TLoginDialog> login(new TLoginDialog(this, MSW_OR_OTHER(_("Sign in to cloud account"), _("Sign in to Cloud Account"))));
         login->ShowWindowModalThenDo([login,thenDo](int retval)
         {
             thenDo(retval == wxID_OK);
