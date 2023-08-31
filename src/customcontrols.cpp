@@ -328,21 +328,16 @@ LearnMoreLink::LearnMoreLink(wxWindow *parent, const wxString& url, wxString lab
     wxHyperlinkCtrl::Create(parent, winid, label, url);
 
 #ifdef __WXOSX__
-    if (@available(macOS 10.14, *))
-    {
-        wxColour normal(NSColor.linkColor);
-        wxColour hover([NSColor.linkColor colorWithSystemEffect:NSColorSystemEffectRollover]);
-        SetNormalColour(normal);
-        SetVisitedColour(normal);
-        SetHoverColour(hover);
-    }
-    else
+    wxColour normal(NSColor.linkColor);
+    wxColour hover([NSColor.linkColor colorWithSystemEffect:NSColorSystemEffectRollover]);
+    SetNormalColour(normal);
+    SetVisitedColour(normal);
+    SetHoverColour(hover);
+#else
+    SetNormalColour("#2F79BE");
+    SetVisitedColour("#2F79BE");
+    SetHoverColour("#3D8DD5");
 #endif
-    {
-        SetNormalColour("#2F79BE");
-        SetVisitedColour("#2F79BE");
-        SetHoverColour("#3D8DD5");
-    }
 
 #ifdef __WXOSX__
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
@@ -470,7 +465,7 @@ ImageButton::ImageButton(wxWindow *parent, const wxString& bitmapName)
 #ifdef __WXOSX__
     // don't light up the background when clicked:
     NSButton *view = (NSButton*)GetHandle();
-    view.buttonType = NSMomentaryChangeButton;
+    view.buttonType = NSButtonTypeMomentaryChange;
 #else
     // refresh template icons on theme change (macOS handles automatically):
     if (bitmapName.EndsWith("Template"))

@@ -73,8 +73,8 @@
     {
         self.title = label;
         self.heading = heading;
-        self.buttonType = NSMomentaryPushInButton;
-        self.bezelStyle = NSTexturedRoundedBezelStyle;
+        self.buttonType = NSButtonTypeMomentaryPushIn;
+        self.bezelStyle = NSBezelStyleTexturedRounded;
         self.showsBorderOnlyWhileMouseInside = YES;
         self.mouseHover = NO;
     }
@@ -97,13 +97,9 @@
     NSColor *bg = self.window.backgroundColor;
     if (self.mouseHover)
     {
-        if (@available(macOS 10.14, *)) {
-            NSColor *highlight = [bg colorWithSystemEffect:NSColorSystemEffectRollover];
-            // use only lighter version of the highlight by blending with the background
-            bg = [bg blendedColorWithFraction:0.2 ofColor:highlight];
-        } else {
-            bg = [NSColor colorWithWhite:0.9 alpha:1.0];
-        }
+        NSColor *highlight = [bg colorWithSystemEffect:NSColorSystemEffectRollover];
+        // use only lighter version of the highlight by blending with the background
+        bg = [bg blendedColorWithFraction:0.2 ofColor:highlight];
     }
     [StyleKit drawActionButtonWithFrame:self.bounds
                             buttonColor:bg
@@ -172,8 +168,8 @@ ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& s
     if (self)
     {
         self.title = label;
-        self.bezelStyle = NSSmallSquareBezelStyle;
-        self.buttonType = NSOnOffButton;
+        self.bezelStyle = NSBezelStyleSmallSquare;
+        self.buttonType = NSButtonTypeOnOff;
         self.font = [NSFont boldSystemFontOfSize:[NSFont smallSystemFontSize]];
         self.animationPosition = 0.0;
         self.onColor = [NSColor colorWithCalibratedRed:0.302 green:0.847 blue:0.396 alpha:1.0];
@@ -221,13 +217,13 @@ ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& s
     if (state == self.state)
         return;
     [super setState:state];
-    self.animationPosition = (state == NSOnState) ? 1.0 : 0.0;
+    self.animationPosition = (state == NSControlStateValueOn) ? 1.0 : 0.0;
 }
 
 - (void)controlAction:(id)sender
 {
     #pragma unused(sender)
-    double target = (self.state == NSOnState) ? 1.0 : 0.0;
+    double target = (self.state == NSControlStateValueOn) ? 1.0 : 0.0;
 
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
     {
@@ -261,12 +257,12 @@ public:
 
     void SetValue(bool value)
     {
-        m_view.state = value ? NSOnState : NSOffState;
+        m_view.state = value ? NSControlStateValueOn : NSControlStateValueOff;
     }
 
     bool GetValue() const
     {
-        return m_view.state == NSOnState;
+        return m_view.state == NSControlStateValueOn;
     }
 
 private:
@@ -574,8 +570,8 @@ bool SwitchButton::MSWOnDraw(WXDRAWITEMSTRUCT *wxdis)
     if (self)
     {
         self.title = label;
-        self.bezelStyle = NSRoundRectBezelStyle;
-        self.buttonType = NSMomentaryPushInButton;
+        self.bezelStyle = NSBezelStyleRoundRect;
+        self.buttonType = NSButtonTypeMomentaryPushIn;
         self.font = [NSFont systemFontOfSize:[NSFont smallSystemFontSize]];
     }
     return self;

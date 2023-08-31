@@ -50,15 +50,8 @@ inline wxColour sRGB(int r, int g, int b, double a = 1.0)
 
 inline bool IsDarkAppearance(NSAppearance *appearance)
 {
-    if (@available(macOS 10.14, *))
-    {
-        NSAppearanceName appearanceName = [appearance bestMatchFromAppearancesWithNames:@[NSAppearanceNameAqua, NSAppearanceNameDarkAqua]];
-        return [appearanceName isEqualToString:NSAppearanceNameDarkAqua];
-    }
-    else
-    {
-        return false;
-    }
+    NSAppearanceName appearanceName = [appearance bestMatchFromAppearancesWithNames:@[NSAppearanceNameAqua, NSAppearanceNameDarkAqua]];
+    return [appearanceName isEqualToString:NSAppearanceNameDarkAqua];
 }
 
 #else
@@ -264,10 +257,7 @@ ColorScheme::Mode ColorScheme::GetAppMode()
     if (!s_appModeDetermined)
     {
 #ifdef __WXOSX__
-        if (@available(macOS 10.14, *))
-            s_appMode = IsDarkAppearance(NSApp.effectiveAppearance) ? Dark : Light;
-        else
-            s_appMode = Light;
+        s_appMode = IsDarkAppearance(NSApp.effectiveAppearance) ? Dark : Light;
 #else
         auto colBg = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW);
     #if wxCHECK_VERSION(3,1,3)

@@ -132,7 +132,7 @@ FileViewer::FileViewer(wxWindow*)
 
     m_openInEditor = new wxButton(panel, wxID_ANY, MSW_OR_OTHER(_("Open in editor"), _("Open in Editor")));
 #ifdef __WXOSX__
-    static_cast<NSButton*>(m_openInEditor->GetHandle()).bezelStyle = NSRoundRectBezelStyle;
+    static_cast<NSButton*>(m_openInEditor->GetHandle()).bezelStyle = NSBezelStyleRoundRect;
 #endif
     m_topBarSizer->Add(m_openInEditor, wxSizerFlags().Center().ReserveSpaceEvenIfHidden().Border(wxLEFT, PX(10)));
 

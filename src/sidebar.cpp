@@ -426,18 +426,10 @@ private:
         {
 #ifdef __WXOSX__
             auto winbg = GetBackgroundColour();
-            wxColour highlight;
-            if (@available(macOS 10.14, *))
-            {
-                NSColor *bg = winbg.OSXGetNSColor();
-                NSColor *osHighlight = [bg colorWithSystemEffect:NSColorSystemEffectRollover];
-                // use only lighter version of the highlight by blending with the background
-                highlight = wxColour([bg blendedColorWithFraction:0.2 ofColor:osHighlight]);
-            }
-            else
-            {
-                highlight = winbg.ChangeLightness(95);
-            }
+            NSColor *bg = winbg.OSXGetNSColor();
+            NSColor *osHighlight = [bg colorWithSystemEffect:NSColorSystemEffectRollover];
+            // use only lighter version of the highlight by blending with the background
+            auto highlight = wxColour([bg blendedColorWithFraction:0.2 ofColor:osHighlight]);
 #else
             auto highlight = m_bgHighlight;
 #endif
