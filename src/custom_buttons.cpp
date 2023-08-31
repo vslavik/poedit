@@ -413,7 +413,7 @@ SwitchButton::SwitchButton(wxWindow *parent, wxWindowID winid, const wxString& l
     Bind(wxEVT_LEFT_DOWN, &SwitchButton::OnMouseClick, this);
 #if wxUSE_ACCESSIBILITY
     Bind(wxEVT_TOGGLEBUTTON, [=](wxCommandEvent& e) {
-        wxAccessible::NotifyEvent(wxACC_EVENT_OBJECT_STATECHANGE, wxDynamicCast(this, wxWindow), wxOBJID_CLIENT, wxACC_SELF);
+        wxAccessible::NotifyEvent(wxACC_EVENT_OBJECT_STATECHANGE, this, wxOBJID_CLIENT, wxACC_SELF);
         e.Skip();
     });
 #endif // wxUSE_ACCESSIBILITY
@@ -582,7 +582,7 @@ wxAccStatus SwitchButton::accessible::GetState(int childId, long* state)
     {
         return wxAccessible::GetState(childId, state);
     }
-    auto window = wxDynamicCast(this->GetWindow(), SwitchButton);
+    auto window = dynamic_cast<SwitchButton*>(this->GetWindow());
     if (window->IsFocusable())
     {
         *state |= wxACC_STATE_SYSTEM_FOCUSABLE;
