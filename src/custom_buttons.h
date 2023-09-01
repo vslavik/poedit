@@ -114,12 +114,24 @@ public:
     void SetColors(const wxColour& on, const wxColour& offLabel);
 
 #ifdef __WXMSW__
+#if wxUSE_ACCESSIBILITY
+    wxAccessible* CreateAccessible() override;
+#endif // wxUSE_ACCESSIBILITY
     bool ShouldInheritColours() const override { return true; }
     void OnMouseClick(wxMouseEvent& e);
     bool MSWOnDraw(WXDRAWITEMSTRUCT *wxdis) override;
     wxSize DoGetBestSize() const override;
 
 private:
+#if wxUSE_ACCESSIBILITY
+    class accessible : public wxAccessible
+    {
+    public:
+        accessible(SwitchButton* win) : wxAccessible(wxDynamicCast(win, wxWindow)) {}
+        wxAccStatus GetRole(int childId, wxAccRole* role) override;
+        wxAccStatus GetState(int childId, long* state) override;
+    };
+#endif // wxUSE_ACCESSIBILITY
     wxColour m_clrOn, m_clrOffLabel;
 #endif // __WXMSW__
 };

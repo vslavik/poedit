@@ -407,8 +407,23 @@ SwitchButton::SwitchButton(wxWindow *parent, wxWindowID winid, const wxString& l
     SetBackgroundColour(parent->GetBackgroundColour());
     MakeOwnerDrawn();
     Bind(wxEVT_LEFT_DOWN, &SwitchButton::OnMouseClick, this);
-#endif
+#if wxUSE_ACCESSIBILITY
+    Bind(wxEVT_TOGGLEBUTTON, [=](wxCommandEvent& e) {
+        wxAccessible::NotifyEvent(wxACC_EVENT_OBJECT_STATECHANGE, this, wxOBJID_CLIENT, wxACC_SELF);
+        e.Skip();
+    });
+#endif // wxUSE_ACCESSIBILITY
+#endif // __WXMSW__
 }
+
+#ifdef __WXMSW__
+#if wxUSE_ACCESSIBILITY
+wxAccessible* SwitchButton::CreateAccessible() 
+{
+    return new accessible(this);
+}
+#endif // wxUSE_ACCESSIBILITY
+#endif // __WXMSW__
 
 void SwitchButton::SetColors(const wxColour& on, const wxColour& offLabel)
 {
@@ -545,6 +560,49 @@ bool SwitchButton::MSWOnDraw(WXDRAWITEMSTRUCT *wxdis)
 
     return true;
 }
+
+#if wxUSE_ACCESSIBILITY
+wxAccStatus SwitchButton::accessible::GetRole(int childId, wxAccRole* role)
+{
+    if (childId != wxACC_SELF)
+    {
+        return wxAccessible::GetRole(childId, role);
+    }
+    *role = wxROLE_SYSTEM_CHECKBUTTON;
+    return wxACC_OK;
+}
+
+wxAccStatus SwitchButton::accessible::GetState(int childId, long* state)
+{
+    if (childId != wxACC_SELF)
+    {
+        return wxAccessible::GetState(childId, state);
+    }
+    auto window = dynamic_cast<SwitchButton*>(this->GetWindow());
+    if (window->IsFocusable())
+    {
+        *state |= wxACC_STATE_SYSTEM_FOCUSABLE;
+    }
+    if (!window->IsShown())
+    {
+        *state |= wxACC_STATE_SYSTEM_INVISIBLE;
+    }
+    if (window->GetValue())
+    {
+        *state |= wxACC_STATE_SYSTEM_CHECKED;
+    }
+    if (!window->IsEnabled())
+    {
+        *state |= wxACC_STATE_SYSTEM_UNAVAILABLE;
+    }
+    if (window->HasFocus())
+    {
+        *state |= wxACC_STATE_SYSTEM_FOCUSED;
+    }
+    return wxACC_OK;
+}
+
+#endif // wxUSE_ACCESSIBILITY
 
 #endif // __WXMSW__
 
