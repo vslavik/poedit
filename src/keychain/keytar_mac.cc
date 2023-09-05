@@ -25,6 +25,11 @@
 
 #include "keytar.h"
 
+// FIXME: Convert to use non-deprecated SecItemAdd/SecItemCopyMatching/SecItemDelete,
+//        see e.g. https://github.com/jaraco/keyring/pull/522 for similar conversion
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
 #include <Security/Security.h>
 
 namespace

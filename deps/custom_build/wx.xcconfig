@@ -7,6 +7,7 @@ PRODUCT_NAME = wx_osx_$(WXTOOLKIT)
 
 OTHER_CFLAGS = -Wall -Wundef -Wno-unused-but-set-variable -fno-strict-aliasing -fno-common -fvisibility=hidden 
 OTHER_CPLUSPLUSFLAGS = $(OTHER_CFLAGS) -fvisibility-inlines-hidden
+GCC_WARN_64_TO_32_BIT_CONVERSION = NO
 
 GCC_PREFIX_HEADER = $(WXROOT)/include/wx/wxprec.h
 GCC_PRECOMPILE_PREFIX_HEADER = YES

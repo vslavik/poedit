@@ -1317,6 +1317,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		B2C129D821C6CA07004364B2 /* Ninja Build */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -1331,10 +1332,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd deps && ./build_deps.sh icu\n\n";
+			shellScript = "cd deps && ./build_deps.sh icu\n";
 		};
 		B2C129D921C6CBAF004364B2 /* Ninja Build */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -1360,6 +1362,7 @@
 			);
 			name = "Link Resources/ to Embedding App";
 			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1387,11 +1390,15 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
+			inputFileListPaths = (
+			);
 			inputPaths = (
 				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
 			);
 			name = "Set bundle versions from deps/gettext";
 			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
+				"$(DERIVED_FILE_DIR)/.updated.info.plist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1403,41 +1410,52 @@
 			files = (
 			);
 			inputPaths = (
+				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
 			);
 			name = "Set CFBundleVersion from git";
 			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
+				"$(DERIVED_FILE_DIR)/.updated.info.plist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "BUILD_NUMBER=`git rev-list HEAD --count`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n";
+			shellScript = "APP_INFO_PLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\nDSYM_INFO_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\nBUILD_NUMBER=`git rev-list HEAD --count`\nif [ -f \"$APP_INFO_PLIST\" ] ; then\n    oldversion=`/usr/libexec/PlistBuddy -c \"Print :CFBundleVersion\" \"$APP_INFO_PLIST\"`\nfi\n\nif [ \"$BUILD_NUMBER\" != \"$oldversion\" ] ; then\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$APP_INFO_PLIST\"\n    if [ -f \"$DSYM_INFO_PLIST\" ] ; then\n        /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$DSYM_INFO_PLIST\"\n    fi\n    touch ${DERIVED_FILE_DIR}/.updated.info.plist\nfi\n";
 		};
 		B2E83707170C96DB00F31559 /* Copy PO Translations */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
+			dependencyFile = "$(DERIVED_FILES_DIR)/copy-translations.d";
 			files = (
+			);
+			inputFileListPaths = (
 			);
 			inputPaths = (
 			);
 			name = "Copy PO Translations";
+			outputFileListPaths = (
+			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/copy-translations.done",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export MSGFMT=\"${DEPS_BUILD_DIR}/gettext/bin/msgfmt\"\nmacos/copy-translations.sh \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n";
+			shellScript = "export MSGFMT=\"${DEPS_BUILD_DIR}/gettext/bin/msgfmt\"\nmacos/copy-translations.sh \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ntouch \"${DERIVED_FILE_DIR}/copy-translations.done\"\necho \"${DERIVED_FILES_DIR}/copy-translations.d : \" \"${SRCROOT}\"/locales/*.po \"${SRCROOT}\"/deps/wx/locale/*.po >${DERIVED_FILES_DIR}/copy-translations.d\n";
 		};
 		B2F287C6170DCF06004C1F41 /* Copy Gettext binaries, data files & translations */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
+			dependencyFile = "$(DERIVED_FILES_DIR)/copy-binaries.d";
 			files = (
 			);
 			inputPaths = (
 			);
 			name = "Copy Gettext binaries, data files & translations";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/copy-binaries.done",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n\nfor i in ${GETTEXT_BINARIES}; do\n  cp -a ${DEPS_BUILD_DIR}/gettext/bin/$i \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\ndone\ncp -a ${DEPS_BUILD_DIR}/gettext/lib/lib*.*.dylib \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"\n\ncp -a ${DEPS_BUILD_DIR}/gettext/share/gettext-* \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gettext\"\ncp -a ${DEPS_BUILD_DIR}/gettext/share/locale \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\n\n(cd \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\" && rm -f locale && ln -s ../../Resources/locale .)\n(cd \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\" && rm -f gettext && ln -s ../../Resources/gettext .)\n";
+			shellScript = "mkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n\nfor i in ${GETTEXT_BINARIES}; do\n  cp -a ${DEPS_BUILD_DIR}/gettext/bin/$i \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\ndone\ncp -a ${DEPS_BUILD_DIR}/gettext/lib/lib*.*.dylib \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"\n\ncp -a ${DEPS_BUILD_DIR}/gettext/share/gettext-* \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gettext\"\ncp -a ${DEPS_BUILD_DIR}/gettext/share/locale \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\n\n(cd \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\" && rm -f locale && ln -s ../../Resources/locale .)\n(cd \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\" && rm -f gettext && ln -s ../../Resources/gettext .)\n\necho \"${DERIVED_FILE_DIR}/copy-binaries.done\" \" : \" ${DEPS_BUILD_DIR}/gettext/bin/* ${DEPS_BUILD_DIR}/gettext/lib/lib*.*.dylib >${DERIVED_FILE_DIR}/copy-binaries.d\ntouch \"${DERIVED_FILE_DIR}/copy-binaries.done\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
