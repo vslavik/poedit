@@ -32,7 +32,6 @@
 #include "cloud_sync.h"
 #include "colorscheme.h"
 #include "concurrency.h"
-#include "configuration.h"
 #include "customcontrols.h"
 #include "errors.h"
 #include "hidpi.h"

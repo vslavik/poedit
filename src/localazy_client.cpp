@@ -27,6 +27,7 @@
 #include "localazy_client.h"
 
 #include "catalog.h"
+#include "configuration.h"
 #include "errors.h"
 #include "http_client.h"
 #include "keychain/keytar.h"

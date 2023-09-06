@@ -27,6 +27,7 @@
 
 #ifdef HAVE_HTTP_CLIENT
 
+#include "configuration.h"
 #include "customcontrols.h"
 #include "http_client.h"
 #include "languagectrl.h"
