@@ -44,8 +44,6 @@
 
 #include <boost/algorithm/string.hpp>
 
-#include <iostream>
-
 using namespace std::chrono_literals;
 
 
@@ -380,32 +378,13 @@ dispatch::future<CloudAccountClient::ProjectDetails> LocalazyClient::GetProjectD
 
                        // there's only one "file" in Localazy projects:
                        ProjectFile f;
-                       auto internal = std::make_shared<FileInternal>();
-                       f.internal = internal;
                        f.title = _("All strings");
                        prj.at("url").get_to(f.description);
                        details.files.push_back(f);
 
                        for (auto lang: prj.at("languages"))
                        {
-                           auto code = lang.at("code").get<std::string>();
-                           auto tag = code;
-
-                           // Localazy uses non-standard codes such as zh_CN#Hans, we need to convert it to
-                           // a language tag (zh-Hans-CN). We assume that the format is lang_region#script.
-                           static const std::regex re_locale("([a-z]+)(_([A-Z0-9]+))?(#([A-Z][a-z]*))?");
-                           std::smatch m;
-                           if (std::regex_search(code, m, re_locale))
-                           {
-                               tag = m[1].str();
-                               if (m[5].matched)
-                                   tag += "-" + m[5].str();
-                               if (m[3].matched)
-                                   tag += "-" + m[3].str();
-                           }
-
-                           internal->tagToLocale[tag] = code;
-
+                           auto tag = lang.at("tag").get<std::string>();
                            auto l = Language::FromLanguageTag(tag);
                            if (l.IsValid())
                                details.languages.push_back(l);
@@ -437,23 +416,9 @@ std::shared_ptr<LocalazyClient::FileSyncMetadata> LocalazyClient::ExtractSyncMet
 
     auto meta = std::make_shared<LocalazySyncMetadata>();
     meta->service = SERVICE_NAME;
-    meta->langCode = catalog.GetLanguage().LanguageTag();
-
-    // extract project information from filename in the form of ProjectName.lang.json:
-    auto name = wxFileName(catalog.GetFileName()).GetName().BeforeLast('.').ToStdWstring();
-    std::lock_guard<std::mutex> guard(m_mutex);
-    for (auto p : m_metadata->projects())
-    {
-        auto pname = p.at("name").get<std::wstring>();
-        if (name == pname)
-        {
-            p.at("id").get_to(meta->projectId);
-            return meta;
-        }
-    }
-
-    // no matching project found in the loop above
-    return nullptr;
+    meta->lang = catalog.GetLanguage().LanguageTag();
+    meta->projectId = str::to_utf8(catalog.Header().GetHeader("X-Localazy-Project"));
+    return meta;
 }
 
 
@@ -461,13 +426,9 @@ dispatch::future<void> LocalazyClient::DownloadFile(const std::wstring& output_f
 {
     auto meta = std::dynamic_pointer_cast<LocalazySyncMetadata>(meta_);
 
-    auto locale = meta->langCode;
-    boost::replace_all(meta->langCode, "-", "_");
-    boost::replace_all(locale, "#", "%23"); // urlencode
-
     http_client::headers headers {{"Authorization", GetAuthorization(meta->projectId)}};
 
-    return m_api->download("/projects/" + meta->projectId + "/exchange/export/" + locale, headers)
+    return m_api->download("/projects/" + meta->projectId + "/exchange/export/" + meta->lang, headers)
             .then([=](downloaded_file file)
             {
                 wxString outfile(output_file);
@@ -476,13 +437,11 @@ dispatch::future<void> LocalazyClient::DownloadFile(const std::wstring& output_f
 }
 
 
-dispatch::future<void> LocalazyClient::DownloadFile(const std::wstring& output_file, const ProjectInfo& project, const ProjectFile& file, const Language& lang)
+dispatch::future<void> LocalazyClient::DownloadFile(const std::wstring& output_file, const ProjectInfo& project, const ProjectFile&, const Language& lang)
 {
-    auto internal = std::static_pointer_cast<FileInternal>(file.internal);
-
     auto meta = std::make_shared<LocalazySyncMetadata>();
     meta->projectId = std::get<std::string>(project.internalID);
-    meta->langCode = internal->tagToLocale.at(lang.LanguageTag());
+    meta->lang = lang.LanguageTag();
 
     return DownloadFile(output_file, meta);
 }

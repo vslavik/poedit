@@ -110,15 +110,9 @@ private:
     /// Get authorization header for given project
     std::string GetAuthorization(const std::string& project_id) const;
 
-    struct FileInternal : public ProjectFile::Internal
-    {
-        // Localazy uses non-standard language codes that we need to remap
-        std::map<std::string, std::string> tagToLocale;
-    };
-
     struct LocalazySyncMetadata : public FileSyncMetadata
     {
-        std::string langCode;
+        std::string lang;
         std::string projectId;
     };
 

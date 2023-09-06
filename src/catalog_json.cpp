@@ -421,6 +421,7 @@ public:
     void Parse() override
     {
         m_header.SetHeader("X-Generator", m_doc.value("generator", ""));
+        m_header.SetHeader("X-Localazy-Project", m_doc.value("projectId", ""));
         m_language = Language::FromLanguageTag(m_doc.value("targetLocale", ""));
 
         int id = 0;
