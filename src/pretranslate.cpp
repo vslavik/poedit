@@ -186,7 +186,7 @@ void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list, CatalogPtr catal
     auto topsizer = new wxBoxSizer(wxVERTICAL);
     auto sizer = new wxBoxSizer(wxVERTICAL);
     auto onlyExact = new wxCheckBox(dlg.get(), wxID_ANY, _("Only fill in exact matches"));
-    auto onlyExactE = new ExplanationLabel(dlg.get(), _("By default, inaccurate results are filled in as well and marked as needing work. Check this option to only include accurate matches."));
+    auto onlyExactE = new ExplanationLabel(dlg.get(), _("By default, inaccurate results are also included, but marked as needing work. Check this option to only include perfect matches."));
     auto noFuzzy = new wxCheckBox(dlg.get(), wxID_ANY, _(L"Don’t mark exact matches as needing work"));
     auto noFuzzyE = new ExplanationLabel(dlg.get(), _("Only enable if you trust the quality of your TM. By default, all matches from the TM are marked as needing work and should be reviewed before use."));
 
