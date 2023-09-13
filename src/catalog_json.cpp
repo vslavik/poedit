@@ -418,6 +418,13 @@ public:
         return doc.value("generator", "") == "Localazy";
     }
 
+    bool HasCapability(Catalog::Cap cap) const override
+    {
+        if (cap == Cap::LanguageSetting)
+            return true;
+        return JSONCatalog::HasCapability(cap);
+    }
+
     void Parse() override
     {
         m_header.SetHeader("X-Generator", m_doc.value("generator", ""));
@@ -434,6 +441,12 @@ public:
                 m_items.push_back(std::make_shared<Item>(++id, filename, tr));
             }
         }
+    }
+
+    void SetLanguage(Language lang) override
+    {
+        JSONCatalog::SetLanguage(lang);
+        m_doc["targetLocale"] = lang.LanguageTag();
     }
 
 protected:
