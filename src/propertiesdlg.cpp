@@ -450,7 +450,10 @@ protected:
 
         auto win = dynamic_cast<wxButton*>(e.GetEventObject());
 #ifdef __WXOSX__
-        win->PopupMenu(menu, -1, 24);
+        if (@available(macOS 11.0, *))
+            win->PopupMenu(menu, -4, 24);
+        else
+            win->PopupMenu(menu, -1, 24);
 #else
         win->PopupMenu(menu, 0, win->GetSize().y);
 #endif
