@@ -258,7 +258,8 @@ private:
         template<typename F>
         void GetSaveAsFilenameThenDo(const CatalogPtr& cat, F then);
         void DoSaveAs(const wxString& filename);
-        void OnProperties(wxCommandEvent& event);
+        void OnEditProperties(wxCommandEvent& event);
+        void OnUpdateEditProperties(wxUpdateUIEvent& event);
 
         void OnUpdateFromSources(wxCommandEvent& event);
         void OnUpdateFromSourcesUpdate(wxUpdateUIEvent& event);

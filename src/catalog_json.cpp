@@ -100,7 +100,7 @@ bool JSONCatalog::HasCapability(Catalog::Cap cap) const
         case Cap::Translations:
             return true;
         case Cap::LanguageSetting:
-            return false; // FIXME: for now
+            return false; // for most variants it is detected from filename
         case Cap::UserComments:
         case Cap::FuzzyTranslations:
             return false;
@@ -288,6 +288,13 @@ public:
     static bool SupportsFile(const json_t& doc, const std::string& extension)
     {
         return extension == "arb" || (doc.is_object() && doc.contains("@@locale"));
+    }
+
+    bool HasCapability(Catalog::Cap cap) const override
+    {
+        if (cap == Cap::LanguageSetting)
+            return true;
+        return JSONCatalog::HasCapability(cap);
     }
 
     void SetLanguage(Language lang) override

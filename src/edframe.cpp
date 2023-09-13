@@ -314,7 +314,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (wxID_SAVEAS,               PoeditFrame::OnSaveAs)
    EVT_MENU           (XRCID("menu_compile_mo"),  PoeditFrame::OnCompileMO)
    EVT_MENU           (XRCID("menu_export"),      PoeditFrame::OnExport)
-   EVT_MENU           (XRCID("menu_catproperties"), PoeditFrame::OnProperties)
+   EVT_MENU           (XRCID("menu_catproperties"), PoeditFrame::OnEditProperties)
    EVT_MENU           (XRCID("menu_update_from_src"), PoeditFrame::OnUpdateFromSources)
    EVT_MENU           (XRCID("menu_update_from_pot"),PoeditFrame::OnUpdateFromPOT)
   #ifdef HAVE_HTTP_CLIENT
@@ -399,6 +399,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
  #endif
    EVT_UPDATE_UI(XRCID("menu_update_from_pot"), PoeditFrame::OnUpdateFromPOTUpdate)
    EVT_UPDATE_UI(XRCID("toolbar_update"), PoeditFrame::OnUpdateSmartUpdate)
+   EVT_UPDATE_UI(XRCID("menu_catproperties"), PoeditFrame::OnUpdateEditProperties)
 
    // handling of find/replace:
    EVT_UPDATE_UI(XRCID("menu_find_next"),   PoeditFrame::OnUpdateFind)
@@ -1461,9 +1462,30 @@ void PoeditFrame::NewFromScratch()
 }
 
 
-void PoeditFrame::OnProperties(wxCommandEvent&)
+void PoeditFrame::OnEditProperties(wxCommandEvent&)
 {
     EditCatalogProperties();
+}
+
+void PoeditFrame::OnUpdateEditProperties(wxUpdateUIEvent& event)
+{
+    if (!m_catalog)
+    {
+        event.Enable(false);
+        return;
+    }
+
+    switch (m_catalog->GetFileType())
+    {
+        case Catalog::Type::PO:
+        case Catalog::Type::POT:
+            event.Enable(true);
+            break;
+
+        default:
+            event.Enable(m_catalog->HasCapability(Catalog::Cap::LanguageSetting));
+            break;
+    }
 }
 
 void PoeditFrame::EditCatalogProperties()

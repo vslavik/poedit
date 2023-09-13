@@ -462,7 +462,7 @@ bool XLIFFCatalog::HasCapability(Catalog::Cap cap) const
         case Cap::Translations:
             return true;
         case Cap::LanguageSetting:
-            return false; // FIXME: for now
+            return true;
         case Cap::UserComments:
             return false; // FIXME: for now
         case Cap::FuzzyTranslations:
