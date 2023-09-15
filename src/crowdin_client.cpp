@@ -464,15 +464,15 @@ std::wstring CrowdinClient::CreateLocalFilename(const ProjectInfo& project, cons
     auto internal = std::static_pointer_cast<FileInternal>(file.internal);
     auto project_id = std::get<int>(project.internalID);
     auto project_name = project.name;
-    auto file_title = file.title;
+    auto file_name = internal->fileName;
 
     // sanitize to be safe filenames:
     std::replace_if(project_name.begin(), project_name.end(), boost::is_any_of("\\/:\"<>|?*"), '_');
-    std::replace_if(file_title.begin(), file_title.end(), boost::is_any_of("\\/:\"<>|?*"), '_');
+    std::replace_if(file_name.begin(), file_name.end(), boost::is_any_of("\\/:\"<>|?*"), '_');
 
     // NB: sync this with ExtractMetadata()
     const wxString dir = project_name + " - " + lang.Code();
-    wxFileName localFileName(dir + wxString::Format("/Crowdin.%d.%d.%s %s", project_id, internal->id, lang.LanguageTag(), file_title));
+    wxFileName localFileName(dir + wxString::Format("/Crowdin.%d.%d.%s %s", project_id, internal->id, lang.LanguageTag(), file_name));
 
     auto ext = localFileName.GetExt().Lower();
     if (ext == "po")
