@@ -137,6 +137,9 @@ private:
 
     PoeditListCtrl *m_associatedList;
 
+    bool m_isSingleSelection = true;
+    bool m_fuzzyToggleNeeded = true;
+
     bool m_dontAutoclearFuzzyStatus;
 
     SourceTextCtrl *m_textOrig, *m_textOrigPlural;

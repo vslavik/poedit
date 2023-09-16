@@ -739,8 +739,9 @@ void EditingArea::UpdateEditingUIForCatalog(CatalogPtr catalog)
     else
         m_labelSource->SetLabel(_("Source text"));
 
+    m_fuzzyToggleNeeded = m_fuzzy && catalog->HasCapability(Catalog::Cap::FuzzyTranslations);
     if (m_fuzzy)
-        m_fuzzy->Show(catalog->HasCapability(Catalog::Cap::FuzzyTranslations));
+        m_fuzzy->Show(m_fuzzyToggleNeeded);
 
     RecreatePluralTextCtrls(catalog);
 }
@@ -876,14 +877,34 @@ void EditingArea::ShowPart(wxWindow *part, bool show)
 
 void EditingArea::SetSingleSelectionMode()
 {
-    if (!IsThisEnabled())
-        Enable();  // in case of previous multiple selection
+    if (m_isSingleSelection)
+        return;
+    m_isSingleSelection = true;
+
+    if (m_fuzzy)
+        m_fuzzy->Show(m_fuzzyToggleNeeded);
+    m_charCounter->Show();
+
+    Enable();
 }
 
 
 void EditingArea::SetMultipleSelectionMode()
 {
+    if (!m_isSingleSelection)
+        return;
+    m_isSingleSelection = false;
+
     // TODO: Show better UI
+
+    if (m_fuzzy)
+        m_fuzzy->Hide();
+    m_charCounter->Hide();
+    ShowPluralFormUI(false);
+    ShowPart(m_tagIdOrContext, false);
+    ShowPart(m_tagFormat, false);
+    m_textOrig->Clear();
+    m_textTrans->Clear();
     Disable();
 }
 
