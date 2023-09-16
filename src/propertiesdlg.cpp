@@ -756,7 +756,6 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
     m_language->Bind(wxEVT_COMBOBOX, &PropertiesDialog::OnLanguageChanged, this);
 
     m_pluralFormsDefault->Bind(wxEVT_RADIOBUTTON, &PropertiesDialog::OnPluralFormsDefault, this);
-    m_pluralFormsCustom->Bind(wxEVT_RADIOBUTTON, &PropertiesDialog::OnPluralFormsCustom, this);
     m_pluralFormsExpr->Bind(
         wxEVT_UPDATE_UI,
         [=](wxUpdateUIEvent& e){ e.Enable(m_pluralFormsCustom->GetValue()); });
@@ -875,7 +874,7 @@ void PropertiesDialog::TransferTo(const CatalogPtr& cat)
     if (m_hasLang)
     {
         m_language->SetLang(cat->Header().Lang);
-        OnLanguageValueChanged(m_language->GetValue());
+        OnLanguageValueChanged();
 
         PluralFormsExpr pf_def(cat->Header().Lang.DefaultPluralFormsExpr());
         PluralFormsExpr pf_cat(cat->Header().GetHeader("Plural-Forms").ToStdString());
@@ -969,34 +968,34 @@ void PropertiesDialog::DisableSourcesControls()
 void PropertiesDialog::OnLanguageChanged(wxCommandEvent& event)
 {
     m_validatedLang = -1;
-    OnLanguageValueChanged(event.GetString());
+    OnLanguageValueChanged();
     event.Skip();
 }
 
-void PropertiesDialog::OnLanguageValueChanged(const wxString& langstr)
+void PropertiesDialog::OnLanguageValueChanged()
 {
-    Language lang = Language::TryParse(langstr.ToStdWstring());
-    auto pluralForm = lang.DefaultPluralFormsExpr();
-    if (!pluralForm)
+    Language lang = m_language->GetLang();
+    if (lang == m_currentLanguageValue)
+        return;
+    m_currentLanguageValue = lang;
+
+    auto pluralExpr = lang.DefaultPluralFormsExpr();
+    auto validPlurals = lang.IsValid() && pluralExpr;
+    m_pluralFormsDefault->Enable(validPlurals);
+    if (validPlurals)
     {
-        m_pluralFormsDefault->Disable();
-        m_pluralFormsCustom->SetValue(true);
+        m_pluralFormsDefault->SetValue(true);
+        m_pluralFormsExpr->SetValue(bidi::mark_direction(pluralExpr.str(), TextDirection::LTR));
     }
     else
     {
-        m_pluralFormsDefault->Enable();
-        if (m_pluralFormsExpr->GetValue().empty() ||
-            PluralFormsExpr(m_pluralFormsExpr->GetValue().ToStdString()) == pluralForm)
-        {
-            m_pluralFormsDefault->SetValue(true);
-        }
+        m_pluralFormsCustom->SetValue(true);
+        m_pluralFormsExpr->Clear();
     }
 }
 
 void PropertiesDialog::OnPluralFormsDefault(wxCommandEvent& event)
 {
-    m_rememberedPluralForm = m_pluralFormsExpr->GetValue();
-
     Language lang = m_language->GetLang();
     if (lang.IsValid())
     {
@@ -1004,14 +1003,6 @@ void PropertiesDialog::OnPluralFormsDefault(wxCommandEvent& event)
         if (defaultForm)
             m_pluralFormsExpr->SetValue(bidi::mark_direction(defaultForm.str(), TextDirection::LTR));
     }
-
-    event.Skip();
-}
-
-void PropertiesDialog::OnPluralFormsCustom(wxCommandEvent& event)
-{
-    if (!m_rememberedPluralForm.empty())
-        m_pluralFormsExpr->SetValue(m_rememberedPluralForm);
 
     event.Skip();
 }

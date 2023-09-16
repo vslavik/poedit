@@ -59,9 +59,8 @@ class PropertiesDialog : public wxDialog
         void DisableSourcesControls();
 
         void OnLanguageChanged(wxCommandEvent& event);
-        void OnLanguageValueChanged(const wxString& langstr);
+        void OnLanguageValueChanged();
         void OnPluralFormsDefault(wxCommandEvent& event);
-        void OnPluralFormsCustom(wxCommandEvent& event);
         void OnGettextSettings(wxCommandEvent& event);
 
         struct PathsData;
@@ -83,7 +82,7 @@ class PropertiesDialog : public wxDialog
         PathsList *m_paths, *m_excludedPaths;
         wxEditableListBox *m_keywords;
         wxCheckBox *m_defaultKeywords;
-        wxString m_rememberedPluralForm;
+        Language m_currentLanguageValue;
         std::shared_ptr<GettextSettings> m_gettextSettings;
         bool m_hasLang;
         int m_validatedPlural, m_validatedLang;
