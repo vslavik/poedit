@@ -766,25 +766,52 @@ bool POLoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
 wxArrayString POCatalogItem::GetReferences() const
 {
     // A line may contain several references, separated by white-space.
-    // Each reference is in the form "path_name:line_number"
-    // (path_name may contain spaces)
-
+    // Traditionally, each reference was in the form "path_name:line_number", but non
+    // standard references are sometime used too, including hyperlinks.
+    // Filenames that contain spaces are supported - they must be enclosed by Unicode
+    // characters U+2068 and U+2069.
     wxArrayString refs;
 
-    for ( wxArrayString::const_iterator i = m_references.begin(); i != m_references.end(); ++i )
+    for (auto ref = m_references.begin(); ref != m_references.end(); ++ref)
     {
-        wxString line = *i;
+        auto line = ref->Strip(wxString::both);
+        wxString buf;
 
-        line = line.Strip(wxString::both);
-        while (!line.empty())
+        auto i = line.begin();
+        while (i != line.end())
         {
-            size_t idx = 0;
-            while (idx < line.length() && line[idx] != _T(':')) { idx++; }
-            while (idx < line.length() && !wxIsspace(line[idx])) { idx++; }
-
-            refs.push_back(line.Left(idx));
-            line = line.Mid(idx).Strip(wxString::both);
+            const wchar_t c = *i;
+            if (wxIsspace(c))
+            {
+                // store reference text encountered so far:
+                if (!buf.empty())
+                {
+                    refs.push_back(buf);
+                    buf.clear();
+                }
+                ++i;
+            }
+            else if (c == L'\u2068')
+            {
+                // quoted filename between U+2068 and U+2069:
+                ++i;
+                while (i != line.end() && *i != L'\u2069')
+                {
+                    buf += *i;
+                    ++i;
+                }
+                if (i != line.end())
+                    ++i; // skip trailing U+2069
+            }
+            else
+            {
+                buf += c;
+                ++i;
+            }
         }
+
+        if (!buf.empty())
+            refs.push_back(buf);
     }
 
     return refs;
