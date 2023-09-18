@@ -217,6 +217,7 @@ const wchar_t* RE_PHP_FORMAT = LR"(%(\d+\$)?[-+]{0,2}([ 0]|'.)?-?\d*(\..?\d+)?[%
 #define RE_C_FORMAT_BASE LR"(%(\d+\$)?[-+ #0]{0,5}(\d+|\*)?(\.(\d+|\*))?(hh|ll|[hljztL])?[%csdioxXufFeEaAgGnp])"
 const wchar_t* RE_C_FORMAT = RE_C_FORMAT_BASE;
 const wchar_t* RE_OBJC_FORMAT =  L"%@|" RE_C_FORMAT_BASE;
+const wchar_t* RE_CXX20_FORMAT = LR"((\{\{)|(\}\})|(\{[^}]*\}))";
 
 // Python and Perl-libintl braces format (also covered by common placeholders above)
 #define RE_BRACES LR"(\{[\w.-:,]+\})"
@@ -306,6 +307,11 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kin
         {
             static auto c_format = std::make_shared<RegexSyntaxHighlighter>(RE_C_FORMAT, TextKind::Placeholder);
             all->Add(c_format);
+        }
+        else if (fmt == "c++")
+        {
+            static auto cxx_format = std::make_shared<RegexSyntaxHighlighter>(RE_CXX20_FORMAT, TextKind::Placeholder);
+            all->Add(cxx_format);
         }
         else if (fmt == "python")
         {
