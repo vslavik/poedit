@@ -66,6 +66,9 @@ public:
     /// Return language tag for the language, per BCP 47, e.g. en-US or sr-Latn
     std::string LanguageTag() const { return m_tag; }
 
+    /// Minimizes the subtags, e.g. returns cs for cs-CZ, but en-GB for en-GB
+    Language MinimizeSubtags() const;
+
     /// Returns name of the locale suitable for ICU
     std::string IcuLocaleName() const { return m_icuLocale; }
     /// Returns ICU equivalent of the language info

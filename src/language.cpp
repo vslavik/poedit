@@ -267,6 +267,13 @@ void Language::Init(const std::string& code)
     {
         m_tag = DoGetLanguageTag(*this);
         m_icuLocale = m_tag;
+
+        char locale[512];
+        UErrorCode status = U_ZERO_ERROR;
+        uloc_forLanguageTag(m_tag.c_str(), locale, 512, NULL, &status);
+        if (U_SUCCESS(status))
+            m_icuLocale = locale;
+
         m_direction = DoIsRTL(*this) ? TextDirection::RTL : TextDirection::LTR;
     }
     else
@@ -312,6 +319,28 @@ std::string Language::Variant() const
         return std::string();
     else
         return m_code.substr(pos + 1);
+}
+
+Language Language::MinimizeSubtags() const
+{
+    if (m_icuLocale.empty())
+        return *this;
+
+    char minimized[512];
+    UErrorCode status = U_ZERO_ERROR;
+    uloc_minimizeSubtags(m_icuLocale.c_str(), minimized, 512, &status);
+    if (U_FAILURE(status))
+        return *this;
+
+    char tag[512];
+    uloc_toLanguageTag(minimized, tag, 512, /*strict=*/1, &status);
+    if (U_FAILURE(status))
+        return *this;
+
+    if (strcmp(tag, "zh") == 0)
+        return Language::FromLanguageTag("zh-Hans");
+
+    return Language::FromLanguageTag(tag);
 }
 
 Language Language::TryParse(const std::wstring& s)
