@@ -63,6 +63,11 @@ inline std::string to_utf8(const wchar_t *str)
     return boost::locale::conv::utf_to_utf<char>(str);
 }
 
+inline std::string to_utf8(const unsigned char *str)
+{
+    return std::string(reinterpret_cast<const char*>(str));
+}
+
 inline std::wstring to_wstring(const std::string& utf8str)
 {
     return boost::locale::conv::utf_to_utf<wchar_t>(utf8str);
