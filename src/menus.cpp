@@ -152,7 +152,7 @@ void MenusManager::TweakOSXMenuBar(wxMenuBar *bar)
         if (prefsItem)
         {
             // TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-            prefsItem->SetItemLabel(_(L"Settings…"));
+            prefsItem->SetItemLabel(_(L"Settings…") + "\tCtrl+,");
         }
     }
 
