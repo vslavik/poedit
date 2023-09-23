@@ -31,12 +31,14 @@
 
 #include <wx/filename.h>
 
+#include <memory>
+
 
 class FileMonitor
 {
 public:
-    FileMonitor() : m_isRespondingGuard(false) {}
-    ~FileMonitor() { Reset(); }
+    FileMonitor();
+    ~FileMonitor();
 
     void SetFile(wxFileName file);
 
@@ -87,6 +89,10 @@ public:
     static void EventLoopStarted();
     static void CleanUp();
 
+    // the following is public only for the needs of filemonitor.cpp implementations:
+    class Impl;
+    static void NotifyFileChanged(const wxString& path);
+
 private:
     void Reset();
 
@@ -95,6 +101,8 @@ private:
     wxString m_monitoredPath;
     wxFileName m_file, m_dir;
     wxDateTime m_loadTime;
+
+    std::unique_ptr<Impl> m_impl;
 };
 
 

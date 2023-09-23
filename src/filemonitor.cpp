@@ -26,6 +26,7 @@
 #include "filemonitor.h"
 
 #include "edframe.h"
+#include "str_helpers.h"
 
 #include <wx/fswatcher.h>
 
@@ -33,6 +34,72 @@
 #include <memory>
 #include <vector>
 
+
+#ifdef __WXOSX__
+
+// We can't use wxFileSystemWatcher, because it monitors the directory, not the file, and that
+// triggers scary warnings on macOS if the directory is ~/Desktop, ~/Downloads etc.
+// So instead, use a minimal sufficient NSFilePresenter for the monitoring
+
+#include <Foundation/Foundation.h>
+
+@interface POFilePresenter : NSObject<NSFilePresenter>
+@property(readwrite, copy) NSURL* presentedItemURL;
+@property(readwrite, assign) NSOperationQueue* presentedItemOperationQueue;
+@property FileMonitor::Impl* owner;
+
+-(instancetype)initWithOwner:(FileMonitor::Impl*)owner URL:(NSURL*)url;
+@end
+
+class FileMonitor::Impl
+{
+public:
+    Impl(const wxFileName& fn)
+    {
+        m_path = fn.GetFullPath();
+        NSURL *url = [NSURL fileURLWithPath:str::to_NS(m_path)];
+        m_presenter = [[POFilePresenter alloc] initWithOwner:this URL:url];
+        [NSFileCoordinator addFilePresenter:m_presenter];
+    }
+
+    ~Impl()
+    {
+        [NSFileCoordinator removeFilePresenter:m_presenter];
+        m_presenter = nil;
+    }
+
+    void OnChanged()
+    {
+        FileMonitor::NotifyFileChanged(m_path);
+    }
+
+private:
+    wxString m_path;
+    POFilePresenter *m_presenter;
+};
+
+@implementation POFilePresenter
+
+-(instancetype)initWithOwner:(FileMonitor::Impl*)owner URL:(NSURL*)url
+{
+    self = [super init];
+    if (self)
+    {
+        self.owner = owner;
+        self.presentedItemURL = url;
+        self.presentedItemOperationQueue = NSOperationQueue.mainQueue;
+    }
+    return self;
+}
+
+- (void)presentedItemDidChange
+{
+    self.owner->OnChanged();
+}
+
+@end
+
+#else // !__WXOSX__
 
 namespace
 {
@@ -53,12 +120,7 @@ public:
     {
         if (m_watcher)
         {
-#ifdef __WXOSX__
-            // kqueue-based monitoring is unreliable on macOS, we need to use AddTree() to force FSEvents usage
-            m_watcher->AddTree(dir, MONITORING_FLASG);
-#else
             m_watcher->Add(dir, MONITORING_FLASG);
-#endif
         }
         else
         {
@@ -71,11 +133,7 @@ public:
     {
         if (m_watcher)
         {
-#ifdef __WXOSX__
-            m_watcher->RemoveTree(dir);
-#else
             m_watcher->Remove(dir);
-#endif
         }
         else
         {
@@ -95,9 +153,7 @@ public:
             auto fn = event.GetNewPath();
             if (!fn.IsOk())
                 return;
-            auto window = PoeditFrame::Find(fn.GetFullPath());
-            if (window)
-                window->ReloadFileIfChanged();
+            FileMonitor::NotifyFileChanged(fn.GetFullPath());
         });
 
         for (auto& dir : m_pending)
@@ -120,21 +176,54 @@ std::unique_ptr<FSWatcher> FSWatcher::ms_instance;
 
 } // anonymous namespace
 
+class FileMonitor::Impl
+{
+public:
+    Impl(const wxFileName& fn)
+    {
+        m_dir = wxFileName::DirName(fn.GetPath());
+        FSWatcher::Get().Add(m_dir);
+    }
+
+    ~Impl()
+    {
+        FSWatcher::Get().Remove(m_dir);
+    }
+
+private:
+    wxFileName m_dir;
+};
+
+#endif // !__WXOSX__
+
 
 void FileMonitor::EventLoopStarted()
 {
+#ifndef __WXOSX__
     FSWatcher::Get().EventLoopStarted();
+#endif
 }
 
 void FileMonitor::CleanUp()
 {
+#ifndef __WXOSX__
     FSWatcher::CleanUp();
+#endif
 }
 
 
+FileMonitor::FileMonitor() : m_isRespondingGuard(false)
+{
+}
+
+FileMonitor::~FileMonitor()
+{
+    Reset();
+}
+
 void FileMonitor::SetFile(wxFileName file)
 {
-    // unmonitor first (needed even if the filename didn't change)xx
+    // unmonitor first (needed even if the filename didn't change)
     if (file == m_file)
     {
         m_loadTime = m_file.GetModificationTime();
@@ -146,17 +235,21 @@ void FileMonitor::SetFile(wxFileName file)
     m_file = file;
     if (!m_file.IsOk())
         return;
-    m_dir = wxFileName::DirName(m_file.GetPath());
 
-    FSWatcher::Get().Add(m_dir);
+    m_impl = std::make_unique<Impl>(m_file);
     m_loadTime = m_file.GetModificationTime();
 }
 
 void FileMonitor::Reset()
 {
-    if (m_file.IsOk())
-    {
-        FSWatcher::Get().Remove(m_dir);
-        m_file.Clear();
-    }
+    m_impl.reset();
+    m_file.Clear();
 }
+
+void FileMonitor::NotifyFileChanged(const wxString& path)
+{
+    auto window = PoeditFrame::Find(path);
+    if (window)
+        window->ReloadFileIfChanged();
+}
+
