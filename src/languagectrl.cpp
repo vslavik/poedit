@@ -127,14 +127,15 @@ LanguageCtrl::LanguageCtrl() : m_inited(false)
 }
 
 LanguageCtrl::LanguageCtrl(wxWindow *parent, wxWindowID winid, Language lang)
-    : wxComboBox(parent, winid)
+    : wxComboBox(parent, winid, "", wxDefaultPosition, wxSize(PX(220), -1))
 {
     Init(lang);
 }
 
 void LanguageCtrl::Init(Language lang)
 {
-    SetHint(_("Language Code or Name (e.g. en_GB)"));
+    // TRANSLATORS: placeholder/hint in language controls
+    SetHint(_("Language name or code"));
 
     // wxGTK must have the value set before autocompletion (but also after it
     // below) to avoid annoying popups in some (hard to determine) cases.
