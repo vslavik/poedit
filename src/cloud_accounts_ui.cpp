@@ -367,7 +367,7 @@ private:
                 EscapeMarkup(f.description)
             );
         #else
-            wxString text = str::to_wx(f.title);
+            wxString text(f.title);
         #endif
 
             wxVector<wxVariant> data;
@@ -847,7 +847,7 @@ bool ShouldSyncToCloudAutomatically(CatalogPtr catalog)
     wxFileName f(catalog->GetFileName());
     f.Normalize();
 
-    return f.GetFullPath().starts_with(root.GetFullPath());
+    return f.GetFullPath().StartsWith(root.GetFullPath());
 }
 
 

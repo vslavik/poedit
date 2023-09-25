@@ -281,7 +281,9 @@ void LocalazyLoginPanel::UpdateUserInfo()
             for (auto p : projects)
             {
                 wxVariant data(wxDataViewIconText(p.name, dummyIcon));
-                m_projects->AppendItem({data});
+                wxVector<wxVariant> datavec;
+                datavec.push_back(data);
+                m_projects->AppendItem(datavec);
 
                 if (!p.avatarUrl.empty())
                 {
