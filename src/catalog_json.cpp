@@ -438,6 +438,10 @@ public:
 
             for (auto& tr : file.at("translations"))
             {
+                // FIXME: for now, skip plural forms and string lists
+                if (!tr.at("source").is_string())
+                    continue;
+
                 m_items.push_back(std::make_shared<Item>(++id, filename, tr));
             }
         }
