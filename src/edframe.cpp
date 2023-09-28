@@ -2352,8 +2352,7 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
 #ifdef HAVE_HTTP_CLIENT
     if (!m_catalog->GetCloudSync())
     {
-        if (ShouldSyncToCrowdinAutomatically(m_catalog))
-            m_catalog->AttachCloudSync(std::make_shared<CrowdinSyncDestination>());
+        SetupCloudSyncIfShouldBeDoneAutomatically(m_catalog);
     }
 
     m_toolbar->EnableSyncWithCrowdin(CanSyncWithCrowdin(m_catalog));

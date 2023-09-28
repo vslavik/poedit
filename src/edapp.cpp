@@ -72,7 +72,9 @@
 #include "colorscheme.h"
 #include "concurrency.h"
 #include "configuration.h"
-#include "crowdin_gui.h"
+#include "cloud_accounts_ui.h"
+#include "crowdin_client.h"
+#include "localazy_client.h"
 #include "edapp.h"
 #include "edframe.h"
 #include "extractors/extractor_legacy.h"
@@ -93,7 +95,6 @@
 #include "prefsdlg.h"
 #include "errors.h"
 #include "language.h"
-#include "crowdin_client.h"
 #include "welcomescreen.h"
 
 #ifdef __WXOSX__
@@ -322,6 +323,7 @@ bool PoeditApp::CheckForBetaUpdates() const
 static wxArrayString gs_filesToOpen;
 #endif
 static int gs_lineToOpen = 0;
+static wxString gs_uriToHandle;
 
 extern void InitXmlResource();
 
@@ -456,23 +458,6 @@ bool PoeditApp::OnInit()
     s_macHelpMenuTitleName = _("&Help");
 #endif
 
-#ifndef __WXOSX__
-    // NB: opening files or creating empty window is handled differently on
-    //     Macs, using MacOpenFiles() and MacNewFile(), so don't create empty
-    //     window if no files are given on command line; but still support
-    //     passing files on command line
-    if (!gs_filesToOpen.empty())
-    {
-        OpenFiles(gs_filesToOpen, gs_lineToOpen);
-        gs_filesToOpen.clear();
-        gs_lineToOpen = 0;
-    }
-    else
-    {
-        OpenNewFile();
-    }
-#endif // !__WXOSX__
-
 #ifdef USE_SPARKLE
     m_nativeMacAppData->sparkleDelegate = Sparkle_Initialize();
 #endif // USE_SPARKLE
@@ -490,6 +475,30 @@ bool PoeditApp::OnInit()
         win_sparkle_set_app_build_version(buildnum.wc_str());
     win_sparkle_init();
 #endif
+
+#ifndef __WXOSX__
+    // NB: opening files or creating empty window is handled differently on
+    //     Macs, using MacOpenFiles() and MacNewFile(), so don't create empty
+    //     window if no files are given on command line; but still support
+    //     passing files on command line
+    if (!gs_filesToOpen.empty())
+    {
+        OpenFiles(gs_filesToOpen, gs_lineToOpen);
+        gs_filesToOpen.clear();
+        gs_lineToOpen = 0;
+    }
+    else if (!gs_uriToHandle.empty())
+    {
+        HandleCustomURI(gs_uriToHandle);
+        gs_uriToHandle.clear();
+        // don't terminate event loop right away on Windows as HandleCustomURI() is async:
+        return true;
+    }
+    else
+    {
+        OpenNewFile();
+    }
+#endif // !__WXOSX__
 
 #ifndef __WXOSX__
     // If we failed to open any window during startup (e.g. because the user
@@ -531,7 +540,7 @@ int PoeditApp::OnExit()
     TranslationMemory::CleanUp();
 
 #ifdef HAVE_HTTP_CLIENT
-    CrowdinClient::CleanUp();
+    CloudAccountClient::CleanUp();
 #endif
 
     dispatch::cleanup();
@@ -624,6 +633,15 @@ wxLayoutDirection PoeditApp::GetLayoutDirection() const
 
 void PoeditApp::OpenNewFile()
 {
+#ifdef __WXOSX__
+    // this must be done here rather than in OnInit on macOS
+    if (!gs_uriToHandle.empty())
+    {
+        HandleCustomURI(gs_uriToHandle);
+        gs_uriToHandle.clear();
+        return;
+    }
+#endif
     WelcomeWindow::GetAndActivate();
 }
 
@@ -758,8 +776,7 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
     wxString poeditURI;
     if (parser.Found(CL_HANDLE_POEDIT_URI, &poeditURI))
     {
-        // handling the URI shows UI, so do it after OnInit() initialization:
-        CallAfter([=]{ HandleCustomURI(poeditURI); });
+        gs_uriToHandle = poeditURI;
     }
 
 #ifdef __WXOSX__
@@ -771,7 +788,7 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
         auto fn = parser.GetParam(i);
         if (fn.StartsWith("poedit://"))
         {
-            CallAfter([=]{ HandleCustomURI(fn); });
+            gs_uriToHandle = fn;
         }
         else
         {
@@ -795,10 +812,24 @@ void PoeditApp::HandleCustomURI(const wxString& uri)
         return;
 
 #ifdef HAVE_HTTP_CLIENT
-    if (CrowdinClient::Get().IsOAuthCallback(uri.ToStdString()))
+    if (CrowdinClient::IsOAuthCallback(uri.ToStdString()))
     {
-        wxConfig::Get()->Write("/6p/crowdin_logged_in", true);
         CrowdinClient::Get().HandleOAuthCallback(uri.ToStdString());
+        return;
+    }
+
+    if (LocalazyClient::IsAuthCallback(uri.ToStdString()))
+    {
+        LocalazyClient::Get().HandleAuthCallback(uri.ToStdString())
+            .then_on_main([=](std::shared_ptr<LocalazyClient::ProjectInfo> projectToOpen){
+                if (projectToOpen)
+                {
+                    // this shows UI, so do it after OnInit() initialization:
+                    CallAfter([=]{
+                        OpenCloudTranslation(projectToOpen);
+                    });
+                }
+            });
         return;
     }
 #endif
@@ -840,7 +871,7 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
    EVT_MENU           (XRCID("menu_new_from_pot"),PoeditApp::OnNewFromPOT)
    EVT_MENU           (wxID_OPEN,                 PoeditApp::OnOpen)
  #ifdef HAVE_HTTP_CLIENT
-   EVT_MENU           (XRCID("menu_open_crowdin"),PoeditApp::OnOpenFromCrowdin)
+   EVT_MENU           (XRCID("menu_open_cloud"),PoeditApp::OnOpenCloudTranslation)
  #endif
    EVT_COMMAND        (wxID_ANY, EVT_OPEN_RECENT_FILE, PoeditApp::OnOpenHist)
    EVT_MENU           (wxID_ABOUT,                PoeditApp::OnAbout)
@@ -1057,7 +1088,24 @@ void PoeditApp::OnOpen(wxCommandEvent& event)
 
 
 #ifdef HAVE_HTTP_CLIENT
-void PoeditApp::OnOpenFromCrowdin(wxCommandEvent& event)
+template<typename T>
+void PoeditApp::OpenCloudTranslation(T preopen)
+{
+    CloudOpenFile(nullptr, preopen, [=](int retval, wxString filename)
+    {
+        if (retval != wxID_OK)
+            return;
+
+        auto cat = PoeditFrame::PreOpenFileWithErrorsUI(filename, nullptr);
+        if (!cat)
+            return;
+
+        auto frame = PoeditFrame::CreateEmpty();
+        frame->DoOpenFile(cat);
+    });
+}
+
+void PoeditApp::OnOpenCloudTranslation(wxCommandEvent& event)
 {
     InvokingWindowProxy win(event);
 
@@ -1065,7 +1113,7 @@ void PoeditApp::OnOpenFromCrowdin(wxCommandEvent& event)
         return;
 
     win.NotifyIsStarting();
-    CrowdinOpenFile(win.GetParentWindowIfAny(), [=](int retval, wxString filename)
+    CloudOpenFile(win.GetParentWindowIfAny(), nullptr, [=](int retval, wxString filename)
     {
         if (retval != wxID_OK)
         {

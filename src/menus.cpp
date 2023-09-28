@@ -113,7 +113,7 @@ wxMenuBar *MenusManager::CreateMenu(Menu purpose)
     item = bar->FindItem(XRCID("menu_update_from_crowdin"), &menu);
     if (item)
         menu->Destroy(item);
-    item = bar->FindItem(XRCID("menu_open_crowdin"), &menu);
+    item = bar->FindItem(XRCID("menu_open_cloud"), &menu);
     if (item)
         menu->Destroy(item);
 #endif

@@ -11,13 +11,16 @@ WX_BACKPORT_SRC = wx_backports/wx_gtk_activityindicator.cpp \
                   wx_backports/wx_gtk_nativewin.cpp
 
 if HAVE_CPPREST
-CROWDIN_SUPPORT_SRC = \
+ACCOUNTS_SUPPORT_SRC = \
                  http_client.h http_client.cpp http_client_casablanca.cpp \
+                 cloud_accounts.h cloud_accounts.cpp cloud_accounts_ui.h cloud_accounts_ui.cpp \
                  crowdin_client.h crowdin_client.cpp \
                  crowdin_gui.h crowdin_gui.cpp \
+                 localazy_client.h localazy_client.cpp \
+                 localazy_gui.h localazy_gui.cpp \
                  keychain/keytar_posix.cc keychain/keytar.h \
                  json.h
-CROWDIN_SUPPORT_LIBS = $(CPPREST_LIBS) $(LIBSECRET_LIBS)
+ACCOUNTS_SUPPORT_LIBS = $(CPPREST_LIBS) $(LIBSECRET_LIBS)
 endif
 
 poedit_SOURCES = \
@@ -80,11 +83,11 @@ poedit_SOURCES = \
                  version.h \
                  welcomescreen.cpp welcomescreen.h \
                  pugixml.h \
-                 $(CROWDIN_SUPPORT_SRC) \
+                 $(ACCOUNTS_SUPPORT_SRC) \
                  $(WX_BACKPORT_SRC)
 nodist_poedit_SOURCES = compiled_xrc.cpp
 
-poedit_LDADD = $(WX_LIBS) $(LUCENE_LIBS) $(CLD2_LIBS) $(PUGIXML_LIBS) $(CROWDIN_SUPPORT_LIBS) \
+poedit_LDADD = $(WX_LIBS) $(LUCENE_LIBS) $(CLD2_LIBS) $(PUGIXML_LIBS) $(ACCOUNTS_SUPPORT_LIBS) \
                $(BOOST_LDFLAGS) $(BOOST_THREAD_LIB) $(BOOST_REGEX_LIB) $(BOOST_SYSTEM_LIB)
 
 XRC_RESOURCES = \

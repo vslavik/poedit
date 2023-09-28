@@ -67,8 +67,11 @@ public:
     static bool ShowWarnings() { return Read("/show_warnings", true); }
     static void ShowWarnings(bool show) { Write("/show_warnings", show); }
 
-    static std::string CrowdinLastProject() { return Read("/crowdin_last_project", std::string()); }
-    static void CrowdinLastProject(const std::string& prj) { return Write("/crowdin_last_project", prj); }
+    static std::string CloudLastProject() { return Read("/cloud_last_project", std::string()); }
+    static void CloudLastProject(const std::string& prj) { return Write("/cloud_last_project", prj); }
+
+    static std::string LocalazyMetadata() { return Read("/accounts/localazy/metadata", std::string()); }
+    static void LocalazyMetadata(const std::string& prj) { return Write("/accounts/localazy/metadata", prj); }
 
 private:
     template<typename T>

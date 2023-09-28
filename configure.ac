@@ -301,7 +301,7 @@ Enabled features:
 
     * debug build:                    $USE_DEBUG
     * language detection:             $have_cld2
-    * crowdin integration:            $have_cpprest
+    * cloud accounts integration:     $have_cpprest
 "
 
 if test "x$have_cld2" != "xyes" -o "x$have_cpprest" != "xyes" ; then

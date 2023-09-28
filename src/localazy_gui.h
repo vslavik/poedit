@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (https://poedit.net)
  *
- *  Copyright (C) 2015-2023 Vaclav Slavik
+ *  Copyright (C) 2023 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef Poedit_crowdin_gui_h
-#define Poedit_crowdin_gui_h
+#ifndef Poedit_localazy_gui_h
+#define Poedit_localazy_gui_h
 
 #include "catalog.h"
 
@@ -38,25 +38,24 @@
 
 class WXDLLIMPEXP_FWD_CORE wxBoxSizer;
 class WXDLLIMPEXP_FWD_CORE wxButton;
+class WXDLLIMPEXP_FWD_CORE wxDataViewListCtrl;
 
 
 /**
-    Panel used to sign in into Crowdin.
+    Panel used to sign in into Localazy.
  */
-class CrowdinLoginPanel : public AccountDetailPanel
+class LocalazyLoginPanel : public AccountDetailPanel
 {
 public:
-    /// Constructor flags
     enum Flags
     {
-        /// Add wxID_CANCEL dialog button to the panel
-        AddCancelButton = 1
+        DialogButtons = 1
     };
 
-    CrowdinLoginPanel(wxWindow *parent, int flags = 0);
+    LocalazyLoginPanel(wxWindow *parent, int flags = 0);
 
-    wxString GetServiceName() const override { return "Crowdin"; }
-    wxString GetServiceLogo() const override { return "CrowdinLogoTemplate"; }
+    wxString GetServiceName() const override { return "Localazy"; }
+    wxString GetServiceLogo() const override { return "LocalazyLogo"; }
     wxString GetServiceDescription() const override;
     wxString GetServiceLearnMoreURL() const override;
 
@@ -81,6 +80,7 @@ protected:
     void UpdateUserInfo();
 
     void OnSignIn(wxCommandEvent&);
+    void OnAddProject(wxCommandEvent&);
     void OnSignOut(wxCommandEvent&);
     void OnUserSignedIn();
 
@@ -88,30 +88,11 @@ protected:
     ActivityIndicator *m_activity;
     wxBoxSizer *m_loginInfo;
     wxButton *m_signIn, *m_signOut;
+    wxDataViewListCtrl *m_projects;
     wxString m_userName, m_userLogin;
     std::string m_userAvatar;
 };
 
+#endif // HAVE_HTTP_CLIENT
 
-/// Can given file by synced to Crowdin, i.e. does it come from Crowdin and does it have required metadata?
-bool CanSyncWithCrowdin(CatalogPtr cat);
-
-/**
-    Synces the catalog with Crowdin, uploading and downloading translations.
-
-    @param parent    PoeditFrame the UI should be shown under.
-    @param catalog   Catalog to sync.
-    @param onDone    Called with the (new) updated catalog instance.
- */
-void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
-                     std::function<void(std::shared_ptr<Catalog>)> onDone);
-
-#else // !HAVE_HTTP_CLIENT
-
-// convenience stubs to avoid additional checks all over other code:
-inline bool CanSyncWithCrowdin(CatalogPtr) { return false; }
-inline bool ShouldSyncToCrowdinAutomatically(CatalogPtr) { return false; }
-
-#endif // !HAVE_HTTP_CLIENT
-
-#endif // Poedit_crowdin_gui_h
+#endif // Poedit_localazy_gui_h

@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (https://poedit.net)
  *
- *  Copyright (C) 2015-2023 Vaclav Slavik
+ *  Copyright (C) 2023 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -23,50 +23,59 @@
  *
  */
 
-#ifndef Poedit_crowdin_client_h
-#define Poedit_crowdin_client_h
+#ifndef Poedit_localazy_client_h
+#define Poedit_localazy_client_h
 
 #ifdef HAVE_HTTP_CLIENT
 
+#include <map>
 #include <memory>
+#include <mutex>
 
 #include "cloud_accounts.h"
-#include "language.h"
 
 
 /**
-    Client to the Crowdin platform.
+    Client to the Localazy platform.
  */
-class CrowdinClient : public CloudAccountClient
+class LocalazyClient : public CloudAccountClient
 {
 public:
     /// Return singleton instance of the client.
-    static CrowdinClient& Get();
+    static LocalazyClient& Get();
 
     /// Destroys the singleton, must be called (only) on app shutdown.
     static void CleanUp();
 
-    static constexpr const char* SERVICE_NAME = "Crowdin";
+    static constexpr const char* SERVICE_NAME = "Localazy";
     const char *GetServiceName() const override { return SERVICE_NAME; }
 
-    /// Is the user currently signed into Crowdin?
+    /// Is the user currently signed into Localazy?
     bool IsSignedIn() const override;
 
-    /// Wrap relative Crowdin URL to absolute URL with attribution
+    /// Wrap relative Localazy URL to absolute URL with attribution
     static std::string AttributeLink(std::string page);
 
     /**
-        Authenticate with Crowdin.
+        Authenticate with Localazy.
         
         This opens the browser to authenticate the app. The app must handle
-        poedit:// URL and call HandleOAuthCallback. @a callback will be
-        called after receiving the OAuth token.
+        poedit:// URL and call HandleAuthCallback. @a callback will be
+        called after receiving the auth token.
      */
     dispatch::future<void> Authenticate();
-    void HandleOAuthCallback(const std::string& uri);
-    static bool IsOAuthCallback(const std::string& uri);
 
-    /// Sign out of Crowdin, forget the token
+    /**
+        Handles auth callback, i.e. invocation of poedit://localazy/... URL.
+
+        If the verb in the URL is "open", returns information about the project that
+        should be immediately opened. Otherwise (auth only), returns nullptr.
+     */
+    dispatch::future<std::shared_ptr<ProjectInfo>> HandleAuthCallback(const std::string& uri);
+
+    static bool IsAuthCallback(const std::string& uri);
+
+    /// Sign out of Localazy, forget the tokens
     void SignOut() override;
 
     /// Retrieve information about the current user asynchronously
@@ -83,52 +92,53 @@ public:
 
     std::shared_ptr<FileSyncMetadata> ExtractSyncMetadata(Catalog& catalog) override;
 
-    /// Asynchronously download specific Crowdin file into @a output_file.
+    /// Asynchronously download specific file into @a output_file.
     dispatch::future<void> DownloadFile(const std::wstring& output_file, const ProjectInfo& project, const ProjectFile& file, const Language& lang) override;
 
-    /// Asynchronously download specific Crowdin file into @a output_file.
     dispatch::future<void> DownloadFile(const std::wstring& output_file, std::shared_ptr<FileSyncMetadata> meta) override;
 
-    /// Asynchronously upload specific Crowdin file data.
     dispatch::future<void> UploadFile(const std::string& file_buffer, std::shared_ptr<FileSyncMetadata> meta) override;
 
 private:
-    class crowdin_http_client;
-    class crowdin_token;
+    /**
+        Exchanges temporary token for per-project token.
 
-    struct FileInternal : public ProjectFile::Internal
+        After exchange, updates stored tokens and project metadata and saves them.
+     */
+    dispatch::future<ProjectInfo> ExchangeTemporaryToken(const std::string& token);
+
+    /// Get authorization header for given project
+    std::string GetAuthorization(const std::string& project_id) const;
+
+    struct LocalazySyncMetadata : public FileSyncMetadata
     {
-        std::string fileName, dirName;
-        std::string fullPath;
-        int id, dirId, branchId;
+        std::string lang;
+        std::string projectId;
     };
 
-    struct CrowdinSyncMetadata : public FileSyncMetadata
-    {
-        Language lang;
-        int projectId, fileId;
-        std::string xliffRemoteFilename;
-        std::string extension;
-    };
+private:
+    class localazy_http_client;
+    class project_tokens;
+    class metadata;
 
-    CrowdinClient();
-    ~CrowdinClient();
+    LocalazyClient();
+    ~LocalazyClient();
 
-    // Initialize m_api for use with given authorization; must be called before use
-    bool InitWithAuthToken(const crowdin_token& token);
+    void InitMetadataAndTokens();
+    // can only be called if m_mutex is held:
+    void SaveMetadataAndTokens(std::lock_guard<std::mutex>& acquiredLock);
 
-    void SignInIfAuthorized();
-    void SaveAndSetToken(const std::string& token);
-    crowdin_token GetValidToken() const;
+    std::unique_ptr<project_tokens> m_tokens;
+    std::unique_ptr<metadata> m_metadata;
+    mutable std::mutex m_mutex; // guards m_tokens and m_metadata
 
-    mutable std::unique_ptr<crowdin_token> m_cachedAuthToken;
-    std::unique_ptr<crowdin_http_client> m_api;
+    std::unique_ptr<localazy_http_client> m_api;
+
     std::shared_ptr<dispatch::promise<void>> m_authCallback;
-    std::string m_authCallbackExpectedState;
 
-    static CrowdinClient *ms_instance;
+    static LocalazyClient *ms_instance;
 };
 
 #endif // HAVE_HTTP_CLIENT
 
-#endif // Poedit_crowdin_client_h
+#endif // Poedit_localazy_client_h

@@ -28,7 +28,6 @@
 #include "colorscheme.h"
 #include "custom_buttons.h"
 #include "customcontrols.h"
-#include "crowdin_gui.h"
 #include "edapp.h"
 #include "edframe.h"
 #include "hidpi.h"
@@ -41,6 +40,7 @@
 #include <wx/dcbuffer.h>
 #include <wx/statbmp.h>
 #include <wx/stattext.h>
+#include <wx/stdpaths.h>
 #include <wx/sizer.h>
 #include <wx/artprov.h>
 #include <wx/font.h>
@@ -297,10 +297,12 @@ WelcomeWindow::WelcomeWindow()
 
 #ifdef HAVE_HTTP_CLIENT
     leftsizer->Add(new ActionButton(
-                       this, XRCID("menu_open_crowdin"), "Collaborate",
-                       _("Translate Crowdin project"),
-                       _("Collaborate with others in a Crowdin project.")),
-               wxSizerFlags().Border(wxTOP|wxBOTTOM, PX(2)).Expand());
+                       this, XRCID("menu_open_cloud"), "Collaborate",
+                       _("Translate cloud project"),
+                       _("Collaborate with other people online.")),
+               wxSizerFlags().Border(wxTOP, PX(2)).Expand());
+    auto learnCloud = new LearnMoreLink(this, "https://poedit.net/cloud-sync", _("How does cloud sync work?"));
+    leftsizer->Add(learnCloud, wxSizerFlags().Left().Border(wxLEFT, MACOS_OR_OTHER(PX(18), PX(8))));
 #endif // HAVE_HTTP_CLIENT
 
     leftoutersizer->Add(leftsizer, wxSizerFlags().Center().Border(wxALL, PX(50)));

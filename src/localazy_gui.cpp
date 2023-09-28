@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (https://poedit.net)
  *
- *  Copyright (C) 2015-2023 Vaclav Slavik
+ *  Copyright (C) 2023 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -24,18 +24,22 @@
  */
 
 
-#include "crowdin_gui.h"
+#include "localazy_gui.h"
 
-#include "crowdin_client.h"
+#include "localazy_client.h"
+
+#include <unicode/coll.h>
 
 #include "catalog.h"
 #include "cloud_sync.h"
 #include "colorscheme.h"
 #include "concurrency.h"
+#include "configuration.h"
 #include "customcontrols.h"
 #include "errors.h"
 #include "hidpi.h"
 #include "http_client.h"
+#include "languagectrl.h"
 #include "str_helpers.h"
 #include "utility.h"
 #include "catalog_xliff.h"
@@ -55,10 +59,11 @@
 #include <wx/weakref.h>
 #include <wx/windowptr.h>
 
-#include <regex>
+#include <boost/algorithm/string.hpp>
 
 
-CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
+
+LocalazyLoginPanel::LocalazyLoginPanel(wxWindow *parent, int flags)
     : AccountDetailPanel(parent, flags),
       m_state(State::Uninitialized),
       m_activity(nullptr)
@@ -67,7 +72,7 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
     SetSizer(topsizer);
 
     wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-    sizer->SetMinSize(PX(300), -1);
+    sizer->SetMinSize(PX(350), PX(320));
     topsizer->Add(sizer, wxSizerFlags(1).Expand().Border(wxALL, (flags & SlimBorders) ? PX(0) : PX(16)));
 
     auto logo = new StaticBitmap(this, GetServiceLogo());
@@ -81,22 +86,31 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
     auto loginInfoContainer = new wxBoxSizer(wxVERTICAL);
     loginInfoContainer->SetMinSize(-1, PX(50));
     loginInfoContainer->AddStretchSpacer();
-    loginInfoContainer->Add(m_loginInfo, wxSizerFlags().Center());
+    loginInfoContainer->Add(m_loginInfo, wxSizerFlags().Expand());
     loginInfoContainer->AddStretchSpacer();
 
     sizer->Add(loginInfoContainer, wxSizerFlags().Expand().ReserveSpaceEvenIfHidden().Border(wxTOP|wxBOTTOM, PX(16)));
-    sizer->AddStretchSpacer();
+
+    m_projects = new wxDataViewListCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(-1, PX(100)), /*wxDV_NO_HEADER |*/ MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN));
+#ifdef __WXOSX__
+    [((NSTableView*)[((NSScrollView*)m_projects->GetHandle()) documentView]) setIntercellSpacing:NSMakeSize(0.0, 0.0)];
+    if (@available(macOS 11.0, *))
+        ((NSTableView*)[((NSScrollView*)m_projects->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
+#endif
+    sizer->Add(m_projects, wxSizerFlags(1).Expand().Border(wxBOTTOM, PX(16)));
+    m_projects->AppendIconTextColumn(_("Projects"));
 
     m_signIn = new wxButton(this, wxID_ANY, MSW_OR_OTHER(_("Sign in"), _("Sign In")));
-    m_signIn->Bind(wxEVT_BUTTON, &CrowdinLoginPanel::OnSignIn, this);
+    m_signIn->Bind(wxEVT_BUTTON, &LocalazyLoginPanel::OnSignIn, this);
     m_signOut= new wxButton(this, wxID_ANY, MSW_OR_OTHER(_("Sign out"), _("Sign Out")));
-    m_signOut->Bind(wxEVT_BUTTON, &CrowdinLoginPanel::OnSignOut, this);
+    m_signOut->Bind(wxEVT_BUTTON, &LocalazyLoginPanel::OnSignOut, this);
 #ifdef __WXMSW__
     m_signIn->SetBackgroundColour(GetBackgroundColour());
     m_signOut->SetBackgroundColour(GetBackgroundColour());
 #endif
 
-    auto learnMore = new LearnMoreLink(this, GetServiceLearnMoreURL(), _("Learn more about Crowdin"));
+    // TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+    auto learnMore = new LearnMoreLink(this, GetServiceLearnMoreURL(), wxString::Format(_("Learn more about %s"), "Localazy"));
 
     auto buttons = new wxBoxSizer(wxHORIZONTAL);
     sizer->Add(buttons, wxSizerFlags().Expand().Border(wxBOTTOM, 1));
@@ -121,17 +135,17 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
     ChangeState(State::Uninitialized);
 }
 
-wxString CrowdinLoginPanel::GetServiceDescription() const
+wxString LocalazyLoginPanel::GetServiceDescription() const
 {
-    return _("Crowdin is an online localization management platform and collaborative translation tool.");
+    return _("Localazy is a highly automated localization platform allowing anyone to translate their products and content into multiple languages easily.");
 }
 
-wxString CrowdinLoginPanel::GetServiceLearnMoreURL() const
+wxString LocalazyLoginPanel::GetServiceLearnMoreURL() const
 {
-    return CrowdinClient::AttributeLink("/");
+    return LocalazyClient::AttributeLink("/");
 }
 
-void CrowdinLoginPanel::InitializeAfterShown()
+void LocalazyLoginPanel::InitializeAfterShown()
 {
     if (m_state != State::Uninitialized)
         return;
@@ -142,12 +156,12 @@ void CrowdinLoginPanel::InitializeAfterShown()
         ChangeState(State::SignedOut);
 }
 
-bool CrowdinLoginPanel::IsSignedIn() const
+bool LocalazyLoginPanel::IsSignedIn() const
 {
-    return CrowdinClient::Get().IsSignedIn();
+    return LocalazyClient::Get().IsSignedIn();
 }
 
-void CrowdinLoginPanel::ChangeState(State state)
+void LocalazyLoginPanel::ChangeState(State state)
 {
     m_state = state;
 
@@ -176,7 +190,7 @@ void CrowdinLoginPanel::ChangeState(State state)
     }
 }
 
-void CrowdinLoginPanel::CreateLoginInfoControls(State state)
+void LocalazyLoginPanel::CreateLoginInfoControls(State state)
 {
     auto sizer = m_loginInfo;
     sizer->Clear(/*delete_windows=*/true);
@@ -190,7 +204,9 @@ void CrowdinLoginPanel::CreateLoginInfoControls(State state)
                       ? _(L"Waiting for authentication…")
                       : _(L"Updating user information…");
             m_activity = new ActivityIndicator(this, ActivityIndicator::Centered);
+            sizer->AddStretchSpacer();
             sizer->Add(m_activity, wxSizerFlags().Expand());
+            sizer->AddStretchSpacer();
             m_activity->Start(text);
             break;
         }
@@ -214,7 +230,17 @@ void CrowdinLoginPanel::CreateLoginInfoControls(State state)
             box->Add(name, wxSizerFlags().Left());
             box->Add(username, wxSizerFlags().Left());
             sizer->Add(box, wxSizerFlags().Center());
-            sizer->AddSpacer(PX(6));
+
+            sizer->AddStretchSpacer();
+            auto addPrj = new wxButton(this, wxID_ANY, MSW_OR_OTHER(_("Add project"), _("Add Project")));
+#ifdef __WXOSX__
+            addPrj->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
+#ifdef __WXMSW__
+            addPrj->SetBackgroundColour(GetBackgroundColour());
+#endif
+            addPrj->Bind(wxEVT_BUTTON, &LocalazyLoginPanel::OnAddProject, this);
+            sizer->Add(addPrj, wxSizerFlags().Center().Border(wxALL, PX(6)));
 
             profile->SetUserName(m_userName);
             if (!m_userAvatar.empty())
@@ -233,35 +259,99 @@ void CrowdinLoginPanel::CreateLoginInfoControls(State state)
     Layout();
 }
 
-void CrowdinLoginPanel::UpdateUserInfo()
+void LocalazyLoginPanel::UpdateUserInfo()
 {
     ChangeState(State::UpdatingInfo);
 
-    CrowdinClient::Get().GetUserInfo()
-        .then_on_window(this, [=](CrowdinClient::UserInfo u) {
+    LocalazyClient::Get().GetUserInfo()
+        .then_on_window(this, [=](LocalazyClient::UserInfo u) {
             m_userName = u.name;
             m_userLogin = u.login;
             m_userAvatar = u.avatarUrl;
             ChangeState(State::SignedIn);
         })
         .catch_all(m_activity->HandleError);
+
+    LocalazyClient::Get().GetUserProjects()
+        .then_on_window(m_projects, [=](std::vector<LocalazyClient::ProjectInfo> projects){
+            m_projects->DeleteAllItems();
+        #ifdef __WXOSX__
+            auto dummyIcon = wxArtProvider::GetIcon("AccountLocalazy");
+        #else
+            auto dummyIcon = wxArtProvider::GetIcon("AccountLocalazy", wxART_OTHER, wxSize(PX(16), PX(16)));
+        #endif
+
+            unsigned idx = 0;
+            for (auto p : projects)
+            {
+                wxVariant data(wxDataViewIconText(p.name, dummyIcon));
+                wxVector<wxVariant> datavec;
+                datavec.push_back(data);
+                m_projects->AppendItem(datavec);
+
+                if (!p.avatarUrl.empty())
+                {
+                    http_client::download_from_anywhere(p.avatarUrl)
+                    .then_on_window(m_projects, [=](downloaded_file f)
+                    {
+                        wxBitmap bitmap;
+                    #ifdef __WXOSX__
+                        NSString *path = str::to_NS(f.filename().GetFullPath());
+                        NSImage *img = [[NSImage alloc] initWithContentsOfFile:path];
+                        if (img != nil)
+                            bitmap = wxBitmap(img);
+                    #else
+                        wxLogNull null;
+                        wxImage img(f.filename().GetFullPath());
+                        if (img.IsOk())
+                        {
+                            img.Rescale(PX(16), PX(16));
+                            bitmap = wxBitmap(img);
+                        }
+                    #endif
+                        if (bitmap.IsOk())
+                        {
+                            wxVariant value;
+                            m_projects->GetValue(value, idx, 0);
+                            wxDataViewIconText iconText;
+                            iconText << value;
+                            wxIcon icon;
+                            icon.CopyFromBitmap(bitmap);
+                            iconText.SetIcon(icon);
+                            value << iconText;
+                            m_projects->SetValue(value, idx, 0);
+                        }
+                    });
+                }
+
+                idx++;
+            }
+        })
+        .catch_all(m_activity->HandleError);
 }
 
-void CrowdinLoginPanel::SignIn()
+void LocalazyLoginPanel::SignIn()
 {
     ChangeState(State::Authenticating);
-    CrowdinClient::Get().Authenticate()
-        .then_on_window(this, &CrowdinLoginPanel::OnUserSignedIn);
+    LocalazyClient::Get().Authenticate()
+        .then_on_window(this, &LocalazyLoginPanel::OnUserSignedIn);
     if (NotifyShouldBeRaised)
         NotifyShouldBeRaised();
 }
 
-void CrowdinLoginPanel::OnSignIn(wxCommandEvent&)
+void LocalazyLoginPanel::OnSignIn(wxCommandEvent&)
 {
     SignIn();
 }
 
-void CrowdinLoginPanel::OnUserSignedIn()
+void LocalazyLoginPanel::OnAddProject(wxCommandEvent&)
+{
+    // don't change UI state unlike with OnSignIn() -- FIXME: do indicate waiting in some way
+    LocalazyClient::Get().Authenticate()
+        .then_on_window(this, &LocalazyLoginPanel::OnUserSignedIn);
+}
+
+void LocalazyLoginPanel::OnUserSignedIn()
 {
     UpdateUserInfo();
     Raise();
@@ -269,91 +359,9 @@ void CrowdinLoginPanel::OnUserSignedIn()
         NotifyShouldBeRaised();
 }
 
-void CrowdinLoginPanel::OnSignOut(wxCommandEvent&)
+void LocalazyLoginPanel::OnSignOut(wxCommandEvent&)
 {
-    CrowdinClient::Get().SignOut();
+    LocalazyClient::Get().SignOut();
+    m_projects->DeleteAllItems();
     ChangeState(State::SignedOut);
-}
-
-
-namespace
-{
-
-typedef CloudLoginDialog<CrowdinLoginPanel> CrowdinLoginDialog;
-
-} // anonymous namespace
-
-
-bool CanSyncWithCrowdin(CatalogPtr cat)
-{
-    return (bool)CrowdinClient::Get().ExtractSyncMetadata(*cat);
-}
-
-
-void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
-                     std::function<void(std::shared_ptr<Catalog>)> onDone)
-{
-    if (!CrowdinClient::Get().IsSignedIn())
-    {
-        wxWindowPtr<CrowdinLoginDialog> login(new CrowdinLoginDialog(parent, _("Sign in to Crowdin")));
-        login->ShowWindowModalThenDo([login,parent,catalog,onDone](int retval){
-            if (retval == wxID_OK)
-                CrowdinSyncFile(parent, catalog, onDone);
-        });
-        return;
-    }
-
-    wxLogTrace("poedit.crowdin", "Crowdin syncing file ...");
-
-    wxWindowPtr<CloudSyncProgressWindow> dlg(new CloudSyncProgressWindow(parent));
-
-    auto meta = CrowdinClient::Get().ExtractSyncMetadata(*catalog);
-
-    auto handle_error = [=](dispatch::exception_ptr e){
-        dispatch::on_main([=]{
-            dlg->EndModal(wxID_CANCEL);
-            wxWindowPtr<wxMessageDialog> err(new wxMessageDialog
-                (
-                    parent,
-                    _("Syncing with Crowdin failed."),
-                    _("Crowdin error"),
-                    wxOK | wxICON_ERROR
-                ));
-            err->SetExtendedMessage(DescribeException(e));
-            err->ShowWindowModalThenDo([err](int){});
-        });
-    };
-
-    dlg->Activity->Start(_(L"Uploading translations…"));
-
-    // TODO: nicer API for this.
-    // This must be done right after entering the modal loop (on non-OSX)
-    dlg->CallAfter([=]{
-        CrowdinClient::Get().UploadFile(catalog->SaveToBuffer(), meta)
-        .then([=]
-        {
-            auto tmpdir = std::make_shared<TempDirectory>();
-            auto outfile = tmpdir->CreateFileName("crowdin." + wxFileName(catalog->GetFileName()).GetExt());
-
-            dispatch::on_main([=]{
-                dlg->Activity->Start(_(L"Downloading latest translations…"));
-            });
-
-            return CrowdinClient::Get().DownloadFile(outfile.ToStdWstring(), meta)
-                .then_on_main([=]
-                {
-                    auto newcat = Catalog::Create(outfile);
-                    newcat->SetFileName(catalog->GetFileName());
-
-                    tmpdir->Clear();
-                    dlg->EndModal(wxID_OK);
-
-                    onDone(newcat);
-                })
-                .catch_all(handle_error);
-        })
-        .catch_all(handle_error);
-    });
-
-    dlg->ShowWindowModal();
 }

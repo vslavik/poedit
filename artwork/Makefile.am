@@ -30,7 +30,10 @@ dist_uiicons_DATA = \
 		linux/poedit-update.png \
 		linux/poedit-validate.png \
 		linux/sidebar.png \
+		AccountCrowdin.png \
+		AccountLocalazy.png \
 		CrowdinLogoTemplate.png \
+		LocalazyLogo.png \
 		DownvoteTemplate.png \
 		ExtractorsGNUgettext.png \
 		ItemBookmarkTemplate.png \

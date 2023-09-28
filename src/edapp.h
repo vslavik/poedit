@@ -65,6 +65,9 @@ class PoeditApp : public wxApp, public MenusManager
         int OpenFiles(const wxArrayString& filenames, int lineno = 0);
         // opens empty frame or catalogs manager
         void OpenNewFile();
+        // opens cloud translation with optional project to pre-open
+        template<typename T>
+        void OpenCloudTranslation(T preopen);
 
 #ifdef __WXOSX__
         void MacOpenFiles(const wxArrayString& names) override;
@@ -104,7 +107,7 @@ class PoeditApp : public wxApp, public MenusManager
         void OnNewFromScratch(wxCommandEvent& event);
         void OnNewFromPOT(wxCommandEvent& event);
         void OnOpen(wxCommandEvent& event);
-        void OnOpenFromCrowdin(wxCommandEvent& event);
+        void OnOpenCloudTranslation(wxCommandEvent& event);
         void OnOpenHist(wxCommandEvent& event);
         void OnAbout(wxCommandEvent& event);
         void OnWelcomeWindow(wxCommandEvent& event);

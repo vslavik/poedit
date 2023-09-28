@@ -59,6 +59,7 @@
 #include "edapp.h"
 #include "edframe.h"
 #include "catalog.h"
+#include "cloud_accounts_ui.h"
 #include "configuration.h"
 #include "crowdin_gui.h"
 #include "hidpi.h"
@@ -1040,17 +1041,18 @@ class AccountsPageWindow : public PrefsPanel
 public:
     AccountsPageWindow(wxWindow *parent) : PrefsPanel(parent)
     {
-        wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
-        m_login = new CrowdinLoginPanel(this);
-        topsizer->Add(m_login, wxSizerFlags(1).Expand().Border(wxALL, PX(15)));
-        SetSizer(topsizer);
+        wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
+        SetSizer(sizer);
+
+        m_accounts = new AccountsPanel(this);
+        sizer->Add(m_accounts, wxSizerFlags(1).Expand().PXDoubleBorderAll());
 
     #ifdef __WXOSX__
-        // This window was possible created on demand (pre-macOS 11), possibly
+        // This window was possibly created on demand (pre-macOS 11), possibly
         // hidden. Initialize as soon as it is shown:
         Bind(wxEVT_SHOW, [=](wxShowEvent& e){
             if (e.IsShown())
-                CallAfter([=]{ m_login->EnsureInitialized(); });
+                CallAfter([=]{ m_accounts->InitializeAfterShown(); });
         });
     #else
         // On other platforms, notebook pages are all created at once. Don't do
@@ -1063,7 +1065,7 @@ public:
             notebook->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, [=](wxBookCtrlEvent& e){
                 e.Skip();
                 if (notebook->GetPage(e.GetSelection()) == this)
-                    CallAfter([=]{ m_login->EnsureInitialized(); });
+                    CallAfter([=]{ m_accounts->InitializeAfterShown(); });
             });
         }
     #endif
@@ -1078,7 +1080,7 @@ public:
     }
 
 private:
-    CrowdinLoginPanel *m_login;
+    AccountsPanel *m_accounts;
 };
 
 class AccountsPage : public wxPreferencesPage

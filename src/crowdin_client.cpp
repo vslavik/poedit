@@ -27,6 +27,7 @@
 #include "crowdin_client.h"
 
 #include "catalog.h"
+#include "catalog_xliff.h"
 #include "errors.h"
 #include "http_client.h"
 #include "keychain/keytar.h"
@@ -255,7 +256,7 @@ bool CrowdinClient::IsOAuthCallback(const std::string& uri)
 //      and handle errors since now Poedit just crashes
 //      in case of some of expected keys missing
 
-dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
+dispatch::future<CloudAccountClient::UserInfo> CrowdinClient::GetUserInfo()
 {
     return m_api->get("user")
         .then([](json r)
@@ -263,8 +264,9 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
             wxLogTrace("poedit.crowdin", "Got user info: %s", r.dump().c_str());
             const json& d = r["data"];
             UserInfo u;
+            u.service = SERVICE_NAME;
             d.at("username").get_to(u.login);
-            u.avatar = d.value("avatarUrl", "");
+            u.avatarUrl = d.value("avatarUrl", "");
             std::string fullName;
             try
             {
@@ -291,7 +293,7 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
                 catch (...) {}
             }
             if (fullName.empty())
-                u.name = u.login;
+                u.name = str::to_wstring(u.login);
             else
                 u.name = str::to_wstring(fullName);
             return u;
@@ -299,7 +301,7 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
 }
 
 
-dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetUserProjects()
+dispatch::future<std::vector<CloudAccountClient::ProjectInfo>> CrowdinClient::GetUserProjects()
 {
     // TODO: handle pagination if projects more than 500
     //       (what is quite rare case I guess)
@@ -307,15 +309,17 @@ dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetU
         .then([](json r)
         {
             wxLogTrace("poedit.crowdin", "Got projects: %s", r.dump().c_str());
-            std::vector<ProjectListing> all;
+            std::vector<ProjectInfo> all;
             for (const auto& d : r["data"])
             {
                 const json& i = d["data"];
                 all.push_back(
                 {
+                    SERVICE_NAME,
+                    i.at("id").get<int>(),
                     i.at("name").get<std::wstring>(),
                     i.at("identifier").get<std::string>(),
-                    i.at("id").get<int>()
+                    std::string() // avatarUrl
                 });
             }
             return all;
@@ -323,10 +327,12 @@ dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetU
 }
 
 
-dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const int project_id)
+dispatch::future<CrowdinClient::ProjectDetails> CrowdinClient::GetProjectDetails(const CrowdinClient::ProjectInfo& project)
 {
+    auto project_id = std::get<int>(project.internalID);
+
     auto url = "projects/" + std::to_string(project_id);
-    auto prj = std::make_shared<ProjectInfo>();
+    auto prj = std::make_shared<ProjectDetails>();
     static const int NO_ID = -1;
 
     return m_api->get(url)
@@ -338,8 +344,6 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
         if (get_value(d, "publicDownloads", false) == false)
             throw Exception(_("Downloading translations is disabled in this project."));
 
-        d.at("name").get_to(prj->name);
-        d.at("id").get_to(prj->id);
         for (const auto& langCode: d.at("targetLanguageIds"))
             prj->languages.push_back(Language::FromLanguageTag(std::string(langCode)));
 
@@ -354,13 +358,16 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
             const json& d = i["data"];
             if (d["type"] != "assets")
             {
-                FileInfo f;
-                d.at("id").get_to(f.id);
-                f.fullPath = '/' + d.at("name").get<std::string>();
-                f.dirId = get_value(d, "directoryId", NO_ID);
-                f.branchId = get_value(d, "branchId", NO_ID);
-                d.at("name").get_to(f.fileName);
-                f.title = get_value(d, "title", f.fileName);
+                ProjectFile f;
+                auto internal = std::make_shared<FileInternal>();
+                f.internal = internal;
+
+                d.at("id").get_to(internal->id);
+                internal->fullPath = '/' + d.at("name").get<std::string>();
+                internal->dirId = get_value(d, "directoryId", NO_ID);
+                internal->branchId = get_value(d, "branchId", NO_ID);
+                d.at("name").get_to(internal->fileName);
+                f.title = str::to_wstring(get_value(d, "title", internal->fileName));
                 prj->files.push_back(std::move(f));
             }
         }
@@ -396,16 +403,17 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
 
         for (auto& i : prj->files)
         {
+            auto internal = std::static_pointer_cast<FileInternal>(i.internal);
             std::list<std::string> path;
-            int dirId = i.dirId;
+            int dirId = internal->dirId;
             while (dirId != NO_ID)
             {
                 const auto& dir = dirs[dirId];
                 path.push_front(dir.title);
-                i.fullPath.insert(0, '/' + dir.name);
+                internal->fullPath.insert(0, '/' + dir.name);
                 dirId = dir.parentId;
             }
-            i.dirName = boost::join(path, "/");
+            internal->dirName = boost::join(path, "/");
         }
     })
     .then([this, url]()
@@ -432,15 +440,62 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
 
         for (auto& i : prj->files)
         {
-            if (i.branchId != NO_ID)
+            auto internal = std::static_pointer_cast<FileInternal>(i.internal);
+            std::wstring branchName;
+
+            if (internal->branchId != NO_ID)
             {
-                i.branchName = branches[i.branchId].title;
-                i.fullPath.insert(0, '/' + branches[i.branchId].name);
+                branchName = str::to_wstring(branches[internal->branchId].title);
+                internal->fullPath.insert(0, '/' + branches[internal->branchId].name);
             }
+
+            if (!branchName.empty())
+                i.description += branchName + L" → ";
+            i.description += str::to_wstring(internal->fullPath);
         }
 
-        return *prj;
+        return std::move(*prj);
     });
+}
+
+
+std::wstring CrowdinClient::CreateLocalFilename(const ProjectInfo& project, const ProjectFile& file, const Language& lang) const
+{
+    auto internal = std::static_pointer_cast<FileInternal>(file.internal);
+    auto project_id = std::get<int>(project.internalID);
+    auto project_name = project.name;
+    auto file_name = internal->fileName;
+
+    // sanitize to be safe filenames:
+    std::replace_if(project_name.begin(), project_name.end(), boost::is_any_of("\\/:\"<>|?*"), '_');
+    std::replace_if(file_name.begin(), file_name.end(), boost::is_any_of("\\/:\"<>|?*"), '_');
+
+    // NB: sync this with ExtractMetadata()
+    const wxString dir = project_name + " - " + lang.Code();
+    wxFileName localFileName(dir + wxString::Format("/Crowdin.%d.%d.%s %s", project_id, internal->id, lang.LanguageTag(), file_name));
+
+    auto ext = localFileName.GetExt().Lower();
+    if (ext == "po")
+    {
+        // natively supported file format, will be opened as-is
+    }
+    else if (ext == "pot")
+    {
+        // POT files are natively supported, but need to be opened as PO to see translations
+        localFileName.SetExt("po");
+    }
+    else if (ext == "xliff" || ext == "xlf")
+    {
+        // Do nothing, we don't want to use double-extension like .xliff.xliff
+    }
+    else
+    {
+        // Everything else is exported as XLIFF and we do want, at least for now, to keep
+        // the old extension for clarity, e.g. *.strings.xliff or *.rc.xliff
+        localFileName.SetFullName(localFileName.GetFullName() + ".xliff");
+    }
+
+    return str::to_wstring(localFileName.GetFullPath());
 }
 
 
@@ -476,22 +531,85 @@ static void PostprocessDownloadedXLIFF(const wxString& filename)
 }
 
 
-dispatch::future<void> CrowdinClient::DownloadFile(int project_id,
-                                                   const Language& lang,
-                                                   int file_id,
-                                                   const std::string& file_extension,
-                                                   bool forceExportAsXliff,
-                                                   const std::wstring& output_file)
+std::shared_ptr<CrowdinClient::FileSyncMetadata> CrowdinClient::ExtractSyncMetadata(Catalog& catalog)
 {
-    wxLogTrace("poedit.crowdin", "DownloadFile(project_id=%d, lang=%s, file_id=%d, file_extension=%s, output_file=%S)", project_id, lang.LanguageTag(), file_id, file_extension.c_str(), output_file.c_str());
+    auto meta = std::make_shared<CrowdinSyncMetadata>();
+    meta->service = SERVICE_NAME;
 
-    wxString ext(file_extension);
+    wxFileName fn(catalog.GetFileName());
+    meta->extension = fn.GetExt().utf8_str();
+
+    auto& hdr = catalog.Header();
+    bool crowdinSpecificLangUsed = false;
+
+    if (hdr.HasHeader("X-Crowdin-Language"))
+    {
+        meta->lang = Language::FromLanguageTag(hdr.GetHeader("X-Crowdin-Language").ToStdString());
+        crowdinSpecificLangUsed = true;
+    }
+    else
+    {
+        meta->lang = catalog.GetLanguage();
+    }
+
+    const auto xliff = dynamic_cast<XLIFFCatalog*>(&catalog);
+    if (xliff)
+    {
+        if (xliff->GetXPathValue("file/header/tool//@tool-id") == "crowdin")
+        {
+            try
+            {
+                meta->projectId = std::stoi(xliff->GetXPathValue("file/@*[local-name()='project-id']"));
+                meta->fileId = std::stoi(xliff->GetXPathValue("file/@*[local-name()='id']"));
+                meta->xliffRemoteFilename = xliff->GetXPathValue("file/@*[local-name()='original']");
+                return meta;
+            }
+            catch(...)
+            {
+                wxLogTrace("poedit.crowdin", "Missing or malformatted Crowdin project and/or file ID");
+            }
+        }
+    }
+
+    if (hdr.HasHeader("X-Crowdin-Project-ID") && hdr.HasHeader("X-Crowdin-File-ID"))
+    {
+        meta->projectId = std::stoi(hdr.GetHeader("X-Crowdin-Project-ID").ToStdString());
+        meta->fileId = std::stoi(hdr.GetHeader("X-Crowdin-File-ID").ToStdString());
+        return meta;
+    }
+
+    // NB: sync this with CreateLocalFilename()
+    static const std::wregex RE_CROWDIN_FILE(L"^Crowdin\\.([0-9]+)\\.([0-9]+)(\\.([a-zA-Z-]+))? .*");
+    auto name = fn.GetName().ToStdWstring();
+
+    std::wsmatch m;
+    if (std::regex_match(name, m, RE_CROWDIN_FILE))
+    {
+        meta->projectId = std::stoi(m.str(1));
+        meta->fileId = std::stoi(m.str(2));
+        if (!crowdinSpecificLangUsed && m[4].matched)
+            meta->lang = Language::FromLanguageTag(str::to_utf8(m[4].str()));
+        return meta;
+    }
+
+    return nullptr;
+}
+
+
+dispatch::future<void> CrowdinClient::DownloadFile(const std::wstring& output_file, std::shared_ptr<FileSyncMetadata> meta_)
+{
+    auto meta = std::dynamic_pointer_cast<CrowdinSyncMetadata>(meta_);
+    auto const forceExportAsXliff = !meta->xliffRemoteFilename.empty();
+
+    wxLogTrace("poedit.crowdin", "DownloadFile(project_id=%d, lang=%s, file_id=%d, file_extension=%s, output_file=%S)", meta->projectId, meta->lang.LanguageTag(), meta->fileId, meta->extension.c_str(), output_file.c_str());
+
+    wxString ext(meta->extension);
     ext.MakeLower();
     const bool isXLIFFNative = (ext == "xliff" || ext == "xlf") && !forceExportAsXliff;
     const bool isXLIFFConverted = (!isXLIFFNative && ext != "po" && ext != "pot") || forceExportAsXliff;
 
     json options({
-        { "targetLanguageId", lang.LanguageTag() },
+        { "targetLanguageId", meta->lang.LanguageTag() },
         // for XLIFF and PO files should be exported "as is" so set to `false`
         { "exportAsXliff", isXLIFFConverted },
         // ensure that XLIFF files contain not-yet-translated entries, see https://github.com/vslavik/poedit/pull/648
@@ -499,7 +617,7 @@ dispatch::future<void> CrowdinClient::DownloadFile(int project_id,
     });
 
     return m_api->post(
-        "projects/" + std::to_string(project_id) + "/translations/builds/files/" + std::to_string(file_id),
+        "projects/" + std::to_string(meta->projectId) + "/translations/builds/files/" + std::to_string(meta->fileId),
         json_data(options)
         )
         .then([](json r)
@@ -519,26 +637,40 @@ dispatch::future<void> CrowdinClient::DownloadFile(int project_id,
 }
 
 
-dispatch::future<void> CrowdinClient::UploadFile(int project_id,
-                                                 const Language& lang,
-                                                 int file_id,
-                                                 const std::string& file_extension,
-                                                 const std::string& file_content)
+dispatch::future<void> CrowdinClient::DownloadFile(const std::wstring& output_file, const ProjectInfo& project, const ProjectFile& file, const Language& lang)
 {
-    wxLogTrace("poedit.crowdin", "UploadFile(project_id=%d, lang=%s, file_id=%d, file_extension=%s)", project_id, lang.LanguageTag().c_str(), file_id, file_extension.c_str());
+    auto internal = std::static_pointer_cast<FileInternal>(file.internal);
+
+    auto meta = std::make_shared<CrowdinSyncMetadata>();
+    meta->lang = lang;
+    meta->projectId = std::get<int>(project.internalID);
+    meta->fileId = internal->id;
+    meta->extension = wxFileName(internal->fileName, wxPATH_UNIX).GetExt().utf8_str();
+    meta->xliffRemoteFilename.clear(); // -> forceExportAsXliff=false
+
+    return DownloadFile(output_file, meta);
+}
+
+
+dispatch::future<void> CrowdinClient::UploadFile(const std::string& file_buffer, std::shared_ptr<CrowdinClient::FileSyncMetadata> meta_)
+{
+    auto meta = std::dynamic_pointer_cast<CrowdinSyncMetadata>(meta_);
+
+    wxLogTrace("poedit.crowdin", "UploadFile(project_id=%d, lang=%s, file_id=%d, file_extension=%s)", meta->projectId, meta->lang.LanguageTag().c_str(), meta->fileId, meta->extension.c_str());
+
     return m_api->post(
             "storages",
-            octet_stream_data(file_content),
-            { { "Crowdin-API-FileName", "crowdin." + file_extension } }
+            octet_stream_data(file_buffer),
+            { { "Crowdin-API-FileName", "crowdin." + meta->extension } }
         )
-        .then([this, project_id, file_id, lang] (json r) {
+        .then([this, meta] (json r) {
             wxLogTrace("poedit.crowdin", "File uploaded to temporary storage: %s", r.dump().c_str());
             const auto storageId = r["data"]["id"];
             return m_api->post(
-                "projects/" + std::to_string(project_id) + "/translations/" + lang.LanguageTag(),
+                "projects/" + std::to_string(meta->projectId) + "/translations/" + meta->lang.LanguageTag(),
                 json_data({
                     { "storageId", storageId },
-                    { "fileId", file_id }
+                    { "fileId", meta->fileId }
                 }))
                 .then([](json r) {
                     wxLogTrace("poedit.crowdin", "File uploaded: %s", r.dump().c_str());

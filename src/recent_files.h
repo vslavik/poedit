@@ -26,7 +26,8 @@
 #ifndef Poedit_recent_files_h
 #define Poedit_recent_files_h
 
-#include <wx/dataview.h>
+#include "customcontrols.h"
+
 #include <wx/event.h>
 
 #include <memory>
@@ -77,7 +78,7 @@ private:
 
 
 /// Control with a list of recently opened files
-class RecentFilesCtrl : public wxDataViewListCtrl
+class RecentFilesCtrl : public IconAndSubtitleListCtrl
 {
 public:
     RecentFilesCtrl(wxWindow *parent);
@@ -85,8 +86,6 @@ public:
 private:
     void RefreshContent();
     void OnActivate(wxDataViewEvent& event);
-
-    class MultilineTextRenderer;
 
     struct data;
     std::unique_ptr<data> m_data;
