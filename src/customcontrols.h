@@ -34,6 +34,7 @@
 #include <wx/dataview.h>
 #include <wx/statbmp.h>
 #include <wx/stattext.h>
+#include <wx/statline.h>
 #include <wx/hyperlink.h>
 #include <wx/xrc/xmlres.h>
 
@@ -280,6 +281,18 @@ private:
 
     class MultilineTextRenderer;
 };
+
+
+/// Fix for a wxStaticLine bug on macOS Ventura
+#if defined(__WXOSX__) && !wxCHECK_VERSION(3,2,3)
+class StaticLine : public wxStaticLine
+{
+public:
+    StaticLine(wxWindow *parent, wxWindowID id);
+};
+#else
+typedef wxStaticLine StaticLine;
+#endif
 
 
 #endif // Poedit_customcontrols_h

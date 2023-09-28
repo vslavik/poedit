@@ -97,7 +97,7 @@ void ServiceSelectionPanel::AddService(AccountDetailPanel *account)
 
     m_sizer->Insert(pos, content, wxSizerFlags(1).Expand());
     if (!isFirst)
-        m_sizer->Insert(posLine, new wxStaticLine(this, wxID_ANY), wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(24)));
+        m_sizer->Insert(posLine, new StaticLine(this, wxID_ANY), wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(24)));
 }
 
 

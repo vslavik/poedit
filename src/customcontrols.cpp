@@ -739,3 +739,12 @@ void IconAndSubtitleListCtrl::UpdateFormattedItem(unsigned row, const wxString& 
 {
     SetTextValue(FormatItemText(title, description), row, 1);
 }
+
+
+#if defined(__WXOSX__) && !wxCHECK_VERSION(3,2,3)
+StaticLine::StaticLine(wxWindow *parent, wxWindowID id) : wxStaticLine(parent, id)
+{
+    NSBox *box = (NSBox*)GetHandle();
+    box.boxType = NSBoxSeparator;
+}
+#endif
