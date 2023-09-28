@@ -898,6 +898,12 @@ void SuggestionsSidebarBlock::OnDelayedShowSuggestionsForItem(wxTimerEvent&)
 void SuggestionsSidebarBlock::QueryAllProviders(const CatalogItemPtr& item)
 {
     auto thisQueryId = ++m_latestQueryId;
+
+    // At this point, we know we're not interested in any older results, but some might have
+    // arrived asynchronously in between ClearSuggestions() call and now. So make sure there
+    // are no old suggestions present right after increasing the query ID:
+    m_suggestions.clear();
+
     QueryProvider(TranslationMemory::Get(), item, thisQueryId);
 }
 
