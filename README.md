@@ -60,9 +60,12 @@ They can be installed with Homebrew and `macos/Brewfile`:
     brew bundle --file=macos/Brewfile
 
 
-### Windows using Visual Studio 2019
+### Windows using Visual Studio
 
-You need a full git checkout to build on Windows; see below for details.
+You need a full git checkout to build on Windows; see below for details. Note that the repository uses
+symlinks and so you'll need to enabled [Developer Mode](https://msdn.microsoft.com/en-us/windows/uwp/get-started/enable-your-device-for-development) and configure git to allow symlinks:
+
+    git config --global core.symlinks true
 
 After checkout, use the `Poedit.sln` solution to build everything. To build the installer, open `win32/poedit.iss` in Inno Setup and compile the project.
 

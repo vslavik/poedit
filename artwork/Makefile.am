@@ -32,7 +32,8 @@ dist_uiicons_DATA = \
 		linux/sidebar.png \
 		AccountCrowdin.png \
 		AccountLocalazy.png \
-		CrowdinLogoTemplate.png \
+		CrowdinLogo.png \
+		CrowdinLogoDark.png \
 		LocalazyLogo.png \
 		DownvoteTemplate.png \
 		ExtractorsGNUgettext.png \

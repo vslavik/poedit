@@ -56,7 +56,7 @@ public:
     CrowdinLoginPanel(wxWindow *parent, int flags = 0);
 
     wxString GetServiceName() const override { return "Crowdin"; }
-    wxString GetServiceLogo() const override { return "CrowdinLogoTemplate"; }
+    wxString GetServiceLogo() const override { return "CrowdinLogo"; }
     wxString GetServiceDescription() const override;
     wxString GetServiceLearnMoreURL() const override;
 
