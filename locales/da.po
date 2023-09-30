@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-05-09 17:49+0200\n"
-"PO-Revision-Date: 2023-05-09 15:48\n"
+"POT-Creation-Date: 2023-09-30 19:13+0200\n"
+"PO-Revision-Date: 2023-09-30 16:45\n"
 "Last-Translator: \n"
 "Language-Team: Danish\n"
 "Language: da_DK\n"
@@ -99,6 +99,9 @@ msgstr ""
 msgid "Couldn’t save file %s."
 msgstr "Kunne ikke gemme filen %s."
 
+msgid "Screenshots:"
+msgstr "Skærmfoto:"
+
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
@@ -172,18 +175,77 @@ msgstr "Vælg dit foretrukne sprog"
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Du skal genstarte Poedit før denne ændring træder i kraft."
 
+msgid "Add Account"
+msgstr "Tilføj konto"
+
+msgid "Add account"
+msgstr "Tilføj konto"
+
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Learn more about %s"
+msgstr "Læs mere om %s"
+
+msgid ""
+"Connect Poedit with supported cloud localization platforms to seamlessly "
+"sync translations managed on them."
+msgstr ""
+"Forbind Poedit med understøttede cloud-lokaliseringsplatforme for problemfri "
+"synk af oversættelser håndteret af disse."
+
+msgid "How does cloud sync work?"
+msgstr "Hvordan fungerer cloud-synk?"
+
+msgid "Account"
+msgstr "Konto"
+
+msgid "(not signed in)"
+msgstr "(ikke logget ind)"
+
+msgid "File"
+msgstr "Fil"
+
+msgid "Open cloud translation"
+msgstr "Åbn cloud-oversættelse"
+
+msgid "Manage accounts"
+msgstr "Håndtér konti"
+
+msgid "Project:"
+msgstr "Projekt:"
+
+msgid "Language:"
+msgstr "Sprog:"
+
+msgid "Sign in to Cloud Account"
+msgstr "Log ind på Cloud-konto"
+
+msgid "Sign in to cloud account"
+msgstr "Log ind på cloud-konto"
+
+msgid "No translation projects listed in your account."
+msgstr "Ingen oversættelsesprojekter opført i kontoen."
+
+msgid "Downloading latest translations…"
+msgstr "Downloader seneste oversættelser…"
+
+#. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Sign in to %s"
+msgstr "Log ind på %s"
+
 msgid "Syncing"
 msgstr "Synkronisering"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s…"
-msgstr "Synker med %s…"
+msgid "Uploading translations to %s…"
+msgstr "Uploader oversættelser til %s…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s failed."
-msgstr "Synk med %s mislykkedes."
+msgid "Uploading translations to %s failed."
+msgstr "Upload af oversættelser til %s mislykkedes."
 
 msgid "Syncing error"
 msgstr "Synkfejl"
@@ -200,14 +262,6 @@ msgstr "Ikke godkendt, log venligst ind igen."
 msgid "Downloading translations is disabled in this project."
 msgstr "Download af oversættelser er deaktiveret i dette projekt."
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
-msgstr ""
-"Crowdin er en online lokaliseringhåndteringsplatform og et kollaborativt "
-"oversættelsesværktøj. Poedit kan uden problemer synke PO-filer håndteret på "
-"Crowdin."
-
 msgid "Sign In"
 msgstr "Log ind"
 
@@ -220,38 +274,24 @@ msgstr "Log ud"
 msgid "Sign out"
 msgstr "Log ud"
 
+msgid "Learn more about Crowdin"
+msgstr "Læs mere om Crowdin"
+
+msgid ""
+"Crowdin is an online localization management platform and collaborative "
+"translation tool."
+msgstr ""
+"Crowdin er en online lokaliseringshåndteringsplatform og et "
+"oversættelsessamarbejdsværktøj."
+
 msgid "Waiting for authentication…"
 msgstr "Venter på godkendelse…"
 
 msgid "Updating user information…"
 msgstr "Opdaterer brugeroplysninger…"
 
-msgid "Learn more about Crowdin"
-msgstr "Læs mere om Crowdin"
-
 msgid "Sign in to Crowdin"
 msgstr "Log ind på Crowdin"
-
-msgid "File"
-msgstr "Fil"
-
-msgid "Open Crowdin translation"
-msgstr "Åbn Crowdin-oversættelse"
-
-msgid "Project:"
-msgstr "Projekt:"
-
-msgid "Language:"
-msgstr "Sprog:"
-
-msgid "Signed in as:"
-msgstr "Logget ind som:"
-
-msgid "No translation projects listed in your Crowdin account."
-msgstr "Ingen oversættelsesprojekter i din Crowdin-konto."
-
-msgid "Downloading latest translations…"
-msgstr "Downloader seneste oversættelser…"
 
 msgid "Syncing with Crowdin failed."
 msgstr "Synkronisering med Crowdin mislykkedes."
@@ -936,14 +976,40 @@ msgstr "Erstatningsstreng"
 msgid "Cannot execute program: %s"
 msgstr "Kan ikke udføre program: %s"
 
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "Sprogkode eller navn (f.eks. da_DK)"
+#. TRANSLATORS: placeholder/hint in language controls
+msgid "Language name or code"
+msgstr "Sprognavn eller -kode"
 
 msgid "Translation Language"
 msgstr "Oversættelsessprog"
 
 msgid "Language of the translation:"
 msgstr "Sprog for oversættelsen:"
+
+msgid "All strings"
+msgstr "Alle strenge"
+
+msgid "Couldn’t download Localazy project details."
+msgstr "Kunne ikke downloade Localazy-projektoplysninger."
+
+msgid "There was an error when uploading translations to Localazy."
+msgstr "En fejl opstod under upload af oversættelser til Localazy."
+
+msgid "Projects"
+msgstr "Projekter"
+
+msgid ""
+"Localazy is a highly automated localization platform allowing anyone to "
+"translate their products and content into multiple languages easily."
+msgstr ""
+"Localazy er en højautomatiseret lokaliseringsplatform, hvormed alle nemt kan "
+"oversætte deres produkter og indhold til flere sprog."
+
+msgid "Add Project"
+msgstr "Tilføj projekt"
+
+msgid "Add project"
+msgstr "Tilføj projekt"
 
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - Kataloghåndtering"
@@ -1421,16 +1487,25 @@ msgstr ""
 "Præoversættelse kræver at kildetekst er tilgængelig. Det virker ikke, hvis "
 "kun id'er uden den egentlige tekst bruges."
 
+msgid "Cannot pre-translate from unknown language."
+msgstr "Kan ikke præoversætte fra ukendt sprog."
+
+msgid ""
+"Pre-translation requires that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"Præoversættelse kræver, at kildetekstens sprog er kendt. Poedit kunne ikke "
+"bestemme det i denne fil."
+
 msgid "Only fill in exact matches"
 msgstr "Udfyld kun nøjagtige overensstemmelser"
 
 msgid ""
-"By default, inaccurate results are filled in as well and marked as needing "
-"work. Check this option to only include accurate matches."
+"By default, inaccurate results are also included, but marked as needing "
+"work. Check this option to only include perfect matches."
 msgstr ""
-"Som standard vil unøjagtige resultater også blive udfyldt og markeret som "
-"\"skal efterses.\" Marker dette punkt for kun at inkludere nøjagtige "
-"overensstemmelser."
+"Unøjagtige resultater medtages som standard også, men markeres som ufærdige. "
+"Markér valgmuligheden for kun at medtage 100% matchninger."
 
 msgid "Don’t mark exact matches as needing work"
 msgstr "Marker ikke nøjagtige overensstemmelser som \"skal efterses\""
@@ -1670,11 +1745,11 @@ msgstr "Åbn seneste"
 msgid "Open recent"
 msgstr "Åbn seneste"
 
-msgid "Open from Crowdin…"
-msgstr "Åbn fra Crowdin…"
+msgid "Open cloud translation…"
+msgstr "Åbn cloud-oversættelse…"
 
-msgid "Open From Crowdin…"
-msgstr "Åbn fra Crowdin…"
+msgid "Open Cloud Translation…"
+msgstr "Åbn Cloud Translation…"
 
 msgid "&Start window"
 msgstr "O&pstartsvindue"
@@ -2151,6 +2226,13 @@ msgstr ""
 "Oversættelsesforslag kræver, at kildetekst er tilgængelig. De virker ikke, "
 "hvis kun id'er uden selve teksten bruges."
 
+msgid ""
+"Translation suggestions require that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"Oversættelse kræver, at kildetekstens sprog er kendt. Poedit kunne ikke "
+"bestemme det i denne fil."
+
 msgid "The TMX file is malformed."
 msgstr "TMX filen er forkert udformet."
 
@@ -2228,11 +2310,11 @@ msgstr "Gennemse filer"
 msgid "Open and edit translation files."
 msgstr "Åbn og rediger oversættelsesfiler."
 
-msgid "Translate Crowdin project"
-msgstr "Oversæt Crowdin-projekt"
+msgid "Translate cloud project"
+msgstr "Oversæt cloud-projekt"
 
-msgid "Collaborate with others in a Crowdin project."
-msgstr "Samarbejd med andre i et Crowdin-projekt."
+msgid "Collaborate with other people online."
+msgstr "Samarbejd med andre personer online."
 
 msgid "Recent files"
 msgstr "Seneste filer"

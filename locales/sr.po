@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-05-09 17:49+0200\n"
-"PO-Revision-Date: 2023-05-09 15:49\n"
+"POT-Creation-Date: 2023-09-30 19:13+0200\n"
+"PO-Revision-Date: 2023-09-30 16:45\n"
 "Last-Translator: \n"
 "Language-Team: Serbian (Cyrillic)\n"
 "Language: sr_SP\n"
@@ -99,6 +99,9 @@ msgstr ""
 msgid "Couldn’t save file %s."
 msgstr "Није могуће сачувати датотеку „%s”."
 
+msgid "Screenshots:"
+msgstr "Снимци екрана:"
+
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
@@ -175,18 +178,77 @@ msgid "You must restart Poedit for this change to take effect."
 msgstr ""
 "Потребно је да поново покренете Poedit како би ова измена ступила на снагу."
 
+msgid "Add Account"
+msgstr "Додај налог"
+
+msgid "Add account"
+msgstr "Додај налог"
+
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Learn more about %s"
+msgstr "Сазнајте више о %s"
+
+msgid ""
+"Connect Poedit with supported cloud localization platforms to seamlessly "
+"sync translations managed on them."
+msgstr ""
+"Повежите Poedit са подржаним интернет плаформама за превођење како бисте с "
+"лакоћом синхронизовали преводе који се налазе на њима."
+
+msgid "How does cloud sync work?"
+msgstr "Како интернет синхронизација функционише?"
+
+msgid "Account"
+msgstr "Налог"
+
+msgid "(not signed in)"
+msgstr "(нисте пријављени)"
+
+msgid "File"
+msgstr "Датотека"
+
+msgid "Open cloud translation"
+msgstr "Отвори превод са интернета"
+
+msgid "Manage accounts"
+msgstr "Управљај налозима"
+
+msgid "Project:"
+msgstr "Пројекат:"
+
+msgid "Language:"
+msgstr "Језик:"
+
+msgid "Sign in to Cloud Account"
+msgstr ""
+
+msgid "Sign in to cloud account"
+msgstr ""
+
+msgid "No translation projects listed in your account."
+msgstr ""
+
+msgid "Downloading latest translations…"
+msgstr "Преузимање најновијих превода…"
+
+#. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Sign in to %s"
+msgstr ""
+
 msgid "Syncing"
 msgstr "Синхронизација"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s…"
-msgstr "Синхронизовање са услугом %s…"
+msgid "Uploading translations to %s…"
+msgstr ""
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s failed."
-msgstr "Синхронизација са услугом %s није успела."
+msgid "Uploading translations to %s failed."
+msgstr ""
 
 msgid "Syncing error"
 msgstr "Грешка при синхронизовању"
@@ -203,13 +265,6 @@ msgstr "Немате овлашћења. Поново се пријавите."
 msgid "Downloading translations is disabled in this project."
 msgstr "Преузимање превода из овог пројекта је онемогућено."
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
-msgstr ""
-"Crowdin је онлајн платформа за заједничку локализацију и превод. Poedit са "
-"лакоћом може да синхронизује PO датотеке са Crowdin-ом."
-
 msgid "Sign In"
 msgstr "Пријавите се"
 
@@ -222,38 +277,22 @@ msgstr "Одјави ме"
 msgid "Sign out"
 msgstr "Одјави ме"
 
+msgid "Learn more about Crowdin"
+msgstr "Сазнајте више о Crowdin-у"
+
+msgid ""
+"Crowdin is an online localization management platform and collaborative "
+"translation tool."
+msgstr ""
+
 msgid "Waiting for authentication…"
 msgstr "Чека се потврда идентитета…"
 
 msgid "Updating user information…"
 msgstr "Ажурирање информација о кориснику…"
 
-msgid "Learn more about Crowdin"
-msgstr "Сазнајте више о Crowdin-у"
-
 msgid "Sign in to Crowdin"
 msgstr "Пријава на Crowdin"
-
-msgid "File"
-msgstr "Датотека"
-
-msgid "Open Crowdin translation"
-msgstr "Отварање превода из Crowdin-а"
-
-msgid "Project:"
-msgstr "Пројекат:"
-
-msgid "Language:"
-msgstr "Језик:"
-
-msgid "Signed in as:"
-msgstr "Пријављени сте као:"
-
-msgid "No translation projects listed in your Crowdin account."
-msgstr "Нема преводилачких пројеката на вашем Crowdin налогу."
-
-msgid "Downloading latest translations…"
-msgstr "Преузимање најновијих превода…"
 
 msgid "Syncing with Crowdin failed."
 msgstr "Синхронизација са Crowdin-ом није успела."
@@ -408,7 +447,7 @@ msgstr "HTML датотеке"
 
 #, c-format
 msgid "In: %s"
-msgstr "Фајл: %s"
+msgstr "Датотека: %s"
 
 msgid "Source code not available."
 msgstr "Изворни кôд је недоступан."
@@ -575,7 +614,7 @@ msgstr "У заглављу недостаје образац за множин�
 
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
-msgstr "Синтаксна грешка у заглављу код обрасца облика множине („%s”)."
+msgstr "Синтактичка грешка у заглављу код обрасца за множинске облике („%s”)."
 
 msgid "Fix the Header"
 msgstr "Исправи заглавље"
@@ -641,10 +680,10 @@ msgstr " (измењено)"
 
 #, c-format
 msgid "Failed to update translation memory: %s"
-msgstr "Нисам успео освежити преводилачку меморију: %s"
+msgstr "Није могуће ажурирати преводилачку меморију: %s"
 
 msgid "Purge deleted translations"
-msgstr "Очисти избрисане преводе"
+msgstr "Чишћење избрисаних превода"
 
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr "Желите ли да уклоните све преводе који се више не користе?"
@@ -658,7 +697,7 @@ msgstr ""
 "Мораћете да поново преведете стрингове ако буду додати у будућности."
 
 msgid "Keep"
-msgstr "Задржи"
+msgstr "&Задржи"
 
 msgid "Purge"
 msgstr "&Обриши"
@@ -943,8 +982,9 @@ msgstr "Стринг за замену"
 msgid "Cannot execute program: %s"
 msgstr "Није могуће извршити програм: %s"
 
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "Кôд или назив језика (нпр. sr_RS)"
+#. TRANSLATORS: placeholder/hint in language controls
+msgid "Language name or code"
+msgstr ""
 
 msgid "Translation Language"
 msgstr "Језик превода"
@@ -952,8 +992,31 @@ msgstr "Језик превода"
 msgid "Language of the translation:"
 msgstr "Језик превода:"
 
+msgid "All strings"
+msgstr ""
+
+msgid "Couldn’t download Localazy project details."
+msgstr ""
+
+msgid "There was an error when uploading translations to Localazy."
+msgstr ""
+
+msgid "Projects"
+msgstr "Пројекти"
+
+msgid ""
+"Localazy is a highly automated localization platform allowing anyone to "
+"translate their products and content into multiple languages easily."
+msgstr ""
+
+msgid "Add Project"
+msgstr "Додај пројекат"
+
+msgid "Add project"
+msgstr "Додај пројекат"
+
 msgid "Poedit - Catalogs manager"
-msgstr "Поедит – управник збирака превода"
+msgstr "Poedit – менаџер каталога"
 
 msgid "Edit…"
 msgstr "Уреди…"
@@ -1325,7 +1388,7 @@ msgid "Custom extractors:"
 msgstr "Прилагођени издвајачи:"
 
 msgid "GNU gettext"
-msgstr "ГНУ-геттекст"
+msgstr "GNU gettext"
 
 msgid ""
 "Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
@@ -1348,7 +1411,7 @@ msgid "Accounts"
 msgstr "Налози"
 
 msgid "Automatically check for updates"
-msgstr "Самостално тражи освежења"
+msgstr "Аутоматски тражи ажурирања"
 
 msgid "Include beta versions"
 msgstr "Укључи бета верзије"
@@ -1357,11 +1420,11 @@ msgid ""
 "Beta versions contain the latest new features and improvements, but may be a "
 "bit less stable."
 msgstr ""
-"Бета-издања садрже најновије могућности и побољшања, али могу бити мање "
+"Бета верзије садрже најновије функције и побољшања, али могу бити мање "
 "стабилне."
 
 msgid "Updates"
-msgstr "Освежења"
+msgstr "Ажурирања"
 
 msgid ""
 "These settings affect internal formatting of PO files. Adjust them if you "
@@ -1428,15 +1491,21 @@ msgstr ""
 "За прелиминарни превод је потребан изворни текст. Ова функција неће радити "
 "само са идентификаторима."
 
+msgid "Cannot pre-translate from unknown language."
+msgstr ""
+
+msgid ""
+"Pre-translation requires that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+
 msgid "Only fill in exact matches"
 msgstr "Само потпуна подударања"
 
 msgid ""
-"By default, inaccurate results are filled in as well and marked as needing "
-"work. Check this option to only include accurate matches."
+"By default, inaccurate results are also included, but marked as needing "
+"work. Check this option to only include perfect matches."
 msgstr ""
-"Подразумевано се преузимају и приближни резултати и означавају за дораду. "
-"Изаберите ову опцију да бисте користили само потпуна подударања."
 
 msgid "Don’t mark exact matches as needing work"
 msgstr "Потпуна подударања не означавај за дораду"
@@ -1674,11 +1743,11 @@ msgstr "Отвори &недавне"
 msgid "Open recent"
 msgstr "Отвори &недавне"
 
-msgid "Open from Crowdin…"
-msgstr "О&твори из Crowdin-а…"
+msgid "Open cloud translation…"
+msgstr ""
 
-msgid "Open From Crowdin…"
-msgstr "О&твори из Crowdin-а…"
+msgid "Open Cloud Translation…"
+msgstr ""
 
 msgid "&Start window"
 msgstr "&Уводни прозор"
@@ -1687,10 +1756,10 @@ msgid "&Start Window"
 msgstr "&Уводни прозор"
 
 msgid "Catalogs &manager"
-msgstr "Управник& збирака"
+msgstr "&Менаџер каталога"
 
 msgid "Catalogs &Manager"
-msgstr "Управник& збирака"
+msgstr "&Менаџер каталога"
 
 msgid "&Close"
 msgstr "&Затвори"
@@ -1720,7 +1789,7 @@ msgid "E&xit"
 msgstr "&Изађи"
 
 msgid "Quit"
-msgstr "Напусти"
+msgstr "Изађи"
 
 msgid "Copy from singular"
 msgstr "Копирај из &једнине"
@@ -1925,7 +1994,7 @@ msgid "&GNU gettext Manual"
 msgstr "П&риручник за GNU gettext"
 
 msgid "&About Poedit"
-msgstr "&О Поедиту"
+msgstr "&О Poedit-у"
 
 msgid "&About"
 msgstr "&О програму"
@@ -1976,7 +2045,7 @@ msgstr ""
 "Параметар %f означава назив датотеке."
 
 msgid "Source code charset:"
-msgstr "Скуп знакова изворног кôда:"
+msgstr "Кодирање изворног кода:"
 
 #, c-format
 msgid ""
@@ -2021,10 +2090,10 @@ msgid "Translation properties"
 msgstr "Својства превода"
 
 msgid "Sources Paths"
-msgstr "Путање до изворних фајлова"
+msgstr "Путање до изворних датотека"
 
 msgid "Sources paths"
-msgstr "Путање до изворних фајлова"
+msgstr "Путање до изворних датотека"
 
 msgid "Extract text from source files in the following directories:"
 msgstr "Издвој текст из изворних датотека у следеће фолдере:"
@@ -2033,10 +2102,10 @@ msgid "Base path:"
 msgstr "Основна путања:"
 
 msgid "Sources Keywords"
-msgstr "Кључне речи изворних фајлова"
+msgstr "Кључне речи изворних датотека"
 
 msgid "Sources keywords"
-msgstr "Кључне речи изворних фајлова"
+msgstr "Кључне речи изворних датотека"
 
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
@@ -2052,7 +2121,7 @@ msgid "Learn about gettext keywords"
 msgstr "Сазнајте више о кључним речима gettext-а"
 
 msgid "Update summary"
-msgstr "Освежи сажетак"
+msgstr "Резиме ажурирања"
 
 msgid ""
 "These strings were found in the sources but were not in the file.\n"
@@ -2062,7 +2131,7 @@ msgstr ""
 "Poedit ће их сада додати у њу."
 
 msgid "New strings"
-msgstr "Нове ниске"
+msgstr "Нови стрингови"
 
 msgid ""
 "These strings are no longer in the source code.\n"
@@ -2072,7 +2141,7 @@ msgstr ""
 "Poedit ће их сада уклонити из датотеке."
 
 msgid "Obsolete strings"
-msgstr "Застареле ниске"
+msgstr "Застарели стрингови"
 
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 нових, 0 застарелих)"
@@ -2096,7 +2165,7 @@ msgid "Update from code"
 msgstr "Ажурирај из кода"
 
 msgid "Update from Code"
-msgstr "Ажурирај из кôда"
+msgstr "Ажурирај из кода"
 
 msgid "Update from source code"
 msgstr "Ажурирај из изворног кода"
@@ -2146,7 +2215,7 @@ msgid "No Matches Found"
 msgstr "Нема резултата"
 
 msgid "This string was found in Poedit’s translation memory."
-msgstr "Овај текст је пронађен у Poedit преводилачкој меморији."
+msgstr "Овај стринг је пронађен у Poedit-овој преводилачкој меморији."
 
 msgid ""
 "Translation suggestions require that source text is available. They don’t "
@@ -2154,6 +2223,11 @@ msgid ""
 msgstr ""
 "За предложене преводе је потребан изворни текст. Ова функција неће радити "
 "само са идентификаторима."
+
+msgid ""
+"Translation suggestions require that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
 
 msgid "The TMX file is malformed."
 msgstr "Неисправан формат TMX датотеке."
@@ -2188,7 +2262,7 @@ msgstr ""
 "Преводиоци обично користе шаблоне (POT датотеке) које им припреми програмер."
 
 msgid "(Learn more about GNU gettext)"
-msgstr "(Сазнајте више о ГНУ геттексту)"
+msgstr "Сазнајте више о GNU gettext-у"
 
 msgid ""
 "The simplest way to fill this file with translations is to update it from a "
@@ -2198,7 +2272,7 @@ msgstr ""
 "ажурирате помоћу POT датотеке:"
 
 msgid "Update from POT"
-msgstr "Ажурирај помоћу POT фајла"
+msgstr "Ажурирај помоћу POT датотеке"
 
 msgid "Take translatable strings from an existing POT template."
 msgstr "Преузмите стрингове за превод из постојећег POT шаблона."
@@ -2231,11 +2305,11 @@ msgstr "Прегледај датотеке"
 msgid "Open and edit translation files."
 msgstr "Отворите и уређујте датотеке превода."
 
-msgid "Translate Crowdin project"
-msgstr "Преведи пројекат на Crowdin-у"
+msgid "Translate cloud project"
+msgstr ""
 
-msgid "Collaborate with others in a Crowdin project."
-msgstr "Сарађујте са другима на пројекту на Crowdin-у."
+msgid "Collaborate with other people online."
+msgstr ""
 
 msgid "Recent files"
 msgstr "Недавне датотеке"

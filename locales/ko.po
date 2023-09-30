@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-05-09 17:49+0200\n"
-"PO-Revision-Date: 2023-05-09 15:48\n"
+"POT-Creation-Date: 2023-09-30 19:13+0200\n"
+"PO-Revision-Date: 2023-09-30 16:45\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -98,6 +98,9 @@ msgstr ""
 msgid "Couldn’t save file %s."
 msgstr "%s 파일을 저장할 수 없습니다."
 
+msgid "Screenshots:"
+msgstr "스크린샷:"
+
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
@@ -171,18 +174,77 @@ msgstr "선호하는 언어 선택"
 msgid "You must restart Poedit for this change to take effect."
 msgstr "바뀐 내용을 반영하려면 Poedit을 다시 시작해야 합니다."
 
+msgid "Add Account"
+msgstr "계정 추가"
+
+msgid "Add account"
+msgstr "계정 추가"
+
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Learn more about %s"
+msgstr "%s 자세히 알아보기"
+
+msgid ""
+"Connect Poedit with supported cloud localization platforms to seamlessly "
+"sync translations managed on them."
+msgstr ""
+"poedit에서 지원하는 클라우드 기반 지역화 플랫폼에서 관리하는 번역을 감쪽같이 "
+"동기화하려면 플랫폼에 연결합니다."
+
+msgid "How does cloud sync work?"
+msgstr "클라우드 동작을 어떻게 처리할까요?"
+
+msgid "Account"
+msgstr "계정"
+
+msgid "(not signed in)"
+msgstr "(로그인하지 않음)"
+
+msgid "File"
+msgstr "파일"
+
+msgid "Open cloud translation"
+msgstr "클라우드 번역 열기"
+
+msgid "Manage accounts"
+msgstr "계정 관리"
+
+msgid "Project:"
+msgstr "프로젝트:"
+
+msgid "Language:"
+msgstr "언어:"
+
+msgid "Sign in to Cloud Account"
+msgstr "클라우드 계정에 로그인"
+
+msgid "Sign in to cloud account"
+msgstr "클라우드 계정에 로그인합니다"
+
+msgid "No translation projects listed in your account."
+msgstr "이 계정에 번역 프로젝트가 없습니다."
+
+msgid "Downloading latest translations…"
+msgstr "최신 번역 다운로드 중…"
+
+#. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Sign in to %s"
+msgstr "%s에 로그인"
+
 msgid "Syncing"
 msgstr "동기화 중"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s…"
-msgstr "%s와(과) 동기화 중…"
+msgid "Uploading translations to %s…"
+msgstr "%s에 번역 업로드중…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s failed."
-msgstr "%s 동기화에 실패했습니다."
+msgid "Uploading translations to %s failed."
+msgstr "%s(으)로의 번역 업로드에 실패했습니다."
 
 msgid "Syncing error"
 msgstr "동기화 오류"
@@ -199,13 +261,6 @@ msgstr "인증하지 않았습니다. 다시 로그인하십시오."
 msgid "Downloading translations is disabled in this project."
 msgstr "이 프로젝트에서는 번역을 다운로드할 수 없습니다."
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
-msgstr ""
-"Crowdin은 온라인 번역 관리 플랫폼이며 협력을 기반으로 한 번역 도구입니다. "
-"Poedit은 Crowdin에서 PO 파일을 감쪽같이 동기화할 수 있습니다."
-
 msgid "Sign In"
 msgstr "로그인"
 
@@ -218,38 +273,22 @@ msgstr "로그아웃"
 msgid "Sign out"
 msgstr "로그아웃"
 
+msgid "Learn more about Crowdin"
+msgstr "Crowdin 더 알아보기"
+
+msgid ""
+"Crowdin is an online localization management platform and collaborative "
+"translation tool."
+msgstr "크라우드인은 지역화 관리 플랫폼이며 공동 번역 도구입니다."
+
 msgid "Waiting for authentication…"
 msgstr "인증 대기 중…"
 
 msgid "Updating user information…"
 msgstr "사용자 정보 업데이트 중…"
 
-msgid "Learn more about Crowdin"
-msgstr "Crowdin 더 알아보기"
-
 msgid "Sign in to Crowdin"
 msgstr "Crowdin에 로그인"
-
-msgid "File"
-msgstr "파일"
-
-msgid "Open Crowdin translation"
-msgstr "Crowdin 번역 열기"
-
-msgid "Project:"
-msgstr "프로젝트:"
-
-msgid "Language:"
-msgstr "언어:"
-
-msgid "Signed in as:"
-msgstr "로그인 사용자:"
-
-msgid "No translation projects listed in your Crowdin account."
-msgstr "Crowdin 계정에 번역 프로젝트가 없습니다."
-
-msgid "Downloading latest translations…"
-msgstr "최신 번역 다운로드 중…"
 
 msgid "Syncing with Crowdin failed."
 msgstr "Crowdin과 동기화에 실패했습니다."
@@ -916,14 +955,40 @@ msgstr "바꿀 문자열"
 msgid "Cannot execute program: %s"
 msgstr "프로그램을 실행할 수 없습니다: %s"
 
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "언어 코드 또는 이름(예 en_GB)"
+#. TRANSLATORS: placeholder/hint in language controls
+msgid "Language name or code"
+msgstr "언어 이름 또는 코드"
 
 msgid "Translation Language"
 msgstr "번역 언어"
 
 msgid "Language of the translation:"
 msgstr "번역 언어:"
+
+msgid "All strings"
+msgstr "모든 문자열"
+
+msgid "Couldn’t download Localazy project details."
+msgstr "로컬레이지 프로젝트 세부 정보를 다운로드할 수 없습니다."
+
+msgid "There was an error when uploading translations to Localazy."
+msgstr "로컬레이지로 번역을 업로드하는 중 오류가 발생했습니다."
+
+msgid "Projects"
+msgstr "프로젝트"
+
+msgid ""
+"Localazy is a highly automated localization platform allowing anyone to "
+"translate their products and content into multiple languages easily."
+msgstr ""
+"로컬레이지는 누구에게든 자신의 제품과 내용물을 여러 언어로 번역하는 과정을 상"
+"당 부분 자동화해주는 지역화 플랫폼입니다."
+
+msgid "Add Project"
+msgstr "프로젝트 추가"
+
+msgid "Add project"
+msgstr "프로젝트 추가"
 
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - 카탈로그 관리자"
@@ -1397,15 +1462,25 @@ msgstr ""
 "원문이 주어져야 사전 번역 기능을 이용할 수 있습니다. 실제 텍스트가 아닌 ID만 "
 "있는 경우 작업을 실행할 수 없습니다."
 
+msgid "Cannot pre-translate from unknown language."
+msgstr "알 수 없는 언어를 사전 번역할 수 없습니다."
+
+msgid ""
+"Pre-translation requires that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"사전 번역 작업시 원본 내용의 언어를 알아야 합니다. Poedit에서 이 파일의 언어"
+"를 확인하지 못했습니다."
+
 msgid "Only fill in exact matches"
 msgstr "정확하게 일치하는 내용만 채우기"
 
 msgid ""
-"By default, inaccurate results are filled in as well and marked as needing "
-"work. Check this option to only include accurate matches."
+"By default, inaccurate results are also included, but marked as needing "
+"work. Check this option to only include perfect matches."
 msgstr ""
-"기본 설정으로, 있는 그대로의 부정확한 결과로 채우며 작업 필요로 표시합니다. "
-"정확하게 일치하는 내용만 포함하려면 이 설정을 켜세요."
+"기본적으로, 부정확한 결과도 들어있을 수 있지만, 해당 부분은 작업이 필요한 상"
+"태로 표시합니다. 완전히 일치하는 결과를 넣을 경우에만 이 옵션을 표시하세요."
 
 msgid "Don’t mark exact matches as needing work"
 msgstr "정확하게 일치하는 내용은 작업 필요로 표시하지 않기"
@@ -1643,11 +1718,11 @@ msgstr "최근 파일 열기"
 msgid "Open recent"
 msgstr "최근 파일 열기"
 
-msgid "Open from Crowdin…"
-msgstr "Crowdin에서 열기…"
+msgid "Open cloud translation…"
+msgstr "클라우드 번역 열기…"
 
-msgid "Open From Crowdin…"
-msgstr "Crowdin에서 열기…"
+msgid "Open Cloud Translation…"
+msgstr "클라우드 번역 열기…"
 
 msgid "&Start window"
 msgstr "시작 창(&S)"
@@ -2123,6 +2198,13 @@ msgstr ""
 "원문이 주어져야 번역 제안 기능을 이용할 수 있습니다. 실제 텍스트가 아닌 ID만 "
 "있는 경우 작업을 실행할 수 없습니다."
 
+msgid ""
+"Translation suggestions require that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"번역 제안 기능에서 원본 내용의 언어를 알아야 합니다. Poedit에서 이 파일의 언"
+"어를 확인하지 못했습니다."
+
 msgid "The TMX file is malformed."
 msgstr "TMX 파일이 잘못되었습니다."
 
@@ -2197,11 +2279,11 @@ msgstr "파일 찾아보기"
 msgid "Open and edit translation files."
 msgstr "번역 파일을 열어 편집합니다."
 
-msgid "Translate Crowdin project"
-msgstr "Crowdin 프로젝트 번역"
+msgid "Translate cloud project"
+msgstr "클라우드 프로젝트 번역"
 
-msgid "Collaborate with others in a Crowdin project."
-msgstr "Crowdin 프로젝트에서 다른 번역가와 협업합니다."
+msgid "Collaborate with other people online."
+msgstr "다른 번역가와 온라인에서 공동 번역을 진행합니다."
 
 msgid "Recent files"
 msgstr "최근 파일"

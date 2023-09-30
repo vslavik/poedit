@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-05-09 17:49+0200\n"
-"PO-Revision-Date: 2023-05-01 07:27\n"
+"POT-Creation-Date: 2023-09-30 19:13+0200\n"
+"PO-Revision-Date: 2023-09-30 16:45\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -99,6 +99,9 @@ msgstr ""
 msgid "Couldn’t save file %s."
 msgstr "Tiedostoa %s ei voitu tallentaa."
 
+msgid "Screenshots:"
+msgstr "Kuvankaappaukset:"
+
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
@@ -177,18 +180,77 @@ msgstr "Valitse ensisijainen kieli"
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Poedit täytyy käynnistää uudestaan muutoksien käyttöön ottamiseksi."
 
+msgid "Add Account"
+msgstr "Lisää tili"
+
+msgid "Add account"
+msgstr "Lisää tili"
+
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Learn more about %s"
+msgstr "Lisätietoja palvelusta %s"
+
+msgid ""
+"Connect Poedit with supported cloud localization platforms to seamlessly "
+"sync translations managed on them."
+msgstr ""
+"Yhdistä Poedit tuettuihin pilvilokalisointialustoihin käännösten saumatonta "
+"synkronointia ja hallintaa varten."
+
+msgid "How does cloud sync work?"
+msgstr "Miten pilvisynkronointi toimii?"
+
+msgid "Account"
+msgstr "Tili"
+
+msgid "(not signed in)"
+msgstr "(ei kirjautunut)"
+
+msgid "File"
+msgstr "Tiedosto"
+
+msgid "Open cloud translation"
+msgstr "Avaa pilvikäännös"
+
+msgid "Manage accounts"
+msgstr "Hallitse tilejä"
+
+msgid "Project:"
+msgstr "Projekti:"
+
+msgid "Language:"
+msgstr "Kieli:"
+
+msgid "Sign in to Cloud Account"
+msgstr "Kirjaudu pilvitilille"
+
+msgid "Sign in to cloud account"
+msgstr "Kirjaudu pilvitilille"
+
+msgid "No translation projects listed in your account."
+msgstr "Tililläsi ei ole käännösprojekteja."
+
+msgid "Downloading latest translations…"
+msgstr "Ladataan uusimmat käännökset…"
+
+#. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Sign in to %s"
+msgstr "Kirjaudu palveluun %s"
+
 msgid "Syncing"
 msgstr "Synkronoidaan"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s…"
-msgstr "Synkronointi: %s…"
+msgid "Uploading translations to %s…"
+msgstr "Tallennetaan käännöksiä palveluun %s…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s failed."
-msgstr "Synkronointi epäonnistui: %s."
+msgid "Uploading translations to %s failed."
+msgstr "Käännösten tallennus palveluun %s epäonnistui."
 
 msgid "Syncing error"
 msgstr "Synkronointivirhe"
@@ -205,14 +267,6 @@ msgstr "Ei valtuutusta; kirjaudu uudelleen."
 msgid "Downloading translations is disabled in this project."
 msgstr "Käännösten lataus on poistettu käytöstä tässä projektissa."
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
-msgstr ""
-"Crowdin on verkossa toimiva lokalisoinninhallinta-alusta ja yhteistyökalu "
-"kääntämiseen. Poedit osaa saumattomasti synkronoida Crowdinissa hallittuja "
-"PO-tiedostoja."
-
 msgid "Sign In"
 msgstr "Kirjaudu"
 
@@ -225,38 +279,24 @@ msgstr "Kirjaudu ulos"
 msgid "Sign out"
 msgstr "Kirjaudu ulos"
 
+msgid "Learn more about Crowdin"
+msgstr "Lisätietoja Crowdinista"
+
+msgid ""
+"Crowdin is an online localization management platform and collaborative "
+"translation tool."
+msgstr ""
+"Crowdin on verkkopohjainen lokalisointialusta ja yhteisöllinen "
+"käännöstyökalu."
+
 msgid "Waiting for authentication…"
 msgstr "Odotetaan todennusta…"
 
 msgid "Updating user information…"
 msgstr "Päivitetään käyttäjätietoja…"
 
-msgid "Learn more about Crowdin"
-msgstr "Lisätietoja Crowdinista"
-
 msgid "Sign in to Crowdin"
 msgstr "Kirjaudu Crowdiniin"
-
-msgid "File"
-msgstr "Tiedosto"
-
-msgid "Open Crowdin translation"
-msgstr "Avaa Crowdin-käännös"
-
-msgid "Project:"
-msgstr "Projekti:"
-
-msgid "Language:"
-msgstr "Kieli:"
-
-msgid "Signed in as:"
-msgstr "Kirjautuneena käyttäjänä:"
-
-msgid "No translation projects listed in your Crowdin account."
-msgstr "Crowdin-tiliisi ei liity käännösprojekteja."
-
-msgid "Downloading latest translations…"
-msgstr "Ladataan uusimmat käännökset…"
 
 msgid "Syncing with Crowdin failed."
 msgstr "Synkronointi Crowdiniin epäonnistui."
@@ -941,14 +981,40 @@ msgstr "Korvaava teksti"
 msgid "Cannot execute program: %s"
 msgstr "Ei voida suorittaa ohjelmaa: %s"
 
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "Kielen koodi tai nimi (esim. fi_FI)"
+#. TRANSLATORS: placeholder/hint in language controls
+msgid "Language name or code"
+msgstr "Kielen nimi tai koodi"
 
 msgid "Translation Language"
 msgstr "Käännöksen kieli"
 
 msgid "Language of the translation:"
 msgstr "Käännöksen kieli:"
+
+msgid "All strings"
+msgstr "Kaikki merkkijonot"
+
+msgid "Couldn’t download Localazy project details."
+msgstr "Localazy-projektin tietoja ei voitu ladata."
+
+msgid "There was an error when uploading translations to Localazy."
+msgstr "Virhe tallennettaessa käännöksiä Localazyyn."
+
+msgid "Projects"
+msgstr "Projektit"
+
+msgid ""
+"Localazy is a highly automated localization platform allowing anyone to "
+"translate their products and content into multiple languages easily."
+msgstr ""
+"Localazy on erittäin automatisoitu lokalisointialusta, jonka avulla kuka "
+"tahansa voi kääntää tuotteensa ja sisällönsä useille kielille helposti."
+
+msgid "Add Project"
+msgstr "Lisää projekti"
+
+msgid "Add project"
+msgstr "Lisää projekti"
 
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - Katalogien hallinta"
@@ -1428,16 +1494,26 @@ msgstr ""
 "Esikäännös edellyttää, että varsinainen lähdeteksti on käytettävissä. Se ei "
 "toimi, jos käytetään vain tunnisteita ilman varsinaista tekstiä."
 
+msgid "Cannot pre-translate from unknown language."
+msgstr "Ei voida esikääntää tuntemattomalta kieleltä."
+
+msgid ""
+"Pre-translation requires that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"Esikääntäminen edellyttää, että lähdetekstin kieli on tiedossa. Poedit ei "
+"tunnistanut sitä tästä tiedostosta."
+
 msgid "Only fill in exact matches"
 msgstr "Täytä vain tarkat täsmäävyydet"
 
 msgid ""
-"By default, inaccurate results are filled in as well and marked as needing "
-"work. Check this option to only include accurate matches."
+"By default, inaccurate results are also included, but marked as needing "
+"work. Check this option to only include perfect matches."
 msgstr ""
-"Oletuksena käännökset täytetään myös epätäsmällisten tulosten perustella ja "
-"merkitään keskeneräisiksi. Valitse tämä vaihtoehto, jos haluat käyttää vain "
-"tarkasti täsmääviä."
+"Oletusarvoisesti myös epätarkat tulokset sisällytetään, mutta merkitään "
+"keskeneräisiksi. Valitse tämä, jos haluat sisällyttää vain täydelliset "
+"vastineet."
 
 msgid "Don’t mark exact matches as needing work"
 msgstr "Älä merkitse tarkkoja vastineita keskeneräisiksi"
@@ -1676,11 +1752,11 @@ msgstr "Avaa äskettäinen"
 msgid "Open recent"
 msgstr "Avaa äskettäinen"
 
-msgid "Open from Crowdin…"
-msgstr "Avaa Crowdinista…"
+msgid "Open cloud translation…"
+msgstr "Avaa pilvikäännös…"
 
-msgid "Open From Crowdin…"
-msgstr "Avaa Crowdinista…"
+msgid "Open Cloud Translation…"
+msgstr "Avaa pilvikäännös…"
 
 msgid "&Start window"
 msgstr "Aloitusikkuna"
@@ -2158,6 +2234,13 @@ msgstr ""
 "käytettävissä. Se ei toimi, jos käytetään vain tunnisteita ilman varsinaista "
 "tekstiä."
 
+msgid ""
+"Translation suggestions require that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"Esikääntäminen edellyttää, että lähdetekstin kieli on tiedossa. Poedit ei "
+"tunnistanut sitä tästä tiedostosta."
+
 msgid "The TMX file is malformed."
 msgstr "TMX-tiedosto on viallinen."
 
@@ -2235,11 +2318,11 @@ msgstr "Selaa tiedostoja"
 msgid "Open and edit translation files."
 msgstr "Avaa ja muokkaa käännöstiedostoja."
 
-msgid "Translate Crowdin project"
-msgstr "Käännä Crowdin-projektia"
+msgid "Translate cloud project"
+msgstr "Käännä pilviprojekti"
 
-msgid "Collaborate with others in a Crowdin project."
-msgstr "Tee yhteistyötä muiden kanssa Crowdin-projektissa."
+msgid "Collaborate with other people online."
+msgstr "Työskentele verkossa muiden kanssa."
 
 msgid "Recent files"
 msgstr "Äskettäiset tiedostot"

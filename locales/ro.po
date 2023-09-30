@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-05-09 17:49+0200\n"
-"PO-Revision-Date: 2023-06-26 11:33\n"
+"POT-Creation-Date: 2023-09-30 19:13+0200\n"
+"PO-Revision-Date: 2023-09-30 16:45\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -101,6 +101,9 @@ msgstr ""
 msgid "Couldn’t save file %s."
 msgstr "Nu sa putut salva fișierul %s."
 
+msgid "Screenshots:"
+msgstr "Capturi de ecran:"
+
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
@@ -181,18 +184,77 @@ msgstr "Selectați limba preferată"
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Redeschideți Poedit pentru ca această schimbare să intre în vigoare."
 
+msgid "Add Account"
+msgstr "Adăugați un cont"
+
+msgid "Add account"
+msgstr "Adăugați un cont"
+
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Learn more about %s"
+msgstr "Aflați mai multe despre %s"
+
+msgid ""
+"Connect Poedit with supported cloud localization platforms to seamlessly "
+"sync translations managed on them."
+msgstr ""
+"Conectați Poedit cu platformele de localizare în cloud acceptate pentru a "
+"sincroniza perfect traducerile gestionate pe acestea."
+
+msgid "How does cloud sync work?"
+msgstr "Cum funcționează sincronizarea în cloud?"
+
+msgid "Account"
+msgstr "Cont"
+
+msgid "(not signed in)"
+msgstr "(neconectat)"
+
+msgid "File"
+msgstr "Fișier"
+
+msgid "Open cloud translation"
+msgstr "Deschideți traducerea în cloud"
+
+msgid "Manage accounts"
+msgstr "Gestionare conturi"
+
+msgid "Project:"
+msgstr "Proiect:"
+
+msgid "Language:"
+msgstr "Limba:"
+
+msgid "Sign in to Cloud Account"
+msgstr "Conectați-vă la contul de cloud"
+
+msgid "Sign in to cloud account"
+msgstr "Conectați-vă la contul de cloud"
+
+msgid "No translation projects listed in your account."
+msgstr "Nu sunt listate proiecte de traducere în contul dumneavoastră."
+
+msgid "Downloading latest translations…"
+msgstr "Se descarcă ultimele traduceri…"
+
+#. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Sign in to %s"
+msgstr "Conectați-vă la %s"
+
 msgid "Syncing"
 msgstr "Sincronizare"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s…"
-msgstr "Sincronizare cu %s…"
+msgid "Uploading translations to %s…"
+msgstr "Se încarcă traducerile în %s…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s failed."
-msgstr "Sincronizarea cu %s a eșuat."
+msgid "Uploading translations to %s failed."
+msgstr "Încărcarea traducerilor în %s a eșuat."
 
 msgid "Syncing error"
 msgstr "Eroare sincronizare"
@@ -209,14 +271,6 @@ msgstr "Neautorizat, vă rugăm să faceţi \"sign in\" din nou."
 msgid "Downloading translations is disabled in this project."
 msgstr "Descărcare traduceri este dezactivată în acest proiect."
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
-msgstr ""
-"Crowdin este o platformă online de management a localizării şi un instrument "
-"de traducere colaborativ. Poedit se poate sincroniza perfect cu fişierele PO "
-"gestionate de Crowdin."
-
 msgid "Sign In"
 msgstr "Autentificare"
 
@@ -229,38 +283,24 @@ msgstr "Deconectare"
 msgid "Sign out"
 msgstr "Deconectare"
 
+msgid "Learn more about Crowdin"
+msgstr "Află mai multe despre Crowdin"
+
+msgid ""
+"Crowdin is an online localization management platform and collaborative "
+"translation tool."
+msgstr ""
+"Crowdin este o platformă online de gestionare a localizării și un instrument "
+"de traducere colaborativă."
+
 msgid "Waiting for authentication…"
 msgstr "Autentificare în așteptare…"
 
 msgid "Updating user information…"
 msgstr "Actualizarea informațiilor utilizatorului…"
 
-msgid "Learn more about Crowdin"
-msgstr "Află mai multe despre Crowdin"
-
 msgid "Sign in to Crowdin"
 msgstr "Autentificare pe Crowdin"
-
-msgid "File"
-msgstr "Fișier"
-
-msgid "Open Crowdin translation"
-msgstr "Deschide traducere Crowdin"
-
-msgid "Project:"
-msgstr "Proiect:"
-
-msgid "Language:"
-msgstr "Limba:"
-
-msgid "Signed in as:"
-msgstr "Autentificat ca:"
-
-msgid "No translation projects listed in your Crowdin account."
-msgstr "Nu sunt proiecte de traducere în contul tău Crowdin."
-
-msgid "Downloading latest translations…"
-msgstr "Se descarcă ultimele traduceri…"
 
 msgid "Syncing with Crowdin failed."
 msgstr "Sincronizarea cu Crowdin nu a reușit."
@@ -958,14 +998,40 @@ msgstr "Şir de înlocuit"
 msgid "Cannot execute program: %s"
 msgstr "Nu se poate executa programul: %s"
 
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "Cod limbă sau nume (ex. ro_RO)"
+#. TRANSLATORS: placeholder/hint in language controls
+msgid "Language name or code"
+msgstr ""
 
 msgid "Translation Language"
 msgstr "Limba Traducere"
 
 msgid "Language of the translation:"
 msgstr "Limba traducerii:"
+
+msgid "All strings"
+msgstr "Toate șirurile"
+
+msgid "Couldn’t download Localazy project details."
+msgstr "Nu s-au putut descărca detaliile proiectului Localazy."
+
+msgid "There was an error when uploading translations to Localazy."
+msgstr "A apărut o eroare la încărcarea traducerilor în Localazy."
+
+msgid "Projects"
+msgstr "Proiecte"
+
+msgid ""
+"Localazy is a highly automated localization platform allowing anyone to "
+"translate their products and content into multiple languages easily."
+msgstr ""
+"Localazy este o platformă de localizare extrem de automatizată care permite "
+"oricui să-și traducă cu ușurință produsele și conținutul în mai multe limbi."
+
+msgid "Add Project"
+msgstr "Adăugați un proiect"
+
+msgid "Add project"
+msgstr "Adăugați un proiect"
 
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - Administrator de cataloage"
@@ -1446,16 +1512,24 @@ msgstr ""
 "Traducerea anticipată necesită ca textul sursă să fie disponibil. Nu "
 "funcționează dacă sunt folosite doar ID-uri fără textul propriu-zis."
 
+msgid "Cannot pre-translate from unknown language."
+msgstr ""
+
+msgid ""
+"Pre-translation requires that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+
 msgid "Only fill in exact matches"
 msgstr "Completați doar potriviri exacte"
 
 msgid ""
-"By default, inaccurate results are filled in as well and marked as needing "
-"work. Check this option to only include accurate matches."
+"By default, inaccurate results are also included, but marked as needing "
+"work. Check this option to only include perfect matches."
 msgstr ""
-"În mod implicit, rezultate inexacte sunt completate, precum și marcate ca "
-"necesitând munca. Bifează aceasta opțiune pentru a include numai potriviri "
-"exacte."
+"În mod implicit, sunt incluse și rezultatele inexacte, dar marcate ca având "
+"nevoie de lucru. Bifați această opțiune pentru a include numai potrivirile "
+"perfecte."
 
 msgid "Don’t mark exact matches as needing work"
 msgstr "Nu marca potriviri exacte ca nevoie de muncă"
@@ -1693,11 +1767,11 @@ msgstr "Deschide Recent"
 msgid "Open recent"
 msgstr "Deschide recente"
 
-msgid "Open from Crowdin…"
-msgstr "Deschide din Crowdin…"
+msgid "Open cloud translation…"
+msgstr ""
 
-msgid "Open From Crowdin…"
-msgstr "Deschide Din Crowdin…"
+msgid "Open Cloud Translation…"
+msgstr ""
 
 msgid "&Start window"
 msgstr "Fereastra de &pornire"
@@ -2176,6 +2250,11 @@ msgstr ""
 "Sugestiile de traducere necesită ca textul sursă să fie disponibil. Nu "
 "funcționează dacă sunt folosite doar ID-uri fără textul propriu-zis."
 
+msgid ""
+"Translation suggestions require that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+
 msgid "The TMX file is malformed."
 msgstr "Fişierului TMX are un format incorect."
 
@@ -2253,11 +2332,11 @@ msgstr "Navighează după fișiere"
 msgid "Open and edit translation files."
 msgstr "Deschide și editează fișierele de traducere."
 
-msgid "Translate Crowdin project"
-msgstr "Tradu proiectul Crowdin"
+msgid "Translate cloud project"
+msgstr ""
 
-msgid "Collaborate with others in a Crowdin project."
-msgstr "Colaborați cu alții într-un proiect Crowdin."
+msgid "Collaborate with other people online."
+msgstr ""
 
 msgid "Recent files"
 msgstr "Fişiere recente"

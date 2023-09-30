@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-05-09 17:49+0200\n"
-"PO-Revision-Date: 2023-06-26 11:33\n"
+"POT-Creation-Date: 2023-09-30 19:13+0200\n"
+"PO-Revision-Date: 2023-09-30 16:45\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -99,6 +99,9 @@ msgstr ""
 msgid "Couldn’t save file %s."
 msgstr "ファイル %s を保存できません。"
 
+msgid "Screenshots:"
+msgstr "スクリーンショット"
+
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
@@ -175,18 +178,77 @@ msgstr "お好みの言語を選択してください"
 msgid "You must restart Poedit for this change to take effect."
 msgstr "変更を有効にするには Poedit を再起動してください。"
 
+msgid "Add Account"
+msgstr "アカウントを追加する"
+
+msgid "Add account"
+msgstr "アカウントを追加する"
+
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Learn more about %s"
+msgstr "%s の詳細"
+
+msgid ""
+"Connect Poedit with supported cloud localization platforms to seamlessly "
+"sync translations managed on them."
+msgstr ""
+"Poedit をサポートしているローカライゼーションプラットフォームと翻訳を同期する"
+"ために接続します。"
+
+msgid "How does cloud sync work?"
+msgstr "同期はどのように機能しますか?"
+
+msgid "Account"
+msgstr "アカウント"
+
+msgid "(not signed in)"
+msgstr "サインインしていません"
+
+msgid "File"
+msgstr "ファイル"
+
+msgid "Open cloud translation"
+msgstr "クラウド翻訳を開く"
+
+msgid "Manage accounts"
+msgstr "アカウントの管理"
+
+msgid "Project:"
+msgstr "プロジェクト:"
+
+msgid "Language:"
+msgstr "言語:"
+
+msgid "Sign in to Cloud Account"
+msgstr "アカウントにサインインする"
+
+msgid "Sign in to cloud account"
+msgstr "アカウントにサインインする"
+
+msgid "No translation projects listed in your account."
+msgstr "あなたのアカウントには翻訳プロジェクトがありません。"
+
+msgid "Downloading latest translations…"
+msgstr "最新の翻訳をダウンロード中…"
+
+#. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Sign in to %s"
+msgstr "%sにサインイン"
+
 msgid "Syncing"
 msgstr "同期中..."
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s…"
-msgstr "%s と同期中…"
+msgid "Uploading translations to %s…"
+msgstr "%sに翻訳をアップロードしています…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s failed."
-msgstr "%s との同期に失敗しました。"
+msgid "Uploading translations to %s failed."
+msgstr "%sに翻訳をアップロードできませんでした。"
 
 msgid "Syncing error"
 msgstr "同期エラー"
@@ -203,14 +265,6 @@ msgstr "未認証です。もう一度ログインしてください。"
 msgid "Downloading translations is disabled in this project."
 msgstr "このプロジェクトでは、翻訳のダウンロードが無効になっています。"
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
-msgstr ""
-"Crowdin は、オンラインのローカリゼーション管理プラットフォームであり、共同翻"
-"訳ツールです。Poedit は Crowdin で管理されている PO ファイルをシームレスに同"
-"期することができます。"
-
 msgid "Sign In"
 msgstr "ログイン"
 
@@ -223,38 +277,22 @@ msgstr "ログアウト"
 msgid "Sign out"
 msgstr "ログアウト"
 
+msgid "Learn more about Crowdin"
+msgstr "Crowdin について"
+
+msgid ""
+"Crowdin is an online localization management platform and collaborative "
+"translation tool."
+msgstr ""
+
 msgid "Waiting for authentication…"
 msgstr "認証を待機中…"
 
 msgid "Updating user information…"
 msgstr "ユーザー情報を更新しています…"
 
-msgid "Learn more about Crowdin"
-msgstr "Crowdin について"
-
 msgid "Sign in to Crowdin"
 msgstr "Crowdin にログイン"
-
-msgid "File"
-msgstr "ファイル"
-
-msgid "Open Crowdin translation"
-msgstr "Crowdin 翻訳を開く"
-
-msgid "Project:"
-msgstr "プロジェクト:"
-
-msgid "Language:"
-msgstr "言語:"
-
-msgid "Signed in as:"
-msgstr "ログイン中:"
-
-msgid "No translation projects listed in your Crowdin account."
-msgstr "あなたの Crowdin アカウントには翻訳プロジェクトが何もありません。"
-
-msgid "Downloading latest translations…"
-msgstr "最新の翻訳をダウンロード中…"
 
 msgid "Syncing with Crowdin failed."
 msgstr "Crowdin との同期に失敗しました。"
@@ -934,14 +972,38 @@ msgstr "置換文字列"
 msgid "Cannot execute program: %s"
 msgstr "プログラムを実行できません: %s"
 
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "言語コードまたは言語名 (例: en_GB)"
+#. TRANSLATORS: placeholder/hint in language controls
+msgid "Language name or code"
+msgstr "言語名またはコード"
 
 msgid "Translation Language"
 msgstr "翻訳言語"
 
 msgid "Language of the translation:"
 msgstr "翻訳の言語:"
+
+msgid "All strings"
+msgstr ""
+
+msgid "Couldn’t download Localazy project details."
+msgstr ""
+
+msgid "There was an error when uploading translations to Localazy."
+msgstr ""
+
+msgid "Projects"
+msgstr ""
+
+msgid ""
+"Localazy is a highly automated localization platform allowing anyone to "
+"translate their products and content into multiple languages easily."
+msgstr ""
+
+msgid "Add Project"
+msgstr ""
+
+msgid "Add project"
+msgstr ""
 
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - カタログマネージャ"
@@ -1416,15 +1478,23 @@ msgstr ""
 "事前翻訳は、ソーステキストが利用可能であることが必要です。実テキストがない "
 "ID のみが使われている場合は、利用できません。"
 
+msgid "Cannot pre-translate from unknown language."
+msgstr "不明な言語から事前翻訳できません。"
+
+msgid ""
+"Pre-translation requires that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"事前翻訳では、原文の言語が判明している必要があります。Poedit はこのファイルで"
+"言語を検出できませんでした。"
+
 msgid "Only fill in exact matches"
 msgstr "完全な一致のみ採用する"
 
 msgid ""
-"By default, inaccurate results are filled in as well and marked as needing "
-"work. Check this option to only include accurate matches."
+"By default, inaccurate results are also included, but marked as needing "
+"work. Check this option to only include perfect matches."
 msgstr ""
-"デフォルトでは正確ではない一致結果も使われ、要確認としてマークされます。正確"
-"な一致のみを含めたい場合は、このオプションにチェックを入れてください。"
 
 msgid "Don’t mark exact matches as needing work"
 msgstr "完全な一致を要確認としてマークしない"
@@ -1660,11 +1730,11 @@ msgstr "最近のファイルを開く"
 msgid "Open recent"
 msgstr "最近使用したファイル"
 
-msgid "Open from Crowdin…"
-msgstr "Crowdin から開く…"
+msgid "Open cloud translation…"
+msgstr ""
 
-msgid "Open From Crowdin…"
-msgstr "Crowdin から開く…"
+msgid "Open Cloud Translation…"
+msgstr ""
 
 msgid "&Start window"
 msgstr "スタートウィンドウ(&S)"
@@ -2140,6 +2210,13 @@ msgstr ""
 "翻訳の提案は、ソーステキストが利用可能であることが必要です。実テキストがない "
 "ID のみが使われている場合は、利用できません。"
 
+msgid ""
+"Translation suggestions require that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"翻訳提案では、原文の言語が判明している必要があります。Poedit はこのファイルで"
+"言語を検出できませんでした。"
+
 msgid "The TMX file is malformed."
 msgstr "TMX ファイルの形式が正しくありません。"
 
@@ -2215,11 +2292,11 @@ msgstr "ファイルを閲覧"
 msgid "Open and edit translation files."
 msgstr "翻訳ファイルを開いて編集します。"
 
-msgid "Translate Crowdin project"
-msgstr "Crowdin プロジェクトを翻訳"
+msgid "Translate cloud project"
+msgstr ""
 
-msgid "Collaborate with others in a Crowdin project."
-msgstr "Crowdin のプロジェクトで一緒に作業してみましょう。"
+msgid "Collaborate with other people online."
+msgstr ""
 
 msgid "Recent files"
 msgstr "最近使用したファイル"

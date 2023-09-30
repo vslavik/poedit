@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-05-09 17:49+0200\n"
-"PO-Revision-Date: 2023-05-09 15:49\n"
+"POT-Creation-Date: 2023-09-30 19:13+0200\n"
+"PO-Revision-Date: 2023-09-30 16:45\n"
 "Last-Translator: \n"
 "Language-Team: Slovak\n"
 "Language: sk_SK\n"
@@ -100,6 +100,9 @@ msgstr ""
 msgid "Couldn’t save file %s."
 msgstr "Súbor %s nie je možné uložiť."
 
+msgid "Screenshots:"
+msgstr "Snímky obrazovky:"
+
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
@@ -178,18 +181,77 @@ msgstr "Vyberte si vami preferovaný jazyk"
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Musíte reštartovať program Poedit, aby sa zmeny prejavili."
 
+msgid "Add Account"
+msgstr "Pridať účet"
+
+msgid "Add account"
+msgstr "Pridá účet"
+
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Learn more about %s"
+msgstr "Získať viac informácií o službe %s"
+
+msgid ""
+"Connect Poedit with supported cloud localization platforms to seamlessly "
+"sync translations managed on them."
+msgstr ""
+"Prepojte Poedit s podporovanými cloudovými lokalizačnými platformami na "
+"bezproblémovú synchronizáciu prekladov, ktoré sú na nich spravované."
+
+msgid "How does cloud sync work?"
+msgstr "Ako funguje synchronizácia v cloude?"
+
+msgid "Account"
+msgstr "Účet"
+
+msgid "(not signed in)"
+msgstr "(neprihlásený)"
+
+msgid "File"
+msgstr "Súbor"
+
+msgid "Open cloud translation"
+msgstr "Otvoriť cloud prekladov"
+
+msgid "Manage accounts"
+msgstr "Spravovať účty"
+
+msgid "Project:"
+msgstr "Projekt:"
+
+msgid "Language:"
+msgstr "Jazyk:"
+
+msgid "Sign in to Cloud Account"
+msgstr "Prihlásiť sa do účtu cloudu"
+
+msgid "Sign in to cloud account"
+msgstr "Prihlásenie do cloud účtu"
+
+msgid "No translation projects listed in your account."
+msgstr "Vo vašom účte nie sú uvedené žiadne prekladateľské projekty."
+
+msgid "Downloading latest translations…"
+msgstr "Sťahovanie najnovších prekladov…"
+
+#. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Sign in to %s"
+msgstr "Prihlásiť sa do služby %s"
+
 msgid "Syncing"
 msgstr "Synchronizácia"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s…"
-msgstr "Synchronizovanie s %s…"
+msgid "Uploading translations to %s…"
+msgstr "Obnova prekladov v %s…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s failed."
-msgstr "Synchronizácia s %s zlyhala."
+msgid "Uploading translations to %s failed."
+msgstr "Nahrávanie prekladov prostredníctvom %s zlyhalo."
 
 msgid "Syncing error"
 msgstr "Chyba synchronizácie"
@@ -206,14 +268,6 @@ msgstr "Vyskytla sa chyba pri autorizácii, skúste sa prihlásiť znova."
 msgid "Downloading translations is disabled in this project."
 msgstr "V tomto projekte je sťahovanie prekladov vypnuté."
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
-msgstr ""
-"Crowdin je služba pre správu online prekladov a nástroj pre spoluprácu pri "
-"nich. Program Poedit môže jednoducho synchronizovať PO súbory spravované v "
-"službe Crowdin."
-
 msgid "Sign In"
 msgstr "Prihlásiť sa"
 
@@ -226,39 +280,24 @@ msgstr "Odhlásiť sa"
 msgid "Sign out"
 msgstr "Odhlásiť sa"
 
+msgid "Learn more about Crowdin"
+msgstr "Dozvedieť sa viac o službe Crowdin"
+
+msgid ""
+"Crowdin is an online localization management platform and collaborative "
+"translation tool."
+msgstr ""
+"Crowdin je online platforma na správu lokalizácie a nástroj pre spoluprácu "
+"na preklade."
+
 msgid "Waiting for authentication…"
 msgstr "Čakanie na autentifikáciu…"
 
 msgid "Updating user information…"
 msgstr "Aktualizujú sa informácie o používateľovi…"
 
-msgid "Learn more about Crowdin"
-msgstr "Dozvedieť sa viac o službe Crowdin"
-
 msgid "Sign in to Crowdin"
 msgstr "Prihlásiť sa do služby Crowdin"
-
-msgid "File"
-msgstr "Súbor"
-
-msgid "Open Crowdin translation"
-msgstr "Otvoriť preklad služby Crowdin"
-
-msgid "Project:"
-msgstr "Projekt:"
-
-msgid "Language:"
-msgstr "Jazyk:"
-
-msgid "Signed in as:"
-msgstr "Prihlásený ako:"
-
-msgid "No translation projects listed in your Crowdin account."
-msgstr ""
-"Neboli zaznamenané žiadne prekladateľské projekty vo vašom účte Crowdin."
-
-msgid "Downloading latest translations…"
-msgstr "Sťahovanie najnovších prekladov…"
 
 msgid "Syncing with Crowdin failed."
 msgstr "Synchronizácia so službou Crowdin zlyhala."
@@ -615,11 +654,11 @@ msgid ""
 "texts from the “%s” file for you."
 msgstr ""
 "V tomto súbore sa namiesto zdrojového textu používajú ID reťazce. Poedit "
-"môže za vás načítať anglické texty zo súboru “%s”."
+"môže za vás načítať anglické texty zo súboru „%s”."
 
 #. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
 msgid "Load English"
-msgstr "Načítať anglicky"
+msgstr "Načítať angličtinu"
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
@@ -957,14 +996,40 @@ msgstr "Reťazec nahradenia"
 msgid "Cannot execute program: %s"
 msgstr "Nepodarilo sa spustiť program: %s"
 
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "Kód alebo názov jazyku (napr. en_GB)"
+#. TRANSLATORS: placeholder/hint in language controls
+msgid "Language name or code"
+msgstr "Názov jazyka alebo kódu"
 
 msgid "Translation Language"
 msgstr "Jazyk prekladu"
 
 msgid "Language of the translation:"
 msgstr "Jazyk prekladu:"
+
+msgid "All strings"
+msgstr "Všetky reťazce"
+
+msgid "Couldn’t download Localazy project details."
+msgstr "Nepodarilo sa stiahnuť detaily projektu Localazy."
+
+msgid "There was an error when uploading translations to Localazy."
+msgstr "Pri obnove prekladov do služby Localazy došlo k chybe."
+
+msgid "Projects"
+msgstr "Projekty"
+
+msgid ""
+"Localazy is a highly automated localization platform allowing anyone to "
+"translate their products and content into multiple languages easily."
+msgstr ""
+"Localazy je vysoko automatizovaná lokalizačná platforma, ktorá umožňuje "
+"každému jednoducho prekladať svoje produkty a obsah do viacerých jazykov."
+
+msgid "Add Project"
+msgstr "Pridať projekt"
+
+msgid "Add project"
+msgstr "Pridáva projekt"
 
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit – Správca katalógov"
@@ -1421,7 +1486,7 @@ msgid "Pre-translating…"
 msgstr "Prebieha pred-preklad…"
 
 msgid "Cannot pre-translate without source text."
-msgstr "Nemožno pred-prekladať bez zdrojového textu."
+msgstr "Nie je možné použiť pred-preklad bez zdrojového textu."
 
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
@@ -1443,15 +1508,26 @@ msgstr ""
 "Predbežný preklad si vyžaduje, aby bol k dispozícii zdrojový text. "
 "Nefunguje, ak sa použijú len ID bez skutočného textu."
 
+msgid "Cannot pre-translate from unknown language."
+msgstr "Nemožno predbežne prekladať z neznámeho jazyka."
+
+msgid ""
+"Pre-translation requires that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"Predbežný preklad vyžaduje, aby bol známy jazyk východiskového textu. Poedit "
+"ho v tomto súbore nedokázal zistiť."
+
 msgid "Only fill in exact matches"
 msgstr "Vyplniť iba presné zhody"
 
 msgid ""
-"By default, inaccurate results are filled in as well and marked as needing "
-"work. Check this option to only include accurate matches."
+"By default, inaccurate results are also included, but marked as needing "
+"work. Check this option to only include perfect matches."
 msgstr ""
-"Štandadne sú vyplňované aj nepresné výsledky a označením potrebnosti "
-"dopracovania. Začiarknite túto možnosť, aby boli vyplňované iba presné zhody."
+"V predvolenom nastavení sú zahrnuté aj nepresné výsledky, ale sú označené "
+"ako výsledky, ktoré si vyžadujú prepracovanie. Ak chcete zahrnúť len "
+"dokonalé zhody, zaškrtnite túto možnosť."
 
 msgid "Don’t mark exact matches as needing work"
 msgstr "Neoznačovať presné výsledky ako potrebujúce dopracovanie"
@@ -1692,11 +1768,11 @@ msgstr "Naposledy otvorené"
 msgid "Open recent"
 msgstr "Otvoriť nedávne"
 
-msgid "Open from Crowdin…"
-msgstr "Otvoriť z Crowdinu…"
+msgid "Open cloud translation…"
+msgstr "Otvoriť cloudovský preklad…"
 
-msgid "Open From Crowdin…"
-msgstr "Otvoriť zo služby Crowdin…"
+msgid "Open Cloud Translation…"
+msgstr "Otváranie cloudovského prekladu…"
 
 msgid "&Start window"
 msgstr "Š&tartovacie okno"
@@ -2174,6 +2250,13 @@ msgstr ""
 "Návrhy na preklad vyžadujú, aby bol k dispozícii zdrojový text. Nefungujú, "
 "ak sa použijú len ID bez skutočného textu."
 
+msgid ""
+"Translation suggestions require that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"Návrhy na preklad vyžadujú, aby bol známy jazyk zdrojového textu. Poedit ho "
+"v tomto súbore nedokázal zistiť."
+
 msgid "The TMX file is malformed."
 msgstr "Súbor Výmennej pamäte prekladov (TMX) je poškodený."
 
@@ -2251,11 +2334,11 @@ msgstr "Prehľadávať súbory"
 msgid "Open and edit translation files."
 msgstr "Otvoriť a upraviť súbory prekladu."
 
-msgid "Translate Crowdin project"
-msgstr "Preložiť Crowdin projekt"
+msgid "Translate cloud project"
+msgstr "Preložiť cloudovský projekt"
 
-msgid "Collaborate with others in a Crowdin project."
-msgstr "Spolupracovať s ostatnými na Crowdin projekte."
+msgid "Collaborate with other people online."
+msgstr "Spolupracovať s ostatnými ľuďmi online."
 
 msgid "Recent files"
 msgstr "Nedávne súbory"

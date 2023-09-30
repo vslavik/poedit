@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-05-09 17:49+0200\n"
-"PO-Revision-Date: 2023-05-09 15:48\n"
+"POT-Creation-Date: 2023-09-30 19:13+0200\n"
+"PO-Revision-Date: 2023-09-30 16:45\n"
 "Last-Translator: \n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -98,6 +98,9 @@ msgstr ""
 msgid "Couldn’t save file %s."
 msgstr "Файлът „%s“ не може да бъде запазен."
 
+msgid "Screenshots:"
+msgstr "Екранни снимки:"
+
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
@@ -174,18 +177,77 @@ msgstr "Избиране на предпочитан език"
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Трябва да рестартирате Poedit, за да влезе в сила тази промяна."
 
+msgid "Add Account"
+msgstr "Добавяне на профил"
+
+msgid "Add account"
+msgstr "Добавяне на профил"
+
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Learn more about %s"
+msgstr "Научете повече относно %s"
+
+msgid ""
+"Connect Poedit with supported cloud localization platforms to seamlessly "
+"sync translations managed on them."
+msgstr ""
+"Свържете Poedit с поддържаните облачни системи за локализация, за да "
+"синхронизирате безпроблемно преводите, управлявани от тях."
+
+msgid "How does cloud sync work?"
+msgstr "Как работи синхронизирането с облака?"
+
+msgid "Account"
+msgstr "Профил"
+
+msgid "(not signed in)"
+msgstr "(не сте вписан/а)"
+
+msgid "File"
+msgstr "Файл"
+
+msgid "Open cloud translation"
+msgstr "Отваряне на облачния превод"
+
+msgid "Manage accounts"
+msgstr "Управление на профилите"
+
+msgid "Project:"
+msgstr "Проект:"
+
+msgid "Language:"
+msgstr "Език:"
+
+msgid "Sign in to Cloud Account"
+msgstr "Вписване в облачния профил"
+
+msgid "Sign in to cloud account"
+msgstr "Вписване в облачния профил"
+
+msgid "No translation projects listed in your account."
+msgstr "Няма проекти за превод във Вашия профил."
+
+msgid "Downloading latest translations…"
+msgstr "Изтегляне на текущите преводи…"
+
+#. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Sign in to %s"
+msgstr "Вписване в %s"
+
 msgid "Syncing"
 msgstr "Синхронизиране"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s…"
-msgstr "Синхронизиране с %s…"
+msgid "Uploading translations to %s…"
+msgstr "Изпращане на преводите към %s…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s failed."
-msgstr "Синхронизирането с %s е неуспешно."
+msgid "Uploading translations to %s failed."
+msgstr "Преводите не могат да бъдат изпратени към %s."
 
 msgid "Syncing error"
 msgstr "Грешка при синхронизиране"
@@ -202,14 +264,6 @@ msgstr "Не сте удостоверени, моля, впишете се от
 msgid "Downloading translations is disabled in this project."
 msgstr "Изтеглянето на преводи е изключено за този проект."
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
-msgstr ""
-"Crowdin е онлайн платформа за управление на локализации и инструмент за "
-"съвместни преводи. Poedit може безпроблемно да синхронизира PO, управлявани "
-"от Crowdin."
-
 msgid "Sign In"
 msgstr "Вписване"
 
@@ -222,38 +276,24 @@ msgstr "Изход"
 msgid "Sign out"
 msgstr "Изход"
 
+msgid "Learn more about Crowdin"
+msgstr "Научете повече за Crowdin"
+
+msgid ""
+"Crowdin is an online localization management platform and collaborative "
+"translation tool."
+msgstr ""
+"Crowdin е онлайн система за управление на локализацията и инструмент за "
+"съвместен превод."
+
 msgid "Waiting for authentication…"
 msgstr "Изчакване на удостоверяване…"
 
 msgid "Updating user information…"
 msgstr "Обновяване на информацията за потребителя…"
 
-msgid "Learn more about Crowdin"
-msgstr "Научете повече за Crowdin"
-
 msgid "Sign in to Crowdin"
 msgstr "Вписване се в Crowdin"
-
-msgid "File"
-msgstr "Файл"
-
-msgid "Open Crowdin translation"
-msgstr "Отваряне на превод от Crowdin"
-
-msgid "Project:"
-msgstr "Проект:"
-
-msgid "Language:"
-msgstr "Език:"
-
-msgid "Signed in as:"
-msgstr "Вписани като:"
-
-msgid "No translation projects listed in your Crowdin account."
-msgstr "Няма проекти за превод във вашия профил в Crowdin."
-
-msgid "Downloading latest translations…"
-msgstr "Изтегляне на текущите преводи…"
 
 msgid "Syncing with Crowdin failed."
 msgstr "Неуспешно синхронизиране с Crowdin."
@@ -939,14 +979,41 @@ msgstr "Заместване"
 msgid "Cannot execute program: %s"
 msgstr "Програмата не може да бъде изпълнена: %s"
 
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "Код или име на езика (например en_GB)"
+#. TRANSLATORS: placeholder/hint in language controls
+msgid "Language name or code"
+msgstr "Име или код на език"
 
 msgid "Translation Language"
 msgstr "Език"
 
 msgid "Language of the translation:"
 msgstr "Език на превода:"
+
+msgid "All strings"
+msgstr "Всички низове"
+
+msgid "Couldn’t download Localazy project details."
+msgstr "Подробностите за проекта в Localazy не могат да бъдат свалени."
+
+msgid "There was an error when uploading translations to Localazy."
+msgstr "Възникна грешка при изпращането на преводите към Localazy."
+
+msgid "Projects"
+msgstr "Проекти"
+
+msgid ""
+"Localazy is a highly automated localization platform allowing anyone to "
+"translate their products and content into multiple languages easily."
+msgstr ""
+"Localazy е силно автоматизирана система за локализация, която дава "
+"възможност на всеки лесно да преведе своите продукти и съдържание на много "
+"езици."
+
+msgid "Add Project"
+msgstr "Добавяне на проект"
+
+msgid "Add project"
+msgstr "Добавяне на проект"
 
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit — управление на каталози"
@@ -1425,15 +1492,25 @@ msgstr ""
 "Предварителените преводи се нуждаят от истински изходен текст. Те не могат "
 "да работят, ако във файла има само текстови идентификатори."
 
+msgid "Cannot pre-translate from unknown language."
+msgstr "Не може да се извърши предварителен превод от непознат език."
+
+msgid ""
+"Pre-translation requires that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"За извършването на предварителен превод трябва да е ясно кой е изходният "
+"език на текста. Poedit не може да го разпознае в този файл."
+
 msgid "Only fill in exact matches"
 msgstr "Попълване само на точните съвпадения"
 
 msgid ""
-"By default, inaccurate results are filled in as well and marked as needing "
-"work. Check this option to only include accurate matches."
+"By default, inaccurate results are also included, but marked as needing "
+"work. Check this option to only include perfect matches."
 msgstr ""
-"Стандартно неточните резултати биват добавяни, но отбелязани като мъгляви. "
-"Отметнете, за да бъдат добавяни само точните съвпадения."
+"По подразбиране, неточните резултати също биват добавяни, но отбелязани като "
+"мъгляви. Отметнете, за да бъдат добавяни само точните съвпадения."
 
 msgid "Don’t mark exact matches as needing work"
 msgstr "Точните съвпадения да не бъдат отбелязвани като мъгляви"
@@ -1671,11 +1748,11 @@ msgstr "Отваряне на последните файлове"
 msgid "Open recent"
 msgstr "Отваряне на скорошен файл"
 
-msgid "Open from Crowdin…"
-msgstr "Отваряне от Crowdin…"
+msgid "Open cloud translation…"
+msgstr "Отваряне на облачния превод…"
 
-msgid "Open From Crowdin…"
-msgstr "Отваряне от Crowdin…"
+msgid "Open Cloud Translation…"
+msgstr "Отваряне на облачния превод…"
 
 msgid "&Start window"
 msgstr "&Начален прозорец"
@@ -2155,6 +2232,13 @@ msgstr ""
 "Предложенията за превод се нуждаят от реален изходен текст. Те не могат да "
 "работят, ако във файла има само текстови идентификатори."
 
+msgid ""
+"Translation suggestions require that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"За използването на предложения за превод трябва да е ясно кой е изходният "
+"език на текста. Poedit не може да го разпознае в този файл."
+
 msgid "The TMX file is malformed."
 msgstr "Файлът TMX е повреден или неправилно форматиран."
 
@@ -2232,11 +2316,11 @@ msgstr "Разглеждане на файлове"
 msgid "Open and edit translation files."
 msgstr "Отваряне и редактиране на файлове с преводи."
 
-msgid "Translate Crowdin project"
-msgstr "Превод на проект в Crowdin"
+msgid "Translate cloud project"
+msgstr "Превеждане на облачния проект"
 
-msgid "Collaborate with others in a Crowdin project."
-msgstr "Съдействайте си с други хора по проект в Crowdin."
+msgid "Collaborate with other people online."
+msgstr "Работете съвместно с други хора в Интернет."
 
 msgid "Recent files"
 msgstr "Последно отваряни файлове"

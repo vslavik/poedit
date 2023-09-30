@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-05-09 17:49+0200\n"
-"PO-Revision-Date: 2023-05-09 15:48\n"
+"POT-Creation-Date: 2023-09-30 19:13+0200\n"
+"PO-Revision-Date: 2023-09-30 16:45\n"
 "Last-Translator: \n"
 "Language-Team: Armenian\n"
 "Language: hy_AM\n"
@@ -47,7 +47,7 @@ msgstr "Թարգմանությունների թարմացում"
 
 #, c-format
 msgid "The file “%s” couldn’t be opened."
-msgstr ""
+msgstr "“%s” ֆայլի բացումը չհաջողվեց։"
 
 msgid "Invalid file"
 msgstr "Անվավեր նիշք"
@@ -66,25 +66,26 @@ msgid "XLIFF Translation Files"
 msgstr "XLIFF թարգմանության նիշքեր"
 
 msgid "JSON Translation Files"
-msgstr ""
+msgstr "JSON թարգմանության ֆայլեր"
 
 #. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
 msgid "Flutter Translation Files"
-msgstr ""
+msgstr "Flutter թարգմանության ֆայլեր"
 
 msgid "All Translation Files"
 msgstr "Թարգմանության բոլոր նիշքերը"
 
 msgid "The file is in a format not recognized by Poedit."
-msgstr ""
+msgstr "Չհաջողվեց Poedit-ի կողմից որոշել ֆայլի ձևաչափը:"
 
 msgid ""
 "This JSON file isn’t a translations file and cannot be edited in Poedit."
 msgstr ""
+"Այս JSON ֆայլը թարգմանությունների ֆայլ չէ և հնարավոր չէ խմբագրել Poedit-ում:"
 
 #, c-format
 msgid "Reading file content failed with the following error: %s"
-msgstr ""
+msgstr "Ֆայլի բովանդակության ընթերցումը ձախողվեց հետևյալ սխալով. %s"
 
 #, c-format
 msgid ""
@@ -97,6 +98,9 @@ msgstr ""
 #, c-format
 msgid "Couldn’t save file %s."
 msgstr "Հնարավոր չէ պահել %s նիշքը:"
+
+msgid "Screenshots:"
+msgstr "Էկրանի հանույթ"
 
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
@@ -116,7 +120,7 @@ msgstr ""
 "Վնասված PO նիշք. հոգնակի msgstr ձեւը օգտագործված է առանց msgid_plural-ի"
 
 msgid "Couldn’t load the file, it is probably damaged."
-msgstr ""
+msgstr "Չհաջողվեց բեռնել ֆայլը, հավանաբար այն վնասված է:"
 
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
@@ -151,11 +155,11 @@ msgstr "'%s'-ը վավեր POT նիշք չէ:"
 
 #, c-format
 msgid "Error while loading XLIFF file: %s"
-msgstr ""
+msgstr "XLIFF ֆայլի բեռնման ընթացքի խնդիր. %s"
 
 #, c-format
 msgid "unsupported version (%s)"
-msgstr ""
+msgstr "չաջակցվող տարբերակ (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
@@ -173,18 +177,77 @@ msgstr "Ընտրեք Ձեր նախընտրած լեզուն"
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Կիրառֆելու համար պետք է վերագործարկեք Poedit-ը"
 
+msgid "Add Account"
+msgstr "Հավելել հաշիվ"
+
+msgid "Add account"
+msgstr "Հավելել հաշիվ"
+
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Learn more about %s"
+msgstr "Իմանալ ավելին %s-ի մասին"
+
+msgid ""
+"Connect Poedit with supported cloud localization platforms to seamlessly "
+"sync translations managed on them."
+msgstr ""
+"Կապակցել Poedit-ն աջակցվող ամպի տեղայնացման հարթակների հետ՝ դրանցքում "
+"կառավարվող թարգմանությունները աննկատ համաժամեցնելու համար:"
+
+msgid "How does cloud sync work?"
+msgstr "Ինչպե՞ս է աշխատում ամպի համաժամեցումը:"
+
+msgid "Account"
+msgstr "Հաշիվ"
+
+msgid "(not signed in)"
+msgstr "(մուտք գործած չէ)"
+
+msgid "File"
+msgstr "Նիշք"
+
+msgid "Open cloud translation"
+msgstr "Բացել ամպի թարգմանությունը"
+
+msgid "Manage accounts"
+msgstr "Կառավարել հաշիվները"
+
+msgid "Project:"
+msgstr "Նախագիծ՝"
+
+msgid "Language:"
+msgstr "Լեզուն՝"
+
+msgid "Sign in to Cloud Account"
+msgstr "Մուտք գործել ամպի հաշիվ"
+
+msgid "Sign in to cloud account"
+msgstr "Մուտք գործել ամպի հաշիվ"
+
+msgid "No translation projects listed in your account."
+msgstr "Թարգմանության նախագծեր ցուցակագրված չեն ձեր հաշվում:"
+
+msgid "Downloading latest translations…"
+msgstr "Ներբեռնում է վերջին թարգմանությունները..."
+
+#. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Sign in to %s"
+msgstr "Մուտք գործել %s"
+
 msgid "Syncing"
 msgstr "Համաժամեցում"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s…"
-msgstr "Համաժամեցում %s-ի հետ..."
+msgid "Uploading translations to %s…"
+msgstr "Թարգմանությունների վերբեռնում %s..."
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s failed."
-msgstr "%s-ի հետ համաժամեցումը ձախողվեց:"
+msgid "Uploading translations to %s failed."
+msgstr "Թարգմանությունների վերբեռնումը %s ձախողվեց:"
 
 msgid "Syncing error"
 msgstr "Համաժամեցման սխալ"
@@ -201,14 +264,6 @@ msgstr "Իսկորոշում չկա, կրկին մուտք գործեք:"
 msgid "Downloading translations is disabled in this project."
 msgstr "Թարգմանությունների ներբեռնումը անջատած է այս նախագծի համար:"
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
-msgstr ""
-"Crowdin-ը առցանց թարգմանությունների հարթակ է եւ թարգմանությունները "
-"համատեղելու գործիք: Poedit-ը կարող է հեշտության համաժամեցնել PO նիշքերը "
-"Crowdin-ում:"
-
 msgid "Sign In"
 msgstr "Մուտք գործել"
 
@@ -221,38 +276,24 @@ msgstr "Դուրս գրվել"
 msgid "Sign out"
 msgstr "Դուրս գրվել"
 
+msgid "Learn more about Crowdin"
+msgstr "Մանրամասներ Crowdin-ի մասին"
+
+msgid ""
+"Crowdin is an online localization management platform and collaborative "
+"translation tool."
+msgstr ""
+"Crowdin-ը առցանց թարգմանությունների կառավարման հարթակ և համագործակցային "
+"թարգմանության գործիք է:"
+
 msgid "Waiting for authentication…"
 msgstr "Սպասում է իսկորոշման..."
 
 msgid "Updating user information…"
 msgstr "Թարմացնում է օգտվողի տեղեկությունը..."
 
-msgid "Learn more about Crowdin"
-msgstr "Մանրամասներ Crowdin-ի մասին"
-
 msgid "Sign in to Crowdin"
 msgstr "Մուտք գործել Crowdin"
-
-msgid "File"
-msgstr "Նիշք"
-
-msgid "Open Crowdin translation"
-msgstr "Բացել Crowdin թարգմանությունը"
-
-msgid "Project:"
-msgstr "Նախագիծ՝"
-
-msgid "Language:"
-msgstr "Լեզուն՝"
-
-msgid "Signed in as:"
-msgstr "Մուտք եք գործել որպես՝"
-
-msgid "No translation projects listed in your Crowdin account."
-msgstr "Չկան թարգմանության նախագծեր Crowdin-ի Ձեր հաշվում:"
-
-msgid "Downloading latest translations…"
-msgstr "Ներբեռնում է վերջին թարգմանությունները..."
 
 msgid "Syncing with Crowdin failed."
 msgstr "Համաժամեցումը Crowdin-ի հետ ձախողվեց:"
@@ -597,17 +638,19 @@ msgid "Review"
 msgstr "Վերանայել"
 
 msgid "Would you like to use English for source text?"
-msgstr ""
+msgstr "Կցանկանա՞ք օգտագործել անգլերենը սկզբնաղբյուր տեքստի համար:"
 
 #, c-format
 msgid ""
 "This file uses string IDs instead of source text. Poedit can load English "
 "texts from the “%s” file for you."
 msgstr ""
+"Այս ֆայլը սկզբնական գրվածքի փոխարեն օգտագործում է տողի ID-ներ: Poedit-ը "
+"կարող է բեռնել անգլերեն գրվածքները “%s” ֆայլից:"
 
 #. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
 msgid "Load English"
-msgstr ""
+msgstr "Բեռնել անգլերեն"
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
@@ -775,7 +818,7 @@ msgstr "Նոր թարգմանություն այս POT նիշքից:"
 
 #. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
 msgid "Source text ID"
-msgstr ""
+msgstr "Աղբյուրի տեքստի ID"
 
 msgid "Everything"
 msgstr "Ամենը"
@@ -803,12 +846,12 @@ msgstr "Այլ"
 #. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
 #, c-format
 msgid "String context: %s"
-msgstr ""
+msgstr "Լարի համատեքստ՝ %s"
 
 #. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
 #, c-format
 msgid "String identifier: %s"
-msgstr ""
+msgstr "Լարի նույնացուցիչ՝ %s"
 
 #, c-format
 msgid "%s Format"
@@ -937,14 +980,41 @@ msgstr "Ինչով փոխարինել"
 msgid "Cannot execute program: %s"
 msgstr "Հնարավոր չէ կատարել %s ծրագիրը"
 
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "Լեզվի կոդը կամ անունը (օրինակ՝ hy_am)"
+#. TRANSLATORS: placeholder/hint in language controls
+msgid "Language name or code"
+msgstr "Լեզվի անունը կամ կոդը"
 
 msgid "Translation Language"
 msgstr "Թարգմանության լեզուն"
 
 msgid "Language of the translation:"
 msgstr "Թարգմանության լեզուն՝"
+
+msgid "All strings"
+msgstr "Բոլոր տողերը"
+
+msgid "Couldn’t download Localazy project details."
+msgstr "Անհնար է ներբեռնել Localazy նախագծի մանրամասները:"
+
+msgid "There was an error when uploading translations to Localazy."
+msgstr "Սխալ՝ թարգմանությունները Localazy ներբեռնելիս:"
+
+msgid "Projects"
+msgstr "Նախագծեր"
+
+msgid ""
+"Localazy is a highly automated localization platform allowing anyone to "
+"translate their products and content into multiple languages easily."
+msgstr ""
+"Localazy-ը վերին աստիճան ինքնաշխատ տեղայնացման հարթակ է, որը ցանկացած անձի "
+"հնարավորություն է տալիս հեշտությամբ թարգմանել իր արտադրանքը և "
+"բովանդակությունը տարբեր լեզուներով:"
+
+msgid "Add Project"
+msgstr "Հավելել նախագիծ"
+
+msgid "Add project"
+msgstr "Հավելել նախագիծ"
 
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit-ի Գրացուցակների կառավար"
@@ -1401,7 +1471,7 @@ msgid "Pre-translating…"
 msgstr "Նախաթարգմանություն..."
 
 msgid "Cannot pre-translate without source text."
-msgstr ""
+msgstr "Առանց սկզբնական գրվածքի անհնար է նախաթարգմանել:"
 
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
@@ -1420,16 +1490,28 @@ msgid ""
 "Pre-translation requires that source text is available. It doesn’t work if "
 "only IDs without the actual text are used."
 msgstr ""
+"Նախաթարգմանությունը պահանջում է, որ մատչելի լինի սկզբնական գրվածքը: Այն չի "
+"աշխատի, եթե իրական գրվածքի փոխարեն օգտագործվեն միայն ID-ներ:"
+
+msgid "Cannot pre-translate from unknown language."
+msgstr "Հնարավոր չէ նախաթարգմանել անհայտ լեզվից:"
+
+msgid ""
+"Pre-translation requires that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"Նախաթարգմանությունը պահանջում է, որ սկզբնական գրվածքի լեզուն հայտնի լինի: "
+"Poedit-ը չի կարողանում հայտնաբերել այն տվյալ ֆայլում:"
 
 msgid "Only fill in exact matches"
 msgstr "Լցնել միայն ճիշտ համընկնումներով"
 
 msgid ""
-"By default, inaccurate results are filled in as well and marked as needing "
-"work. Check this option to only include accurate matches."
+"By default, inaccurate results are also included, but marked as needing "
+"work. Check this option to only include perfect matches."
 msgstr ""
-"Ըստ լռելյայնի, ոչ ճիշտ արդյունքները լցվում են եւ նշվում որպես ոչ վերջնական: "
-"Նշեք այս ընտրանքը՝ միայն ճիշտ համընկնումները ներառելու համար:"
+"Սկզբնադիր ոչ ճիշտ արդյունքները նույնպես ներառված են, բայց նշված որպես ոչ "
+"վերջնական: Ընտրեք այս ընտրանքը՝ միայն ճիշտ համընկնումները ներառելու հանար:"
 
 msgid "Don’t mark exact matches as needing work"
 msgstr "Չնշել ճիշտ համընկնումները որպես ոչ վերջնական"
@@ -1669,11 +1751,11 @@ msgstr "Բացել վերջինը"
 msgid "Open recent"
 msgstr "Բացել վերջինը"
 
-msgid "Open from Crowdin…"
-msgstr "Բացել Crowdin-ից…"
+msgid "Open cloud translation…"
+msgstr "Բացել ամպի թարգմանություն..."
 
-msgid "Open From Crowdin…"
-msgstr "Բացել Crowdin-ից…"
+msgid "Open Cloud Translation…"
+msgstr "Բացել ամպի թարգմանություն..."
 
 msgid "&Start window"
 msgstr "&Մեկնարկային պատուհան"
@@ -2148,6 +2230,15 @@ msgid ""
 "Translation suggestions require that source text is available. They don’t "
 "work if only IDs without the actual text are used."
 msgstr ""
+"Նախաթարգմանությունը պահանջում է, որ մատչելի լինի սկզբնական գրվածքը: Այն չի "
+"աշխատի, եթե իրական գրվածքի փոխարեն օգտագործվեն միայն ID-ներ:"
+
+msgid ""
+"Translation suggestions require that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"Թարգմանության առաջարկները պահանջում են, որ սկզբնական գրվածքի լեզուն հայտնի "
+"լինի: Poedit-ը չի կարողանում հայտնաբերել այն տվյալ ֆայլում:"
 
 msgid "The TMX file is malformed."
 msgstr "TMX նիշքը այլակերպված է"
@@ -2227,11 +2318,11 @@ msgstr "Դիտել նիշքերը"
 msgid "Open and edit translation files."
 msgstr "Բացել եւ խմբագրել թարգմանության նիշքերը:"
 
-msgid "Translate Crowdin project"
-msgstr "Թարգմանել Crowdin նախագիծ"
+msgid "Translate cloud project"
+msgstr "Թարգմանել ամպի նախագիծ"
 
-msgid "Collaborate with others in a Crowdin project."
-msgstr "Համագործակցել Crowdin նախագծի շուրջ:"
+msgid "Collaborate with other people online."
+msgstr "Համագործակցել այլ մարդկանց հետ առցանց:"
 
 msgid "Recent files"
 msgstr "Վերջին նիշքերը"

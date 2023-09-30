@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-05-09 17:49+0200\n"
-"PO-Revision-Date: 2023-05-01 07:27\n"
+"POT-Creation-Date: 2023-09-30 19:13+0200\n"
+"PO-Revision-Date: 2023-09-30 16:45\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -100,6 +100,9 @@ msgstr ""
 msgid "Couldn’t save file %s."
 msgstr "Неможливо зберегти файл %s."
 
+msgid "Screenshots:"
+msgstr "Знімки екрана:"
+
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
@@ -180,18 +183,77 @@ msgstr "Виберіть бажану мову"
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Зміни набудуть чинності після перезапуску Poedit."
 
+msgid "Add Account"
+msgstr "Додати обліковий запис"
+
+msgid "Add account"
+msgstr "Додати обліковий запис"
+
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Learn more about %s"
+msgstr "Докладніше про %s"
+
+msgid ""
+"Connect Poedit with supported cloud localization platforms to seamlessly "
+"sync translations managed on them."
+msgstr ""
+"З'єднайте Poedit з підтримуваними хмарними платформами локалізації, щоб "
+"безперешкодно синхронізувати переклади, оброблювані на них."
+
+msgid "How does cloud sync work?"
+msgstr "Як працює хмарна синхронізація?"
+
+msgid "Account"
+msgstr "Обілковий запис"
+
+msgid "(not signed in)"
+msgstr "(не авторизовано)"
+
+msgid "File"
+msgstr "Файл"
+
+msgid "Open cloud translation"
+msgstr "Відкрити хмарний переклад"
+
+msgid "Manage accounts"
+msgstr "Керувати обліковими записами"
+
+msgid "Project:"
+msgstr "Проєкт:"
+
+msgid "Language:"
+msgstr "Мова:"
+
+msgid "Sign in to Cloud Account"
+msgstr "Увійти до хмарного облікового запису"
+
+msgid "Sign in to cloud account"
+msgstr "Увійти у хмарний обліковий запис"
+
+msgid "No translation projects listed in your account."
+msgstr "У вашому обліковому записі немає проєктів з перекладу."
+
+msgid "Downloading latest translations…"
+msgstr "Завантаження найновішого перекладу…"
+
+#. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Sign in to %s"
+msgstr "Увійти до %s"
+
 msgid "Syncing"
 msgstr "Синхронізація"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s…"
-msgstr "Синхронізація з %s…"
+msgid "Uploading translations to %s…"
+msgstr "Вивантаження перекладів до %s…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s failed."
-msgstr "Не вдалося синхронізувати з %s."
+msgid "Uploading translations to %s failed."
+msgstr "Не вдалося вивантажити переклади до %s."
 
 msgid "Syncing error"
 msgstr "Помилка синхронізації"
@@ -208,13 +270,6 @@ msgstr "Не авторизовані, увійдіть повторно."
 msgid "Downloading translations is disabled in this project."
 msgstr "Завантаження перекладів вимкнено в цьому проєкті."
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
-msgstr ""
-"Crowdin це онлайн-платформа керування локалізаціями та засіб для спільного "
-"перекладу. Poedit може легко синхронізувати файли PO, керовані у Crowdin."
-
 msgid "Sign In"
 msgstr "Увійти"
 
@@ -227,38 +282,24 @@ msgstr "Вийти"
 msgid "Sign out"
 msgstr "Вийти"
 
+msgid "Learn more about Crowdin"
+msgstr "Докладніше про Crowdin"
+
+msgid ""
+"Crowdin is an online localization management platform and collaborative "
+"translation tool."
+msgstr ""
+"Crowdin — це онлайн-платформа для керування локалізацією та засіб спільного "
+"перекладу."
+
 msgid "Waiting for authentication…"
 msgstr "Очікування автентифікації…"
 
 msgid "Updating user information…"
 msgstr "Оновлення відомостей про користувача…"
 
-msgid "Learn more about Crowdin"
-msgstr "Докладніше про Crowdin"
-
 msgid "Sign in to Crowdin"
 msgstr "Увійти до Crowdin"
-
-msgid "File"
-msgstr "Файл"
-
-msgid "Open Crowdin translation"
-msgstr "Відкрити переклад Crowdin"
-
-msgid "Project:"
-msgstr "Проєкт:"
-
-msgid "Language:"
-msgstr "Мова:"
-
-msgid "Signed in as:"
-msgstr "Увійшли як:"
-
-msgid "No translation projects listed in your Crowdin account."
-msgstr "У вашому обліковому записі Crowdin немає перекладацьких проєктів."
-
-msgid "Downloading latest translations…"
-msgstr "Завантаження найновішого перекладу…"
 
 msgid "Syncing with Crowdin failed."
 msgstr "Не вдалося синхронізувати з Crowdin."
@@ -949,14 +990,40 @@ msgstr "Рядок заміни"
 msgid "Cannot execute program: %s"
 msgstr "Не вдалося виконати програму: %s"
 
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "Код мови або назва (напр. en_GB)"
+#. TRANSLATORS: placeholder/hint in language controls
+msgid "Language name or code"
+msgstr "Назва мови або код"
 
 msgid "Translation Language"
 msgstr "Мова перекладу"
 
 msgid "Language of the translation:"
 msgstr "Мова перекладу:"
+
+msgid "All strings"
+msgstr "Усі рядки"
+
+msgid "Couldn’t download Localazy project details."
+msgstr "Не вдалося завантажити відомості про проєкт Localazy."
+
+msgid "There was an error when uploading translations to Localazy."
+msgstr "Виникла помилка під час вивантаження перекладів на Localazy."
+
+msgid "Projects"
+msgstr "Проєкти"
+
+msgid ""
+"Localazy is a highly automated localization platform allowing anyone to "
+"translate their products and content into multiple languages easily."
+msgstr ""
+"Localazy — платформа локалізації з високим рівнем автоматизації, що дозволяє "
+"будь-кому легко перекладати свої продукти й матеріали різними мовами."
+
+msgid "Add Project"
+msgstr "Додати проєкт"
+
+msgid "Add project"
+msgstr "Додати проєкт"
 
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit. Менеджер каталогів"
@@ -1437,15 +1504,26 @@ msgstr ""
 "Попередній переклад вимагає, щоб був доступний початковий текст. Він не "
 "працює, якщо використовуються лише ID без самого тексту."
 
+msgid "Cannot pre-translate from unknown language."
+msgstr "Неможливо зробити попередній переклад з невідомої мови."
+
+msgid ""
+"Pre-translation requires that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"Попередній переклад потребує, щоб мова початкового тексту була відомою. "
+"Poedit не зміг знайти її в цьому файлі."
+
 msgid "Only fill in exact matches"
 msgstr "Заповнювати лише точні збіги"
 
 msgid ""
-"By default, inaccurate results are filled in as well and marked as needing "
-"work. Check this option to only include accurate matches."
+"By default, inaccurate results are also included, but marked as needing "
+"work. Check this option to only include perfect matches."
 msgstr ""
-"Типово результати, які не повністю збігаються, все одно будуть заповнені, "
-"але позначені «потребує доопрацювання»."
+"Усталено, неточні результати також включаються, але позначаються такими, що "
+"потребують доопрацювання. Увімкніть цю опцію, щоб включалися лише ідеальні "
+"збіги."
 
 msgid "Don’t mark exact matches as needing work"
 msgstr "Не позначати точні збіги як «потребує доопрацювання»"
@@ -1688,11 +1766,11 @@ msgstr "Відкрити нещодавні"
 msgid "Open recent"
 msgstr "Відкрити недавні"
 
-msgid "Open from Crowdin…"
-msgstr "Відкрити з Crowdin…"
+msgid "Open cloud translation…"
+msgstr "Відкрити хмарний переклад…"
 
-msgid "Open From Crowdin…"
-msgstr "Відкрити з Crowdin…"
+msgid "Open Cloud Translation…"
+msgstr "Відкрити хмарний переклад…"
 
 msgid "&Start window"
 msgstr "&Початкове вікно"
@@ -2169,6 +2247,13 @@ msgstr ""
 "Пропозиції перекладу потребують, щоб початковий текст був доступний. Вони не "
 "працювали в разі, якщо використовуються лише ID без самого тексту."
 
+msgid ""
+"Translation suggestions require that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"Пропозиції перекладу потребують, щоб мова початкового тексту була відомою. "
+"Poedit не зміг визначити її у цьому файлі."
+
 msgid "The TMX file is malformed."
 msgstr "TMX-файл пошкоджено."
 
@@ -2248,11 +2333,11 @@ msgstr "Огляд файлів"
 msgid "Open and edit translation files."
 msgstr "Відкрити й редагувати файли перекладу."
 
-msgid "Translate Crowdin project"
-msgstr "Перекласти проєкт на Crowdin"
+msgid "Translate cloud project"
+msgstr "Перекласти проєкт із хмари"
 
-msgid "Collaborate with others in a Crowdin project."
-msgstr "Співпрацюйте з іншими в проєкті Crowdin."
+msgid "Collaborate with other people online."
+msgstr "Співпрацюйте з іншими людьми онлайн."
 
 msgid "Recent files"
 msgstr "Недавні файли"

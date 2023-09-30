@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-05-09 17:49+0200\n"
-"PO-Revision-Date: 2023-05-09 15:49\n"
+"POT-Creation-Date: 2023-09-30 19:13+0200\n"
+"PO-Revision-Date: 2023-09-30 16:45\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -100,6 +100,9 @@ msgstr ""
 msgid "Couldn’t save file %s."
 msgstr "Datoteke %s ni možno shraniti."
 
+msgid "Screenshots:"
+msgstr "Posnetki zaslona:"
+
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
@@ -182,18 +185,77 @@ msgstr "Izberite želeni jezik"
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Poedit morate ponovno zagnati, da bo sprememba začela veljati."
 
+msgid "Add Account"
+msgstr "Dodaj račun"
+
+msgid "Add account"
+msgstr "Dodaj račun"
+
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Learn more about %s"
+msgstr "Več o %s"
+
+msgid ""
+"Connect Poedit with supported cloud localization platforms to seamlessly "
+"sync translations managed on them."
+msgstr ""
+"Povežite Poedit s podprtimi platformami za lokalizacijo v oblaku, da "
+"nemoteno sinhronizirate prevode, ki se upravljajo na njih."
+
+msgid "How does cloud sync work?"
+msgstr "Kako deluje sinhronizacija v oblaku?"
+
+msgid "Account"
+msgstr "Račun"
+
+msgid "(not signed in)"
+msgstr "(niste vpisani)"
+
+msgid "File"
+msgstr "Datoteka"
+
+msgid "Open cloud translation"
+msgstr "Odpri prevod v oblaku"
+
+msgid "Manage accounts"
+msgstr "Upravljaj račune"
+
+msgid "Project:"
+msgstr "Projekt:"
+
+msgid "Language:"
+msgstr "Jezik:"
+
+msgid "Sign in to Cloud Account"
+msgstr "Vpiši se v račun v oblaku"
+
+msgid "Sign in to cloud account"
+msgstr "Vpiši se v račun v oblaku"
+
+msgid "No translation projects listed in your account."
+msgstr "V vašem računu ni navedenih prevajalskih projektov."
+
+msgid "Downloading latest translations…"
+msgstr "Prenašanje najnovejših prevodov ..."
+
+#. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Sign in to %s"
+msgstr "Vpis v %s"
+
 msgid "Syncing"
 msgstr "Usklajevanje"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s…"
-msgstr "Usklajevanje s strežnikom %s …"
+msgid "Uploading translations to %s…"
+msgstr "Nalaganje prevodov na %s…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s failed."
-msgstr "Usklajevanje s strežnikom %s je spodletelo."
+msgid "Uploading translations to %s failed."
+msgstr "Ni uspelo nalaganje prevodov na %s."
 
 msgid "Syncing error"
 msgstr "Napaka usklajevanja"
@@ -210,14 +272,6 @@ msgstr "Niste pooblaščeni, ponovno se prijavite."
 msgid "Downloading translations is disabled in this project."
 msgstr "Prenos prevodov je v tem projektu onemogočen."
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
-msgstr ""
-"Crowdin je spletna platforma za upravljanje lokalizacije in sodelujoče "
-"orodje za prevajanje. Poedit lahko brez težav uskladi datoteke PO, ki jih "
-"upravlja Crowdin."
-
 msgid "Sign In"
 msgstr "Prijava"
 
@@ -230,38 +284,24 @@ msgstr "Odjava"
 msgid "Sign out"
 msgstr "Odjavi"
 
+msgid "Learn more about Crowdin"
+msgstr "Več o Crowdin"
+
+msgid ""
+"Crowdin is an online localization management platform and collaborative "
+"translation tool."
+msgstr ""
+"Crowdin je spletna platforma za upravljanje lokalizacij in orodje za skupno "
+"prevajanje."
+
 msgid "Waiting for authentication…"
 msgstr "Čakanje na preverjanje pristnosti …"
 
 msgid "Updating user information…"
 msgstr "Posodabljanje uporabniških podatkov …"
 
-msgid "Learn more about Crowdin"
-msgstr "Več o Crowdin"
-
 msgid "Sign in to Crowdin"
 msgstr "Prijava v Crowdin"
-
-msgid "File"
-msgstr "Datoteka"
-
-msgid "Open Crowdin translation"
-msgstr "Odpri prevod Crowdin"
-
-msgid "Project:"
-msgstr "Projekt:"
-
-msgid "Language:"
-msgstr "Jezik:"
-
-msgid "Signed in as:"
-msgstr "Prijavljeni kot:"
-
-msgid "No translation projects listed in your Crowdin account."
-msgstr "V vašem računu Crowdin ni navedeni noben prevajalski projekt."
-
-msgid "Downloading latest translations…"
-msgstr "Prenašanje najnovejših prevodov ..."
 
 msgid "Syncing with Crowdin failed."
 msgstr "Usklajevanje s Crowdin ni uspelo."
@@ -958,14 +998,40 @@ msgstr "Nadomestni niz"
 msgid "Cannot execute program: %s"
 msgstr "Ni mogoče izvesti programa: %s"
 
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "Koda jezika ali ime (npr. sl_SI ali sl)"
+#. TRANSLATORS: placeholder/hint in language controls
+msgid "Language name or code"
+msgstr "Ime ali koda jezika"
 
 msgid "Translation Language"
 msgstr "Jezik prevoda"
 
 msgid "Language of the translation:"
 msgstr "Jezik prevoda:"
+
+msgid "All strings"
+msgstr "Vsi nizi"
+
+msgid "Couldn’t download Localazy project details."
+msgstr "Ni bilo mogoče prenesti podrobnosti projekta Localazy."
+
+msgid "There was an error when uploading translations to Localazy."
+msgstr "Pri nalaganju prevodov v Localazy je prišlo do napake."
+
+msgid "Projects"
+msgstr "Projekti"
+
+msgid ""
+"Localazy is a highly automated localization platform allowing anyone to "
+"translate their products and content into multiple languages easily."
+msgstr ""
+"Localazy je visoko avtomatizirana lokalizacijska platforma, ki vsakomur "
+"omogoča enostavno prevajanje njihovih izdelkov in vsebine v več jezikov."
+
+msgid "Add Project"
+msgstr "Dodaj projekt"
+
+msgid "Add project"
+msgstr "Dodaj projekt"
 
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit – upravljalnik katalogov"
@@ -1444,15 +1510,25 @@ msgstr ""
 "Predhodni prevod zahteva, da je na voljo izvorno besedilo. Ne deluje, če se "
 "uporabljajo samo ID-ji brez dejanskega besedila."
 
+msgid "Cannot pre-translate from unknown language."
+msgstr "Ni mogoče vnaprej prevesti iz neznanega jezika."
+
+msgid ""
+"Pre-translation requires that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"Vnaprejšnji prevod zahteva znani jezik izvornega besedila. Poedit ga v tej "
+"datoteki ni mogel zaznati."
+
 msgid "Only fill in exact matches"
 msgstr "Zapolni le natančna ujemanja"
 
 msgid ""
-"By default, inaccurate results are filled in as well and marked as needing "
-"work. Check this option to only include accurate matches."
+"By default, inaccurate results are also included, but marked as needing "
+"work. Check this option to only include perfect matches."
 msgstr ""
-"Privzeto so zapolnjeni tudi netočni rezultati in so označeni kot potrebni "
-"predelave. Izberite to možnost, če želite vključiti le natančne zadetke."
+"Privzeto so vključeni tudi netočni rezultati, vendar označeni kot potrebni "
+"dela. Označite to možnost, če želite vključiti samo popolna ujemanja."
 
 msgid "Don’t mark exact matches as needing work"
 msgstr "Natančnih ujemanj ne označi kot potrebnih predelave"
@@ -1693,11 +1769,11 @@ msgstr "Odpri nedavne"
 msgid "Open recent"
 msgstr "Odpri nedavno"
 
-msgid "Open from Crowdin…"
-msgstr "Odpri iz Crowdina …"
+msgid "Open cloud translation…"
+msgstr "Odpri prevod v oblaku…"
 
-msgid "Open From Crowdin…"
-msgstr "Odpri iz Crowdina …"
+msgid "Open Cloud Translation…"
+msgstr "Odpri prevod v oblaku…"
 
 msgid "&Start window"
 msgstr "&Začetno okno"
@@ -2175,6 +2251,13 @@ msgstr ""
 "Predlogi prevodov zahtevajo, da je na voljo izvorno besedilo. Ne delujejo, "
 "če so uporabljeni samo ID-ji brez dejanskega besedila."
 
+msgid ""
+"Translation suggestions require that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"Predlogi prevoda zahtevajo znani jezik izvornega besedila. Poedit ga v tej "
+"datoteki ni mogel zaznati."
+
 msgid "The TMX file is malformed."
 msgstr "Datoteka TMX ni pravilno oblikovana."
 
@@ -2252,11 +2335,11 @@ msgstr "Prebrskaj datoteke"
 msgid "Open and edit translation files."
 msgstr "Odpri in uredi datoteke za prevajanje."
 
-msgid "Translate Crowdin project"
-msgstr "Prevedi projekt Crowdin"
+msgid "Translate cloud project"
+msgstr "Prevedi projekt v oblaku"
 
-msgid "Collaborate with others in a Crowdin project."
-msgstr "Sodeluj z drugimi v projektu Crowdin."
+msgid "Collaborate with other people online."
+msgstr "Sodelujte z drugimi na spletu."
 
 msgid "Recent files"
 msgstr "Nedavne datoteke"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-05-09 17:49+0200\n"
-"PO-Revision-Date: 2023-05-09 15:48\n"
+"POT-Creation-Date: 2023-09-30 19:13+0200\n"
+"PO-Revision-Date: 2023-09-30 16:45\n"
 "Last-Translator: \n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -100,6 +100,9 @@ msgstr ""
 msgid "Couldn’t save file %s."
 msgstr "S’u ruajt dot kartela %s."
 
+msgid "Screenshots:"
+msgstr "Foto ekrani:"
+
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
@@ -178,18 +181,77 @@ msgstr "Përzgjidhni gjuhën tuaj të parapëlqyer"
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Duhet të rinisni Poedit-in, pa të hyjnë në fuqi ndryshimet."
 
+msgid "Add Account"
+msgstr "Shtoni Llogari"
+
+msgid "Add account"
+msgstr "Shtoni llogari"
+
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Learn more about %s"
+msgstr "Mësoni më tepër rreth %s"
+
+msgid ""
+"Connect Poedit with supported cloud localization platforms to seamlessly "
+"sync translations managed on them."
+msgstr ""
+"Lidheni Poedit-in me platforma përkthimi në re që mbulon, për njëkohësim të "
+"pacen përkthimesh të administruara në to."
+
+msgid "How does cloud sync work?"
+msgstr "Si funksionon njëkohësimi me renë?"
+
+msgid "Account"
+msgstr "Llogari"
+
+msgid "(not signed in)"
+msgstr "(pa bërë hyrjen)"
+
+msgid "File"
+msgstr "Kartelë"
+
+msgid "Open cloud translation"
+msgstr "Hapni përkthim në re"
+
+msgid "Manage accounts"
+msgstr "Administroni llogari"
+
+msgid "Project:"
+msgstr "Projekt:"
+
+msgid "Language:"
+msgstr "Gjuhë:"
+
+msgid "Sign in to Cloud Account"
+msgstr "Hyni në Llogari Reje"
+
+msgid "Sign in to cloud account"
+msgstr "Hyni në llogari reje"
+
+msgid "No translation projects listed in your account."
+msgstr "Në llogarinë tuaj s’ka projekte përkthimi."
+
+msgid "Downloading latest translations…"
+msgstr "Po shkarkohen përkthimet më të reja…"
+
+#. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Sign in to %s"
+msgstr "Bëni hyrjen në %s"
+
 msgid "Syncing"
 msgstr "Njëkohësim"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s…"
-msgstr "Po njëkohësohet me %s…"
+msgid "Uploading translations to %s…"
+msgstr "Po ngarkohen përkthime në %s…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s failed."
-msgstr "Njëkohësimi me %s dështoi."
+msgid "Uploading translations to %s failed."
+msgstr "Ngarkimi i përkthimeve në %s dështoi."
 
 msgid "Syncing error"
 msgstr "Gabim njëkohësimi"
@@ -206,14 +268,6 @@ msgstr "Jo i autorizuar, ju lutemi, ribëni hyrjen."
 msgid "Downloading translations is disabled in this project."
 msgstr "Shkarkimi i përkthimeve është i çaktivizuar për këtë projekt."
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
-msgstr ""
-"Crowdin është një platformë administrimi përkthimesh në internet dhe mjet "
-"përkthimi në bashkëpunim. Poedit-i mund të njëkohësojë pa të metë kartela PO "
-"të administruara në Crowdin."
-
 msgid "Sign In"
 msgstr "Hyni"
 
@@ -226,38 +280,24 @@ msgstr "Dilni"
 msgid "Sign out"
 msgstr "Dilni"
 
+msgid "Learn more about Crowdin"
+msgstr "Mësoni më tepër mbi Crowdin-in"
+
+msgid ""
+"Crowdin is an online localization management platform and collaborative "
+"translation tool."
+msgstr ""
+"Crowdin-i është një platformë internetore administrimi përkthimesh dhe një "
+"mjet përkthimi në bashkëpunim."
+
 msgid "Waiting for authentication…"
 msgstr "Po pritet për mirëfilltësim…"
 
 msgid "Updating user information…"
 msgstr "Po përditësohen të dhëna mbi përdoruesin…"
 
-msgid "Learn more about Crowdin"
-msgstr "Mësoni më tepër mbi Crowdin-in"
-
 msgid "Sign in to Crowdin"
 msgstr "Hyni në Crowdin"
-
-msgid "File"
-msgstr "Kartelë"
-
-msgid "Open Crowdin translation"
-msgstr "Hape përkthimin në Crowdin"
-
-msgid "Project:"
-msgstr "Projekt:"
-
-msgid "Language:"
-msgstr "Gjuhë:"
-
-msgid "Signed in as:"
-msgstr "I futur si:"
-
-msgid "No translation projects listed in your Crowdin account."
-msgstr "Pa projekte përkthimi në llogarinë tuaj Crowdin."
-
-msgid "Downloading latest translations…"
-msgstr "Po shkarkohen përkthimet më të reja…"
 
 msgid "Syncing with Crowdin failed."
 msgstr "Njëkohësimi me Crowdin-in dështoi."
@@ -943,14 +983,40 @@ msgstr "Varg zëvendësimi"
 msgid "Cannot execute program: %s"
 msgstr "S’përmbushet dot programi: %s"
 
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "Kod ose Emër Gjuhe (p.sh. sq)"
+#. TRANSLATORS: placeholder/hint in language controls
+msgid "Language name or code"
+msgstr "Emër ose kode gjuhe"
 
 msgid "Translation Language"
 msgstr "Gjuhë Përkthimi"
 
 msgid "Language of the translation:"
 msgstr "Gjuha e përkthimit:"
+
+msgid "All strings"
+msgstr "Krejt vargjet"
+
+msgid "Couldn’t download Localazy project details."
+msgstr "S’u shkakrkuan dot hollësi projekti Localazy."
+
+msgid "There was an error when uploading translations to Localazy."
+msgstr "Pati një gabim, teksa ngarkoheshin përkthime te Localazy."
+
+msgid "Projects"
+msgstr "Projekte"
+
+msgid ""
+"Localazy is a highly automated localization platform allowing anyone to "
+"translate their products and content into multiple languages easily."
+msgstr ""
+"Localazy është një platformë shumë e automatizuar përkthimesh që i lejon "
+"kujtdo të përkthejë produktet dhe lëndën e vet kollaj në gjuhë të shumta."
+
+msgid "Add Project"
+msgstr "Shtoni Projekt"
+
+msgid "Add project"
+msgstr "Shtoni projekt"
 
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - Përgjegjës katalogësh"
@@ -1431,16 +1497,26 @@ msgstr ""
 "Përkthimi paraprak lyp prani të tekstit burim. S’funksionon, nëse përdoren "
 "vetëm ID, pa tekstin faktik."
 
+msgid "Cannot pre-translate from unknown language."
+msgstr "S’mund të bëhet përkthim paraprak prej një gjuhe të panjohur."
+
+msgid ""
+"Pre-translation requires that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"Përkthimi paraprak lyp që gjuha e tekstit burim të njihet. Poedit-i s’e "
+"pikasi dot në këtë kartelë."
+
 msgid "Only fill in exact matches"
 msgstr "Plotëso vetëm përputhjet e përpikta"
 
 msgid ""
-"By default, inaccurate results are filled in as well and marked as needing "
-"work. Check this option to only include accurate matches."
+"By default, inaccurate results are also included, but marked as needing "
+"work. Check this option to only include perfect matches."
 msgstr ""
-"Si parazgjedhje, plotësohen edhe përfundimet e pasakta dhe shënohen si të "
-"turbullta. I vini shenjë kësaj mundësie që të përfshihen vetëm përputhjet e "
-"përpikta."
+"Si parazgjedhje, përfshihen edhe përfundime jo të përpikta, por me shenjën "
+"se duan punë. Që të përfshihen vetëm përputhje të përpikta, i vini shenjë "
+"kësaj mundësie."
 
 msgid "Don’t mark exact matches as needing work"
 msgstr "Përputhjeve të përpikta mos u vër shenjë si të lypnin punë"
@@ -1680,11 +1756,11 @@ msgstr "Hap Një Nga të Rejat"
 msgid "Open recent"
 msgstr "Hap një nga të rejat"
 
-msgid "Open from Crowdin…"
-msgstr "Hapeni prej Crowdin-i…"
+msgid "Open cloud translation…"
+msgstr "Hapni përkthim në re…"
 
-msgid "Open From Crowdin…"
-msgstr "Hapeni Prej Crowdin-i…"
+msgid "Open Cloud Translation…"
+msgstr "Hapni Përkthim Në Re…"
 
 msgid "&Start window"
 msgstr "Dritare &nisjeje"
@@ -2162,6 +2238,13 @@ msgstr ""
 "Sugjerimet e përkthimeve lypin praninë e tekstit burim. S’funksionojnë, nëse "
 "përdoren vetëm ID, pa tekstin faktik."
 
+msgid ""
+"Translation suggestions require that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"Sugjerime përkthimi lypin që gjuha e tekstit burim të njihet. Poedit-i s’e "
+"pikasi dot në këtë kartelë."
+
 msgid "The TMX file is malformed."
 msgstr "Kartela TMX është e keqformuar."
 
@@ -2239,11 +2322,11 @@ msgstr "Shfletoni kartela"
 msgid "Open and edit translation files."
 msgstr "Hapni dhe përpunoni kartela përkthimi."
 
-msgid "Translate Crowdin project"
-msgstr "Përktheni projekt Crowdin"
+msgid "Translate cloud project"
+msgstr "Përktheni projekt në re"
 
-msgid "Collaborate with others in a Crowdin project."
-msgstr "Bashkëpunoni me të tjerë në një projekt Crowdin."
+msgid "Collaborate with other people online."
+msgstr "Bashkëpunoni me persona të tjerë në internet."
 
 msgid "Recent files"
 msgstr "Kartela së fundi"

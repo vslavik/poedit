@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-05-09 17:49+0200\n"
-"PO-Revision-Date: 2023-06-26 11:33\n"
+"POT-Creation-Date: 2023-09-30 19:13+0200\n"
+"PO-Revision-Date: 2023-09-30 16:45\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -98,6 +98,9 @@ msgstr ""
 msgid "Couldn’t save file %s."
 msgstr "A(z) %s fájl mentése nem sikerült."
 
+msgid "Screenshots:"
+msgstr "Képernyőképek:"
+
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
@@ -175,18 +178,77 @@ msgstr "Válassza ki a kívánt nyelvet"
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Újra kell indítania a Poeditet a módosítás életbe léptetéséhez."
 
+msgid "Add Account"
+msgstr "Fiók hozzáadása"
+
+msgid "Add account"
+msgstr "Fiók hozzáadása"
+
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Learn more about %s"
+msgstr "Bővebben a %s-ról"
+
+msgid ""
+"Connect Poedit with supported cloud localization platforms to seamlessly "
+"sync translations managed on them."
+msgstr ""
+"Kapcsolja a Poeditet egy támogatt felhős honosítási platformhoz, hogy "
+"zökkenőmentesen szinkronizálja a rajtuk kezelt fordításokat."
+
+msgid "How does cloud sync work?"
+msgstr "Hogyan működik a felhős szinkronizálás?"
+
+msgid "Account"
+msgstr "Fiók"
+
+msgid "(not signed in)"
+msgstr "(nincs bejelentkezve)"
+
+msgid "File"
+msgstr "Fájl"
+
+msgid "Open cloud translation"
+msgstr "Felhős fordítás megnyitása"
+
+msgid "Manage accounts"
+msgstr "Fiókok kezelése"
+
+msgid "Project:"
+msgstr "Projekt:"
+
+msgid "Language:"
+msgstr "Nyelv:"
+
+msgid "Sign in to Cloud Account"
+msgstr "Bejelentkezés egy felhős fiókba"
+
+msgid "Sign in to cloud account"
+msgstr "Bejelentkezés egy felhős fiókba"
+
+msgid "No translation projects listed in your account."
+msgstr "Nem szerepel fordítási projekt a fiókjában."
+
+msgid "Downloading latest translations…"
+msgstr "A legújabb fordítások letöltése…"
+
+#. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Sign in to %s"
+msgstr "Bejelentkezés ide: %s"
+
 msgid "Syncing"
 msgstr "Szinkronizálás"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s…"
-msgstr "Szinkronizálás ezzel: %s…"
+msgid "Uploading translations to %s…"
+msgstr "Fordítások feltöltése ide: %s…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s failed."
-msgstr "A szinkronizálás nem sikerült ezzel: %s."
+msgid "Uploading translations to %s failed."
+msgstr "A fordítások feltöltése ide sikertelen: %s."
 
 msgid "Syncing error"
 msgstr "Szinkronizálási hiba"
@@ -203,14 +265,6 @@ msgstr "Nem engedélyezett, kérjük jelentkezzen be újra."
 msgid "Downloading translations is disabled in this project."
 msgstr "A fordítások letöltése ebben a projektben le van tiltva."
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
-msgstr ""
-"A Crowdin egy online honosításkezelő platform és együttműködésen alapuló "
-"fordítási eszköz. A Poedit gond nélkül képes szinkronizálni a Crowdinon "
-"kezelt PO fájlokkal."
-
 msgid "Sign In"
 msgstr "Bejelentkezés"
 
@@ -223,38 +277,24 @@ msgstr "Kijelentkezés"
 msgid "Sign out"
 msgstr "Kijelentkezés"
 
+msgid "Learn more about Crowdin"
+msgstr "Tudjon meg többet a Crowdinról"
+
+msgid ""
+"Crowdin is an online localization management platform and collaborative "
+"translation tool."
+msgstr ""
+"A Crowdin egy online honosításkezelő platform és kollaboratív fordítási "
+"eszköz."
+
 msgid "Waiting for authentication…"
 msgstr "Várakozás a hitelesítésre…"
 
 msgid "Updating user information…"
 msgstr "Felhasználói adatok frissítése…"
 
-msgid "Learn more about Crowdin"
-msgstr "Tudjon meg többet a Crowdinról"
-
 msgid "Sign in to Crowdin"
 msgstr "Bejelentkezés a Crowdinra"
-
-msgid "File"
-msgstr "Fájl"
-
-msgid "Open Crowdin translation"
-msgstr "Crowdin fordítás megnyitása"
-
-msgid "Project:"
-msgstr "Projekt:"
-
-msgid "Language:"
-msgstr "Nyelv:"
-
-msgid "Signed in as:"
-msgstr "Bejelentkezve mint:"
-
-msgid "No translation projects listed in your Crowdin account."
-msgstr "Nem szerepel fordítási projekt az Ön Crowdin fiókjában."
-
-msgid "Downloading latest translations…"
-msgstr "A legújabb fordítások letöltése…"
 
 msgid "Syncing with Crowdin failed."
 msgstr "Nem sikerült szinkronizálni a Crowdinnel."
@@ -945,14 +985,41 @@ msgstr "Behelyettesítendő karakterlánc"
 msgid "Cannot execute program: %s"
 msgstr "A programot nem lehet futtatni: %s"
 
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "Nyelv kódja vagy neve (pl. hu_HU)"
+#. TRANSLATORS: placeholder/hint in language controls
+msgid "Language name or code"
+msgstr "Nyelv nyeve vagy kódja"
 
 msgid "Translation Language"
 msgstr "Fordítás nyelve"
 
 msgid "Language of the translation:"
 msgstr "A fordítás nyelve:"
+
+msgid "All strings"
+msgstr "Összes karakterlánc"
+
+msgid "Couldn’t download Localazy project details."
+msgstr "Nem sikerült letölteni a Localazy projekt részleteit."
+
+msgid "There was an error when uploading translations to Localazy."
+msgstr "Hiba történt a fordtások Localazyre történő feltöltése során."
+
+msgid "Projects"
+msgstr "Projektek"
+
+msgid ""
+"Localazy is a highly automated localization platform allowing anyone to "
+"translate their products and content into multiple languages easily."
+msgstr ""
+"A Localaz egy magas szinten automatizált honosítási platform, amely lehetővé "
+"teszi, hogy bárki egyszerűen több nyelvre fordíthassa le a termékét vagy "
+"tartalmát."
+
+msgid "Add Project"
+msgstr "Projekt hozzáadása"
+
+msgid "Add project"
+msgstr "Projekt hozzáadása"
 
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit – Katalóguskezelő"
@@ -1431,16 +1498,26 @@ msgstr ""
 "Az előfordításhoz szükséges a forrásszöveg megléte. Nem működik csak "
 "azonosítókkal, a valódi szöveg használata nélkül."
 
+msgid "Cannot pre-translate from unknown language."
+msgstr "Ismeretlen nyelvről nem lehet előfordítani."
+
+msgid ""
+"Pre-translation requires that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"Az előfordítás előfeltétele, hogy a forrásszöveg nyelve ismert legyen. A "
+"Poedit ezt nem észlelte a fájlban."
+
 msgid "Only fill in exact matches"
 msgstr "Kitöltés csak pontos egyezés esetén"
 
 msgid ""
-"By default, inaccurate results are filled in as well and marked as needing "
-"work. Check this option to only include accurate matches."
+"By default, inaccurate results are also included, but marked as needing "
+"work. Check this option to only include perfect matches."
 msgstr ""
-"Alapesetben a pontatlan eredmények is belekerülnek a fordításba, és munkát "
-"igénylőként lesznek megjelölve. Kapcsolja be ezt a lehetőséget, hogy csak "
-"pontos egyezés esetén legyen kitöltve."
+"Alapesetben a pontatlan eredmények is belekerülnek, de munkát igénylőként "
+"lesznek megjelölve. Kapcsolja be ezt a lehetőséget, hogy csak pontos egyezés "
+"esetén kerüljenek bele."
 
 msgid "Don’t mark exact matches as needing work"
 msgstr "Ne jelölje meg munkát igénylőként a pontosan egyezőket"
@@ -1679,11 +1756,11 @@ msgstr "Legutóbbi megnyitása"
 msgid "Open recent"
 msgstr "Legutóbbi megnyitása"
 
-msgid "Open from Crowdin…"
-msgstr "Megnyitás a Crowdinról…"
+msgid "Open cloud translation…"
+msgstr "Felhős fordítás megnyitása…"
 
-msgid "Open From Crowdin…"
-msgstr "Megnyitás a Crowdinról…"
+msgid "Open Cloud Translation…"
+msgstr "Felhős fordítás megnyitása…"
 
 msgid "&Start window"
 msgstr "&Kezdő ablak"
@@ -2160,6 +2237,13 @@ msgstr ""
 "A fordítási javaslatokhoz szükséges a forrásszöveg megléte. Nem működnek "
 "csak azonosítókkal, a valódi szöveg használata nélkül."
 
+msgid ""
+"Translation suggestions require that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"A fordítási feladatok előfeltétele, hogy a forrásszöveg nyelve ismert "
+"legyen. A Poedit ezt nem észlelte a fájlban."
+
 msgid "The TMX file is malformed."
 msgstr "A TMX fájl formátuma hibás."
 
@@ -2237,11 +2321,11 @@ msgstr "Fájlok böngészése"
 msgid "Open and edit translation files."
 msgstr "Fordítási fájl megnyitása és szerkesztése."
 
-msgid "Translate Crowdin project"
-msgstr "Crowdin projekt fordítása"
+msgid "Translate cloud project"
+msgstr "Felhős projekt fordítása"
 
-msgid "Collaborate with others in a Crowdin project."
-msgstr "Együttműködés másokkal egy Crowdin projektben."
+msgid "Collaborate with other people online."
+msgstr "Együttműködés más emberekkel online."
 
 msgid "Recent files"
 msgstr "Legutóbbi fájlok"

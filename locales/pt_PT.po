@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-05-09 17:49+0200\n"
-"PO-Revision-Date: 2023-05-01 07:27\n"
+"POT-Creation-Date: 2023-09-30 19:13+0200\n"
+"PO-Revision-Date: 2023-09-30 16:45\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -100,6 +100,9 @@ msgstr ""
 msgid "Couldn’t save file %s."
 msgstr "Não foi possível guardar o ficheiro %s."
 
+msgid "Screenshots:"
+msgstr "Capturas de ecrã:"
+
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
@@ -178,18 +181,77 @@ msgstr "Selecione o seu idioma preferido"
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Tem que reiniciar o Poedit para aplicar a alteração."
 
+msgid "Add Account"
+msgstr "Adicionar conta"
+
+msgid "Add account"
+msgstr "Adicionar conta"
+
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Learn more about %s"
+msgstr "Saber mais acerca de %s"
+
+msgid ""
+"Connect Poedit with supported cloud localization platforms to seamlessly "
+"sync translations managed on them."
+msgstr ""
+"Conecte o Poedit com plataformas de tradução na nuvem suportadas, para "
+"sincronizar de forma transparente as traduções aí geridas."
+
+msgid "How does cloud sync work?"
+msgstr "Como é que funciona a sincronização na nuvem?"
+
+msgid "Account"
+msgstr "Conta"
+
+msgid "(not signed in)"
+msgstr "(sessão não iniciada)"
+
+msgid "File"
+msgstr "Ficheiro"
+
+msgid "Open cloud translation"
+msgstr "Abrir tradução na nuvem"
+
+msgid "Manage accounts"
+msgstr "Gerir contas"
+
+msgid "Project:"
+msgstr "Projeto:"
+
+msgid "Language:"
+msgstr "Idioma:"
+
+msgid "Sign in to Cloud Account"
+msgstr "Inicie sessão na sua conta"
+
+msgid "Sign in to cloud account"
+msgstr "Inicie sessão na sua conta"
+
+msgid "No translation projects listed in your account."
+msgstr "Não existem projetos de tradução associados à sua conta."
+
+msgid "Downloading latest translations…"
+msgstr "A descarregar traduções mais recentes..."
+
+#. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#, c-format
+msgid "Sign in to %s"
+msgstr "Iniciar sessão em %s"
+
 msgid "Syncing"
 msgstr "Sincronização"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s…"
-msgstr "A sincronizar com %s…"
+msgid "Uploading translations to %s…"
+msgstr "A carregar traduções para %s…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
-msgid "Syncing with %s failed."
-msgstr "Erro ao sincronizar com %s."
+msgid "Uploading translations to %s failed."
+msgstr "Não foi possível carregar as traduções para %s."
 
 msgid "Syncing error"
 msgstr "Erro de sincronização"
@@ -206,14 +268,6 @@ msgstr "Não autorizado. Inicie novamente a sessão."
 msgid "Downloading translations is disabled in this project."
 msgstr "Este projeto desativou a descarga de traduções."
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
-msgstr ""
-"Crowdin é uma plataforma de gestão de localização on-line e uma ferramenta "
-"de tradução colaborativa. Poedit pode sincronizar continuamente os ficheiros "
-"PO geridos na Crowdin."
-
 msgid "Sign In"
 msgstr "Iniciar sessão"
 
@@ -226,38 +280,24 @@ msgstr "Terminar sessão"
 msgid "Sign out"
 msgstr "Terminar sessão"
 
+msgid "Learn more about Crowdin"
+msgstr "Saber mais sobre o Crowdin"
+
+msgid ""
+"Crowdin is an online localization management platform and collaborative "
+"translation tool."
+msgstr ""
+"Crowdin é uma plataforma online de gestão de traduções e uma ferramenta "
+"colaborativa."
+
 msgid "Waiting for authentication…"
 msgstr "A aguardar autenticação…"
 
 msgid "Updating user information…"
 msgstr "A atualizar informações do utilizador…"
 
-msgid "Learn more about Crowdin"
-msgstr "Saber mais sobre o Crowdin"
-
 msgid "Sign in to Crowdin"
 msgstr "Inicie a sessão na Crowdin"
-
-msgid "File"
-msgstr "Ficheiro"
-
-msgid "Open Crowdin translation"
-msgstr "Abrir a tradução na Crowdin"
-
-msgid "Project:"
-msgstr "Projeto:"
-
-msgid "Language:"
-msgstr "Idioma:"
-
-msgid "Signed in as:"
-msgstr "Sessão iniciada como:"
-
-msgid "No translation projects listed in your Crowdin account."
-msgstr "Não existem projetos de tradução listados na sua conta da Crowdin."
-
-msgid "Downloading latest translations…"
-msgstr "A descarregar traduções mais recentes..."
 
 msgid "Syncing with Crowdin failed."
 msgstr "Falha ao sincronizar com o Crowdin."
@@ -948,14 +988,40 @@ msgstr "Texto de substituição"
 msgid "Cannot execute program: %s"
 msgstr "Não foi possível executar o programa: %s"
 
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "Código ou nome do idioma (ex: pt)"
+#. TRANSLATORS: placeholder/hint in language controls
+msgid "Language name or code"
+msgstr "Nome ou código do idioma"
 
 msgid "Translation Language"
 msgstr "Idioma da tradução"
 
 msgid "Language of the translation:"
 msgstr "Idioma da tradução:"
+
+msgid "All strings"
+msgstr "Todas as cadeias"
+
+msgid "Couldn’t download Localazy project details."
+msgstr "Não foi possível descarregar os detalhes do projeto Localazy."
+
+msgid "There was an error when uploading translations to Localazy."
+msgstr "Ocorreu um erro ao carregar as traduções para Localazy."
+
+msgid "Projects"
+msgstr "Projetos"
+
+msgid ""
+"Localazy is a highly automated localization platform allowing anyone to "
+"translate their products and content into multiple languages easily."
+msgstr ""
+"Localazy é uma plataforma altamente automatizada que permite facilmente a "
+"qualquer um traduzir os seus produtos e/ou conteúdos facilmente."
+
+msgid "Add Project"
+msgstr "Adicionar projeto"
+
+msgid "Add project"
+msgstr "Adicionar projeto"
 
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - Gestor de catálogos"
@@ -1436,16 +1502,25 @@ msgstr ""
 "A pré-tradução requer que o texto original esteja disponível. Não funciona "
 "se apenas IDs sem o texto real forem usados."
 
+msgid "Cannot pre-translate from unknown language."
+msgstr "Não foi possível pré-traduzir de um idioma desconhecido."
+
+msgid ""
+"Pre-translation requires that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"A pré-tradução requer que o idioma do texto de origem seja conhecido. O "
+"Poedit não conseguiu detetá-lo neste ficheiro."
+
 msgid "Only fill in exact matches"
 msgstr "Preencher apenas as ocorrências exatas"
 
 msgid ""
-"By default, inaccurate results are filled in as well and marked as needing "
-"work. Check this option to only include accurate matches."
+"By default, inaccurate results are also included, but marked as needing "
+"work. Check this option to only include perfect matches."
 msgstr ""
-"Por definição, os resultados inexatos são preenchidos mas marcados como "
-"imprecisos. Selecione esta opção para incluir apenas as correspondências "
-"exatas."
+"Por definição, os resultados imprecisos também são incluídos mas marcados "
+"para revisão. Assinale esta opção para apenas incluir ocorrências exatas."
 
 msgid "Don’t mark exact matches as needing work"
 msgstr "Não marcar ocorrências exatas como imprecisas"
@@ -1684,11 +1759,11 @@ msgstr "Abrir recentes"
 msgid "Open recent"
 msgstr "Abrir recentes"
 
-msgid "Open from Crowdin…"
-msgstr "Abrir do Crowdin…"
+msgid "Open cloud translation…"
+msgstr "Abrir tradução na nuvem…"
 
-msgid "Open From Crowdin…"
-msgstr "Abrir do Crowdin…"
+msgid "Open Cloud Translation…"
+msgstr "Abrir tradução na nuvem…"
 
 msgid "&Start window"
 msgstr "Janela i&nicial"
@@ -2166,6 +2241,13 @@ msgstr ""
 "As sugestões de tradução requerem que o texto de origem esteja disponível. "
 "As mesmas não funcionam se apenas IDs sem o texto real forem usadas."
 
+msgid ""
+"Translation suggestions require that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
+msgstr ""
+"As sugestões de tradução requerem que o idioma do texto de origem seja "
+"conhecido. O Poedit não conseguiu detetá-lo neste ficheiro."
+
 msgid "The TMX file is malformed."
 msgstr "O ficheiro TMX está danificado."
 
@@ -2244,11 +2326,11 @@ msgstr "Explorar ficheiros"
 msgid "Open and edit translation files."
 msgstr "Abrir e editar ficheiros de tradução."
 
-msgid "Translate Crowdin project"
-msgstr "Traduzir projeto Crowdin"
+msgid "Translate cloud project"
+msgstr "Traduzir projeto na nuvem"
 
-msgid "Collaborate with others in a Crowdin project."
-msgstr "Colabore com outros num projeto no Crowdin."
+msgid "Collaborate with other people online."
+msgstr "Colabore online com outras pessoas"
 
 msgid "Recent files"
 msgstr "Ficheiros recentes"
