@@ -1,6 +1,7 @@
 
 # Poedit: cross-platform translation editor
 
+[![Crowdin](https://badges.crowdin.net/poedit/localized.svg)](https://crowdin.com/project/poedit)
 
 ## About
 
