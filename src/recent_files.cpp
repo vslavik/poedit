@@ -136,6 +136,9 @@ private:
 
     wxBitmap do_get(const wxString& ext, icon_size size)
     {
+        if (ext.empty())
+            return wxNullBitmap;
+
         auto& cache = m_cache[size];
         auto i = cache.find(ext);
         if (i != cache.end())
