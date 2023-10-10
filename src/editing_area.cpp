@@ -1085,6 +1085,9 @@ void EditingArea::UpdateCharCounter(CatalogItemPtr item)
 
 void EditingArea::UpdateFromTextCtrl()
 {
+    if (!m_isSingleSelection)
+        return;
+
     auto item = m_associatedList->GetCurrentCatalogItem();
     if (!item)
         return;
