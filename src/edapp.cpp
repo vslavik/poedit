@@ -683,16 +683,7 @@ void PoeditApp::SetDefaultCfg(wxConfigBase *cfg)
 
     if (cfg->Read("version", wxEmptyString) == GetAppVersion()) return;
 
-    if (cfg->Read("TM/search_paths", wxEmptyString).empty())
-    {
-        wxString paths;
-#if defined(__UNIX__)
-        paths = wxGetHomeDir() + ":/usr/share/locale:/usr/local/share/locale";
-#elif defined(__WXMSW__)
-        paths = "C:";
-#endif
-        cfg->Write("TM/search_paths", paths);
-    }
+    // do version migrations here
 
     cfg->Write("version", GetAppVersion());
 }
