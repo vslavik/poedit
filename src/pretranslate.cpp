@@ -73,7 +73,21 @@ int PreTranslateCatalogImpl(CatalogPtr catalog, const T& range, PreTranslateOpti
 
             dt->SetTranslation(res.text, index);
             dt->SetPreTranslated(true);
-            dt->SetFuzzy(!res.IsExactMatch() || (flags & PreTranslate_ExactNotFuzzy) == 0);
+
+            bool isFuzzy = true;
+            if (res.IsExactMatch() && (flags & PreTranslate_ExactNotFuzzy))
+            {
+                if (results.size() > 1 && results[1].IsExactMatch())
+                {
+                    // more than one exact match is ambiguous, so keep it flagged for review
+                }
+                else
+                {
+                    isFuzzy = false;
+                }
+            }
+            dt->SetFuzzy(isFuzzy);
+
             return true;
         };
 
