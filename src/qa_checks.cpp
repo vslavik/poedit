@@ -200,11 +200,12 @@ public:
 
     CaseMismatch(Language lang) : m_lang(lang.Lang())
     {
+        m_shouldCheck = (m_lang != "zh" && m_lang != "ja");
     }
 
     bool CheckString(CatalogItemPtr item, const wxString& source, const wxString& translation) override
     {
-        if (source.length() < 2)
+        if (!m_shouldCheck || source.length() < 2)
             return false;
 
         // Detect that the source string is a sentence: should have 1st letter uppercase and 2nd lowercase,
@@ -229,6 +230,7 @@ public:
     }
 
 private:
+    bool m_shouldCheck;
     std::string m_lang;
 };
 
@@ -238,11 +240,17 @@ class WhitespaceMismatch : public QACheck
 public:
     QA_METADATA("whitespace", _("Inconsistent whitespace"))
 
-    WhitespaceMismatch(Language /*lang*/) {}
+    WhitespaceMismatch(Language lang)
+    {
+        auto l = lang.Lang();
+        // Space is used sparingly in these languages and e.g. not present after sentence-ending
+        // period. Checking trailing/leading space is therefore often a false positive.
+        m_checkSpaceInTranslation = (l != "zh" && l != "ja");
+    }
 
     bool CheckString(CatalogItemPtr item, const wxString& source, const wxString& translation) override
     {
-        if (u_isspace(source[0]) && !u_isspace(translation[0]))
+        if (m_checkSpaceInTranslation && u_isspace(source[0]) && !u_isspace(translation[0]))
         {
             item->SetIssue(CatalogItem::Issue::Warning, _(L"The translation doesn’t start with a space."));
             return true;
@@ -266,7 +274,7 @@ public:
             return true;
         }
 
-        if (u_isspace(source.Last()) && !u_isspace(translation.Last()))
+        if (m_checkSpaceInTranslation && u_isspace(source.Last()) && !u_isspace(translation.Last()))
         {
             item->SetIssue(CatalogItem::Issue::Warning, _(L"The translation is missing a space at the end."));
             return true;
@@ -280,6 +288,9 @@ public:
 
         return false;
     }
+
+private:
+    bool m_checkSpaceInTranslation;
 };
 
 
@@ -292,7 +303,7 @@ public:
     {
     }
 
-    bool CheckString(CatalogItemPtr item, const wxString& source, const wxString& translation) override
+    bool CheckString(CatalogItemPtr item, const wxString& source_, const wxString& translation) override
     {
         if (m_lang == "th" || m_lang == "lo" || m_lang == "km" || m_lang == "my")
         {
@@ -303,6 +314,15 @@ public:
             // on _everything_.
             // See https://www.ccjk.com/punctuation-rule-for-bahasa-vietnamese-and-thai/
             return false;
+        }
+
+        auto source(source_);
+        if (m_lang == "zh" || m_lang == "ja")
+        {
+            // Space is used sparingly in these languages andd e.g. not present after sentence-ending
+            // period, so strip it from the source if present and check punctuation w/o it.
+            if (u_isspace(source.Last()) && !u_isspace(translation.Last()))
+                source.Trim(/*fromRight:*/true);
         }
 
         const UChar32 s_last = source.Last();
@@ -407,13 +427,15 @@ private:
                 case '.':
                     return trans == L'。';
                 case ',':
-                    return trans == L'、';
+                    return trans == L'，' || trans == L'、';
                 case '!':
                     return trans == L'！';
                 case '?':
                     return trans == L'？';
                 case ':':
                     return trans == L'：';
+                case ';':
+                    return trans == L'；';
                 case '(':
                     return trans == L'（';
                 case ')':
