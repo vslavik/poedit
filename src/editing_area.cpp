@@ -871,7 +871,8 @@ void EditingArea::ShowPluralFormUI(bool show)
 
 void EditingArea::ShowPart(wxWindow *part, bool show)
 {
-    part->GetContainingSizer()->Show(part, show);
+    if (part)
+        part->GetContainingSizer()->Show(part, show);
 }
 
 
@@ -904,7 +905,8 @@ void EditingArea::SetMultipleSelectionMode()
     ShowPart(m_tagIdOrContext, false);
     ShowPart(m_tagFormat, false);
     m_textOrig->Clear();
-    m_textTrans->Clear();
+    if (m_textTrans)
+        m_textTrans->Clear();
     Disable();
 }
 
