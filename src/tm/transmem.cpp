@@ -303,7 +303,15 @@ std::wstring TranslationMemoryImpl::GetDatabaseDir()
 namespace
 {
 
-static const int DEFAULT_MAXHITS = 10;
+// Max. number of hits returned from this API
+static const int MAX_RESULTS = 10;
+
+// Max. number of documents Lucene is queried for. This needs to be more than
+// MAX_RESULTS because we perform additional re-scoring, e.g. because Lucene
+// will happily return much longer documents for a short query.
+// It should be OK to have this fairy large, because most queries will return just
+// a few hits regardless.
+static const int LUCENE_QUERY_MAX_DOCS = 500;
 
 // Normalized score that must be met for a suggestion to be shown. This is
 // an empirical guess of what constitutes good matches.
@@ -353,6 +361,13 @@ std::wstring get_text_field(DocumentPtr doc, const std::wstring& field)
 }
 
 
+void postprocess_results(SuggestionsList& results)
+{
+    std::stable_sort(results.begin(), results.end());
+    results.resize(MAX_RESULTS);
+}
+
+
 template<typename T>
 void PerformSearchWithBlock(IndexSearcherPtr searcher,
                             const SearchArguments& sa,
@@ -365,7 +380,7 @@ void PerformSearchWithBlock(IndexSearcherPtr searcher,
     fullQuery->add(sa.lang, BooleanClause::MUST);
     fullQuery->add(sa.query, BooleanClause::MUST);
 
-    auto hits = searcher->search(fullQuery, DEFAULT_MAXHITS);
+    auto hits = searcher->search(fullQuery, LUCENE_QUERY_MAX_DOCS);
 
     for (int i = 0; i < hits->scoreDocs.size(); i++)
     {
@@ -419,7 +434,7 @@ void PerformSearch(IndexSearcherPtr searcher,
         }
     );
 
-    std::stable_sort(results.begin(), results.end());
+    postprocess_results(results);
 }
 
 } // anonymous namespace
@@ -495,7 +510,7 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& srclang,
             }
         );
 
-        std::stable_sort(results.begin(), results.end());
+        postprocess_results(results);
         return results;
     }
     catch (LuceneException&)
