@@ -484,7 +484,8 @@ PluralFormsExpr Language::DefaultPluralFormsExpr() const
     if ( i != forms.end() )
         return i->second;
 
-    return PluralFormsExpr();
+    // fall back to English-like singular+plural
+    return PluralFormsExpr::English();
 }
 
 
@@ -765,4 +766,9 @@ int PluralFormsExpr::evaluate_for_n(int n) const
 {
     auto c = calc();
     return c ? c->evaluate(n) : 0;
+}
+
+PluralFormsExpr PluralFormsExpr::English()
+{
+    return PluralFormsExpr("nplurals=2; plural=(n != 1);", 2);
 }

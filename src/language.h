@@ -215,6 +215,8 @@ public:
     PluralFormsExpr(const std::string& expr, int nplurals = -1);
     ~PluralFormsExpr();
 
+    static PluralFormsExpr English();
+
     const std::string& str() const { return m_expr; }
     bool operator==(const PluralFormsExpr& other) const;
     bool operator!=(const PluralFormsExpr& other) const { return !(*this == other); }
