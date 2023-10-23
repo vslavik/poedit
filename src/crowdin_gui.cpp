@@ -286,7 +286,7 @@ typedef CloudLoginDialog<CrowdinLoginPanel> CrowdinLoginDialog;
 
 bool CanSyncWithCrowdin(CatalogPtr cat)
 {
-    return (bool)CrowdinClient::Get().ExtractSyncMetadata(*cat);
+    return (bool)CrowdinClient::DoExtractSyncMetadata(*cat);
 }
 
 

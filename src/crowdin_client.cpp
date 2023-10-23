@@ -531,7 +531,7 @@ static void PostprocessDownloadedXLIFF(const wxString& filename)
 }
 
 
-std::shared_ptr<CrowdinClient::FileSyncMetadata> CrowdinClient::ExtractSyncMetadata(Catalog& catalog)
+std::shared_ptr<CrowdinClient::FileSyncMetadata> CrowdinClient::DoExtractSyncMetadata(Catalog& catalog)
 {
     auto meta = std::make_shared<CrowdinSyncMetadata>();
     meta->service = SERVICE_NAME;

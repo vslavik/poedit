@@ -178,12 +178,7 @@ AccountsPanel::AccountsPanel(wxWindow *parent, int flags) : wxPanel(parent, wxID
         topsizer->AddSpacer(PX(2));
     }
 
-    // don't show the list yet if no account was signed in:
-    if (!IsSignedIn())
-    {
-        SetMinSize(GetBestSize());
-        sizer->Hide(m_list);
-    }
+    SetMinSize(GetBestSize());
 
     m_list->Bind(wxEVT_DATAVIEW_SELECTION_CHANGED, &AccountsPanel::OnSelectAccount, this);
 }
@@ -191,6 +186,30 @@ AccountsPanel::AccountsPanel(wxWindow *parent, int flags) : wxPanel(parent, wxID
 
 void AccountsPanel::InitializeAfterShown()
 {
+    if (IsSignedIn())
+    {
+        // select 1st available signed-in service if we can and hide the intro panel:
+        if (m_list->GetSelectedRow() == wxNOT_FOUND)
+        {
+            for (unsigned i = 0; i < m_panels.size(); i++)
+            {
+                if (m_panels[i]->IsSignedIn())
+                {
+                    SelectAccount(i);
+                    break;
+                }
+            }
+        }
+    }
+    else
+    {
+        // don't show the list yet if no account was signed in:
+        auto sizer = m_list->GetContainingSizer();
+        sizer->Hide(m_list);
+        sizer->Layout();
+    }
+
+    // perform first-show initialization:
     for (auto& p: m_panels)
         p->InitializeAfterShown();
     m_list->SetFocus();
@@ -230,9 +249,6 @@ void AccountsPanel::AddAccount(const wxString& name, const wxString& iconId, Acc
         if (NotifyShouldBeRaised)
             NotifyShouldBeRaised();
     };
-
-    if (m_list->GetSelectedRow() == wxNOT_FOUND && panel->IsSignedIn())
-        SelectAccount(pos);
 }
 
 
