@@ -52,8 +52,9 @@
 #include <wx/memtext.h>
 #include <wx/filename.h>
 
-#include <set>
 #include <algorithm>
+#include <set>
+#include <regex>
 
 
 // ----------------------------------------------------------------------
@@ -62,6 +63,9 @@
 
 namespace
 {
+
+// Mostly correct regex for removing HTML markup
+const std::wregex RE_APPROXIMATE_MARKUP(L"<[^>]*>");
 
 // Fixup some common issues with filepaths in PO files, due to old Poedit versions,
 // user misunderstanding or Poedit bugs:
@@ -1076,15 +1080,17 @@ void Catalog::PostCreation()
         {
             // detect source language from the text (ignoring plurals for simplicity,
             // as we don't need 100% of the text):
-            wxString allText;
+            std::wstring allText;
             for (auto& i: items())
             {
-                allText.append(i->GetRawString());
-                allText.append('\n');
+                auto withoutMarkup = std::regex_replace(i->GetRawString().ToStdWstring(), RE_APPROXIMATE_MARKUP, L" ");
+                allText.append(withoutMarkup);
+                allText += L' ';
             }
             if (!allText.empty())
             {
-                m_sourceLanguage = Language::TryDetectFromText(allText.utf8_str());
+                puts(str::to_utf8(allText).c_str());
+                m_sourceLanguage = Language::TryDetectFromText(str::to_utf8(allText));
                 wxLogTrace("poedit", "detected source language is '%s'", m_sourceLanguage.Code());
             }
         }

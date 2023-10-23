@@ -31,6 +31,7 @@
 #include <mutex>
 #include <memory>
 #include <regex>
+#include <set>
 
 #include <boost/algorithm/string.hpp>
 
@@ -130,10 +131,12 @@ const DisplayNamesData& GetDisplayNamesData()
     std::call_once(of_namesList, [=]{
         auto locEng = icu::Locale::getEnglish();
         std::vector<icu::UnicodeString> names;
+        std::set<std::string> foundCodes;
 
         int32_t count;
         const icu::Locale *loc = icu::Locale::getAvailableLocales(count);
         names.reserve(count);
+
         for (int i = 0; i < count; i++, loc++)
         {
             auto language = loc->getLanguage();
@@ -177,13 +180,42 @@ const DisplayNamesData& GetDisplayNamesData()
                         code += "@cyrillic";
                 }
             }
-            
+
+            foundCodes.insert(code);
+
             s.foldCase();
             data.names[str::to_wstring(s)] = code;
 
             loc->getDisplayName(locEng, s);
             s.foldCase();
             data.namesEng[str::to_wstring(s)] = code;
+        }
+
+        // add languages that are not listed as locales in ICU:
+        for (const char * const* i = icu::Locale::getISOLanguages(); *i != nullptr; ++i)
+        {
+            const char *code = *i;
+            if (foundCodes.find(code) != foundCodes.end())
+                continue;
+
+            icu::Locale langLoc(code);
+            wxASSERT( strcmp(code, langLoc.getLanguage()) == 0 );
+
+            icu::UnicodeString name;
+            if (langLoc.getDisplayName(name).isEmpty())
+                langLoc.getDisplayLanguage(name);
+            if (name.isEmpty())
+                continue;
+
+            names.push_back(name);
+
+            name.foldCase();
+            data.names[str::to_wstring(name)] = code;
+
+            if (langLoc.getDisplayName(locEng, name).isEmpty())
+                langLoc.getDisplayLanguage(locEng, name);
+            name.foldCase();
+            data.namesEng[str::to_wstring(name)] = code;
         }
 
         // sort the names alphabetically for data.sortedNames:
@@ -506,8 +538,10 @@ icu::Locale Language::ToIcu() const
 
 wxString Language::DisplayName() const
 {
+    auto loc = ToIcu();
     icu::UnicodeString s;
-    ToIcu().getDisplayName(s);
+    if (loc.getDisplayName(s).isEmpty())
+        loc.getDisplayLanguage(s);
     return str::to_wx(s);
 }
 
@@ -522,7 +556,10 @@ wxString Language::DisplayNameInItself() const
 {
     auto loc = ToIcu();
     icu::UnicodeString s;
-    loc.getDisplayName(loc, s);
+    if (loc.getDisplayName(loc, s).isEmpty())
+        loc.getDisplayLanguage(loc, s);
+    if (s.isEmpty())
+        return DisplayName(); // fall back to current locale's name, better than nothing
     return str::to_wx(s);
 }
 
