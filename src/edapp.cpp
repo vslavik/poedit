@@ -630,6 +630,25 @@ wxLayoutDirection PoeditApp::GetLayoutDirection() const
     return g_layoutDirection;
 }
 
+wxString PoeditApp::GetCacheDir(const wxString& category)
+{
+    static wxString localBaseDir;
+
+    if (localBaseDir.empty())
+    {
+    #if defined(__WXOSX__)
+        localBaseDir = wxGetHomeDir() + "/Library/Caches/net.poedit.Poedit";
+    #elif defined(__UNIX__)
+        if (!wxGetEnv("XDG_CACHE_HOME", &localBaseDir))
+            localBaseDir = wxGetHomeDir() + "/.cache";
+        localBaseDir += "/poedit";
+    #else
+        localBaseDir = wxStandardPaths::Get().GetUserDataDir() + wxFILE_SEP_PATH + "Cache";
+    #endif
+    }
+
+    return localBaseDir + wxFILE_SEP_PATH + category;
+}
 
 void PoeditApp::OpenNewFile()
 {

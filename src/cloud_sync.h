@@ -30,8 +30,6 @@
 #include "concurrency.h"
 
 #include <wx/string.h>
-#include <wx/stdpaths.h>
-#include <wx/utils.h>
 
 #if wxUSE_GUI
     #include "customcontrols.h"
@@ -88,26 +86,6 @@ public:
         };
 
         return std::make_shared<Dest>(name, std::move(func));
-    }
-
-    static wxString GetCacheDir(const wxString& category)
-    {
-        static wxString localBaseDir;
-
-        if (localBaseDir.empty())
-        {
-        #if defined(__WXOSX__)
-            localBaseDir = wxGetHomeDir() + "/Library/Caches/net.poedit.Poedit";
-        #elif defined(__UNIX__)
-            if (!wxGetEnv("XDG_CACHE_HOME", &localBaseDir))
-                localBaseDir = wxGetHomeDir() + "/.cache";
-            localBaseDir += "/poedit";
-        #else
-            localBaseDir = wxStandardPaths::Get().GetUserDataDir() + wxFILE_SEP_PATH + "Cache";
-        #endif
-        }
-
-        return localBaseDir + wxFILE_SEP_PATH + category;
     }
 };
 

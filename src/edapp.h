@@ -56,6 +56,8 @@ class PoeditApp : public wxApp, public MenusManager
 
         wxLayoutDirection GetLayoutDirection() const override;
 
+        static wxString GetCacheDir(const wxString& category);
+
         /// Returns Poedit version string.
         wxString GetAppVersion() const;
         wxString GetAppBuildNumber() const;
