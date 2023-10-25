@@ -175,7 +175,12 @@ public:
         {
             handle_error(response);
 
-            downloaded_file file(extract_attachment_filename(req, response));
+            std::string etag;
+            auto i_etag = response.headers().find(http::header_names::etag);
+            if (i_etag != response.headers().end())
+				etag = str::to_utf8(i_etag->second);
+
+            downloaded_file file(extract_attachment_filename(req, response), etag);
 
             return
             fstream::open_ostream(to_string_t(file.filename().GetFullPath()))
