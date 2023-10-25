@@ -39,6 +39,9 @@
 class WXDLLIMPEXP_FWD_BASE wxConfigBase;
 class WXDLLIMPEXP_FWD_BASE wxSingleInstanceChecker;
 
+#if defined(HAVE_HTTP_CLIENT) && (defined(__WXMSW__) || defined(__WXOSX__))
+    #define SUPPORTS_OTA_UPDATES
+#endif
 
 /// wxApp for use with
 class PoeditApp : public wxApp, public MenusManager
@@ -104,6 +107,9 @@ class PoeditApp : public wxApp, public MenusManager
         void HandleCustomURI(const wxString& uri);
 
         void SetupLanguage();
+#ifdef SUPPORTS_OTA_UPDATES
+        void SetupOTALanguageUpdate(wxTranslations *trans, const std::string& lang);
+#endif
 
         // App-global menu commands:
         void OnNewFromScratch(wxCommandEvent& event);

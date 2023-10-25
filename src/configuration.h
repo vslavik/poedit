@@ -73,6 +73,12 @@ public:
     static std::string LocalazyMetadata() { return Read("/accounts/localazy/metadata", std::string()); }
     static void LocalazyMetadata(const std::string& prj) { return Write("/accounts/localazy/metadata", prj); }
 
+    static time_t OTATranslationLastCheck() { return Read("/ota/last_check", (long)0); }
+    static void OTATranslationLastCheck(time_t when) { Write("/ota/last_check", (long)when); }
+
+    static std::string OTATranslationEtag() { return Read("/ota/etag", std::string()); }
+    static void OTATranslationEtag(const std::string& etag) { Write("/ota/etag", etag); }
+
 private:
     template<typename T>
     static T Read(const std::string& key, T defval)
@@ -87,10 +93,12 @@ private:
     static bool Read(const std::string& key, std::string *out);
     static bool Read(const std::string& key, std::wstring *out);
     static bool Read(const std::string& key, bool *out);
+    static bool Read(const std::string& key, long *out);
 
     static void Write(const std::string& key, const std::string& value);
     static void Write(const std::string& key, const std::wstring& value);
     static void Write(const std::string& key, bool value);
+    static void Write(const std::string& key, long value);
 };
 
 #endif // Poedit_configuration_h
