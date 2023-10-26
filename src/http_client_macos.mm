@@ -101,13 +101,17 @@ public:
         auto promise = std::make_shared<dispatch::promise<downloaded_file>>();
 
         auto request = build_request(@"GET", url, hdrs);
-        auto task = [m_session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+        auto task = [m_session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response_, NSError *error) {
             try
             {
+                NSHTTPURLResponse *response = (NSHTTPURLResponse*)response_;
+
                 if (handle_error(nil, response, error, *promise))
                     return;
 
-                downloaded_file file(str::to_utf8([response suggestedFilename]));
+                NSString *etag = response.allHeaderFields[@"ETag"];
+                downloaded_file file(str::to_utf8([response suggestedFilename]),
+                                     etag ? str::to_utf8(etag) : std::string());
                 NSString *outputPath = str::to_NS(file.filename().GetFullPath());
 
                 NSError *err = nil;

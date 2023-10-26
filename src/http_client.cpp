@@ -43,14 +43,17 @@
 class downloaded_file::impl
 {
 public:
-    impl(std::string filename)
+    impl(std::string filename, const std::string& etag)
     {
         // filter out invalid characters in filenames
         std::replace_if(filename.begin(), filename.end(), boost::is_any_of("\\/:\"<>|?*"), '_');
         m_fn = m_tmpdir.CreateFileName(!filename.empty() ? str::to_wx(filename) : "data");
+        m_etag = etag;
     }
 
     wxFileName filename() const { return m_fn; }
+
+    std::string etag() const { return m_etag; }
 
     void move_to(const wxFileName& target)
     {
@@ -60,10 +63,12 @@ public:
 private:
     TempDirectory m_tmpdir;
     wxFileName m_fn;
+    std::string m_etag;
 };
 
-downloaded_file::downloaded_file(const std::string& filename) : m_impl(new impl(filename)) {}
+downloaded_file::downloaded_file(const std::string& filename, const std::string& etag) : m_impl(new impl(filename, etag)) {}
 wxFileName downloaded_file::filename() const { return m_impl->filename(); }
+std::string downloaded_file::etag() const { return m_impl->etag(); }
 void downloaded_file::move_to(const wxFileName& target) { return m_impl->move_to(target); }
 downloaded_file::~downloaded_file() {}
 

@@ -253,6 +253,8 @@ class TempOutputFileFor
 {
 public:
     explicit TempOutputFileFor(const wxString& filename);
+    explicit TempOutputFileFor(const wxFileName& filename) : TempOutputFileFor(filename.GetFullPath()) {}
+
     ~TempOutputFileFor();
 
     /// Name of the temporary placeholder

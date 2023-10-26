@@ -259,6 +259,18 @@ void Config::Write(const std::string& key, bool value)
     wxConfig::Get()->Write(key, value);
 }
 
+bool Config::Read(const std::string& key, long *out)
+{
+    CfgLock lock;
+    return wxConfig::Get()->Read(key, out);
+}
+
+void Config::Write(const std::string& key, long value)
+{
+    CfgLock lock;
+    wxConfig::Get()->Write(key, value);
+}
+
 
 ::PretranslateSettings Config::PretranslateSettings()
 {

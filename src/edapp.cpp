@@ -47,6 +47,12 @@
 #include <wx/ipc.h>
 #include <wx/translation.h>
 
+#include <iostream>
+#include <fstream>
+#include <boost/iostreams/copy.hpp>
+#include <boost/iostreams/filtering_stream.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
+
 #ifdef __WXOSX__
 #include "macos_helpers.h"
 #endif
@@ -584,7 +590,7 @@ void PoeditApp::SetupLanguage()
         if (langinfo)
         {
             language = langinfo->Language;
-            uilang.clear(); // will go through locale
+            // keep 'uilang' for use below 
         }
     }
 #endif
@@ -623,13 +629,93 @@ void PoeditApp::SetupLanguage()
 #ifdef __WXMSW__
     win_sparkle_set_lang(bestTrans.utf8_str());
 #endif
+
+#ifdef SUPPORTS_OTA_UPDATES
+    SetupOTALanguageUpdate(trans, str::to_utf8(bestTrans));
+#endif
 }
+
+#ifdef SUPPORTS_OTA_UPDATES
+void PoeditApp::SetupOTALanguageUpdate(wxTranslations *trans, const std::string& lang)
+{
+    if (lang == "en")
+        return;
+
+    // use downloaded OTA translations:
+    auto dir = GetCacheDir("Translations") + "/" + POEDIT_VERSION;
+    wxFileTranslationsLoader::AddCatalogLookupPathPrefix(dir);
+    trans->AddCatalog("poedit-ota");
+
+    // ..and update them (but at most once a day):
+    auto lastCheck = Config::OTATranslationLastCheck();
+    auto now = time(NULL);
+    if (now < lastCheck + 24*60*60)
+        return;
+    Config::OTATranslationLastCheck(now);
+
+    wxFileName mofile(dir + "/" + lang + "/poedit-ota.mo");
+    wxFileName::Mkdir(mofile.GetPath(), wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
+
+    http_client::headers hdrs;
+    std::string etag;
+    if (mofile.FileExists())
+        etag = Config::OTATranslationEtag();
+    if (!etag.empty())
+        hdrs.emplace_back("If-None-Match", etag);
+
+    http_client::download_from_anywhere("https://ota.poedit.net/i18n/" POEDIT_VERSION "/" + lang + "/poedit-ota.mo.gz", hdrs)
+    .then_on_main([=](downloaded_file f)
+    {
+        TempOutputFileFor temp(mofile);
+        std::ofstream output_file(temp.FileName().fn_str(), std::ios_base::binary);
+        std::ifstream input_file(f.filename().GetFullPath().mb_str(), std::ios_base::binary);
+
+        if (output_file.fail() || input_file.fail())
+            return;
+
+        boost::iostreams::filtering_istream input;
+        input.push(boost::iostreams::gzip_decompressor());
+        input.push(input_file);
+
+        boost::iostreams::copy(input, output_file);
+        input_file.close();
+        output_file.close();
+
+        temp.Commit();
+        Config::OTATranslationEtag(f.etag());
+
+        // re-add the catalog to force reloading updated file
+        trans->AddCatalog("poedit-ota");
+    })
+    .catch_all([](dispatch::exception_ptr){});
+}
+#endif // SUPPORTS_OTA_UPDATES
+
 
 wxLayoutDirection PoeditApp::GetLayoutDirection() const
 {
     return g_layoutDirection;
 }
 
+wxString PoeditApp::GetCacheDir(const wxString& category)
+{
+    static wxString localBaseDir;
+
+    if (localBaseDir.empty())
+    {
+    #if defined(__WXOSX__)
+        localBaseDir = wxGetHomeDir() + "/Library/Caches/net.poedit.Poedit";
+    #elif defined(__UNIX__)
+        if (!wxGetEnv("XDG_CACHE_HOME", &localBaseDir))
+            localBaseDir = wxGetHomeDir() + "/.cache";
+        localBaseDir += "/poedit";
+    #else
+        localBaseDir = wxStandardPaths::Get().GetUserDataDir() + wxFILE_SEP_PATH + "Cache";
+    #endif
+    }
+
+    return localBaseDir + wxFILE_SEP_PATH + category;
+}
 
 void PoeditApp::OpenNewFile()
 {

@@ -29,6 +29,7 @@
 
 #include "configuration.h"
 #include "customcontrols.h"
+#include "edapp.h"
 #include "http_client.h"
 #include "languagectrl.h"
 #include "str_helpers.h"
@@ -316,7 +317,7 @@ void SortAlphabetically(std::vector<T>& items, Key func)
 
 inline wxString GetCacheDir()
 {
-    return CloudSyncDestination::GetCacheDir("Cloud");
+    return PoeditApp::GetCacheDir("Cloud");
 }
 
 

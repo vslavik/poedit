@@ -89,6 +89,9 @@ public:
 
         return next_stage()->propagate(request).then([](http::http_response response) -> pplx::task<http::http_response>
         {
+            if (response.headers().content_type() == _XPLATSTR("application/octet-stream"))
+                return pplx::task_from_result(response); // don't try to decompress binary data
+
             string_t encoding;
             if (response.headers().match(http::header_names::content_encoding, encoding) && encoding == _XPLATSTR("gzip"))
             {
@@ -175,7 +178,12 @@ public:
         {
             handle_error(response);
 
-            downloaded_file file(extract_attachment_filename(req, response));
+            std::string etag;
+            auto i_etag = response.headers().find(http::header_names::etag);
+            if (i_etag != response.headers().end())
+				etag = str::to_utf8(i_etag->second);
+
+            downloaded_file file(extract_attachment_filename(req, response), etag);
 
             return
             fstream::open_ostream(to_string_t(file.filename().GetFullPath()))

@@ -54,11 +54,14 @@ class http_client;
 class downloaded_file
 {
 public:
-    downloaded_file(const std::string& filename = "");
+    downloaded_file(const std::string& filename = "", const std::string& etag = "");
     ~downloaded_file();
 
     /// Return location of the temporary file
     wxFileName filename() const;
+
+    /// Return downloaded file's ETag if present or empty string otherwise
+    std::string etag() const;
 
     /// Move the file to a different location
     void move_to(const wxFileName& target);
@@ -186,7 +189,13 @@ public:
     /// Perform a GET request at the given URL
     dispatch::future<json> get(const std::string& url, const headers& hdrs = headers());
 
-    /// Perform a GET request and store the body in a file.
+    /**
+        Perform a GET request and store the body in a file.
+
+        This method supports ETag handling. If the headers include If-None-Match value
+        and the server returns 304 Not Modified, downloaded_file is not returned and
+        an exception is thrown instead.
+     */
     dispatch::future<downloaded_file> download(const std::string& url, const headers& hdrs = headers());
 
     /**
