@@ -89,6 +89,9 @@ public:
 
         return next_stage()->propagate(request).then([](http::http_response response) -> pplx::task<http::http_response>
         {
+            if (response.headers().content_type() == _XPLATSTR("application/octet-stream"))
+                return pplx::task_from_result(response); // don't try to decompress binary data
+
             string_t encoding;
             if (response.headers().match(http::header_names::content_encoding, encoding) && encoding == _XPLATSTR("gzip"))
             {
