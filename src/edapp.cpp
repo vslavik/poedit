@@ -293,6 +293,12 @@ wxString PoeditApp::GetAppVersion() const
     return wxString::FromAscii(POEDIT_VERSION);
 }
 
+wxString PoeditApp::GetMajorAppVersion() const
+{
+    auto v = wxSplit(GetAppVersion(), '.');
+    return wxString::Format("%s.%s", v[0], v[1]);
+}
+
 wxString PoeditApp::GetAppBuildNumber() const
 {
 #if defined(__WXOSX__)
@@ -631,18 +637,29 @@ void PoeditApp::SetupLanguage()
 #endif
 
 #ifdef SUPPORTS_OTA_UPDATES
-    SetupOTALanguageUpdate(trans, str::to_utf8(bestTrans));
+    SetupOTALanguageUpdate(trans, bestTrans);
 #endif
 }
 
 #ifdef SUPPORTS_OTA_UPDATES
-void PoeditApp::SetupOTALanguageUpdate(wxTranslations *trans, const std::string& lang)
+void PoeditApp::SetupOTALanguageUpdate(wxTranslations *trans, const wxString& lang)
 {
     if (lang == "en")
         return;
 
+    // normalize language code for requests
+    wxString langMO(lang);
+    if (langMO == "zh-Hans")
+        langMO = "zh_CN";
+    else if (langMO == "zh-Hant")
+        langMO = "zh_TW";
+    else
+        langMO.Replace("-", "_");
+
+    auto version = str::to_utf8(GetMajorAppVersion());
+
     // use downloaded OTA translations:
-    auto dir = GetCacheDir("Translations") + "/" + POEDIT_VERSION;
+    auto dir = GetCacheDir("Translations") + "/" + version;
     wxFileTranslationsLoader::AddCatalogLookupPathPrefix(dir);
     trans->AddCatalog("poedit-ota");
 
@@ -663,7 +680,7 @@ void PoeditApp::SetupOTALanguageUpdate(wxTranslations *trans, const std::string&
     if (!etag.empty())
         hdrs.emplace_back("If-None-Match", etag);
 
-    http_client::download_from_anywhere("https://ota.poedit.net/i18n/" POEDIT_VERSION "/" + lang + "/poedit-ota.mo.gz", hdrs)
+    http_client::download_from_anywhere("https://ota.poedit.net/i18n/" + version + "/" + str::to_utf8(langMO) + "/poedit-ota.mo.gz", hdrs)
     .then_on_main([=](downloaded_file f)
     {
         TempOutputFileFor temp(mofile);
