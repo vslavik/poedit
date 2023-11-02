@@ -39,7 +39,7 @@
 class WXDLLIMPEXP_FWD_BASE wxConfigBase;
 class WXDLLIMPEXP_FWD_BASE wxSingleInstanceChecker;
 
-#if defined(HAVE_HTTP_CLIENT) && (defined(__WXMSW__) || defined(__WXOSX__))
+#if defined(HAVE_HTTP_CLIENT) && (defined(__WXMSW__) || defined(__WXOSX__) || defined(SNAPCRAFT))
     #define SUPPORTS_OTA_UPDATES
 #endif
 

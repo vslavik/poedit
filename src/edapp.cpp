@@ -644,7 +644,7 @@ void PoeditApp::SetupLanguage()
 #ifdef SUPPORTS_OTA_UPDATES
 void PoeditApp::SetupOTALanguageUpdate(wxTranslations *trans, const wxString& lang)
 {
-    if (lang == "en")
+    if (lang == "en" || lang == "en_US")
         return;
 
     // normalize language code for requests
