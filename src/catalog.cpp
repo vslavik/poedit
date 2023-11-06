@@ -602,7 +602,7 @@ wxString Catalog::GetTypesFileMask(std::initializer_list<Type> types)
 void Catalog::SetFileName(const wxString& fn)
 {
     wxFileName f(fn);
-    f.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
+    f.MakeAbsolute();
     m_fileName = f.GetFullPath();
 }
 
@@ -638,7 +638,7 @@ wxString GetSourcesPath(const wxString& fileName, const Catalog::HeaderData& hea
     }
 
     wxFileName root = wxFileName::DirName(basepath);
-    root.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
+    root.MakeAbsolute();
 
     if (kind == SourcesPath::Root)
     {

@@ -245,7 +245,7 @@ public:
 
     void NoteRecentFile(wxFileName fn)
     {
-        fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
+        fn.MakeAbsolute();
         NSURL *url = [NSURL fileURLWithPath:str::to_NS(fn.GetFullPath())];
         [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:url];
     }
@@ -355,7 +355,7 @@ public:
 
     void NoteRecentFile(wxFileName fn)
     {
-        fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
+        fn.MakeAbsolute();
         m_history.AddFileToHistory(fn.GetFullPath());
 
         UpdateAfterChange();

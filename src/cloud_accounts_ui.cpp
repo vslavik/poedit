@@ -860,10 +860,10 @@ void CloudOpenFile(wxWindow *parent,
 bool ShouldSyncToCloudAutomatically(CatalogPtr catalog)
 {
     auto root = wxFileName::DirName(GetCacheDir());
-    root.Normalize();
+    root.MakeAbsolute();
 
     wxFileName f(catalog->GetFileName());
-    f.Normalize();
+    f.MakeAbsolute();
 
     return f.GetFullPath().StartsWith(root.GetFullPath());
 }

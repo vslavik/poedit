@@ -113,7 +113,7 @@ wxFileName MakeFileName(const wxString& path)
         fn.AssignDir(path);
     else
         fn.Assign(path);
-    fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
+    fn.MakeAbsolute();
     return fn;
 }
 

@@ -72,7 +72,7 @@ namespace
 inline wxString NormalizedPath(const wxString& fn, wxPathFormat format)
 {
     auto f = MakeFileName(fn);
-    f.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
+    f.MakeAbsolute();
     return f.GetFullPath(format);
 }
 

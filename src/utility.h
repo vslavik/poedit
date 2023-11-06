@@ -187,7 +187,7 @@ wxFileName MakeFileName(const wxString& path);
 
 inline wxFileName MakeFileName(wxFileName fn)
 {
-    fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
+    fn.MakeAbsolute();
     return fn;
 }
 
