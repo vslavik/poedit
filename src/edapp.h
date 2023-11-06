@@ -39,7 +39,7 @@
 class WXDLLIMPEXP_FWD_BASE wxConfigBase;
 class WXDLLIMPEXP_FWD_BASE wxSingleInstanceChecker;
 
-#if defined(HAVE_HTTP_CLIENT) && (defined(__WXMSW__) || defined(__WXOSX__))
+#if defined(HAVE_HTTP_CLIENT) && (defined(__WXMSW__) || defined(__WXOSX__) || defined(SNAPCRAFT))
     #define SUPPORTS_OTA_UPDATES
 #endif
 
@@ -62,7 +62,8 @@ class PoeditApp : public wxApp, public MenusManager
         static wxString GetCacheDir(const wxString& category);
 
         /// Returns Poedit version string.
-        wxString GetAppVersion() const;
+        wxString GetAppVersion() const; // e.g. "3.4.2"
+        wxString GetMajorAppVersion() const; // e.g. "3.4"
         wxString GetAppBuildNumber() const;
         bool CheckForBetaUpdates() const;
 
@@ -108,7 +109,7 @@ class PoeditApp : public wxApp, public MenusManager
 
         void SetupLanguage();
 #ifdef SUPPORTS_OTA_UPDATES
-        void SetupOTALanguageUpdate(wxTranslations *trans, const std::string& lang);
+        void SetupOTALanguageUpdate(wxTranslations *trans, const wxString& lang);
 #endif
 
         // App-global menu commands:
