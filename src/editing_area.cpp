@@ -904,6 +904,9 @@ void EditingArea::SetMultipleSelectionMode()
     ShowPluralFormUI(false);
     ShowPart(m_tagIdOrContext, false);
     ShowPart(m_tagFormat, false);
+    ShowPart(m_tagPretranslated, false);
+    ShowPart(m_issueLine, false);
+
     m_textOrig->Clear();
     if (m_textTrans)
         m_textTrans->Clear();
