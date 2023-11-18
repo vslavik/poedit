@@ -1089,7 +1089,6 @@ void Catalog::PostCreation()
             }
             if (!allText.empty())
             {
-                puts(str::to_utf8(allText).c_str());
                 m_sourceLanguage = Language::TryDetectFromText(str::to_utf8(allText));
                 wxLogTrace("poedit", "detected source language is '%s'", m_sourceLanguage.Code());
             }
