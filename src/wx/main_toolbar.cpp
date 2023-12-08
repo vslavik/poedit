@@ -52,7 +52,9 @@ public:
         m_idUpdate = XRCID("toolbar_update");
 
 #ifdef __WXGTK3__
-        gtk_style_context_add_class(gtk_widget_get_style_context(GTK_WIDGET(Toolbar())), GTK_STYLE_CLASS_PRIMARY_TOOLBAR);
+        GtkToolbar *gtb = Toolbar();
+        gtk_toolbar_set_icon_size(gtb, GTK_ICON_SIZE_SMALL_TOOLBAR);
+        gtk_style_context_add_class(gtk_widget_get_style_context(GTK_WIDGET(gtb)), GTK_STYLE_CLASS_PRIMARY_TOOLBAR);
         SetIcon(0 , "document-open-symbolic");
         SetIcon(1 , "document-save-symbolic");
         SetIcon(3 , "poedit-validate-symbolic");
