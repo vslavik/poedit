@@ -555,6 +555,8 @@ void Catalog::CreateNewHeader(const Catalog::HeaderData& pot_header)
     dt.Lang = Language();
     if (dt.LanguageTeam == "LANGUAGE <LL@li.org>")
         dt.LanguageTeam.clear();
+    if (dt.Project == "PROJECT VERSION")
+        dt.Project.clear();
     if (dt.GetHeader("Plural-Forms") == "nplurals=INTEGER; plural=EXPRESSION;")
         dt.DeleteHeader("Plural-Forms");
 

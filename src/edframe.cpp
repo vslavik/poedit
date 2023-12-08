@@ -2676,6 +2676,8 @@ void PoeditFrame::UpdateTitle()
 
     wxString title = fpath;
     wxString subtitle = m_catalog->Header().Project;
+    if (subtitle == "PROJECT VERSION")
+        subtitle.clear();
 
 #ifdef __WXOSX__
     if (@available(macOS 11.0, *))
