@@ -502,6 +502,9 @@ SegmentedNotebook::SegmentedNotebook(wxWindow *parent, SegmentStyle style)
         case SegmentStyle::LargeFullWidth:
             size *= 1.2;
             break;
+        case SegmentStyle::SidebarPanels:
+            // do nothing
+            break;
     }
 
     font.SetFractionalPointSize(size);

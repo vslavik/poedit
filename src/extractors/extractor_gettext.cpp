@@ -150,7 +150,7 @@ public:
         {
             extraFlags = sourceSpec.XHeaders.at("X-Poedit-Flags-xgettext");
         }
-        catch (std::out_of_range) {}
+        catch (std::out_of_range&) {}
 
         if (!extraFlags.Contains("--add-comments"))
             cmdline += " --add-comments=TRANSLATORS:";
