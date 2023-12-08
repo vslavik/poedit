@@ -354,7 +354,7 @@ wxString PoeditListCtrl::Model::GetColumnType(unsigned int col) const
 
 void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsigned col) const
 {
-#if defined(__WXGTK__) && !wxCHECK_VERSION(3,1,1)
+#if defined(__WXGTK__)
     #define NULL_ICON(variant)  variant << wxNullIcon
 #else
     #define NULL_ICON(variant)  variant = wxNullVariant
@@ -362,7 +362,7 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
 
     if (!m_catalog || m_frozen)
     {
-#if defined(__WXGTK__) && !wxCHECK_VERSION(3,1,1)
+#if defined(__WXGTK__)
         auto type = GetColumnType(col);
         if (type == "string")
             variant = "";
