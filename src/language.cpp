@@ -199,7 +199,8 @@ const DisplayNamesData& GetDisplayNamesData()
                 continue;
 
             icu::Locale langLoc(code);
-            wxASSERT( strcmp(code, langLoc.getLanguage()) == 0 );
+            if (strcmp(code, langLoc.getLanguage()) != 0)
+                continue; // e.g. 'und' for undetermined language
 
             icu::UnicodeString name;
             if (langLoc.getDisplayName(name).isEmpty())
