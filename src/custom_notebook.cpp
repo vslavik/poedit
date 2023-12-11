@@ -340,9 +340,16 @@ public:
 
         button->Bind(wxEVT_TOGGLEBUTTON, [=](wxCommandEvent& e)
         {
-            // SetSelection() generates events:
             if (e.IsChecked())
+            {
+                // SetSelection() generates events:
                 m_book->SetSelection(n);
+            }
+            else
+            {
+                // don't un-toggle already toggled button / selection
+                button->SetValue(true);
+            }
         });
     }
 
