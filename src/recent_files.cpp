@@ -204,6 +204,11 @@ wxString pretty_print_path(wxFileName f)
     // shorten the path for visual use:
     auto path = f.GetPath();
 
+    auto cloud = wxFileName::DirName(PoeditApp::GetCacheDir("Cloud"));
+    cloud.ReplaceHomeDir();
+    if (path.StartsWith(cloud.GetFullPath()))
+        path = _("Cloud") + L" → " + path.substr(cloud.GetFullPath().length());
+
 #ifdef __WXMSW__
     // ReplaceHomeDir() puts tilde at the beginning to replace $HOME, but this is uncommon on Windows,
     // so remove it and just use plain path:
