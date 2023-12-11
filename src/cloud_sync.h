@@ -57,7 +57,7 @@ class CloudSyncDestination
 public:
     virtual ~CloudSyncDestination() {}
 
-    /// Name of the destination (e.g. Crowding or hostname)
+    /// Name of the destination (e.g. Crowdin or hostname)
     virtual wxString GetName() const = 0;
 
     /// Asynchronously uploads the file. Returned future throws on error.
@@ -102,7 +102,7 @@ public:
         sizer->SetMinSize(PX(300), -1);
         Activity = new ActivityIndicator(this);
         sizer->AddStretchSpacer();
-        sizer->Add(Activity, wxSizerFlags().Expand().Border(wxALL, PX(25)));
+        sizer->Add(Activity, wxSizerFlags().Expand().Border(wxALL, PX(40)));
         sizer->AddStretchSpacer();
         SetSizerAndFit(sizer);
         CenterOnParent();
@@ -112,7 +112,15 @@ public:
         : CloudSyncProgressWindow(parent)
     {
         // TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
-        Activity->Start(wxString::Format(_(L"Uploading translations to %s…"), dest->GetName()));
+        auto label = wxString::Format(_(L"Uploading translations to %s…"), dest->GetName());
+
+        auto sz = Activity->GetTextExtent(label);
+        Activity->SetSize(wxSize(std::max(PX(300), PX(100) + sz.x), -1));
+
+        Activity->Start(label);
+
+        GetSizer()->SetSizeHints(this);
+        CenterOnParent();
     }
 
     ActivityIndicator *Activity;
