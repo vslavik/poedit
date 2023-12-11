@@ -26,6 +26,7 @@
 #include "recent_files.h"
 
 #include "colorscheme.h"
+#include "edapp.h"
 #include "hidpi.h"
 #include "str_helpers.h"
 #include "unicode_helpers.h"
@@ -193,6 +194,25 @@ private:
 typedef std::shared_ptr<file_icons> file_icons_ptr;
 
 #endif // !__WXOSX__
+
+
+wxString pretty_print_path(wxFileName f)
+{
+    f.MakeAbsolute();
+    f.ReplaceHomeDir();
+
+    // shorten the path for visual use:
+    auto path = f.GetPath();
+
+#ifdef __WXMSW__
+    // ReplaceHomeDir() puts tilde at the beginning to replace $HOME, but this is uncommon on Windows,
+    // so remove it and just use plain path:
+    if (path.StartsWith("~\\"))
+        path = path.substr(2);
+#endif
+
+    return path;
+}
 
 } // anonymous namespace
 
@@ -417,7 +437,7 @@ protected:
         {
             auto menuEntry = bidi::platform_mark_direction(
                                  showFullPath
-                                 ? wxString::Format(L"%s — %s", fn.GetFullName(), fn.GetPath())
+                                 ? wxString::Format(L"%s — %s", fn.GetFullName(), pretty_print_path(fn))
                                  : fn.GetFullName());
 
             // we need to quote '&' characters which are used for mnemonics
@@ -550,17 +570,13 @@ void RecentFilesCtrl::RefreshContent()
     m_data->files = RecentFiles::Get().GetRecentFiles();
     for (auto f : m_data->files)
     {
-#ifndef __WXMSW__
-        f.ReplaceHomeDir();
-#endif
-
 #ifdef __WXOSX__
         wxBitmap icon([[NSWorkspace sharedWorkspace] iconForFileType:str::to_NS(f.GetExt())]);
 #else
         wxBitmap icon(m_data->icons_cache->get_large(f.GetExt()));
 #endif
 
-        AppendFormattedItem(icon, f.GetFullName(), f.GetPath());
+        AppendFormattedItem(icon, f.GetFullName(), pretty_print_path(f));
     }
 }
 
