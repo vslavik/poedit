@@ -57,6 +57,7 @@
 
 #include "propertiesdlg.h"
 
+#include "catalog_po.h"
 #include "colorscheme.h"
 #include "customcontrols.h"
 #include "hidpi.h"
@@ -669,7 +670,11 @@ private:
 PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileExistsOnDisk, int initialPage)
     : m_validatedPlural(-1), m_validatedLang(-1)
 {
+    auto po = std::dynamic_pointer_cast<POCatalog>(cat);
+    wxASSERT(po);
+
     m_hasLang = cat->HasCapability(Catalog::Cap::LanguageSetting);
+    m_hasPlurals = m_hasLang && (po->HasPluralItems() || po->Header().HasHeader("Plural-Forms"));
 
     wxXmlResource::Get()->LoadDialog(this, parent, "properties");
 
@@ -755,13 +760,22 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
     m_language->Bind(wxEVT_TEXT, &PropertiesDialog::OnLanguageChanged, this);
     m_language->Bind(wxEVT_COMBOBOX, &PropertiesDialog::OnLanguageChanged, this);
 
-    m_pluralFormsDefault->Bind(wxEVT_RADIOBUTTON, &PropertiesDialog::OnPluralFormsDefault, this);
-    m_pluralFormsExpr->Bind(
-        wxEVT_UPDATE_UI,
-        [=](wxUpdateUIEvent& e){ e.Enable(m_pluralFormsCustom->GetValue()); });
-    m_pluralFormsExpr->Bind(
-        wxEVT_TEXT,
-        [=](wxCommandEvent& e){ m_validatedPlural = -1; e.Skip(); });
+    if (m_hasPlurals)
+    {
+        m_pluralFormsDefault->Bind(wxEVT_RADIOBUTTON, &PropertiesDialog::OnPluralFormsDefault, this);
+        m_pluralFormsExpr->Bind(wxEVT_UPDATE_UI,
+                                [=](wxUpdateUIEvent& e){ e.Enable(m_pluralFormsCustom->GetValue()); });
+        m_pluralFormsExpr->Bind(wxEVT_TEXT,
+                                [=](wxCommandEvent& e){ m_validatedPlural = -1; e.Skip(); });
+    }
+    else
+    {
+        m_pluralFormsDefault->SetValue(true);
+        m_pluralFormsDefault->Disable();
+        m_pluralFormsCustom->Disable();
+        m_pluralFormsExpr->Disable();
+    }
+
     Bind(wxEVT_UPDATE_UI,
         [=](wxUpdateUIEvent& e){ e.Enable(Validate()); },
         wxID_OK);
@@ -876,16 +890,19 @@ void PropertiesDialog::TransferTo(const CatalogPtr& cat)
         m_language->SetLang(cat->Header().Lang);
         OnLanguageValueChanged();
 
-        PluralFormsExpr pf_def(cat->Header().Lang.DefaultPluralFormsExpr());
-        PluralFormsExpr pf_cat(cat->Header().GetHeader("Plural-Forms").ToStdString());
-        if (pf_cat.str() == "nplurals=INTEGER; plural=EXPRESSION;")
-            pf_cat = pf_def;
+        if (m_hasPlurals)
+        {
+            PluralFormsExpr pf_def(cat->Header().Lang.DefaultPluralFormsExpr());
+            PluralFormsExpr pf_cat(cat->Header().GetHeader("Plural-Forms").ToStdString());
+            if (pf_cat.str() == "nplurals=INTEGER; plural=EXPRESSION;")
+                pf_cat = pf_def;
 
-        m_pluralFormsExpr->SetValue(bidi::mark_direction(pf_cat.str(), TextDirection::LTR));
-        if (pf_cat && pf_cat == pf_def)
-            m_pluralFormsDefault->SetValue(true);
-        else
-            m_pluralFormsCustom->SetValue(true);
+            m_pluralFormsExpr->SetValue(bidi::mark_direction(pf_cat.str(), TextDirection::LTR));
+            if (pf_cat && pf_cat == pf_def)
+                m_pluralFormsDefault->SetValue(true);
+            else
+                m_pluralFormsCustom->SetValue(true);
+        }
     }
 
     auto kw = cat->Header().Keywords;
@@ -922,21 +939,24 @@ void PropertiesDialog::TransferFrom(const CatalogPtr& cat)
             cat->Header().Lang = lang;
         }
 
-        if (m_pluralFormsDefault->GetValue() && cat->Header().Lang.IsValid())
+        if (m_hasPlurals)
         {
-            // make sure we don't overwrite catalog's expression if the user didn't modify and
-            // it differs only cosmetically from the default
-            PluralFormsExpr pf_def(cat->Header().Lang.DefaultPluralFormsExpr());
-            PluralFormsExpr pf_cat(cat->Header().GetHeader("Plural-Forms").ToStdString());
-            if (langChanged || pf_def != pf_cat)
-                cat->Header().SetHeaderNotEmpty("Plural-Forms", pf_def.str());
-        }
-        else
-        {
-            auto pluralForms = bidi::strip_control_chars(m_pluralFormsExpr->GetValue().Strip(wxString::both));
-            if (!pluralForms.empty() && !pluralForms.EndsWith(";"))
-                pluralForms += ";";
-            cat->Header().SetHeaderNotEmpty("Plural-Forms", pluralForms);
+            if (m_pluralFormsDefault->GetValue() && cat->Header().Lang.IsValid())
+            {
+                // make sure we don't overwrite catalog's expression if the user didn't modify and
+                // it differs only cosmetically from the default
+                PluralFormsExpr pf_def(cat->Header().Lang.DefaultPluralFormsExpr());
+                PluralFormsExpr pf_cat(cat->Header().GetHeader("Plural-Forms").ToStdString());
+                if (langChanged || pf_def != pf_cat)
+                    cat->Header().SetHeaderNotEmpty("Plural-Forms", pf_def.str());
+            }
+            else
+            {
+                auto pluralForms = bidi::strip_control_chars(m_pluralFormsExpr->GetValue().Strip(wxString::both));
+                if (!pluralForms.empty() && !pluralForms.EndsWith(";"))
+                    pluralForms += ";";
+                cat->Header().SetHeaderNotEmpty("Plural-Forms", pluralForms);
+            }
         }
     }
 
@@ -979,18 +999,21 @@ void PropertiesDialog::OnLanguageValueChanged()
         return;
     m_currentLanguageValue = lang;
 
-    auto pluralExpr = lang.DefaultPluralFormsExpr();
-    auto validPlurals = lang.IsValid() && pluralExpr;
-    m_pluralFormsDefault->Enable(validPlurals);
-    if (validPlurals)
+    if (m_hasPlurals)
     {
-        m_pluralFormsDefault->SetValue(true);
-        m_pluralFormsExpr->SetValue(bidi::mark_direction(pluralExpr.str(), TextDirection::LTR));
-    }
-    else
-    {
-        m_pluralFormsCustom->SetValue(true);
-        m_pluralFormsExpr->Clear();
+        auto pluralExpr = lang.DefaultPluralFormsExpr();
+        auto validPlurals = lang.IsValid() && pluralExpr;
+        m_pluralFormsDefault->Enable(validPlurals);
+        if (validPlurals)
+        {
+            m_pluralFormsDefault->SetValue(true);
+            m_pluralFormsExpr->SetValue(bidi::mark_direction(pluralExpr.str(), TextDirection::LTR));
+        }
+        else
+        {
+            m_pluralFormsCustom->SetValue(true);
+            m_pluralFormsExpr->Clear();
+        }
     }
 }
 

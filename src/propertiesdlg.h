@@ -84,7 +84,7 @@ class PropertiesDialog : public wxDialog
         wxCheckBox *m_defaultKeywords;
         Language m_currentLanguageValue;
         std::shared_ptr<GettextSettings> m_gettextSettings;
-        bool m_hasLang;
+        bool m_hasLang, m_hasPlurals;
         int m_validatedPlural, m_validatedLang;
 };
 
