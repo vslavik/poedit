@@ -56,6 +56,8 @@
 #include <map>
 #include <fstream>
 
+#include<boost/algorithm/string.hpp>
+
 #include "catalog.h"
 #include "catalog_po.h"
 #include "cat_update.h"
@@ -2678,6 +2680,24 @@ void PoeditFrame::UpdateTitle()
     wxString subtitle = m_catalog->Header().Project;
     if (subtitle == "PROJECT VERSION")
         subtitle.clear();
+
+#if wxCHECK_VERSION(3,1,5)
+    if (m_catalog->GetLanguage().IsValid())
+    {
+        // add language to the subtitle, but only if not part of the filename already
+        auto lang = m_catalog->GetLanguage().LanguageTag();
+        if (!boost::algorithm::icontains(fpath.utf8_string(), lang))
+        {
+            boost::replace_all(lang, "-", "_");
+            if (!boost::algorithm::icontains(fpath.utf8_string(), lang))
+            {
+                if (!subtitle.empty())
+                    subtitle += L" • ";
+                subtitle += m_catalog->GetLanguage().DisplayName();
+            }
+        }
+    }
+#endif
 
 #ifdef __WXOSX__
     if (@available(macOS 11.0, *))
