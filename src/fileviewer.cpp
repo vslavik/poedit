@@ -67,8 +67,7 @@ const int FRAME_STYLE = wxDEFAULT_FRAME_STYLE;
 wxString FileToHTMLMarkup(const wxTextFile& file, const wxString& ext, size_t lineno);
 
 extern const char *HTML_POEDIT_CSS;
-extern const char *SVG_NOTHING;
-extern const char *SVG_WARNING;
+extern const char *SVG_ICON;
 
 } // anonymous namespace
 
@@ -254,7 +253,7 @@ void FileViewer::ShowReferences(CatalogPtr catalog, CatalogItemPtr item, int def
     if (m_references.empty())
     {
         m_description->SetLabel("");
-        ShowError(SVG_NOTHING, _("No usage information"), _(L"No information about this string’s occurrences in the source code is provided in the file."));
+        ShowError(SVG_ICON, _("No usage information"), _(L"No information about this string’s occurrences in the source code is provided in the file."));
     }
     else
     {
@@ -275,7 +274,7 @@ void FileViewer::SelectReference(const wxString& ref)
     const wxFileName filename = GetFilename(ref);
     if (!filename.IsOk())
     {
-        ShowError(SVG_WARNING, _("Source code not found"),
+        ShowError(SVG_ICON, _("Source code not found"),
                   _(L"Poedit cannot show source code where the string is used, because the file is either not available in the referenced location or it is a symbolic reference that doesn’t point to a real file."),
                   wxJoin(m_references, '\n')
                   );
@@ -290,7 +289,7 @@ void FileViewer::SelectReference(const wxString& ref)
 
     if ( !filename.IsFileReadable() || !file.Open(fullpath) )
     {
-        ShowError(SVG_WARNING, _("File cannot be opened"),
+        ShowError(SVG_ICON, _("File cannot be opened"),
                   wxString::Format(_(L"Poedit was unable to open the “%s” file."), fullpath));
         m_openInEditor->Disable();
         return;
@@ -361,7 +360,7 @@ void FileViewer::ShowError(const char *icon, const wxString& msg, const wxString
             <body>
                 <div class="message-wrapper">
                     <div class="message">
-                        <h1>%s</h1>
+                        %s
                         <h2>%s</h2>
         )",
         HTML_POEDIT_CSS,
@@ -493,6 +492,18 @@ wxString FileToHTMLMarkup(const wxTextFile& file, const wxString& ext, size_t li
 
     return html;
 }
+
+
+
+const char *SVG_ICON = R"(
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 9.75C12.5 9.05964 13.0596 8.5 13.75 8.5H26.5931C27.4551 8.5 28.2817 8.84241 28.8912 9.4519L34.5481 15.1088C35.1576 15.7183 35.5 16.5449 35.5 17.4069V25.8507C36.0797 26.3696 36.5856 26.9692 37 27.6318V17.4069C37 16.1471 36.4996 14.9389 35.6088 14.0481L29.9519 8.39124C29.0611 7.50045 27.8529 7 26.5931 7H13.75C12.2312 7 11 8.23122 11 9.75V36.25C11 37.7688 12.2312 39 13.75 39H25.6318C24.9692 38.5856 24.3696 38.0797 23.8507 37.5H13.75C13.0596 37.5 12.5 36.9404 12.5 36.25V9.75ZM36.9973 36.3724C36.9351 37.7938 35.7938 38.9351 34.3724 38.9973C35.4336 38.3328 36.3328 37.4336 36.9973 36.3724Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M27.25 9.75C27.25 8.64543 26.3546 7.75 25.25 7.75H23.25H13.75C12.6454 7.75 11.75 8.64543 11.75 9.75V36.25C11.75 37.3546 12.6454 38.25 13.75 38.25H24.6146C22.8604 36.7371 21.75 34.4982 21.75 32C21.75 27.4437 25.4437 23.75 30 23.75C32.4982 23.75 34.7371 24.8604 36.25 26.6146V20.75V18.75C36.25 17.6454 35.3546 16.75 34.25 16.75H29.25C28.1454 16.75 27.25 15.8546 27.25 14.75V9.75Z" fill="currentColor" fill-opacity="0.15"/>
+<path d="M24.6146 38.25V39H26.6326L25.1044 37.682L24.6146 38.25ZM36.25 26.6146L35.682 27.1044L37 28.6326V26.6146H36.25ZM25.25 8.5C25.9404 8.5 26.5 9.05964 26.5 9.75H28C28 8.23122 26.7688 7 25.25 7V8.5ZM23.25 8.5H25.25V7H23.25V8.5ZM13.75 8.5H23.25V7H13.75V8.5ZM12.5 9.75C12.5 9.05964 13.0596 8.5 13.75 8.5V7C12.2312 7 11 8.23122 11 9.75H12.5ZM12.5 36.25V9.75H11V36.25H12.5ZM13.75 37.5C13.0596 37.5 12.5 36.9404 12.5 36.25H11C11 37.7688 12.2312 39 13.75 39V37.5ZM24.6146 37.5H13.75V39H24.6146V37.5ZM25.1044 37.682C23.5084 36.3056 22.5 34.271 22.5 32H21C21 34.7255 22.2124 37.1687 24.1248 38.818L25.1044 37.682ZM22.5 32C22.5 27.8579 25.8579 24.5 30 24.5V23C25.0294 23 21 27.0294 21 32H22.5ZM30 24.5C32.271 24.5 34.3056 25.5084 35.682 27.1044L36.818 26.1248C35.1687 24.2124 32.7255 23 30 23V24.5ZM35.5 20.75V26.6146H37V20.75H35.5ZM35.5 18.75V20.75H37V18.75H35.5ZM34.25 17.5C34.9404 17.5 35.5 18.0596 35.5 18.75H37C37 17.2312 35.7688 16 34.25 16V17.5ZM29.25 17.5H34.25V16H29.25V17.5ZM26.5 14.75C26.5 16.2688 27.7312 17.5 29.25 17.5V16C28.5596 16 28 15.4404 28 14.75H26.5ZM26.5 9.75V14.75H28V9.75H26.5Z" fill="currentColor"/>
+<circle cx="30" cy="32" r="8.25" stroke="currentColor" stroke-width="1.5"/>
+<path d="M40.4697 43.5303C40.7626 43.8232 41.2374 43.8232 41.5303 43.5303C41.8232 43.2374 41.8232 42.7626 41.5303 42.4697L40.4697 43.5303ZM35.4697 38.5303L40.4697 43.5303L41.5303 42.4697L36.5303 37.4697L35.4697 38.5303Z" fill="currentColor"/>
+</svg>
+)";
 
 
 /*
@@ -790,11 +801,14 @@ mark {
 }
 
 .message h2 {
+    margin-top: 0.2em;
+    font-size: 125%;
     font-weight: 600;
 }
 
 .explanation {
     width: 80%;
+    font-size: 90%;
     margin: 1em auto;
     opacity: 0.6;
 }
@@ -806,41 +820,6 @@ mark {
     margin-right: auto;
 }
 
-)";
-
-
-/*
-
-The MIT License (MIT)
-
-Copyright (c) 2013-2017 Cole Bemis
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
- */
-
-const char *SVG_NOTHING = R"(
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-slash"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
-)";
-
-const char *SVG_WARNING = R"(
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
 )";
 
 } // anonymous namespace
