@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-09-30 19:13+0200\n"
-"PO-Revision-Date: 2023-10-26 14:41\n"
+"POT-Creation-Date: 2023-12-21 18:55+0100\n"
+"PO-Revision-Date: 2023-11-21 10:17\n"
 "Last-Translator: \n"
 "Language-Team: Georgian\n"
 "Language: ka_GE\n"
@@ -37,7 +37,7 @@ msgid "Extracting translatable strings…"
 msgstr "მიმდინარეობს სათარგმნი ფრაზების ამოღება…"
 
 msgid "Failed to load file with extracted translations."
-msgstr ""
+msgstr "ვერ მოხერხდა ფაილის ჩატვირთვა ამოღებული თარგმანებით."
 
 msgid "Merging differences…"
 msgstr "განსხვავებების შერწყმა…"
@@ -60,7 +60,7 @@ msgid "PO Translation Files"
 msgstr "PO თარგმნის ფაილები"
 
 msgid "POT Translation Templates"
-msgstr "PO თარგმნის შაბლონები"
+msgstr "POT თარგმნის შაბლონები"
 
 msgid "XLIFF Translation Files"
 msgstr "XLIFF თარგმანის ფაილები"
@@ -84,17 +84,19 @@ msgstr "ეს JSON ფაილი სათარგმნი ფაილი 
 
 #, c-format
 msgid "Reading file content failed with the following error: %s"
-msgstr "ფაილის შემცველობის წაკითხვა დასრულდა შემდეგიი შეცდომით: %s"
+msgstr "ფაილის შიგთავსის წაკითხვა დასრულდა შემდეგი შეცდომით: %s"
 
 #, c-format
 msgid ""
 "File “%s” is read-only and cannot be saved.\n"
 "Please save it under different name."
 msgstr ""
+"ფაილი “%s” არის მხოლოდ წაკითხვადი და მისი შენახვა შეუძლებელია.\n"
+"გთხოვთ, შეინახოთ სხვა სახელით."
 
 #, c-format
 msgid "Couldn’t save file %s."
-msgstr "%s ფაილის დამახსოვრება ვერ მოხერხდა."
+msgstr "%s ფაილის შენახვა ვერ მოხერხდა."
 
 msgid "Screenshots:"
 msgstr "ეკრანის ანაბეჭდები:"
@@ -102,18 +104,22 @@ msgstr "ეკრანის ანაბეჭდები:"
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "“%2$s” ფაილის %1$i ხაზი სწორად არ ჩაიტვირთა."
+msgstr[1] "“%2$s” ფაილის %1$i ხაზი სწორად არ ჩაიტვირთა."
 
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
-msgstr ""
+msgstr "“%2$s” ფაილის %1$d ხაზი დაზიანებულია (მონაცემი %3$s არ არის ვალიდური)."
 
 msgid "Broken PO file: singular form msgstr used together with msgid_plural"
 msgstr ""
+"დაზიანებული PO ფაილი: msgstr-ის მხოლობითი ფორმა გამოყენებულია msgid_plural-"
+"თან ერთად"
 
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr ""
+"დაზიანებული PO ფაილი: msgstr-ის მრავლობითი ფორმა გამოყენებულია msgid_plural-"
+"ის გარეშე"
 
 msgid "Couldn’t load the file, it is probably damaged."
 msgstr "ფაილის ჩატვირთვა შეუძლებელია. სავარაუდოდ იგი დაზიანებულია."
@@ -122,6 +128,8 @@ msgid ""
 "There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
+"ფაილის ჩატვირთვისას წარმოიშვა შეცდომები. შედეგად, ზოგიერთი მონაცემი შესაძლოა "
+"იყოს გამოკლებული ან დაზიანებული."
 
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
@@ -136,13 +144,17 @@ msgid ""
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
+"ფაილის შენახვა  პარამეტრებში მითითებული “%s” კოდირებით ვერ მოხერხდა.\n"
+"\n"
+"მის ნაცვლად, ფაილი შენახულია  UTF-8 კოდირებით და პარამეტრიც შესაბამისად "
+"შეიცვალა."
 
 msgid "Error saving file"
 msgstr "შეცდომა ფაილის შენახვისას"
 
 #, c-format
 msgid "“%s” is not a valid POT file."
-msgstr "'%s' არ არის გამართული POT ფაილი."
+msgstr "'%s' არ არის ვალიდური POT ფაილი."
 
 #, c-format
 msgid "Error while loading XLIFF file: %s"
@@ -154,19 +166,19 @@ msgstr "მხარდაუჭერელი ვერსია (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
-msgstr ""
+msgstr "დაზიანებული მარკირებათარგმანის ხაზში."
 
 msgid "(Use default language)"
 msgstr "(გამოიყენე სისტემის სტანდარტული ენა)"
 
 msgid "Language selection"
-msgstr "ენების ამორჩევა"
+msgstr "ენის არჩევა"
 
 msgid "Select your preferred language"
-msgstr "ამოირჩიეთ სასურველი ენა"
+msgstr "აირჩიეთ თქვენთვის სასურველი ენა"
 
 msgid "You must restart Poedit for this change to take effect."
-msgstr "ამ ცვლილების გასააქტიურებლად Poedit თავიდან უნდა გამოიძახოთ."
+msgstr "თქვენ უნდა გადატვირთოთ Poedit, რათა ეს ცვლილება ძალაში შევიდეს."
 
 msgid "Add Account"
 msgstr "ანგარიშის დამატება"
@@ -183,17 +195,17 @@ msgid ""
 "Connect Poedit with supported cloud localization platforms to seamlessly "
 "sync translations managed on them."
 msgstr ""
-"მიუერთდით Poedit-ით მხარდაჭერილ ღრუბლოვან ლოკალიზაცის პლატფორმებს, რათა მათ "
-"შორის თარგმანების სინქრონიზაცია შეუმჩნევლად მოხდეს."
+"დააკავშირეთ Poedit ღრუბლოვან ლოკალიზაციის მხარდაჭერილ პლატფორმებთან, მათზე "
+"არსებული თარგმანების შეუფერხებლად სინქრონიზაციისთვის."
 
 msgid "How does cloud sync work?"
-msgstr "როგორ მუშაობს ღრუბელთან სინქრონიზაცია?"
+msgstr "როგორ მუშაობს ღრუბლოვანი სინქრონიზაცია?"
 
 msgid "Account"
 msgstr "ანგარიში"
 
 msgid "(not signed in)"
-msgstr "(არ ხართ ავტორიზებული)"
+msgstr "( არ არის ავტორიზებული)"
 
 msgid "File"
 msgstr "ფაილი"
@@ -211,16 +223,16 @@ msgid "Language:"
 msgstr "ენა:"
 
 msgid "Sign in to Cloud Account"
-msgstr "შედით ღრუბლის ანგარიშში"
+msgstr "გაიარეთ ავტორიზაცია ღრუბლოვან ანგარიშში"
 
 msgid "Sign in to cloud account"
-msgstr "შედით ღრუბლის ანგარიშში"
+msgstr "გაიარეთ ავტორიზაცია ღრუბლოვან ანგარიშში"
 
 msgid "No translation projects listed in your account."
-msgstr "თქვენს ანგარიშზე თარგმანის პროექტები რეგისტრირებული არაა."
+msgstr "თქვენს ანგარიშში თარგმანის პროექტები არ არის."
 
 msgid "Downloading latest translations…"
-msgstr "იტვირთება უახლესი თარგმანები…"
+msgstr "მიმდინარეობს უახლესი თარგმანების ჩამოტვირთვა…"
 
 #. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
 #, c-format
@@ -233,27 +245,27 @@ msgstr "სინქრონიზაცია"
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
 msgid "Uploading translations to %s…"
-msgstr "თარგმანების ატვირთვა %s-ზე…"
+msgstr "მიმდინარეობს თარგმანების ატვირთვა %s-ზე…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
 msgid "Uploading translations to %s failed."
-msgstr "%s-ზე თარგმანების ატვირთვა ჩავარდა."
+msgstr "%s-ზე თარგმანების ატვირთვა ვერ მოხერხდა."
 
 msgid "Syncing error"
-msgstr "სინრქონიზაციის შეცდომა"
+msgstr "სინქრონიზაციის შეცდომა"
 
 msgid "Add"
 msgstr "დამატება"
 
 msgid "Unknown Crowdin error."
-msgstr "უცნობი Crowdin-ის შეცდომა."
+msgstr "Crowdin-ის უცნობი შეცდომა."
 
 msgid "Not authorized, please sign in again."
-msgstr "ავტორიზებული არ ბრძანდებით. შედით და თავიდან სცადეთ."
+msgstr "არ ხართ ავტორიზებული. გთხოვთ, ხელახლა გაიაროთ ავტორიზაცია."
 
 msgid "Downloading translations is disabled in this project."
-msgstr "თარგმანების ჩამოტვირთვა გამორთულია ამ პროექტში."
+msgstr "ამ პროექტში თარგმანების ჩამოტვირთვა გამორთულია."
 
 msgid "Sign In"
 msgstr "შესვლა"
@@ -268,32 +280,32 @@ msgid "Sign out"
 msgstr "გამოსვლა"
 
 msgid "Learn more about Crowdin"
-msgstr "შეიტყვეთ მეტი Crowdin-ზე"
+msgstr "შეიტყვეთ მეტი Crowdin-ის შესახებ"
 
 msgid ""
 "Crowdin is an online localization management platform and collaborative "
 "translation tool."
 msgstr ""
-"Crowdin ონლაინ-ლოკალიზაციის მართვის პლატფორმას და ჯგუფური თარგმანის "
-"ხელსაწყოს წარმოადგენს."
+"Crowdin არის ონლაინ პლატფორმა ლოკალიზაციის მართვისა და ერთობლივი "
+"თარგმანისთვის."
 
 msgid "Waiting for authentication…"
-msgstr "ავთენტიკაციის მოლოდინი…"
+msgstr "აუთენთიფიკაციის ლოდინი…"
 
 msgid "Updating user information…"
-msgstr "მომხმარებლის ინფორმაციის განახლება…"
+msgstr "მიმდინარეობს მომხმარებლის ინფორმაციის განახლება…"
 
 msgid "Sign in to Crowdin"
-msgstr "შედით Crowdin-ზე"
+msgstr "შედით Crowdin-ში"
 
 msgid "Syncing with Crowdin failed."
-msgstr "Crowdin-თან სინქრონიზაცია ჩაიშალა."
+msgstr "Crowdin-თან სინქრონიზაცია ვერ მოხერხდა."
 
 msgid "Crowdin error"
 msgstr "Crowdin-ის შეცდომა"
 
 msgid "Uploading translations…"
-msgstr "თარგმანების ატვირთვა…"
+msgstr "მიმდინარეობს თარგმანების ატვირთვა…"
 
 msgid "&Copy"
 msgstr "&კოპირება"
@@ -305,7 +317,7 @@ msgid "&Help"
 msgstr "&დახმარება"
 
 msgid "MO files can’t be directly edited in Poedit."
-msgstr ""
+msgstr "MO ფაილების რედაქტირება შეუძლებელია Poedit-ში."
 
 msgid "Error opening file"
 msgstr "შეცდომა ფაილის გახსნისას"
@@ -314,22 +326,24 @@ msgid ""
 "Please open and edit the corresponding PO file instead. When you save it, "
 "the MO file will be updated as well."
 msgstr ""
+"გთხოვთ, MO ფაილის ნაცვლად, გახსენით და დაარედაქტირეთ შესაბამისი PO ფაილი. "
+"როდესაც PO ფაილს შეინახავთ, MO ფაილიც განახლდება."
 
 msgid "don’t delete temporary files (for debugging)"
-msgstr ""
+msgstr "არ მოხდეს დროებითი ფაილების წაშლა (გამართვისთვის)"
 
 msgid "handle a poedit:// URI"
 msgstr "poedit:// URI-ების გახსნა"
 
 msgid "go to item at given line number"
-msgstr ""
+msgstr "მითითებული ხაზის ნომრით ელემენტზე გადასვლა"
 
 msgid "Failed to communicate with Poedit process."
-msgstr ""
+msgstr "ვერ მოხერხდა Poedit-ის პროცესთან დაკავშირება."
 
 #, c-format
 msgid "Unhandled exception occurred: %s"
-msgstr ""
+msgstr "წარმოიშვა მოულოდნელი გამონაკლისი: %s"
 
 msgid "Select translation template"
 msgstr "აირჩიეთ თარგმანის შაბლონი"
@@ -338,14 +352,14 @@ msgid "Select translation file"
 msgstr "აირჩიეთ თარგმანის ფაილი"
 
 msgid "Poedit is an easy to use translation editor."
-msgstr "Poedit ადვილად გამოსაყენებელი თარგმანების რედაქტორია."
+msgstr "Poedit არის მარტივი გამოსაყენებელი თარგმანის რედაქტორი."
 
 msgid "You can’t drop more than one file on Poedit window."
-msgstr ""
+msgstr "თქვენ არ შეგიძლიათ ერთზე მეტი ფაილის ჩაგდება Poedit-ის ფანჯარაში."
 
 #, c-format
 msgid "File “%s” is not a translation file."
-msgstr ""
+msgstr "ფაილი “%s” არ არის თარგმნის ფაილი."
 
 #, c-format
 msgid "File “%s” doesn’t exist."
@@ -364,13 +378,15 @@ msgstr "&გადასვლა"
 msgid ""
 "Spellchecking is disabled, because the dictionary for %s isn’t installed."
 msgstr ""
+"მართლწერის შემოწმება გამორთულია, რადგან %s-ისთვის ლექსიკონი არ არის "
+"დაყენებული."
 
 msgid "Install"
 msgstr "დაყენება"
 
 #, c-format
 msgid "The file “%s” has been changed by another application."
-msgstr ""
+msgstr "ფაილი “%s” შეიცვალა სხვა აპლიკაციის მიერ."
 
 msgid "Reload file"
 msgstr "ფაილის თავიდან ჩატვირთვა"
@@ -379,42 +395,45 @@ msgid ""
 "Do you want to reload the file from disk? Your unsaved edits in Poedit will "
 "be lost if you do."
 msgstr ""
+"გსურთ ფაილის ხელახლა ჩატვირთვა დისკიდან? თუ ხელახლა ჩატვირთავთ, Poedit-ში "
+"თქვენს მიერ განხორციელებული ცვლილებები დაიკარგება."
 
 msgid "Ignore"
-msgstr "უგულებელყოფა"
+msgstr "იგნორირება"
 
 msgid "Reload File"
-msgstr "ფაილის თავიდან ჩატვირთვა"
+msgstr "ფაილის ხელახლა ჩატვირთვა"
 
 msgid "The file has been modified. Do you want to save changes?"
-msgstr "ფაილი შეიცვალა. გნებავთ ცვლილებების შენახვა?"
+msgstr "ფაილი შეიცვალა. გსურთ ცვლილებების შენახვა?"
 
 msgid "Save changes"
-msgstr "ცვლილებების დამახსოვრება"
+msgstr "ცვლილებების შენახვა"
 
 msgid "Your changes will be lost if you don’t save them."
-msgstr "ცვლილებები დაიკარგება, თუ არ დაიმახსოვრებთ."
+msgstr "თქვენი ცვლილებები დაიკარგება, თუ მათ არ შეინახავთ."
 
 msgid "Save"
 msgstr "შენახვა"
 
 msgid "Do&n’t save"
-msgstr "არ შეინახო"
+msgstr "&არ შეინახო"
 
 msgid "Don’t Save"
 msgstr "არ შეინახო"
 
 msgid "The changes made by the other application will be lost if you save."
 msgstr ""
+"თუ შეინახავთ, სხვა აპლიკაციის მხრიდან განხორციელებული ცვლილებები დაიკარგება."
 
 msgid "Cancel"
 msgstr "გაუქმება"
 
 msgid "Save Anyway"
-msgstr "დაიმახსოვრე ყველაფრის მიუხედავად"
+msgstr "შეინახე მაინც"
 
 msgid "Save anyway"
-msgstr "დაიმახსოვრე ყველაფრის მიუხედავად"
+msgstr "შეინახე მაინც"
 
 msgid "Save as…"
 msgstr "შენახვა როგორც…"
@@ -426,7 +445,7 @@ msgid "Compiled Translation Files"
 msgstr "თარგმანის კომპილირებული ფაილები"
 
 msgid "Export as…"
-msgstr "გატანა, როგორც…"
+msgstr "გატანა როგორც…"
 
 msgid "HTML Files"
 msgstr "HTML ფაილები"
@@ -436,7 +455,7 @@ msgid "In: %s"
 msgstr "%s -ში"
 
 msgid "Source code not available."
-msgstr "საწყისი კოდი ხელმიუწვდომელია."
+msgstr "წყაროს კოდი მიუწვდომელია."
 
 msgid "Updating failed"
 msgstr "განახლება ვერ მოხერხდა"
@@ -445,32 +464,43 @@ msgid ""
 "Translations couldn’t be updated from the source code, because no code was "
 "found in the location specified in the file’s Properties."
 msgstr ""
+"წყაროს კოდიდან თარგმანების განახლება ვერ მოხერხდა, რადგან ფაილის თვისებებში "
+"მითითებულ ადგილას კოდი ვერ მოიძებნა."
 
 msgid "Permission denied."
-msgstr "წვდომა აკრძალულია."
+msgstr "ნებართვა უარყოფილია."
 
 msgid ""
 "You don’t have permission to read source code files from the location "
 "specified in the file’s Properties."
 msgstr ""
+"თქვენ არ გაქვთ ნებართვა, წაიკითხოთ წყაროს კოდის ფაილები ფაილის თვისებებში "
+"მითითებული მდებარეობიდან."
 
 #. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
 msgid ""
 "If you previously denied access to your files, you can allow it in System "
 "Settings > Privacy & Security > Files & Folders."
 msgstr ""
+"თუ თქვენ შეზღუდეთ წვდომა თქვენს ფაილებზე, შეგიძლიათ წვდომის მიცემა სისტემის "
+"პარამეტრებში > კონფიდენციალურობა & უსაფრთხოება > ფაილები & საქაღალდეები."
 
 #. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
 msgid ""
 "If you previously denied access to your files, you can allow it in System "
 "Preferences > Security & Privacy > Privacy > Files & Folders."
 msgstr ""
+"თუ თქვენ შეზღუდეთ წვდომა თქვენს ფაილებზე, შეგიძლიათ წვდომის მიცემა სისტემის "
+"პარამეტრებში > უსაფრთხოება & კონფიდენციალურობა > კონფიდენციალურობა > ფაილები "
+"& საქაღალდეები."
 
 msgid "Translation entries in the file are probably incorrect."
-msgstr ""
+msgstr "სავარაუდოდ, ფაილში თარგმანის ჩანაწერები არასწორია."
 
 msgid "Updating the file failed. Click on 'Details >>' for details."
 msgstr ""
+"ფაილის განახლება ვერ მოხერხდა. დააჭირეთ ღილაკს 'დეტალები >>' დამატებითი "
+"ინფორმაციისთვის."
 
 msgid "Open translation template"
 msgstr "ღია თარგმანის შაბლონი"
@@ -488,8 +518,8 @@ msgid ""
 "Entries with errors were marked in red in the list. Details of the error "
 "will be shown when you select such an entry."
 msgstr ""
-"შეცდომებიან შენატანები სიაში წითლად არის მონიშნული. შეცდომის დეტალები "
-"შენატანის არჩევისას გამოჩნდება."
+"ჩანაწერები, რომელიც შეიცავს შეცდომას, სიაში მონიშნულია წითლად. შეცდომის "
+"დეტალები გამოჩნდება მაშინ, როდესაც აირჩევთ შეცდომის შემცველ ჩანაწერს."
 
 msgid "The file was saved safely."
 msgstr "ფაილი უსაფრთხოდ იქნა შენახული."
@@ -498,6 +528,8 @@ msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
 msgstr ""
+"ფაილი უსაფრთხოდ იქნა შენახული და დაკომპილირებული MO ფორმატში, მაგრამ ის "
+"სავარაუდოდ არ იმუშავებს სწორად."
 
 msgid ""
 "The file was saved safely, but it cannot be compiled into the MO format and "
@@ -509,10 +541,10 @@ msgstr ""
 msgid ""
 "The file was compiled into the MO format, but it will probably not work "
 "correctly."
-msgstr ""
+msgstr "ფაილი დაკომპილირებულია MO ფორმატში, თუმცა შესაძლოა, არ იმუშაოს სწორად."
 
 msgid "The file cannot be compiled into the MO format and used."
-msgstr ""
+msgstr "ფაილის MO ფორმატში დაკომპილირება და გამოყენება შეუძლებელია."
 
 msgid "No problems with the translation found."
 msgstr "თარგმანში შეცდომები ვერ მოიძებნა."
@@ -522,16 +554,16 @@ msgid "The translation is ready for use, but %d entry is not translated yet."
 msgid_plural ""
 "The translation is ready for use, but %d entries are not translated yet."
 msgstr[0] ""
-"თარგმანი გამოსაყენებლად მზადაა, მაგრამ %d ჩანაწერი ჯერ თარგმნილი არაა."
+"თარგმანი გამოსაყენებლად მზადაა, მაგრამ %d ჩანაწერი ჯერ არ არის ნათარგმნი."
 msgstr[1] ""
-"თარგმანი გამოსაყენებლად მზადაა, მაგრამ %d ჩანაწერი ჯერ თარგმნილი არაა."
+"თარგმანი გამოსაყენებლად მზადაა, მაგრამ %d ჩანაწერი ჯერ არ არის ნათარგმნი."
 
 msgid "The translation is ready for use."
 msgstr "თარგმანი გამოსაყენებლად მზად არის."
 
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
-msgstr ""
+msgstr "Poedit-მა ავტომატურად გაასწორა არასწორი შინაარსი “%s” ფაილში."
 
 msgid ""
 "The file contained duplicate items, which is not allowed in PO files and "
@@ -541,10 +573,10 @@ msgid ""
 msgstr ""
 
 msgid "Language of the translation isn’t set."
-msgstr "თარგმანის ენადაყენებული არაა."
+msgstr "თარგმანის ენა არ არის დაყენებული."
 
 msgid "Set Language"
-msgstr "ენის ამორჩევა"
+msgstr "ენის არჩევა"
 
 msgid "Set language"
 msgstr "ენის არჩევა"
@@ -601,7 +633,7 @@ msgid "Review"
 msgstr "გადახედვა"
 
 msgid "Would you like to use English for source text?"
-msgstr "გნებავთ გამოიყენოთ ინგლისური საწყისი ტექსტისთვის?"
+msgstr "გსურთ გამოიყენოთ ინგლისური ენა საწყისი ტექსტისთვის?"
 
 #, c-format
 msgid ""
@@ -1146,7 +1178,7 @@ msgid "Zoom"
 msgstr "დაახლოება"
 
 msgid "Welcome to Poedit"
-msgstr ""
+msgstr "მოგესალმებით Poedit-ში"
 
 msgid "Bring All to Front"
 msgstr "ყველას წინ გამოტანა"
@@ -1621,6 +1653,9 @@ msgstr ""
 
 #, c-format
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
+msgstr ""
+
+msgid "Cloud"
 msgstr ""
 
 msgid "Clear Menu"
@@ -2111,7 +2146,7 @@ msgid ""
 msgstr ""
 
 msgid "Notes for translators"
-msgstr "შენიშვნები მთარგმნელთათვის"
+msgstr "შენიშვნები მთარგმნელებისთვის"
 
 msgid "Comment"
 msgstr "კომენტარი"
@@ -2167,7 +2202,7 @@ msgid "Translation memory error: %s (%d)."
 msgstr "თარგმანის მეხსიერების შეცდომა: %s (%d)."
 
 msgid "Cannot create temporary directory."
-msgstr "დროებითი ფოლდერი ვერ შეიქმნა."
+msgstr "დროებითი საქაღალდის შექმნა შეუძლებელია."
 
 msgid "There are no translations. That’s unusual."
 msgstr ""
@@ -2181,7 +2216,7 @@ msgid ""
 msgstr ""
 
 msgid "(Learn more about GNU gettext)"
-msgstr "(გაიგეთ მეტი GNU gettext-ის შესახებ)"
+msgstr "(შეიტყვეთ მეტი GNU gettext-ის შესახებ)"
 
 msgid ""
 "The simplest way to fill this file with translations is to update it from a "
@@ -2220,13 +2255,13 @@ msgid "Browse files"
 msgstr "ფაილის არჩევა"
 
 msgid "Open and edit translation files."
-msgstr "გახსენით და ჩაასწორეთ თარგმანის ფაილები."
+msgstr "თარგმანის ფაილების გახსნა და რედაქტირება."
 
 msgid "Translate cloud project"
 msgstr "ღრუბლოვანი პროექტის თარგმნა"
 
 msgid "Collaborate with other people online."
-msgstr "იმუშავეთ სხვა ხალხთან ერთად, ონლაინ."
+msgstr "ითანამშრომლეთ სხვა ადამიანებთან ონლაინ."
 
 msgid "Recent files"
 msgstr "უკანასკნელი ფაილების სია"
@@ -2246,7 +2281,7 @@ msgstr "%s-ის შესახებ"
 #. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
 #, c-format
 msgid "%s Preferences"
-msgstr "%s მორგება"
+msgstr "%s-ის პარამეტრები"
 
 #. TRANSLATORS: macOS item in app menu
 msgid "Services"
@@ -2272,10 +2307,10 @@ msgstr "%s-დან გასვლა"
 
 #. TRANSLATORS: macOS item in app menu
 msgid "Preferences…"
-msgstr "მორგება…"
+msgstr "პარამეტრები…"
 
 msgid "Preferences..."
-msgstr "მორგება..."
+msgstr "პარამეტრები..."
 
 #. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
 msgid "Recent"
@@ -2286,16 +2321,16 @@ msgid "Frequent"
 msgstr "ხშირი"
 
 msgid "&Apply"
-msgstr "&გადატარება"
+msgstr "&დადასტურება"
 
 msgid "Apply"
-msgstr "გადატარება"
+msgstr "დადასტურება"
 
 msgid "&Back"
 msgstr "&უკან"
 
 msgid "Back"
-msgstr "დაბრუნება"
+msgstr "უკან"
 
 msgid "&Cancel"
 msgstr "&გაუქმება"
@@ -2316,10 +2351,10 @@ msgid "Cut"
 msgstr "ამოჭრა"
 
 msgid "Edit"
-msgstr "დამუშავება"
+msgstr "რედაქტირება"
 
 msgid "&Quit"
-msgstr "&გასვლა"
+msgstr "&გამოსვლა"
 
 msgid "Help"
 msgstr "დახმარება"
@@ -2343,19 +2378,19 @@ msgid "Open…"
 msgstr "გახსნა…"
 
 msgid "&Open..."
-msgstr "გ&ახსნა..."
+msgstr "&გახსნა..."
 
 msgid "Open..."
 msgstr "გახსნა..."
 
 msgid "&Paste"
-msgstr "&ჩასმა"
+msgstr "ჩ&ასმა"
 
 msgid "Paste"
 msgstr "ჩასმა"
 
 msgid "Preferences"
-msgstr "მორგება"
+msgstr "პარამეტრები"
 
 msgid "&Redo"
 msgstr "&გამეორება"
@@ -2364,7 +2399,7 @@ msgid "Refresh"
 msgstr "განახლება"
 
 msgid "&Save as"
-msgstr "&დაიმახსოვრე როგორც"
+msgstr "შენახვა &როგორც"
 
 msgid "Save as"
 msgstr "შენახვა როგორც"
@@ -2376,7 +2411,7 @@ msgid "Select All"
 msgstr "ყველას მონიშვნა"
 
 msgid "&Undo"
-msgstr "&დაბრუნება"
+msgstr "&გაუქმება"
 
 msgid "&Yes"
 msgstr "&დიახ"
