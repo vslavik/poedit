@@ -71,7 +71,7 @@ namespace
 // and don't touch output. Is permissive about whitespace in the input:
 // a space (' ') in pattern will match any number of any whitespace characters
 // on that position in input.
-bool ReadParam(const wxString& input, const wxString& pattern, wxString& output)
+bool ReadParam(const wxString& input, const wxString& pattern, wxString& output, bool preserveWhitespace = false)
 {
     if (input.size() < pattern.size())
         return false;
@@ -87,12 +87,15 @@ bool ReadParam(const wxString& input, const wxString& pattern, wxString& output)
             if (!wxIsspace(input[in_pos++]))
                 return false;
 
+            if (!preserveWhitespace)
+            {
             while (wxIsspace(input[in_pos]))
             {
                 in_pos++;
                 if (in_pos == input.size())
                     return false;
             }
+        }
         }
         else
         {
@@ -106,6 +109,7 @@ bool ReadParam(const wxString& input, const wxString& pattern, wxString& output)
         return false;
 
     output = input.Mid(in_pos);
+    if (!preserveWhitespace)
     output.Trim(true); // trailing whitespace
     return true;
 }
@@ -263,14 +267,14 @@ bool POCatalogParser::Parse()
         }
 
         // auto comments:
-        if (ReadParam(line, prefix_autocomments, dummy) || ReadParam(line, prefix_autocomments2, dummy))
+        if (ReadParam(line, prefix_autocomments, dummy, /*preserveWhitespace=*/true) || ReadParam(line, prefix_autocomments2, dummy, /*preserveWhitespace=*/true))
         {
             mextractedcomments.Add(dummy);
             line = ReadTextLine();
         }
 
         // references:
-        else if (ReadParam(line, prefix_references, dummy))
+        else if (ReadParam(line, prefix_references, dummy, /*preserveWhitespace=*/true))
         {
             // Just store the references unmodified, we don't modify this
             // data anywhere.
