@@ -89,13 +89,13 @@ bool ReadParam(const wxString& input, const wxString& pattern, wxString& output,
 
             if (!preserveWhitespace)
             {
-            while (wxIsspace(input[in_pos]))
-            {
-                in_pos++;
-                if (in_pos == input.size())
-                    return false;
+                while (wxIsspace(input[in_pos]))
+                {
+                    in_pos++;
+                    if (in_pos == input.size())
+                        return false;
+                }
             }
-        }
         }
         else
         {
@@ -110,7 +110,7 @@ bool ReadParam(const wxString& input, const wxString& pattern, wxString& output,
 
     output = input.Mid(in_pos);
     if (!preserveWhitespace)
-    output.Trim(true); // trailing whitespace
+        output.Trim(true); // trailing whitespace
     return true;
 }
 
@@ -702,6 +702,12 @@ bool POLoadParser::OnEntry(const wxString& msgid,
             // gettext header:
             m_catalog.m_header.FromString(mtranslations[0]);
             m_catalog.m_header.Comment = comment;
+            for (const auto& s : extractedComments)
+                m_catalog.m_header.Comment += "\n#. " + s;
+            for (const auto& s : references)
+                m_catalog.m_header.Comment += "\n#: " + s;
+            if (!flags.empty())
+                m_catalog.m_header.Comment += "\n#" + flags;
             m_seenHeaderAlready = true;
         }
         // else: ignore duplicate header in malformed files
