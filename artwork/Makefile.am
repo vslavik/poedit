@@ -37,7 +37,6 @@ dist_uiicons_DATA = \
 		LocalazyLogo.png \
 		DownvoteTemplate.png \
 		ExtractorsGNUgettext.png \
-		ItemBookmarkTemplate.png \
 		ItemCommentTemplate.png \
 		SuggestionErrorTemplate.png \
 		SuggestionPerfectMatch.png \
