@@ -28,16 +28,18 @@
 #define CONFIG           "Release"
 #endif
 
-#include "../" + CONFIG + "/git_build_number.h"
+#define BINDIR 		     "x64\" + CONFIG
+
+#include "../" + BINDIR + "/git_build_number.h"
 
 #define VERSION          "3.4.2"
 #define VERSION_WIN      VERSION + "." + Str(POEDIT_GIT_BUILD_NUMBER)
 
 #ifndef CRT_REDIST
-#define CRT_REDIST       GetEnv("VCToolsRedistDir") + "\x86\Microsoft.VC143.CRT"
+#define CRT_REDIST       GetEnv("VCToolsRedistDir") + "\x64\Microsoft.VC143.CRT"
 #endif
 #ifndef UCRT_REDIST
-#define UCRT_REDIST       GetEnv("UniversalCRTSdkDir") + "\Redist\" + GetEnv("UCRTVersion") + "\ucrt\DLLs\x86"
+#define UCRT_REDIST      GetEnv("UniversalCRTSdkDir") + "\Redist\" + GetEnv("UCRTVersion") + "\ucrt\DLLs\x64"
 #endif
 
 [Setup]
@@ -47,10 +49,13 @@ OutputDir=win32\distrib-{#CONFIG}-{#VERSION}
 AppName=Poedit
 AppVerName=Poedit {#VERSION}
 
+ArchitecturesInstallIn64BitMode=x64 arm64
+ArchitecturesAllowed=x64 arm64
+
 ChangesAssociations=true
 AlwaysShowComponentsList=false
 SourceDir=..
-DefaultDirName={pf}\Poedit
+DefaultDirName={commonpf}\Poedit
 DefaultGroupName=Poedit
 AllowNoIcons=true
 LicenseFile=COPYING
@@ -76,7 +81,7 @@ AppVersion={#VERSION}
 AppContact=help@poedit.net
 UninstallDisplayIcon={app}\Poedit.exe
 UninstallDisplayName=Poedit
-MinVersion=0,6.1.7600
+MinVersion=6.1sp1
 WizardSmallImageFile=artwork\windows\installer_wizard_image.bmp
 WizardStyle=modern
 AppPublisherURL=https://poedit.net/
@@ -94,16 +99,16 @@ VersionInfoProductTextVersion={#VERSION}
 DisableDirPage=auto
 
 [Files]
-Source: {#CONFIG}\Poedit.exe; DestDir: {app}; Flags: ignoreversion
-Source: {#CONFIG}\*.dll; DestDir: {app}; Flags: ignoreversion
-Source: {#CONFIG}\icudt*.dat; DestDir: {app}
+Source: {#BINDIR}\Poedit.exe; DestDir: {app}; Flags: ignoreversion
+Source: {#BINDIR}\*.dll; DestDir: {app}; Flags: ignoreversion
+Source: {#BINDIR}\icudt*.dat; DestDir: {app}
 Source: COPYING; DestDir: {app}\Docs; DestName: Copying.txt
 Source: NEWS; DestDir: {app}\Docs; DestName: News.txt
 Source: {#CRT_REDIST}\*.dll; DestDir: {app}
 Source: {#UCRT_REDIST}\*.dll; DestDir: {app}; OnlyBelowVersion: 0,10.0
-Source: "{#CONFIG}\Resources\*"; DestDir: "{app}\Resources"; Flags: recursesubdirs
-Source: "{#CONFIG}\Translations\*"; DestDir: "{app}\Translations"; Flags: recursesubdirs
-Source: "{#CONFIG}\GettextTools\*"; DestDir: "{app}\GettextTools"; Flags: ignoreversion recursesubdirs
+Source: "{#BINDIR}\Resources\*"; DestDir: "{app}\Resources"; Flags: recursesubdirs
+Source: "{#BINDIR}\Translations\*"; DestDir: "{app}\Translations"; Flags: recursesubdirs
+Source: "{#BINDIR}\GettextTools\*"; DestDir: "{app}\GettextTools"; Flags: ignoreversion recursesubdirs
 
 [InstallDelete]
 ; Remove all files from previous version to have known clean state
