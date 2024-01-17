@@ -116,8 +116,6 @@ Root: "HKLM"; Subkey: "Software\Vaclav Slavik\Poedit\WinSparkle"; ValueType: str
 ; Uninstall Poedit settings on uninstall:
 Root: "HKLM"; Subkey: "Software\Vaclav Slavik\Poedit"; Flags: noerror uninsdeletekey
 Root: "HKLM"; Subkey: "Software\Vaclav Slavik"; Flags: noerror uninsdeletekeyifempty
-Root: "HKCU"; Subkey: "Software\Vaclav Slavik\Poedit"; Flags: uninsdeletekey dontcreatekey
-Root: "HKCU"; Subkey: "Software\Vaclav Slavik"; Flags: uninsdeletekeyifempty dontcreatekey
 
 ; Associate files with Poedit:
 Root: "HKA"; Subkey: "Software\Classes\.po"; ValueType: string; ValueData: "Poedit.PO"; Flags: noerror
