@@ -35,6 +35,8 @@
 #define VERSION          "3.4.2"
 #define VERSION_WIN      VERSION + "." + Str(POEDIT_GIT_BUILD_NUMBER)
 
+#define APP_ID           "{68EB2C37-083A-4303-B5D8-41FA67E50B8F}"
+
 #ifndef CRT_REDIST
 #define CRT_REDIST       GetEnv("VCToolsRedistDir") + "\x64\Microsoft.VC143.CRT"
 #endif
@@ -70,7 +72,7 @@ ShowLanguageDialog=no
 DisableWelcomePage=true
 AllowUNCPath=true
 InternalCompressLevel=ultra
-AppID={{68EB2C37-083A-4303-B5D8-41FA67E50B8F}
+AppID={{#APP_ID}
 VersionInfoVersion={#VERSION_WIN}
 VersionInfoTextVersion={#VERSION}
 AppCopyright=Copyright © 1999-2023 Vaclav Slavik
@@ -99,6 +101,7 @@ VersionInfoProductTextVersion={#VERSION}
 DisableDirPage=auto
 
 [Files]
+Source: win32\uninst-helper.dll; Flags: dontcopy
 Source: {#BINDIR}\Poedit.exe; DestDir: {app}; Flags: ignoreversion
 Source: {#BINDIR}\*.dll; DestDir: {app}; Flags: ignoreversion
 Source: {#BINDIR}\icudt*.dat; DestDir: {app}
@@ -209,6 +212,7 @@ Name: "ukrainian"; MessagesFile: "compiler:Languages\Ukrainian.isl"
 
 [CustomMessages]
 OpenAfterInstall=Open Poedit after installation
+Uninstall32bit=Uninstalling 32-bit version of Poedit...
 brazilianportuguese.OpenAfterInstall=Abrir o Poedit após a instalação
 catalan.OpenAfterInstall=Obre el Poedit després de la instal·lació
 corsican.OpenAfterInstall=Apre Poedit dopu à l'installazione
@@ -229,3 +233,48 @@ slovenian.OpenAfterInstall=Odpri Poedit po namestitvi
 spanish.OpenAfterInstall=Abrir Poedit tras la instalación
 turkish.OpenAfterInstall=Kurulumdan sonra Poedit'i aç
 ukrainian.OpenAfterInstall=Відкрити Poedit після встановлення
+
+[Code]
+
+{ -- Handle uninstallation of conflicting 32-bit version of Poedit -- }
+
+const UninstallKey = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{#APP_ID}_is1';
+
+function SafelyUninstall32BitVersion(uninstallerExe: String): Integer;
+external 'SafelyUninstall32BitVersion@files:uninst-helper.dll cdecl setuponly';
+
+
+function Find32bitUninstallerPath(): String;
+var
+  uninst: String;
+begin
+  if (not RegKeyExists(HKCU64, UninstallKey)) and (not RegKeyExists(HKLM64, UninstallKey)) and RegKeyExists(HKLM32, UninstallKey) then begin
+    RegQueryStringValue(HKLM32, UninstallKey, 'UninstallString', uninst);
+    Result := RemoveQuotes(uninst);
+  end
+  else
+    Result := '';
+end;
+
+
+procedure Uninstall32bitVersionIfPresent;
+var
+  uninstaller: String;
+begin
+  uninstaller := Find32bitUninstallerPath();
+  if (uninstaller <> '') then begin
+    Log('Migrating from 32bit install, uninstalling via ' + uninstaller);
+    WizardForm.StatusLabel.Caption := CustomMessage('Uninstall32bit');
+    SafelyUninstall32BitVersion(uninstaller);
+  end;
+end;
+
+
+{ -- Inno Setup hooks -- }
+
+procedure CurStepChanged(CurStep: TSetupStep);
+begin
+  if (CurStep = ssInstall) then begin
+    Uninstall32bitVersionIfPresent();
+  end;
+end;
