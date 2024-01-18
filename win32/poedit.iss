@@ -176,16 +176,10 @@ Name: {commonprograms}\Poedit; Filename: {app}\Poedit.exe; WorkingDir: {app}; Ic
 [Run]
 Filename: {app}\Poedit.exe; WorkingDir: {app}; Description: {cm:OpenAfterInstall}; Flags: postinstall nowait skipifsilent runasoriginaluser
 
-[_ISTool]
-UseAbsolutePaths=false
-
 [Dirs]
 Name: {app}\Docs
 Name: {app}\Resources
 Name: {app}\Translations
-
-[ThirdParty]
-CompileLogMethod=append
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
