@@ -40,9 +40,6 @@
 #ifndef CRT_REDIST
 #define CRT_REDIST       GetEnv("VCToolsRedistDir") + "\x64\Microsoft.VC143.CRT"
 #endif
-#ifndef UCRT_REDIST
-#define UCRT_REDIST      GetEnv("UniversalCRTSdkDir") + "\Redist\" + GetEnv("UCRTVersion") + "\ucrt\DLLs\x64"
-#endif
 
 [Setup]
 OutputBaseFilename=Poedit-{#VERSION}-setup
@@ -108,7 +105,6 @@ Source: {#BINDIR}\icudt*.dat; DestDir: {app}
 Source: COPYING; DestDir: {app}\Docs; DestName: Copying.txt
 Source: NEWS; DestDir: {app}\Docs; DestName: News.txt
 Source: {#CRT_REDIST}\*.dll; DestDir: {app}
-Source: {#UCRT_REDIST}\*.dll; DestDir: {app}; OnlyBelowVersion: 0,10.0
 Source: "{#BINDIR}\Resources\*"; DestDir: "{app}\Resources"; Flags: recursesubdirs
 Source: "{#BINDIR}\Translations\*"; DestDir: "{app}\Translations"; Flags: recursesubdirs
 Source: "{#BINDIR}\GettextTools\*"; DestDir: "{app}\GettextTools"; Flags: ignoreversion recursesubdirs
@@ -207,6 +203,8 @@ Name: "ukrainian"; MessagesFile: "compiler:Languages\Ukrainian.isl"
 [CustomMessages]
 OpenAfterInstall=Open Poedit after installation
 Uninstall32bit=Uninstalling 32-bit version of Poedit...
+DownloadingUCRT=Poedit needs to download and install Microsoft Universal C Runtime support files, because they are missing on your computer.
+InstallingUCRT=Installing Microsoft Universal C Runtime...
 brazilianportuguese.OpenAfterInstall=Abrir o Poedit após a instalação
 catalan.OpenAfterInstall=Obre el Poedit després de la instal·lació
 corsican.OpenAfterInstall=Apre Poedit dopu à l'installazione
@@ -264,11 +262,96 @@ begin
 end;
 
 
+{ -- Install UCRT on ancient Windows 7/8 -- }
+
+var
+  DownloadPage: TDownloadWizardPage;
+  UCRTFilename, UCRTSha256: String;
+
+
+procedure PrepareUCRTDownloadIfNeeded;
+var
+  Version: TWindowsVersion;
+begin
+  DownloadPage := nil;
+  { Windows 10 always includes UCRT, older versions may or may not have it installed }
+  GetWindowsVersionEx(Version);
+  if (Version.Major = 6) then begin
+    if (not FileExists(ExpandConstant('{sys}\ucrtbase.dll'))) then begin
+      if (Version.Minor = 1) then begin
+        UCRTFilename := 'Windows6.1-KB3118401-x64.msu';
+        UCRTSha256 := '145623e0b85037b90e1ef5c45aee1aaa4120c4d12a388d94c48cfbb083e914e4';
+      end
+      else if (Version.Minor = 2) then begin
+        UCRTFilename := 'Windows8-RT-KB3118401-x64.msu';
+        UCRTSha256 := 'fc2fb2dd6f25739f7e0938b9d24fe590ee03e62de3b4132193f424f0bbb8b0fd';
+      end
+      else if (Version.Minor = 3) then begin
+        UCRTFilename := 'Windows8.1-KB3118401-x64.msu';
+        UCRTSha256 := '0e44ad74aa341909865dc6a72b2bcb80564fcd0df7e1e388be81a7e04868c98f';
+      end;
+      if (UCRTFilename <> '') then
+        DownloadPage := CreateDownloadPage(SetupMessage(msgWizardPreparing), CustomMessage('DownloadingUCRT'), nil);
+	  end;
+  end;
+end;
+
+
+function DownloadUCRTIfNeeded(): Boolean;
+begin
+  Result := True;
+  if (DownloadPage <> nil) then begin
+    DownloadPage.Clear;
+    DownloadPage.Add('https://download.poedit.net/ucrt/' + UCRTFilename, UCRTFilename, UCRTSha256);
+    DownloadPage.Show;
+    try
+      try
+        DownloadPage.Download;
+      except
+        if DownloadPage.AbortedByUser then
+          Log('UCRT download aborted by user.')
+        else
+          SuppressibleMsgBox(AddPeriod(GetExceptionMessage), mbCriticalError, MB_OK, IDOK);
+        Result := False;
+      end;
+    finally
+      DownloadPage.Hide;
+    end;
+  end;
+end;
+
+
+procedure InstallUCRTIfNeeded;
+var
+  ResultCode: Integer;
+begin
+  if (UCRTFilename <> '') then begin
+    WizardForm.StatusLabel.Caption := CustomMessage('InstallingUCRT');
+    Exec('wusa.exe', UCRTFilename + ' /quiet /norestart', ExpandConstant('{tmp}'), SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode);
+  end;
+end;
+
+
 { -- Inno Setup hooks -- }
+
+procedure InitializeWizard;
+begin
+  PrepareUCRTDownloadIfNeeded();
+end;
+
+function NextButtonClick(CurPageID: Integer): Boolean;
+begin
+  if (CurPageID = wpReady) then
+    Result := DownloadUCRTIfNeeded()
+  else
+    Result := True;
+  
+end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
 begin
   if (CurStep = ssInstall) then begin
+    InstallUCRTIfNeeded();
     Uninstall32bitVersionIfPresent();
   end;
 end;
