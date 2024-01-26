@@ -92,9 +92,7 @@ fixup_windows_rc_files()
 fixup_po_files()
 {
     for i in locales/*.po ; do
-        # Crowdin started producing bad Last-Translator header leading to
-        # warning: header field 'Last-Translator' still has the initial default value
-        $SED --in-place -e "s/Last-Translator: FULL NAME <EMAIL@ADDRESS>/Last-Translator: /g" "$i"
+        # nothing currently
     done
 }
 
