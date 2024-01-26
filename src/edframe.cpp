@@ -286,6 +286,7 @@ bool g_focusToText = false;
             return nullptr;
 
         f = new PoeditFrame();
+        f->Show(true);
         f->ReadCatalog(cat);
     }
 
@@ -2365,6 +2366,8 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
 
 void PoeditFrame::FixDuplicatesIfPresent()
 {
+    wxASSERT_MSG( IsShown(), "this method may show UI error, which requires the window to be visible" );
+
     auto cat = std::dynamic_pointer_cast<POCatalog>(m_catalog);
     if (!cat)
         return;
