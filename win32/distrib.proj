@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+         ToolsVersion="4.0"
+         InitialTargets="SetupOutputDir"
+         DefaultTargets="Distrib">
+
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Common.props" />
+  
+  <Import Project="version.props" />
+
+  <PropertyGroup>
+    <MSBuildCommunityTasksPath>$(MSBuildProjectDirectory)\..\packages\MSBuildTasks.1.5.0.235\tools</MSBuildCommunityTasksPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets"/>
+
+  <PropertyGroup>
+    <BinDir>../x64/$(Configuration)</BinDir>
+    <MsvcToolsX86>"$(VCToolsInstallDir)\bin\HostX64\x86"</MsvcToolsX86>
+    <MsvcLibpathX86>"$(VCToolsInstallDir)\lib\x86"</MsvcLibpathX86>
+    <InnoCC>..\packages\Tools.InnoSetup.6.2.2\tools\ISCC.exe</InnoCC>
+    <InnoFlags>/dCONFIG=$(Configuration)</InnoFlags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PdbFiles Include="$(BinDir)/*.pdb" Exclude="$(BinDir)/vc1*.pdb" />
+  </ItemGroup>
+
+  <Target Name="SetupOutputDir" BeforeTargets="PDBs;Distrib;Installer">
+    <GitCommits>
+      <Output TaskParameter="CommitsCount" PropertyName="GitBuildNumber" />
+    </GitCommits>
+    <CreateProperty Value="distrib-$(Configuration)-$(PoeditVersion).$(GitBuildNumber)">
+      <Output TaskParameter="Value" PropertyName="OutputDir"/>
+    </CreateProperty>
+  </Target>
+  
+  <Target Name="Distrib" DependsOnTargets="$(BuildDependsOn);Build;Installer;PDBs">
+    <Message Importance="High" Text="Copying debug symbols..." />
+  </Target>
+
+  <Target Name="Installer" DependsOnTargets="Build;UninstHelper">
+    <Message Importance="High" Text="Creating InnoSetup installer..." />
+    <Exec Command="$(InnoCC) /O$(OutputDir) $(InnoFlags) poedit.iss " />
+  </Target>
+
+  <Target Name="Build">
+    <MSBuild
+      Projects="..\Poedit.sln"
+      Properties="Configuration=$(Configuration)"
+      />
+  </Target>
+
+  <Target Name="UninstHelper" Inputs="uninst-helper.c" Outputs="uninst-helper.dll">
+    <!-- the helper needs to be compiled as 32bit: -->
+    <PropertyGroup>
+      <HelperCompileCmd>
+        call "$(VCINSTALLDIR)\Auxiliary\Build\vcvarsall.bat" x64_x86 || exit /b 666
+        cl /LD /O1 /MT /W3 uninst-helper.c || exit /b 666
+      </HelperCompileCmd>
+    </PropertyGroup>
+    <WriteLinesToFile File="uninst-helper.bat" Lines="$(HelperCompileCmd)" Overwrite="true" />
+    <Exec Command="uninst-helper.bat" />    
+    <Delete Files="uninst-helper.bat;uninst-helper.exp;uninst-helper.lib;uninst-helper.obj" />
+  </Target>
+
+  <Target Name="PDBs" DependsOnTargets="Build">
+    <Message Importance="High" Text="Copying debug symbols..." />
+    <MakeDir Directories="$(OutputDir)\pdb" />
+    <Copy SourceFiles="@(PdbFiles)" DestinationFolder="$(OutputDir)\pdb" SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>

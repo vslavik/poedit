@@ -28,16 +28,17 @@
 #define CONFIG           "Release"
 #endif
 
-#include "../" + CONFIG + "/git_build_number.h"
+#define BINDIR 		     "x64\" + CONFIG
+
+#include "../" + BINDIR + "/git_build_number.h"
 
 #define VERSION          "3.4.2"
 #define VERSION_WIN      VERSION + "." + Str(POEDIT_GIT_BUILD_NUMBER)
 
+#define APP_ID           "{68EB2C37-083A-4303-B5D8-41FA67E50B8F}"
+
 #ifndef CRT_REDIST
-#define CRT_REDIST       GetEnv("VCToolsRedistDir") + "\x86\Microsoft.VC143.CRT"
-#endif
-#ifndef UCRT_REDIST
-#define UCRT_REDIST       GetEnv("UniversalCRTSdkDir") + "\Redist\" + GetEnv("UCRTVersion") + "\ucrt\DLLs\x86"
+#define CRT_REDIST       GetEnv("VCToolsRedistDir") + "\x64\Microsoft.VC143.CRT"
 #endif
 
 [Setup]
@@ -47,10 +48,13 @@ OutputDir=win32\distrib-{#CONFIG}-{#VERSION}
 AppName=Poedit
 AppVerName=Poedit {#VERSION}
 
+ArchitecturesInstallIn64BitMode=x64 arm64
+ArchitecturesAllowed=x64 arm64
+
 ChangesAssociations=true
 AlwaysShowComponentsList=false
 SourceDir=..
-DefaultDirName={pf}\Poedit
+DefaultDirName={commonpf}\Poedit
 DefaultGroupName=Poedit
 AllowNoIcons=true
 LicenseFile=COPYING
@@ -65,7 +69,7 @@ ShowLanguageDialog=no
 DisableWelcomePage=true
 AllowUNCPath=true
 InternalCompressLevel=ultra
-AppID={{68EB2C37-083A-4303-B5D8-41FA67E50B8F}
+AppID={{#APP_ID}
 VersionInfoVersion={#VERSION_WIN}
 VersionInfoTextVersion={#VERSION}
 AppCopyright=Copyright © 1999-2023 Vaclav Slavik
@@ -76,7 +80,7 @@ AppVersion={#VERSION}
 AppContact=help@poedit.net
 UninstallDisplayIcon={app}\Poedit.exe
 UninstallDisplayName=Poedit
-MinVersion=0,6.1.7600
+MinVersion=6.1sp1
 WizardSmallImageFile=artwork\windows\installer_wizard_image.bmp
 WizardStyle=modern
 AppPublisherURL=https://poedit.net/
@@ -94,16 +98,16 @@ VersionInfoProductTextVersion={#VERSION}
 DisableDirPage=auto
 
 [Files]
-Source: {#CONFIG}\Poedit.exe; DestDir: {app}; Flags: ignoreversion
-Source: {#CONFIG}\*.dll; DestDir: {app}; Flags: ignoreversion
-Source: {#CONFIG}\icudt*.dat; DestDir: {app}
+Source: win32\uninst-helper.dll; Flags: dontcopy
+Source: {#BINDIR}\Poedit.exe; DestDir: {app}; Flags: ignoreversion
+Source: {#BINDIR}\*.dll; DestDir: {app}; Flags: ignoreversion
+Source: {#BINDIR}\icudt*.dat; DestDir: {app}
 Source: COPYING; DestDir: {app}\Docs; DestName: Copying.txt
 Source: NEWS; DestDir: {app}\Docs; DestName: News.txt
 Source: {#CRT_REDIST}\*.dll; DestDir: {app}
-Source: {#UCRT_REDIST}\*.dll; DestDir: {app}; OnlyBelowVersion: 0,10.0
-Source: "{#CONFIG}\Resources\*"; DestDir: "{app}\Resources"; Flags: recursesubdirs
-Source: "{#CONFIG}\Translations\*"; DestDir: "{app}\Translations"; Flags: recursesubdirs
-Source: "{#CONFIG}\GettextTools\*"; DestDir: "{app}\GettextTools"; Flags: ignoreversion recursesubdirs
+Source: "{#BINDIR}\Resources\*"; DestDir: "{app}\Resources"; Flags: recursesubdirs
+Source: "{#BINDIR}\Translations\*"; DestDir: "{app}\Translations"; Flags: recursesubdirs
+Source: "{#BINDIR}\GettextTools\*"; DestDir: "{app}\GettextTools"; Flags: ignoreversion recursesubdirs
 
 [InstallDelete]
 ; Remove all files from previous version to have known clean state
@@ -168,16 +172,10 @@ Name: {commonprograms}\Poedit; Filename: {app}\Poedit.exe; WorkingDir: {app}; Ic
 [Run]
 Filename: {app}\Poedit.exe; WorkingDir: {app}; Description: {cm:OpenAfterInstall}; Flags: postinstall nowait skipifsilent runasoriginaluser
 
-[_ISTool]
-UseAbsolutePaths=false
-
 [Dirs]
 Name: {app}\Docs
 Name: {app}\Resources
 Name: {app}\Translations
-
-[ThirdParty]
-CompileLogMethod=append
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -204,6 +202,9 @@ Name: "ukrainian"; MessagesFile: "compiler:Languages\Ukrainian.isl"
 
 [CustomMessages]
 OpenAfterInstall=Open Poedit after installation
+Uninstall32bit=Uninstalling 32-bit version of Poedit...
+DownloadingUCRT=Poedit needs to download and install Microsoft Universal C Runtime support files, because they are missing on your computer.
+InstallingUCRT=Installing Microsoft Universal C Runtime...
 brazilianportuguese.OpenAfterInstall=Abrir o Poedit após a instalação
 catalan.OpenAfterInstall=Obre el Poedit després de la instal·lació
 corsican.OpenAfterInstall=Apre Poedit dopu à l'installazione
@@ -224,3 +225,133 @@ slovenian.OpenAfterInstall=Odpri Poedit po namestitvi
 spanish.OpenAfterInstall=Abrir Poedit tras la instalación
 turkish.OpenAfterInstall=Kurulumdan sonra Poedit'i aç
 ukrainian.OpenAfterInstall=Відкрити Poedit після встановлення
+
+[Code]
+
+{ -- Handle uninstallation of conflicting 32-bit version of Poedit -- }
+
+const UninstallKey = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{#APP_ID}_is1';
+
+function SafelyUninstall32BitVersion(uninstallerExe: String): Integer;
+external 'SafelyUninstall32BitVersion@files:uninst-helper.dll cdecl setuponly';
+
+
+function Find32bitUninstallerPath(): String;
+var
+  uninst: String;
+begin
+  if (not RegKeyExists(HKCU64, UninstallKey)) and (not RegKeyExists(HKLM64, UninstallKey)) and RegKeyExists(HKLM32, UninstallKey) then begin
+    RegQueryStringValue(HKLM32, UninstallKey, 'UninstallString', uninst);
+    Result := RemoveQuotes(uninst);
+  end
+  else
+    Result := '';
+end;
+
+
+procedure Uninstall32bitVersionIfPresent;
+var
+  uninstaller: String;
+begin
+  uninstaller := Find32bitUninstallerPath();
+  if (uninstaller <> '') then begin
+    Log('Migrating from 32bit install, uninstalling via ' + uninstaller);
+    WizardForm.StatusLabel.Caption := CustomMessage('Uninstall32bit');
+    SafelyUninstall32BitVersion(uninstaller);
+  end;
+end;
+
+
+{ -- Install UCRT on ancient Windows 7/8 -- }
+
+var
+  DownloadPage: TDownloadWizardPage;
+  UCRTFilename, UCRTSha256: String;
+
+
+procedure PrepareUCRTDownloadIfNeeded;
+var
+  Version: TWindowsVersion;
+begin
+  DownloadPage := nil;
+  { Windows 10 always includes UCRT, older versions may or may not have it installed }
+  GetWindowsVersionEx(Version);
+  if (Version.Major = 6) then begin
+    if (not FileExists(ExpandConstant('{sys}\ucrtbase.dll'))) then begin
+      if (Version.Minor = 1) then begin
+        UCRTFilename := 'Windows6.1-KB3118401-x64.msu';
+        UCRTSha256 := '145623e0b85037b90e1ef5c45aee1aaa4120c4d12a388d94c48cfbb083e914e4';
+      end
+      else if (Version.Minor = 2) then begin
+        UCRTFilename := 'Windows8-RT-KB3118401-x64.msu';
+        UCRTSha256 := 'fc2fb2dd6f25739f7e0938b9d24fe590ee03e62de3b4132193f424f0bbb8b0fd';
+      end
+      else if (Version.Minor = 3) then begin
+        UCRTFilename := 'Windows8.1-KB3118401-x64.msu';
+        UCRTSha256 := '0e44ad74aa341909865dc6a72b2bcb80564fcd0df7e1e388be81a7e04868c98f';
+      end;
+      if (UCRTFilename <> '') then
+        DownloadPage := CreateDownloadPage(SetupMessage(msgWizardPreparing), CustomMessage('DownloadingUCRT'), nil);
+	  end;
+  end;
+end;
+
+
+function DownloadUCRTIfNeeded(): Boolean;
+begin
+  Result := True;
+  if (DownloadPage <> nil) then begin
+    DownloadPage.Clear;
+    DownloadPage.Add('https://download.poedit.net/ucrt/' + UCRTFilename, UCRTFilename, UCRTSha256);
+    DownloadPage.Show;
+    try
+      try
+        DownloadPage.Download;
+      except
+        if DownloadPage.AbortedByUser then
+          Log('UCRT download aborted by user.')
+        else
+          SuppressibleMsgBox(AddPeriod(GetExceptionMessage), mbCriticalError, MB_OK, IDOK);
+        Result := False;
+      end;
+    finally
+      DownloadPage.Hide;
+    end;
+  end;
+end;
+
+
+procedure InstallUCRTIfNeeded;
+var
+  ResultCode: Integer;
+begin
+  if (UCRTFilename <> '') then begin
+    WizardForm.StatusLabel.Caption := CustomMessage('InstallingUCRT');
+    Exec('wusa.exe', UCRTFilename + ' /quiet /norestart', ExpandConstant('{tmp}'), SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode);
+  end;
+end;
+
+
+{ -- Inno Setup hooks -- }
+
+procedure InitializeWizard;
+begin
+  PrepareUCRTDownloadIfNeeded();
+end;
+
+function NextButtonClick(CurPageID: Integer): Boolean;
+begin
+  if (CurPageID = wpReady) then
+    Result := DownloadUCRTIfNeeded()
+  else
+    Result := True;
+  
+end;
+
+procedure CurStepChanged(CurStep: TSetupStep);
+begin
+  if (CurStep = ssInstall) then begin
+    InstallUCRTIfNeeded();
+    Uninstall32bitVersionIfPresent();
+  end;
+end;

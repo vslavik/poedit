@@ -241,7 +241,7 @@ ManagerFrame::~ManagerFrame()
     if (sel != -1)
     {
         cfg->Write("manager_last_selected",
-                   (long)m_listPrj->GetClientData(sel));
+                   (long)(wxIntPtr)m_listPrj->GetClientData(sel));
     }
 
     ms_instance = NULL;
