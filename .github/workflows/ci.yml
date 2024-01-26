@@ -13,7 +13,7 @@ jobs:
     env:
       MAKEFLAGS: -j2
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Checkout submodules
       # submodules are not used by the build, but needed for `make dist`:
       run: git submodule update --init deps/json deps/pugixml
@@ -53,7 +53,7 @@ jobs:
     - name: Run make distcheck
       run: make distcheck
     - name: Upload source tarball artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: source-tarball
         path: poedit-*.tar.gz
@@ -62,7 +62,7 @@ jobs:
     name: Build on macOS
     runs-on: macos-13
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
     - name: Install ccache
@@ -71,7 +71,7 @@ jobs:
         key: ${{ github.job }}
     - name: Install external dependencies
       run: brew bundle --file=macos/Brewfile
-    - uses: sersoft-gmbh/xcodebuild-action@v2
+    - uses: sersoft-gmbh/xcodebuild-action@v3
       with:
         workspace: Poedit.xcworkspace
         scheme: Poedit
@@ -82,11 +82,11 @@ jobs:
     name: Build on Windows
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
-    - uses: microsoft/setup-msbuild@v1.1
-    - uses: nuget/setup-nuget@v1
+    - uses: microsoft/setup-msbuild@v2
+    - uses: nuget/setup-nuget@v2
     - name: Restore NuGet packages
       run: nuget restore Poedit.sln
     - name: Build solution
@@ -98,7 +98,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-linux
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: source-tarball
 
