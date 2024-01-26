@@ -9,12 +9,13 @@ concurrency:
 jobs:
   build-linux:
     name: Build on Linux
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     env:
       MAKEFLAGS: -j2
     steps:
     - uses: actions/checkout@v3
     - name: Checkout submodules
+      # submodules are not used by the build, but needed for `make dist`:
       run: git submodule update --init deps/json deps/pugixml
     - name: Install dependencies
       run: |
@@ -36,7 +37,9 @@ jobs:
             libgtkspell3-3-dev \
             libcld2-dev \
             libcpprest-dev \
-            libsecret-1-dev
+            libsecret-1-dev \
+            libpugixml-dev \
+            nlohmann-json3-dev
     - name: Install ccache
       uses: hendrikmuhs/ccache-action@v1.2
       with:
@@ -57,7 +60,7 @@ jobs:
 
   build-macos:
     name: Build on macOS
-    runs-on: macos-11
+    runs-on: macos-13
     steps:
     - uses: actions/checkout@v3
       with:
