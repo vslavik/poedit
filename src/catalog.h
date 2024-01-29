@@ -47,24 +47,6 @@ typedef std::shared_ptr<CatalogItem> CatalogItemPtr;
 typedef std::shared_ptr<Catalog> CatalogPtr;
 
 
-/// The possible bookmarks for a given item
-typedef enum
-{
-    NO_BOOKMARK = -1,
-    BOOKMARK_0,
-    BOOKMARK_1,
-    BOOKMARK_2,
-    BOOKMARK_3,
-    BOOKMARK_4,
-    BOOKMARK_5,
-    BOOKMARK_6,
-    BOOKMARK_7,
-    BOOKMARK_8,
-    BOOKMARK_9,
-    BOOKMARK_LAST
-} Bookmark;
-
-
 /**
     Optional data attached to CatalogItem.
 
@@ -112,8 +94,8 @@ class CatalogItem
                   m_isTranslated(false),
                   m_isModified(false),
                   m_isPreTranslated(false),
-                  m_lineNum(0),
-                  m_bookmark(NO_BOOKMARK) {}
+                  m_lineNum(0)
+        {}
 
         CatalogItem(const CatalogItem&) = delete;
 
@@ -208,11 +190,6 @@ class CatalogItem
         wxString GetOldMsgid() const;
         bool HasOldMsgid() const { return !m_oldMsgid.empty(); }
 
-        /// Returns the bookmark for the item
-        Bookmark GetBookmark() const {return m_bookmark;}
-        /// Returns true if the item has a bookmark
-        bool HasBookmark() const {return (GetBookmark() != NO_BOOKMARK);}
-
 
         // -------------------------------------------------------------------
         // Setters for user-editable values:
@@ -240,8 +217,6 @@ class CatalogItem
         void SetModified(bool modified) { m_isModified = modified; }
         /// Sets pre-translated translation flag.
         void SetPreTranslated(bool pre) { m_isPreTranslated = pre; }
-        /// Sets the bookmark
-        void SetBookmark(Bookmark bookmark) {m_bookmark = bookmark;}
 
         /// Sets the comment.
         void SetComment(const wxString& c) { m_comment = c; }
@@ -340,7 +315,6 @@ class CatalogItem
         wxString m_moreFlags;
         wxString m_comment;
         int m_lineNum;
-        Bookmark m_bookmark;
 
         std::shared_ptr<Issue> m_issue;
         std::shared_ptr<SideloadedItemData> m_sideloaded;
@@ -431,7 +405,6 @@ class Catalog
             Language Lang;
 
             wxArrayString SearchPaths, SearchPathsExcluded, Keywords;
-            int Bookmarks[BOOKMARK_LAST];
             wxString BasePath;
 
             wxString Comment;
@@ -606,16 +579,6 @@ class Catalog
 
         /// Finds catalog index by line number
         int FindItemIndexByLine(int lineno);
-
-        /// Sets the given item to have the given bookmark and returns the index
-        /// of the item that previously had this bookmark (or -1)
-        int SetBookmark(int id, Bookmark bookmark);
-
-        /// Returns the index of the item that has the given bookmark or -1
-        int GetBookmarkIndex(Bookmark bookmark) const
-        {
-            return m_header.Bookmarks[bookmark];
-        }
 
 
         /// Validates correctness of the translation by running msgfmt

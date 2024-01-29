@@ -326,11 +326,6 @@ private:
 
         void OnPurgeDeleted(wxCommandEvent& event);
 
-        void OnGoToBookmark(wxCommandEvent& event);
-        void OnSetBookmark(wxCommandEvent& event);
-
-        void AddBookmarksMenu(wxMenu *menu);
-
         void OnCompileMO(wxCommandEvent& event);
         void OnExport(wxCommandEvent& event);
         bool ExportCatalog(const wxString& filename);

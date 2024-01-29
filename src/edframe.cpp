@@ -232,10 +232,8 @@ const unsigned   ID_POEDIT_STEP  = 1000;
 
 const wxWindowID ID_POPUP_REFS   = ID_POEDIT_FIRST + 1*ID_POEDIT_STEP;
 const wxWindowID ID_POPUP_DUMMY  = ID_POEDIT_FIRST + 3*ID_POEDIT_STEP;
-const wxWindowID ID_BOOKMARK_GO  = ID_POEDIT_FIRST + 4*ID_POEDIT_STEP;
-const wxWindowID ID_BOOKMARK_SET = ID_POEDIT_FIRST + 5*ID_POEDIT_STEP;
 
-const wxWindowID ID_POEDIT_LAST  = ID_POEDIT_FIRST + 6*ID_POEDIT_STEP;
+const wxWindowID ID_POEDIT_LAST  = ID_POEDIT_FIRST + 4*ID_POEDIT_STEP;
 
 
 #ifdef __VISUALC__
@@ -362,16 +360,11 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU_RANGE     (ID_POPUP_REFS, ID_POPUP_REFS + 999, PoeditFrame::OnReference)
    EVT_COMMAND        (wxID_ANY, EVT_SUGGESTION_SELECTED, PoeditFrame::OnSuggestion)
    EVT_MENU           (XRCID("menu_pretranslate"), PoeditFrame::OnPreTranslateAll)
-   EVT_MENU_RANGE     (ID_BOOKMARK_GO, ID_BOOKMARK_GO + 9,
-                       PoeditFrame::OnGoToBookmark)
-   EVT_MENU_RANGE     (ID_BOOKMARK_SET, ID_BOOKMARK_SET + 9,
-                       PoeditFrame::OnSetBookmark)
-   EVT_CLOSE          (                PoeditFrame::OnCloseWindow)
+   EVT_CLOSE          (PoeditFrame::OnCloseWindow)
    EVT_SIZE           (PoeditFrame::OnSize)
 
    // handling of selection:
    EVT_UPDATE_UI(XRCID("menu_references"), PoeditFrame::OnReferencesMenuUpdate)
-   EVT_UPDATE_UI_RANGE(ID_BOOKMARK_SET, ID_BOOKMARK_SET + 9, PoeditFrame::OnSingleSelectionUpdate)
 
    EVT_UPDATE_UI(XRCID("go_done_and_next"),   PoeditFrame::OnSingleSelectionUpdate)
    EVT_UPDATE_UI(XRCID("go_previously_edited"), PoeditFrame::OnGoPreviouslyEditedUpdate)
@@ -508,7 +501,6 @@ PoeditFrame::PoeditFrame() :
     wxMenuBar *MenuBar = wxGetApp().CreateMenu(Menu::Editor);
     if (MenuBar)
     {
-        AddBookmarksMenu(MenuBar->GetMenu(MenuBar->FindMenu(_("&Go"))));
         SetMenuBar(MenuBar);
     }
     else
@@ -2762,14 +2754,6 @@ void PoeditFrame::UpdateMenu()
 
     menubar->Enable(XRCID("menu_purge_deleted"),
                     editable && m_catalog->HasDeletedItems());
-
-    for (int i = 0; i < 10; i++)
-    {
-        menubar->Enable(ID_BOOKMARK_SET + i, editable);
-        menubar->Enable(ID_BOOKMARK_GO + i,
-                        editable &&
-                        m_catalog->GetBookmarkIndex(Bookmark(i)) != -1);
-    }
 }
 
 
@@ -3158,92 +3142,6 @@ void PoeditFrame::OnSidebarSplitterSashMoving(wxSplitterEvent& event)
 {
     auto split = (double)event.GetSashPosition() / (double)GetSize().x;
     wxConfigBase::Get()->Write("/sidebar_splitter", split);
-}
-
-void PoeditFrame::AddBookmarksMenu(wxMenu *parent)
-{
-    wxMenu *menu = new wxMenu();
-
-    parent->AppendSeparator();
-    parent->AppendSubMenu(menu, _("&Bookmarks"));
-
-#ifdef __WXOSX__
-    // on Mac, Alt+something is used during normal typing, so we shouldn't
-    // use it as shortcuts:
-    #define BK_ACCEL_SET  "Ctrl+rawctrl+%i"
-    #define BK_ACCEL_GO   "Ctrl+Alt+%i"
-#else
-    // TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-    #define BK_ACCEL_SET  _("Alt+") + "%i"
-    // TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-    #define BK_ACCEL_GO   _("Ctrl+") + _("Alt+") + "%i"
-#endif
-
-#ifdef __WXMSW__
-    #define BK_LABEL_SET  _("Set bookmark %i")
-    #define BK_LABEL_GO   _("Go to bookmark %i")
-#else
-    #define BK_LABEL_SET  _("Set Bookmark %i")
-    #define BK_LABEL_GO   _("Go to Bookmark %i")
-#endif
-
-    for (int i = 0; i < 10; i++)
-    {
-        auto label = BK_LABEL_SET + "\t" + BK_ACCEL_SET;
-        menu->Append(ID_BOOKMARK_SET + i, wxString::Format(label, i, i));
-    }
-    menu->AppendSeparator();
-    for (int i = 0; i < 10; i++)
-    {
-        auto label = BK_LABEL_GO + "\t" + BK_ACCEL_GO;
-        menu->Append(ID_BOOKMARK_GO + i, wxString::Format(label, i, i));
-    }
-}
-
-void PoeditFrame::OnGoToBookmark(wxCommandEvent& event)
-{
-    // Go to bookmark, if there is an item for it
-    Bookmark bk = static_cast<Bookmark>(event.GetId() - ID_BOOKMARK_GO);
-    int bkIndex = m_catalog->GetBookmarkIndex(bk);
-    if (bkIndex != -1)
-    {
-        int listIndex = m_list->CatalogIndexToList(bkIndex);
-        if (listIndex >= 0 && listIndex < m_list->GetItemCount())
-        {
-            m_list->SelectAndFocus(listIndex);
-        }
-    }
-}
-
-void PoeditFrame::OnSetBookmark(wxCommandEvent& event)
-{
-    // Set bookmark if different from the current value for the item,
-    // else unset it
-    int bkIndex = -1;
-    wxDataViewItem selItem = m_list->GetCurrentItem();
-    int selItemIndex = m_list->ListItemToCatalogIndex(selItem);
-    if (selItemIndex == -1)
-        return;
-
-    Bookmark bk = static_cast<Bookmark>(event.GetId() - ID_BOOKMARK_SET);
-    if (m_catalog->GetBookmarkIndex(bk) == selItemIndex)
-    {
-        m_catalog->SetBookmark(selItemIndex, NO_BOOKMARK);
-    }
-    else
-    {
-        bkIndex = m_catalog->SetBookmark(selItemIndex, bk);
-    }
-
-    // Refresh items
-    m_list->RefreshItem(selItem);
-    if (bkIndex != -1)
-        m_list->RefreshItem(m_list->CatalogIndexToListItem(bkIndex));
-
-    // Catalog has been modified
-    m_modified = true;
-    UpdateTitle();
-    UpdateMenu();
 }
 
 

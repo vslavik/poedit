@@ -229,23 +229,9 @@ void Catalog::HeaderData::UpdateDict()
         SetHeader("X-Poedit-KeywordsList", kw);
     }
 
-    unsigned i;
-    bool noBookmarkSet = true;
-    wxString bk;
-    for (i = 0; i < BOOKMARK_LAST ; i++)
-    {
-        noBookmarkSet = noBookmarkSet && (Bookmarks[i] == NO_BOOKMARK);
-        bk += wxString() << Bookmarks[i] << _T(',');
-    }
-    bk.RemoveLast();
-    if (noBookmarkSet)
-        DeleteHeader("X-Poedit-Bookmarks");
-    else
-        SetHeader("X-Poedit-Bookmarks", bk);
-
     SetHeaderNotEmpty("X-Poedit-Basepath", BasePath);
 
-    i = 0;
+    unsigned i = 0;
     while (true)
     {
         wxString path;
@@ -379,27 +365,8 @@ void Catalog::HeaderData::ParseDict()
         }
     }
 
-    int i;
-    for(i = 0; i < BOOKMARK_LAST; i++)
-    {
-      Bookmarks[i] = NO_BOOKMARK;
-    }
-    wxString bk = GetHeader("X-Poedit-Bookmarks");
-    if (!bk.empty())
-    {
-        wxStringTokenizer tkn(bk, ",");
-        i=0;
-        long int val;
-        while (tkn.HasMoreTokens() && i<BOOKMARK_LAST)
-        {
-            tkn.GetNextToken().ToLong(&val);
-            Bookmarks[i] = (int)val;
-            i++;
-        }
-    }
-
     SearchPaths.clear();
-    i = 0;
+    int i = 0;
     while (true)
     {
         wxString path;
@@ -503,12 +470,7 @@ Catalog::HeaderData::Find(const wxString& key) const
 Catalog::Catalog(Type type)
 {
     m_fileType = type;
-
     m_header.BasePath = wxEmptyString;
-    for(int i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
-    {
-        m_header.Bookmarks[i] = -1;
-    }
 }
 
 
@@ -587,28 +549,6 @@ int Catalog::FindItemIndexByLine(int lineno)
     }
 
     return last;
-}
-
-int Catalog::SetBookmark(int id, Bookmark bookmark)
-{
-    int previous = (bookmark==NO_BOOKMARK)?-1:m_header.Bookmarks[bookmark];
-    if (previous >= (int)m_items.size())
-        previous = -1;
-
-    // unset previous bookmarks, if any
-    Bookmark bk = m_items[id]->GetBookmark();
-    if (bk != NO_BOOKMARK)
-        m_header.Bookmarks[bk] = -1;
-    if (previous > -1)
-        m_items[previous]->SetBookmark(NO_BOOKMARK);
-
-    // set new bookmark
-    m_items[id]->SetBookmark(bookmark);
-    if (bookmark != NO_BOOKMARK)
-        m_header.Bookmarks[bookmark] = id;
-
-    // return id of previous item for that bookmark
-    return previous;
 }
 
 

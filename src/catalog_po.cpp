@@ -951,23 +951,6 @@ void POCatalog::Load(const wxString& po_file, int flags)
 
     m_sourceLanguage = parser.GetSpecifiedMsgidLanguage();  // may be, and likely will, invalid
 
-    // now that the catalog is loaded, update its items with the bookmarks
-    for (unsigned i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
-    {
-        if (m_header.Bookmarks[i] == -1)
-            continue;
-
-        if (m_header.Bookmarks[i] < (int)m_items.size())
-        {
-            m_items[m_header.Bookmarks[i]]->SetBookmark(
-                    static_cast<Bookmark>(i));
-        }
-        else // invalid bookmark
-        {
-            m_header.Bookmarks[i] = -1;
-        }
-    }
-
     m_fileCRLF = GetFileCRLFFormat(f);
     m_fileWrappingWidth = parser.GetWrappingWidth();
     wxLogTrace("poedit", "detect line wrapping: %d", m_fileWrappingWidth);
@@ -1055,8 +1038,6 @@ void POCatalog::Clear()
 {
     // Catalog base class fields:
     m_items.clear();
-    for (int i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
-        m_header.Bookmarks[i] = -1;
 
     // PO-specific fields:
     m_deletedItems.clear();

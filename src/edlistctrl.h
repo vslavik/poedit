@@ -319,7 +319,7 @@ class PoeditListCtrl : public wxDataViewCtrl
 
             wxColour m_clrID, m_clrInvalid, m_clrFuzzy;
             wxString m_clrContextFg, m_clrContextBg;
-            wxIcon m_iconComment, m_iconBookmark, m_iconError, m_iconWarning;
+            wxIcon m_iconComment, m_iconError, m_iconWarning;
         };
 
 

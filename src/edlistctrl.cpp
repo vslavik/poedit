@@ -224,8 +224,6 @@ public:
     {
         m_comment = wxArtProvider::GetIcon("ItemCommentTemplate");
         m_commentSel = wxArtProvider::GetIcon("ItemCommentTemplate@inverted");
-        m_bookmark = wxArtProvider::GetIcon("ItemBookmarkTemplate");
-        m_bookmarkSel = wxArtProvider::GetIcon("ItemBookmarkTemplate@inverted");
     }
 
     wxVariant MakeHighlighted(const wxVariant& value) const override
@@ -243,19 +241,11 @@ public:
             return vout;
         }
 
-        if (icon.IsSameAs(m_bookmark))
-        {
-            wxVariant vout;
-            vout << m_bookmarkSel;
-            return vout;
-        }
-
         return value;
     }
 
 private:
     wxIcon m_comment, m_commentSel;
-    wxIcon m_bookmark, m_bookmarkSel;
 };
 
 #endif // wxCHECK_VERSION(3,1,1) && !defined(__WXMSW__) && !defined(__WXOSX__)
@@ -295,7 +285,6 @@ void PoeditListCtrl::Model::SetVisualMode(ColorScheme::Mode visualMode)
     m_clrContextBg = ColorScheme::Get(Color::ItemContextBg, visualMode).GetAsString(wxC2S_HTML_SYNTAX);
 
     m_iconComment = wxArtProvider::GetIcon("ItemCommentTemplate");
-    m_iconBookmark = wxArtProvider::GetIcon("ItemBookmarkTemplate");
     m_iconError = wxArtProvider::GetIcon("StatusError");
     m_iconWarning = wxArtProvider::GetIcon("StatusWarning");
 }
@@ -406,8 +395,6 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
                 }
                 break;
             }
-            else if (d->GetBookmark() != NO_BOOKMARK)
-                variant << m_iconBookmark;
             else if (d->HasComment())
                 variant << m_iconComment;
             else
