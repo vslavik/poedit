@@ -28,9 +28,9 @@
 
 #include <wx/defs.h>
 #include <wx/font.h>
+#include <wx/image.h>
 
 class WXDLLIMPEXP_FWD_BASE wxString;
-class WXDLLIMPEXP_FWD_CORE wxImage;
 
 #ifdef __WXMSW__
     #define NEEDS_MANUAL_HIDPI 1
@@ -95,6 +95,8 @@ inline wxFont SmallerFont(const wxFont& font)
 }
 
 
+// helper for handling scaled images
+// TODO: replace with use of wxBitmapBundle & remove #include <wx/image.h>
 struct ScaledImage
 {
     wxImage image;

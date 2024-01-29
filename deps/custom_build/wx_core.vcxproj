@@ -130,8 +130,8 @@
     <ClCompile Include="..\wx\src\common\artstd.cpp" />
     <ClCompile Include="..\wx\src\common\bmpbase.cpp" />
     <ClCompile Include="..\wx\src\common\bmpbndl.cpp">
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">vc_mswu\core\bmpbndl_common.obj</ObjectFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">vc_mswud\core\bmpbndl_common.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)%(Filename)_common.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)%(Filename)_common.obj</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\wx\src\common\bmpbtncmn.cpp" />
     <ClCompile Include="..\wx\src\common\bookctrl.cpp" />

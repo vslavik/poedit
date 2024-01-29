@@ -206,8 +206,8 @@
     <ClCompile Include="..\wx\src\common\translation.cpp" />
     <ClCompile Include="..\wx\src\common\txtstrm.cpp" />
     <ClCompile Include="..\wx\src\common\uilocale.cpp">
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">vc_mswud\base\uilocale_common.obj</ObjectFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">vc_mswu\base\uilocale_common.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)%(Filename)_common.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)%(Filename)_common.obj</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\wx\src\common\unichar.cpp" />
     <ClCompile Include="..\wx\src\common\uri.cpp" />
