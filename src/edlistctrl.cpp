@@ -89,8 +89,6 @@ private:
 };
 
 
-#if wxCHECK_VERSION(3,1,1)
-
 class DataViewMarkupRenderer : public wxDataViewTextRenderer
 {
 public:
@@ -145,16 +143,6 @@ private:
     };
 };
 
-#else
-
-class DataViewMarkupRenderer : public wxDataViewTextRenderer
-{
-public:
-    DataViewMarkupRenderer() {}
-    void SetHighlightedBgColor(const wxColour&) {}
-};
-
-#endif
 
 /**
  * A wxDataViewColum whose GetWidth() prefers to return the fixed width over the actual width - they may differ, e.g.
@@ -177,13 +165,6 @@ public:
      */
     int GetWidth() const override
     {
-#if !wxCHECK_VERSION(3,1,3)
-        // workaround a wx bug where it calculates width of hidden columns
-        // see https://github.com/wxWidgets/wxWidgets/commit/560a81b913f23800e286d297d8cd38e72a207641
-        if ( IsHidden() )
-            return 0;
-#endif
-
         if ( fixed_width != wxCOL_WIDTH_DEFAULT )
             return fixed_width;
 
@@ -215,7 +196,7 @@ private:
     int fixed_width;
 };
 
-#if wxCHECK_VERSION(3,1,1) && !defined(__WXMSW__)&& !defined(__WXOSX__)
+#if !defined(__WXMSW__) && !defined(__WXOSX__)
 
 class DataViewIconsAdjuster : public wxDataViewValueAdjuster
 {
@@ -248,7 +229,7 @@ private:
     wxIcon m_comment, m_commentSel;
 };
 
-#endif // wxCHECK_VERSION(3,1,1) && !defined(__WXMSW__) && !defined(__WXOSX__)
+#endif // !defined(__WXMSW__) && !defined(__WXOSX__)
 
 wxString TrimTextValue(const wxString& text, size_t maxChars)
 {
@@ -407,11 +388,18 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
             wxString orig;
             const auto orig_str = TrimTextValue(d->GetString(), m_maxVisibleWidth);
 
-#if wxCHECK_VERSION(3,1,1)
         #ifdef __WXMSW__
             // Temporary workaround for https://github.com/vslavik/poedit/issues/343 and
             // https://github.com/vslavik/poedit/issues/481 -- fall back to old style rendering:
-            if (m_appTextDir == TextDirection::LTR || m_sourceTextDir == TextDirection::RTL)
+            if (m_appTextDir == TextDirection::RTL && m_sourceTextDir == TextDirection::LTR)
+            {
+                // non-markup rendering of source column:
+                if (d->HasContext())
+                    orig.Printf("[%s] %s", d->GetContext(), orig_str);
+                else
+                    orig = orig_str;
+            }
+            else
         #endif
             {
                 if (d->HasContext())
@@ -431,19 +419,6 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
                     orig = EscapeMarkup(orig_str);
                 }
             }
-        #ifdef __WXMSW__
-            else // RTL problems, fall back to worse rendering
-        #endif
-#endif
-#if !wxCHECK_VERSION(3,1,1) || defined(__WXMSW__)
-            // non-markup rendering of source column:
-            {
-                if (d->HasContext())
-                    orig.Printf("[%s] %s", d->GetContext(), orig_str);
-                else
-                    orig = orig_str;
-            }
-#endif
 
             // Add RTL Unicode mark to render bidi texts correctly
             if (m_appTextDir != m_sourceTextDir)
@@ -711,7 +686,7 @@ void PoeditListCtrl::CreateColumns()
 
     ColorScheme::SetupWindowColors(this, [=]
     {
-    #if wxCHECK_VERSION(3,1,1) && !defined(__WXMSW__) && !defined(__WXOSX__)
+    #if !defined(__WXMSW__) && !defined(__WXOSX__)
         if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
             m_colIcon->GetRenderer()->SetValueAdjuster(new DataViewIconsAdjuster());
         else

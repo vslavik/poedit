@@ -54,10 +54,6 @@
     #include <wx/generic/private/markuptext.h>
 #endif
 
-#if !wxCHECK_VERSION(3,1,0)
-    #define CenterVertical() Center()
-#endif
-
 namespace
 {
 
@@ -98,7 +94,7 @@ void ServiceSelectionPanel::AddService(AccountDetailPanel *account)
 
     m_sizer->Insert(pos, content, wxSizerFlags(1).Expand());
     if (!isFirst)
-        m_sizer->Insert(posLine, new StaticLine(this, wxID_ANY), wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(24)));
+        m_sizer->Insert(posLine, new wxStaticLine(this, wxID_ANY), wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(24)));
 }
 
 
@@ -330,9 +326,7 @@ public:
         : wxDataViewListCtrl(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
                              wxDV_NO_HEADER | MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN))
     {
-    #if wxCHECK_VERSION(3,1,1)
         SetRowHeight(PX(36));
-    #endif
         SetMinSize(wxSize(PX(500), PX(200)));
     #ifdef __WXOSX__
         if (@available(macOS 11.0, *))
@@ -375,7 +369,6 @@ private:
 
         for (auto& f : m_files)
         {
-        #if wxCHECK_VERSION(3,1,1)
             wxString text = wxString::Format
             (
                 "%s\n<small><span %s>%s</span></small>",
@@ -383,10 +376,6 @@ private:
                 secondaryFormatting,
                 EscapeMarkup(f.description)
             );
-        #else
-            wxString text(f.title);
-        #endif
-
             wxVector<wxVariant> data;
             data.push_back({text});
             AppendItem(data);
@@ -398,9 +387,7 @@ private:
     public:
         MultilineTextRenderer() : wxDataViewTextRenderer()
         {
-    #if wxCHECK_VERSION(3,1,1)
             EnableMarkup();
-    #endif
         }
 
     #ifdef __WXMSW__

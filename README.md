@@ -26,7 +26,7 @@ Most Linux distributions also include native Poedit packages.
 Requirements:
 
   * Boost
-  * Unicode build of [wxWidgets](http://www.wxwidgets.org) library, version >= 3.0.4
+  * Unicode build of [wxWidgets](http://www.wxwidgets.org) library, version >= 3.2
   * ICU
   * LucenePlusPlus
   * If on Unix, GtkSpell for spell checking support

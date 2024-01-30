@@ -49,10 +49,6 @@
 #include <wx/windowptr.h>
 #include <wx/sizer.h>
 
-#if !wxCHECK_VERSION(3,1,1)
-    #define wxGETTEXT_IN_CONTEXT(ctxt, s) wxGetTranslation((s))
-#endif
-
 #include "catalog.h"
 #include "cat_update.h"
 #include "edapp.h"

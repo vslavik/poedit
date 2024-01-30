@@ -2676,7 +2676,6 @@ void PoeditFrame::UpdateTitle()
     if (subtitle == "PROJECT VERSION")
         subtitle.clear();
 
-#if wxCHECK_VERSION(3,1,5)
     if (m_catalog->GetLanguage().IsValid())
     {
         // add language to the subtitle, but only if not part of the filename already
@@ -2692,7 +2691,6 @@ void PoeditFrame::UpdateTitle()
             }
         }
     }
-#endif
 
 #ifdef __WXOSX__
     if (@available(macOS 11.0, *))

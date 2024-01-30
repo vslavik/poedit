@@ -53,12 +53,7 @@ inline bool IsHiDPI() { return g_pxScalingFactor > 1.0; }
  */
 #define PX(x) (int(((x) * g_pxScalingFactor) + 0.5))
 
-#if wxCHECK_VERSION(3,1,0)
-    #define PXDefaultBorder wxSizerFlags::GetDefaultBorder()
-#else
-    #define PXDefaultBorder PX(wxSizerFlags::GetDefaultBorder())
-#endif
-
+#define PXDefaultBorder wxSizerFlags::GetDefaultBorder()
 #define PXBorder(dir) Border(dir, PXDefaultBorder)
 #define PXDoubleBorder(dir) Border(dir, 2 * PXDefaultBorder)
 

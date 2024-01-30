@@ -50,10 +50,6 @@
 #include <wx/time.h>
 #include <wx/wupdlock.h>
 
-#if !wxCHECK_VERSION(3,1,0)
-    #define CenterVertical() Center()
-#endif
-
 #include <algorithm>
 
 
@@ -442,10 +438,8 @@ private:
             {
 #if defined(__WXOSX__)
                 gc->DrawRoundedRectangle(rect.x, rect.y, rect.width, rect.height, PX(5));
-#elif wxCHECK_VERSION(3,1,1)
-                gc->DrawRoundedRectangle(rect.x, rect.y, rect.width, rect.height, PX(2));
 #else
-                gc->DrawRectangle(rect.x, rect.y, rect.width, rect.height);
+                gc->DrawRoundedRectangle(rect.x, rect.y, rect.width, rect.height, PX(2));
 #endif
             }
         }

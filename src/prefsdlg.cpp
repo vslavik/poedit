@@ -52,10 +52,6 @@
 #include <wx/xrc/xmlres.h>
 #include <wx/numformatter.h>
 
-#if !wxCHECK_VERSION(3,1,0)
-    #define CenterVertical() Center()
-#endif
-
 #include "edapp.h"
 #include "edframe.h"
 #include "catalog.h"

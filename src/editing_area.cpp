@@ -42,10 +42,6 @@
 #include <wx/statbmp.h>
 #include <wx/stattext.h>
 
-#if !wxCHECK_VERSION(3,1,0)
-    #define CenterVertical() Center()
-#endif
-
 #include <algorithm>
 
 
@@ -114,14 +110,12 @@ class ShrinkableBoxSizer : public wxBoxSizer
 public:
     ShrinkableBoxSizer(int orient) : wxBoxSizer(orient) {}
 
-#if wxCHECK_VERSION(3,1,1)
     void SetShrinkableWindow(wxWindow *win)
     {
         m_shrinkable = win ? GetItem(win) : nullptr;
     }
 
-#if wxCHECK_VERSION(3,1,3)
-    virtual void RepositionChildren(const wxSize& minSize) override
+    void RepositionChildren(const wxSize& minSize) override
     {
         if (m_shrinkable)
         {
@@ -134,32 +128,9 @@ public:
 
         wxBoxSizer::RepositionChildren(minSize);
     }
-#else
-    void RecalcSizes() override
-    {
-        if (m_shrinkable)
-        {
-            const wxCoord totalSize = GetSizeInMajorDir(m_size);
-            const wxCoord minSize = GetSizeInMajorDir(m_calculatedMinSize);
-            // If there's not enough space, make shrinkable item proportional,
-            // it will be resized under its minimal size then.
-            m_shrinkable->SetProportion(totalSize > 20 && totalSize < minSize ? 10000 : 0);
-        }
-
-        wxBoxSizer::RecalcSizes();
-    }
-#endif
 
 private:
     wxSizerItem *m_shrinkable;
-#else
-    void SetShrinkableWindow(wxWindow *win)
-    {
-        auto item = win ? GetItem(win) : nullptr;
-        if (item)
-            item->SetProportion(10000);
-    }
-#endif
 };
 
 
@@ -287,13 +258,11 @@ protected:
 #endif
     }
 
-#if wxCHECK_VERSION(3,1,1)
     void DoSetToolTipText(const wxString &tip) override
     {
         wxWindow::DoSetToolTipText(tip);
         m_label->SetToolTip(tip);
     }
-#endif
 
 #ifdef __WXOSX__
     wxSize DoGetBestSize() const override
@@ -315,11 +284,7 @@ protected:
         auto rect = GetClientRect();
         if (!rect.IsEmpty())
         {
-#if wxCHECK_VERSION(3,1,1)
             gc->DrawRoundedRectangle(rect.x, rect.y, rect.width, rect.height, PX(2));
-#else
-            gc->DrawRectangle(rect.x, rect.y, rect.width, rect.height);
-#endif
         }
     }
 
