@@ -42,14 +42,9 @@
 #include <wx/sizer.h>
 #include <wx/stattext.h>
 #include <wx/menu.h>
+#include <wx/nativewin.h>
 #include <wx/notebook.h>
 #include <wx/windowptr.h>
-
-#include <wx/nativewin.h>
-#if !wxCHECK_VERSION(3,1,0)
-  #include "wx_backports/nativewin.h"
-#endif
-
 
 #include <algorithm>
 #include <functional>

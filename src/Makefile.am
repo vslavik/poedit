@@ -4,12 +4,6 @@ WX_LIBS = @WX_LIBS@
 
 bin_PROGRAMS = poedit
 
-WX_BACKPORT_SRC = wx_backports/wx_gtk_activityindicator.cpp \
-                  wx_backports/activityindicator.h \
-                  wx_backports/gtk_activityindicator.h \
-                  wx_backports/nativewin.h \
-                  wx_backports/wx_gtk_nativewin.cpp
-
 if HAVE_CPPREST
 ACCOUNTS_SUPPORT_SRC = \
                  http_client.h http_client.cpp http_client_casablanca.cpp \
@@ -83,8 +77,7 @@ poedit_SOURCES = \
                  version.h \
                  welcomescreen.cpp welcomescreen.h \
                  pugixml.h \
-                 $(ACCOUNTS_SUPPORT_SRC) \
-                 $(WX_BACKPORT_SRC)
+                 $(ACCOUNTS_SUPPORT_SRC)
 nodist_poedit_SOURCES = compiled_xrc.cpp
 
 poedit_LDADD = $(WX_LIBS) $(LUCENE_LIBS) $(CLD2_LIBS) $(PUGIXML_LIBS) $(ACCOUNTS_SUPPORT_LIBS) \

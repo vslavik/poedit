@@ -30,6 +30,7 @@
 #include "hidpi.h"
 #include "utility.h"
 
+#include <wx/activityindicator.h>
 #include <wx/app.h>
 #include <wx/artprov.h>
 #include <wx/clipbrd.h>
@@ -45,12 +46,6 @@
 
 #ifdef __WXMSW__
 #include <wx/generic/private/markuptext.h>
-#endif
-
-#if wxCHECK_VERSION(3,1,0)
-    #include <wx/activityindicator.h>
-#else
-    #include "wx_backports/activityindicator.h"
 #endif
 
 #include <unicode/brkiter.h>
