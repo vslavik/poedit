@@ -2451,7 +2451,7 @@ void PoeditFrame::WarnAboutLanguageIssues()
         }
 
         // FIXME: make this part of global error checking
-        PluralFormsExpr plForms(po_cat->Header().GetHeader("Plural-Forms").ToStdString());
+        PluralFormsExpr plForms(po_cat->Header().GetHeader("Plural-Forms").utf8_string());
         if (!plForms)
         {
             if (plForms.str().empty())

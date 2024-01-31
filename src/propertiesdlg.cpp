@@ -884,7 +884,7 @@ void PropertiesDialog::TransferTo(const CatalogPtr& cat)
         if (m_hasPlurals)
         {
             PluralFormsExpr pf_def(cat->Header().Lang.DefaultPluralFormsExpr());
-            PluralFormsExpr pf_cat(cat->Header().GetHeader("Plural-Forms").ToStdString());
+            PluralFormsExpr pf_cat(cat->Header().GetHeader("Plural-Forms").utf8_string());
             if (pf_cat.str() == "nplurals=INTEGER; plural=EXPRESSION;")
                 pf_cat = pf_def;
 
@@ -937,7 +937,7 @@ void PropertiesDialog::TransferFrom(const CatalogPtr& cat)
                 // make sure we don't overwrite catalog's expression if the user didn't modify and
                 // it differs only cosmetically from the default
                 PluralFormsExpr pf_def(cat->Header().Lang.DefaultPluralFormsExpr());
-                PluralFormsExpr pf_cat(cat->Header().GetHeader("Plural-Forms").ToStdString());
+                PluralFormsExpr pf_cat(cat->Header().GetHeader("Plural-Forms").utf8_string());
                 if (langChanged || pf_def != pf_cat)
                     cat->Header().SetHeaderNotEmpty("Plural-Forms", pf_def.str());
             }
@@ -1044,7 +1044,7 @@ bool PropertiesDialog::Validate()
             auto form = bidi::strip_control_chars(m_pluralFormsExpr->GetValue());
             if (!form.empty())
             {
-                PluralFormsExpr expr(form.ToStdString());
+                PluralFormsExpr expr(form.utf8_string());
                 if (!expr)
                     m_validatedPlural = 0;
             }

@@ -440,7 +440,7 @@ wxString FileToHTMLMarkup(const wxTextFile& file, const wxString& ext, size_t li
     html += wxString::Format("<pre class=\"line-numbers\">"
                                  "<code>"
                                      "<code class=\"language-%s\">",
-                             FilenameToLanguage(ext.Lower().ToStdString()));
+                             FilenameToLanguage(ext.Lower().utf8_string()));
 
     const size_t count = file.GetLineCount();
     if (lineno && lineno <= count)

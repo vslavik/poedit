@@ -38,7 +38,7 @@ class Exception : public std::runtime_error
 {
 public:
     Exception(const wxString& what)
-        : std::runtime_error(std::string(what.utf8_str())), m_what(what) {}
+        : std::runtime_error(what.utf8_string()), m_what(what) {}
 
     const wxString& What() const { return m_what; }
 

@@ -85,7 +85,7 @@ inline std::wstring to_wstring(const unsigned char *utf8str)
 
 inline std::string to_utf8(const wxString& str)
 {
-    return std::string(str.utf8_str());
+    return str.utf8_string();
 }
 
 inline std::wstring to_wstring(const wxString& str)

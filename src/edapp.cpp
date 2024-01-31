@@ -906,15 +906,16 @@ void PoeditApp::HandleCustomURI(const wxString& uri)
         return;
 
 #ifdef HAVE_HTTP_CLIENT
-    if (CrowdinClient::IsOAuthCallback(uri.ToStdString()))
+    auto uri_utf8 = uri.utf8_string();
+    if (CrowdinClient::IsOAuthCallback(uri_utf8))
     {
-        CrowdinClient::Get().HandleOAuthCallback(uri.ToStdString());
+        CrowdinClient::Get().HandleOAuthCallback(uri_utf8);
         return;
     }
 
-    if (LocalazyClient::IsAuthCallback(uri.ToStdString()))
+    if (LocalazyClient::IsAuthCallback(uri_utf8))
     {
-        LocalazyClient::Get().HandleAuthCallback(uri.ToStdString())
+        LocalazyClient::Get().HandleAuthCallback(uri_utf8)
             .then_on_main([=](std::shared_ptr<LocalazyClient::ProjectInfo> projectToOpen){
                 if (projectToOpen)
                 {

@@ -329,7 +329,7 @@ void Catalog::HeaderData::ParseDict()
         wxString X_Language = GetHeader("X-Poedit-Language");
         wxString X_Country = GetHeader("X-Poedit-Country");
         if ( !X_Language.empty() )
-            Lang = Language::FromLegacyNames(X_Language.ToStdString(), X_Country.ToStdString());
+            Lang = Language::FromLegacyNames(X_Language.utf8_string(), X_Country.utf8_string());
     }
 
     DeleteHeader("X-Poedit-Language");
@@ -1063,7 +1063,7 @@ void Catalog::PostCreation()
             }
             if (!allText.empty())
             {
-                lang = Language::TryDetectFromText(allText.utf8_str());
+                lang = Language::TryDetectFromText(str::to_utf8(allText));
                 wxLogTrace("poedit", "detected translation language is '%s'", GetLanguage().Code());
             }
         }

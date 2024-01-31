@@ -720,7 +720,7 @@ void EditingArea::RecreatePluralTextCtrls(CatalogPtr catalog)
     m_pluralNotebook->DeleteAllPages();
     m_textTransSingularForm = NULL;
 
-    auto plurals = PluralFormsExpr(catalog->Header().GetHeader("Plural-Forms").ToStdString());
+    auto plurals = PluralFormsExpr(catalog->Header().GetHeader("Plural-Forms").utf8_string());
 
     int formsCount = catalog->GetPluralFormsCount();
     for (int form = 0; form < formsCount; form++)
