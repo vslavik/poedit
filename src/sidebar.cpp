@@ -174,7 +174,7 @@ public:
     void Update(const CatalogItemPtr& item) override
     {
         auto comment = wxJoin(item->GetExtractedComments(), '\n', '\0');
-        if (comment.StartsWith("TRANSLATORS:") || comment.StartsWith("translators:"))
+        if (comment.starts_with("TRANSLATORS:") || comment.starts_with("translators:"))
         {
             comment.Remove(0, 12);
             if (!comment.empty() && comment[0] == ' ')

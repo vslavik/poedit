@@ -944,7 +944,7 @@ void PropertiesDialog::TransferFrom(const CatalogPtr& cat)
             else
             {
                 auto pluralForms = bidi::strip_control_chars(m_pluralFormsExpr->GetValue().Strip(wxString::both));
-                if (!pluralForms.empty() && !pluralForms.EndsWith(";"))
+                if (!pluralForms.empty() && !pluralForms.ends_with(";"))
                     pluralForms += ";";
                 cat->Header().SetHeaderNotEmpty("Plural-Forms", pluralForms);
             }

@@ -233,7 +233,7 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id_,
         return wxNullBitmap;
     }
 
-    if (id.EndsWith("Template"))
+    if (id.ends_with("Template"))
         ProcessTemplateImage(icon.image, opaqueVariant, invertedVariant);
 
     if (disabledVariant)

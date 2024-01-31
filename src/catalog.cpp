@@ -706,7 +706,7 @@ bool Catalog::HasSourcesAvailable() const
         auto root = GetSourcesRootPath();
         if (root == wxGetUserHome() ||
             root == wxStandardPaths::Get().GetDocumentsDir() ||
-            root.EndsWith(wxString(wxFILE_SEP_PATH) + "Desktop" + wxFILE_SEP_PATH))
+            root.ends_with(wxString(wxFILE_SEP_PATH) + "Desktop" + wxFILE_SEP_PATH))
         {
             return false;
         }
@@ -850,7 +850,7 @@ wxString CatalogItem::GetFormatFlag() const
     auto format = (space == wxString::npos)
                     ? m_moreFlags.substr(0, pos)
                     : m_moreFlags.substr(space+1, pos-space-1);
-    if (format.StartsWith("no-"))
+    if (format.starts_with("no-"))
         return wxString();
     return format;
 }
@@ -977,9 +977,9 @@ wxString CatalogItem::GetOldMsgid() const
             line.RemoveLast();
         if (line[0] == '"')
             line.Remove(0, 1);
-        if (line.StartsWith("msgid \""))
+        if (line.starts_with("msgid \""))
             line.Remove(0, 7);
-        else if (line.StartsWith("msgid_plural \""))
+        else if (line.starts_with("msgid_plural \""))
             line.replace(0, 14, "\n");
         s += UnescapeCString(line);
     }

@@ -2369,7 +2369,7 @@ void PoeditFrame::FixDuplicatesIfPresent()
     wxString generator = cat->Header().GetHeader("X-Generator");
     wxString gversion;
     if (generator.StartsWith("Poedit ", &gversion) &&
-            !gversion.StartsWith("1.7") && !gversion.StartsWith("1.6") && !gversion.StartsWith("1.5"))
+            !gversion.starts_with("1.7") && !gversion.starts_with("1.6") && !gversion.starts_with("1.5"))
         return;
 
     if (!cat->HasDuplicateItems())

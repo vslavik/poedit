@@ -852,7 +852,7 @@ bool ShouldSyncToCloudAutomatically(CatalogPtr catalog)
     wxFileName f(catalog->GetFileName());
     f.MakeAbsolute();
 
-    return f.GetFullPath().StartsWith(root.GetFullPath());
+    return f.GetFullPath().starts_with(root.GetFullPath());
 }
 
 

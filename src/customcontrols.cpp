@@ -457,7 +457,7 @@ ImageButton::ImageButton(wxWindow *parent, const wxString& bitmapName)
     view.buttonType = NSButtonTypeMomentaryChange;
 #else
     // refresh template icons on theme change (macOS handles automatically):
-    if (bitmapName.EndsWith("Template"))
+    if (bitmapName.ends_with("Template"))
     {
         ColorScheme::SetupWindowColors(this, [=]
         {
@@ -475,7 +475,7 @@ StaticBitmap::StaticBitmap(wxWindow *parent, const wxString& bitmapName)
 {
 #ifndef __WXOSX__
     // refresh template icons on theme change (macOS handles automatically):
-    if (bitmapName.EndsWith("Template"))
+    if (bitmapName.ends_with("Template"))
     {
         ColorScheme::SetupWindowColors(this, [=]
         {

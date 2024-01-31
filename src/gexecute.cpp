@@ -179,7 +179,7 @@ void LogUnrecognizedError(const wxString& err)
     //   Warning: Failed to set locale category LC_NUMERIC to de.
     //   Warning: Failed to set locale category LC_TIME to de.
     //   ...etc...
-    if (err.StartsWith("Warning: Failed to set locale category"))
+    if (err.starts_with("Warning: Failed to set locale category"))
         return;
 #endif // __WXOSX__
 

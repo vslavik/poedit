@@ -220,7 +220,7 @@ void Extractor::CreateGettextExtractors(Extractor::ExtractorsList& into, const S
 
     for (auto& m : sources.TypeMapping)
     {
-        if (m.second.StartsWith("gettext:"))  // e.g. gettext:php
+        if (m.second.starts_with("gettext:"))  // e.g. gettext:php
         {
             auto e = std::make_shared<CustomGettextExtractor>(m.second.AfterFirst(':'));
             if (wxIsWild(m.first))

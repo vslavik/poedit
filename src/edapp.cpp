@@ -757,7 +757,7 @@ int PoeditApp::OpenFiles(const wxArrayString& names, int lineno)
         // associated with it, so that the app can provide explanation to users
         // not familiar with the MO/PO distinction.
         auto n = name.Lower();
-        if (n.EndsWith(".mo") || n.EndsWith(".gmo"))
+        if (n.ends_with(".mo") || n.ends_with(".gmo"))
         {
             wxMessageDialog dlg(nullptr,
                                 _(L"MO files can’t be directly edited in Poedit."),
@@ -852,7 +852,7 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
                 for (size_t i = 0; i < parser.GetParamCount(); i++)
                 {
                     auto fn = parser.GetParam(i);
-                    if (fn.StartsWith("poedit://"))
+                    if (fn.starts_with("poedit://"))
                         client.HandleCustomURI(fn);
                     else
                         client.OpenFile(fn, (int)lineno);
@@ -880,7 +880,7 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
     for (size_t i = 0; i < parser.GetParamCount(); i++)
     {
         auto fn = parser.GetParam(i);
-        if (fn.StartsWith("poedit://"))
+        if (fn.starts_with("poedit://"))
         {
             gs_uriToHandle = fn;
         }
@@ -902,7 +902,7 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
 
 void PoeditApp::HandleCustomURI(const wxString& uri)
 {
-    if (!uri.StartsWith("poedit://"))
+    if (!uri.starts_with("poedit://"))
         return;
 
 #ifdef HAVE_HTTP_CLIENT

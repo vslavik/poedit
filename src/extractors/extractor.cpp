@@ -50,7 +50,7 @@ struct PathToMatch
         if (isWildcard)
             return wxMatchWild(path, fn);
         else
-            return fn == path || fn.StartsWith(path + "/");
+            return fn == path || fn.starts_with(path + "/");
     }
 };
 
