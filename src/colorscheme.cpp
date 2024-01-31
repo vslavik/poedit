@@ -257,7 +257,7 @@ ColorScheme::Mode ColorScheme::GetAppMode()
 #else
         auto colBg = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW);
         auto colFg = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT);
-        s_appMode = (colFg.GetLuminance() > colBg.GetLuminance()) ? Dark : Light;
+        s_appMode = (colFg.GetLuminance() - colBg.GetLuminance() > 0.2) ? Dark : Light;
 #endif
         s_appModeDetermined = true;
     }
@@ -268,6 +268,8 @@ ColorScheme::Mode ColorScheme::GetAppMode()
 
 ColorScheme::Mode ColorScheme::GetWindowMode(wxWindow *win)
 {
+    // TODO: Migrate to using wxSystemAppearance. That is only app-wide, not per-window,
+    //       but I don't think Poedit actually requires per-window handling.
 #ifdef __WXOSX__
     NSView *view = win->GetHandle();
     return IsDarkAppearance(view.effectiveAppearance) ? Dark : Light;
@@ -275,7 +277,7 @@ ColorScheme::Mode ColorScheme::GetWindowMode(wxWindow *win)
     // Use dark scheme for very dark backgrounds:
     auto colBg = win->GetDefaultAttributes().colBg;
     auto colFg = win->GetDefaultAttributes().colFg;
-    return (colFg.GetLuminance() > colBg.GetLuminance()) ? Dark : Light;
+    return (colFg.GetLuminance() - colBg.GetLuminance() > 0.2) ? Dark : Light;
 #endif
 }
 
