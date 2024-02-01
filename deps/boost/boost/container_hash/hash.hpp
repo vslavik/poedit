@@ -38,6 +38,11 @@
 #include <system_error>
 #endif
 
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#endif
+
 #if defined(BOOST_MSVC)
 #pragma warning(push)
 
@@ -747,6 +752,10 @@ namespace boost
 
 #if defined(BOOST_MSVC)
 #pragma warning(pop)
+#endif
+
+#ifdef __clang__
+#pragma clang diagnostic pop
 #endif
 
 #endif // BOOST_FUNCTIONAL_HASH_HASH_HPP
