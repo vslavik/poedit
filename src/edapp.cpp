@@ -720,14 +720,13 @@ wxString PoeditApp::GetCacheDir(const wxString& category)
 
     if (localBaseDir.empty())
     {
+        localBaseDir = wxStandardPaths::Get().GetUserDir(wxStandardPaths::Dir_Cache);
     #if defined(__WXOSX__)
-        localBaseDir = wxGetHomeDir() + "/Library/Caches/net.poedit.Poedit";
-    #elif defined(__UNIX__)
-        if (!wxGetEnv("XDG_CACHE_HOME", &localBaseDir))
-            localBaseDir = wxGetHomeDir() + "/.cache";
-        localBaseDir += "/poedit";
+        localBaseDir += "/net.poedit.Poedit";
+    #elif defined(__WXMSW__)
+        localBaseDir += "\\Poedit\\Cache";
     #else
-        localBaseDir = wxStandardPaths::Get().GetUserDataDir() + wxFILE_SEP_PATH + "Cache";
+        localBaseDir += "/poedit";
     #endif
     }
 
