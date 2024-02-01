@@ -47,6 +47,7 @@
 #include <wx/ipc.h>
 #include <wx/translation.h>
 
+#include <algorithm>
 #include <iostream>
 #include <fstream>
 #include <boost/iostreams/copy.hpp>
@@ -655,6 +656,17 @@ void PoeditApp::SetupOTALanguageUpdate(wxTranslations *trans, const wxString& la
         langMO = "zh_TW";
     else
         langMO.Replace("-", "_");
+
+#if defined(__UNIX__) && !defined(__WXOSX__)
+    // GetBestTranslation() can fall back to the locale there, so check if we ship this translation
+    auto avail = trans->GetAvailableTranslations("poedit");
+    if (std::find(avail.begin(), avail.end(), lang) == avail.end())
+    {
+        langMO = lang.BeforeFirst('_');
+        if (std::find(avail.begin(), avail.end(), langMO) == avail.end())
+            return;
+    }
+#endif
 
     auto version = str::to_utf8(GetMajorAppVersion());
 
