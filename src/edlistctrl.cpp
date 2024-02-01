@@ -656,9 +656,7 @@ void PoeditListCtrl::CreateColumns()
     int iconWidth = PX(16);
 #endif
 
-    auto iconRenderer = new wxDataViewBitmapRenderer("wxIcon", wxDATAVIEW_CELL_INERT, wxALIGN_CENTER | wxALIGN_CENTRE_VERTICAL);
-    m_colIcon = new wxDataViewColumn(L"∙", iconRenderer, Model::Col_Icon, iconWidth, wxALIGN_CENTER, 0);
-    AppendColumn(m_colIcon);
+    m_colIcon = AppendBitmapColumn(L"∙", Model::Col_Icon, wxDATAVIEW_CELL_INERT, iconWidth, wxALIGN_CENTER, 0);
 
     auto sourceRenderer = new DataViewMarkupRenderer();
     sourceRenderer->EnableEllipsize(wxELLIPSIZE_END);
