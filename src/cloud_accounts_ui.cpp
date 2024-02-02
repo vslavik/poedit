@@ -603,6 +603,7 @@ private:
     {
         SortAlphabetically(m_projects, [](const auto& p){ return p.name; });
 
+        m_project->Clear();
         m_project->Append("");
         for (auto& p: m_projects)
             m_project->Append(p.name);
@@ -732,9 +733,8 @@ private:
 
     void OnManageAccounts(wxHyperlinkEvent&)
     {
-        ManageAccounts<CloudEditLoginDialog<AccountsPanel>>([=](bool ok){
-            if (ok)
-                LoadFromCloud(nullptr);
+        ManageAccounts<CloudEditLoginDialog<AccountsPanel>>([=](bool /*ok*/) {
+            LoadFromCloud(nullptr);
         });
     }
 
