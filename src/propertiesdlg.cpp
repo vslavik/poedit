@@ -235,7 +235,6 @@ public:
                                                   wxST_ELLIPSIZE_MIDDLE | wxST_NO_AUTORESIZE)
     {
     #ifdef __WXMSW__
-        SetBackgroundColour(*wxWHITE);
         SetForegroundColour(wxColour("#58595C"));
     #endif
     }
@@ -257,8 +256,6 @@ public:
     {
 #if defined(__WXOSX__)
         SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-#elif defined(__WXMSW__)
-        SetBackgroundColour(*wxWHITE);
 #endif
 
         auto sizer = new wxBoxSizer(wxVERTICAL);
@@ -313,6 +310,7 @@ public:
         m_list->Bind(wxEVT_CONTEXT_MENU, &PathsList::OnRightClick, this);
 
 #ifdef __WXMSW__
+        m_placeholder->SetBackgroundColour(m_list->GetBackgroundColour());
         m_list->Bind(wxEVT_SET_FOCUS, [=](wxFocusEvent& e){
             e.Skip();
             m_placeholder->Lower(); // move to the top in Z-order, above the list (yeah, really)
