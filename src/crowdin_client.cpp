@@ -471,7 +471,7 @@ std::wstring CrowdinClient::CreateLocalFilename(const ProjectInfo& project, cons
     std::replace_if(file_name.begin(), file_name.end(), boost::is_any_of("\\/:\"<>|?*"), '_');
 
     // NB: sync this with ExtractMetadata()
-    const wxString dir = project_name + " - " + lang.Code();
+    const wxString dir = project_name + L" - " + lang.WCode();
     wxFileName localFileName(dir + wxString::Format("/Crowdin.%d.%d.%s %s", project_id, internal->id, lang.LanguageTag(), file_name));
 
     auto ext = localFileName.GetExt().Lower();

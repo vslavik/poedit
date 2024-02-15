@@ -384,9 +384,9 @@ Language Language::TryParse(const std::wstring& s)
     if (IsValidCode(s))
         return Language(s);
 
-    if (s == "zh-Hans")
+    if (s == L"zh-Hans")
         return Language("zh_CN");
-    else if (s == "zh-Hant")
+    else if (s == L"zh-Hant")
         return Language("zh_TW");
 
     // Is it a standard language code?
