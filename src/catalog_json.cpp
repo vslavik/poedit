@@ -300,12 +300,12 @@ public:
     void SetLanguage(Language lang) override
     {
         JSONCatalog::SetLanguage(lang);
-        m_doc["@@locale"] = lang.LanguageTag();
+        m_doc["@@locale"] = lang.Code();
     }
 
     void Parse() override
     {
-        m_language = Language::FromLanguageTag(m_doc.value("@@locale", ""));
+        m_language = Language::TryParse(m_doc.value("@@locale", ""));
 
         int id = 0;
         ParseSubtree(id, m_doc, "");
