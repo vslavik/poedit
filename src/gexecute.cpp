@@ -28,6 +28,7 @@
 #include <wx/process.h>
 #include <wx/thread.h>
 #include <wx/txtstrm.h>
+#include <wx/scopedptr.h>
 #include <wx/string.h>
 #include <wx/intl.h>
 #include <wx/stdpaths.h>
