@@ -128,6 +128,8 @@ std::pair<long, wxArrayString> DoExecuteGettextImpl(const wxString& cmdline_)
     env.env["OUTPUT_CHARSET"] = "UTF-8";
 
     wxString lang = wxTranslations::Get()->GetBestTranslation("gettext-tools");
+    if ( lang.starts_with("en@") )
+        lang = "en"; // don't want things like en@blockquot
 	if ( !lang.empty() )
         env.env["LANG"] = lang;
 #endif // __WXOSX__ || __WXMSW__

@@ -586,6 +586,19 @@ void PoeditApp::SetupLanguage()
     wxTranslations *trans = new wxTranslations();
     wxTranslations::Set(trans);
 
+    // workaround wx bug, see https://github.com/wxWidgets/wxWidgets/pull/24297
+    class PoeditTranslationsLoader : public wxFileTranslationsLoader
+    {
+    public:
+        wxArrayString GetAvailableTranslations(const wxString& domain) const override
+        {
+            auto all = wxFileTranslationsLoader::GetAvailableTranslations(domain);
+            all.push_back("en");
+            return all;
+        }
+    };
+    trans->SetLoader(new PoeditTranslationsLoader);
+
     int language = wxLANGUAGE_DEFAULT;
 
 #if NEED_CHOOSELANG_UI
