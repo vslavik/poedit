@@ -445,8 +445,8 @@ Language Language::FromLanguageTag(const std::string& tag)
 
     char locale[512];
     UErrorCode status = U_ZERO_ERROR;
-    uloc_forLanguageTag(tag.c_str(), locale, 512, NULL, &status);
-    if (U_FAILURE(status))
+    auto len = uloc_forLanguageTag(tag.c_str(), locale, 512, NULL, &status);
+    if (U_FAILURE(status) || !len)
         return Language();
 
     Language lang;
