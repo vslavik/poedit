@@ -110,11 +110,7 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
             return mode == Dark ? sRGB(180, 222, 254) : sRGB(70, 109, 137);
         case Color::ItemContextBg:
             if (mode == Dark)
-                #if wxCHECK_VERSION(3,1,0)
                 return sRGB(67, 94, 147, 0.6);
-                #else  // see https://github.com/vslavik/poedit/issues/524
-                return sRGB(67, 94, 147);
-                #endif
             else
                 return sRGB(217, 232, 242);
         case Color::ItemContextBgHighlighted:
@@ -260,12 +256,8 @@ ColorScheme::Mode ColorScheme::GetAppMode()
         s_appMode = IsDarkAppearance(NSApp.effectiveAppearance) ? Dark : Light;
 #else
         auto colBg = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW);
-    #if wxCHECK_VERSION(3,1,3)
         auto colFg = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT);
-        s_appMode = (colFg.GetLuminance() > colBg.GetLuminance()) ? Dark : Light;
-    #else
-        s_appMode = (colBg.Red() < 0x60 && colBg.Green() < 0x60 && colBg.Blue() < 0x60) ? Dark : Light;
-    #endif
+        s_appMode = (colFg.GetLuminance() - colBg.GetLuminance() > 0.2) ? Dark : Light;
 #endif
         s_appModeDetermined = true;
     }
@@ -276,18 +268,16 @@ ColorScheme::Mode ColorScheme::GetAppMode()
 
 ColorScheme::Mode ColorScheme::GetWindowMode(wxWindow *win)
 {
+    // TODO: Migrate to using wxSystemAppearance. That is only app-wide, not per-window,
+    //       but I don't think Poedit actually requires per-window handling.
 #ifdef __WXOSX__
     NSView *view = win->GetHandle();
     return IsDarkAppearance(view.effectiveAppearance) ? Dark : Light;
 #else
     // Use dark scheme for very dark backgrounds:
     auto colBg = win->GetDefaultAttributes().colBg;
-  #if wxCHECK_VERSION(3,1,3)
     auto colFg = win->GetDefaultAttributes().colFg;
-    return (colFg.GetLuminance() > colBg.GetLuminance()) ? Dark : Light;
-  #else
-    return (colBg.Red() < 0x60 && colBg.Green() < 0x60 && colBg.Blue() < 0x60) ? Dark : Light;
-  #endif
+    return (colFg.GetLuminance() - colBg.GetLuminance() > 0.2) ? Dark : Light;
 #endif
 }
 

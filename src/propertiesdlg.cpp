@@ -42,14 +42,9 @@
 #include <wx/sizer.h>
 #include <wx/stattext.h>
 #include <wx/menu.h>
+#include <wx/nativewin.h>
 #include <wx/notebook.h>
 #include <wx/windowptr.h>
-
-#include <wx/nativewin.h>
-#if !wxCHECK_VERSION(3,1,0)
-  #include "wx_backports/nativewin.h"
-#endif
-
 
 #include <algorithm>
 #include <functional>
@@ -72,7 +67,7 @@ namespace
 inline wxString NormalizedPath(const wxString& fn, wxPathFormat format)
 {
     auto f = MakeFileName(fn);
-    f.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
+    f.MakeAbsolute();
     return f.GetFullPath(format);
 }
 
@@ -240,7 +235,6 @@ public:
                                                   wxST_ELLIPSIZE_MIDDLE | wxST_NO_AUTORESIZE)
     {
     #ifdef __WXMSW__
-        SetBackgroundColour(*wxWHITE);
         SetForegroundColour(wxColour("#58595C"));
     #endif
     }
@@ -262,8 +256,6 @@ public:
     {
 #if defined(__WXOSX__)
         SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-#elif defined(__WXMSW__)
-        SetBackgroundColour(*wxWHITE);
 #endif
 
         auto sizer = new wxBoxSizer(wxVERTICAL);
@@ -318,6 +310,7 @@ public:
         m_list->Bind(wxEVT_CONTEXT_MENU, &PathsList::OnRightClick, this);
 
 #ifdef __WXMSW__
+        m_placeholder->SetBackgroundColour(m_list->GetBackgroundColour());
         m_list->Bind(wxEVT_SET_FOCUS, [=](wxFocusEvent& e){
             e.Skip();
             m_placeholder->Lower(); // move to the top in Z-order, above the list (yeah, really)
@@ -689,11 +682,7 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
     m_pluralFormsDefault = XRCCTRL(*this, "plural_forms_default", wxRadioButton);
     m_pluralFormsCustom = XRCCTRL(*this, "plural_forms_custom", wxRadioButton);
     m_pluralFormsExpr = XRCCTRL(*this, "plural_forms_expr", wxTextCtrl);
-#if defined(__WXMSW__) && !wxCHECK_VERSION(3,1,0)
-    m_pluralFormsExpr->SetFont(SmallerFont(m_pluralFormsExpr->GetFont()));
-#else
     m_pluralFormsExpr->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-#endif
 
     if (!m_hasLang)
     {
@@ -893,7 +882,7 @@ void PropertiesDialog::TransferTo(const CatalogPtr& cat)
         if (m_hasPlurals)
         {
             PluralFormsExpr pf_def(cat->Header().Lang.DefaultPluralFormsExpr());
-            PluralFormsExpr pf_cat(cat->Header().GetHeader("Plural-Forms").ToStdString());
+            PluralFormsExpr pf_cat(cat->Header().GetHeader("Plural-Forms").utf8_string());
             if (pf_cat.str() == "nplurals=INTEGER; plural=EXPRESSION;")
                 pf_cat = pf_def;
 
@@ -946,14 +935,14 @@ void PropertiesDialog::TransferFrom(const CatalogPtr& cat)
                 // make sure we don't overwrite catalog's expression if the user didn't modify and
                 // it differs only cosmetically from the default
                 PluralFormsExpr pf_def(cat->Header().Lang.DefaultPluralFormsExpr());
-                PluralFormsExpr pf_cat(cat->Header().GetHeader("Plural-Forms").ToStdString());
+                PluralFormsExpr pf_cat(cat->Header().GetHeader("Plural-Forms").utf8_string());
                 if (langChanged || pf_def != pf_cat)
                     cat->Header().SetHeaderNotEmpty("Plural-Forms", pf_def.str());
             }
             else
             {
                 auto pluralForms = bidi::strip_control_chars(m_pluralFormsExpr->GetValue().Strip(wxString::both));
-                if (!pluralForms.empty() && !pluralForms.EndsWith(";"))
+                if (!pluralForms.empty() && !pluralForms.ends_with(";"))
                     pluralForms += ";";
                 cat->Header().SetHeaderNotEmpty("Plural-Forms", pluralForms);
             }
@@ -1053,7 +1042,7 @@ bool PropertiesDialog::Validate()
             auto form = bidi::strip_control_chars(m_pluralFormsExpr->GetValue());
             if (!form.empty())
             {
-                PluralFormsExpr expr(form.ToStdString());
+                PluralFormsExpr expr(form.utf8_string());
                 if (!expr)
                     m_validatedPlural = 0;
             }

@@ -59,11 +59,11 @@ void LoadPNGImage(wxImage& img, const wxString& filename)
 
 } // anonymous namespace
 
-wxImage LoadScaledBitmap(const wxString& name)
+ScaledImage LoadScaledBitmap(const wxString& name)
 {
     const wxString filename(name + ".png");
     if (!wxFileExists(filename))
-        return wxNullImage;
+        return ScaledImage();
 
     wxImage img;
 
@@ -85,7 +85,7 @@ wxImage LoadScaledBitmap(const wxString& name)
             {
                 LoadPNGImage(img, filename_15x);
                 if (img.IsOk())
-                    return img;
+                    return { img, 1.5 };
             }
         }
 
@@ -95,7 +95,7 @@ wxImage LoadScaledBitmap(const wxString& name)
         {
             LoadPNGImage(img, filename_2x);
             if (screenScaling > 1.75 && screenScaling <= 2.50)  // @2x is reasonable
-                return img;
+                return { img, 2.0 };
             else
                 imgScale /= 2.0;
         }
@@ -105,8 +105,9 @@ wxImage LoadScaledBitmap(const wxString& name)
         }
 
         if (!img.IsOk())
-            return wxNullImage;
+            return ScaledImage();
 
+        // TODO: avoid this scaling altogether
         wxImageResizeQuality quality;
         if (imgScale == 2.0)
             quality = wxIMAGE_QUALITY_NEAREST;
@@ -115,11 +116,11 @@ wxImage LoadScaledBitmap(const wxString& name)
         else
             quality = wxIMAGE_QUALITY_BICUBIC;
         img.Rescale(img.GetWidth() * imgScale, img.GetHeight() * imgScale, quality);
-        return img;
+        return { img, screenScaling };
     }
     // else if screenScaling <= 1.25: @1x size is good enough, load normally
 #endif
 
     LoadPNGImage(img, filename);
-    return img;
+    return { img, 1.0 };
 }

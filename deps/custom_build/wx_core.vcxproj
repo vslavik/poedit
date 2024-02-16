@@ -129,6 +129,10 @@
     <ClCompile Include="..\wx\src\common\artprov.cpp" />
     <ClCompile Include="..\wx\src\common\artstd.cpp" />
     <ClCompile Include="..\wx\src\common\bmpbase.cpp" />
+    <ClCompile Include="..\wx\src\common\bmpbndl.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)%(Filename)_common.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)%(Filename)_common.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\wx\src\common\bmpbtncmn.cpp" />
     <ClCompile Include="..\wx\src\common\bookctrl.cpp" />
     <ClCompile Include="..\wx\src\common\btncmn.cpp" />
@@ -234,8 +238,10 @@
     <ClCompile Include="..\wx\src\common\windowid.cpp" />
     <ClCompile Include="..\wx\src\common\wrapsizer.cpp" />
     <ClCompile Include="..\wx\src\common\xpmdecod.cpp" />
+    <ClCompile Include="..\wx\src\generic\bmpsvg.cpp" />
     <ClCompile Include="..\wx\src\generic\collheaderctrlg.cpp" />
     <ClCompile Include="..\wx\src\msw\accel.cpp" />
+    <ClCompile Include="..\wx\src\msw\bmpbndl.cpp" />
     <ClCompile Include="..\wx\src\msw\customdraw.cpp" />
     <ClCompile Include="..\wx\src\msw\graphicsd2d.cpp" />
     <ClCompile Include="..\wx\src\msw\ole\access.cpp" />
@@ -373,6 +379,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\wx\include\wx\bmpbndl.h" />
     <ClInclude Include="..\wx\include\wx\msw\accel.h" />
     <ClInclude Include="..\wx\include\wx\msw\ole\access.h" />
     <ClInclude Include="..\wx\include\wx\msw\ole\activex.h" />

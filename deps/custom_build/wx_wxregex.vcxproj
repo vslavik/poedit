@@ -10,6 +10,35 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_auto_possess.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_chartables.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_compile.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_config.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_context.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_convert.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_dfa_match.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_error.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_extuni.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_find_bracket.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_jit_compile.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_maketables.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_match.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_match_data.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_newline.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_ord2utf.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_pattern_info.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_script_run.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_serialize.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_string_utils.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_study.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_substitute.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_substring.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_tables.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_ucd.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_valid_utf.c" />
+    <ClCompile Include="..\wx\3rdparty\pcre\src\pcre2_xclass.c" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>wxWidgets_wxregex</ProjectName>
     <ProjectGuid>{56A4B526-BB81-5D01-AAA9-16D23BBB169D}</ProjectGuid>
@@ -57,8 +86,8 @@
     <ClCompile>
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\wx\include;config;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_LIB;_DEBUG;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;NDEBUG;_CRT_SECURE_NO_WARNINGS;__WXMSW__;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\wx\include;..\wx\3rdparty\pcre\src\wx;config;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;WIN32;_LIB;_DEBUG;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;NDEBUG;_CRT_SECURE_NO_WARNINGS;__WXMSW__;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Sync</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -92,8 +121,8 @@
     <ClCompile>
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
       <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>..\wx\include;config;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;NDEBUG;_CRT_SECURE_NO_WARNINGS;__WXMSW__;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\wx\include;..\wx\3rdparty\pcre\src\wx;config;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;WIN32;_LIB;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;NDEBUG;_CRT_SECURE_NO_WARNINGS;__WXMSW__;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -117,12 +146,6 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Bscmake>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\wx\src\regex\regcomp.c" />
-    <ClCompile Include="..\wx\src\regex\regerror.c" />
-    <ClCompile Include="..\wx\src\regex\regexec.c" />
-    <ClCompile Include="..\wx\src\regex\regfree.c" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

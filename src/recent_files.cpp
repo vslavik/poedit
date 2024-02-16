@@ -184,6 +184,8 @@ private:
             return wxBitmap(image);
         }
 #endif
+
+        icon.SetScaleFactor(HiDPIScalingFactor());
         return icon;
     }
 
@@ -206,13 +208,13 @@ wxString pretty_print_path(wxFileName f)
 
     auto cloud = wxFileName::DirName(PoeditApp::GetCacheDir("Cloud"));
     cloud.ReplaceHomeDir();
-    if (path.StartsWith(cloud.GetFullPath()))
+    if (path.starts_with(cloud.GetFullPath()))
         path = _("Cloud") + L" → " + path.substr(cloud.GetFullPath().length());
 
 #ifdef __WXMSW__
     // ReplaceHomeDir() puts tilde at the beginning to replace $HOME, but this is uncommon on Windows,
     // so remove it and just use plain path:
-    if (path.StartsWith("~\\"))
+    if (path.starts_with("~\\"))
         path = path.substr(2);
 #endif
 
@@ -243,7 +245,7 @@ public:
 
     void NoteRecentFile(wxFileName fn)
     {
-        fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
+        fn.MakeAbsolute();
         NSURL *url = [NSURL fileURLWithPath:str::to_NS(fn.GetFullPath())];
         [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:url];
     }
@@ -353,7 +355,7 @@ public:
 
     void NoteRecentFile(wxFileName fn)
     {
-        fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
+        fn.MakeAbsolute();
         m_history.AddFileToHistory(fn.GetFullPath());
 
         UpdateAfterChange();

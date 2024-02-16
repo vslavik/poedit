@@ -279,6 +279,7 @@ void LocalazyLoginPanel::UpdateUserInfo()
             auto dummyIcon = wxArtProvider::GetIcon("AccountLocalazy");
         #else
             auto dummyIcon = wxArtProvider::GetIcon("AccountLocalazy", wxART_OTHER, wxSize(PX(16), PX(16)));
+            dummyIcon.SetScaleFactor(HiDPIScalingFactor());
         #endif
 
             unsigned idx = 0;
@@ -307,6 +308,7 @@ void LocalazyLoginPanel::UpdateUserInfo()
                         {
                             img.Rescale(PX(16), PX(16));
                             bitmap = wxBitmap(img);
+                            bitmap.SetScaleFactor(HiDPIScalingFactor());                            
                         }
                     #endif
                         if (bitmap.IsOk())

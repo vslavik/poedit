@@ -533,9 +533,9 @@ wxString POCatalogParser::ReadTextLine()
 
         // gettext tools don't include (extracted) comments in wrapping, so they can't
         // be reliably used to detect file's wrapping either; just skip them.
-        if (!ln.StartsWith(wxS("#. ")) && !ln.StartsWith(wxS("# ")))
+        if (!ln.starts_with(wxS("#. ")) && !ln.starts_with(wxS("# ")))
         {
-            if (ln.EndsWith(wxS("\\n\"")))
+            if (ln.ends_with(wxS("\\n\"")))
             {
                 // Similarly, lines ending with \n are always wrapped, so skip that too.
                 m_lastLineHardWrapped = true;
@@ -737,7 +737,7 @@ bool POLoadParser::OnEntry(const wxString& msgid,
             // https://groups.google.com/d/topic/poedit/j41KuvXtVUU/discussion
             // As a workaround, just filter them out.
             // FIXME: Fix this properly... but not using msgcat in the first place
-            if (i.StartsWith(MSGCAT_CONFLICT_MARKER) && i.EndsWith(MSGCAT_CONFLICT_MARKER))
+            if (i.starts_with(MSGCAT_CONFLICT_MARKER) && i.ends_with(MSGCAT_CONFLICT_MARKER))
                 continue;
             d->AddExtractedComments(i);
         }
@@ -1015,7 +1015,7 @@ void POCatalog::FixupCommonIssues()
 
     if (!pluralForms.empty())
     {
-        if (!pluralForms.EndsWith(";"))
+        if (!pluralForms.ends_with(";"))
         {
             pluralForms += ";";
             m_header.SetHeader("Plural-Forms", pluralForms);

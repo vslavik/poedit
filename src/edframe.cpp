@@ -2369,7 +2369,7 @@ void PoeditFrame::FixDuplicatesIfPresent()
     wxString generator = cat->Header().GetHeader("X-Generator");
     wxString gversion;
     if (generator.StartsWith("Poedit ", &gversion) &&
-            !gversion.StartsWith("1.7") && !gversion.StartsWith("1.6") && !gversion.StartsWith("1.5"))
+            !gversion.starts_with("1.7") && !gversion.starts_with("1.6") && !gversion.starts_with("1.5"))
         return;
 
     if (!cat->HasDuplicateItems())
@@ -2451,7 +2451,7 @@ void PoeditFrame::WarnAboutLanguageIssues()
         }
 
         // FIXME: make this part of global error checking
-        PluralFormsExpr plForms(po_cat->Header().GetHeader("Plural-Forms").ToStdString());
+        PluralFormsExpr plForms(po_cat->Header().GetHeader("Plural-Forms").utf8_string());
         if (!plForms)
         {
             if (plForms.str().empty())
@@ -2676,7 +2676,6 @@ void PoeditFrame::UpdateTitle()
     if (subtitle == "PROJECT VERSION")
         subtitle.clear();
 
-#if wxCHECK_VERSION(3,1,5)
     if (m_catalog->GetLanguage().IsValid())
     {
         // add language to the subtitle, but only if not part of the filename already
@@ -2692,7 +2691,6 @@ void PoeditFrame::UpdateTitle()
             }
         }
     }
-#endif
 
 #ifdef __WXOSX__
     if (@available(macOS 11.0, *))

@@ -135,7 +135,7 @@ FileViewer::FileViewer(wxWindow*)
 #endif
     m_topBarSizer->Add(m_openInEditor, wxSizerFlags().Center().ReserveSpaceEvenIfHidden().Border(wxLEFT, PX(10)));
 
-    sizer->Add(new StaticLine(panel, wxID_ANY), wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, PX(5)));
+    sizer->Add(new wxStaticLine(panel, wxID_ANY), wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, PX(5)));
 
 #ifdef __WXMSW__
     if (wxWebView::IsBackendAvailable(wxWebViewBackendEdge))
@@ -440,7 +440,7 @@ wxString FileToHTMLMarkup(const wxTextFile& file, const wxString& ext, size_t li
     html += wxString::Format("<pre class=\"line-numbers\">"
                                  "<code>"
                                      "<code class=\"language-%s\">",
-                             FilenameToLanguage(ext.Lower().ToStdString()));
+                             FilenameToLanguage(ext.Lower().utf8_string()));
 
     const size_t count = file.GetLineCount();
     if (lineno && lineno <= count)

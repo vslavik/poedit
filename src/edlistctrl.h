@@ -161,14 +161,7 @@ class PoeditListCtrl : public wxDataViewCtrl
             EnsureVisible(item);
 
         #ifndef __WXOSX__
-          #if wxCHECK_VERSION(3,1,1)
             wxDataViewEvent event(wxEVT_DATAVIEW_SELECTION_CHANGED, this, item);
-          #else
-            wxDataViewEvent event(wxEVT_DATAVIEW_SELECTION_CHANGED, GetId());
-            event.SetEventObject(this);
-            event.SetModel(GetModel());
-            event.SetItem(item);
-          #endif
             ProcessWindowEvent(event);
         #endif
         }

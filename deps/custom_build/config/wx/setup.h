@@ -477,6 +477,14 @@
 // Recommended setting: 1 (but may be safely disabled if you don't use it)
 #define wxUSE_SECRETSTORE   0
 
+// Allow the use of the OS built-in spell checker in wxTextCtrl.
+//
+// Default is 1, the corresponding wxTextCtrl functions simply won't do
+// anything if the functionality is not supported by the current platform.
+//
+// Recommended setting: 1 unless you want to save a tiny bit of code.
+#define wxUSE_SPELLCHECK 0
+
 // Use wxStandardPaths class which allows to retrieve some standard locations
 // in the file system
 //
@@ -1547,6 +1555,12 @@
 
 // Set to 1 for TGA format support (loading only)
 #define wxUSE_TGA           0
+
+// Set to 1 for SVG rasterizing support using nanosvg
+#define wxUSE_NANOSVG       0
+
+// Set to 1 to use external nanosvg library when wxUSE_NANOSVG is enabled
+#define wxUSE_NANOSVG_EXTERNAL 0
 
 // Set to 1 for GIF format support
 #define wxUSE_GIF           0

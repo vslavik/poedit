@@ -367,7 +367,7 @@ public:
         }
         else if (!s_punct && t_punct)
         {
-            if (t_last == '.' && (source.EndsWith("st") || source.EndsWith("nd") || source.EndsWith("th")))
+            if (t_last == '.' && (source.ends_with("st") || source.ends_with("nd") || source.ends_with("th")))
             {
                 // special-case English ordinals to languages that use [number].
             }
@@ -380,7 +380,7 @@ public:
         }
         else if (s_punct && t_punct && s_last != t_last)
         {
-            if (IsEquivalent(L'…', t_last) && source.EndsWith("..."))
+            if (IsEquivalent(L'…', t_last) && source.ends_with("..."))
             {
                 // as a special case, allow translating ... (3 dots) as … (ellipsis)
             }

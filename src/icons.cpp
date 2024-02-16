@@ -217,43 +217,46 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id_,
         return wxNullBitmap;
     }
 
-    wxString icon;
-    icon.Printf("%s/%s", iconsdir, id);
-    wxLogTrace("poedit.icons", "loading from %s", icon);
-    wxImage img;
-    if (ColorScheme::GetAppMode() == ColorScheme::Dark)
-        img = LoadScaledBitmap(icon + "Dark");
-    if (!img.IsOk())
-        img = LoadScaledBitmap(icon);
+    wxString iconfile;
+    iconfile.Printf("%s/%s", iconsdir, id);
+    wxLogTrace("poedit.icons", "loading from %s", iconfile);
+    ScaledImage icon;
 
-    if (!img.IsOk())
+    if (ColorScheme::GetAppMode() == ColorScheme::Dark)
+        icon = LoadScaledBitmap(iconfile + "Dark");
+    if (!icon.IsOk())
+        icon = LoadScaledBitmap(iconfile);
+
+    if (!icon.IsOk())
     {
         wxLogTrace("poedit.icons", "failed to load icon '%s'", id);
         return wxNullBitmap;
     }
 
-    if (id.EndsWith("Template"))
-        ProcessTemplateImage(img, opaqueVariant, invertedVariant);
+    if (id.ends_with("Template"))
+        ProcessTemplateImage(icon.image, opaqueVariant, invertedVariant);
 
     if (disabledVariant)
-        img = img.ConvertToDisabled();
+        icon.image = icon.image.ConvertToDisabled();
 
     if (wxTheApp->GetLayoutDirection() == wxLayout_RightToLeft && ShouldBeMirorredInRTL(id, client))
     {
-        img = img.Mirror();
+        icon.image = icon.image.Mirror();
     }
 
 #ifdef __WXMSW__
     if (client == wxART_TOOLBAR && IsWindows10OrGreater())
     {
         const int padding = PX(1);
-        auto sz = img.GetSize();
+        auto sz = icon.image.GetSize();
         sz.IncBy(padding * 2);
-        img.Resize(sz, wxPoint(padding, padding));
+        icon.image.Resize(sz, wxPoint(padding, padding));
     }
 #endif // __WXMSW__
 
-    return wxBitmap(img);
+    auto bitmap = wxBitmap(icon.image);
+    bitmap.SetScaleFactor(icon.scale);
+    return bitmap;
 }
 
 #endif // !__WXOSX__

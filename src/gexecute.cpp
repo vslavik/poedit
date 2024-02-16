@@ -28,6 +28,7 @@
 #include <wx/process.h>
 #include <wx/thread.h>
 #include <wx/txtstrm.h>
+#include <wx/scopedptr.h>
 #include <wx/string.h>
 #include <wx/intl.h>
 #include <wx/stdpaths.h>
@@ -127,6 +128,8 @@ std::pair<long, wxArrayString> DoExecuteGettextImpl(const wxString& cmdline_)
     env.env["OUTPUT_CHARSET"] = "UTF-8";
 
     wxString lang = wxTranslations::Get()->GetBestTranslation("gettext-tools");
+    if ( lang.starts_with("en@") )
+        lang = "en"; // don't want things like en@blockquot
 	if ( !lang.empty() )
         env.env["LANG"] = lang;
 #endif // __WXOSX__ || __WXMSW__
@@ -179,7 +182,7 @@ void LogUnrecognizedError(const wxString& err)
     //   Warning: Failed to set locale category LC_NUMERIC to de.
     //   Warning: Failed to set locale category LC_TIME to de.
     //   ...etc...
-    if (err.StartsWith("Warning: Failed to set locale category"))
+    if (err.starts_with("Warning: Failed to set locale category"))
         return;
 #endif // __WXOSX__
 

@@ -55,6 +55,8 @@ const wchar_t* Symbol_ChromClose = L"\U0000E8BB";
 wxBitmap RenderButton(const wxSize& size, const wxFont& font, const wxColour& bg, const wxColour& fg)
 {
     wxBitmap bmp(size);
+    bmp.SetScaleFactor(HiDPIScalingFactor());
+
     {
         wxMemoryDC dc(bmp);
         dc.SetBackground(bg);

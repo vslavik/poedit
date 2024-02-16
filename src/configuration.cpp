@@ -220,7 +220,7 @@ bool Config::Read(const std::string& key, std::string *out)
     wxString s;
     if (!wxConfig::Get()->Read(key, &s))
         return false;
-    *out = s.ToStdString();
+    *out = s.utf8_string();
     return true;
 }
 

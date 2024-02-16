@@ -50,10 +50,6 @@
 #include <wx/time.h>
 #include <wx/wupdlock.h>
 
-#if !wxCHECK_VERSION(3,1,0)
-    #define CenterVertical() Center()
-#endif
-
 #include <algorithm>
 
 
@@ -178,7 +174,7 @@ public:
     void Update(const CatalogItemPtr& item) override
     {
         auto comment = wxJoin(item->GetExtractedComments(), '\n', '\0');
-        if (comment.StartsWith("TRANSLATORS:") || comment.StartsWith("translators:"))
+        if (comment.starts_with("TRANSLATORS:") || comment.starts_with("translators:"))
         {
             comment.Remove(0, 12);
             if (!comment.empty() && comment[0] == ' ')
@@ -442,10 +438,8 @@ private:
             {
 #if defined(__WXOSX__)
                 gc->DrawRoundedRectangle(rect.x, rect.y, rect.width, rect.height, PX(5));
-#elif wxCHECK_VERSION(3,1,1)
-                gc->DrawRoundedRectangle(rect.x, rect.y, rect.width, rect.height, PX(2));
 #else
-                gc->DrawRectangle(rect.x, rect.y, rect.width, rect.height);
+                gc->DrawRoundedRectangle(rect.x, rect.y, rect.width, rect.height, PX(2));
 #endif
             }
         }

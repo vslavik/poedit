@@ -28,9 +28,9 @@
 
 #include <wx/defs.h>
 #include <wx/font.h>
+#include <wx/image.h>
 
 class WXDLLIMPEXP_FWD_BASE wxString;
-class WXDLLIMPEXP_FWD_CORE wxImage;
 
 #ifdef __WXMSW__
     #define NEEDS_MANUAL_HIDPI 1
@@ -53,12 +53,7 @@ inline bool IsHiDPI() { return g_pxScalingFactor > 1.0; }
  */
 #define PX(x) (int(((x) * g_pxScalingFactor) + 0.5))
 
-#if wxCHECK_VERSION(3,1,0)
-    #define PXDefaultBorder wxSizerFlags::GetDefaultBorder()
-#else
-    #define PXDefaultBorder PX(wxSizerFlags::GetDefaultBorder())
-#endif
-
+#define PXDefaultBorder wxSizerFlags::GetDefaultBorder()
 #define PXBorder(dir) Border(dir, PXDefaultBorder)
 #define PXDoubleBorder(dir) Border(dir, 2 * PXDefaultBorder)
 
@@ -95,6 +90,16 @@ inline wxFont SmallerFont(const wxFont& font)
 }
 
 
+// helper for handling scaled images
+// TODO: replace with use of wxBitmapBundle & remove #include <wx/image.h>
+struct ScaledImage
+{
+    wxImage image;
+    double scale = 1.0;
+
+    bool IsOk() const { return image.IsOk(); }
+};
+
 /**
     Load image from given PNG file.
 
@@ -104,6 +109,6 @@ inline wxFont SmallerFont(const wxFont& font)
 
     Note that @a name is given *without* the ".png" extension.
  */
-extern wxImage LoadScaledBitmap(const wxString& name);
+extern ScaledImage LoadScaledBitmap(const wxString& name);
 
 #endif // Poedit_hidpi_h

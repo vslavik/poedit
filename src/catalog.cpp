@@ -329,7 +329,7 @@ void Catalog::HeaderData::ParseDict()
         wxString X_Language = GetHeader("X-Poedit-Language");
         wxString X_Country = GetHeader("X-Poedit-Country");
         if ( !X_Language.empty() )
-            Lang = Language::FromLegacyNames(X_Language.ToStdString(), X_Country.ToStdString());
+            Lang = Language::FromLegacyNames(X_Language.utf8_string(), X_Country.utf8_string());
     }
 
     DeleteHeader("X-Poedit-Language");
@@ -602,7 +602,7 @@ wxString Catalog::GetTypesFileMask(std::initializer_list<Type> types)
 void Catalog::SetFileName(const wxString& fn)
 {
     wxFileName f(fn);
-    f.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
+    f.MakeAbsolute();
     m_fileName = f.GetFullPath();
 }
 
@@ -638,7 +638,7 @@ wxString GetSourcesPath(const wxString& fileName, const Catalog::HeaderData& hea
     }
 
     wxFileName root = wxFileName::DirName(basepath);
-    root.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
+    root.MakeAbsolute();
 
     if (kind == SourcesPath::Root)
     {
@@ -706,7 +706,7 @@ bool Catalog::HasSourcesAvailable() const
         auto root = GetSourcesRootPath();
         if (root == wxGetUserHome() ||
             root == wxStandardPaths::Get().GetDocumentsDir() ||
-            root.EndsWith(wxString(wxFILE_SEP_PATH) + "Desktop" + wxFILE_SEP_PATH))
+            root.ends_with(wxString(wxFILE_SEP_PATH) + "Desktop" + wxFILE_SEP_PATH))
         {
             return false;
         }
@@ -850,7 +850,7 @@ wxString CatalogItem::GetFormatFlag() const
     auto format = (space == wxString::npos)
                     ? m_moreFlags.substr(0, pos)
                     : m_moreFlags.substr(space+1, pos-space-1);
-    if (format.StartsWith("no-"))
+    if (format.starts_with("no-"))
         return wxString();
     return format;
 }
@@ -977,9 +977,9 @@ wxString CatalogItem::GetOldMsgid() const
             line.RemoveLast();
         if (line[0] == '"')
             line.Remove(0, 1);
-        if (line.StartsWith("msgid \""))
+        if (line.starts_with("msgid \""))
             line.Remove(0, 7);
-        else if (line.StartsWith("msgid_plural \""))
+        else if (line.starts_with("msgid_plural \""))
             line.replace(0, 14, "\n");
         s += UnescapeCString(line);
     }
@@ -1063,7 +1063,7 @@ void Catalog::PostCreation()
             }
             if (!allText.empty())
             {
-                lang = Language::TryDetectFromText(allText.utf8_str());
+                lang = Language::TryDetectFromText(str::to_utf8(allText));
                 wxLogTrace("poedit", "detected translation language is '%s'", GetLanguage().Code());
             }
         }

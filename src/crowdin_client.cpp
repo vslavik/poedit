@@ -140,9 +140,7 @@ protected:
             }
             catch (...)
             {
-                std::string msg;
-                msg = _("Unknown Crowdin error.").utf8_str();
-                return msg;
+                return _("Unknown Crowdin error.").utf8_string();
             }
         }
     }
@@ -152,7 +150,7 @@ protected:
         if (statusCode == 401/*Unauthorized*/)
         {
             // message is e.g. "The access token provided is invalid"
-            message = _("Not authorized, please sign in again.").utf8_str();
+            message = _("Not authorized, please sign in again.").utf8_string();
         }
         wxLogTrace("poedit.crowdin", "JSON error: %s", message.c_str());
     }
@@ -171,10 +169,7 @@ public:
             if (jwt_token.empty())
                 return;
 
-            auto token_json = json::parse(
-                base64_decode_json_part(std::string(
-                    wxString(jwt_token).AfterFirst('.').BeforeFirst('.').utf8_str()
-            )));
+            auto token_json = json::parse(base64_decode_json_part(wxString(jwt_token).AfterFirst('.').BeforeFirst('.').utf8_string()));
             domain = get_value(token_json, "domain", "");
             if (!domain.empty())
                 domain += '.';
@@ -537,14 +532,14 @@ std::shared_ptr<CrowdinClient::FileSyncMetadata> CrowdinClient::DoExtractSyncMet
     meta->service = SERVICE_NAME;
 
     wxFileName fn(catalog.GetFileName());
-    meta->extension = fn.GetExt().utf8_str();
+    meta->extension = fn.GetExt().utf8_string();
 
     auto& hdr = catalog.Header();
     bool crowdinSpecificLangUsed = false;
 
     if (hdr.HasHeader("X-Crowdin-Language"))
     {
-        meta->lang = Language::FromLanguageTag(hdr.GetHeader("X-Crowdin-Language").ToStdString());
+        meta->lang = Language::FromLanguageTag(hdr.GetHeader("X-Crowdin-Language").utf8_string());
         crowdinSpecificLangUsed = true;
     }
     else
@@ -573,8 +568,8 @@ std::shared_ptr<CrowdinClient::FileSyncMetadata> CrowdinClient::DoExtractSyncMet
 
     if (hdr.HasHeader("X-Crowdin-Project-ID") && hdr.HasHeader("X-Crowdin-File-ID"))
     {
-        meta->projectId = std::stoi(hdr.GetHeader("X-Crowdin-Project-ID").ToStdString());
-        meta->fileId = std::stoi(hdr.GetHeader("X-Crowdin-File-ID").ToStdString());
+        meta->projectId = std::stoi(hdr.GetHeader("X-Crowdin-Project-ID").utf8_string());
+        meta->fileId = std::stoi(hdr.GetHeader("X-Crowdin-File-ID").utf8_string());
         return meta;
     }
 
@@ -645,7 +640,7 @@ dispatch::future<void> CrowdinClient::DownloadFile(const std::wstring& output_fi
     meta->lang = lang;
     meta->projectId = std::get<int>(project.internalID);
     meta->fileId = internal->id;
-    meta->extension = wxFileName(internal->fileName, wxPATH_UNIX).GetExt().utf8_str();
+    meta->extension = wxFileName(internal->fileName, wxPATH_UNIX).GetExt().utf8_string();
     meta->xliffRemoteFilename.clear(); // -> forceExportAsXliff=false
 
     return DownloadFile(output_file, meta);

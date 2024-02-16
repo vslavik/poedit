@@ -586,6 +586,19 @@ void PoeditApp::SetupLanguage()
     wxTranslations *trans = new wxTranslations();
     wxTranslations::Set(trans);
 
+    // workaround wx bug, see https://github.com/wxWidgets/wxWidgets/pull/24297
+    class PoeditTranslationsLoader : public wxFileTranslationsLoader
+    {
+    public:
+        wxArrayString GetAvailableTranslations(const wxString& domain) const override
+        {
+            auto all = wxFileTranslationsLoader::GetAvailableTranslations(domain);
+            all.push_back("en");
+            return all;
+        }
+    };
+    trans->SetLoader(new PoeditTranslationsLoader);
+
     int language = wxLANGUAGE_DEFAULT;
 
 #if NEED_CHOOSELANG_UI
@@ -720,14 +733,13 @@ wxString PoeditApp::GetCacheDir(const wxString& category)
 
     if (localBaseDir.empty())
     {
+        localBaseDir = wxStandardPaths::Get().GetUserDir(wxStandardPaths::Dir_Cache);
     #if defined(__WXOSX__)
-        localBaseDir = wxGetHomeDir() + "/Library/Caches/net.poedit.Poedit";
-    #elif defined(__UNIX__)
-        if (!wxGetEnv("XDG_CACHE_HOME", &localBaseDir))
-            localBaseDir = wxGetHomeDir() + "/.cache";
-        localBaseDir += "/poedit";
+        localBaseDir += "/net.poedit.Poedit";
+    #elif defined(__WXMSW__)
+        localBaseDir += "\\Poedit\\Cache";
     #else
-        localBaseDir = wxStandardPaths::Get().GetUserDataDir() + wxFILE_SEP_PATH + "Cache";
+        localBaseDir += "/poedit";
     #endif
     }
 
@@ -757,7 +769,7 @@ int PoeditApp::OpenFiles(const wxArrayString& names, int lineno)
         // associated with it, so that the app can provide explanation to users
         // not familiar with the MO/PO distinction.
         auto n = name.Lower();
-        if (n.EndsWith(".mo") || n.EndsWith(".gmo"))
+        if (n.ends_with(".mo") || n.ends_with(".gmo"))
         {
             wxMessageDialog dlg(nullptr,
                                 _(L"MO files can’t be directly edited in Poedit."),
@@ -852,7 +864,7 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
                 for (size_t i = 0; i < parser.GetParamCount(); i++)
                 {
                     auto fn = parser.GetParam(i);
-                    if (fn.StartsWith("poedit://"))
+                    if (fn.starts_with("poedit://"))
                         client.HandleCustomURI(fn);
                     else
                         client.OpenFile(fn, (int)lineno);
@@ -880,7 +892,7 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
     for (size_t i = 0; i < parser.GetParamCount(); i++)
     {
         auto fn = parser.GetParam(i);
-        if (fn.StartsWith("poedit://"))
+        if (fn.starts_with("poedit://"))
         {
             gs_uriToHandle = fn;
         }
@@ -902,19 +914,20 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
 
 void PoeditApp::HandleCustomURI(const wxString& uri)
 {
-    if (!uri.StartsWith("poedit://"))
+    if (!uri.starts_with("poedit://"))
         return;
 
 #ifdef HAVE_HTTP_CLIENT
-    if (CrowdinClient::IsOAuthCallback(uri.ToStdString()))
+    auto uri_utf8 = uri.utf8_string();
+    if (CrowdinClient::IsOAuthCallback(uri_utf8))
     {
-        CrowdinClient::Get().HandleOAuthCallback(uri.ToStdString());
+        CrowdinClient::Get().HandleOAuthCallback(uri_utf8);
         return;
     }
 
-    if (LocalazyClient::IsAuthCallback(uri.ToStdString()))
+    if (LocalazyClient::IsAuthCallback(uri_utf8))
     {
-        LocalazyClient::Get().HandleAuthCallback(uri.ToStdString())
+        LocalazyClient::Get().HandleAuthCallback(uri_utf8)
             .then_on_main([=](std::shared_ptr<LocalazyClient::ProjectInfo> projectToOpen){
                 if (projectToOpen)
                 {

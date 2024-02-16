@@ -30,6 +30,7 @@
 #include "hidpi.h"
 #include "utility.h"
 
+#include <wx/activityindicator.h>
 #include <wx/app.h>
 #include <wx/artprov.h>
 #include <wx/clipbrd.h>
@@ -45,12 +46,6 @@
 
 #ifdef __WXMSW__
 #include <wx/generic/private/markuptext.h>
-#endif
-
-#if wxCHECK_VERSION(3,1,0)
-    #include <wx/activityindicator.h>
-#else
-    #include "wx_backports/activityindicator.h"
 #endif
 
 #include <unicode/brkiter.h>
@@ -286,14 +281,8 @@ SelectableAutoWrappingText::SelectableAutoWrappingText(wxWindow *parent, const w
 ExplanationLabel::ExplanationLabel(wxWindow *parent, const wxString& label)
     : AutoWrappingText(parent, label)
 {
-#if defined(__WXOSX__)
+#if defined(__WXOSX__) || defined(__WXGTK__)
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-#elif defined(__WXGTK__)
-    #if wxCHECK_VERSION(3,1,0)
-        SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-    #else
-        SetFont(GetFont().Smaller());
-    #endif
 #endif
 #ifndef __WXGTK__
     ColorScheme::SetupWindowColors(this, [=]
@@ -307,14 +296,8 @@ ExplanationLabel::ExplanationLabel(wxWindow *parent, const wxString& label)
 SecondaryLabel::SecondaryLabel(wxWindow *parent, const wxString& label)
     : wxStaticText(parent, wxID_ANY, label)
 {
-#if defined(__WXOSX__)
+#if defined(__WXOSX__) || defined(__WXGTK__)
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-#elif defined(__WXGTK__)
-    #if wxCHECK_VERSION(3,1,0)
-        SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-    #else
-        SetFont(GetFont().Smaller());
-    #endif
 #endif
 #ifndef __WXGTK__
     ColorScheme::SetupWindowColors(this, [=]
@@ -474,7 +457,7 @@ ImageButton::ImageButton(wxWindow *parent, const wxString& bitmapName)
     view.buttonType = NSButtonTypeMomentaryChange;
 #else
     // refresh template icons on theme change (macOS handles automatically):
-    if (bitmapName.EndsWith("Template"))
+    if (bitmapName.ends_with("Template"))
     {
         ColorScheme::SetupWindowColors(this, [=]
         {
@@ -492,7 +475,7 @@ StaticBitmap::StaticBitmap(wxWindow *parent, const wxString& bitmapName)
 {
 #ifndef __WXOSX__
     // refresh template icons on theme change (macOS handles automatically):
-    if (bitmapName.EndsWith("Template"))
+    if (bitmapName.ends_with("Template"))
     {
         ColorScheme::SetupWindowColors(this, [=]
         {
@@ -612,9 +595,7 @@ class IconAndSubtitleListCtrl::MultilineTextRenderer : public wxDataViewTextRend
 public:
     MultilineTextRenderer() : wxDataViewTextRenderer()
     {
-#if wxCHECK_VERSION(3,1,1)
         EnableMarkup();
-#endif
     }
 
 #ifdef __WXMSW__
@@ -624,11 +605,12 @@ public:
         if ( state & wxDATAVIEW_CELL_SELECTED )
             flags |= wxCONTROL_SELECTED;
 
+        rect.height /= 2;
         for (auto& line: wxSplit(m_text, '\n'))
         {
             wxItemMarkupText markup(line);
             markup.Render(GetView(), *dc, rect, flags, GetEllipsizeMode());
-            rect.y += rect.height / 2;
+            rect.y += rect.height;
         }
 
         return true;
@@ -663,9 +645,7 @@ IconAndSubtitleListCtrl::IconAndSubtitleListCtrl(wxWindow *parent, const wxStrin
     const int icon_column_width = wxSystemSettings::GetMetric(wxSYS_ICON_X) + PX(12);
 #endif
 
-#if wxCHECK_VERSION(3,1,1)
     SetRowHeight(GetDefaultRowHeight());
-#endif
 
     AppendBitmapColumn("", 0, wxDATAVIEW_CELL_INERT, icon_column_width);
     auto renderer = new MultilineTextRenderer();
@@ -690,7 +670,6 @@ wxString IconAndSubtitleListCtrl::FormatItemText(const wxString& title, const wx
     auto secondaryFormatting = GetSecondaryFormatting();
 #endif
 
-#if wxCHECK_VERSION(3,1,1)
     return wxString::Format
     (
         "%s\n<small><span %s>%s</span></small>",
@@ -698,9 +677,6 @@ wxString IconAndSubtitleListCtrl::FormatItemText(const wxString& title, const wx
         secondaryFormatting,
         EscapeMarkup(description)
     );
-#else
-    return title;
-#endif
 }
 
 #ifndef __WXGTK__
@@ -740,12 +716,3 @@ void IconAndSubtitleListCtrl::UpdateFormattedItem(unsigned row, const wxString& 
 {
     SetTextValue(FormatItemText(title, description), row, 1);
 }
-
-
-#if defined(__WXOSX__) && !wxCHECK_VERSION(3,2,3)
-StaticLine::StaticLine(wxWindow *parent, wxWindowID id) : wxStaticLine(parent, id)
-{
-    NSBox *box = (NSBox*)GetHandle();
-    box.boxType = NSBoxSeparator;
-}
-#endif

@@ -282,17 +282,4 @@ private:
     class MultilineTextRenderer;
 };
 
-
-/// Fix for a wxStaticLine bug on macOS Ventura
-#if defined(__WXOSX__) && !wxCHECK_VERSION(3,2,3)
-class StaticLine : public wxStaticLine
-{
-public:
-    StaticLine(wxWindow *parent, wxWindowID id);
-};
-#else
-typedef wxStaticLine StaticLine;
-#endif
-
-
 #endif // Poedit_customcontrols_h

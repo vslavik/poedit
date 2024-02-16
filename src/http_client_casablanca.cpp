@@ -76,7 +76,7 @@ using utility::conversions::to_string_t;
 #ifdef _UTF16_STRINGS
 inline string_t to_string_t(const wxString& s) { return s.ToStdWstring(); }
 #else
-inline string_t to_string_t(const wxString& s) { return s.ToStdString(); }
+inline string_t to_string_t(const wxString& s) { return str::to_utf8(s); }
 inline string_t to_string_t(const std::wstring& s) { return str::to_utf8(s); }
 #endif
 
