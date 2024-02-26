@@ -25,10 +25,7 @@
 
 #include "menus.h"
 
-#ifdef __WXOSX__
-#include "macos_helpers.h"
-#endif
-
+#include "app_updates.h"
 #include "recent_files.h"
 #include "str_helpers.h"
 
@@ -142,9 +139,7 @@ void MenusManager::TweakOSXMenuBar(wxMenuBar *bar)
         apple->InsertSeparator(3);
     }
 
-#if USE_SPARKLE
-    Sparkle_AddMenuItem(apple->GetHMenu(), _(L"Check for Updates…").utf8_str());
-#endif
+    AppUpdates::Get().AddMenuItem(apple);
 
     if (@available(macOS 13.0, *))
     {

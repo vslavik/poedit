@@ -43,10 +43,6 @@
 #include <wx/wupdlock.h>
 
 #ifdef __WXOSX__
-#include "macos_helpers.h"
-#endif
-
-#ifdef __WXOSX__
     #define SMALL_BORDER   PX(7)
     #define BUTTONS_SPACE PX(10)
 #else

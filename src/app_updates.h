@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (https://poedit.net)
  *
- *  Copyright (C) 2007-2023 Vaclav Slavik
+ *  Copyright (C) 2024 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -19,29 +19,58 @@
  *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- *  DEALINGS IN THE SOFTWARE. 
+ *  DEALINGS IN THE SOFTWARE.
  *
  */
 
-#ifndef Poedit_macos_helpers_h
-#define Poedit_macos_helpers_h
+#ifndef Poedit_app_updates_h
+#define Poedit_app_updates_h
 
-// FIXME: This is a hack to work around Automake's lack of support for ObjC++.
-//        Remove it after switching build system to Bakefile.
+#if defined(__WXMSW__) || defined(__WXOSX__)
+    #define HAS_UPDATES_CHECK
+#endif
 
-#ifdef USE_SPARKLE
-// Sparkle helpers
-NSObject *Sparkle_Initialize();
-void Sparkle_AddMenuItem(NSMenu *appmenu, const char *title);
-void Sparkle_Cleanup();
-#endif // USE_SPARKLE
+#include <wx/defs.h>
 
-// Native preferences
-void UserDefaults_SetBoolValue(const char *key, int value);
-int  UserDefaults_GetBoolValue(const char *key);
-void UserDefaults_RemoveValue(const char *key);
+class WXDLLIMPEXP_FWD_CORE wxMenu;
 
-// Misc UI helpers
-void MoveToApplicationsFolderIfNecessary();
+#include <memory>
 
-#endif // Poedit_macos_helpers_h
+#ifdef HAS_UPDATES_CHECK
+
+/// Management of app updates.
+class AppUpdates
+{
+public:
+    /// Return singleton instance of the manager.
+    static AppUpdates& Get();
+
+    // InitAndStart and start checking for updates (if allowed by the user).
+    void InitAndStart();
+
+    /// Destroys the singleton, must be called (only) on app shutdown.
+    static void CleanUp();
+
+    void EnableAutomaticChecks(bool enable);
+    bool AutomaticChecksEnabled() const;
+
+#ifdef __WXMSW__
+    void SetLanguage(const std::string& lang);
+    void CheckForUpdatesWithUI();
+#endif
+
+#ifdef __WXOSX__
+    void AddMenuItem(wxMenu *appleMenu);
+#endif
+
+private:
+    AppUpdates();
+    ~AppUpdates();
+
+    class impl;
+    std::unique_ptr<impl> m_impl;
+};
+
+#endif // HAS_UPDATES_CHECK
+
+#endif // Poedit_app_updates_h

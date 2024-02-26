@@ -57,6 +57,9 @@ public:
     static bool UseTM() { return Read("/use_tm", true); }
     static void UseTM(bool use) { Write("/use_tm", use); }
 
+    static bool CheckForBetaUpdates() { return Read("/check_for_beta_updates", false); }
+    static void CheckForBetaUpdates(bool use) { Write("/check_for_beta_updates", use); }
+
     static ::PretranslateSettings PretranslateSettings();
     static void PretranslateSettings(::PretranslateSettings s);
 

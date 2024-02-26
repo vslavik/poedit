@@ -65,7 +65,6 @@ class PoeditApp : public wxApp, public MenusManager
         wxString GetAppVersion() const; // e.g. "3.4.2"
         wxString GetMajorAppVersion() const; // e.g. "3.4"
         wxString GetAppBuildNumber() const;
-        bool CheckForBetaUpdates() const;
 
         // opens files in new frame, returns count of succesfully opened
         int OpenFiles(const wxArrayString& filenames, int lineno = 0);
@@ -128,8 +127,6 @@ class PoeditApp : public wxApp, public MenusManager
 
 #ifdef __WXMSW__
         void OnWinsparkleCheck(wxCommandEvent& event);
-        static int WinSparkle_CanShutdown();
-        static void WinSparkle_Shutdown();
 #endif
 
         DECLARE_EVENT_TABLE()

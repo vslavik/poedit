@@ -52,6 +52,7 @@
 #include <wx/xrc/xmlres.h>
 #include <wx/numformatter.h>
 
+#include "app_updates.h"
 #include "edapp.h"
 #include "edframe.h"
 #include "catalog.h"
@@ -70,17 +71,6 @@
 #include "customcontrols.h"
 #include "unicode_helpers.h"
 
-#ifdef __WXMSW__
-#include <winsparkle.h>
-#endif
-
-#ifdef USE_SPARKLE
-#include "macos_helpers.h"
-#endif // USE_SPARKLE
-
-#if defined(USE_SPARKLE) || defined(__WXMSW__)
-    #define HAS_UPDATES_CHECK
-#endif
 
 // Handling of different page icons
 #ifdef __WXOSX__
@@ -1118,29 +1108,16 @@ public:
 
     void InitValues(const wxConfigBase&) override
     {
-#ifdef USE_SPARKLE
-        m_updates->SetValue((bool)UserDefaults_GetBoolValue("SUEnableAutomaticChecks"));
-#endif
-#ifdef __WXMSW__
-        m_updates->SetValue(win_sparkle_get_automatic_check_for_updates() != 0);
-#endif
-        m_beta->SetValue(wxGetApp().CheckForBetaUpdates());
+        m_updates->SetValue(AppUpdates::Get().AutomaticChecksEnabled());
+        m_beta->SetValue(Config::CheckForBetaUpdates());
     }
 
-    void SaveValues(wxConfigBase& cfg) override
+    void SaveValues(wxConfigBase&) override
     {
-        cfg.Write("check_for_beta_updates", m_beta->GetValue());
-#ifdef __WXMSW__
-        win_sparkle_set_automatic_check_for_updates(m_updates->GetValue());
-        // FIXME: don't duplicate this code from PoeditApp::OnInit()
-        if (m_beta->GetValue())
-            win_sparkle_set_appcast_url("https://poedit.net/updates_v2/win/appcast/beta");
-        else
-            win_sparkle_set_appcast_url("https://poedit.net/updates_v2/win/appcast");
-#endif
-#ifdef USE_SPARKLE
-        UserDefaults_SetBoolValue("SUEnableAutomaticChecks", m_updates->GetValue());
-#endif
+        // NB: Must be done first, before calling AppUpdates methods!
+        Config::CheckForBetaUpdates(m_beta->GetValue());
+
+        AppUpdates::Get().EnableAutomaticChecks(m_beta->GetValue());
     }
 
 private:

@@ -54,13 +54,12 @@
 #include <boost/iostreams/filter/gzip.hpp>
 
 #ifdef __WXOSX__
-#include "macos_helpers.h"
+#import "PFMoveApplication.h"
 #endif
 
 #ifdef __WXMSW__
 #include <wx/msw/wrapwin.h>
 #include <Shlwapi.h>
-#include <winsparkle.h>
 #endif
 
 #ifdef __WXGTK__
@@ -75,6 +74,7 @@
     #error "Unicode build of wxWidgets is required by Poedit"
 #endif
 
+#include "app_updates.h"
 #include "colorscheme.h"
 #include "concurrency.h"
 #include "configuration.h"
@@ -106,9 +106,6 @@
 #ifdef __WXOSX__
 struct PoeditApp::NativeMacAppData
 {
-#ifdef USE_SPARKLE
-    NSObject *sparkleDelegate = nullptr;
-#endif
 };
 #endif
 
@@ -325,11 +322,6 @@ wxString PoeditApp::GetAppBuildNumber() const
 #endif
 }
 
-bool PoeditApp::CheckForBetaUpdates() const
-{
-    return wxConfigBase::Get()->ReadBool("check_for_beta_updates", false);
-}
-
 
 #ifndef __WXOSX__
 static wxArrayString gs_filesToOpen;
@@ -385,7 +377,7 @@ bool PoeditApp::OnInit()
     InitHiDPIHandling();
 
 #ifdef __WXOSX__
-    MoveToApplicationsFolderIfNecessary();
+    PFMoveToApplicationsFolderIfNecessary();
 
     wxSystemOptions::SetOption(wxMAC_TEXTCONTROL_USE_SPELL_CHECKER, 1);
 
@@ -470,22 +462,8 @@ bool PoeditApp::OnInit()
     s_macHelpMenuTitleName = _("&Help");
 #endif
 
-#ifdef USE_SPARKLE
-    m_nativeMacAppData->sparkleDelegate = Sparkle_Initialize();
-#endif // USE_SPARKLE
-
-#ifdef __WXMSW__
-    if (CheckForBetaUpdates())
-        win_sparkle_set_appcast_url("https://poedit.net/updates_v2/win/appcast/beta");
-    else
-        win_sparkle_set_appcast_url("https://poedit.net/updates_v2/win/appcast");
- 
-    win_sparkle_set_can_shutdown_callback(&PoeditApp::WinSparkle_CanShutdown);
-    win_sparkle_set_shutdown_request_callback(&PoeditApp::WinSparkle_Shutdown);
-    auto buildnum = GetAppBuildNumber();
-    if (!buildnum.empty())
-        win_sparkle_set_app_build_version(buildnum.wc_str());
-    win_sparkle_init();
+#ifdef HAS_UPDATES_CHECK
+    AppUpdates::Get().InitAndStart();
 #endif
 
 #ifndef __WXOSX__
@@ -551,18 +529,15 @@ int PoeditApp::OnExit()
     RecentFiles::CleanUp();
     TranslationMemory::CleanUp();
 
+#ifdef HAS_UPDATES_CHECK
+    AppUpdates::CleanUp();
+#endif
+
 #ifdef HAVE_HTTP_CLIENT
     CloudAccountClient::CleanUp();
 #endif
 
     dispatch::cleanup();
-
-#ifdef USE_SPARKLE
-    Sparkle_Cleanup();
-#endif // USE_SPARKLE
-#ifdef __WXMSW__
-    win_sparkle_cleanup();
-#endif
 
     u_cleanup();
 
@@ -646,7 +621,7 @@ void PoeditApp::SetupLanguage()
     g_layoutDirection = info ? info->LayoutDirection : wxLayout_Default;
 
 #ifdef __WXMSW__
-    win_sparkle_set_lang(bestTrans.utf8_str());
+    AppUpdates::Get().SetLanguage(bestTrans.utf8_string());
 #endif
 
 #ifdef SUPPORTS_OTA_UPDATES
@@ -1406,18 +1381,7 @@ void PoeditApp::OnCloseWindowCommand(wxCommandEvent&)
 
 void PoeditApp::OnWinsparkleCheck(wxCommandEvent& event)
 {
-    win_sparkle_check_update_with_ui();
-}
-
-// WinSparkle callbacks:
-int PoeditApp::WinSparkle_CanShutdown()
-{
-    return !PoeditFrame::AnyWindowIsModified();
-}
-
-void PoeditApp::WinSparkle_Shutdown()
-{
-    wxGetApp().OnQuit(wxCommandEvent());
+    AppUpdates::Get().CheckForUpdatesWithUI();
 }
 
 #endif // __WXMSW__

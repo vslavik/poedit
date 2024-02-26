@@ -49,7 +49,6 @@
 
 #ifdef __WXOSX__
 #import <AppKit/NSDocumentController.h>
-#include "macos_helpers.h"
 #endif
 
 #include <algorithm>
