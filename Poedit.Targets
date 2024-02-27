@@ -54,7 +54,7 @@
 
 
   <PropertyGroup>
-    <GitBuildNumberFile>$(MSBuildProjectDirectory)\$(IntermediateOutputPath)\git_build_number.h</GitBuildNumberFile>
+    <GitBuildNumberFile>$(IntermediateOutputPath)\git_build_number.h</GitBuildNumberFile>
     <GitBuildNumberOldDefine Condition="Exists('$(GitBuildNumberFile)')">$([System.IO.File]::ReadAllText($(GitBuildNumberFile)).Trim())</GitBuildNumberOldDefine>
   </PropertyGroup>
   <Target Name="GetGitVersion" BeforeTargets="ClCompile">
