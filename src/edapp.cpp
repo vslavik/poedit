@@ -103,12 +103,6 @@
 #include "language.h"
 #include "welcomescreen.h"
 
-#ifdef __WXOSX__
-struct PoeditApp::NativeMacAppData
-{
-};
-#endif
-
 
 #ifndef __WXOSX__
 
@@ -276,9 +270,6 @@ IMPLEMENT_APP(PoeditApp);
 
 PoeditApp::PoeditApp()
 {
-#ifdef __WXOSX__
-    m_nativeMacAppData.reset(new NativeMacAppData);
-#endif
 }
 
 PoeditApp::~PoeditApp()

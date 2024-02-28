@@ -131,13 +131,7 @@ class PoeditApp : public wxApp, public MenusManager
 
         DECLARE_EVENT_TABLE()
 
-#ifdef __WXOSX__
-        class NativeMacAppData;
-        std::unique_ptr<NativeMacAppData> m_nativeMacAppData;
-#endif
-
         std::unique_ptr<PoeditPreferencesEditor> m_preferences;
-
         std::unique_ptr<wxLocale> m_locale;
 
 #ifndef __WXOSX__
