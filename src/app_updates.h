@@ -54,13 +54,11 @@ public:
     void EnableAutomaticChecks(bool enable);
     bool AutomaticChecksEnabled() const;
 
+    bool CanCheckForUpdates() const;
+    void CheckForUpdatesWithUI();
+
 #ifdef __WXMSW__
     void SetLanguage(const std::string& lang);
-    void CheckForUpdatesWithUI();
-#endif
-
-#ifdef __WXOSX__
-    void AddMenuItem(wxMenu *appleMenu);
 #endif
 
 private:

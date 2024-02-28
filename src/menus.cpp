@@ -135,11 +135,11 @@ void MenusManager::TweakOSXMenuBar(wxMenuBar *bar)
     wxMenu *apple = bar->OSXGetAppleMenu();
     if (apple)
     {
-        apple->Insert(3, XRCID("menu_manager"), _("Catalogs Manager"));
-        apple->InsertSeparator(3);
-    }
+        apple->Insert(1, XRCID("menu_check_for_updates"), _(L"Check for Updates…"));
 
-    AppUpdates::Get().AddMenuItem(apple);
+        apple->Insert(4, XRCID("menu_manager"), _("Catalogs Manager"));
+        apple->InsertSeparator(4);
+    }
 
     if (@available(macOS 13.0, *))
     {

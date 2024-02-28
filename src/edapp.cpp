@@ -954,8 +954,9 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
    EVT_MENU           (wxID_PREFERENCES,          PoeditApp::OnPreferences)
    EVT_MENU           (wxID_HELP,                 PoeditApp::OnHelp)
    EVT_MENU           (XRCID("menu_gettext_manual"), PoeditApp::OnGettextManual)
-#ifdef __WXMSW__
-   EVT_MENU           (XRCID("menu_check_for_updates"), PoeditApp::OnWinsparkleCheck)
+#ifdef HAS_UPDATES_CHECK
+   EVT_MENU           (XRCID("menu_check_for_updates"), PoeditApp::OnCheckForUpdates)
+   EVT_UPDATE_UI      (XRCID("menu_check_for_updates"), PoeditApp::OnEnableCheckForUpdates)
 #endif
 #ifdef __WXOSX__
    EVT_MENU           (wxID_CLOSE, PoeditApp::OnCloseWindowCommand)
@@ -1368,12 +1369,14 @@ void PoeditApp::OnCloseWindowCommand(wxCommandEvent&)
 #endif // __WXOSX__
 
 
-#ifdef __WXMSW__
-
-void PoeditApp::OnWinsparkleCheck(wxCommandEvent& event)
+#ifdef HAS_UPDATES_CHECK
+void PoeditApp::OnCheckForUpdates(wxCommandEvent&)
 {
     AppUpdates::Get().CheckForUpdatesWithUI();
 }
 
-#endif // __WXMSW__
-
+void PoeditApp::OnEnableCheckForUpdates(wxUpdateUIEvent& event)
+{
+    event.Enable(AppUpdates::Get().CanCheckForUpdates());
+}
+#endif // HAS_UPDATES_CHECK

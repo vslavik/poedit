@@ -43,12 +43,12 @@
 
 #ifdef __WXOSX__
 
-@interface PoeditSparkleDelegate : NSObject <SUUpdaterDelegate>
+@interface PoeditSparkleDelegate : NSObject <SPUUpdaterDelegate>
 @end
 
 @implementation PoeditSparkleDelegate
 
-- (NSArray *)feedParametersForUpdater:(SUUpdater *)updater sendingSystemProfile:(BOOL)sendingProfile
+- (NSArray<NSDictionary<NSString *, NSString *> *> *)feedParametersForUpdater:(SPUUpdater *)updater sendingSystemProfile:(BOOL)sendingProfile;
 {
     #pragma unused(updater, sendingProfile)
     if (Config::CheckForBetaUpdates())
@@ -90,8 +90,8 @@ public:
         NSDictionary *sparkleDefaults = @{ @"SUEnableAutomaticChecks": @YES };
         [[NSUserDefaults standardUserDefaults] registerDefaults:sparkleDefaults];
 
-        m_sparkleDelegate = [PoeditSparkleDelegate new];
-        SUUpdater.sharedUpdater.delegate = m_sparkleDelegate;
+        m_delegate = [PoeditSparkleDelegate new];
+        m_controller = [[SPUStandardUpdaterController alloc] initWithUpdaterDelegate:m_delegate userDriverDelegate:nil];
     }
 
     void EnableAutomaticChecks(bool enable)
@@ -104,16 +104,14 @@ public:
         return GetBoolValue("SUEnableAutomaticChecks");
     }
 
-    void AddMenuItem(wxMenu *appleMenu)
+    bool CanCheckForUpdates() const
     {
-        NSString *nstitle = [NSString stringWithUTF8String: _(L"Check for Updates…").utf8_str()];
-        NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:nstitle
-                                               action:@selector(checkForUpdates:)
-                                               keyEquivalent:@""];
-        SUUpdater *updater = [SUUpdater sharedUpdater];
-        [item setEnabled:YES];
-        [item setTarget:updater];
-        [appleMenu->GetHMenu() insertItem:item atIndex:1];
+        return m_controller.updater.canCheckForUpdates;
+    }
+
+    void CheckForUpdatesWithUI()
+    {
+        [m_controller checkForUpdates:nil];
     }
 
 private:
@@ -132,7 +130,8 @@ private:
     }
 
 private:
-    NSObject<SUUpdaterDelegate> *m_sparkleDelegate = nullptr;
+    SPUStandardUpdaterController *m_controller = nil;
+    NSObject<SPUUpdaterDelegate> *m_delegate = nil;
 };
 
 #endif // __WXOSX__
@@ -169,6 +168,11 @@ public:
 	{
 		win_sparkle_set_lang(lang.c_str());
 	}
+
+    bool CanCheckForUpdates() const
+    {
+        return true;
+    }
 
     void CheckForUpdatesWithUI()
     {
@@ -255,23 +259,21 @@ bool AppUpdates::AutomaticChecksEnabled() const
     return m_impl->AutomaticChecksEnabled();
 }
 
-#ifdef __WXMSW__
-void AppUpdates::SetLanguage(const std::string& lang)
+bool AppUpdates::CanCheckForUpdates() const
 {
-    m_impl->SetLanguage(lang);
+    return m_impl->CanCheckForUpdates();
 }
 
 void AppUpdates::CheckForUpdatesWithUI()
 {
     m_impl->CheckForUpdatesWithUI();
 }
-#endif // __WXMSW__
 
-#ifdef __WXOSX__
-void AppUpdates::AddMenuItem(wxMenu *appleMenu)
+#ifdef __WXMSW__
+void AppUpdates::SetLanguage(const std::string& lang)
 {
-    m_impl->AddMenuItem(appleMenu);
+    m_impl->SetLanguage(lang);
 }
-#endif
+#endif // __WXMSW__
 
 #endif // HAS_UPDATES_CHECK

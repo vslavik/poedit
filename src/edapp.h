@@ -125,8 +125,9 @@ class PoeditApp : public wxApp, public MenusManager
         void OnHelp(wxCommandEvent& event);
         void OnGettextManual(wxCommandEvent& event);
 
-#ifdef __WXMSW__
-        void OnWinsparkleCheck(wxCommandEvent& event);
+#ifdef HAS_UPDATES_CHECK
+        void OnCheckForUpdates(wxCommandEvent& event);
+        void OnEnableCheckForUpdates(wxUpdateUIEvent& event);
 #endif
 
         DECLARE_EVENT_TABLE()
