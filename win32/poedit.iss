@@ -43,7 +43,7 @@
 
 [Setup]
 OutputBaseFilename=Poedit-{#VERSION}-setup
-OutputDir=win32\distrib-{#CONFIG}-{#VERSION}
+OutputDir=win32
 
 AppName=Poedit
 AppVerName=Poedit {#VERSION}
@@ -88,6 +88,7 @@ DisableProgramGroupPage=true
 
 #ifdef SIGNTOOL
 SignTool={#SIGNTOOL}
+SignedUninstaller=yes
 #endif
 VersionInfoCompany=Vaclav Slavik
 VersionInfoDescription=Poedit Installer
@@ -98,16 +99,17 @@ VersionInfoProductTextVersion={#VERSION}
 DisableDirPage=auto
 
 [Files]
-Source: win32\uninst-helper.dll; Flags: dontcopy
-Source: {#BINDIR}\Poedit.exe; DestDir: {app}; Flags: ignoreversion
-Source: {#BINDIR}\*.dll; DestDir: {app}; Flags: ignoreversion
+Source: win32\uninst-helper.dll; Flags: dontcopy signonce
+Source: {#BINDIR}\Poedit.exe; DestDir: {app}; Flags: ignoreversion signonce
+Source: {#BINDIR}\*.dll; DestDir: {app}; Flags: ignoreversion signonce
 Source: {#BINDIR}\icudt*.dat; DestDir: {app}
 Source: COPYING; DestDir: {app}\Docs; DestName: Copying.txt
 Source: NEWS; DestDir: {app}\Docs; DestName: News.txt
 Source: {#CRT_REDIST}\*.dll; DestDir: {app}
 Source: "{#BINDIR}\Resources\*"; DestDir: "{app}\Resources"; Flags: recursesubdirs
 Source: "{#BINDIR}\Translations\*"; DestDir: "{app}\Translations"; Flags: recursesubdirs
-Source: "{#BINDIR}\GettextTools\*"; DestDir: "{app}\GettextTools"; Flags: ignoreversion recursesubdirs
+Source: "{#BINDIR}\GettextTools\bin\*"; DestDir: "{app}\GettextTools\bin"; Flags: ignoreversion signonce
+Source: "{#BINDIR}\GettextTools\share\*"; DestDir: "{app}\GettextTools\share"; Flags: ignoreversion recursesubdirs
 
 [InstallDelete]
 ; Remove all files from previous version to have known clean state
@@ -161,10 +163,10 @@ Root: "HKA"; Subkey: "Software\Classes\Poedit.ARB"; ValueType: string; ValueName
 Root: "HKA"; Subkey: "Software\Classes\Poedit.ARB\Shell\Open\Command"; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
 
 ; URL protocol for poedit:// (various custom tasks such as OAuth)
-Root: HKA; Subkey: "Software\Classes\poedit"; ValueType: "string"; ValueData: "URL:Poedit Custom Protocol"; Flags: uninsdeletekey noerror
-Root: HKA; Subkey: "Software\Classes\poedit"; ValueType: "string"; ValueName: "URL Protocol"; ValueData: ""; Flags: uninsdeletekey noerror
-Root: HKA; Subkey: "Software\Classes\poedit\DefaultIcon"; ValueType: "string"; ValueData: "{app}\Poedit.exe,0"; Flags: uninsdeletekey noerror
-Root: HKA; Subkey: "Software\Classes\poedit\shell\open\command"; ValueType: "string"; ValueData: """{app}\Poedit.exe"" --handle-poedit-uri ""%1"""; Flags: uninsdeletekey noerror
+Root: "HKA"; Subkey: "Software\Classes\poedit"; ValueType: "string"; ValueData: "URL:Poedit Custom Protocol"; Flags: uninsdeletekey noerror
+Root: "HKA"; Subkey: "Software\Classes\poedit"; ValueType: "string"; ValueName: "URL Protocol"; ValueData: ""; Flags: uninsdeletekey noerror
+Root: "HKA"; Subkey: "Software\Classes\poedit\DefaultIcon"; ValueType: "string"; ValueData: "{app}\Poedit.exe,0"; Flags: uninsdeletekey noerror
+Root: "HKA"; Subkey: "Software\Classes\poedit\shell\open\command"; ValueType: "string"; ValueData: """{app}\Poedit.exe"" --handle-poedit-uri ""%1"""; Flags: uninsdeletekey noerror
 
 [Icons]
 Name: {commonprograms}\Poedit; Filename: {app}\Poedit.exe; WorkingDir: {app}; IconIndex: 0; Comment: Translation editor.

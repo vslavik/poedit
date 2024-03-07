@@ -8,6 +8,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Common.props" />
   
   <Import Project="version.props" />
+  <Import Project="$(MSBuildProjectFullPath).user" Condition="Exists('$(MSBuildProjectFullPath).user')"/>
 
   <PropertyGroup>
     <MSBuildCommunityTasksPath>$(MSBuildProjectDirectory)\..\packages\MSBuildTasks.1.5.0.235\tools</MSBuildCommunityTasksPath>
@@ -18,8 +19,12 @@
     <BinDir>../x64/$(Configuration)</BinDir>
     <MsvcToolsX86>"$(VCToolsInstallDir)\bin\HostX64\x86"</MsvcToolsX86>
     <MsvcLibpathX86>"$(VCToolsInstallDir)\lib\x86"</MsvcLibpathX86>
+    <SignTool Condition="'$(SignTool)' == ''"></SignTool>
+    <SignToolTimestamp Condition="'$(SignToolTimestamp)' == ''">http://timestamp.digicert.com</SignToolTimestamp>
+    <SignToolFlags Condition="'$(SignToolFlags)' == ''">-fd sha256 -td sha256 -tr $(SignToolTimestamp) -d Poedit -du https://poedit.net</SignToolFlags>
     <InnoCC>..\packages\Tools.InnoSetup.6.2.2\tools\ISCC.exe</InnoCC>
-    <InnoFlags>/dCONFIG=$(Configuration)</InnoFlags>
+    <InnoSignToolArgs Condition="'$(SignTool)' != ''">/dSIGNTOOL=default /Sdefault="$(SignTool) $(SignToolFlags) $f"</InnoSignToolArgs>
+    <InnoFlags>/dCONFIG=$(Configuration) $(InnoSignToolArgs)</InnoFlags>
   </PropertyGroup>
 
   <ItemGroup>
