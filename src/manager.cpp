@@ -297,24 +297,33 @@ static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& fi
     }
     else
     {
-        // suppress error messages, we don't mind if the catalog is corrupted
+        // suppress error messages, we don't care about specifics of the error
         // FIXME: *do* indicate error somehow
         wxLogNull nullLog;
 
         // FIXME: don't re-load the catalog if it's already loaded in the
         //        editor, reuse loaded instance
-        auto cat = Catalog::Create(file);
-        if (cat)
+        try
         {
-            cat->GetStatistics(&all, &fuzzy, &badtokens, &untranslated, NULL);
-            modtime = wxFileModificationTime(file);
-            lastmodified = cat->Header().RevisionDate;
-            cfg->Write(key + "timestamp", (long)modtime);
-            cfg->Write(key + "all", (long)all);
-            cfg->Write(key + "fuzzy", (long)fuzzy);
-            cfg->Write(key + "badtokens", (long)badtokens);
-            cfg->Write(key + "untranslated", (long)untranslated);
-            cfg->Write(key + "lastmodified", lastmodified);
+            auto cat = Catalog::Create(file);
+            if (cat)
+            {
+                cat->GetStatistics(&all, &fuzzy, &badtokens, &untranslated, NULL);
+                modtime = wxFileModificationTime(file);
+                lastmodified = cat->Header().RevisionDate;
+                cfg->Write(key + "timestamp", (long)modtime);
+                cfg->Write(key + "all", (long)all);
+                cfg->Write(key + "fuzzy", (long)fuzzy);
+                cfg->Write(key + "badtokens", (long)badtokens);
+                cfg->Write(key + "untranslated", (long)untranslated);
+                cfg->Write(key + "lastmodified", lastmodified);
+            }
+        }
+        catch (...)
+        {
+            // FIXME: Nicer way of showing errors, this is hacky
+            lastmodified = L"⚠️ " + DescribeCurrentException();
+            badtokens = 1;
         }
     }
 

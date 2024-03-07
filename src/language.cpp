@@ -384,9 +384,9 @@ Language Language::TryParse(const std::wstring& s)
     if (IsValidCode(s))
         return Language(s);
 
-    if (s == "zh-Hans")
+    if (s == L"zh-Hans")
         return Language("zh_CN");
-    else if (s == "zh-Hant")
+    else if (s == L"zh-Hant")
         return Language("zh_TW");
 
     // Is it a standard language code?
@@ -445,8 +445,8 @@ Language Language::FromLanguageTag(const std::string& tag)
 
     char locale[512];
     UErrorCode status = U_ZERO_ERROR;
-    uloc_forLanguageTag(tag.c_str(), locale, 512, NULL, &status);
-    if (U_FAILURE(status))
+    auto len = uloc_forLanguageTag(tag.c_str(), locale, 512, NULL, &status);
+    if (U_FAILURE(status) || !len)
         return Language();
 
     Language lang;
