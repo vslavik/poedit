@@ -65,7 +65,6 @@ class PoeditApp : public wxApp, public MenusManager
         wxString GetAppVersion() const; // e.g. "3.4.2"
         wxString GetMajorAppVersion() const; // e.g. "3.4"
         wxString GetAppBuildNumber() const;
-        bool CheckForBetaUpdates() const;
 
         // opens files in new frame, returns count of succesfully opened
         int OpenFiles(const wxArrayString& filenames, int lineno = 0);
@@ -126,21 +125,14 @@ class PoeditApp : public wxApp, public MenusManager
         void OnHelp(wxCommandEvent& event);
         void OnGettextManual(wxCommandEvent& event);
 
-#ifdef __WXMSW__
-        void OnWinsparkleCheck(wxCommandEvent& event);
-        static int WinSparkle_CanShutdown();
-        static void WinSparkle_Shutdown();
+#ifdef HAS_UPDATES_CHECK
+        void OnCheckForUpdates(wxCommandEvent& event);
+        void OnEnableCheckForUpdates(wxUpdateUIEvent& event);
 #endif
 
         DECLARE_EVENT_TABLE()
 
-#ifdef __WXOSX__
-        class NativeMacAppData;
-        std::unique_ptr<NativeMacAppData> m_nativeMacAppData;
-#endif
-
         std::unique_ptr<PoeditPreferencesEditor> m_preferences;
-
         std::unique_ptr<wxLocale> m_locale;
 
 #ifndef __WXOSX__
