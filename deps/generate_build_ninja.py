@@ -5,9 +5,9 @@ from collections import OrderedDict
 from glob import glob
 from ninja_syntax import Writer
 
-GETTEXT_VERSION = "0.22.3"  # use of " important for Xcode build!
+GETTEXT_VERSION = "0.22.5"  # use of " important for Xcode build!
 GETTEXT_TARBALL = 'gettext-%s.tar.gz' % GETTEXT_VERSION
-GETTEXT_SHA256 = '839a260b2314ba66274dae7d245ec19fce190a3aa67869bf31354cb558df42c7'
+GETTEXT_SHA256 = 'ec1705b1e969b83a9f073144ec806151db88127f5e40fe5a94cb6c8fa48996a0'
 
 _exclusion_list = [
     '.DS_Store',
