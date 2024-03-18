@@ -15,8 +15,8 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{88A0AD6E-0E9B-5FCB-801A-6F6531C7577B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>boost_system</RootNamespace>
-    <ProjectName>boost_system</ProjectName>
+    <RootNamespace>boost</RootNamespace>
+    <ProjectName>boost</ProjectName>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -54,7 +54,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>.</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;..\zlib</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -73,7 +73,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>.</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;..\zlib</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -86,7 +86,50 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="libs\date_time\src\gregorian\date_generators.cpp" />
+    <ClCompile Include="libs\date_time\src\gregorian\greg_month.cpp" />
+    <ClCompile Include="libs\date_time\src\gregorian\greg_weekday.cpp" />
+    <ClCompile Include="libs\filesystem\src\codecvt_error_category.cpp" />
+    <ClCompile Include="libs\filesystem\src\operations.cpp" />
+    <ClCompile Include="libs\filesystem\src\path.cpp" />
+    <ClCompile Include="libs\filesystem\src\path_traits.cpp" />
+    <ClCompile Include="libs\filesystem\src\portability.cpp" />
+    <ClCompile Include="libs\filesystem\src\unique_path.cpp" />
+    <ClCompile Include="libs\filesystem\src\utf8_codecvt_facet.cpp" />
+    <ClCompile Include="libs\filesystem\src\windows_file_codecvt.cpp" />
+    <ClCompile Include="libs\iostreams\src\file_descriptor.cpp" />
+    <ClCompile Include="libs\iostreams\src\gzip.cpp" />
+    <ClCompile Include="libs\iostreams\src\mapped_file.cpp" />
+    <ClCompile Include="libs\iostreams\src\zlib.cpp" />
+    <ClCompile Include="libs\random\src\random_device.cpp" />
+    <ClCompile Include="libs\regex\src\cpp_regex_traits.cpp" />
+    <ClCompile Include="libs\regex\src\cregex.cpp" />
+    <ClCompile Include="libs\regex\src\c_regex_traits.cpp" />
+    <ClCompile Include="libs\regex\src\fileiter.cpp" />
+    <ClCompile Include="libs\regex\src\instances.cpp" />
+    <ClCompile Include="libs\regex\src\posix_api.cpp" />
+    <ClCompile Include="libs\regex\src\regex.cpp" />
+    <ClCompile Include="libs\regex\src\regex_raw_buffer.cpp" />
+    <ClCompile Include="libs\regex\src\regex_traits_defaults.cpp" />
+    <ClCompile Include="libs\regex\src\static_mutex.cpp" />
+    <ClCompile Include="libs\regex\src\usinstances.cpp" />
+    <ClCompile Include="libs\regex\src\w32_regex_traits.cpp" />
+    <ClCompile Include="libs\regex\src\wc_regex_traits.cpp" />
+    <ClCompile Include="libs\regex\src\wide_posix_api.cpp" />
+    <ClCompile Include="libs\regex\src\winstances.cpp" />
     <ClCompile Include="libs\system\src\error_code.cpp" />
+    <ClCompile Include="libs\thread\src\future.cpp">
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">BOOST_THREAD_BUILD_LIB=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">BOOST_THREAD_BUILD_LIB=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="libs\thread\src\win32\thread.cpp">
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">BOOST_THREAD_BUILD_LIB=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">BOOST_THREAD_BUILD_LIB=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="libs\thread\src\win32\tss_pe.cpp">
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">BOOST_THREAD_BUILD_LIB=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">BOOST_THREAD_BUILD_LIB=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
