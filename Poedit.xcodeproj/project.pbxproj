@@ -197,6 +197,7 @@
 		B2F25F0D199E327C00127FF9 /* spellchecking.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F25F0C199E327C00127FF9 /* spellchecking.cpp */; };
 		B2F287C0170DCC63004C1F41 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B248B2DF170D765100EBA58E /* CoreFoundation.framework */; };
 		B2F3C2912B891644008E0593 /* app_updates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F3C28F2B891644008E0593 /* app_updates.cpp */; };
+		B2FD1DD82BA8B8450024BA78 /* poedit.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B2FD1DD72BA8B8450024BA78 /* poedit.xcconfig */; };
 		B2FE296B1AC85FFF005588E4 /* keytar_mac.cc in Sources */ = {isa = PBXBuildFile; fileRef = B2FE29691AC85FFF005588E4 /* keytar_mac.cc */; };
 /* End PBXBuildFile section */
 
@@ -616,6 +617,7 @@
 		B2F672DB197A841200DBFDB0 /* ja */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B2F672DC197A841600DBFDB0 /* ko */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B2F672DE197A842100DBFDB0 /* nl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/MoveApplication.strings; sourceTree = "<group>"; };
+		B2FD1DD72BA8B8450024BA78 /* poedit.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = poedit.xcconfig; path = macos/poedit.xcconfig; sourceTree = "<group>"; };
 		B2FE29691AC85FFF005588E4 /* keytar_mac.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = keytar_mac.cc; path = keychain/keytar_mac.cc; sourceTree = "<group>"; };
 		B2FE296A1AC85FFF005588E4 /* keytar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = keytar.h; path = keychain/keytar.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -957,6 +959,7 @@
 		B24ACD6516F6201F00399242 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B2FD1DD72BA8B8450024BA78 /* poedit.xcconfig */,
 				B24ACD6616F6201F00399242 /* Poedit-Info.plist */,
 				B24ACD6716F6201F00399242 /* InfoPlist.strings */,
 				B24ACD6C16F6201F00399242 /* Poedit-Prefix.pch */,
@@ -1289,6 +1292,7 @@
 				B2A012B321BEE4C5008051FD /* SuggestionTMTemplate@2x.png in Resources */,
 				B20F31D0216654DA005B7037 /* StatusWarningBlack.png in Resources */,
 				B20F31CC216654D2005B7037 /* StatusErrorBlack@2x.png in Resources */,
+				B2FD1DD82BA8B8450024BA78 /* poedit.xcconfig in Resources */,
 				B2B735F92A5865320037A0DA /* LocalazyLogo@2x.png in Resources */,
 				B2CE2FF21A94F19D0020A620 /* Prefs-Accounts.png in Resources */,
 				B2E3EE4E256D658500FCE1BF /* Prefs-Advanced.png in Resources */,
@@ -1782,6 +1786,7 @@
 		};
 		B24ACD7916F6201F00399242 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B2FD1DD72BA8B8450024BA78 /* poedit.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -1823,6 +1828,7 @@
 					"$(WX_DEFINES)",
 					"$(POEDIT_FEATURES)",
 					"DEBUG=1",
+					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1840,11 +1846,11 @@
 				HEADER_SEARCH_PATHS = (
 					deps/custom_build/config,
 					deps/wx/include,
-					deps/boost,
 					deps/lucene,
 					deps/lucene/LucenePlusPlus/include,
 					deps/cld2,
 					"$(DEPS_BUILD_DIR)/icu/include",
+					"$(inherited)",
 				);
 				LIBRARY_SEARCH_PATHS = "$(DEPS_BUILD_DIR)/icu/lib";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
@@ -1859,6 +1865,7 @@
 		};
 		B24ACD7A16F6201F00399242 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B2FD1DD72BA8B8450024BA78 /* poedit.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -1899,6 +1906,7 @@
 					"$(WX_DEFINES)",
 					"$(POEDIT_FEATURES)",
 					NDEBUG,
+					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1916,11 +1924,11 @@
 				HEADER_SEARCH_PATHS = (
 					deps/custom_build/config,
 					deps/wx/include,
-					deps/boost,
 					deps/lucene,
 					deps/lucene/LucenePlusPlus/include,
 					deps/cld2,
 					"$(DEPS_BUILD_DIR)/icu/include",
+					"$(inherited)",
 				);
 				LIBRARY_SEARCH_PATHS = "$(DEPS_BUILD_DIR)/icu/lib";
 				LLVM_LTO = YES;
@@ -1943,7 +1951,6 @@
 				GCC_PREFIX_HEADER = "src/Poedit-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/macos/Poedit-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-licuuc",
 					"-licudata",
@@ -1967,7 +1974,6 @@
 				GCC_PREFIX_HEADER = "src/Poedit-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/macos/Poedit-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-licuuc",
 					"-licudata",

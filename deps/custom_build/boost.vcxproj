@@ -36,9 +36,11 @@
   <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\boost\boost.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\boost\boost.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -56,7 +58,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <AdditionalIncludeDirectories>..\boost;..\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
@@ -75,7 +77,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <AdditionalIncludeDirectories>..\boost;..\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
@@ -86,32 +88,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\boost\libs\date_time\src\gregorian\date_generators.cpp" />
-    <ClCompile Include="..\boost\libs\date_time\src\gregorian\greg_month.cpp" />
-    <ClCompile Include="..\boost\libs\date_time\src\gregorian\greg_weekday.cpp" />
-    <ClCompile Include="..\boost\libs\filesystem\src\codecvt_error_category.cpp" />
-    <ClCompile Include="..\boost\libs\filesystem\src\operations.cpp" />
-    <ClCompile Include="..\boost\libs\filesystem\src\path.cpp" />
-    <ClCompile Include="..\boost\libs\filesystem\src\path_traits.cpp" />
-    <ClCompile Include="..\boost\libs\filesystem\src\portability.cpp" />
-    <ClCompile Include="..\boost\libs\filesystem\src\unique_path.cpp" />
-    <ClCompile Include="..\boost\libs\filesystem\src\utf8_codecvt_facet.cpp" />
-    <ClCompile Include="..\boost\libs\filesystem\src\windows_file_codecvt.cpp" />
-    <ClCompile Include="..\boost\libs\iostreams\src\file_descriptor.cpp" />
-    <ClCompile Include="..\boost\libs\iostreams\src\gzip.cpp" />
-    <ClCompile Include="..\boost\libs\iostreams\src\mapped_file.cpp" />
-    <ClCompile Include="..\boost\libs\iostreams\src\zlib.cpp" />
-    <ClCompile Include="..\boost\libs\random\src\random_device.cpp" />
-    <ClCompile Include="..\boost\libs\system\src\error_code.cpp" />
-    <ClCompile Include="..\boost\libs\thread\src\future.cpp">
+    <ClCompile Include="..\boost\filesystem\src\codecvt_error_category.cpp" />
+    <ClCompile Include="..\boost\filesystem\src\directory.cpp" />
+    <ClCompile Include="..\boost\filesystem\src\exception.cpp" />
+    <ClCompile Include="..\boost\filesystem\src\operations.cpp" />
+    <ClCompile Include="..\boost\filesystem\src\path.cpp" />
+    <ClCompile Include="..\boost\filesystem\src\path_traits.cpp" />
+    <ClCompile Include="..\boost\filesystem\src\portability.cpp" />
+    <ClCompile Include="..\boost\filesystem\src\unique_path.cpp" />
+    <ClCompile Include="..\boost\filesystem\src\utf8_codecvt_facet.cpp" />
+    <ClCompile Include="..\boost\filesystem\src\windows_file_codecvt.cpp" />
+    <ClCompile Include="..\boost\iostreams\src\file_descriptor.cpp" />
+    <ClCompile Include="..\boost\iostreams\src\gzip.cpp" />
+    <ClCompile Include="..\boost\iostreams\src\mapped_file.cpp" />
+    <ClCompile Include="..\boost\iostreams\src\zlib.cpp" />
+    <ClCompile Include="..\boost\random\src\random_device.cpp" />
+    <ClCompile Include="..\boost\system\src\error_code.cpp" />
+    <ClCompile Include="..\boost\thread\src\future.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">BOOST_THREAD_BUILD_LIB=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">BOOST_THREAD_BUILD_LIB=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\boost\libs\thread\src\win32\thread.cpp">
+    <ClCompile Include="..\boost\thread\src\win32\thread.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">BOOST_THREAD_BUILD_LIB=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">BOOST_THREAD_BUILD_LIB=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\boost\libs\thread\src\win32\tss_pe.cpp">
+    <ClCompile Include="..\boost\thread\src\win32\tss_pe.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">BOOST_THREAD_BUILD_LIB=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">BOOST_THREAD_BUILD_LIB=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
