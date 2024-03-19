@@ -36,9 +36,11 @@
   <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\boost\boost.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\boost\boost.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -54,11 +56,13 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;LPP_BUILDING_LIB;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>..\boost;.;LucenePlusPlus\include;LucenePlusPlus\src\core\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;std_replacements;LucenePlusPlus\include;LucenePlusPlus\src\core\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>LuceneInc.h</PrecompiledHeaderFile>
       <DisableSpecificWarnings>4244;4267</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -74,11 +78,13 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;LPP_BUILDING_LIB;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>..\boost;.;LucenePlusPlus\include;LucenePlusPlus\src\core\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;std_replacements;LucenePlusPlus\include;LucenePlusPlus\src\core\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>LuceneInc.h</PrecompiledHeaderFile>
       <DisableSpecificWarnings>4244;4267</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -336,7 +342,6 @@
     <ClCompile Include="LucenePlusPlus\src\core\search\MultiTermQueryWrapperFilter.cpp" />
     <ClCompile Include="LucenePlusPlus\src\core\search\NumericRangeFilter.cpp" />
     <ClCompile Include="LucenePlusPlus\src\core\search\NumericRangeQuery.cpp" />
-    <ClCompile Include="LucenePlusPlus\src\core\search\ParallelMultiSearcher.cpp" />
     <ClCompile Include="LucenePlusPlus\src\core\search\payloads\AveragePayloadFunction.cpp" />
     <ClCompile Include="LucenePlusPlus\src\core\search\payloads\MaxPayloadFunction.cpp" />
     <ClCompile Include="LucenePlusPlus\src\core\search\payloads\MinPayloadFunction.cpp" />
@@ -389,7 +394,6 @@
     <ClCompile Include="LucenePlusPlus\src\core\search\TermRangeQuery.cpp" />
     <ClCompile Include="LucenePlusPlus\src\core\search\TermRangeTermEnum.cpp" />
     <ClCompile Include="LucenePlusPlus\src\core\search\TermScorer.cpp" />
-    <ClCompile Include="LucenePlusPlus\src\core\search\TimeLimitingCollector.cpp" />
     <ClCompile Include="LucenePlusPlus\src\core\search\TopDocs.cpp" />
     <ClCompile Include="LucenePlusPlus\src\core\search\TopDocsCollector.cpp" />
     <ClCompile Include="LucenePlusPlus\src\core\search\TopFieldCollector.cpp" />
@@ -458,7 +462,6 @@
     <ClCompile Include="LucenePlusPlus\src\core\util\StringUtils.cpp" />
     <ClCompile Include="LucenePlusPlus\src\core\util\Synchronize.cpp" />
     <ClCompile Include="LucenePlusPlus\src\core\util\TestPoint.cpp" />
-    <ClCompile Include="LucenePlusPlus\src\core\util\ThreadPool.cpp" />
     <ClCompile Include="LucenePlusPlus\src\core\util\unicode\guniprop.cpp" />
     <ClCompile Include="LucenePlusPlus\src\core\util\UnicodeUtils.cpp" />
     <ClCompile Include="LucenePlusPlus\src\core\util\UTF8Stream.cpp" />

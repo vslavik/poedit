@@ -35,9 +35,13 @@
     #define USE_PPL_DISPATCH
 #endif
 
-#define BOOST_CHRONO_HEADER_ONLY
-#define BOOST_THREAD_VERSION 4
-#define BOOST_THREAD_PROVIDES_EXECUTORS
+#ifndef BOOST_CHRONO_HEADER_ONLY
+    #define BOOST_CHRONO_HEADER_ONLY
+#endif
+#ifndef BOOST_THREAD_VERSION
+    #define BOOST_THREAD_VERSION 4
+    #define BOOST_THREAD_PROVIDES_EXECUTORS
+#endif
 
 #ifdef __clang__
     #pragma clang diagnostic push
