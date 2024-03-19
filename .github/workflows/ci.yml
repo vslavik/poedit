@@ -70,6 +70,8 @@ jobs:
     name: Build on macOS
     runs-on: macos-13
     steps:
+    - name: Setup parallel submodule fetching
+      run: git config --global submodule.fetchJobs 10
     - uses: actions/checkout@v4
       with:
         submodules: recursive
@@ -95,6 +97,8 @@ jobs:
     name: Build on Windows
     runs-on: windows-latest
     steps:
+    - name: Setup parallel submodule fetching
+      run: git config --global submodule.fetchJobs 10
     - uses: actions/checkout@v4
       with:
         submodules: recursive
