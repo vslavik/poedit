@@ -473,7 +473,7 @@ void SwitchButton::OnMouseClick(wxMouseEvent& e)
 wxSize SwitchButton::DoGetBestSize() const
 {
     auto size = wxToggleButton::DoGetBestSize();
-    size.x += PX(38);
+    size.x += PX(44);
     size.y = PX(20);
     return size;
 }
