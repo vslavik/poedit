@@ -28,8 +28,6 @@
 
 #include "localazy_client.h"
 
-#include <unicode/coll.h>
-
 #include "catalog.h"
 #include "cloud_sync.h"
 #include "colorscheme.h"

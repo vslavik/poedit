@@ -27,6 +27,7 @@
 #define Poedit_str_helpers_h
 
 #include <string>
+#include <utility>
 
 #include <boost/locale/encoding_utf.hpp>
 
@@ -217,25 +218,100 @@ inline std::wstring to_wstring(const icu::UnicodeString& str)
 }
 
 
+/// Buffer holding, possibly non-owned, UChar* NULL-terminated string
+class UCharBuffer
+{
+public:
+    UCharBuffer(UCharBuffer&& other) noexcept
+        : m_owned(std::exchange(other.m_owned, false)),
+          m_data(std::exchange(other.m_data, nullptr)),
+          m_capacity(std::exchange(other.m_capacity, 0))
+    {}
+
+    UCharBuffer(const UCharBuffer&) = delete;
+    UCharBuffer& operator=(const UCharBuffer&) = delete;
+
+    static UCharBuffer owned(int32_t length) { return UCharBuffer(true, new UChar[length + 1], length + 1); }
+    static UCharBuffer non_owned(const UChar *data) { return UCharBuffer(false, data, -1); }
+    static UCharBuffer null() { static UChar empty[1] = {0}; return UCharBuffer(false, empty, 0); }
+
+    ~UCharBuffer()
+    {
+        if (m_owned)
+            delete[] m_data;
+    }
+
+    operator const UChar*() const { return m_data; }
+    UChar* data() { return const_cast<UChar*>(m_data); }
+
+    // available buffer size, only for owned versions, returns 0 for read-only non-owned
+    int32_t capacity() { return m_capacity; }
+
+private:
+    UCharBuffer(bool owned, const UChar *data, int32_t capacity) : m_owned(owned), m_data(data), m_capacity(capacity) {}
+
+    bool m_owned;
+    const UChar *m_data;
+    int32_t m_capacity;
+};
+
+inline UCharBuffer to_icu_raw(const char *str)
+{
+    int32_t destLen = 0;
+    UErrorCode err = U_ZERO_ERROR;
+    u_strFromUTF8Lenient(nullptr, 0, &destLen, str, -1, &err);
+    if (!destLen)
+        return UCharBuffer::null();
+    auto buf = UCharBuffer::owned(destLen);
+    err = U_ZERO_ERROR;
+    u_strFromUTF8Lenient(buf.data(), buf.capacity(), nullptr, str, -1, &err);
+    if (U_FAILURE(err))
+        return UCharBuffer::null();
+    return buf;
+}
+
+inline UCharBuffer to_icu_raw(const wchar_t *str)
+{
+    static_assert(SIZEOF_WCHAR_T == 2 || SIZEOF_WCHAR_T == 4, "unexpected wchar_t size");
+    static_assert(U_SIZEOF_UCHAR == 2, "unexpected UChar size");
+
+#if SIZEOF_WCHAR_T == 2
+    // read-only aliasing ctor, doesn't copy data
+    return UCharBuffer::non_owned(reinterpret_cast<const UChar*>(str));
+#else
+    int32_t destLen = 0;
+    UErrorCode err = U_ZERO_ERROR;
+    u_strFromUTF32(nullptr, 0, &destLen, reinterpret_cast<const UChar32*>(str), -1, &err);
+    if (!destLen)
+        return UCharBuffer::null();
+    auto buf = UCharBuffer::owned(destLen);
+    err = U_ZERO_ERROR;
+    u_strFromUTF32(buf.data(), buf.capacity(), nullptr, reinterpret_cast<const UChar32*>(str), -1, &err);
+    if (U_FAILURE(err))
+        return UCharBuffer::null();
+    return buf;
+#endif
+}
 
 /**
     Create buffer with raw UChar* string.
 
     Notice that the resulting string is only valid for the input's lifetime.
  */
-inline wxScopedCharTypeBuffer<wxChar16> to_icu_raw(const wxString& str)
+inline UCharBuffer to_icu_raw(const wxString& str)
 {
-    static_assert(U_SIZEOF_UCHAR == 2, "unexpected UChar size");
-#if SIZEOF_WCHAR_T == 2
-    // read-only aliasing ctor, doesn't copy data
-    return wxScopedCharTypeBuffer<UChar>::CreateNonOwned((const UChar*)str.wx_str(), str.length());
-#else
-    auto buf = wxMBConvUTF16().cWC2MB(str.wc_str());
-    auto len = buf.length();
-    return wxCharTypeBuffer<wxChar16>::CreateOwned((wxChar16*)buf.release(), len);
-#endif
+    return to_icu_raw(str.wx_str());
 }
 
+inline UCharBuffer to_icu_raw(const std::wstring& str)
+{
+    return to_icu_raw(str.c_str());
+}
+
+inline UCharBuffer to_icu_raw(const std::string& str)
+{
+    return to_icu_raw(str.c_str());
+}
 
 
 } // namespace str

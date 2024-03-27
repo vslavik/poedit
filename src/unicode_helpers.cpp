@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (https://poedit.net)
  *
- *  Copyright (C) 2016-2023 Vaclav Slavik
+ *  Copyright (C) 2016-2024 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -29,6 +29,37 @@
 
 #include <unicode/ubidi.h>
 
+
+namespace unicode
+{
+
+Collator::Collator(const Language& language, mode m)
+{
+    UErrorCode err = U_ZERO_ERROR;
+
+    if (language.IsValid())
+        m_coll = ucol_open(language.IcuLocaleName().c_str(), &err);
+    else
+        m_coll = ucol_open(NULL, &err); // NULL is default locale, i.e. set to user's
+
+    if (!m_coll)
+        m_coll = ucol_open("", &err); // "" is the root collator, should always exist
+
+    wxASSERT(m_coll);
+
+    if (m == case_insensitive)
+        ucol_setStrength(m_coll, UCOL_SECONDARY);
+}
+
+Collator::~Collator()
+{
+    if (m_coll)
+        ucol_close(m_coll);
+}
+
+} // namespace unicode
+
+
 namespace bidi
 {
 
@@ -38,7 +69,7 @@ TextDirection get_base_direction(const wxString& text)
         return TextDirection::LTR;
 
     auto s = str::to_icu_raw(text);
-    switch (ubidi_getBaseDirection((const UChar*)s.data(), (int)s.length()))
+    switch (ubidi_getBaseDirection(s.data(), -1))
     {
         case UBIDI_RTL:
             return TextDirection::RTL;

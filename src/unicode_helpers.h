@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (https://poedit.net)
  *
- *  Copyright (C) 2016-2023 Vaclav Slavik
+ *  Copyright (C) 2016-2024 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -28,12 +28,86 @@
 
 #include "language.h"
 
+#include "str_helpers.h"
+
 #include <wx/string.h>
+
+#include <unicode/ucol.h>
+
 
 #ifdef __WXMSW__
     #define BIDI_NEEDS_DIRECTION_ON_EACH_LINE
     #define BIDI_PLATFORM_DOESNT_DETECT_DIRECTION
 #endif
+
+
+namespace unicode
+{
+
+/// Collator class - language-aware sorting
+class Collator
+{
+public:
+    enum mode
+    {
+        case_sensitive,
+        case_insensitive
+    };
+
+    typedef UCollationResult result_type;
+
+    /// Ctor for sorting using rules for given language.
+    /// If the language is not provide, uses current UI language.
+    Collator(const Language& language, mode m = case_sensitive);
+    Collator(mode m = case_sensitive) : Collator(Language(), m) {}
+    ~Collator();
+
+    Collator(const Collator&) = delete;
+    Collator& operator=(const Collator&) = delete;
+
+    result_type compare(const wxString& a, const wxString& b) const
+    {
+#if wxUSE_UNICODE_UTF8
+        UErrorCode err = U_ZERO_ERROR;
+        return ucol_strcollUTF8(m_coll, a.wx_str(), -1, b.wx_str(), -1, &err);
+#else
+        return ucol_strcoll(m_coll, str::to_icu_raw(a), -1, str::to_icu_raw(b), -1);
+#endif
+    };
+
+    result_type compare(const std::string& a, const std::string& b) const
+    {
+        UErrorCode err = U_ZERO_ERROR;
+        return ucol_strcollUTF8(m_coll, a.c_str(), (int32_t)a.length(), b.c_str(), (int32_t)b.length(), &err);
+    }
+
+    result_type compare(const std::wstring& a, const std::wstring& b) const
+    {
+        return ucol_strcoll(m_coll, str::to_icu_raw(a), -1, str::to_icu_raw(b), -1);
+    }
+
+    // Temporary until removal of icu::UnicodeString
+    result_type compare(const icu::UnicodeString& a_, const icu::UnicodeString& b_) const
+    {
+        std::string a, b;
+        a_.toUTF8String(a);
+        b_.toUTF8String(b);
+        UErrorCode err = U_ZERO_ERROR;
+        return ucol_strcollUTF8(m_coll, a.c_str(), (int32_t)a.length(), b.c_str(), (int32_t)b.length(), &err);
+    }
+
+    template<typename T>
+    bool operator()(const T& a, const T& b) const
+    {
+        return compare(a, b) == UCOL_LESS;
+    }
+
+private:
+    UCollator *m_coll = nullptr;
+};
+
+} // namespace unicode
+
 
 namespace bidi
 {

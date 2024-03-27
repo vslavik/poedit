@@ -33,6 +33,7 @@
 #include "http_client.h"
 #include "languagectrl.h"
 #include "str_helpers.h"
+#include "unicode_helpers.h"
 #include "utility.h"
 
 #include "cloud_sync.h"
@@ -40,9 +41,6 @@
 #include "crowdin_gui.h"
 #include "localazy_client.h"
 #include "localazy_gui.h"
-
-#include <unicode/coll.h>
-#include <boost/algorithm/string.hpp>
 
 #include <wx/choice.h>
 #include <wx/renderer.h>
@@ -285,28 +283,11 @@ namespace
 template<typename T, typename Key>
 void SortAlphabetically(std::vector<T>& items, Key func)
 {
-    UErrorCode err = U_ZERO_ERROR;
-    std::unique_ptr<icu::Collator> coll(icu::Collator::createInstance(err));
-    if (coll)
-        coll->setStrength(icu::Collator::SECONDARY); // case insensitive
-
+    unicode::Collator coll(unicode::Collator::case_insensitive);
     std::sort
     (
         items.begin(), items.end(),
-        [&coll,&func](const T& a, const T& b)
-        {
-            auto ka = func(a);
-            auto kb = func(b);
-            if (coll)
-            {
-                UErrorCode e = U_ZERO_ERROR;
-                return coll->compare(str::to_icu(ka), str::to_icu(kb), e) == UCOL_LESS;
-            }
-            else
-            {
-                return ka < kb;
-            }
-        }
+        [&coll,&func](const T& a, const T& b){ return coll(func(a), func(b)); }
     );
 }
 
