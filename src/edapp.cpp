@@ -437,7 +437,7 @@ bool PoeditApp::OnInit()
 
     SetDefaultCfg(wxConfig::Get());
 
-#if defined(__WXOSX__) || defined(__WXMSW__)
+#if defined(__WXMSW__)
     u_setDataDirectory(wxStandardPaths::Get().GetResourcesDir().mb_str());
 #endif
 

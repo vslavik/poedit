@@ -18,17 +18,6 @@
 			name = deps.gettext;
 			productName = deps.gettext;
 		};
-		B2E270B421B6977700C33EA0 /* deps.icu */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = B2E270B521B6977700C33EA0 /* Build configuration list for PBXAggregateTarget "deps.icu" */;
-			buildPhases = (
-				B2C129D821C6CA07004364B2 /* Ninja Build */,
-			);
-			dependencies = (
-			);
-			name = deps.icu;
-			productName = deps.icu;
-		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -90,6 +79,9 @@
 		B25FAE61249527BC00B9A1A1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25FAE60249527BC00B9A1A1 /* QuartzCore.framework */; };
 		B260089429AE694E00349A0E /* catalog_json.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B260089229AE694D00349A0E /* catalog_json.cpp */; };
 		B260089529AF88A000349A0E /* catalog_json.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B260089229AE694D00349A0E /* catalog_json.cpp */; };
+		B260AA6A2BB2FCAC0003E378 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B260AA692BB2FCAC0003E378 /* libicucore.tbd */; };
+		B260AA6B2BB2FCB70003E378 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B260AA692BB2FCAC0003E378 /* libicucore.tbd */; };
+		B260AA682BB2BDAE0003E378 /* unicode_helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2E02A341CB812C500D18F5C /* unicode_helpers.cpp */; };
 		B26483E82A4CAC30001736CD /* localazy_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26483E62A4CAC30001736CD /* localazy_client.cpp */; };
 		B26483E92A4CAC30001736CD /* localazy_gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26483E72A4CAC30001736CD /* localazy_gui.cpp */; };
 		B267EAFD1E045959005541E7 /* StatusError.png in Resources */ = {isa = PBXBuildFile; fileRef = B267EAFB1E045959005541E7 /* StatusError.png */; };
@@ -161,6 +153,8 @@
 		B2BF84C4170849D00030AA22 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2BF84BB170846940030AA22 /* Carbon.framework */; };
 		B2C21633251906CC002B144A /* recent_files.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2C21632251906CC002B144A /* recent_files.cpp */; };
 		B2C62E191AA8A29000901D63 /* http_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2C62E181AA8A29000901D63 /* http_client.cpp */; };
+		B2CAC13B2BBEE95900707D8D /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CAC13A2BBEE95900707D8D /* libicucore.tbd */; };
+		B2CAC13C2BBEE96300707D8D /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CAC13A2BBEE95900707D8D /* libicucore.tbd */; };
 		B2CE2FEF1A94EBF50020A620 /* crowdin_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2CE2FED1A94EBF50020A620 /* crowdin_client.cpp */; };
 		B2CE2FF21A94F19D0020A620 /* Prefs-Accounts.png in Resources */ = {isa = PBXBuildFile; fileRef = B2CE2FF01A94F19D0020A620 /* Prefs-Accounts.png */; };
 		B2CE2FF31A94F19D0020A620 /* Prefs-Accounts@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2CE2FF11A94F19D0020A620 /* Prefs-Accounts@2x.png */; };
@@ -193,7 +187,6 @@
 		B2E837031709ED6300F31559 /* poedit-validate.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836FA1709ED6300F31559 /* poedit-validate.png */; };
 		B2E91E3E2AC73DCA0042EF10 /* libexpat.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E91E3D2AC73DCA0042EF10 /* libexpat.tbd */; };
 		B2E91E402AC73E2D0042EF10 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E91E3F2AC73E2D0042EF10 /* libz.tbd */; };
-		B2EC60A41812D9D40059756A /* icudt57l.dat in Resources */ = {isa = PBXBuildFile; fileRef = B2EC60A31812D9D40059756A /* icudt57l.dat */; };
 		B2F25F0D199E327C00127FF9 /* spellchecking.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F25F0C199E327C00127FF9 /* spellchecking.cpp */; };
 		B2F287C0170DCC63004C1F41 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B248B2DF170D765100EBA58E /* CoreFoundation.framework */; };
 		B2F3C2912B891644008E0593 /* app_updates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F3C28F2B891644008E0593 /* app_updates.cpp */; };
@@ -222,20 +215,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = B2CE6D191ACFCD95007E6863;
 			remoteInfo = PoeditQuicklook;
-		};
-		B2E270B821B6979D00C33EA0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B2E270B421B6977700C33EA0;
-			remoteInfo = deps.icu;
-		};
-		B2E270BA21B697AA00C33EA0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B2E270B421B6977700C33EA0;
-			remoteInfo = deps.icu;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -542,6 +521,7 @@
 		B2C62E181AA8A29000901D63 /* http_client.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = http_client.cpp; sourceTree = "<group>"; };
 		B2C67BBF19B0DE7200691FA4 /* eu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = eu; path = eu.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B2C67BC019B0DE7C00691FA4 /* gl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = gl; path = gl.lproj/MoveApplication.strings; sourceTree = "<group>"; };
+		B2CAC13A2BBEE95900707D8D /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		B2CDAA1B1A61866300261248 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B2CDAA1C1A61866300261248 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B2CDAA1D1A61867600261248 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -651,6 +631,7 @@
 				B24F271F2BA8718700311C6D /* libboost.a in Frameworks */,
 				B2E91E402AC73E2D0042EF10 /* libz.tbd in Frameworks */,
 				B2E91E3E2AC73DCA0042EF10 /* libexpat.tbd in Frameworks */,
+				B2CAC13B2BBEE95900707D8D /* libicucore.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -660,6 +641,7 @@
 			files = (
 				B2B7E81A1AD94194007FC4EB /* libwx_osx_base_static.a in Frameworks */,
 				B216A14E1AD9426500F2898C /* libcld2.a in Frameworks */,
+				B2CAC13C2BBEE96300707D8D /* libicucore.tbd in Frameworks */,
 				B239051924F163510069939B /* AppKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -909,6 +891,7 @@
 		B24ACD5D16F6201F00399242 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B2CAC13A2BBEE95900707D8D /* libicucore.tbd */,
 				B2B6065425F100F3006186A9 /* WebKit.framework */,
 				B25FAE60249527BC00B9A1A1 /* QuartzCore.framework */,
 				B22E69101A93699E002C06C7 /* SystemConfiguration.framework */,
@@ -1127,7 +1110,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				B2E270B921B6979D00C33EA0 /* PBXTargetDependency */,
 				B248B2EE170D773000EBA58E /* PBXTargetDependency */,
 				B2CE6D281AD00897007E6863 /* PBXTargetDependency */,
 			);
@@ -1153,7 +1135,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				B2E270BB21B697AA00C33EA0 /* PBXTargetDependency */,
 			);
 			name = PoeditQuicklook;
 			productName = PoeditQuicklook;
@@ -1245,7 +1226,6 @@
 			targets = (
 				B24ACD5A16F6201F00399242 /* Poedit */,
 				B27115F8170830A800B936D5 /* deps.gettext */,
-				B2E270B421B6977700C33EA0 /* deps.icu */,
 				B248B2DD170D765100EBA58E /* GettextTools */,
 				B2CE6D191ACFCD95007E6863 /* PoeditQuicklook */,
 			);
@@ -1306,7 +1286,6 @@
 				B29AE89717103992008D1F8A /* summary.xrc in Resources */,
 				B29AE89A17103992008D1F8A /* toolbar.xrc in Resources */,
 				B26E2C9125A245BD008D6DF1 /* CloseButtonHoverTemplate.png in Resources */,
-				B2EC60A41812D9D40059756A /* icudt57l.dat in Resources */,
 				B25DB35E1E3E5102006D7228 /* ExtractorsGNUgettext@2x.png in Resources */,
 				B24D196A1E84503B00C6DD8D /* StatusWarning@2x.png in Resources */,
 				B26897B4197A830200B42764 /* MoveApplication.strings in Resources */,
@@ -1338,25 +1317,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		B2C129D821C6CA07004364B2 /* Ninja Build */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Ninja Build";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd deps && ./build_deps.sh icu\n";
-		};
 		B2C129D921C6CBAF004364B2 /* Ninja Build */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -1599,16 +1559,6 @@
 			target = B2CE6D191ACFCD95007E6863 /* PoeditQuicklook */;
 			targetProxy = B2CE6D271AD00897007E6863 /* PBXContainerItemProxy */;
 		};
-		B2E270B921B6979D00C33EA0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B2E270B421B6977700C33EA0 /* deps.icu */;
-			targetProxy = B2E270B821B6979D00C33EA0 /* PBXContainerItemProxy */;
-		};
-		B2E270BB21B697AA00C33EA0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B2E270B421B6977700C33EA0 /* deps.icu */;
-			targetProxy = B2E270BA21B697AA00C33EA0 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -1849,13 +1799,10 @@
 					deps/lucene,
 					deps/lucene/LucenePlusPlus/include,
 					deps/cld2,
-					"$(DEPS_BUILD_DIR)/icu/include",
 					"$(inherited)",
 				);
-				LIBRARY_SEARCH_PATHS = "$(DEPS_BUILD_DIR)/icu/lib";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CFLAGS = "";
 				POEDIT_FEATURES = "";
 				POEDIT_VERSION = 3.5;
 				SDKROOT = macosx;
@@ -1927,10 +1874,8 @@
 					deps/lucene,
 					deps/lucene/LucenePlusPlus/include,
 					deps/cld2,
-					"$(DEPS_BUILD_DIR)/icu/include",
 					"$(inherited)",
 				);
-				LIBRARY_SEARCH_PATHS = "$(DEPS_BUILD_DIR)/icu/lib";
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				POEDIT_FEATURES = "";
@@ -1951,11 +1896,6 @@
 				GCC_PREFIX_HEADER = "src/Poedit-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/macos/Poedit-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-licuuc",
-					"-licudata",
-					"-licui18n",
-				);
 				POEDIT_FEATURES = "HAVE_CLD2 HAVE_HTTP_CLIENT";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.poedit.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1974,11 +1914,6 @@
 				GCC_PREFIX_HEADER = "src/Poedit-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/macos/Poedit-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-licuuc",
-					"-licudata",
-					"-licui18n",
-				);
 				POEDIT_FEATURES = "HAVE_CLD2 HAVE_HTTP_CLIENT";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.poedit.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2036,11 +1971,6 @@
 				INFOPLIST_FILE = src/quicklook/Info.plist;
 				INSTALL_PATH = /Library/QuickLook;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = (
-					"-licuuc",
-					"-licudata",
-					"-licui18n",
-				);
 				POEDIT_FEATURES = HAVE_CLD2;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.poedit.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2074,43 +2004,11 @@
 				INFOPLIST_FILE = src/quicklook/Info.plist;
 				INSTALL_PATH = /Library/QuickLook;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = (
-					"-licuuc",
-					"-licudata",
-					"-licui18n",
-				);
 				POEDIT_FEATURES = HAVE_CLD2;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.poedit.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = qlgenerator;
-			};
-			name = Release;
-		};
-		B2E270B621B6977700C33EA0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				DEAD_CODE_STRIPPING = YES;
-				DEBUGGING_SYMBOLS = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		B2E270B721B6977700C33EA0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				DEAD_CODE_STRIPPING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -2158,15 +2056,6 @@
 			buildConfigurations = (
 				B2CE6D241ACFCD95007E6863 /* Debug */,
 				B2CE6D251ACFCD95007E6863 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B2E270B521B6977700C33EA0 /* Build configuration list for PBXAggregateTarget "deps.icu" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B2E270B621B6977700C33EA0 /* Debug */,
-				B2E270B721B6977700C33EA0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

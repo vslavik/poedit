@@ -51,6 +51,7 @@
  *
  * @internal ICU 4.0
  */
+#define UCONFIG_USE_LOCAL
 #if defined(UCONFIG_USE_LOCAL)
 #include "uconfig_local.h"
 #endif
