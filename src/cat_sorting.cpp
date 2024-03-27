@@ -26,11 +26,13 @@
 
 #include "cat_sorting.h"
 
-#include <unicode/unistr.h>
 #include "str_helpers.h"
 
 #include <wx/config.h>
 #include <wx/log.h>
+
+#include <unicode/unistr.h>
+
 
 /*static*/ SortOrder SortOrder::Default()
 {

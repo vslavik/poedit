@@ -29,6 +29,8 @@
 #include "errors.h"
 #include "hidpi.h"
 #include "utility.h"
+#include "str_helpers.h"
+#include "unicode_helpers.h"
 
 #include <wx/activityindicator.h>
 #include <wx/app.h>
@@ -52,9 +54,6 @@
 #ifdef __WXGTK__
 #include <gtk/gtk.h>
 #endif
-
-#include "str_helpers.h"
-#include "unicode_helpers.h"
 
 #include <map>
 #include <memory>

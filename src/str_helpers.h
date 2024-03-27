@@ -31,11 +31,18 @@
 #include <boost/locale/encoding_utf.hpp>
 
 #ifdef __OBJC__
-#include <Foundation/NSString.h>
+    #include <Foundation/NSString.h>
 #endif
 
-#include <wx/string.h>
-#include <wx/buffer.h>
+#ifdef __cplusplus
+    #include <wx/string.h>
+    #include <wx/buffer.h>
+
+    #include <unicode/umachine.h>
+    #include <unicode/unistr.h>
+    #include <unicode/ustring.h>
+#endif // __cplusplus
+
 
 /**
     Defines conversions between various string types.
@@ -153,8 +160,7 @@ inline std::wstring to_wstring(NSString *str)
 #endif // Objective-C++
 
 
-// ICU conversions; only include them if ICU is included
-#ifdef UNISTR_H
+// ICU conversions:
 
 /**
     Create read-only icu::UnicodeString from wxString efficiently.
@@ -210,10 +216,7 @@ inline std::wstring to_wstring(const icu::UnicodeString& str)
     return to_wx(str).ToStdWstring();
 }
 
-#endif // UNISTR_H
 
-// Low-level ICU conversions:
-#ifdef U_SIZEOF_UCHAR
 
 /**
     Create buffer with raw UChar* string.
@@ -233,7 +236,6 @@ inline wxScopedCharTypeBuffer<wxChar16> to_icu_raw(const wxString& str)
 #endif
 }
 
-#endif // U_SIZEOF_UCHAR
 
 
 } // namespace str

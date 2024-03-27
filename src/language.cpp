@@ -25,6 +25,8 @@
 
 #include "language.h"
 
+#include "str_helpers.h"
+
 #include <cctype>
 #include <algorithm>
 #include <unordered_map>
@@ -41,7 +43,6 @@
 
 #include <wx/filename.h>
 
-#include "str_helpers.h"
 #include "pluralforms/pl_evaluate.h"
 
 #ifdef HAVE_CLD2
