@@ -35,6 +35,7 @@
 #include <wx/string.h>
 #include <wx/osx/core/cfstring.h>
 
+#include <unicode/uloc.h>
 #include <unicode/uclean.h>
 
 #include "catalog.h"
@@ -96,7 +97,7 @@ void Initialize_plugin(void)
 
             wxString bestTrans = trans->GetBestTranslation("poedit");
             Language uiLang = Language::TryParse(bestTrans.ToStdWstring());
-            icu::Locale::setDefault(uiLang.ToIcu(), err);
+            uloc_setDefault(uiLang.IcuLocaleName().c_str(), &err);
         }
         CFRelease(url);
     }

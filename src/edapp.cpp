@@ -604,7 +604,7 @@ void PoeditApp::SetupLanguage()
     wxString bestTrans = trans->GetBestTranslation("poedit");
     Language uiLang = Language::TryParse(bestTrans.ToStdWstring());
     UErrorCode err = U_ZERO_ERROR;
-    icu::Locale::setDefault(uiLang.ToIcu(), err);
+    uloc_setDefault(uiLang.IcuLocaleName().c_str(), &err);
 #if defined(HAVE_HTTP_CLIENT) && !defined(__WXOSX__)
     http_client::set_ui_language(uiLang.LanguageTag());
 #endif

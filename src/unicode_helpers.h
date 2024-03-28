@@ -144,6 +144,71 @@ public:
 private:
     UBreakIterator *m_bi = nullptr;
 };
+
+
+/// Helper for writing data from ICU C API to string types, optimized to avoid copying in case of UTF-16 wchar_t
+template<typename T>
+struct UCharWriteBuffer
+{
+    UCharWriteBuffer(int32_t length) : m_data(str::UCharBuffer::owned(length)) {}
+
+    UChar *data() { return m_data.data(); }
+    int32_t capacity() { return m_data.capacity(); }
+
+    auto output() { return str::to<T>(m_data); }
+
+private:
+    str::UCharBuffer m_data;
+};
+
+#if SIZEOF_WCHAR_T == 2
+
+template<>
+struct UCharWriteBuffer<std::wstring>
+{
+    UCharWriteBuffer(int32_t length) : m_data(length, L'\0') {}
+
+    UChar *data() { return reinterpret_cast<UChar*>(m_data.data()); }
+    int32_t capacity() { return m_data.length() + 1; }
+
+    std::wstring output() { return std::move(m_data); }
+
+private:
+    std::wstring m_data;
+};
+
+#endif
+
+
+/// Like fold_case(), but limited to buffers
+inline bool fold_case(const UChar *input, UChar *output, int32_t capacity)
+{
+    UErrorCode err = U_ZERO_ERROR;
+    u_strFoldCase(output, capacity, input, -1, U_FOLD_CASE_DEFAULT, &err);
+    return U_SUCCESS(err);
+}
+
+/// Folds case Unicode-correctly, converting to a different output type
+template<typename TOut, typename TIn>
+inline auto fold_case_to_type(const TIn& str)
+{
+    UErrorCode err = U_ZERO_ERROR;
+    auto input = str::to_icu_raw(str);
+    int32_t length = u_strFoldCase(nullptr, 0, input, -1, U_FOLD_CASE_DEFAULT, &err);
+
+    UCharWriteBuffer<TOut> folded(length);
+    fold_case(input, folded.data(), folded.capacity());
+    return folded.output();
+};
+
+/// Folds case Unicode-correctly
+template<typename T>
+inline auto fold_case(const T& str)
+{
+    return fold_case_to_type<T, T>(str);
+}
+
+
 } // namespace unicode
 
 

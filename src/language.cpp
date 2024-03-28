@@ -38,7 +38,6 @@
 
 #include <boost/algorithm/string.hpp>
 
-#include <unicode/locid.h>
 #include <unicode/utypes.h>
 
 #include <wx/filename.h>
@@ -96,7 +95,7 @@ void TryNormalize(std::wstring& s)
 bool IsISOLanguage(const std::string& s)
 {
     const char *test = s.c_str();
-    for (const char * const* i = icu::Locale::getISOLanguages(); *i != nullptr; ++i)
+    for (const char * const* i = uloc_getISOLanguages(); *i != nullptr; ++i)
     {
         if (strcmp(test, *i) == 0)
             return true;
@@ -107,13 +106,30 @@ bool IsISOLanguage(const std::string& s)
 bool IsISOCountry(const std::string& s)
 {
     const char *test = s.c_str();
-    for (const char * const* i = icu::Locale::getISOCountries(); *i != nullptr; ++i)
+    for (const char * const* i = uloc_getISOCountries(); *i != nullptr; ++i)
     {
         if (strcmp(test, *i) == 0)
             return true;
     }
     return false;
 }
+
+// Get locale display name or at least language
+template<typename T>
+auto GetDisplayNameOrLanguage(const char *locale, const char *displayLocale)
+{
+    UErrorCode err = U_ZERO_ERROR;
+    UChar buf[512] = {0};
+    uloc_getDisplayName(locale, displayLocale, buf, std::size(buf), &err);
+    if (U_FAILURE(err) || str::empty(buf))
+    {
+        err = U_ZERO_ERROR;
+        uloc_getDisplayLanguage(locale, displayLocale, buf, std::size(buf), &err);
+    }
+
+    return str::to<T>(buf);
+}
+
 
 // Mapping of names to their respective ISO codes.
 struct DisplayNamesData
@@ -130,36 +146,44 @@ const DisplayNamesData& GetDisplayNamesData()
     static DisplayNamesData data;
 
     std::call_once(of_namesList, [=]{
-        auto locEng = icu::Locale::getEnglish();
-        std::vector<icu::UnicodeString> names;
         std::set<std::string> foundCodes;
 
-        int32_t count;
-        const icu::Locale *loc = icu::Locale::getAvailableLocales(count);
-        names.reserve(count);
+        int32_t count = uloc_countAvailable();
+        data.sortedNames.reserve(count);
 
-        for (int i = 0; i < count; i++, loc++)
+        char language[128] = {0};
+        char script[128] = {0};
+        char country[128] = {0};
+        char variant[128] = {0};
+
+        for (int i = 0; i < count; i++)
         {
-            auto language = loc->getLanguage();
-            auto script = loc->getScript();
-            auto country = loc->getCountry();
-            auto variant = loc->getVariant();
+            const char *locale = uloc_getAvailable(i);
+
+            UErrorCode err = U_ZERO_ERROR;
+            uloc_getLanguage(locale, language, std::size(language), &err);
+            uloc_getScript(locale, script, std::size(script), &err);
+            uloc_getCountry(locale, country, std::size(country), &err);
+            uloc_getVariant(locale, variant, std::size(variant), &err);
 
             // TODO: for now, ignore variants here and in FormatForRoundtrip(),
             //       because translating them between gettext and ICU is nontrivial
-            if (variant != nullptr && *variant != '\0')
+            if (!str::empty(variant))
                 continue;
 
-            icu::UnicodeString s;
-            loc->getDisplayName(s);
-            names.push_back(s);
+            UChar buf[512] = {0};
+            err = U_ZERO_ERROR;
+            uloc_getDisplayName(locale, nullptr, buf, std::size(buf), &err);
+
+            data.sortedNames.emplace_back(str::to_wstring(buf));
+            auto foldedName = unicode::fold_case_to_type<std::wstring>(buf);
 
             if (strcmp(language, "zh") == 0 && *country == '\0')
             {
                 if (strcmp(script, "Hans") == 0)
-                    country = "CN";
+                    strncpy(country, "CN", std::size(country));
                 else if (strcmp(script, "Hant") == 0)
-                    country = "TW";
+                    strncpy(country, "TW", std::size(country));
             }
 
             std::string code(language);
@@ -183,51 +207,42 @@ const DisplayNamesData& GetDisplayNamesData()
             }
 
             foundCodes.insert(code);
+            data.names[foldedName] = code;
+ 
+            err = U_ZERO_ERROR;
+            uloc_getDisplayName(locale, ULOC_ENGLISH, buf, std::size(buf), &err);
+            auto foldedEngName = unicode::fold_case_to_type<std::wstring>(buf);
 
-            s.foldCase();
-            data.names[str::to_wstring(s)] = code;
-
-            loc->getDisplayName(locEng, s);
-            s.foldCase();
-            data.namesEng[str::to_wstring(s)] = code;
+            data.namesEng[foldedEngName] = code;
         }
 
         // add languages that are not listed as locales in ICU:
-        for (const char * const* i = icu::Locale::getISOLanguages(); *i != nullptr; ++i)
+        for (const char * const* i = uloc_getISOLanguages(); *i != nullptr; ++i)
         {
             const char *code = *i;
             if (foundCodes.find(code) != foundCodes.end())
                 continue;
 
-            icu::Locale langLoc(code);
-            if (strcmp(code, langLoc.getLanguage()) != 0)
+            UErrorCode err = U_ZERO_ERROR;
+            uloc_getLanguage(code, language, std::size(language), &err);
+            if (U_FAILURE(err) || strcmp(code, language) != 0)
                 continue; // e.g. 'und' for undetermined language
 
-            icu::UnicodeString name;
-            if (langLoc.getDisplayName(name).isEmpty())
-                langLoc.getDisplayLanguage(name);
-            if (name.isEmpty())
+            auto isoName = GetDisplayNameOrLanguage<std::wstring>(code, nullptr);
+            if (isoName.empty())
                 continue;
 
-            names.push_back(name);
+            data.sortedNames.push_back(isoName);
+            data.names[unicode::fold_case(isoName)] = code;
 
-            name.foldCase();
-            data.names[str::to_wstring(name)] = code;
-
-            if (langLoc.getDisplayName(locEng, name).isEmpty())
-                langLoc.getDisplayLanguage(locEng, name);
-            name.foldCase();
-            data.namesEng[str::to_wstring(name)] = code;
+            auto isoEngName = GetDisplayNameOrLanguage<std::wstring>(code, ULOC_ENGLISH);
+            if (!isoEngName.empty())
+                data.namesEng[unicode::fold_case(isoEngName)] = code;
         }
 
         // sort the names alphabetically for data.sortedNames:
         unicode::Collator coll(unicode::Collator::case_insensitive);
-        std::sort(names.begin(), names.end(), std::ref(coll));
-
-        // convert into std::wstring
-        data.sortedNames.reserve(names.size());
-        for (auto s: names)
-            data.sortedNames.push_back(str::to_wstring(s));
+        std::sort(data.sortedNames.begin(), data.sortedNames.end(), std::ref(coll));
     });
 
     return data;
@@ -387,9 +402,7 @@ Language Language::TryParse(const std::wstring& s)
 
     // If not, perhaps it's a human-readable name (perhaps coming from the language control)?
     auto names = GetDisplayNamesData();
-    icu::UnicodeString s_icu = str::to_icu(s);
-    s_icu.foldCase();
-    std::wstring folded = str::to_wstring(s_icu);
+    auto folded = unicode::fold_case(s);
     auto i = names.names.find(folded);
     if (i != names.names.end())
         return Language(i->second);
@@ -515,40 +528,27 @@ int Language::nplurals() const
 }
 
 
-icu::Locale Language::ToIcu() const
-{
-    if (!IsValid())
-        return icu::Locale::getEnglish();
-
-    return icu::Locale(IcuLocaleName().c_str());
-}
-
-
 wxString Language::DisplayName() const
 {
-    auto loc = ToIcu();
-    icu::UnicodeString s;
-    if (loc.getDisplayName(s).isEmpty())
-        loc.getDisplayLanguage(s);
-    return str::to_wx(s);
+    return GetDisplayNameOrLanguage<wxString>(m_icuLocale.c_str(), nullptr);
 }
 
 wxString Language::LanguageDisplayName() const
 {
-    icu::UnicodeString s;
-    ToIcu().getDisplayLanguage(s);
-    return str::to_wx(s);
+    UErrorCode err = U_ZERO_ERROR;
+    UChar buf[512] = {0};
+    uloc_getDisplayLanguage(m_icuLocale.c_str(), nullptr, buf, std::size(buf), &err);
+    return str::to_wx(buf);
 }
 
 wxString Language::DisplayNameInItself() const
 {
-    auto loc = ToIcu();
-    icu::UnicodeString s;
-    if (loc.getDisplayName(loc, s).isEmpty())
-        loc.getDisplayLanguage(loc, s);
-    if (s.isEmpty())
-        return DisplayName(); // fall back to current locale's name, better than nothing
-    return str::to_wx(s);
+    auto name = GetDisplayNameOrLanguage<wxString>(m_icuLocale.c_str(), m_icuLocale.c_str());
+    if (!name.empty())
+        return name;
+
+    // fall back to current locale's name, better than nothing
+    return DisplayName();
 }
 
 wxString Language::FormatForRoundtrip() const

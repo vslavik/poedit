@@ -27,6 +27,7 @@
 #define Poedit_str_helpers_h
 
 #include <string>
+#include <string_view>
 #include <utility>
 
 #include <boost/locale/encoding_utf.hpp>
@@ -255,6 +256,15 @@ private:
     int32_t m_capacity;
 };
 
+
+// Simple check for empty buffer / C string:
+template<typename T>
+inline bool empty(const T *str)
+{
+    return !str || *str == 0;
+}
+
+
 inline UCharBuffer to_icu_raw(const char *str)
 {
     int32_t destLen = 0;
@@ -313,6 +323,14 @@ inline UCharBuffer to_icu_raw(const std::string& str)
     return to_icu_raw(str.c_str());
 }
 
+inline const UChar* to_icu_raw(const UChar *str)
+{
+    return str;
+}
+
+inline UCharBuffer to_icu_raw(const UCharBuffer& str) = delete;
+
+
 #if SIZEOF_WCHAR_T == 2
 
 inline wxString to_wx(const UChar *str)
@@ -327,6 +345,12 @@ inline wxString to_wx(const UChar *str, size_t count)
     return wxString(reinterpret_cast<const wchar_t*>(str), count);
 }
 
+inline std::wstring_view to_wstring(const UChar *str)
+{
+    static_assert(sizeof(wchar_t) == sizeof(UChar));
+    return std::wstring_view(reinterpret_cast<const wchar_t*>(str));
+}
+
 #else // SIZEOF_WCHAR_T == 4
 
 inline wxString to_wx(const UChar *str)
@@ -339,7 +363,93 @@ inline wxString to_wx(const UChar *str, size_t count)
     return wxString(reinterpret_cast<const char*>(str), wxMBConvUTF16(), count * 2);
 }
 
+inline std::wstring to_wstring(const UChar *str)
+{
+    static_assert(sizeof(wchar_t) == 4);
+
+    int32_t destLen = 0;
+    UErrorCode err = U_ZERO_ERROR;
+    u_strToUTF32(nullptr, 0, &destLen, str, -1, &err);
+    if (!destLen)
+        return std::wstring();
+    std::wstring out(destLen, '\0');
+    err = U_ZERO_ERROR;
+    u_strToUTF32(reinterpret_cast<UChar32*>(out.data()), (int32_t)out.length() + 1, nullptr, str, -1, &err);
+    if (U_FAILURE(err))
+        return std::wstring();
+    return out;
+}
+
 #endif // SIZEOF_WHCAR_T
+
+inline std::string to_utf8(const UChar *str)
+{
+    int32_t destLen = 0;
+    UErrorCode err = U_ZERO_ERROR;
+    u_strToUTF8(nullptr, 0, &destLen, str, -1, &err);
+    if (!destLen)
+        return std::string();
+    std::string out(destLen, '\0');
+    err = U_ZERO_ERROR;
+    u_strToUTF8(out.data(), (int32_t)out.length() + 1, nullptr, str, -1, &err);
+    if (U_FAILURE(err))
+        return std::string();
+    return out;
+}
+
+
+// Template-friendly API:
+
+namespace detail
+{
+
+template<typename TOut>
+struct converter
+{
+};
+
+template<>
+struct converter<wxString>
+{
+    template<typename TIn>
+    static auto convert(const TIn& s) { return str::to_wx(s); }
+};
+
+template<>
+struct converter<std::wstring>
+{
+    template<typename TIn>
+    static auto convert(const TIn& s) { return str::to_wstring(s); }
+};
+
+template<>
+struct converter<std::string>
+{
+    template<typename TIn>
+    static auto convert(const TIn& s) { return str::to_utf8(s); }
+};
+
+template<>
+struct converter<UChar*>
+{
+    template<typename TIn>
+    static auto convert(const TIn& s) { return str::to_icu_raw(s); }
+    static auto convert(str::UCharBuffer&& s) { return s; }
+};
+
+} // namespace detail
+
+template<typename TOut, typename TIn>
+inline auto to(const TIn& s)
+{
+    return detail::converter<TOut>::convert(s);
+}
+
+template<typename TOut, typename TIn>
+inline auto to(TIn&& s)
+{
+    return detail::converter<TOut>::convert(std::move(s));
+}
 
 } // namespace str
 
