@@ -71,7 +71,7 @@ wxString WrapTextAtWidth(const wxString& text_, int width, Language lang, wxWind
         directionMark = *text_.begin();
 #endif
         
-    auto text = str::to_icu_raw(text_);
+    auto text = str::to_icu(text_);
 
     static std::map<std::string, std::shared_ptr<unicode::BreakIterator>> lang_iters;
     std::shared_ptr<unicode::BreakIterator> iter;

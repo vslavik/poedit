@@ -31,8 +31,6 @@
 #include <wx/config.h>
 #include <wx/log.h>
 
-#include <unicode/unistr.h>
-
 
 /*static*/ SortOrder SortOrder::Default()
 {

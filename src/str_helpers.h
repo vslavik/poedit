@@ -40,8 +40,7 @@
     #include <wx/string.h>
     #include <wx/buffer.h>
 
-    #include <unicode/umachine.h>
-    #include <unicode/unistr.h>
+    #include <unicode/utypes.h>
     #include <unicode/ustring.h>
 #endif // __cplusplus
 
@@ -50,7 +49,7 @@
     Defines conversions between various string types.
     
     Supported string classes are std::wstring, std::string (UTF-8 encoded),
-    wxString and icu::UnicodeString.
+    wxString and ICU UChar* strings.
     
     Usage:
         - to_wx(...)
@@ -164,60 +163,6 @@ inline std::wstring to_wstring(NSString *str)
 
 // ICU conversions:
 
-/**
-    Create read-only icu::UnicodeString from wxString efficiently.
-    
-    Notice that the resulting string is only valid for the input wxString's
-    lifetime duration, unless you make a copy.
- */
-inline icu::UnicodeString to_icu(const wxString& str)
-{
-#if wxUSE_UNICODE_UTF8
-    return icu::UnicodeString::fromUTF8((const char*)str.utf8_str());
-#elif SIZEOF_WCHAR_T == 4
-    return icu::UnicodeString::fromUTF32((const UChar32*)str.wx_str(), (int32_t)str.length());
-#elif SIZEOF_WCHAR_T == 2
-    // read-only aliasing ctor, doesn't copy data
-    return icu::UnicodeString(true, str.wx_str(), str.length());
-#else
-    #error "WTF?!"
-#endif
-}
-
-/**
-Create read-only icu::UnicodeString from std::wstring efficiently.
-
-Notice that the resulting string is only valid for the input std::wstring's
-lifetime duration, unless you make a copy.
-*/
-inline icu::UnicodeString to_icu(const std::wstring& str)
-{
-#if SIZEOF_WCHAR_T == 4
-    return icu::UnicodeString::fromUTF32((const UChar32*) str.c_str(), (int32_t) str.length());
-#elif SIZEOF_WCHAR_T == 2
-    // read-only aliasing ctor, doesn't copy data
-    return icu::UnicodeString(true, str.c_str(), str.length());
-#else
-    #error "WTF?!"
-#endif
-}
-
-/// Create wxString from icu::UnicodeString, making a copy.
-inline wxString to_wx(const icu::UnicodeString& str)
-{
-#if wxUSE_UNICODE_WCHAR && SIZEOF_WCHAR_T == 2
-    return wxString(str.getBuffer(), str.length());
-#else
-    return wxString((const char*)str.getBuffer(), wxMBConvUTF16(), str.length() * 2);
-#endif
-}
-
-/// Create std::wstring from icu::UnicodeString, making a copy.
-inline std::wstring to_wstring(const icu::UnicodeString& str)
-{
-    return to_wx(str).ToStdWstring();
-}
-
 
 /// Buffer holding, possibly non-owned, UChar* NULL-terminated string
 class UCharBuffer
@@ -265,7 +210,7 @@ inline bool empty(const T *str)
 }
 
 
-inline UCharBuffer to_icu_raw(const char *str)
+inline UCharBuffer to_icu(const char *str)
 {
     int32_t destLen = 0;
     UErrorCode err = U_ZERO_ERROR;
@@ -280,7 +225,7 @@ inline UCharBuffer to_icu_raw(const char *str)
     return buf;
 }
 
-inline UCharBuffer to_icu_raw(const wchar_t *str)
+inline UCharBuffer to_icu(const wchar_t *str)
 {
     static_assert(SIZEOF_WCHAR_T == 2 || SIZEOF_WCHAR_T == 4, "unexpected wchar_t size");
     static_assert(U_SIZEOF_UCHAR == 2, "unexpected UChar size");
@@ -308,27 +253,27 @@ inline UCharBuffer to_icu_raw(const wchar_t *str)
 
     Notice that the resulting string is only valid for the input's lifetime.
  */
-inline UCharBuffer to_icu_raw(const wxString& str)
+inline UCharBuffer to_icu(const wxString& str)
 {
-    return to_icu_raw(str.wx_str());
+    return to_icu(str.wx_str());
 }
 
-inline UCharBuffer to_icu_raw(const std::wstring& str)
+inline UCharBuffer to_icu(const std::wstring& str)
 {
-    return to_icu_raw(str.c_str());
+    return to_icu(str.c_str());
 }
 
-inline UCharBuffer to_icu_raw(const std::string& str)
+inline UCharBuffer to_icu(const std::string& str)
 {
-    return to_icu_raw(str.c_str());
+    return to_icu(str.c_str());
 }
 
-inline const UChar* to_icu_raw(const UChar *str)
+inline const UChar* to_icu(const UChar *str)
 {
     return str;
 }
 
-inline UCharBuffer to_icu_raw(const UCharBuffer& str) = delete;
+inline UCharBuffer to_icu(const UCharBuffer& str) = delete;
 
 
 #if SIZEOF_WCHAR_T == 2
@@ -433,8 +378,8 @@ template<>
 struct converter<UChar*>
 {
     template<typename TIn>
-    static auto convert(const TIn& s) { return str::to_icu_raw(s); }
-    static auto convert(str::UCharBuffer&& s) { return s; }
+    static auto convert(const TIn& s) { return str::to_icu(s); }
+    static auto convert(str::UCharBuffer&& s) { return std::move(s); }
 };
 
 } // namespace detail

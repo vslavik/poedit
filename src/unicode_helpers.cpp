@@ -81,7 +81,7 @@ TextDirection get_base_direction(const wxString& text)
     if (text.empty())
         return TextDirection::LTR;
 
-    auto s = str::to_icu_raw(text);
+    auto s = str::to_icu(text);
     switch (ubidi_getBaseDirection(s.data(), -1))
     {
         case UBIDI_RTL:

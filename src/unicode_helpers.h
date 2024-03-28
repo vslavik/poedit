@@ -72,7 +72,7 @@ public:
         UErrorCode err = U_ZERO_ERROR;
         return ucol_strcollUTF8(m_coll, a.wx_str(), -1, b.wx_str(), -1, &err);
 #else
-        return ucol_strcoll(m_coll, str::to_icu_raw(a), -1, str::to_icu_raw(b), -1);
+        return ucol_strcoll(m_coll, str::to_icu(a), -1, str::to_icu(b), -1);
 #endif
     };
 
@@ -84,17 +84,7 @@ public:
 
     result_type compare(const std::wstring& a, const std::wstring& b) const
     {
-        return ucol_strcoll(m_coll, str::to_icu_raw(a), -1, str::to_icu_raw(b), -1);
-    }
-
-    // Temporary until removal of icu::UnicodeString
-    result_type compare(const icu::UnicodeString& a_, const icu::UnicodeString& b_) const
-    {
-        std::string a, b;
-        a_.toUTF8String(a);
-        b_.toUTF8String(b);
-        UErrorCode err = U_ZERO_ERROR;
-        return ucol_strcollUTF8(m_coll, a.c_str(), (int32_t)a.length(), b.c_str(), (int32_t)b.length(), &err);
+        return ucol_strcoll(m_coll, str::to_icu(a), -1, str::to_icu(b), -1);
     }
 
     template<typename T>
@@ -193,7 +183,7 @@ template<typename TOut, typename TIn>
 inline auto fold_case_to_type(const TIn& str)
 {
     UErrorCode err = U_ZERO_ERROR;
-    auto input = str::to_icu_raw(str);
+    auto input = str::to_icu(str);
     int32_t length = u_strFoldCase(nullptr, 0, input, -1, U_FOLD_CASE_DEFAULT, &err);
 
     UCharWriteBuffer<TOut> folded(length);
@@ -208,6 +198,19 @@ inline auto fold_case(const T& str)
     return fold_case_to_type<T, T>(str);
 }
 
+/// Upper-casing Unicode-correctly
+template<typename T>
+inline auto to_upper(const T& str)
+{
+    UErrorCode err = U_ZERO_ERROR;
+    auto input = str::to_icu(str);
+    int32_t length = u_strToUpper(nullptr, 0, input, -1, nullptr, &err);
+
+    err = U_ZERO_ERROR;
+    UCharWriteBuffer<T> transformed(length);
+    u_strToUpper(transformed.data(), transformed.capacity(), input, -1, nullptr, &err);
+    return transformed.output();
+};
 
 } // namespace unicode
 
