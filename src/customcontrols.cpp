@@ -50,7 +50,6 @@
 #include <wx/generic/private/markuptext.h>
 #endif
 
-#include <unicode/brkiter.h>
 #ifdef __WXGTK__
 #include <gtk/gtk.h>
 #endif
@@ -72,18 +71,15 @@ wxString WrapTextAtWidth(const wxString& text_, int width, Language lang, wxWind
         directionMark = *text_.begin();
 #endif
         
-    auto text = str::to_icu(text_);
+    auto text = str::to_icu_raw(text_);
 
-    static std::map<std::string, std::shared_ptr<icu::BreakIterator>> lang_iters;
-    std::shared_ptr<icu::BreakIterator> iter;
+    static std::map<std::string, std::shared_ptr<unicode::BreakIterator>> lang_iters;
+    std::shared_ptr<unicode::BreakIterator> iter;
     auto lang_name = lang.IcuLocaleName();
     auto li = lang_iters.find(lang_name);
     if (li == lang_iters.end())
     {
-        UErrorCode err = U_ZERO_ERROR;
-        iter.reset(icu::BreakIterator::createLineInstance(lang.IsValid() ? lang.ToIcu() : icu::Locale(), err));
-        if (!iter)
-            iter.reset(icu::BreakIterator::createLineInstance(icu::Locale::getEnglish(), err));
+        iter.reset(new unicode::BreakIterator(UBRK_LINE, lang));
         lang_iters[lang_name] = iter;
     }
     else
@@ -91,7 +87,7 @@ wxString WrapTextAtWidth(const wxString& text_, int width, Language lang, wxWind
         iter = li->second;
     }
 
-    iter->setText(text);
+    iter->set_text(text);
 
     wxString out;
     out.reserve(text_.length() + 10);
@@ -99,14 +95,14 @@ wxString WrapTextAtWidth(const wxString& text_, int width, Language lang, wxWind
     int32_t lineStart = 0;
     wxString previousSubstr;
 
-    for (int32_t pos = iter->next(); pos != icu::BreakIterator::DONE; pos = iter->next())
+    for (int32_t pos = iter->begin(); pos != iter->end(); pos = iter->next())
     {
-        auto substr = str::to_wx(text.tempSubStringBetween(lineStart, pos));
+        auto substr = str::to_wx(text + lineStart, pos - lineStart);
 
         if (wnd->GetTextExtent(substr).x > width)
         {
             auto previousPos = iter->previous();
-            if (previousPos == lineStart || previousPos == icu::BreakIterator::DONE)
+            if (previousPos == lineStart || previousPos == iter->end())
             {
                 // line is too large but we can't break it, so have no choice but not to wrap
                 out += substr;

@@ -33,6 +33,7 @@
 #include <wx/string.h>
 
 #include <unicode/ucol.h>
+#include <unicode/ubrk.h>
 
 
 #ifdef __WXMSW__
@@ -106,6 +107,43 @@ private:
     UCollator *m_coll = nullptr;
 };
 
+
+/// Low-level thin wrapper around UBreakIterator
+class BreakIterator
+{
+public:
+    BreakIterator(UBreakIteratorType type, const Language& lang);
+    ~BreakIterator()
+    {
+        if (m_bi)
+            ubrk_close(m_bi);
+    }
+
+    /**
+        Set the text to process.
+
+        The lifetime of the text buffer must be longer than the lifetime of BreakIterator!
+     */
+    void set_text(const UChar *text)
+    {
+        UErrorCode err = U_ZERO_ERROR;
+        ubrk_setText(m_bi, text, -1, &err);
+    }
+
+    /// Sets iterator to the beginning
+    int32_t begin() { return ubrk_first(m_bi); }
+    constexpr int32_t end() const { return UBRK_DONE; }
+
+    /// Advances the iterator, returns character index of the next text boundary, or UBRK_DONE if all text boundaries have been returned.
+    int32_t next() { return ubrk_next(m_bi); }
+    int32_t previous() { return ubrk_previous(m_bi); }
+
+    /// Return current rule status
+    int32_t rule() const { return ubrk_getRuleStatus(m_bi); }
+
+private:
+    UBreakIterator *m_bi = nullptr;
+};
 } // namespace unicode
 
 

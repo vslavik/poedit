@@ -57,6 +57,19 @@ Collator::~Collator()
         ucol_close(m_coll);
 }
 
+
+BreakIterator::BreakIterator(UBreakIteratorType type, const Language& lang)
+{
+    UErrorCode err = U_ZERO_ERROR;
+    m_bi = ubrk_open(type, lang.IcuLocaleName().c_str(), nullptr, 0, &err);
+    if (U_FAILURE(err))
+    {
+        // fall back to root locale
+        err = U_ZERO_ERROR;
+        m_bi = ubrk_open(type, "", nullptr, 0, &err);
+    }
+}
+
 } // namespace unicode
 
 

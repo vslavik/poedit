@@ -313,6 +313,33 @@ inline UCharBuffer to_icu_raw(const std::string& str)
     return to_icu_raw(str.c_str());
 }
 
+#if SIZEOF_WCHAR_T == 2
+
+inline wxString to_wx(const UChar *str)
+{
+    static_assert(sizeof(wchar_t) == sizeof(UChar));
+    return wxString(reinterpret_cast<const wchar_t*>(str));
+}
+
+inline wxString to_wx(const UChar *str, size_t count)
+{
+    static_assert(sizeof(wchar_t) == sizeof(UChar));
+    return wxString(reinterpret_cast<const wchar_t*>(str), count);
+}
+
+#else // SIZEOF_WCHAR_T == 4
+
+inline wxString to_wx(const UChar *str)
+{
+    return wxString(reinterpret_cast<const char*>(str), wxMBConvUTF16(), u_strlen(str) * 2);
+}
+
+inline wxString to_wx(const UChar *str, size_t count)
+{
+    return wxString(reinterpret_cast<const char*>(str), wxMBConvUTF16(), count * 2);
+}
+
+#endif // SIZEOF_WHCAR_T
 
 } // namespace str
 
