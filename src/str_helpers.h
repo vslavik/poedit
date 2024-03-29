@@ -27,7 +27,6 @@
 #define Poedit_str_helpers_h
 
 #include <string>
-#include <string_view>
 #include <utility>
 
 #include <boost/locale/encoding_utf.hpp>
@@ -290,10 +289,10 @@ inline wxString to_wx(const UChar *str, size_t count)
     return wxString(reinterpret_cast<const wchar_t*>(str), count);
 }
 
-inline std::wstring_view to_wstring(const UChar *str)
+inline std::wstring to_wstring(const UChar *str)
 {
     static_assert(sizeof(wchar_t) == sizeof(UChar));
-    return std::wstring_view(reinterpret_cast<const wchar_t*>(str));
+    return std::wstring(reinterpret_cast<const wchar_t*>(str));
 }
 
 #else // SIZEOF_WCHAR_T == 4
