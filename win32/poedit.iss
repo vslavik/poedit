@@ -102,7 +102,6 @@ DisableDirPage=auto
 Source: win32\uninst-helper.dll; Flags: dontcopy signonce
 Source: {#BINDIR}\Poedit.exe; DestDir: {app}; Flags: ignoreversion signonce
 Source: {#BINDIR}\*.dll; DestDir: {app}; Flags: ignoreversion signonce
-Source: {#BINDIR}\icudt*.dat; DestDir: {app}
 Source: COPYING; DestDir: {app}\Docs; DestName: Copying.txt
 Source: NEWS; DestDir: {app}\Docs; DestName: News.txt
 Source: {#CRT_REDIST}\*.dll; DestDir: {app}

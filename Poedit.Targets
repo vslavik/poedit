@@ -22,13 +22,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <DLLs Include="deps\icu4c\bin64\icudt??.dll" />
-    <DLLs Include="deps\icu4c\bin64\icuuc??$(DebugSuffix).dll" />
-    <DLLs Include="deps\icu4c\bin64\icuin??$(DebugSuffix).dll" />
-    <DLLs Include="deps\icu4c\source\data\in\icudt*.dat" />
-  </ItemGroup>
-
-  <ItemGroup>
     <DataFiles Include="src\resources\*.xrc" />
     <DataFiles Include="artwork\*.png" />
     <DataFiles Include="artwork\windows\*.png" />
@@ -71,16 +64,6 @@
     </Target>
     
 
-  <Target Name="CopyDLLs" AfterTargets="Link">
-    <Message Importance="High" Text="Copying 3rd party DLLs to $(OutDir)" />
-    <Copy
-      SourceFiles="@(DLLs)"
-      DestinationFolder="$(OutDir)"
-      SkipUnchangedFiles="true"
-    />
-  </Target>
-
- 
   <Target Name="CopyDataFiles" AfterTargets="Link">
     <Message Importance="High" Text="Copying resources to $(ResourcesOutDir)" />
     <MakeDir Directories="$(ResourcesOutDir)" />

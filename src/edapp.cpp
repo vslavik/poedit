@@ -69,7 +69,6 @@
 #endif
 
 #include <unicode/uclean.h>
-#include <unicode/putil.h>
 
 #if !wxUSE_UNICODE
     #error "Unicode build of wxWidgets is required by Poedit"
@@ -436,10 +435,6 @@ bool PoeditApp::OnInit()
 #endif
 
     SetDefaultCfg(wxConfig::Get());
-
-#if defined(__WXMSW__)
-    u_setDataDirectory(wxStandardPaths::Get().GetResourcesDir().mb_str());
-#endif
 
 #ifndef __WXOSX__
     wxArtProvider::Push(new PoeditArtProvider);

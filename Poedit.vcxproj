@@ -58,7 +58,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>HAVE_CLD2;HAVE_HTTP_CLIENT;XML_STATIC;_NO_ASYNCRTIMP;WIN32;_DEBUG;DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;deps\custom_build\config;deps\wx\include;deps\boost;deps\lucene;deps\lucene\LucenePlusPlus\include;deps\cld2;deps\icu4c\include;deps\icu4c\source\i18n;deps\casablanca\Release\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;deps\custom_build\config;deps\wx\include;deps\boost;deps\lucene;deps\lucene\LucenePlusPlus\include;deps\cld2;deps\icu\windows;deps\casablanca\Release\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <DisableSpecificWarnings>4800</DisableSpecificWarnings>
@@ -71,7 +71,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
-      <AdditionalDependencies>rpcrt4.lib;advapi32.lib;shlwapi.lib;ws2_32.lib;comctl32.lib;Winhttp.lib;wininet.lib;httpapi.lib;bcrypt.lib;crypt32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>icu.lib;rpcrt4.lib;advapi32.lib;shlwapi.lib;ws2_32.lib;comctl32.lib;Winhttp.lib;wininet.lib;httpapi.lib;bcrypt.lib;crypt32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>mCtrl.dll</DelayLoadDLLs>
     </Link>
     <ResourceCompile>
@@ -89,7 +89,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>HAVE_CLD2;HAVE_HTTP_CLIENT;XML_STATIC;_NO_ASYNCRTIMP;WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;deps\custom_build\config;deps\wx\include;deps\boost;deps\lucene;deps\lucene\LucenePlusPlus\include;deps\cld2;deps\icu4c\include;deps\icu4c\source\i18n;deps\casablanca\Release\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;deps\custom_build\config;deps\wx\include;deps\boost;deps\lucene;deps\lucene\LucenePlusPlus\include;deps\cld2;deps\icu\windows;deps\casablanca\Release\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DisableSpecificWarnings>4800</DisableSpecificWarnings>
       <PrecompiledHeaderFile>Poedit-Prefix.pch</PrecompiledHeaderFile>
@@ -103,7 +103,7 @@
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>rpcrt4.lib;advapi32.lib;shlwapi.lib;ws2_32.lib;comctl32.lib;Winhttp.lib;wininet.lib;httpapi.lib;bcrypt.lib;crypt32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>icu.lib;rpcrt4.lib;advapi32.lib;shlwapi.lib;ws2_32.lib;comctl32.lib;Winhttp.lib;wininet.lib;httpapi.lib;bcrypt.lib;crypt32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>mCtrl.dll</DelayLoadDLLs>
     </Link>
     <ResourceCompile>
@@ -300,19 +300,8 @@
     <ProjectReference Include="deps\custom_build\zlib.vcxproj">
       <Project>{304a6fd9-7ff1-5faa-b095-48f553ddc6f5}</Project>
     </ProjectReference>
-    <ProjectReference Include="deps\icu4c\source\i18n\i18n.vcxproj">
-      <Project>{0178b127-6269-407d-b112-93877bb62776}</Project>
-    </ProjectReference>
     <ProjectReference Include="deps\lucene\LucenePlusPlus.vcxproj">
       <Project>{34b37773-23ac-5286-86f7-60c7bf937abb}</Project>
-    </ProjectReference>
-    <ProjectReference Include="deps\icu4c\source\common\common.vcxproj">
-      <Project>{73c0a65b-d1f2-4de1-b3a6-15dad2c23f3d}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
