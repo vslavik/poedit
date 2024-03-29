@@ -69,6 +69,7 @@
 #endif
 
 #include <unicode/uclean.h>
+#include <unicode/uversion.h>
 
 #if !wxUSE_UNICODE
     #error "Unicode build of wxWidgets is required by Poedit"
@@ -603,6 +604,12 @@ void PoeditApp::SetupLanguage()
 #if defined(HAVE_HTTP_CLIENT) && !defined(__WXOSX__)
     http_client::set_ui_language(uiLang.LanguageTag());
 #endif
+
+    char icuVerStr[U_MAX_VERSION_STRING_LENGTH] = {0};
+    UVersionInfo icuVer;
+    u_getVersion(icuVer);
+    u_versionToString(icuVer, icuVerStr);
+    wxLogTrace("poedit", "ICU version %s, using UI language '%s'", icuVerStr, uiLang.LanguageTag());
 
     const wxLanguageInfo *info = wxLocale::FindLanguageInfo(bestTrans);
     g_layoutDirection = info ? info->LayoutDirection : wxLayout_Default;
