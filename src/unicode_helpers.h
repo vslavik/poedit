@@ -87,6 +87,11 @@ public:
         return ucol_strcoll(m_coll, str::to_icu(a), -1, str::to_icu(b), -1);
     }
 
+    result_type compare(const UChar *a, const UChar *b) const
+    {
+        return ucol_strcoll(m_coll, a, -1, b, -1);
+    }
+
     template<typename T>
     bool operator()(const T& a, const T& b) const
     {

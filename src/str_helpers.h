@@ -194,8 +194,21 @@ public:
     operator const UChar*() const { return m_data; }
     UChar* data() { return const_cast<UChar*>(m_data); }
 
-    // available buffer size, only for owned versions, returns 0 for read-only non-owned
+    /// Available buffer size, only for owned versions, returns 0 for read-only non-owned
     int32_t capacity() { return m_capacity; }
+
+    /// Ensure the buffer has a deep copy of the data, if it's not already owned
+    void ensure_owned()
+    {
+        if (m_owned)
+			return;
+        if (m_capacity == -1)
+            m_capacity = u_strlen(m_data) + 1;
+        auto copy = new UChar[m_capacity];
+        memcpy(copy, m_data, m_capacity * sizeof(UChar));
+        m_data = copy;
+        m_owned = true;
+	}
 
 private:
     UCharBuffer(bool owned, const UChar *data, int32_t capacity) : m_owned(owned), m_data(data), m_capacity(capacity) {}

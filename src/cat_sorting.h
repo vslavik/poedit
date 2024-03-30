@@ -62,6 +62,7 @@ struct SortOrder
     bool errorsFirst;
 };
 
+
 /**
     Comparator for sorting catalog items by different criteria.
  */
@@ -81,21 +82,35 @@ public:
 protected:
     const CatalogItem& Item(int i) const { return *m_catalog[i]; }
 
-    unicode::Collator::result_type CompareTranslationStrings(wxString a, wxString b) const
+    // Pre-process given string and return it in a form efficient for comparing
+    // with ICU collator. This does two things:
+    //  1. Converts to UTF-16 (matters on non-Windows platforms where wchar_t is UTF-32)
+    //  2. Perform substitution of accelerator characters in the string
+    static str::UCharBuffer ConvertToSortKey(const wxString& a)
     {
-        a.Replace("&", "");
-        a.Replace("_", "");
+        if (a.find_first_of(L"&_") == wxString::npos)
+        {
+            return str::to_icu(a);
+        }
+        else
+        {
+            wxString a_(a);
+            a_.Replace("&", "");
+            a_.Replace("_", "");
 
-        b.Replace("&", "");
-        b.Replace("_", "");
-
-        return m_collator->compare(a, b);
+            auto buf = str::to_icu(a_);
+            // on Windows to_icu() returns shallow view of the string, we need to make
+            // a deep copy because a_ is a local temporary variable:
+            buf.ensure_owned();
+            return buf;
+        }
     }
 
 private:
     const Catalog& m_catalog;
     SortOrder m_order;
     std::unique_ptr<unicode::Collator> m_collator;
+    std::vector<str::UCharBuffer> m_sortKeys;
 };
 
 

@@ -94,6 +94,29 @@ CatalogItemsComparator::CatalogItemsComparator(const Catalog& catalog, const Sor
             m_collator.reset(new unicode::Collator(catalog.GetSourceLanguage(), unicode::Collator::case_insensitive));
             break;
     }
+
+    // Prepare cache for faster comparison. ICU uses UTF-16 internally, we can significantly
+    // speed up comparisons by doing string conversion in advance, in O(n) time and space, if
+    // the platform's native representation is UTF-32 or -8 (which it is on non-Windows).
+    // Moreover, the additional processing of removing accelerators is also done only once
+    // on all platforms, resulting in massive speedups on Windows too.
+    switch (m_order.by)
+    {
+        case SortOrder::By_Source:
+            m_sortKeys.reserve(m_catalog.GetCount());
+            for (auto& i: m_catalog.items())
+                m_sortKeys.push_back(ConvertToSortKey(i->GetString()));
+            break;
+
+        case SortOrder::By_Translation:
+            m_sortKeys.reserve(m_catalog.GetCount());
+            for (auto& i: m_catalog.items())
+                m_sortKeys.push_back(ConvertToSortKey(i->GetTranslation()));
+            break;
+
+        case SortOrder::By_FileOrder:
+            break;
+    }
 }
 
 
@@ -156,16 +179,9 @@ bool CatalogItemsComparator::operator()(int i, int j) const
         }
 
         case SortOrder::By_Source:
-        {
-            auto r = CompareTranslationStrings(a.GetString(), b.GetString());
-            if ( r != 0 )
-                return r < 0;
-            break;
-        }
-
         case SortOrder::By_Translation:
         {
-            auto r = CompareTranslationStrings(a.GetTranslation(), b.GetTranslation());
+            auto r = m_collator->compare(m_sortKeys[i], m_sortKeys[j]);
             if ( r != 0 )
                 return r < 0;
             break;
