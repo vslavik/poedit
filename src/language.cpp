@@ -134,7 +134,7 @@ auto GetDisplayNameOrLanguage(const char *locale, const char *displayLocale)
 // Mapping of names to their respective ISO codes.
 struct DisplayNamesData
 {
-    typedef std::unordered_map<std::wstring, std::string> Map;
+    typedef std::unordered_map<std::u16string, std::string> Map;
     Map names, namesEng;
     std::vector<std::wstring> sortedNames;
 };
@@ -176,7 +176,7 @@ const DisplayNamesData& GetDisplayNamesData()
             uloc_getDisplayName(locale, nullptr, buf, std::size(buf), &err);
 
             data.sortedNames.emplace_back(str::to_wstring(buf));
-            auto foldedName = unicode::fold_case_to_type<std::wstring>(buf);
+            auto foldedName = unicode::fold_case_to_type<std::u16string>(buf);
 
             if (strcmp(language, "zh") == 0 && *country == '\0')
             {
@@ -211,7 +211,7 @@ const DisplayNamesData& GetDisplayNamesData()
  
             err = U_ZERO_ERROR;
             uloc_getDisplayName(locale, ULOC_ENGLISH, buf, std::size(buf), &err);
-            auto foldedEngName = unicode::fold_case_to_type<std::wstring>(buf);
+            auto foldedEngName = unicode::fold_case_to_type<std::u16string>(buf);
 
             data.namesEng[foldedEngName] = code;
         }
@@ -233,11 +233,11 @@ const DisplayNamesData& GetDisplayNamesData()
                 continue;
 
             data.sortedNames.push_back(isoName);
-            data.names[unicode::fold_case(isoName)] = code;
+            data.names[unicode::fold_case_to_type<std::u16string>(isoName)] = code;
 
             auto isoEngName = GetDisplayNameOrLanguage<std::wstring>(code, ULOC_ENGLISH);
             if (!isoEngName.empty())
-                data.namesEng[unicode::fold_case(isoEngName)] = code;
+                data.namesEng[unicode::fold_case_to_type<std::u16string>(isoEngName)] = code;
         }
 
         // sort the names alphabetically for data.sortedNames:
@@ -402,7 +402,7 @@ Language Language::TryParse(const std::wstring& s)
 
     // If not, perhaps it's a human-readable name (perhaps coming from the language control)?
     auto names = GetDisplayNamesData();
-    auto folded = unicode::fold_case(s);
+    auto folded = unicode::fold_case_to_type<std::u16string>(s);
     auto i = names.names.find(folded);
     if (i != names.names.end())
         return Language(i->second);

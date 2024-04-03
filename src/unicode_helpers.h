@@ -110,9 +110,9 @@ public:
     }
 
     /**
-        Set the text to process.
+     Set the text to process.
 
-        The lifetime of the text buffer must be longer than the lifetime of BreakIterator!
+     The lifetime of the text buffer must be longer than the lifetime of BreakIterator!
      */
     void set_text(const UChar *text)
     {
@@ -151,22 +151,37 @@ private:
     str::UCharBuffer m_data;
 };
 
-#if SIZEOF_WCHAR_T == 2
-
-template<>
-struct UCharWriteBuffer<std::wstring>
+namespace detail
 {
-    UCharWriteBuffer(int32_t length) : m_data(length, L'\0') {}
+
+template<typename T>
+struct UCharWriteBufferIntoString
+{
+    UCharWriteBufferIntoString(int32_t length) : m_data(length, L'\0') {}
 
     UChar *data() { return reinterpret_cast<UChar*>(m_data.data()); }
-    int32_t capacity() { return m_data.length() + 1; }
+    int32_t capacity() { return (int32_t)m_data.length() + 1; }
 
-    std::wstring output() { return std::move(m_data); }
+    T output() { return std::move(m_data); }
 
 private:
-    std::wstring m_data;
+    T m_data;
 };
 
+} // namespace detail
+
+template<>
+struct UCharWriteBuffer<std::u16string> : public detail::UCharWriteBufferIntoString<std::u16string>
+{
+    using detail::UCharWriteBufferIntoString<std::u16string>::UCharWriteBufferIntoString;
+};
+
+#if SIZEOF_WCHAR_T == 2
+template<>
+struct UCharWriteBuffer<std::wstring> : public detail::UCharWriteBufferIntoString<std::wstring>
+{
+    using detail::UCharWriteBufferIntoString<std::wstring>::UCharWriteBufferIntoString;
+};
 #endif
 
 
