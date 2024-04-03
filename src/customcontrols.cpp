@@ -97,7 +97,10 @@ wxString WrapTextAtWidth(const wxString& text_, int width, Language lang, wxWind
 
     for (int32_t pos = iter->begin(); pos != iter->end(); pos = iter->next())
     {
+        if (pos == lineStart)
+            continue;
         auto substr = str::to_wx(text + lineStart, pos - lineStart);
+        substr.Trim();
 
         if (wnd->GetTextExtent(substr).x > width)
         {
@@ -140,8 +143,7 @@ wxString WrapTextAtWidth(const wxString& text_, int width, Language lang, wxWind
         out += previousSubstr;
     }
 
-    if (out.Last() == '\n')
-        out.RemoveLast();
+    out.Trim();
 
     return out;
 }
