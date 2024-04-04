@@ -108,6 +108,11 @@ inline wxString to_wx(const std::string& utf8)
     return wxString::FromUTF8(utf8.c_str());
 }
 
+inline wxString to_wx(const std::wstring& str)
+{
+    return wxString(str);
+}
+
 #if defined(__cplusplus) && defined(__OBJC__)
 
 inline NSString *to_NS(const wxString& str)

@@ -25,6 +25,8 @@
 
 #include "configuration.h"
 
+#include "str_helpers.h"
+
 #include <wx/config.h>
 #include <wx/thread.h>
 
@@ -220,14 +222,14 @@ bool Config::Read(const std::string& key, std::string *out)
     wxString s;
     if (!wxConfig::Get()->Read(key, &s))
         return false;
-    *out = s.utf8_string();
+    *out = str::to_utf8(s);
     return true;
 }
 
 void Config::Write(const std::string& key, const std::string& value)
 {
     CfgLock lock;
-    wxConfig::Get()->Write(key, wxString(value));
+    wxConfig::Get()->Write(key, str::to_wx(value));
 }
 
 bool Config::Read(const std::string& key, std::wstring *out)
@@ -237,14 +239,14 @@ bool Config::Read(const std::string& key, std::wstring *out)
     wxString s;
     if (!wxConfig::Get()->Read(key, &s))
         return false;
-    *out = s.ToStdWstring();
+    *out = str::to_wstring(s);
     return true;
 }
 
 void Config::Write(const std::string& key, const std::wstring& value)
 {
     CfgLock lock;
-    wxConfig::Get()->Write(key, wxString(value));
+    wxConfig::Get()->Write(key, str::to_wx(value));
 }
 
 bool Config::Read(const std::string& key, bool *out)
