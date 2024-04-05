@@ -168,21 +168,4 @@ with open('build.ninja', 'w') as buildfile:
                                      'strip -S -x $destdir/lib/lib*.*.dylib',
                                  ]))
 
-    targets.append(gen_configure(n, 'icu',
-                                 srcdir='icu4c',
-                                 configure='./source/configure',
-                                 flags=[
-                                     '--prefix=/',
-                                     'CC=$cc',
-                                     'CXX=$cxx',
-                                     'CFLAGS="$cflags -DU_STATIC_IMPLEMENTATION"',
-                                     'CXXFLAGS="$cxxflags -DU_STATIC_IMPLEMENTATION"',
-                                     'LDFLAGS="$ldflags"',
-                                     '--disable-shared',
-                                     '--enable-static',
-                                     '--with-data-packaging=archive',
-                                     '--disable-tests',
-                                     '--disable-samples',
-                                 ]))
-
     n.default(targets)

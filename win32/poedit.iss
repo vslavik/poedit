@@ -80,7 +80,7 @@ AppVersion={#VERSION}
 AppContact=help@poedit.net
 UninstallDisplayIcon={app}\Poedit.exe
 UninstallDisplayName=Poedit
-MinVersion=6.1sp1
+MinVersion=10.0.18362
 WizardSmallImageFile=artwork\windows\installer_wizard_image.bmp
 WizardStyle=modern
 AppPublisherURL=https://poedit.net/
@@ -102,7 +102,6 @@ DisableDirPage=auto
 Source: win32\uninst-helper.dll; Flags: dontcopy signonce
 Source: {#BINDIR}\Poedit.exe; DestDir: {app}; Flags: ignoreversion signonce
 Source: {#BINDIR}\*.dll; DestDir: {app}; Flags: ignoreversion signonce
-Source: {#BINDIR}\icudt*.dat; DestDir: {app}
 Source: COPYING; DestDir: {app}\Docs; DestName: Copying.txt
 Source: NEWS; DestDir: {app}\Docs; DestName: News.txt
 Source: {#CRT_REDIST}\*.dll; DestDir: {app}

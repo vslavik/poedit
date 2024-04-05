@@ -29,7 +29,6 @@
 #include "str_helpers.h"
 
 #include <unicode/uchar.h>
-
 #include <regex>
 
 namespace

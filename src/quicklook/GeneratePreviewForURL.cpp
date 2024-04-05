@@ -35,8 +35,8 @@
 #include <wx/string.h>
 #include <wx/osx/core/cfstring.h>
 
+#include <unicode/uloc.h>
 #include <unicode/uclean.h>
-#include <unicode/putil.h>
 
 #include "catalog.h"
 
@@ -77,6 +77,9 @@ extern "C"
 
 void Initialize_plugin(void)
 {
+    UErrorCode err = U_ZERO_ERROR;
+    u_init(&err);
+
     wxInitialize();
 
     CFBundleRef bundle = CFBundleGetBundleWithIdentifier(CFSTR("net.poedit.PoeditQuicklook"));
@@ -86,7 +89,6 @@ void Initialize_plugin(void)
         char path[PATH_MAX] = {0};
         if (CFURLGetFileSystemRepresentation(url, true, (UInt8*)path, PATH_MAX))
         {
-            u_setDataDirectory(path);
             wxFileTranslationsLoader::AddCatalogLookupPathPrefix(path);
             
             wxTranslations *trans = new wxTranslations();
@@ -95,8 +97,7 @@ void Initialize_plugin(void)
 
             wxString bestTrans = trans->GetBestTranslation("poedit");
             Language uiLang = Language::TryParse(bestTrans.ToStdWstring());
-            UErrorCode err = U_ZERO_ERROR;
-            icu::Locale::setDefault(uiLang.ToIcu(), err);
+            uloc_setDefault(uiLang.IcuLocaleName().c_str(), &err);
         }
         CFRelease(url);
     }
@@ -104,9 +105,8 @@ void Initialize_plugin(void)
 
 void Uninitialize_plugin(void)
 {
-    u_cleanup();
-
     wxUninitialize();
+    u_cleanup();
 }
 
 

@@ -69,7 +69,7 @@
 #endif
 
 #include <unicode/uclean.h>
-#include <unicode/putil.h>
+#include <unicode/uversion.h>
 
 #if !wxUSE_UNICODE
     #error "Unicode build of wxWidgets is required by Poedit"
@@ -437,10 +437,6 @@ bool PoeditApp::OnInit()
 
     SetDefaultCfg(wxConfig::Get());
 
-#if defined(__WXOSX__) || defined(__WXMSW__)
-    u_setDataDirectory(wxStandardPaths::Get().GetResourcesDir().mb_str());
-#endif
-
 #ifndef __WXOSX__
     wxArtProvider::Push(new PoeditArtProvider);
 #endif
@@ -604,10 +600,16 @@ void PoeditApp::SetupLanguage()
     wxString bestTrans = trans->GetBestTranslation("poedit");
     Language uiLang = Language::TryParse(bestTrans.ToStdWstring());
     UErrorCode err = U_ZERO_ERROR;
-    icu::Locale::setDefault(uiLang.ToIcu(), err);
+    uloc_setDefault(uiLang.IcuLocaleName().c_str(), &err);
 #if defined(HAVE_HTTP_CLIENT) && !defined(__WXOSX__)
     http_client::set_ui_language(uiLang.LanguageTag());
 #endif
+
+    char icuVerStr[U_MAX_VERSION_STRING_LENGTH] = {0};
+    UVersionInfo icuVer;
+    u_getVersion(icuVer);
+    u_versionToString(icuVer, icuVerStr);
+    wxLogTrace("poedit", "ICU version %s, using UI language '%s'", icuVerStr, uiLang.LanguageTag());
 
     const wxLanguageInfo *info = wxLocale::FindLanguageInfo(bestTrans);
     g_layoutDirection = info ? info->LayoutDirection : wxLayout_Default;

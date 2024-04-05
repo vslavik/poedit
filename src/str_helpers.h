@@ -27,21 +27,28 @@
 #define Poedit_str_helpers_h
 
 #include <string>
+#include <utility>
 
 #include <boost/locale/encoding_utf.hpp>
 
 #ifdef __OBJC__
-#include <Foundation/NSString.h>
+    #include <Foundation/NSString.h>
 #endif
 
-#include <wx/string.h>
-#include <wx/buffer.h>
+#ifdef __cplusplus
+    #include <wx/string.h>
+    #include <wx/buffer.h>
+
+    #include <unicode/utypes.h>
+    #include <unicode/ustring.h>
+#endif // __cplusplus
+
 
 /**
     Defines conversions between various string types.
     
     Supported string classes are std::wstring, std::string (UTF-8 encoded),
-    wxString and icu::UnicodeString.
+    wxString and ICU UChar* strings.
     
     Usage:
         - to_wx(...)
@@ -158,88 +165,240 @@ inline std::wstring to_wstring(NSString *str)
 #endif // Objective-C++
 
 
-// ICU conversions; only include them if ICU is included
-#ifdef UNISTR_H
+// ICU conversions:
 
-/**
-    Create read-only icu::UnicodeString from wxString efficiently.
-    
-    Notice that the resulting string is only valid for the input wxString's
-    lifetime duration, unless you make a copy.
- */
-inline icu::UnicodeString to_icu(const wxString& str)
+
+/// Buffer holding, possibly non-owned, UChar* NULL-terminated string
+class UCharBuffer
 {
-#if wxUSE_UNICODE_UTF8
-    return icu::UnicodeString::fromUTF8((const char*)str.utf8_str());
-#elif SIZEOF_WCHAR_T == 4
-    return icu::UnicodeString::fromUTF32((const UChar32*)str.wx_str(), (int32_t)str.length());
-#elif SIZEOF_WCHAR_T == 2
+public:
+    UCharBuffer(UCharBuffer&& other) noexcept
+        : m_owned(std::exchange(other.m_owned, false)),
+          m_data(std::exchange(other.m_data, nullptr)),
+          m_capacity(std::exchange(other.m_capacity, 0))
+    {}
+
+    UCharBuffer(const UCharBuffer&) = delete;
+    UCharBuffer& operator=(const UCharBuffer&) = delete;
+
+    static UCharBuffer owned(int32_t length) { return UCharBuffer(true, new UChar[length + 1], length + 1); }
+    static UCharBuffer non_owned(const UChar *data) { return UCharBuffer(false, data, -1); }
+    static UCharBuffer null() { static UChar empty[1] = {0}; return UCharBuffer(false, empty, 0); }
+
+    ~UCharBuffer()
+    {
+        if (m_owned)
+            delete[] m_data;
+    }
+
+    operator const UChar*() const { return m_data; }
+    UChar* data() { return const_cast<UChar*>(m_data); }
+
+    // available buffer size, only for owned versions, returns 0 for read-only non-owned
+    int32_t capacity() { return m_capacity; }
+
+private:
+    UCharBuffer(bool owned, const UChar *data, int32_t capacity) : m_owned(owned), m_data(data), m_capacity(capacity) {}
+
+    bool m_owned;
+    const UChar *m_data;
+    int32_t m_capacity;
+};
+
+
+// Simple check for empty buffer / C string:
+template<typename T>
+inline bool empty(const T *str)
+{
+    return !str || *str == 0;
+}
+
+
+inline UCharBuffer to_icu(const char *str)
+{
+    int32_t destLen = 0;
+    UErrorCode err = U_ZERO_ERROR;
+    u_strFromUTF8Lenient(nullptr, 0, &destLen, str, -1, &err);
+    if (!destLen)
+        return UCharBuffer::null();
+    auto buf = UCharBuffer::owned(destLen);
+    err = U_ZERO_ERROR;
+    u_strFromUTF8Lenient(buf.data(), buf.capacity(), nullptr, str, -1, &err);
+    if (U_FAILURE(err))
+        return UCharBuffer::null();
+    return buf;
+}
+
+inline UCharBuffer to_icu(const wchar_t *str)
+{
+    static_assert(SIZEOF_WCHAR_T == 2 || SIZEOF_WCHAR_T == 4, "unexpected wchar_t size");
+    static_assert(U_SIZEOF_UCHAR == 2, "unexpected UChar size");
+
+#if SIZEOF_WCHAR_T == 2
     // read-only aliasing ctor, doesn't copy data
-    return icu::UnicodeString(true, str.wx_str(), str.length());
+    return UCharBuffer::non_owned(reinterpret_cast<const UChar*>(str));
 #else
-    #error "WTF?!"
+    int32_t destLen = 0;
+    UErrorCode err = U_ZERO_ERROR;
+    u_strFromUTF32(nullptr, 0, &destLen, reinterpret_cast<const UChar32*>(str), -1, &err);
+    if (!destLen)
+        return UCharBuffer::null();
+    auto buf = UCharBuffer::owned(destLen);
+    err = U_ZERO_ERROR;
+    u_strFromUTF32(buf.data(), buf.capacity(), nullptr, reinterpret_cast<const UChar32*>(str), -1, &err);
+    if (U_FAILURE(err))
+        return UCharBuffer::null();
+    return buf;
 #endif
 }
-
-/**
-Create read-only icu::UnicodeString from std::wstring efficiently.
-
-Notice that the resulting string is only valid for the input std::wstring's
-lifetime duration, unless you make a copy.
-*/
-inline icu::UnicodeString to_icu(const std::wstring& str)
-{
-#if SIZEOF_WCHAR_T == 4
-    return icu::UnicodeString::fromUTF32((const UChar32*) str.c_str(), (int32_t) str.length());
-#elif SIZEOF_WCHAR_T == 2
-    // read-only aliasing ctor, doesn't copy data
-    return icu::UnicodeString(true, str.c_str(), str.length());
-#else
-    #error "WTF?!"
-#endif
-}
-
-/// Create wxString from icu::UnicodeString, making a copy.
-inline wxString to_wx(const icu::UnicodeString& str)
-{
-#if wxUSE_UNICODE_WCHAR && SIZEOF_WCHAR_T == 2
-    return wxString(str.getBuffer(), str.length());
-#else
-    return wxString((const char*)str.getBuffer(), wxMBConvUTF16(), str.length() * 2);
-#endif
-}
-
-/// Create std::wstring from icu::UnicodeString, making a copy.
-inline std::wstring to_wstring(const icu::UnicodeString& str)
-{
-    return to_wx(str).ToStdWstring();
-}
-
-#endif // UNISTR_H
-
-// Low-level ICU conversions:
-#ifdef U_SIZEOF_UCHAR
 
 /**
     Create buffer with raw UChar* string.
 
     Notice that the resulting string is only valid for the input's lifetime.
  */
-inline wxScopedCharTypeBuffer<wxChar16> to_icu_raw(const wxString& str)
+inline UCharBuffer to_icu(const wxString& str)
 {
-    static_assert(U_SIZEOF_UCHAR == 2, "unexpected UChar size");
-#if SIZEOF_WCHAR_T == 2
-    // read-only aliasing ctor, doesn't copy data
-    return wxScopedCharTypeBuffer<UChar>::CreateNonOwned((const UChar*)str.wx_str(), str.length());
-#else
-    auto buf = wxMBConvUTF16().cWC2MB(str.wc_str());
-    auto len = buf.length();
-    return wxCharTypeBuffer<wxChar16>::CreateOwned((wxChar16*)buf.release(), len);
-#endif
+    return to_icu(str.wx_str());
 }
 
-#endif // U_SIZEOF_UCHAR
+inline UCharBuffer to_icu(const std::wstring& str)
+{
+    return to_icu(str.c_str());
+}
 
+inline UCharBuffer to_icu(const std::string& str)
+{
+    return to_icu(str.c_str());
+}
+
+inline const UChar* to_icu(const UChar *str)
+{
+    return str;
+}
+
+inline UCharBuffer to_icu(const UCharBuffer& str) = delete;
+
+
+#if SIZEOF_WCHAR_T == 2
+
+inline wxString to_wx(const UChar *str)
+{
+    static_assert(sizeof(wchar_t) == sizeof(UChar));
+    return wxString(reinterpret_cast<const wchar_t*>(str));
+}
+
+inline wxString to_wx(const UChar *str, size_t count)
+{
+    static_assert(sizeof(wchar_t) == sizeof(UChar));
+    return wxString(reinterpret_cast<const wchar_t*>(str), count);
+}
+
+inline std::wstring to_wstring(const UChar *str)
+{
+    static_assert(sizeof(wchar_t) == sizeof(UChar));
+    return std::wstring(reinterpret_cast<const wchar_t*>(str));
+}
+
+#else // SIZEOF_WCHAR_T == 4
+
+inline wxString to_wx(const UChar *str)
+{
+    return wxString(reinterpret_cast<const char*>(str), wxMBConvUTF16(), u_strlen(str) * 2);
+}
+
+inline wxString to_wx(const UChar *str, size_t count)
+{
+    return wxString(reinterpret_cast<const char*>(str), wxMBConvUTF16(), count * 2);
+}
+
+inline std::wstring to_wstring(const UChar *str)
+{
+    static_assert(sizeof(wchar_t) == 4);
+
+    int32_t destLen = 0;
+    UErrorCode err = U_ZERO_ERROR;
+    u_strToUTF32(nullptr, 0, &destLen, str, -1, &err);
+    if (!destLen)
+        return std::wstring();
+    std::wstring out(destLen, '\0');
+    err = U_ZERO_ERROR;
+    u_strToUTF32(reinterpret_cast<UChar32*>(out.data()), (int32_t)out.length() + 1, nullptr, str, -1, &err);
+    if (U_FAILURE(err))
+        return std::wstring();
+    return out;
+}
+
+#endif // SIZEOF_WHCAR_T
+
+inline std::string to_utf8(const UChar *str)
+{
+    int32_t destLen = 0;
+    UErrorCode err = U_ZERO_ERROR;
+    u_strToUTF8(nullptr, 0, &destLen, str, -1, &err);
+    if (!destLen)
+        return std::string();
+    std::string out(destLen, '\0');
+    err = U_ZERO_ERROR;
+    u_strToUTF8(out.data(), (int32_t)out.length() + 1, nullptr, str, -1, &err);
+    if (U_FAILURE(err))
+        return std::string();
+    return out;
+}
+
+
+// Template-friendly API:
+
+namespace detail
+{
+
+template<typename TOut>
+struct converter
+{
+};
+
+template<>
+struct converter<wxString>
+{
+    template<typename TIn>
+    static auto convert(const TIn& s) { return str::to_wx(s); }
+};
+
+template<>
+struct converter<std::wstring>
+{
+    template<typename TIn>
+    static auto convert(const TIn& s) { return str::to_wstring(s); }
+};
+
+template<>
+struct converter<std::string>
+{
+    template<typename TIn>
+    static auto convert(const TIn& s) { return str::to_utf8(s); }
+};
+
+template<>
+struct converter<UChar*>
+{
+    template<typename TIn>
+    static auto convert(const TIn& s) { return str::to_icu(s); }
+    static auto convert(str::UCharBuffer&& s) { return std::move(s); }
+};
+
+} // namespace detail
+
+template<typename TOut, typename TIn>
+inline auto to(const TIn& s)
+{
+    return detail::converter<TOut>::convert(s);
+}
+
+template<typename TOut, typename TIn>
+inline auto to(TIn&& s)
+{
+    return detail::converter<TOut>::convert(std::move(s));
+}
 
 } // namespace str
 

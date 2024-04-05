@@ -27,9 +27,9 @@
 #define _CAT_SORTING_H_
 
 #include "catalog.h"
+#include "unicode_helpers.h"
 
 #include <memory>
-#include <unicode/coll.h>
 
 /// Sort order information
 struct SortOrder
@@ -80,12 +80,22 @@ public:
 
 protected:
     const CatalogItem& Item(int i) const { return *m_catalog[i]; }
-    int CompareStrings(wxString a, wxString b) const;
+
+    unicode::Collator::result_type CompareTranslationStrings(wxString a, wxString b) const
+    {
+        a.Replace("&", "");
+        a.Replace("_", "");
+
+        b.Replace("&", "");
+        b.Replace("_", "");
+
+        return m_collator->compare(a, b);
+    }
 
 private:
     const Catalog& m_catalog;
     SortOrder m_order;
-    std::unique_ptr<icu::Collator> m_collator;
+    std::unique_ptr<unicode::Collator> m_collator;
 };
 
 

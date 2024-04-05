@@ -30,7 +30,6 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include <unicode/locid.h>
 
 class PluralFormsCalculator;
 class PluralFormsExpr;
@@ -71,8 +70,6 @@ public:
 
     /// Returns name of the locale suitable for ICU
     std::string IcuLocaleName() const { return m_icuLocale; }
-    /// Returns ICU equivalent of the language info
-    icu::Locale ToIcu() const;
 
     /// Returns name of this language suitable for display to the user in current UI language
     wxString DisplayName() const;
