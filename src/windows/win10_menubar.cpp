@@ -175,9 +175,6 @@ wxSize Windows10MenubarMixin::MenuWindow::DoGetBestSize() const
 
 bool Windows10MenubarMixin::ShouldUseCustomMenu() const
 {
-    if (!IsWindows10OrGreater())
-        return false;
-
     if (!wxUxThemeIsActive())
         return false;
 

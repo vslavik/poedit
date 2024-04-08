@@ -573,28 +573,26 @@ void PoeditListCtrl::UpdateHeaderAttrs()
 {
 #ifdef __WXMSW__
     // Setup custom header font & color on Windows 10, where the default look is a bit odd
-    if (IsWindows10OrGreater())
+    
+    if (wxUxThemeIsActive())
     {
         // Use the same text color as Explorer's headers use
-        if (wxUxThemeIsActive())
+        wxUxThemeHandle hTheme(this->GetParent(), L"ItemsView::Header");
+        COLORREF clr;
+        HRESULT hr = ::GetThemeColor(hTheme, HP_HEADERITEM, 0, TMT_TEXTCOLOR, &clr);
+        if (SUCCEEDED(hr))
         {
-            wxUxThemeHandle hTheme(this->GetParent(), L"ItemsView::Header");
-            COLORREF clr;
-            HRESULT hr = ::GetThemeColor(hTheme, HP_HEADERITEM, 0, TMT_TEXTCOLOR, &clr);
-            if (SUCCEEDED(hr))
-            {
-                wxItemAttr headerAttr;
-                headerAttr.SetTextColour(wxRGBToColour(clr));
-                SetHeaderAttr(headerAttr);
-            }
+            wxItemAttr headerAttr;
+            headerAttr.SetTextColour(wxRGBToColour(clr));
+            SetHeaderAttr(headerAttr);
         }
-
-        // Standard header has smaller height than Explorer's and it isn't
-        // separated from the content well -- especially in HiDPI modes.
-        // Match Explorer's header size too:
-        int headerHeight = HiDPIScalingFactor() > 1.0 ? PX(26) : PX(25);
-        GenericGetHeader()->SetMinSize(wxSize(-1, headerHeight));
     }
+
+    // Standard header has smaller height than Explorer's and it isn't
+    // separated from the content well -- especially in HiDPI modes.
+    // Match Explorer's header size too:
+    int headerHeight = HiDPIScalingFactor() > 1.0 ? PX(26) : PX(25);
+    GenericGetHeader()->SetMinSize(wxSize(-1, headerHeight));
 #endif // __WXMSW__
 }
 

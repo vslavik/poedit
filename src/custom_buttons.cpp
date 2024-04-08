@@ -675,16 +675,13 @@ TranslucentButton::TranslucentButton(wxWindow *parent, wxWindowID winid, const w
     wxButton::Create(parent, winid, label);
 
 #ifdef __WXMSW__
-    if (IsWindows10OrGreater())
+    ColorScheme::SetupWindowColors(this, [=]
     {
-        ColorScheme::SetupWindowColors(this, [=]
-        {
-            if (ColorScheme::GetAppMode() == ColorScheme::Light)
-                SetBackgroundColour(ColorScheme::GetBlendedOn(::Color::TranslucentButton, parent));
-            else
-                SetBackgroundColour(GetDefaultAttributes().colBg);
-        });
-    }
+        if (ColorScheme::GetAppMode() == ColorScheme::Light)
+            SetBackgroundColour(ColorScheme::GetBlendedOn(::Color::TranslucentButton, parent));
+        else
+            SetBackgroundColour(GetDefaultAttributes().colBg);
+    });
 #endif
 
 #ifdef __WXGTK3__

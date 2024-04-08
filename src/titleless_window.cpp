@@ -197,9 +197,6 @@ bool TitlelessWindowBase<T>::SetBackgroundColour(const wxColour& clr)
 template<typename T>
 bool TitlelessWindowBase<T>::ShouldRemoveChrome()
 {
-    if (!IsWindows10OrGreater())
-        return false;
-
     if (!wxUxThemeIsActive())
         return false;
 

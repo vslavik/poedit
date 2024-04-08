@@ -64,18 +64,16 @@ public:
 
 #ifdef __WXMSW__
         // De-uglify the toolbar a bit on Windows 10:
-        if (IsWindows10OrGreater())
+        if (wxUxThemeIsActive())
         {
-            if (wxUxThemeIsActive())
-            {
-                wxUxThemeHandle hTheme(m_tb, L"ExplorerMenu::Toolbar");
-                m_tb->SetBackgroundColour(wxRGBToColour(::GetThemeSysColor(hTheme, COLOR_WINDOW)));
-            }
-
-            unsigned padding = PX(4);
-            ::SendMessage((HWND) m_tb->GetHWND(), TB_SETPADDING, 0, MAKELPARAM(padding, padding));
+            wxUxThemeHandle hTheme(m_tb, L"ExplorerMenu::Toolbar");
+            m_tb->SetBackgroundColour(wxRGBToColour(::GetThemeSysColor(hTheme, COLOR_WINDOW)));
         }
-        m_tb->SetDoubleBuffered(true);
+
+        unsigned padding = PX(4);
+        ::SendMessage((HWND) m_tb->GetHWND(), TB_SETPADDING, 0, MAKELPARAM(padding, padding));
+        
+         m_tb->SetDoubleBuffered(true);
 #endif
     }
 
