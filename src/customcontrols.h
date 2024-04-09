@@ -70,6 +70,10 @@ protected:
     void OnSize(wxSizeEvent& e);
     bool RewrapForWidth(int width);
 
+#ifdef __WXOSX__
+    wxSize DoGetBestSize() const override;
+#endif
+
     wxString m_text;
     int m_wrapWidth;
     Language m_language;

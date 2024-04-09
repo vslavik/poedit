@@ -232,6 +232,18 @@ bool AutoWrappingText::InformFirstDirection(int direction, int size, int /*avail
     return false;
 }
 
+#ifdef __WXOSX__
+wxSize AutoWrappingText::DoGetBestSize() const
+{
+    auto sz = wxStaticText::DoGetBestSize();
+    // AppKit's intristicContentSize calculation is sometimes subtly wrong in our use case,
+    // hiding the last line of wrapped text. It seems to be off-by-two error only:
+    if (sz.y > 0)
+        sz.y += 2;
+    return sz;
+}
+#endif
+
 void AutoWrappingText::OnSize(wxSizeEvent& e)
 {
     e.Skip();
