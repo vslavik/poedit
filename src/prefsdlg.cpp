@@ -417,7 +417,7 @@ public:
 
         auto learnMore = new LearnMoreLink(this, "https://poedit.net/trac/wiki/Doc/TranslationMemory");
         sizer->AddSpacer(PX(3));
-        sizer->Add(learnMore, wxSizerFlags().Border(wxLEFT, PX(ExplanationLabel::CHECKBOX_INDENT + LearnMoreLink::EXTRA_INDENT)));
+        sizer->Add(learnMore, wxSizerFlags().Border(wxLEFT, PX(ExplanationLabel::CHECKBOX_INDENT)));
         sizer->AddSpacer(PX(10));
 
 #ifdef __WXOSX__

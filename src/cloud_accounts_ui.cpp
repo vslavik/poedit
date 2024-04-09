@@ -120,7 +120,7 @@ wxSizer *ServiceSelectionPanel::CreateServiceContent(AccountDetailPanel *account
 
     auto buttons = new wxBoxSizer(wxHORIZONTAL);
     sizer->Add(buttons, wxSizerFlags().Expand().Border(wxTOP, PX(16)));
-    buttons->Add(learnMore, wxSizerFlags().Center().Border(wxLEFT, PX(LearnMoreLink::EXTRA_INDENT)));
+    buttons->Add(learnMore, wxSizerFlags().Center());
     buttons->AddStretchSpacer();
     buttons->Add(signIn, wxSizerFlags());
 
@@ -137,7 +137,7 @@ AccountsPanel::AccountsPanel(wxWindow *parent, int flags) : wxPanel(parent, wxID
                   wxSizerFlags().Expand().Border(wxBOTTOM, PX(2)));
 
     auto learn = new LearnMoreLink(this, "https://poedit.net/cloud-sync", _("How does cloud sync work?"));
-    topsizer->Add(learn, wxSizerFlags().Left().Border(wxLEFT, PX(LearnMoreLink::EXTRA_INDENT)));
+    topsizer->Add(learn, wxSizerFlags().Left());
     topsizer->AddSpacer(2 * PXDefaultBorder);
 
     wxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
@@ -422,7 +422,7 @@ public:
         loginSizer->Add(m_loginImage, wxSizerFlags().ReserveSpaceEvenIfHidden().Center());
         loginSizer->Add(m_loginText, wxSizerFlags().ReserveSpaceEvenIfHidden().Center().Border(wxLEFT, PX(2)));
         auto manageLink = new LearnMoreLink(this, "", _("Manage accounts"));
-        loginSizer->Add(manageLink, wxSizerFlags().Center().Border(wxRIGHT, PX(LearnMoreLink::EXTRA_INDENT)));
+        loginSizer->Add(manageLink, wxSizerFlags().Center());
         m_loginText->Hide();
         m_loginImage->Hide();
 
