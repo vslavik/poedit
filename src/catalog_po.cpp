@@ -980,7 +980,7 @@ void POCatalog::FixupCommonIssues()
     // this by removing the flag ourselves, as translators can rarely influence it:
     for (auto& i: items())
     {
-        if (i->GetFormatFlag() == wxS("php"))
+        if (i->GetFormatFlag() == "php")
         {
             auto s = i->GetRawString();
             if (s.Contains(wxS("% ")) && !s.Contains(wxS("%% ")))

@@ -171,7 +171,7 @@ class CatalogItem
 
         /// Returns format flag ("php" for "php-format" etc.) if there's any,
         // empty string otherwise
-        wxString GetFormatFlag() const;
+        std::string GetFormatFlag() const;
 
         /// Like GetFormatFlags(), but only for internal uses (e.g. fileformat-specific highlighting)
         virtual std::string GetInternalFormatFlag() const { return std::string(); }

@@ -838,21 +838,21 @@ wxString CatalogItem::GetFlags() const
     }
 }
 
-wxString CatalogItem::GetFormatFlag() const
+std::string CatalogItem::GetFormatFlag() const
 {
     if (m_moreFlags.empty())
-        return wxString();
+        return std::string();
 
     auto pos = m_moreFlags.find(wxS("-format"));
     if (pos == wxString::npos)
-        return wxString();
+        return std::string();
     auto space = m_moreFlags.find_last_of(" \t", pos);
     auto format = (space == wxString::npos)
                     ? m_moreFlags.substr(0, pos)
                     : m_moreFlags.substr(space+1, pos-space-1);
     if (format.starts_with("no-"))
-        return wxString();
-    return format;
+        return std::string();
+    return std::string(format.begin(), format.end());
 }
 
 void CatalogItem::SetFuzzy(bool fuzzy)
