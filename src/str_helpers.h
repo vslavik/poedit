@@ -95,7 +95,12 @@ inline std::string to_utf8(const wxString& str)
     return str.utf8_string();
 }
 
-inline std::wstring to_wstring(const wxString& str)
+#if wxUSE_STD_STRING && wxUSE_UNICODE_WCHAR && wxUSE_STL_BASED_WXSTRING
+typedef const std::wstring& wstring_conv_t;
+#else
+typedef std::wstring wstring_conv_t;
+#endif
+inline wstring_conv_t to_wstring(const wxString& str)
 {
     return str.ToStdWstring();
 }

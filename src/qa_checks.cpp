@@ -559,9 +559,6 @@ std::vector<std::pair<std::string, wxString>> QAChecker::GetMetadata()
 
 int QAChecker::Check(Catalog& catalog)
 {
-    // TODO: parallelize this (make async tasks for chunks of the catalog)
-    //       doing it per-checker is MT-unsafe with API that calls SetIssue()!
-
     int issues = 0;
 
     for (auto& i: catalog.items())

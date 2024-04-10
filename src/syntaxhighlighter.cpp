@@ -204,6 +204,7 @@ std::wregex REOBJ_COMMON_PLACEHOLDERS(
                 //      +--------------------------------------------------- %var% (Twig)
                 //
                 RegexSyntaxHighlighter::flags);
+const wchar_t* COMMON_PLACEHOLDERS_TRIGGER_CHARS = L"{%";
 
 // WebExtension-like $foo$ placeholders
 std::wregex REOBJ_DOLLAR_PLACEHOLDERS(LR"(\$[A-Za-z0-9_]+\$)", RegexSyntaxHighlighter::flags);
@@ -252,8 +253,21 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kin
     bool needsHTML = (kindsMask & Markup);
     if (needsHTML)
     {
-        needsHTML = std::regex_search(str::to_wstring(item.GetString()), REOBJ_HTML_MARKUP) ||
-                (item.HasPlural() && std::regex_search(str::to_wstring(item.GetPluralString()), REOBJ_HTML_MARKUP));
+        needsHTML = false;
+
+        str::wstring_conv_t str1 = str::to_wstring(item.GetString());
+        if (str1.find(L"<") != std::wstring::npos && std::regex_search(str1, REOBJ_HTML_MARKUP))
+        {
+            needsHTML = true;
+        }
+        else if (item.HasPlural())
+        {
+            str::wstring_conv_t strp = str::to_wstring(item.GetString());
+            if (strp.find(L"<") != std::wstring::npos && std::regex_search(strp, REOBJ_HTML_MARKUP))
+            {
+                needsHTML = true;
+            }
+        }
     }
     bool needsGenericPlaceholders = (kindsMask & Placeholder);
     if (needsGenericPlaceholders)
@@ -265,8 +279,21 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kin
         }
         else
         {
-            needsGenericPlaceholders = std::regex_search(str::to_wstring(item.GetString()), REOBJ_COMMON_PLACEHOLDERS) ||
-                    (item.HasPlural() && std::regex_search(str::to_wstring(item.GetPluralString()), REOBJ_COMMON_PLACEHOLDERS));
+            needsGenericPlaceholders = false;
+
+            str::wstring_conv_t str1 = str::to_wstring(item.GetString());
+            if (str1.find_first_of(COMMON_PLACEHOLDERS_TRIGGER_CHARS) != std::wstring::npos && std::regex_search(str1, REOBJ_COMMON_PLACEHOLDERS))
+            {
+				needsGenericPlaceholders = true;
+			}
+            else if (item.HasPlural())
+            {
+                str::wstring_conv_t strp = str::to_wstring(item.GetString());
+                if (strp.find_first_of(COMMON_PLACEHOLDERS_TRIGGER_CHARS) != std::wstring::npos && std::regex_search(strp, REOBJ_COMMON_PLACEHOLDERS))
+                {
+                    needsGenericPlaceholders = true;
+                }
+            }
         }
     }
 
