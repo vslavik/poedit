@@ -20,7 +20,7 @@ remove_date_only_changes()
         return
     fi
 
-    changes=$(git diff $1 | grep '^[+-][^+-]' | grep -v '\(PO-Revision\|POT-Creation\)-Date' | wc -l)
+    changes=$(git diff --no-ext-diff $1 | grep '^[+-][^+-]' | grep -v '\(PO-Revision\|POT-Creation\)-Date' | wc -l)
     if [ $changes -eq 0 ] ; then
         git checkout $1
     fi
