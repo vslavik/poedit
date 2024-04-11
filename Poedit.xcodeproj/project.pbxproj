@@ -1128,6 +1128,7 @@
 				B2CE6D171ACFCD95007E6863 /* Headers */,
 				B2CE6D181ACFCD95007E6863 /* Resources */,
 				B2CE6D291AD008F6007E6863 /* Set CFBundleVersion from git */,
+				B25CC3CE2BC8247900BED2FD /* Copy PO Translations */,
 			);
 			buildRules = (
 			);
@@ -1314,6 +1315,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		B25CC3CE2BC8247900BED2FD /* Copy PO Translations */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			dependencyFile = "$(DERIVED_FILES_DIR)/copy-translations.d";
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy PO Translations";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/copy-translations.done",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"${DEPS_BUILD_DIR}/gettext/bin:$PATH\"\necho \"${DERIVED_FILES_DIR}/copy-translations.done : \" \"${SRCROOT}\"/locales/*.po* \"${SRCROOT}/macos/copy-translations.sh\" >${DERIVED_FILES_DIR}/copy-translations.d\nmacos/copy-translations.sh quicklook \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ntouch \"${DERIVED_FILE_DIR}/copy-translations.done\"\n";
+		};
 		B2C129D921C6CBAF004364B2 /* Ninja Build */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -1404,7 +1425,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export MSGFMT=\"${DEPS_BUILD_DIR}/gettext/bin/msgfmt\"\necho \"${DERIVED_FILES_DIR}/copy-translations.done : \" \"${SRCROOT}\"/locales/*.po \"${SRCROOT}\"/deps/wx/locale/*.po >${DERIVED_FILES_DIR}/copy-translations.d\nmacos/copy-translations.sh \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ntouch \"${DERIVED_FILE_DIR}/copy-translations.done\"\n";
+			shellScript = "export PATH=\"${DEPS_BUILD_DIR}/gettext/bin:$PATH\"\necho \"${DERIVED_FILES_DIR}/copy-translations.done : \" \"${SRCROOT}\"/locales/*.po* \"${SRCROOT}\"/deps/wx/locale/*.po \"${SRCROOT}/macos/copy-translations.sh\" >${DERIVED_FILES_DIR}/copy-translations.d\nmacos/copy-translations.sh app \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ntouch \"${DERIVED_FILE_DIR}/copy-translations.done\"\n";
 		};
 		B2F287C6170DCF06004C1F41 /* Copy Gettext binaries, data files & translations */ = {
 			isa = PBXShellScriptBuildPhase;

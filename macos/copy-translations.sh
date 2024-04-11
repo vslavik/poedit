@@ -1,10 +1,9 @@
 #!/bin/bash
 
-set -e
+set -Eeuo pipefail
 
-DESTDIR="$1"
-
-MSGFMT="${MSGFMT-msgfmt} -c"
+SCOPE="$1"
+DESTDIR="$2"
 
 get_all_langs()
 {
@@ -28,17 +27,21 @@ try_compile_po()
     shortlang=${lang:0:2}
     outfile="$2"
     podir="$3"
+    reference_pot="$4"
 
     if [ -f "$podir/$lang.po" ] ; then
-        if [ '!' "$outfile" -nt "$podir/$lang.po" ] ; then
-            echo "Compiling $podir/$lang.po"
-            $MSGFMT -o "$outfile" "$podir/$lang.po"
-        fi
+        infile="$podir/$lang.po"
     elif [ -f "$podir/$shortlang.po" ] ; then
-        if [ '!' "$outfile" -nt "$podir/$shortlang.po" ] ; then
-            echo "Compiling $podir/$shortlang.po"
-            $MSGFMT -o "$outfile" "$podir/$shortlang.po"
-        fi
+        infile="$podir/$shortlang.po"
+    fi
+    [ -n "$infile" ] || exit 1
+
+    echo "compiling $podir/$lang.po"
+
+    if [ -n "$reference_pot" ] ; then
+        msgmerge -o- "$infile" "$reference_pot" | msgfmt -o "$outfile" -
+    else
+        msgfmt -o "$outfile" "$infile"
     fi
 }
 
@@ -47,8 +50,12 @@ for lang in `get_all_langs`; do
 
     mkdir -p "$lproj"
 
-    try_compile_po $lang "$lproj/poedit.mo"           locales
-    try_compile_po $lang "$lproj/wxstd.mo"            deps/wx/locale
+    if [ $SCOPE = "app" ]; then
+        try_compile_po $lang "$lproj/poedit.mo" locales
+        try_compile_po $lang "$lproj/wxstd.mo"  deps/wx/locale
+    else
+        try_compile_po $lang "$lproj/poedit-$SCOPE.mo" locales "locales/poedit-$SCOPE.pot"
+    fi
 done
 
 # macOS uses pt.lproj for pt-BR localization; bizarre as it is, we must do the

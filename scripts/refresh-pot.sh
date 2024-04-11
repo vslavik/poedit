@@ -33,6 +33,8 @@ find ../src -name "*.cpp" | sort | xargs xgettext ${XGETTEXT_ARGS}             -
 find ../src -name "*.h"   | sort | xargs xgettext ${XGETTEXT_ARGS}          -j -o _poedit.pot
 ${WXRC} --gettext ../src/resources/*.xrc | xgettext ${XGETTEXT_ARGS}        -j -o _poedit.pot -
 
+msggrep -N ../src/export_html.cpp _poedit.pot -o poedit-quicklook.pot
+
 # -F is incompatible with --no-location, results in weird order, so remove location info
 # in a secondary pass:
 msgcat --no-location -o poedit.pot _poedit.pot

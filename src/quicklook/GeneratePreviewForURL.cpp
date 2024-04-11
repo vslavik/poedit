@@ -93,9 +93,9 @@ void Initialize_plugin(void)
             
             wxTranslations *trans = new wxTranslations();
             wxTranslations::Set(trans);
-            trans->AddCatalog("poedit");
+            trans->AddCatalog("poedit-quicklook");
 
-            wxString bestTrans = trans->GetBestTranslation("poedit");
+            wxString bestTrans = trans->GetBestTranslation("poedit-quicklook");
             Language uiLang = Language::TryParse(bestTrans.ToStdWstring());
             uloc_setDefault(uiLang.IcuLocaleName().c_str(), &err);
         }
