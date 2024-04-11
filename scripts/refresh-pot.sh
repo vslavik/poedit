@@ -29,9 +29,9 @@ remove_date_only_changes()
 
 cd locales
 
-find ../src -name "*.cpp" | xargs xgettext ${XGETTEXT_ARGS}             -o _poedit.pot
-find ../src -name "*.h"   | xargs xgettext ${XGETTEXT_ARGS}          -j -o _poedit.pot
-${WXRC} --gettext ../src/resources/*.xrc | xgettext ${XGETTEXT_ARGS} -j -o _poedit.pot -
+find ../src -name "*.cpp" | sort | xargs xgettext ${XGETTEXT_ARGS}             -o _poedit.pot
+find ../src -name "*.h"   | sort | xargs xgettext ${XGETTEXT_ARGS}          -j -o _poedit.pot
+${WXRC} --gettext ../src/resources/*.xrc | xgettext ${XGETTEXT_ARGS}        -j -o _poedit.pot -
 
 # -F is incompatible with --no-location, results in weird order, so remove location info
 # in a secondary pass:
