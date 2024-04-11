@@ -79,8 +79,6 @@
 		B25FAE61249527BC00B9A1A1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25FAE60249527BC00B9A1A1 /* QuartzCore.framework */; };
 		B260089429AE694E00349A0E /* catalog_json.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B260089229AE694D00349A0E /* catalog_json.cpp */; };
 		B260089529AF88A000349A0E /* catalog_json.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B260089229AE694D00349A0E /* catalog_json.cpp */; };
-		B260AA6A2BB2FCAC0003E378 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B260AA692BB2FCAC0003E378 /* libicucore.tbd */; };
-		B260AA6B2BB2FCB70003E378 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B260AA692BB2FCAC0003E378 /* libicucore.tbd */; };
 		B260AA682BB2BDAE0003E378 /* unicode_helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2E02A341CB812C500D18F5C /* unicode_helpers.cpp */; };
 		B26483E82A4CAC30001736CD /* localazy_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26483E62A4CAC30001736CD /* localazy_client.cpp */; };
 		B26483E92A4CAC30001736CD /* localazy_gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26483E72A4CAC30001736CD /* localazy_gui.cpp */; };
@@ -1130,7 +1128,6 @@
 				B2CE6D171ACFCD95007E6863 /* Headers */,
 				B2CE6D181ACFCD95007E6863 /* Resources */,
 				B2CE6D291AD008F6007E6863 /* Set CFBundleVersion from git */,
-				B2C1DA6A1AD2DC0E00CDABFF /* Link Resources/ to Embedding App */,
 			);
 			buildRules = (
 			);
@@ -1335,21 +1332,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "cd deps && ./build_deps.sh gettext\n";
-		};
-		B2C1DA6A1AD2DC0E00CDABFF /* Link Resources/ to Embedding App */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Link Resources/ to Embedding App";
-			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "ln -sf ../../../../Resources \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n";
 		};
 		B2CC62E117DB7E2D0097461B /* Set CFBundleVersion from git */ = {
 			isa = PBXShellScriptBuildPhase;
