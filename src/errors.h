@@ -23,12 +23,13 @@
  *
  */
 
-#ifndef _ERRORS_H_
-#define _ERRORS_H_
+#ifndef Poedit_errors_h
+#define Poedit_errors_h
 
 #include <wx/string.h>
 #include <exception>
 #include <stdexcept>
+#include <functional>
 
 #include <boost/exception_ptr.hpp>
 
@@ -55,46 +56,44 @@ private:
 };
 
 
-/// Helper to convert an exception into a human-readable string
-template<typename Rethrow>
-inline wxString DoDescribeException(Rethrow&& rethrow_exception)
+namespace errors::detail
 {
-    try
-    {
-        rethrow_exception();
-        return "no error"; // silence stupid VC++
-    }
-    catch (const Exception& e)
-    {
-        return e.What();
-    }
-    catch (const std::exception& e)
-    {
-        const char *msg = e.what();
-        // try interpreting as UTF-8 first as the most likely one (from external sources)
-        wxString s = wxString::FromUTF8(msg);
-        if (s.empty())
-        {
-            s = wxString(msg);
-            if (s.empty()) // not in current locale either, fall back to Latin1
-                s = wxString(msg, wxConvISO8859_1);
-        }
-        return s;
-    }
-    catch (...)
-    {
-        return "unknown error";
-    }
+
+struct Rethrower
+{
+	virtual void rethrow() = 0;
+    virtual ~Rethrower() {}
+};
+
+template<typename T>
+struct RethrowerImpl : public Rethrower
+{
+    RethrowerImpl(T&& func) : rethrow_exception(std::move(func)) {}
+    void rethrow() override { rethrow_exception(); }
+
+    T rethrow_exception;
+};
+
+wxString DescribeExceptionImpl(Rethrower& rethrower);
+
+template<typename T>
+inline wxString DescribeException(T&& rethrow_exception)
+{
+    RethrowerImpl<T> rethrower(std::move(rethrow_exception));
+    return DescribeExceptionImpl(rethrower);
 }
 
+} // namespace errors::detail
+
+/// Helper to convert an exception into a human-readable string
 inline wxString DescribeException(std::exception_ptr e)
 {
-    return DoDescribeException([e]{ std::rethrow_exception(e); });
+    return errors::detail::DescribeException([e]{ std::rethrow_exception(e); });
 }
 
 inline wxString DescribeException(boost::exception_ptr e)
 {
-    return DoDescribeException([e]{ boost::rethrow_exception(e); });
+    return errors::detail::DescribeException([e]{ boost::rethrow_exception(e); });
 }
 
 inline wxString DescribeCurrentException()
@@ -102,4 +101,4 @@ inline wxString DescribeCurrentException()
     return DescribeException(std::current_exception());
 }
 
-#endif // _ERRORS_H_
+#endif // Poedit_errors_h

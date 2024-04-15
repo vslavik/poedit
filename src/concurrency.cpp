@@ -117,8 +117,8 @@ void detail::dispatch_async_cxx(boost::executors::work&& f, detail::queue q)
 namespace
 {
 
-std::unique_ptr<detail::background_queue_executor> gs_background_executor;
-std::unique_ptr<detail::main_thread_executor> gs_main_thread_executor;
+std::unique_ptr<dispatch::detail::background_queue_executor> gs_background_executor;
+std::unique_ptr<dispatch::detail::main_thread_executor> gs_main_thread_executor;
 static std::once_flag gs_background_executor_flag, gs_main_thread_executor_flag;
 
 }
