@@ -79,7 +79,7 @@ AS_IF([test "x$with_cpprest" != "xno"],
       CPPFLAGS="$CPPFLAGS $CXXFLAGS $BOOST_CPPFLAGS"
           AC_CHECK_HEADERS([cpprest/http_client.h],
               [
-                  AC_MSG_CHECKING([for libcpprest >= 2.5])
+                  AC_MSG_CHECKING([for libcpprest >= 2.10.8])
                   old_LIBS="$LIBS"
                   LIBS="-lcpprest $BOOST_SYSTEM_LIB $BOOST_THREAD_LIB -lssl -lcrypto $LIBS"
                   AC_LINK_IFELSE([AC_LANG_PROGRAM(
@@ -88,8 +88,8 @@ AS_IF([test "x$with_cpprest" != "xno"],
                           #include <cpprest/http_client.h>
                       ],
                       [
-                          #if CPPREST_VERSION < 200500
-                            #error "cpprest >= 2.5 required"
+                          #if CPPREST_VERSION < 201008
+                            #error "cpprest >= 2.10.8 required"
                           #endif
                           web::http::client::http_client c(U("https://poedit.net"));
                       ])],
