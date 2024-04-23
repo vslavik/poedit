@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\casablanca\Build\version.props" />
+  <Import Project="..\cpprestsdk\Build\version.props" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -14,7 +14,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{15F3B200-1AED-4B57-AF37-B21CD67914B1}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>casablanca</RootNamespace>
+    <RootNamespace>cpprestsdk</RootNamespace>
     <SccProjectName>
     </SccProjectName>
     <SccAuxPath>
@@ -29,10 +29,10 @@
     <TargetXP>false</TargetXP>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
-  <Import Project="..\casablanca\Build\Config.Definitions.props" />
+  <Import Project="..\cpprestsdk\Build\Config.Definitions.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <Import Project="..\casablanca\Build\Release.Product.Settings" />
+  <Import Project="..\cpprestsdk\Build\Release.Product.Settings" />
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -58,7 +58,7 @@
       <WholeProgramOptimization Condition="'$(Configuration)'=='Release'">true</WholeProgramOptimization>
     </ClCompile>
     <ResourceCompile>
-      <AdditionalIncludeDirectories>;..\casablanca\Release\src\build\vs14;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>;..\cpprestsdk\Release\src\build\vs14;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>Winhttp.lib;httpapi.lib;bcrypt.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -73,7 +73,7 @@
       <TargetMachine Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MachineX64</TargetMachine>
     </Lib>
   </ItemDefinitionGroup>
-  <Import Project="..\casablanca\Release\src\build\common.vcxitems" Label="Shared" />
-  <Import Project="..\casablanca\Release\src\build\win32.vcxitems" Label="Shared" />
+  <Import Project="..\cpprestsdk\Release\src\build\common.vcxitems" Label="Shared" />
+  <Import Project="..\cpprestsdk\Release\src\build\win32.vcxitems" Label="Shared" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

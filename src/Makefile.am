@@ -6,7 +6,7 @@ bin_PROGRAMS = poedit
 
 if HAVE_CPPREST
 ACCOUNTS_SUPPORT_SRC = \
-                 http_client.h http_client.cpp http_client_casablanca.cpp \
+                 http_client.h http_client.cpp http_client_cpprestsdk.cpp \
                  cloud_accounts.h cloud_accounts.cpp cloud_accounts_ui.h cloud_accounts_ui.cpp \
                  crowdin_client.h crowdin_client.cpp \
                  crowdin_gui.h crowdin_gui.cpp \
