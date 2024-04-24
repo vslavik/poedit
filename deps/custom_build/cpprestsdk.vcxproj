@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\cpprestsdk\Build\version.props" />
+  <Import Project="cpprestsdk.version.props" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -29,10 +29,10 @@
     <TargetXP>false</TargetXP>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
-  <Import Project="..\cpprestsdk\Build\Config.Definitions.props" />
+  <Import Project="cpprestsdk.config.definitions.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <Import Project="..\cpprestsdk\Build\Release.Product.Settings" />
+  <Import Project="cpprestsdk.product.settings" />
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -73,7 +73,7 @@
       <TargetMachine Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MachineX64</TargetMachine>
     </Lib>
   </ItemDefinitionGroup>
-  <Import Project="..\cpprestsdk\Release\src\build\common.vcxitems" Label="Shared" />
-  <Import Project="..\cpprestsdk\Release\src\build\win32.vcxitems" Label="Shared" />
+  <Import Project="cpprestsdk.common.vcxitems" Label="Shared" />
+  <Import Project="cpprestsdk.win32.vcxitems" Label="Shared" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>
