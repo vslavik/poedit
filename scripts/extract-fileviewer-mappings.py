@@ -22,6 +22,7 @@ OVERRIDES = {
     'h'     : 'cpp',
     'inc'   : 'php',
     'cake'  : 'coffeescript',
+    'astro' : 'javascript',
     'es'    : 'javascript',
     'fcgi'  : 'lua',
     'cgi'   : 'perl',
