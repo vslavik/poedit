@@ -910,7 +910,7 @@ void POCatalog::Load(const wxString& po_file, int flags)
 
     wxString ext;
     wxFileName::SplitPath(po_file, nullptr, nullptr, &ext);
-    if (ext.CmpNoCase("pot") == 0)
+    if (ext.CmpNoCase("pot") == 0 || (flags & CreationFlag_IgnoreTranslations))
         m_fileType = Type::POT;
     else
         m_fileType = Type::PO;
