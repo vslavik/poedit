@@ -1215,6 +1215,9 @@ void Catalog::SideloadSourceDataFromReferenceFile(CatalogPtr ref)
             continue;
 
         auto& rdata = *ri->second;
+        if (rdata.GetTranslation().empty())
+            continue;
+
         auto d = std::make_shared<SideloadedItemData>();
         d->source_string = rdata.GetTranslation();
         if (rdata.HasPlural())
