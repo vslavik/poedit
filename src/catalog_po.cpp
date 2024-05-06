@@ -1474,12 +1474,14 @@ bool POCatalog::DoSaveOnly(const wxString& po_file, wxTextFileType crlf)
 
 bool POCatalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
 {
+    const bool isPOT = m_fileType == Type::POT;
+
     /* Save .po file: */
     if (!m_header.Charset || m_header.Charset == "CHARSET")
         m_header.Charset = "UTF-8";
 
     SaveMultiLines(f, m_header.Comment);
-    if (m_fileType == Type::POT)
+    if (isPOT)
         f.AddLine(wxS("#, fuzzy"));
     f.AddLine(wxS("msgid \"\""));
     f.AddLine(wxS("msgstr \"\""));
@@ -1530,8 +1532,15 @@ bool POCatalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
         }
         else
         {
-            dummy = FormatStringForFile(data->GetTranslation());
-            SaveMultiLines(f, wxS("msgstr \"") + dummy + wxS("\""));
+            if (isPOT)
+            {
+                f.AddLine(wxS("msgstr \"\""));
+            }
+            else
+            {
+                dummy = FormatStringForFile(data->GetTranslation());
+                SaveMultiLines(f, wxS("msgstr \"") + dummy + wxS("\""));
+            }
         }
         f.AddLine(wxEmptyString);
     }
