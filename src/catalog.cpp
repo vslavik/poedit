@@ -867,7 +867,7 @@ void CatalogItem::SetFuzzy(bool fuzzy)
 wxString CatalogItem::GetTranslation(unsigned idx) const
 {
     if (idx >= GetNumberOfTranslations())
-        return wxEmptyString;
+        return wxString();
     else
         return m_translations[idx];
 }

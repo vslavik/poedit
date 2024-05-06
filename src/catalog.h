@@ -144,8 +144,7 @@ class CatalogItem
         unsigned GetPluralFormsCount() const;
 
         /// Returns the nth-translation.
-        wxString GetTranslation(unsigned n) const;
-        const wxString& GetTranslation() const { return m_translations[0]; }
+        wxString GetTranslation(unsigned n = 0) const;
 
         /// Returns all translations.
         const wxArrayString& GetTranslations() const { return m_translations; }
