@@ -82,6 +82,9 @@ void SortOrder::Save()
 CatalogItemsComparator::CatalogItemsComparator(const Catalog& catalog, const SortOrder& order)
     : m_catalog(catalog), m_order(order)
 {
+    if (m_order.by == SortOrder::By_Translation && !m_catalog.HasCapability(Catalog::Cap::Translations))
+        m_order.by = SortOrder::By_FileOrder;
+
     switch (m_order.by)
     {
         case SortOrder::By_Translation:
