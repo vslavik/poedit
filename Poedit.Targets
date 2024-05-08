@@ -98,7 +98,10 @@
   </Target>
 
 
-  <Target Name="CopyGettextTools" AfterTargets="Link">
+  <Target Name="CopyGettextTools" AfterTargets="Link"
+          Inputs="@(GettextBinFiles);@(GettextDataFiles)"
+          Outputs="@(GettextBinFiles->'$(GettextOutDir)\bin\%(Filename)%(Extension)');@(GettextDataFiles->'$(GettextOutDir)\share\%(RecursiveDir)%(Filename)%(Extension)')"
+          >
     <Message Importance="High" Text="Copying gettext tools binaries to $(GettextOutDir)" />
     <MakeDir Directories="$(GettextOutDir)\bin" />
     <MakeDir Directories="$(GettextOutDir)\share" />
