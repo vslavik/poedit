@@ -89,13 +89,6 @@
     <Exec Command='$(Msgfmt) -o "$(TranslationsOutDir)%(TranslationFilesWX.Filename)\wxstd.mo" @(TranslationFilesWX)' />
   </Target>
 
-  <Target Name="CopyTranslations_WXMSW" AfterTargets="Link"
-        Inputs="@(TranslationFilesWXMSW)"
-        Outputs="@(TranslationFilesWXMSW->'$(TranslationsOutDir)%(Filename)\wxmsw.mo')">
-    <MakeDir Directories="@(TranslationFilesWXMSW->'$(TranslationsOutDir)\%(Filename)')" />
-    <Exec Command='$(Msgfmt) -o "$(TranslationsOutDir)%(TranslationFilesWXMSW.Filename)\wxmsw.mo" @(TranslationFilesWXMSW)' />
-  </Target>
-
 
   <Target Name="CleanDataFiles" AfterTargets="Clean">
     <Message Importance="High" Text="Cleaning resources, translations etc." />
