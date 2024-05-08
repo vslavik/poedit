@@ -70,6 +70,10 @@ protected:
     void OnSize(wxSizeEvent& e);
     bool RewrapForWidth(int width);
 
+#ifdef __WXOSX__
+    wxSize DoGetBestSize() const override;
+#endif
+
     wxString m_text;
     int m_wrapWidth;
     Language m_language;
@@ -133,7 +137,7 @@ public:
     ExplanationLabel(wxWindow *parent, const wxString& label);
 
 #if defined(__WXOSX__)
-    static const int CHECKBOX_INDENT = 19;
+    static const int CHECKBOX_INDENT = 21;
 #elif defined(__WXMSW__)
     static const int CHECKBOX_INDENT = 17;
 #elif defined(__WXGTK__)

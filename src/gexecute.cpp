@@ -41,6 +41,7 @@
 #include "concurrency.h"
 #include "gexecute.h"
 #include "errors.h"
+#include "str_helpers.h"
 
 namespace
 {
@@ -83,7 +84,42 @@ wxString GetPathToAuxBinary(const wxString& program)
 #endif // __WXOSX__ || __WXMSW__
 
 
-bool ReadOutput(wxInputStream& s, wxArrayString& out)
+struct CommandInvocation
+{
+    CommandInvocation(const wxString& command, const wxString& arguments) : exe(command), args(arguments)
+    {
+    }
+
+    CommandInvocation(const wxString& cmdline)
+    {
+        exe = cmdline.BeforeFirst(_T(' '));
+        args = cmdline.Mid(exe.length() + 1);
+    }
+
+    wxString cmdline() const
+    {
+#if defined(__WXOSX__) || defined(__WXMSW__)
+        const auto fullexe = GetPathToAuxBinary(exe);
+#else
+        const auto& fullexe(exe);
+#endif
+        return args.empty() ? fullexe : fullexe + " " + args;
+    }
+
+    wxString exe;
+    wxString args;
+};
+
+
+struct ProcessOutput
+{
+    long return_code = -1;
+    std::vector<wxString> std_out;
+    std::vector<wxString> std_err;
+};
+
+
+bool ReadOutput(wxInputStream& s, std::vector<wxString>& out)
 {
     // the stream could be already at EOF or in wxSTREAM_BROKEN_PIPE state
     s.Reset();
@@ -115,15 +151,82 @@ bool ReadOutput(wxInputStream& s, wxArrayString& out)
     return true;
 }
 
-std::pair<long, wxArrayString> DoExecuteGettextImpl(const wxString& cmdline_)
+
+ProcessOutput ExecuteCommandAndCaptureOutput(const CommandInvocation& cmd, const wxExecuteEnv *env)
 {
-    wxArrayString gstderr;
-    wxExecuteEnv env;
-    wxString cmdline(cmdline_);
+    ProcessOutput pout;
+    auto cmdline = cmd.cmdline();
+
+    wxLogTrace("poedit.execute", "executing: %s", cmdline.c_str());
+
+    wxScopedPtr<wxProcess> process(new wxProcess);
+    process->Redirect();
+
+    pout.return_code = wxExecute(cmdline, wxEXEC_BLOCK | wxEXEC_NODISABLE | wxEXEC_NOEVENTS, process.get(), env);
+    if (pout.return_code != 0)
+    {
+        wxLogTrace("poedit.execute", "  execution of command failed with exit code %d: %s", (int)pout.return_code, cmdline.c_str());
+    }
+
+    wxInputStream *std_out = process->GetInputStream();
+    if ( std_out && !ReadOutput(*std_out, pout.std_out) )
+        pout.return_code = -1;
+
+    wxInputStream *std_err = process->GetErrorStream();
+    if ( std_err && !ReadOutput(*std_err, pout.std_err) )
+        pout.return_code = -1;
+
+    if ( pout.return_code == -1 )
+    {
+        BOOST_THROW_EXCEPTION(Exception(wxString::Format(_("Cannot execute program: %s"), cmdline.c_str())));
+    }
+
+    return pout;
+}
+
+
+#define GETTEXT_VERSION_NUM(x, y, z)  ((x*1000*1000) + (y*1000) + (z))
+
+// Determine gettext version, return it in the form of XXXYYYZZZ number for version x.y.z
+uint32_t GetGettextVersion()
+{
+    static uint32_t s_version = 0;
+    if (!s_version)
+    {
+        // set old enough fallback version
+        s_version = GETTEXT_VERSION_NUM(0, 18, 0);
+
+        // then determine actual version
+        CommandInvocation msgfmt("msgfmt", "--version");
+        auto p = ExecuteCommandAndCaptureOutput(msgfmt, nullptr);
+        if (p.return_code == 0 && p.std_out.size() > 1)
+        {
+            auto line = str::to_utf8(p.std_out[0]);
+            std::smatch m;
+            if (std::regex_match(line, m, std::regex(R"(.* (([0-9]+)\.([0-9]+)(\.([0-9]+))?)$)")))
+            {
+                const int x = std::stoi(m.str(2));
+                const int y = std::stoi(m.str(3));
+                const int z = m[5].matched ? std::stoi(m.str(5)) : 0;
+                s_version = GETTEXT_VERSION_NUM(x, y, z);
+            }
+        }
+    }
+    return s_version;
+}
+
+
+ProcessOutput DoExecuteGettextImpl(CommandInvocation cmd)
+{
+    // gettext 0.22 started converting MO files to UTF-8 by default. Don't do that.
+    // See https://git.savannah.gnu.org/gitweb/?p=gettext.git;a=commit;h=5412a4f79929004cb6db15d545e07dc953330e8d
+    if (cmd.exe == "msgfmt" && GetGettextVersion() >= GETTEXT_VERSION_NUM(0, 22, 0))
+    {
+        cmd.args = "--no-convert " + cmd.args;
+    }
 
 #if defined(__WXOSX__) || defined(__WXMSW__)
-    wxString binary = cmdline.BeforeFirst(_T(' '));
-    cmdline = GetPathToAuxBinary(binary) + cmdline.Mid(binary.length());
+    wxExecuteEnv env;
     wxGetEnvMap(&env.env);
     env.env["OUTPUT_CHARSET"] = "UTF-8";
 
@@ -132,32 +235,14 @@ std::pair<long, wxArrayString> DoExecuteGettextImpl(const wxString& cmdline_)
         lang = "en"; // don't want things like en@blockquot
 	if ( !lang.empty() )
         env.env["LANG"] = lang;
-#endif // __WXOSX__ || __WXMSW__
-
-    wxLogTrace("poedit.execute", "executing: %s", cmdline.c_str());
-
-    wxScopedPtr<wxProcess> process(new wxProcess);
-    process->Redirect();
-
-    long retcode = wxExecute(cmdline, wxEXEC_BLOCK | wxEXEC_NODISABLE | wxEXEC_NOEVENTS, process.get(), &env);
-    if (retcode != 0)
-    {
-        wxLogTrace("poedit.execute", "  execution of command failed with exit code %d: %s", (int)retcode, cmdline.c_str());
-    }
-
-	wxInputStream *std_err = process->GetErrorStream();
-    if ( std_err && !ReadOutput(*std_err, gstderr) )
-        retcode = -1;
-
-    if ( retcode == -1 )
-    {
-        BOOST_THROW_EXCEPTION(Exception(wxString::Format(_("Cannot execute program: %s"), cmdline.c_str())));
-    }
-
-    return std::make_pair(retcode, gstderr);
+    return ExecuteCommandAndCaptureOutput(cmd, &env);
+#else // Unix
+    return ExecuteCommandAndCaptureOutput(cmd, nullptr);
+#endif
 }
 
-std::pair<long, wxArrayString> DoExecuteGettext(const wxString& cmdline)
+
+ProcessOutput DoExecuteGettext(const wxString& cmdline)
 {
 #if wxUSE_GUI
     if (wxThread::IsMain())
@@ -194,12 +279,10 @@ void LogUnrecognizedError(const wxString& err)
 
 bool ExecuteGettext(const wxString& cmdline)
 {
-    wxArrayString gstderr;
-    long retcode;
-    std::tie(retcode, gstderr) = DoExecuteGettext(cmdline);
+    auto output = DoExecuteGettext(cmdline);
 
     wxString pending;
-    for (auto& ln: gstderr)
+    for (auto& ln: output.std_err)
     {
         if (ln.empty())
             continue;
@@ -221,19 +304,17 @@ bool ExecuteGettext(const wxString& cmdline)
     if (!pending.empty())
         LogUnrecognizedError(pending);
 
-    return retcode == 0;
+    return output.return_code == 0;
 }
 
 
 bool ExecuteGettextAndParseOutput(const wxString& cmdline, GettextErrors& errors)
 {
-    wxArrayString gstderr;
-    long retcode;
-    std::tie(retcode, gstderr) = DoExecuteGettext(cmdline);
+    auto output = DoExecuteGettext(cmdline);
 
     static const std::wregex RE_ERROR(L".*\\.po:([0-9]+)(:[0-9]+)?: (.*)");
 
-    for (const auto& ewx: gstderr)
+    for (const auto& ewx: output.std_err)
     {
         const auto e = ewx.ToStdWstring();
         wxLogTrace("poedit", "  stderr: %s", e.c_str());
@@ -259,7 +340,7 @@ bool ExecuteGettextAndParseOutput(const wxString& cmdline, GettextErrors& errors
         }
     }
 
-    return retcode == 0;
+    return output.return_code == 0;
 }
 
 
