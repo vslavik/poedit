@@ -64,7 +64,7 @@
     </Target>
     
 
-  <Target Name="CopyDataFiles" AfterTargets="Link">
+  <Target Name="CopyDataFiles" BeforeTargets="ClCompile">
     <Message Importance="High" Text="Copying resources to $(ResourcesOutDir)" />
     <MakeDir Directories="$(ResourcesOutDir)" />
     <Copy
@@ -75,14 +75,14 @@
   </Target>
 
 
-  <Target Name="CopyTranslations_Poedit" AfterTargets="Link"
+  <Target Name="CopyTranslations_Poedit" BeforeTargets="ClCompile"
           Inputs="@(TranslationFiles)"
           Outputs="@(TranslationFiles->'$(TranslationsOutDir)%(Filename)\poedit.mo')">
     <MakeDir Directories="@(TranslationFiles->'$(TranslationsOutDir)\%(Filename)')" />
     <Exec Command='$(Msgfmt) -o "$(TranslationsOutDir)%(TranslationFiles.Filename)\poedit.mo" @(TranslationFiles)' />
   </Target>
 
-  <Target Name="CopyTranslations_WX" AfterTargets="Link"
+  <Target Name="CopyTranslations_WX" BeforeTargets="ClCompile"
         Inputs="@(TranslationFilesWX)"
         Outputs="@(TranslationFilesWX->'$(TranslationsOutDir)%(Filename)\wxstd.mo')">
     <MakeDir Directories="@(TranslationFilesWX->'$(TranslationsOutDir)\%(Filename)')" />
@@ -98,7 +98,7 @@
   </Target>
 
 
-  <Target Name="CopyGettextTools" AfterTargets="Link"
+  <Target Name="CopyGettextTools" BeforeTargets="ClCompile"
           Inputs="@(GettextBinFiles);@(GettextDataFiles)"
           Outputs="@(GettextBinFiles->'$(GettextOutDir)\bin\%(Filename)%(Extension)');@(GettextDataFiles->'$(GettextOutDir)\share\%(RecursiveDir)%(Filename)%(Extension)')"
           >
