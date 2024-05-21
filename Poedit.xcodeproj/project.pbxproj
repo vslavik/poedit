@@ -144,7 +144,7 @@
 		B2B6065525F100F3006186A9 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B6065425F100F3006186A9 /* WebKit.framework */; };
 		B2B735F82A5865320037A0DA /* LocalazyLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = B2B735F62A5865320037A0DA /* LocalazyLogo.png */; };
 		B2B735F92A5865320037A0DA /* LocalazyLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2B735F72A5865320037A0DA /* LocalazyLogo@2x.png */; };
-		B2B7D472170DD93E00ED0AFE /* GettextTools.bundle in Copy Gettext bundle */ = {isa = PBXBuildFile; fileRef = B248B2DE170D765100EBA58E /* GettextTools.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		B2B7D472170DD93E00ED0AFE /* GettextTools.bundle in Copy Gettext bundle */ = {isa = PBXBuildFile; fileRef = B248B2DE170D765100EBA58E /* GettextTools.bundle */; };
 		B2B7E81A1AD94194007FC4EB /* libwx_osx_base_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B7E8191AD94194007FC4EB /* libwx_osx_base_static.a */; };
 		B2BC828B20A1F0DC007652D6 /* catalog_po.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2BC828920A1F0DC007652D6 /* catalog_po.cpp */; };
 		B2BC828C20A34AB6007652D6 /* catalog_po.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2BC828920A1F0DC007652D6 /* catalog_po.cpp */; };
@@ -215,6 +215,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = B2CE6D191ACFCD95007E6863;
 			remoteInfo = PoeditQuicklook;
+		};
+		B2D0B1112BFD08DD00527A5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B27115F8170830A800B936D5;
+			remoteInfo = deps.gettext;
+		};
+		B2D0B1132BFD08EC00527A5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B27115F8170830A800B936D5;
+			remoteInfo = deps.gettext;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -1106,12 +1120,14 @@
 				B2E836D81709EB0700F31559 /* Copy Private Frameworks */,
 				B23D1F72181446EF00E6B212 /* Copy Auxiliary Binaries */,
 				B2B7D470170DD91C00ED0AFE /* Copy Gettext bundle */,
+				B2D0B1102BFCFEF400527A5A /* Codesign Gettext bundle */,
 				B2CE6D2A1AD0096C007E6863 /* Copy Quicklook plugin */,
 				B2E83707170C96DB00F31559 /* Copy PO Translations */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B2D0B1142BFD08EC00527A5A /* PBXTargetDependency */,
 				B248B2EE170D773000EBA58E /* PBXTargetDependency */,
 				B2CE6D281AD00897007E6863 /* PBXTargetDependency */,
 			);
@@ -1137,6 +1153,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B2D0B1122BFD08DD00527A5A /* PBXTargetDependency */,
 			);
 			name = PoeditQuicklook;
 			productName = PoeditQuicklook;
@@ -1410,6 +1427,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "APP_INFO_PLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\nDSYM_INFO_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\nBUILD_NUMBER=`git rev-list HEAD --count`\nif [ -f \"$APP_INFO_PLIST\" ] ; then\n    oldversion=`/usr/libexec/PlistBuddy -c \"Print :CFBundleVersion\" \"$APP_INFO_PLIST\"`\nfi\n\nif [ \"$BUILD_NUMBER\" != \"$oldversion\" ] ; then\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$APP_INFO_PLIST\"\n    if [ -f \"$DSYM_INFO_PLIST\" ] ; then\n        /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$DSYM_INFO_PLIST\"\n    fi\n    touch ${DERIVED_FILE_DIR}/.updated.info.plist\nfi\n";
+		};
+		B2D0B1102BFCFEF400527A5A /* Codesign Gettext bundle */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(TARGET_BUILD_DIR)/$(PLUGINS_FOLDER_PATH)/GettextTools.bundle",
+			);
+			name = "Codesign Gettext bundle";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(PLUGINS_FOLDER_PATH)/GettextTools.bundle",
+				"$(DERIVED_FILE_DIR)/codesign.gettext.done",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = "/bin/sh -e";
+			shellScript = "scripts/macos-sign-bundle.sh \"${TARGET_BUILD_DIR}/${PLUGINS_FOLDER_PATH}/GettextTools.bundle\"\n";
 		};
 		B2E83707170C96DB00F31559 /* Copy PO Translations */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1713,7 +1751,7 @@
 				INFOPLIST_FILE = "macos/GettextTools-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				LIBRARY_SEARCH_PATHS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = "net.poedit.Poedit.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = net.poedit.Poedit.GettextTools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = bundle;
@@ -1737,7 +1775,7 @@
 				INFOPLIST_FILE = "macos/GettextTools-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				LIBRARY_SEARCH_PATHS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = "net.poedit.Poedit.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = net.poedit.Poedit.GettextTools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = bundle;
@@ -1850,7 +1888,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = YES;
+				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEPS_BUILD_DIR = "$(OBJROOT)/Deps.build/$(CONFIGURATION)";
@@ -1899,7 +1937,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1907,7 +1944,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/macos/Poedit-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				POEDIT_FEATURES = "HAVE_CLD2 HAVE_HTTP_CLIENT";
-				PRODUCT_BUNDLE_IDENTIFIER = "net.poedit.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = net.poedit.Poedit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1917,7 +1954,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1925,7 +1961,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/macos/Poedit-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				POEDIT_FEATURES = "HAVE_CLD2 HAVE_HTTP_CLIENT";
-				PRODUCT_BUNDLE_IDENTIFIER = "net.poedit.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = net.poedit.Poedit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1982,7 +2018,7 @@
 				INSTALL_PATH = /Library/QuickLook;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				POEDIT_FEATURES = HAVE_CLD2;
-				PRODUCT_BUNDLE_IDENTIFIER = "net.poedit.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = net.poedit.PoeditQuicklook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = qlgenerator;
@@ -2015,7 +2051,7 @@
 				INSTALL_PATH = /Library/QuickLook;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				POEDIT_FEATURES = HAVE_CLD2;
-				PRODUCT_BUNDLE_IDENTIFIER = "net.poedit.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = net.poedit.PoeditQuicklook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = qlgenerator;
