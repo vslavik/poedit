@@ -190,7 +190,6 @@
 		B2F25F0D199E327C00127FF9 /* spellchecking.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F25F0C199E327C00127FF9 /* spellchecking.cpp */; };
 		B2F287C0170DCC63004C1F41 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B248B2DF170D765100EBA58E /* CoreFoundation.framework */; };
 		B2F3C2912B891644008E0593 /* app_updates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F3C28F2B891644008E0593 /* app_updates.cpp */; };
-		B2FD1DD82BA8B8450024BA78 /* poedit.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B2FD1DD72BA8B8450024BA78 /* poedit.xcconfig */; };
 		B2FE296B1AC85FFF005588E4 /* keytar_mac.cc in Sources */ = {isa = PBXBuildFile; fileRef = B2FE29691AC85FFF005588E4 /* keytar_mac.cc */; };
 /* End PBXBuildFile section */
 
@@ -1079,16 +1078,6 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		B2CE6D171ACFCD95007E6863 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
 		B248B2DD170D765100EBA58E /* GettextTools */ = {
 			isa = PBXNativeTarget;
@@ -1116,12 +1105,12 @@
 				B24ACD5716F6201F00399242 /* Sources */,
 				B24ACD5816F6201F00399242 /* Frameworks */,
 				B24ACD5916F6201F00399242 /* Resources */,
-				B2CC62E117DB7E2D0097461B /* Set CFBundleVersion from git */,
 				B2E836D81709EB0700F31559 /* Copy Private Frameworks */,
 				B23D1F72181446EF00E6B212 /* Copy Auxiliary Binaries */,
 				B2B7D470170DD91C00ED0AFE /* Copy Gettext bundle */,
 				B2D0B1102BFCFEF400527A5A /* Codesign Gettext bundle */,
 				B2CE6D2A1AD0096C007E6863 /* Copy Quicklook plugin */,
+				B2CC62E117DB7E2D0097461B /* Set CFBundleVersion from git */,
 				B2E83707170C96DB00F31559 /* Copy PO Translations */,
 			);
 			buildRules = (
@@ -1145,7 +1134,6 @@
 			buildPhases = (
 				B2CE6D151ACFCD95007E6863 /* Sources */,
 				B2CE6D161ACFCD95007E6863 /* Frameworks */,
-				B2CE6D171ACFCD95007E6863 /* Headers */,
 				B2CE6D181ACFCD95007E6863 /* Resources */,
 				B2CE6D291AD008F6007E6863 /* Set CFBundleVersion from git */,
 				B25CC3CE2BC8247900BED2FD /* Copy PO Translations */,
@@ -1168,7 +1156,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				CLASSPREFIX = PO;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1520;
 				ORGANIZATIONNAME = "Václav Slavík";
 				TargetAttributes = {
 					B2CE6D191ACFCD95007E6863 = {
@@ -1291,7 +1279,6 @@
 				B2A012B321BEE4C5008051FD /* SuggestionTMTemplate@2x.png in Resources */,
 				B20F31D0216654DA005B7037 /* StatusWarningBlack.png in Resources */,
 				B20F31CC216654D2005B7037 /* StatusErrorBlack@2x.png in Resources */,
-				B2FD1DD82BA8B8450024BA78 /* poedit.xcconfig in Resources */,
 				B2B735F92A5865320037A0DA /* LocalazyLogo@2x.png in Resources */,
 				B2CE2FF21A94F19D0020A620 /* Prefs-Accounts.png in Resources */,
 				B2E3EE4E256D658500FCE1BF /* Prefs-Advanced.png in Resources */,

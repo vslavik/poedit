@@ -45,6 +45,8 @@ try_compile_po()
     fi
 }
 
+mkdir -p "$DESTDIR"
+
 for lang in `get_all_langs`; do
     lproj="$DESTDIR/`lang_to_macos $lang`.lproj"
 
