@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -Eeuo pipefail
+set -Eeo pipefail
 
 SCOPE="$1"
 DESTDIR="$2"
