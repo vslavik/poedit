@@ -48,8 +48,11 @@ try_compile_po()
 mkdir -p "$DESTDIR"
 
 for lang in `get_all_langs`; do
-    lproj="$DESTDIR/`lang_to_macos $lang`.lproj"
+    lbase="`lang_to_macos $lang`.lproj"
+    lproj="$DESTDIR/$lbase"
 
+    # Only include POs that have OS X specific translations:
+    if [ ! -d "locales/macos/$lbase" ] ; then continue ; fi
     mkdir -p "$lproj"
 
     if [ $SCOPE = "app" ]; then
