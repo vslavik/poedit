@@ -298,6 +298,8 @@ void ProgressWindow::update_progress(double completedFraction)
     dispatch::on_main([=]
     {
         auto value = std::min((int)std::lround(completedFraction * PROGRESS_BAR_RANGE), PROGRESS_BAR_RANGE);
+        if (m_cancellationToken && m_cancellationToken->is_cancelled())
+            return; // don't update anymore
         m_gauge->SetValue(value);
     });
 }
@@ -317,5 +319,6 @@ void ProgressWindow::OnCancel(wxCommandEvent&)
 {
     ((wxButton*)FindWindow(wxID_CANCEL))->Enable(false);
     UpdateMessage(_(L"Cancelling…"));
+    m_gauge->Pulse();
     m_cancellationToken->cancel();
 }
