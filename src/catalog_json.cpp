@@ -197,9 +197,17 @@ public:
     GenericJSONItem(int id, const std::string& key, json_t& node) : JSONCatalogItem(id, node)
     {
         m_string = str::to_wx(key);
-        auto trans = str::to_wx(node.get<std::string>());
-        m_translations.push_back(trans);
-        m_isTranslated = !trans.empty();
+        if (node.is_null())
+        {
+            m_translations.push_back(wxString());
+            m_isTranslated = false;
+        }
+        else
+        {
+            auto trans = str::to_wx(node.get<std::string>());
+            m_translations.push_back(trans);
+            m_isTranslated = !trans.empty();
+        }
     }
 
     void UpdateInternalRepresentation() override
@@ -235,9 +243,9 @@ private:
         for (auto& el : node.items())
         {
             auto& val = el.value();
-            if (val.is_string())
+            if (val.is_string() || val.is_null())
             {
-                m_items.push_back(std::make_shared<GenericJSONItem>(++id, prefix + el.key(), el.value()));
+                m_items.push_back(std::make_shared<GenericJSONItem>(++id, prefix + el.key(), val));
             }
             else if (val.is_object())
             {
@@ -337,7 +345,7 @@ private:
             {
                 auto mi = metadata.find(key);
                 auto meta = (mi != metadata.end()) ? mi->second : nullptr;
-                m_items.push_back(std::make_shared<FlutterItem>(++id, prefix + el.key(), el.value(), meta));
+                m_items.push_back(std::make_shared<FlutterItem>(++id, prefix + el.key(), val, meta));
             }
             else if (val.is_object())
             {
