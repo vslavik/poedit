@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\Gettext.Tools.0.22.5\build\Gettext.Tools.props" Condition="Exists('packages\Gettext.Tools.0.22.5\build\Gettext.Tools.props')" />
-  <Import Project="packages\Tools.InnoSetup.6.2.2\build\Tools.InnoSetup.props" Condition="Exists('packages\Tools.InnoSetup.6.2.2\build\Tools.InnoSetup.props')" />
+  <Import Project="packages\Tools.InnoSetup.6.3.1\build\Tools.InnoSetup.props" Condition="Exists('packages\Tools.InnoSetup.6.3.1\build\Tools.InnoSetup.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -336,7 +336,7 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\Tools.InnoSetup.6.2.2\build\Tools.InnoSetup.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Tools.InnoSetup.6.2.2\build\Tools.InnoSetup.props'))" />
+    <Error Condition="!Exists('packages\Tools.InnoSetup.6.3.1\build\Tools.InnoSetup.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Tools.InnoSetup.6.3.1\build\Tools.InnoSetup.props'))" />
     <Error Condition="!Exists('packages\Gettext.Tools.0.22.5\build\Gettext.Tools.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Gettext.Tools.0.22.5\build\Gettext.Tools.props'))" />
     <Error Condition="!Exists('packages\WinSparkle.0.8.1\build\native\WinSparkle.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\WinSparkle.0.8.1\build\native\WinSparkle.targets'))" />
     <Error Condition="!Exists('packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets'))" />

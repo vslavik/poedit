@@ -48,8 +48,8 @@ OutputDir=win32
 AppName=Poedit
 AppVerName=Poedit {#VERSION}
 
-ArchitecturesInstallIn64BitMode=x64 arm64
-ArchitecturesAllowed=x64 arm64
+ArchitecturesInstallIn64BitMode=x64compatible
+ArchitecturesAllowed=x64compatible
 
 ChangesAssociations=true
 AlwaysShowComponentsList=false
