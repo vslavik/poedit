@@ -104,6 +104,8 @@ jobs:
     - name: Deepen git history
       run: git fetch --deepen=100000 --filter=blob:none origin ${{ github.ref }}
     - uses: microsoft/setup-msbuild@v2
+      with:
+        msbuild-architecture: x64
     - uses: nuget/setup-nuget@v2
     - name: Restore NuGet packages
       run: nuget restore Poedit.sln
