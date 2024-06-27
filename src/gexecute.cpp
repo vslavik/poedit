@@ -46,44 +46,6 @@
 namespace
 {
 
-#ifdef __WXOSX__
-wxString GetGettextPluginPath()
-{
-    return wxStandardPaths::Get().GetPluginsDir() + "/GettextTools.bundle";
-}
-#endif // __WXOSX__
-
-#if defined(__WXOSX__) || defined(__WXMSW__)
-
-inline wxString GetAuxBinariesDir()
-{
-    return GetGettextPackagePath() + "/bin";
-}
-
-wxString GetPathToAuxBinary(const wxString& program)
-{
-    wxFileName path;
-    path.SetPath(GetAuxBinariesDir());
-    path.SetName(program);
-#ifdef __WXMSW__
-    path.SetExt("exe");
-#endif
-    if ( path.IsFileExecutable() )
-    {
-        return wxString::Format(_T("\"%s\""), path.GetFullPath().c_str());
-    }
-    else
-    {
-        wxLogTrace("poedit.execute",
-                   L"%s doesn’t exist, falling back to %s",
-                   path.GetFullPath().c_str(),
-                   program.c_str());
-        return program;
-    }
-}
-#endif // __WXOSX__ || __WXMSW__
-
-
 struct CommandInvocation
 {
     CommandInvocation(const wxString& command, const wxString& arguments) : exe(command), args(arguments)
@@ -99,7 +61,7 @@ struct CommandInvocation
     wxString cmdline() const
     {
 #if defined(__WXOSX__) || defined(__WXMSW__)
-        const auto fullexe = GetPathToAuxBinary(exe);
+        const auto fullexe = "\"" + GetGettextBinaryPath(exe) + "\"";
 #else
         const auto& fullexe(exe);
 #endif
@@ -355,13 +317,37 @@ wxString QuoteCmdlineArg(const wxString& s)
 
 
 #if defined(__WXOSX__) || defined(__WXMSW__)
+
 wxString GetGettextPackagePath()
 {
 #if defined(__WXOSX__)
-    return GetGettextPluginPath() + "/Contents/MacOS";
+    auto plugin = wxStandardPaths::Get().GetPluginsDir() + "/GettextTools.bundle";
+    return plugin + "/Contents/MacOS";
 #elif defined(__WXMSW__)
     return wxStandardPaths::Get().GetDataDir() + wxFILE_SEP_PATH + "GettextTools";
 #endif
 }
-#endif // __WXOSX__ || __WXMSW__
 
+wxString GetGettextBinaryPath(const wxString& program)
+{
+    wxFileName path;
+    path.SetPath(GetGettextPackagePath() + "/bin");
+    path.SetName(program);
+#ifdef __WXMSW__
+    path.SetExt("exe");
+#endif
+    if ( path.IsFileExecutable() )
+    {
+        return path.GetFullPath();
+    }
+    else
+    {
+        wxLogTrace("poedit.execute",
+                   L"%s doesn’t exist, falling back to %s",
+                   path.GetFullPath().c_str(),
+                   program.c_str());
+        return program;
+    }
+}
+
+#endif // __WXOSX__ || __WXMSW__
