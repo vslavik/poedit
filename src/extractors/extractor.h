@@ -127,9 +127,11 @@ public:
     /// Priority value for GetPriority()
     enum class Priority
     {
-        Highest = 1,
-        High    = 10,
-        Default = 100
+        Highest                     =   1,
+        CustomExtension             =   2, // customization should be highest
+        High                        =  10,
+        DefaultSpecializedExtension =  95, // for use with e.g. .blade.php extentions
+        Default                     = 100
     };
 
     /// Returns priority of the extractor

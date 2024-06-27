@@ -228,7 +228,7 @@ void Extractor::CreateGettextExtractors(Extractor::ExtractorsList& into, const S
             else
                 e->RegisterExtension(m.first);
 
-            e->SetPriority(Priority::Highest);  // user-overriden extension
+            e->SetPriority(Priority::CustomExtension);
             into.push_back(e);
         }
     }
