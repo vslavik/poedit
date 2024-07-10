@@ -48,9 +48,9 @@ def gen_pre_build_commands(tarball, patches, srcdir):
     yield 'rm -rf "$workdir" "$destdir"'
     yield 'mkdir -p "$workdir"'
     if tarball:
-        yield 'tar -x -f "$top_srcdir/%s" -C "$workdir" --strip-components 1' % tarball
+        yield f'tar -x -f "$builddir/{tarball}" -C "$workdir" --strip-components 1'
         for p in patches:
-            yield 'patch -d "$workdir" -p1 < "$top_srcdir/%s"' % p
+            yield f'patch -d "$workdir" -p1 < "$top_srcdir/{p}"'
     else:
         yield 'cp -aR "$srcdir/" "$workdir"'
     yield 'cd "$workdir"'
@@ -81,7 +81,7 @@ def gen_configure(n, prj, tarball=None, patches=[], srcdir=None, configure='conf
            command=' && '.join(emit_commands(configure_commands)))
     n.build([target],
             '%s_build' % prj,
-            inputs=sorted([tarball] + patches if tarball else collect_files(srcdir)),
+            inputs=sorted([f'$builddir/{tarball}'] + patches if tarball else collect_files(srcdir)),
             variables=OrderedDict([
                 ('name', prj),
                 ('configure', configure),
@@ -106,7 +106,7 @@ with open('build.ninja', 'w') as buildfile:
 
     targets = []
 
-    n.build(['tarballs/%s' % GETTEXT_TARBALL],
+    n.build(['$builddir/%s' % GETTEXT_TARBALL],
             'download',
             variables={
                 'url': 'https://ftp.gnu.org/pub/gnu/gettext/%s' % GETTEXT_TARBALL,
@@ -114,7 +114,7 @@ with open('build.ninja', 'w') as buildfile:
             })
 
     targets.append(gen_configure(n, 'gettext',
-                                 tarball='tarballs/%s' % GETTEXT_TARBALL,
+                                 tarball=GETTEXT_TARBALL,
                                  patches=glob('gettext/*.patch'),
                                  configure='./configure',
                                  flags=[
