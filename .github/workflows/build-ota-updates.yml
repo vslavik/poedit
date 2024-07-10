@@ -7,28 +7,56 @@ on:
     - cron:  '11 10 * * *'
 
 jobs:
-  build-ota-translations:
-    name: Build OTA translations
+  download-translations:
+    name: Download translations from Crowdin
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
-
-    - name: Install GNU gettext
-      run: sudo apt-get install gettext
-
     - name: Install Crowdin CLI
       run: npm i -g @crowdin/cli
-
     - name: Download latest translations from Crowdin
       run: |
         echo 'api_token: "${{secrets.CROWDIN_PERSONAL_TOKEN}}"' >>crowdin.yaml
         crowdin download
         rm crowdin.yaml
+    - uses: actions/upload-artifact@v4
+      with:
+        name: translations
+        path: locales/*.po
 
+  check-po-validity:
+    name: Check translations
+    runs-on: ubuntu-latest
+    needs: download-translations
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+        name: translations
+        path: locales
+    - name: Install GNU gettext
+      run: sudo apt-get install gettext
+    - name: Check PO files with msgfmt -v -c
+      run: |
+        for i in locales/*.po ; do
+          echo "checking $i..."
+          msgfmt -v -c -o /dev/null $i
+        done
+
+  build-ota-translations:
+    name: Build OTA translations
+    runs-on: ubuntu-latest
+    needs: download-translations
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/download-artifact@v4
+      with:
+        name: translations
+        path: locales
+    - name: Install GNU gettext
+      run: sudo apt-get install gettext
     - name: Build OTA updates
       run: scripts/build-ota-translations.sh
-
     - name: Upload OTA updates
       run: |
         VERSION=$(sed -n -e 's/.*POEDIT_VERSION.* "\([0-9]*\)\.\([0-9]*\).*".*/\1.\2/p' src/version.h)

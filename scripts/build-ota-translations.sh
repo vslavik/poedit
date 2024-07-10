@@ -9,6 +9,17 @@ function finish {
 }
 trap finish EXIT
 
+# check PO files for errors and remove the ones that won't compile:
+for po in locales/*.po ; do
+    if ! stderr=$(msgfmt -c -o /dev/null "$po" 2>&1) ; then
+        echo "::error title=Failed to compile $po::`echo $stderr`"
+        echo "::group::cat -n $po"
+        cat -n "$po"
+        echo "::endgroup::"
+        rm "$po"
+    fi
+done
+
 # compile PO files, taking care to make them reproducible, i.e. not change if the actual
 # translations didn't change:
 for po in locales/*.po ; do
