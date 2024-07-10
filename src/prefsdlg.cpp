@@ -1245,3 +1245,9 @@ std::unique_ptr<PoeditPreferencesEditor> PoeditPreferencesEditor::Create()
     return p;
 }
 
+PoeditPreferencesEditor::PoeditPreferencesEditor()
+#if defined(__WXMSW__) || defined(__WXOSX__)
+    : wxPreferencesEditor(_("Settings"))
+#endif
+{
+}

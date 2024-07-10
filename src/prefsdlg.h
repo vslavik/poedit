@@ -36,7 +36,7 @@ public:
     static std::unique_ptr<PoeditPreferencesEditor> Create();
 
 private:
-    PoeditPreferencesEditor() {}
+    PoeditPreferencesEditor();
 };
 
 #endif // Poedit_prefsdlg_h
