@@ -123,8 +123,8 @@ FileViewer::FileViewer(wxWindow*)
     m_topBarSizer = new wxBoxSizer(wxHORIZONTAL);
     sizer->Add(m_topBarSizer, wxSizerFlags().ReserveSpaceEvenIfHidden().Expand().Border(wxALL, PX(10)));
 
-    m_file = new wxChoice(panel, wxID_ANY, wxDefaultPosition, wxSize(PX(300), -1));
-    m_topBarSizer->Add(m_file, wxSizerFlags().Center().ReserveSpaceEvenIfHidden());
+    m_file = new wxChoice(panel, wxID_ANY);
+    m_topBarSizer->Add(m_file, wxSizerFlags(1).Center().ReserveSpaceEvenIfHidden());
 
     m_description = new SecondaryLabel(panel, "");
     m_topBarSizer->Add(m_description, wxSizerFlags(1).Center().PXBorder(wxLEFT|wxRIGHT));
@@ -265,6 +265,11 @@ void FileViewer::ShowReferences(CatalogPtr catalog, CatalogItemPtr item, int def
         for (auto& r: m_references)
             m_file->Append(bidi::platform_mark_direction(r));
         m_file->SetSelection(defaultReference);
+
+        m_file->SetMinSize(wxDefaultSize);
+        m_file->SetMinSize(m_file->GetBestSize());
+        m_topBarSizer->Layout();
+
         SelectReference(m_references[defaultReference]);
     }
 }
