@@ -3111,7 +3111,7 @@ void PoeditFrame::OnListRightClick(wxDataViewEvent& event)
     std::shared_ptr<wxMenu> menu(CreatePopupMenu(m_list->ListItemToCatalogIndex(item)));
     if (menu)
     {
-        m_list->PopupMenu(menu.get(), event.GetPosition());
+        m_list->PopupMenu(menu.get());
     }
     else
     {
