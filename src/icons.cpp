@@ -56,10 +56,6 @@ wxString GetGnomeStockId(const wxString& id)
     MAP("document-save",        "gtk-save");
     MAP("window-close",         "gtk-close");
 
-    MAP("document-new",         "gtk-new");
-    MAP("document-properties",  "stock_edit");
-    MAP("edit-delete",          "gtk-delete");
-
     MAP("folder-open@symbolic", "gtk-jump-to");
     MAP("list-add@symbolic",    "list-add");
     MAP("list-remove@symbolic", "list-remove");
