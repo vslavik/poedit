@@ -136,7 +136,7 @@ public:
         m_innerSizer->Add(new ExplanationLabel(parent, _("The old source text (before it changed during an update) that the now-inaccurate translation corresponds to.")),
                      wxSizerFlags().Expand());
         m_innerSizer->AddSpacer(PX(5));
-        m_text = new SelectableAutoWrappingText(parent, "");
+        m_text = new SelectableAutoWrappingText(parent, wxID_ANY, "");
         m_innerSizer->Add(m_text, wxSizerFlags().Expand());
     }
 
@@ -162,7 +162,7 @@ public:
         : SidebarBlock(parent, _("Notes for translators"))
     {
         m_innerSizer->AddSpacer(PX(5));
-        m_comment = new SelectableAutoWrappingText(parent, "");
+        m_comment = new SelectableAutoWrappingText(parent, wxID_ANY, "");
         m_innerSizer->Add(m_comment, wxSizerFlags().Expand());
     }
 
@@ -195,7 +195,7 @@ public:
         : SidebarBlock(parent, _("Comment"))
     {
         m_innerSizer->AddSpacer(PX(5));
-        m_comment = new SelectableAutoWrappingText(parent, "");
+        m_comment = new SelectableAutoWrappingText(parent, wxID_ANY, "");
         m_innerSizer->Add(m_comment, wxSizerFlags().Expand());
     }
 
@@ -266,7 +266,7 @@ public:
         m_parentBlock = block;
         m_isHighlighted = false;
         m_icon = new StaticBitmap(this, "SuggestionTMTemplate");
-        m_text = new AutoWrappingText(this, "TEXT");
+        m_text = new AutoWrappingText(this, wxID_ANY, "TEXT");
         m_info = new InfoStaticText(this);
         m_moreActions = new ImageButton(this, "DownvoteTemplate");
 

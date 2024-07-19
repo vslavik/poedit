@@ -67,7 +67,7 @@ AttentionBar::AttentionBar(wxWindow *parent)
 #ifdef __WXMSW__
     m_icon = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap);
 #endif
-    m_label = new AutoWrappingText(this, "");
+    m_label = new AutoWrappingText(this, wxID_ANY, "");
     m_explanation = new ExplanationLabel(this, "");
     m_buttons = new wxBoxSizer(wxHORIZONTAL);
     m_checkbox = new wxCheckBox(this, wxID_ANY, "");

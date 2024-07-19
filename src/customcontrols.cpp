@@ -165,8 +165,8 @@ HeadingLabel::HeadingLabel(wxWindow *parent, const wxString& label)
 }
 
 
-AutoWrappingText::AutoWrappingText(wxWindow *parent, const wxString& label)
-    : wxStaticText(parent, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, wxST_NO_AUTORESIZE),
+AutoWrappingText::AutoWrappingText(wxWindow *parent, wxWindowID winid, const wxString& label)
+    : wxStaticText(parent, winid, "", wxDefaultPosition, wxDefaultSize, wxST_NO_AUTORESIZE),
       m_text(label),
       m_wrapWidth(-1)
 {
@@ -262,8 +262,8 @@ bool AutoWrappingText::RewrapForWidth(int width)
 }
 
 
-SelectableAutoWrappingText::SelectableAutoWrappingText(wxWindow *parent, const wxString& label)
-    : AutoWrappingText(parent, label)
+SelectableAutoWrappingText::SelectableAutoWrappingText(wxWindow *parent, wxWindowID winid, const wxString& label)
+    : AutoWrappingText(parent, winid, label)
 {
 #if defined(__WXOSX__)
     NSTextField *view = (NSTextField*)GetHandle();
@@ -288,7 +288,7 @@ SelectableAutoWrappingText::SelectableAutoWrappingText(wxWindow *parent, const w
 
 
 ExplanationLabel::ExplanationLabel(wxWindow *parent, const wxString& label)
-    : AutoWrappingText(parent, label)
+    : AutoWrappingText(parent, wxID_ANY, label)
 {
 #if defined(__WXOSX__) || defined(__WXGTK__)
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
