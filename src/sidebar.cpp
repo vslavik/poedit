@@ -474,7 +474,7 @@ private:
 
         auto sidebar = m_sidebar;
         auto suggestion = m_value;
-        static const auto idDelete = wxNewId();
+        static wxWindowIDRef idDelete = NewControlId();
 
         wxMenu menu;
 #ifdef __WXOSX__

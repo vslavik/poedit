@@ -273,7 +273,7 @@ SelectableAutoWrappingText::SelectableAutoWrappingText(wxWindow *parent, const w
     gtk_label_set_selectable(view, TRUE);
 #else
     // at least allow copying
-    static wxWindowID idCopy = wxNewId();
+    static wxWindowIDRef idCopy = NewControlId();
     Bind(wxEVT_CONTEXT_MENU, [=](wxContextMenuEvent&){
         wxMenu menu;
         menu.Append(idCopy, _("&Copy"));
