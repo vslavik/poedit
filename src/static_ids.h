@@ -55,6 +55,24 @@ enum ID
 	ListContextReferencesStart                   = /*10000*/ MIN,
 	ListContextReferencesEnd                     = /*10100*/ ListContextReferencesStart + 100,
 
+    // The "Needs work" toggle in editing area at the bottom:
+    NeedsWorkSwitch                              = 10101,
+
+    // The error or warning line above translation field (hidden when there's
+    // no issue; ID is of the static text child window with issue's text):
+    TranslationIssueText                         = 10102,
+
+    // Text of previous source text (msgid) for current item
+    // (shown in sidebar, may be hidden, is static control with the text):
+    PreviousSourceText                           = 10103,
+
+    // Text of notes for translators (extracted from source code) for current item
+    // (shown in sidebar, may be hidden, is static control with the text):
+    NotesForTranslator                           = 10104,
+
+    // Text of translator's comment for current item
+    // (shown in sidebar, may be hidden, is static control with the text):
+    TranslatorComment                            = 10105,
 
 	// ...enter new IDs here...
 

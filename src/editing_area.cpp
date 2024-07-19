@@ -32,6 +32,7 @@
 #include "edlistctrl.h"
 #include "hidpi.h"
 #include "spellchecking.h"
+#include "static_ids.h"
 #include "text_control.h"
 #include "utility.h"
 
@@ -179,11 +180,11 @@ public:
         Ellipsize
     };
 
-    TagLabel(wxWindow *parent, Color fg, Color bg) : wxWindow(parent, wxID_ANY)
+    TagLabel(wxWindow *parent, Color fg, Color bg, wxWindowID labelChildID = wxID_ANY) : wxWindow(parent, wxID_ANY)
     {
         m_icon = nullptr;
 
-        m_label = new wxStaticText(this, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, wxST_ELLIPSIZE_END);
+        m_label = new wxStaticText(this, labelChildID, "", wxDefaultPosition, wxDefaultSize, wxST_ELLIPSIZE_END);
 #ifdef __WXOSX__
         m_label->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
@@ -299,7 +300,7 @@ class EditingArea::IssueLabel : public EditingArea::TagLabel
 {
 public:
     IssueLabel(wxWindow *parent)
-        : TagLabel(parent, Color::TagErrorLineFg, Color::TagErrorLineBg)
+        : TagLabel(parent, Color::TagErrorLineFg, Color::TagErrorLineBg, WinID::TranslationIssueText)
     {
         m_iconError = wxArtProvider::GetBitmap("StatusErrorBlack");
         m_iconWarning = wxArtProvider::GetBitmap("StatusWarningBlack");
@@ -497,7 +498,7 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
     // "needs review" implies that somebody else should review the string after
     // I am done with it (i.e. consider it good), while "needs work" implies I
     // need to return to it and finish the translation.
-    m_fuzzy = new SwitchButton(this, wxID_ANY, MSW_OR_OTHER(_("Needs work"), _("Needs Work")));
+    m_fuzzy = new SwitchButton(this, WinID::NeedsWorkSwitch, MSW_OR_OTHER(_("Needs work"), _("Needs Work")));
 #ifdef __WXOSX__
     m_fuzzy->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
