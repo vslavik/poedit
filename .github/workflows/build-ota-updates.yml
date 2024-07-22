@@ -62,7 +62,7 @@ jobs:
         VERSION=$(sed -n -e 's/.*POEDIT_VERSION.* "\([0-9]*\)\.\([0-9]*\).*".*/\1.\2/p' src/version.h)
         echo "OTA version: $VERSION"
         curl --fail-with-body -F 'data=@ota-update.tar' -H "X-Api-Key: ${{secrets.OTA_API_KEY}}" "${{secrets.OTA_UPLOAD_ENDPOINT}}?version=${VERSION}" | tee response
-        modified=$(jq -r '.modified[]' < response)
+        modified=$(echo `jq -r '.modified[]' < response`)
         if [ -n "$modified" ] ; then
           echo "::notice title=Translations updated::Updated translation files: $modified"
         else
