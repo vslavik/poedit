@@ -55,7 +55,7 @@ public:
 class AutoWrappingText : public wxStaticText
 {
 public:
-    AutoWrappingText(wxWindow *parent, const wxString& label);
+    AutoWrappingText(wxWindow *parent, wxWindowID winid, const wxString& label);
 
     void SetLanguage(Language lang);
     void SetAlignment(TextDirection dir);
@@ -121,7 +121,7 @@ private:
 class SelectableAutoWrappingText : public AutoWrappingText
 {
 public:
-    SelectableAutoWrappingText(wxWindow *parent, const wxString& label);
+    SelectableAutoWrappingText(wxWindow *parent, wxWindowID winid, const wxString& label);
 };
 
 

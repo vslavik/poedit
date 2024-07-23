@@ -88,6 +88,7 @@
 #include "recent_files.h"
 #include "sidebar.h"
 #include "spellchecking.h"
+#include "static_ids.h"
 #include "str_helpers.h"
 
 
@@ -222,18 +223,7 @@ private:
 
 } // anonymous namespace
 
-// this should be high enough to not conflict with any wxNewId-allocated value,
 PoeditFrame::PoeditFramesList PoeditFrame::ms_instances;
-
-// but there's a check for this in the PoeditFrame ctor, too
-const wxWindowID ID_POEDIT_FIRST = wxID_HIGHEST + 10000;
-const unsigned   ID_POEDIT_STEP  = 1000;
-
-const wxWindowID ID_POPUP_REFS   = ID_POEDIT_FIRST + 1*ID_POEDIT_STEP;
-const wxWindowID ID_POPUP_DUMMY  = ID_POEDIT_FIRST + 3*ID_POEDIT_STEP;
-
-const wxWindowID ID_POEDIT_LAST  = ID_POEDIT_FIRST + 4*ID_POEDIT_STEP;
-
 
 #ifdef __VISUALC__
 // Disabling the useless and annoying MSVC++'s
@@ -356,7 +346,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("go_next_unfinished"), PoeditFrame::OnNextUnfinished)
    EVT_MENU           (XRCID("go_prev_pluralform"), PoeditFrame::OnPrevPluralForm)
    EVT_MENU           (XRCID("go_next_pluralform"), PoeditFrame::OnNextPluralForm)
-   EVT_MENU_RANGE     (ID_POPUP_REFS, ID_POPUP_REFS + 999, PoeditFrame::OnReference)
+   EVT_MENU_RANGE     (WinID::ListContextReferencesStart, WinID::ListContextReferencesEnd, PoeditFrame::OnReference)
    EVT_COMMAND        (wxID_ANY, EVT_SUGGESTION_SELECTED, PoeditFrame::OnSuggestion)
    EVT_MENU           (XRCID("menu_pretranslate"), PoeditFrame::OnPreTranslateAll)
    EVT_CLOSE          (PoeditFrame::OnCloseWindow)
@@ -480,13 +470,6 @@ PoeditFrame::PoeditFrame() :
     m_splitter = nullptr;
     m_sidebarSplitter = nullptr;
     m_sidebar = nullptr;
-
-    // make sure that the [ID_POEDIT_FIRST,ID_POEDIT_LAST] range of IDs is not
-    // used for anything else:
-    wxASSERT_MSG( wxGetCurrentId() < ID_POEDIT_FIRST ||
-                  wxGetCurrentId() > ID_POEDIT_LAST,
-                  "detected ID values conflict!" );
-    wxRegisterId(ID_POEDIT_LAST);
 
     wxConfigBase *cfg = wxConfig::Get();
 
@@ -2058,7 +2041,7 @@ void PoeditFrame::OnReferencesMenuUpdate(wxUpdateUIEvent& event)
 
 void PoeditFrame::OnReference(wxCommandEvent& event)
 {
-    ShowReference(event.GetId() - ID_POPUP_REFS);
+    ShowReference(event.GetId() - WinID::ListContextReferencesStart);
 }
 
 
@@ -2989,7 +2972,7 @@ wxMenu *PoeditFrame::CreatePopupMenu(int item)
     {
         menu->AppendSeparator();
         // TRANSLATORS: Meaning occurrences of the string in source code
-        wxMenuItem *it1 = new wxMenuItem(menu, ID_POPUP_DUMMY+0, MSW_OR_OTHER(_("Code occurrences"), _("Code Occurrences")));
+        wxMenuItem *it1 = new wxMenuItem(menu, wxID_ANY, MSW_OR_OTHER(_("Code occurrences"), _("Code Occurrences")));
 #ifdef __WXMSW__
         it1->SetFont(it1->GetFont().Bold());
         menu->Append(it1);
@@ -2998,8 +2981,9 @@ wxMenu *PoeditFrame::CreatePopupMenu(int item)
         it1->Enable(false);
 #endif
 
-        for (int i = 0; i < (int)refs.GetCount(); i++)
-            menu->Append(ID_POPUP_REFS + i, "    " + refs[i]);
+        int count = std::min((int)refs.GetCount(), WinID::ListContextReferencesEnd - WinID::ListContextReferencesStart);
+        for (int i = 0; i < count; i++)
+            menu->Append(WinID::ListContextReferencesStart + i, "    " + refs[i]);
     }
 
     return menu;
