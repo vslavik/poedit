@@ -322,6 +322,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
   #endif
    EVT_MENU           (XRCID("toolbar_update"),PoeditFrame::OnUpdateSmart)
    EVT_MENU           (XRCID("menu_validate"),    PoeditFrame::OnValidate)
+   EVT_MENU           (XRCID("menu_remove_same_as_source"), PoeditFrame::OnRemoveSameAsSourceTranslations)
    EVT_MENU           (XRCID("menu_purge_deleted"), PoeditFrame::OnPurgeDeleted)
    EVT_MENU           (XRCID("menu_fuzzy"),       PoeditFrame::OnFuzzyFlag)
    EVT_MENU           (XRCID("menu_ids"),         PoeditFrame::OnIDsFlag)
@@ -2749,6 +2750,7 @@ void PoeditFrame::UpdateMenu()
     if (m_list)
         m_list->Enable(nonEmpty);
 
+    menubar->Enable(XRCID("menu_remove_same_as_source"), editable);
     menubar->Enable(XRCID("menu_purge_deleted"),
                     editable && m_catalog->HasDeletedItems());
 }
@@ -2893,6 +2895,33 @@ void PoeditFrame::OnEditComment(wxCommandEvent& event)
         }
     });
 }
+
+
+void PoeditFrame::OnRemoveSameAsSourceTranslations(wxCommandEvent&)
+{
+    const wxString title =
+        _("Remove same-as-source translations");
+    const wxString main =
+        _("Do you want to remove all translations that are idential to the source text?");
+    const wxString details = _("This action will delete any translations that match the source text exactly. This cannot be undone.");
+
+    wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog(this, main, title, wxYES_NO | wxICON_QUESTION));
+    dlg->SetExtendedMessage(details);
+    dlg->SetYesNoLabels(_("Remove"), _("Keep"));
+
+    dlg->ShowWindowModalThenDo([this,dlg](int retcode){
+        if (retcode == wxID_YES)
+        {
+            wxBusyCursor bcur;
+            if (m_catalog->RemoveSameAsSourceTranslations())
+            {
+                m_modified = true;
+                RefreshControls();
+            }
+        }
+    });
+}
+
 
 void PoeditFrame::OnPurgeDeleted(wxCommandEvent& WXUNUSED(event))
 {

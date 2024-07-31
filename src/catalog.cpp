@@ -552,6 +552,30 @@ int Catalog::FindItemIndexByLine(int lineno)
 }
 
 
+bool Catalog::RemoveSameAsSourceTranslations()
+{
+    bool changed = false;
+
+    for (auto& i: m_items)
+    {
+        if (i ->GetString() == i->GetTranslation())
+        {
+            if (i->HasPlural())
+            {
+                // we can only easily do this operation for languages that have singular+plural, skip everything else:
+                if (GetPluralFormsCount() != 2 || i->GetPluralString() != i->GetTranslation(1))
+                    continue;
+            }
+
+            i->ClearTranslation();
+            changed = true;
+        }
+    }
+
+    return changed;
+}
+
+
 namespace
 {
 

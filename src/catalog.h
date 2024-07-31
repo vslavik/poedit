@@ -574,6 +574,9 @@ class Catalog
         /// Removes all obsolete translations from the catalog
         virtual void RemoveDeletedItems() = 0;
 
+        /// Removes translations identical to the source text, returns true if any changes were made
+        bool RemoveSameAsSourceTranslations();
+
         /// Finds item by line number
         CatalogItemPtr FindItemByLine(int lineno);
 

@@ -324,6 +324,7 @@ private:
         void OnSuggestion(wxCommandEvent& event);
         void OnPreTranslateAll(wxCommandEvent& event);
 
+        void OnRemoveSameAsSourceTranslations(wxCommandEvent& event);
         void OnPurgeDeleted(wxCommandEvent& event);
 
         void OnCompileMO(wxCommandEvent& event);
