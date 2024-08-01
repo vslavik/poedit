@@ -328,8 +328,8 @@ private:
         void OnPurgeDeleted(wxCommandEvent& event);
 
         void OnCompileMO(wxCommandEvent& event);
-        void OnExport(wxCommandEvent& event);
-        bool ExportCatalog(const wxString& filename);
+        void OnExportToHTML(wxCommandEvent& event);
+        bool ExportCatalogToHTML(const wxString& filename);
 
         void OnSize(wxSizeEvent& event);
 

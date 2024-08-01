@@ -303,7 +303,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (wxID_SAVE,                 PoeditFrame::OnSave)
    EVT_MENU           (wxID_SAVEAS,               PoeditFrame::OnSaveAs)
    EVT_MENU           (XRCID("menu_compile_mo"),  PoeditFrame::OnCompileMO)
-   EVT_MENU           (XRCID("menu_export"),      PoeditFrame::OnExport)
+   EVT_MENU           (XRCID("menu_export_html"), PoeditFrame::OnExportToHTML)
    EVT_MENU           (XRCID("menu_catproperties"), PoeditFrame::OnEditProperties)
    EVT_MENU           (XRCID("menu_update_from_src"), PoeditFrame::OnUpdateFromSources)
    EVT_MENU           (XRCID("menu_update_from_pot"),PoeditFrame::OnUpdateFromPOT)
@@ -1274,7 +1274,7 @@ void PoeditFrame::OnCompileMO(wxCommandEvent&)
     });
 }
 
-void PoeditFrame::OnExport(wxCommandEvent&)
+void PoeditFrame::OnExportToHTML(wxCommandEvent&)
 {
     auto fileName = GetFileName();
     wxString name;
@@ -1289,24 +1289,23 @@ void PoeditFrame::OnExport(wxCommandEvent&)
 
     wxWindowPtr<wxFileDialog> dlg(
         new wxFileDialog(this,
-                         MACOS_OR_OTHER("", _(L"Export as…")),
+                         MACOS_OR_OTHER("", _(L"Export to HTML…")),
                          wxPathOnly(fileName),
                          name,
-                         wxString::Format("%s (*.html)|*.html", _("HTML Files")),
+                         MaskForType("*.html", _("HTML Files")),
                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT));
 
-    // dlg->ShowWindowModalThenDo([=](int retcode){
-    int retcode = dlg->ShowModal();
-    {
+    dlg->ShowWindowModalThenDo([=](int retcode){
         if (retcode != wxID_OK)
             return;
+
         auto fn = dlg->GetPath();
         wxConfig::Get()->Write("last_file_path", wxPathOnly(fn));
-        ExportCatalog(fn);
-    }
+        ExportCatalogToHTML(fn);
+    });
 }
 
-bool PoeditFrame::ExportCatalog(const wxString& filename)
+bool PoeditFrame::ExportCatalogToHTML(const wxString& filename)
 {
     wxBusyCursor bcur;
 
@@ -2711,7 +2710,7 @@ void PoeditFrame::UpdateMenu()
     const bool editable = nonEmpty && m_catalog->HasCapability(Catalog::Cap::Translations);
 
     menubar->Enable(XRCID("menu_compile_mo"), hasCatalog && m_catalog->GetFileType() == Catalog::Type::PO);
-    menubar->Enable(XRCID("menu_export"), hasCatalog);
+    menubar->Enable(XRCID("menu_export_html"), hasCatalog);
 
     menubar->Enable(XRCID("menu_references"), nonEmpty);
     menubar->Enable(wxID_FIND, nonEmpty);
