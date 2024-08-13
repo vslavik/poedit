@@ -479,6 +479,26 @@ private:
             if (src == '.')
                 return trans == L'։' || trans == L':';
         }
+        else if (m_lang == "ti" || m_lang == "am")
+        {
+            // Handle Geʽez script script (used by Amharic, Tigrinya and more languages) punctuation:
+            switch (trans)
+            {
+                case L'።':
+                    return src == '.';
+                case L'፣':
+                    return src == ',';
+                case L'፤':
+                    return src == ';';
+                case L'፥':
+                    return src == ':';
+                case L'፧':
+                    return src == '?';
+                default:
+                    break;
+
+            }
+        }
 
         return false;
     }
