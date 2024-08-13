@@ -64,6 +64,7 @@ public:
 
     ~Impl()
     {
+        m_presenter.owner = nullptr;
         [NSFileCoordinator removeFilePresenter:m_presenter];
         m_presenter = nil;
     }
@@ -94,7 +95,8 @@ private:
 
 - (void)presentedItemDidChange
 {
-    self.owner->OnChanged();
+    if (self.owner)
+        self.owner->OnChanged();
 }
 
 @end
