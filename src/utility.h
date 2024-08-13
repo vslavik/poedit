@@ -68,15 +68,15 @@
 #endif
 
 #ifdef __WXOSX__
-    inline int AboveCheckboxPadding()
+    inline int AboveChoicePadding()
     {
         if (__builtin_available(macOS 11.0, *))
-            return 4;
+            return 2;
         else
             return 0;
     }
 #else
-    #define AboveCheckboxPadding()  0
+    #define AboveChoicePadding()  0
 #endif
 
 

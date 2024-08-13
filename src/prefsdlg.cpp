@@ -404,7 +404,7 @@ public:
         mergeSizer->AddSpacer(PX(5));
         mergeSizer->Add(m_mergeBehavior, wxSizerFlags().Center()
                     #ifdef __WXOSX__ // BORDER_WIN would reset this padding otherwise
-                        .Border(wxTOP, AboveCheckboxPadding())
+                        .Border(wxTOP, AboveChoicePadding())
                     #else
                         .BORDER_WIN(wxBOTTOM, 1)
                     #endif
@@ -1150,10 +1150,11 @@ public:
         auto crlfbox = new wxBoxSizer(wxHORIZONTAL);
         sizer->Add(crlfbox, wxSizerFlags().Expand().PXBorder(wxTOP));
         crlfbox->Add(new wxStaticText(this, wxID_ANY, _("Line endings:")), wxSizerFlags().Center().BORDER_WIN(wxTOP, PX(1)));
+        crlfbox->AddSpacer(PX(5));
         m_crlf = new wxChoice(this, wxID_ANY);
         m_crlf->Append(_("Unix (recommended)"));
         m_crlf->Append(_("Windows"));
-        crlfbox->Add(m_crlf, wxSizerFlags(1).Center().BORDER_MACOS(wxLEFT, PX(3)).BORDER_WIN(wxLEFT, PX(5)));
+        crlfbox->Add(m_crlf, wxSizerFlags(1).Center().Border(wxTOP, AboveChoicePadding()));
 
         /// TRANSLATORS: Followed by text control for entering number; wraps text at given width
         m_wrap = new wxCheckBox(this, wxID_ANY, _("Wrap at:"));
