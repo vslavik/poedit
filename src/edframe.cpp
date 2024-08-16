@@ -1739,7 +1739,7 @@ void PoeditFrame::OnUpdateFromPOT(wxCommandEvent&)
 
         wxWindowPtr<wxFileDialog> dlg(
             new wxFileDialog(this,
-                             _("Open translation template"),
+                             MACOS_OR_OTHER("", _("Open translation template")),
                              path,
                              wxEmptyString,
                              Catalog::GetTypesFileMask({Catalog::Type::POT, Catalog::Type::PO}),
