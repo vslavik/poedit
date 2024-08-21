@@ -460,7 +460,7 @@ protected:
     };
 
 private:
-    const wxWindowID m_idClear = wxNewId();
+    wxWindowIDRef m_idClear = wxWindow::NewControlId();
 
     file_icons_ptr m_icons_cache;
     MyHistory m_history;

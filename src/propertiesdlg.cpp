@@ -396,9 +396,9 @@ protected:
 
     void OnAddMenu(wxCommandEvent& e)
     {
-        static const auto idFolder = wxNewId();
-        static const auto idFile = wxNewId();
-        static const auto idWild = wxNewId();
+        static wxWindowIDRef idFolder = NewControlId();
+        static wxWindowIDRef idFile = NewControlId();
+        static wxWindowIDRef idWild = NewControlId();
 
         wxMenu *menu = new wxMenu();
 #ifdef __WXOSX__
@@ -473,7 +473,7 @@ protected:
 
         event.Skip(false);
 
-        static wxWindowID idShowInFolder = wxNewId();
+        static wxWindowIDRef idShowInFolder = NewControlId();
         wxMenu menu;
         auto menuItem = menu.Append(idShowInFolder,
 #if defined(__WXOSX__)

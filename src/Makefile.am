@@ -66,6 +66,7 @@ poedit_SOURCES = \
                  recent_files.cpp recent_files.h \
                  sidebar.cpp sidebar.h \
                  spellchecking.h spellchecking.cpp \
+                 static_ids.h \
                  str_helpers.h \
                  syntaxhighlighter.cpp syntaxhighlighter.h \
                  text_control.h text_control.cpp \

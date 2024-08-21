@@ -493,10 +493,10 @@ private:
 
     void OnManageTM(wxCommandEvent& e)
     {
-        static const auto idLearn = wxNewId();
-        static const auto idImportTMX = wxNewId();
-        static const auto idExportTMX = wxNewId();
-        static const auto idReset = wxNewId();
+        static wxWindowIDRef idLearn = NewControlId();
+        static wxWindowIDRef idImportTMX = NewControlId();
+        static wxWindowIDRef idExportTMX = NewControlId();
+        static wxWindowIDRef idReset = NewControlId();
 
         wxMenu menu;
 #ifdef __WXOSX__
