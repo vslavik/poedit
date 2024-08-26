@@ -93,6 +93,7 @@ fixup_po_files()
 {
     for i in locales/*.po ; do
         # nothing currently
+        true
     done
 }
 
