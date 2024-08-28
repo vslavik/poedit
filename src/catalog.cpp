@@ -214,7 +214,7 @@ void Catalog::HeaderData::UpdateDict()
     SetHeader("Content-Type", "text/plain; charset=" + Charset);
     SetHeader("Content-Transfer-Encoding", "8bit");
     SetHeaderNotEmpty("Language", Lang.Code());
-    SetHeader("X-Generator", wxString::FromAscii("Poedit " POEDIT_VERSION));
+    SetHeader("X-Generator", wxString::FromAscii("Poedit " POEDIT_VERSION_SHORT));
 
     // Set extended information:
 

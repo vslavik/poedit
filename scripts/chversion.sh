@@ -28,6 +28,7 @@ replace_ver()
 }
 
 VERSION=$1
+VERSION_SHORT="`echo $VERSION | cut -d. -f1,2`"
 VER_WIN="`echo $VERSION | tr '.' ','`"
 if [ `echo $VER_WIN | awk 'BEGIN{FS=","} {print NF}'` = 2 ] ; then
     VER_WIN="$VER_WIN,0"
@@ -41,6 +42,8 @@ replace_ver configure.ac \
             '\(AC_INIT(\[poedit\], \[\)[^]]*\(\],.*\)' "\1$VERSION\2"
 replace_ver src/version.h \
             '\(POEDIT_VERSION *"\).*\("\)' "\1$VERSION\2"
+replace_ver src/version.h \
+            '\(POEDIT_VERSION_SHORT *"\).*\("\)' "\1$VERSION_SHORT\2"
 replace_ver src/version.h \
             '\(POEDIT_VERSION_WIN *\).*' "\1$VER_WIN"
 replace_ver Poedit.xcodeproj/project.pbxproj \
