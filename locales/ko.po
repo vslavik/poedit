@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2023-11-17 10:16\n"
+"POT-Creation-Date: 2024-08-30 13:42+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -360,9 +360,6 @@ msgstr "“%s” 파일이 없습니다."
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "이동(&G)"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -433,8 +430,8 @@ msgstr "다음으로 컴파일…"
 msgid "Compiled Translation Files"
 msgstr "컴파일한 번역 파일"
 
-msgid "Export as…"
-msgstr "다음으로 내보내기…"
+msgid "Export to HTML…"
+msgstr "HTML로 내보내기…"
 
 msgid "HTML Files"
 msgstr "HTML 파일"
@@ -660,6 +657,26 @@ msgstr " (수정함)"
 msgid "Failed to update translation memory: %s"
 msgstr "번역 기억 장소 업데이트에 실패했습니다: %s"
 
+msgid "Remove same-as-source translations"
+msgstr "원본과 동일한 번역 제거"
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr "원본 문자열과 동일한 모든 번역을 제거할까요?"
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+"이 동작은 원본 문자열과 정확히 일치하는 번역을 모두 삭제합니다. 되돌릴 수 없"
+"습니다."
+
+msgid "Keep"
+msgstr "그대로 유지"
+
+msgid "Remove"
+msgstr "제거"
+
 msgid "Purge deleted translations"
 msgstr "삭제한 번역을 완전히 제거"
 
@@ -673,9 +690,6 @@ msgid ""
 msgstr ""
 "계속 제거를 진행하면 삭제 표시한 모든 번역을 완전히 제거합니다. 다음에 다시 "
 "추가하면 다시 번역해야 합니다."
-
-msgid "Keep"
-msgstr "그대로 유지"
 
 msgid "Purge"
 msgstr "제거"
@@ -710,30 +724,6 @@ msgstr "코드 출현 횟수"
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr "코드 출현 횟수"
-
-msgid "&Bookmarks"
-msgstr "책갈피(&B)"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "책갈피 %i번으로 설정"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "책갈피 %i번으로 이동"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "책갈피 %i번으로 설정"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "책갈피 %i번으로 이동"
 
 msgid "Hide Sidebar"
 msgstr "가장자리 창 숨김"
@@ -854,6 +844,13 @@ msgstr "원본 텍스트 — %s"
 
 msgid "unknown language"
 msgstr "알 수 없는 언어"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr "네트워크 오류: %s (%d)"
+
+msgid "Unknown error"
+msgstr "알 수 없는 오류"
 
 #, c-format
 msgid "Failed command: %s"
@@ -1055,15 +1052,14 @@ msgstr "이 프로젝트의 모든 카탈로그를 업데이트하시겠습니�
 msgid "Performs update from source code on all files in the project."
 msgstr "이 프로젝트의 모든 소스 코드 파일에서 업데이트를 수행합니다."
 
-msgid "Catalogs Manager"
-msgstr "카탈로그 관리자"
-
 msgid "Check for Updates…"
 msgstr "업데이트 확인…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr "설정…"
+msgid "Catalogs Manager"
+msgstr "카탈로그 관리자"
+
+msgid "&Preferences…"
+msgstr "기본 설정(&P)..."
 
 msgid "&Edit"
 msgstr "편집(&E)"
@@ -1320,6 +1316,9 @@ msgstr "\"%s\" TM 가져오기에 실패했습니다."
 msgid "Import error"
 msgstr "가져오기 오류"
 
+msgid "Export as…"
+msgstr "다음으로 내보내기…"
+
 msgid "Exporting translations…"
 msgstr "번역 내보내는 중…"
 
@@ -1424,6 +1423,9 @@ msgstr "기존 파일 서식 유지"
 
 msgid "Advanced"
 msgstr "고급"
+
+msgid "Settings"
+msgstr "설정"
 
 msgid "Preparing strings…"
 msgstr "문자열 준비 중…"
@@ -1665,7 +1667,7 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr "번역문은 \"%s\"(으)로 끝나나, 원문은 \"%s\"(으)로 끝납니다."
 
 msgid "Cloud"
-msgstr ""
+msgstr "클라우드"
 
 msgid "Clear Menu"
 msgstr "메뉴 지우기"
@@ -1754,14 +1756,17 @@ msgstr "다른 이름으로 저장(&A)…"
 msgid "Compile to MO…"
 msgstr "MO로 컴파일…"
 
-msgid "E&xport as HTML…"
+msgid "E&xport to HTML…"
 msgstr "HTML로 내보내기(&X)…"
 
 msgid "Check for updates…"
 msgstr "업데이트 확인…"
 
-msgid "&Preferences…"
-msgstr "기본 설정(&P)..."
+msgid "Settings…"
+msgstr "설정…"
+
+msgid "&Preferences"
+msgstr "기본 설정(&P)"
 
 msgid "E&xit"
 msgstr "나가기(&X)"
@@ -1811,9 +1816,6 @@ msgstr "다음 찾기"
 
 msgid "Find Previous"
 msgstr "이전 찾기"
-
-msgid "&Preferences"
-msgstr "기본 설정(&P)"
 
 msgid "Show string &ID"
 msgstr "문자열 ID 표시(&I)"
@@ -1896,20 +1898,26 @@ msgstr "Crowdin 동기화"
 msgid "Pre-&translate…"
 msgstr "사전 번역(&T)…"
 
-msgid "&Purge deleted translations"
-msgstr "삭제한 번역을 완전히 제거(&P)"
-
-msgid "&Purge Deleted Translations"
-msgstr "삭제한 번역을 완전히 제거(&P)"
-
 msgid "&Validate translations"
 msgstr "번역 검증(&V)"
 
 msgid "&Validate Translations"
 msgstr "번역 검증(&V)"
 
+msgid "Remove Same-as-Source Translations"
+msgstr "원본과 동일한 번역 제거"
+
+msgid "&Purge deleted translations"
+msgstr "삭제한 번역을 완전히 제거(&P)"
+
+msgid "&Purge Deleted Translations"
+msgstr "삭제한 번역을 완전히 제거(&P)"
+
 msgid "&Properties…"
 msgstr "속성(&P)…"
+
+msgid "&Go"
+msgstr "이동(&G)"
 
 msgid "&Done and next"
 msgstr "끝내고 다음으로 진행(&D)"
@@ -2123,7 +2131,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(신규 0, 제거 0)"
 
 msgid "Open"
-msgstr "열기"
+msgstr ""
 
 msgid "Open file"
 msgstr "파일 열기"
@@ -2443,6 +2451,10 @@ msgstr "예(&Y)"
 
 msgid "Yes"
 msgstr "예"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

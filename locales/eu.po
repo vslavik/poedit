@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2023-11-17 10:15\n"
+"POT-Creation-Date: 2024-08-30 13:42+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -353,9 +353,6 @@ msgstr "“%s” fitxategia ez dago."
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "&Joan"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -425,8 +422,8 @@ msgstr "Konpilatu hona…"
 msgid "Compiled Translation Files"
 msgstr "Konpilatutako itzulpen-fitxategiak"
 
-msgid "Export as…"
-msgstr "Esportatu honela…"
+msgid "Export to HTML…"
+msgstr ""
 
 msgid "HTML Files"
 msgstr "HTML fitxategiak"
@@ -655,6 +652,24 @@ msgstr "(aldatuta)"
 msgid "Failed to update translation memory: %s"
 msgstr "Hutsegitea itzulpen memoria eguneratzerakoan: %s"
 
+msgid "Remove same-as-source translations"
+msgstr ""
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr ""
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+
+msgid "Keep"
+msgstr "Mantendu"
+
+msgid "Remove"
+msgstr ""
+
 msgid "Purge deleted translations"
 msgstr "Purgatu ezabatutako itzulpenak"
 
@@ -669,9 +684,6 @@ msgstr ""
 "Purgarekin jarraitzen baduzu, ezabaturik bezala markaturiko itzulpen guztiak "
 "betiko kenduko dira. Berriro itzuli beharko dituzu etorkizunean atzera "
 "gehitzen badira."
-
-msgid "Keep"
-msgstr "Mantendu"
 
 msgid "Purge"
 msgstr "Purgatu"
@@ -706,30 +718,6 @@ msgstr ""
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr ""
-
-msgid "&Bookmarks"
-msgstr "&Laster-markak"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Ezarri %i laster-marka"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Joan %i laster-markara"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Ezarri %i laster-marka"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Joan %i laster-markara"
 
 msgid "Hide Sidebar"
 msgstr "Ezkutatu alboko barra"
@@ -851,6 +839,13 @@ msgstr "Jatorrizko testua — %s"
 
 msgid "unknown language"
 msgstr "hizkuntza ezezaguna"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr ""
+
+msgid "Unknown error"
+msgstr ""
 
 #, c-format
 msgid "Failed command: %s"
@@ -1049,15 +1044,14 @@ msgstr ""
 msgid "Performs update from source code on all files in the project."
 msgstr ""
 
-msgid "Catalogs Manager"
-msgstr "Katalogoen kudeatzailea"
-
 msgid "Check for Updates…"
 msgstr "Egiaztatu eguneraketarik dagoen…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr ""
+msgid "Catalogs Manager"
+msgstr "Katalogoen kudeatzailea"
+
+msgid "&Preferences…"
+msgstr "&Hobespenak…"
 
 msgid "&Edit"
 msgstr "&Editatu"
@@ -1314,6 +1308,9 @@ msgstr "\"%s\"tik itzulpen memoria inportatzeak huts egin du."
 msgid "Import error"
 msgstr "Inportazio-errorea"
 
+msgid "Export as…"
+msgstr "Esportatu honela…"
+
 msgid "Exporting translations…"
 msgstr "Itzulpenak esportatzen…"
 
@@ -1420,6 +1417,9 @@ msgstr "Mantendu dauden fitxategien formatua"
 
 msgid "Advanced"
 msgstr "Aurreratua"
+
+msgid "Settings"
+msgstr ""
 
 msgid "Preparing strings…"
 msgstr ""
@@ -1747,14 +1747,17 @@ msgstr "Gorde &honela…"
 msgid "Compile to MO…"
 msgstr "Konpilatu MO-ra…"
 
-msgid "E&xport as HTML…"
-msgstr "E&sportatu HTML gisa…"
+msgid "E&xport to HTML…"
+msgstr ""
 
 msgid "Check for updates…"
 msgstr "Egiaztatu eguneraketarik dagoen…"
 
-msgid "&Preferences…"
-msgstr "&Hobespenak…"
+msgid "Settings…"
+msgstr ""
+
+msgid "&Preferences"
+msgstr "&Hobespenak"
 
 msgid "E&xit"
 msgstr "I&rten"
@@ -1804,9 +1807,6 @@ msgstr "Bilatu hurrengoa"
 
 msgid "Find Previous"
 msgstr "Bilatu aurrekoa"
-
-msgid "&Preferences"
-msgstr "&Hobespenak"
 
 msgid "Show string &ID"
 msgstr "&ID katea erakutsi"
@@ -1889,20 +1889,26 @@ msgstr "Sinkronizatu Crowdin-ekin"
 msgid "Pre-&translate…"
 msgstr "Aurre-i&tzuli…"
 
-msgid "&Purge deleted translations"
-msgstr "&Purgatu ezabatutako itzulpenak"
-
-msgid "&Purge Deleted Translations"
-msgstr "&Purgatu ezabatutako itzulpenak"
-
 msgid "&Validate translations"
 msgstr "&Balioztatu itzulpenak"
 
 msgid "&Validate Translations"
 msgstr "&Balioztatu itzulpenak"
 
+msgid "Remove Same-as-Source Translations"
+msgstr ""
+
+msgid "&Purge deleted translations"
+msgstr "&Purgatu ezabatutako itzulpenak"
+
+msgid "&Purge Deleted Translations"
+msgstr "&Purgatu ezabatutako itzulpenak"
+
 msgid "&Properties…"
 msgstr "&Propietateak…"
+
+msgid "&Go"
+msgstr "&Joan"
 
 msgid "&Done and next"
 msgstr "&Eginda eta hurrengoa"
@@ -2113,7 +2119,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(0 berri, 0 zaharkitu)"
 
 msgid "Open"
-msgstr "Ireki"
+msgstr ""
 
 msgid "Open file"
 msgstr ""
@@ -2431,6 +2437,10 @@ msgstr "&Bai"
 
 msgid "Yes"
 msgstr "Bai"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

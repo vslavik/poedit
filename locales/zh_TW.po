@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2023-11-17 10:15\n"
+"POT-Creation-Date: 2024-08-30 13:57+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -352,9 +352,6 @@ msgstr "檔案 %s 不存在。"
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "前往(&G)"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -423,8 +420,8 @@ msgstr "編譯成…"
 msgid "Compiled Translation Files"
 msgstr "已編譯的譯文檔案"
 
-msgid "Export as…"
-msgstr "匯出成…"
+msgid "Export to HTML…"
+msgstr ""
 
 msgid "HTML Files"
 msgstr "HTML 檔案"
@@ -638,6 +635,24 @@ msgstr " (已修改)"
 msgid "Failed to update translation memory: %s"
 msgstr "無法更新譯文記憶庫：%s"
 
+msgid "Remove same-as-source translations"
+msgstr ""
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr ""
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+
+msgid "Keep"
+msgstr "保留"
+
+msgid "Remove"
+msgstr ""
+
 msgid "Purge deleted translations"
 msgstr "清除已刪除的譯文"
 
@@ -651,9 +666,6 @@ msgid ""
 msgstr ""
 "如果繼續清除，全部標示為已刪除的譯文便會永久移除。如果未來這些訊息再次加入，"
 "就必須再重新翻譯一次。"
-
-msgid "Keep"
-msgstr "保留"
 
 msgid "Purge"
 msgstr "清除"
@@ -688,30 +700,6 @@ msgstr "程式碼出現處"
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr "程式碼出現處"
-
-msgid "&Bookmarks"
-msgstr "書籤(&B)"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "設定書籤 %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "前往書籤 %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "設定書籤 %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "前往書籤 %i"
 
 msgid "Hide Sidebar"
 msgstr "隱藏側邊欄"
@@ -832,6 +820,13 @@ msgstr "原文 — %s"
 
 msgid "unknown language"
 msgstr "未知的語言"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr "網路錯誤：%s (%d)"
+
+msgid "Unknown error"
+msgstr "未知錯誤"
 
 #, c-format
 msgid "Failed command: %s"
@@ -1033,15 +1028,14 @@ msgstr "是否更新專案中的所有編目檔？"
 msgid "Performs update from source code on all files in the project."
 msgstr "自來源碼進行所有專案中的檔案的字串更新"
 
-msgid "Catalogs Manager"
-msgstr "編目檔管理員"
-
 msgid "Check for Updates…"
 msgstr "檢查更新…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr "系統設定"
+msgid "Catalogs Manager"
+msgstr "編目檔管理員"
+
+msgid "&Preferences…"
+msgstr "偏好設定(&P)…"
 
 msgid "&Edit"
 msgstr "編輯(&E)"
@@ -1296,6 +1290,9 @@ msgstr "無法從 %s 匯入譯文記憶庫。"
 msgid "Import error"
 msgstr "匯入時發生錯誤"
 
+msgid "Export as…"
+msgstr "匯出成…"
+
 msgid "Exporting translations…"
 msgstr "正在匯出譯文…"
 
@@ -1397,6 +1394,9 @@ msgstr "保留現有檔案的格式化處理方式"
 
 msgid "Advanced"
 msgstr "進階"
+
+msgid "Settings"
+msgstr ""
 
 msgid "Preparing strings…"
 msgstr "準備字串中..."
@@ -1631,7 +1631,7 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr "譯文以「%s」結尾，但原文是以「%s」結尾。"
 
 msgid "Cloud"
-msgstr ""
+msgstr "雲端"
 
 msgid "Clear Menu"
 msgstr "清除選單"
@@ -1720,14 +1720,17 @@ msgstr "另存新檔(&A)…"
 msgid "Compile to MO…"
 msgstr "編譯成 MO 檔案…"
 
-msgid "E&xport as HTML…"
-msgstr "匯出成 HTML 檔案(&X)…"
+msgid "E&xport to HTML…"
+msgstr ""
 
 msgid "Check for updates…"
 msgstr "檢查更新…"
 
-msgid "&Preferences…"
-msgstr "偏好設定(&P)…"
+msgid "Settings…"
+msgstr "系統設定"
+
+msgid "&Preferences"
+msgstr "偏好設定(&P)"
 
 msgid "E&xit"
 msgstr "結束(&X)"
@@ -1777,9 +1780,6 @@ msgstr "尋找下一筆"
 
 msgid "Find Previous"
 msgstr "尋找上一筆"
-
-msgid "&Preferences"
-msgstr "偏好設定(&P)"
 
 msgid "Show string &ID"
 msgstr "顯示字串 ID(&I)"
@@ -1862,20 +1862,26 @@ msgstr "與 Crowdin 進行同步"
 msgid "Pre-&translate…"
 msgstr "前置翻譯(&T)…"
 
-msgid "&Purge deleted translations"
-msgstr "清除已刪除的譯文(&P)"
-
-msgid "&Purge Deleted Translations"
-msgstr "清除已刪除的譯文(&P)"
-
 msgid "&Validate translations"
 msgstr "驗證譯文(&V)"
 
 msgid "&Validate Translations"
 msgstr "驗證譯文(&V)"
 
+msgid "Remove Same-as-Source Translations"
+msgstr ""
+
+msgid "&Purge deleted translations"
+msgstr "清除已刪除的譯文(&P)"
+
+msgid "&Purge Deleted Translations"
+msgstr "清除已刪除的譯文(&P)"
+
 msgid "&Properties…"
 msgstr "屬性(&P)…"
+
+msgid "&Go"
+msgstr "前往(&G)"
 
 msgid "&Done and next"
 msgstr "完成並前往下一筆譯文(&D)"
@@ -2087,7 +2093,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(0 筆新增字串，0 筆過時字串)"
 
 msgid "Open"
-msgstr "開啟"
+msgstr ""
 
 msgid "Open file"
 msgstr "開啟檔案"
@@ -2404,6 +2410,10 @@ msgstr "是(&Y)"
 
 msgid "Yes"
 msgstr "是"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

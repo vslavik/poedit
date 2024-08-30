@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2023-11-17 10:15\n"
+"POT-Creation-Date: 2024-08-30 13:42+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -105,10 +105,10 @@ msgstr "צילומי מסך:"
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
-msgstr[0] "שורה %i בקובץ “%s” לא נטענה כראוי."
-msgstr[1] "%i שורות בקובץ “%s” לא נטענו כראוי."
-msgstr[2] "%i שורות בקובץ “%s” לא נטענו כראוי."
-msgstr[3] "%i שורות בקובץ “%s” לא נטענו כראוי."
+msgstr[0] "שורה %i בקובץ „%s” לא נטענה כראוי."
+msgstr[1] "%i שורות בקובץ „%s” לא נטענו כראוי."
+msgstr[2] "%i שורות בקובץ „%s” לא נטענו כראוי."
+msgstr[3] "%i שורות בקובץ „%s” לא נטענו כראוי."
 
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
@@ -361,9 +361,6 @@ msgstr "הקובץ “%s” אינו קיים."
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "מע&בר אל"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -434,8 +431,8 @@ msgstr "ביצוע הידור ל…"
 msgid "Compiled Translation Files"
 msgstr "קובצי תרגום מהודרים"
 
-msgid "Export as…"
-msgstr "ייצוא בשם…"
+msgid "Export to HTML…"
+msgstr "ייצוא ל־HTML…"
 
 msgid "HTML Files"
 msgstr "קובצי HTML"
@@ -669,6 +666,26 @@ msgstr " (שונה)"
 msgid "Failed to update translation memory: %s"
 msgstr "עדכון זיכרון התרגום נכשל: %s"
 
+msgid "Remove same-as-source translations"
+msgstr "הסרת תרגומים שזהים למקור"
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr "להסיר את כל התרגומים שזהים לטקסט המקור?"
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+"הפעולה הזאת תמחק את כל התרגומים שזהים לטקסט המקור במדויק. זאת פעולה בלתי "
+"הפיכה."
+
+msgid "Keep"
+msgstr "שמירה"
+
+msgid "Remove"
+msgstr "להסיר"
+
 msgid "Purge deleted translations"
 msgstr "פינוי תרגומים שנמחקו"
 
@@ -682,9 +699,6 @@ msgid ""
 msgstr ""
 "אם הליך הפינוי יימשך, כל התרגומים שסומנו כמחוקים יוסרו לצמיתות. יהיה עליך "
 "לתרגם אותם מחדש אם הם יתווספו שוב בעתיד."
-
-msgid "Keep"
-msgstr "שמירה"
 
 msgid "Purge"
 msgstr "פינוי"
@@ -719,30 +733,6 @@ msgstr "מופעים בקוד"
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr "מופעים בקוד"
-
-msgid "&Bookmarks"
-msgstr "&סימניות"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "הגדרה כסימניה %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "מעבר לסימניה %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "הגדרה כסימניה %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "מעבר לסימניה %i"
 
 msgid "Hide Sidebar"
 msgstr "הסתרת סרגל הצד"
@@ -863,6 +853,13 @@ msgstr "טקסט המקור — %s"
 
 msgid "unknown language"
 msgstr "שפה לא ידועה"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr "שגיאת רשת: %s (%d)"
+
+msgid "Unknown error"
+msgstr "שגיאה לא ידועה"
 
 #, c-format
 msgid "Failed command: %s"
@@ -1067,15 +1064,14 @@ msgstr "לעדכן את כל הקטלוגים במיזם הזה?"
 msgid "Performs update from source code on all files in the project."
 msgstr "מבצע עדכון מקוד המקור על כל הקבצים במיזם."
 
-msgid "Catalogs Manager"
-msgstr "מנהל הקטלוגים"
-
 msgid "Check for Updates…"
 msgstr "בדיקה אחר עדכונים…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr "הגדרות…"
+msgid "Catalogs Manager"
+msgstr "מנהל הקטלוגים"
+
+msgid "&Preferences…"
+msgstr "&העדפות…"
 
 msgid "&Edit"
 msgstr "&עריכה"
@@ -1332,6 +1328,9 @@ msgstr "ייבוא זיכרון תרגום מתוך „%s” נכשל."
 msgid "Import error"
 msgstr "שגיאת ייבוא"
 
+msgid "Export as…"
+msgstr "ייצוא בשם…"
+
 msgid "Exporting translations…"
 msgstr "התרגומים מיוצאים…"
 
@@ -1437,6 +1436,9 @@ msgstr "שמירה על עיצוב של קבצים קיימים"
 
 msgid "Advanced"
 msgstr "מתקדם"
+
+msgid "Settings"
+msgstr "הגדרות"
 
 msgid "Preparing strings…"
 msgstr "המחרוזות בהכנה…"
@@ -1681,7 +1683,7 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr "התרגום מסתיים ב-“%s”, אבל טקסט המקור מסתיים ב-“%s”."
 
 msgid "Cloud"
-msgstr ""
+msgstr "ענן"
 
 msgid "Clear Menu"
 msgstr "ניקוי התפריט"
@@ -1770,14 +1772,17 @@ msgstr "שמירה &בשם…"
 msgid "Compile to MO…"
 msgstr "ביצוע הידור ל-MO…"
 
-msgid "E&xport as HTML…"
-msgstr "ייצוא כ-&HTML…"
+msgid "E&xport to HTML…"
+msgstr "יי&צוא ל־HTML…"
 
 msgid "Check for updates…"
 msgstr "בדיקה אחר עדכונים…"
 
-msgid "&Preferences…"
-msgstr "&העדפות…"
+msgid "Settings…"
+msgstr "הגדרות…"
+
+msgid "&Preferences"
+msgstr "ה&עדפות"
 
 msgid "E&xit"
 msgstr "י&ציאה"
@@ -1827,9 +1832,6 @@ msgstr "חיפוש הבא"
 
 msgid "Find Previous"
 msgstr "חיפוש הקודם"
-
-msgid "&Preferences"
-msgstr "ה&עדפות"
 
 msgid "Show string &ID"
 msgstr "הצגת מ&זהה מחרוזת"
@@ -1912,20 +1914,26 @@ msgstr "סנכרון עם Crowdin"
 msgid "Pre-&translate…"
 msgstr "&תרגום מראש…"
 
-msgid "&Purge deleted translations"
-msgstr "פינוי תרגומים ש&נמחקו"
-
-msgid "&Purge Deleted Translations"
-msgstr "פינוי תרגומים ש&נמחקו"
-
 msgid "&Validate translations"
 msgstr "&אימות התרגומים"
 
 msgid "&Validate Translations"
 msgstr "&אימות התרגומים"
 
+msgid "Remove Same-as-Source Translations"
+msgstr "הסרת תרגומים זהים למקור"
+
+msgid "&Purge deleted translations"
+msgstr "פינוי תרגומים ש&נמחקו"
+
+msgid "&Purge Deleted Translations"
+msgstr "פינוי תרגומים ש&נמחקו"
+
 msgid "&Properties…"
 msgstr "מא&פיינים…"
+
+msgid "&Go"
+msgstr "מע&בר אל"
 
 msgid "&Done and next"
 msgstr "ב&צע והמשך"
@@ -2138,7 +2146,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(0 חדשות, 0 מיושנות)"
 
 msgid "Open"
-msgstr "פתיחה"
+msgstr ""
 
 msgid "Open file"
 msgstr "פתיחת קובץ"
@@ -2317,7 +2325,7 @@ msgstr "סנכרון התרגום עם Crowdin"
 #. ("Poedit" here, but please use "%s")
 #, c-format
 msgid "About %s"
-msgstr "אודות %s"
+msgstr "על %s"
 
 #. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
 #, c-format
@@ -2459,6 +2467,10 @@ msgstr "&כן"
 
 msgid "Yes"
 msgstr "כן"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

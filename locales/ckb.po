@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2023-11-17 10:16\n"
+"POT-Creation-Date: 2024-08-30 13:42+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Sorani (Kurdish)\n"
 "Language: ckb_IR\n"
@@ -353,9 +353,6 @@ msgstr ""
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "&بڕۆ"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -424,8 +421,8 @@ msgstr ""
 msgid "Compiled Translation Files"
 msgstr "فایلە وەرگێڕدراوە بەراوردکراوەکان"
 
-msgid "Export as…"
-msgstr "هەناردن وەکو..."
+msgid "Export to HTML…"
+msgstr ""
 
 msgid "HTML Files"
 msgstr "پەڕگەی HTML"
@@ -634,6 +631,24 @@ msgstr " (گۆڕدراو)"
 msgid "Failed to update translation memory: %s"
 msgstr ""
 
+msgid "Remove same-as-source translations"
+msgstr ""
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr ""
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+
+msgid "Keep"
+msgstr "هێشتنەوە"
+
+msgid "Remove"
+msgstr ""
+
 msgid "Purge deleted translations"
 msgstr "پاکژکردنەوەی وەرگێڕانە سڕدراوەکان"
 
@@ -648,9 +663,6 @@ msgstr ""
 "ئەگەر بەردەوام بیت لەگەڵ بەرکەنارخستن،هەموو ئەو وەرگێڕدراوانەی نیشانەکراون "
 "وەکو سڕدراوە بە یەکجاریی لادەبرێن.ئەو کات دەبێت دووبارە وەریان بگێڕیتەوە "
 "ئەگەر زیادکران لە داهاتوودا."
-
-msgid "Keep"
-msgstr "هێشتنەوە"
 
 msgid "Purge"
 msgstr "پاکژکردنەوە"
@@ -685,30 +697,6 @@ msgstr ""
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr ""
-
-msgid "&Bookmarks"
-msgstr "&دڵخوازەکان"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "ڕێکخستنی نیشانەکراوی %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "چوون بۆ نیشانەکراوی %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "ڕێکخستنی نیشانەکراوی %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "چوون بۆ نیشانەکراوی %i"
 
 msgid "Hide Sidebar"
 msgstr "شاردنەوەی لاتەنیشت"
@@ -829,6 +817,13 @@ msgstr "سەرچاوەی دەق — %s"
 
 msgid "unknown language"
 msgstr "زمانی نەزانراو"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr ""
+
+msgid "Unknown error"
+msgstr ""
 
 #, c-format
 msgid "Failed command: %s"
@@ -1027,14 +1022,13 @@ msgstr ""
 msgid "Performs update from source code on all files in the project."
 msgstr ""
 
-msgid "Catalogs Manager"
-msgstr ""
-
 msgid "Check for Updates…"
 msgstr "پشکنین بۆ نوێکردنەوە…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
+msgid "Catalogs Manager"
+msgstr ""
+
+msgid "&Preferences…"
 msgstr ""
 
 msgid "&Edit"
@@ -1289,6 +1283,9 @@ msgstr ""
 msgid "Import error"
 msgstr ""
 
+msgid "Export as…"
+msgstr "هەناردن وەکو..."
+
 msgid "Exporting translations…"
 msgstr "هەناردەکردنی وەرگێڕانەکان..."
 
@@ -1385,6 +1382,9 @@ msgstr ""
 
 msgid "Advanced"
 msgstr "پەرەسەندوو"
+
+msgid "Settings"
+msgstr ""
 
 msgid "Preparing strings…"
 msgstr ""
@@ -1700,14 +1700,17 @@ msgstr ""
 msgid "Compile to MO…"
 msgstr ""
 
-msgid "E&xport as HTML…"
+msgid "E&xport to HTML…"
 msgstr ""
 
 msgid "Check for updates…"
 msgstr ""
 
-msgid "&Preferences…"
+msgid "Settings…"
 msgstr ""
+
+msgid "&Preferences"
+msgstr "&سازکارییەکان"
 
 msgid "E&xit"
 msgstr "چوو&نەدەرەوە"
@@ -1757,9 +1760,6 @@ msgstr "دۆزینەوەی دواتر"
 
 msgid "Find Previous"
 msgstr "دۆزینەوەی پێشتر"
-
-msgid "&Preferences"
-msgstr "&سازکارییەکان"
 
 msgid "Show string &ID"
 msgstr ""
@@ -1842,20 +1842,26 @@ msgstr "Crowdin هاوکاتکردن لەگەڵ "
 msgid "Pre-&translate…"
 msgstr ""
 
-msgid "&Purge deleted translations"
-msgstr "&پاکژکردنەوەی وەرگێڕانە سڕاوەکان"
-
-msgid "&Purge Deleted Translations"
-msgstr "&پاکژکردنەوەی وەرگێڕانە سڕاوەکان"
-
 msgid "&Validate translations"
 msgstr ""
 
 msgid "&Validate Translations"
 msgstr ""
 
+msgid "Remove Same-as-Source Translations"
+msgstr ""
+
+msgid "&Purge deleted translations"
+msgstr "&پاکژکردنەوەی وەرگێڕانە سڕاوەکان"
+
+msgid "&Purge Deleted Translations"
+msgstr "&پاکژکردنەوەی وەرگێڕانە سڕاوەکان"
+
 msgid "&Properties…"
 msgstr ""
+
+msgid "&Go"
+msgstr "&بڕۆ"
 
 msgid "&Done and next"
 msgstr "&جێبەجێکراو و بچۆ دانەی دواتر"
@@ -2062,7 +2068,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(0 نوێ، 0 کۆن)"
 
 msgid "Open"
-msgstr "کردنەوە"
+msgstr ""
 
 msgid "Open file"
 msgstr ""
@@ -2373,6 +2379,10 @@ msgstr ""
 
 msgid "Yes"
 msgstr "بەڵێ"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

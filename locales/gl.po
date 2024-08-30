@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2024-03-14 10:15\n"
+"POT-Creation-Date: 2024-08-30 13:42+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Language: gl_ES\n"
@@ -365,9 +365,6 @@ msgstr "O ficheiro «%s» non existe."
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "&Ir a"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -442,8 +439,8 @@ msgstr "Compilar a…"
 msgid "Compiled Translation Files"
 msgstr "Ficheiros de tradución compilados"
 
-msgid "Export as…"
-msgstr "Exportar como…"
+msgid "Export to HTML…"
+msgstr ""
 
 msgid "HTML Files"
 msgstr "Ficheiros HTML"
@@ -689,6 +686,24 @@ msgstr " (modificado)"
 msgid "Failed to update translation memory: %s"
 msgstr "Erro ao actualizar a memoria de tradución: %s"
 
+msgid "Remove same-as-source translations"
+msgstr ""
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr ""
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+
+msgid "Keep"
+msgstr "Manter"
+
+msgid "Remove"
+msgstr ""
+
 msgid "Purge deleted translations"
 msgstr "Purgar as traducións eliminadas"
 
@@ -703,9 +718,6 @@ msgstr ""
 "Se continua coa purga, todas as traducións marcadas para eliminar "
 "retiraranse permanentemente do ficheiro. Terá que traducilas outra vez se se "
 "volven engadir no futuro."
-
-msgid "Keep"
-msgstr "Manter"
 
 msgid "Purge"
 msgstr "Purgar"
@@ -740,30 +752,6 @@ msgstr "Aparicións no código"
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr "Aparicións no código"
-
-msgid "&Bookmarks"
-msgstr "&Marcadores"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Definir marcador %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Ir ao marcador %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Definir marcador %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Ir ao marcador %i"
 
 msgid "Hide Sidebar"
 msgstr "Agochar barra lateral"
@@ -884,6 +872,13 @@ msgstr "Texto fonte — %s"
 
 msgid "unknown language"
 msgstr "idioma descoñecido"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr ""
+
+msgid "Unknown error"
+msgstr ""
 
 #, c-format
 msgid "Failed command: %s"
@@ -1087,15 +1082,14 @@ msgstr "Actualizar todos os catálogos deste proxecto?"
 msgid "Performs update from source code on all files in the project."
 msgstr "Actualiza desde o código fonte todos os ficheiros do proxecto."
 
-msgid "Catalogs Manager"
-msgstr "Xestor de catálogos"
-
 msgid "Check for Updates…"
 msgstr "Buscar actualizacións…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr "Preferencias…"
+msgid "Catalogs Manager"
+msgstr "Xestor de catálogos"
+
+msgid "&Preferences…"
+msgstr "&Preferencias…"
 
 msgid "&Edit"
 msgstr "&Editar"
@@ -1354,6 +1348,9 @@ msgstr "Produciuse un erro importando a memoria de tradución «%s»."
 msgid "Import error"
 msgstr "Produciuse un erro na importación"
 
+msgid "Export as…"
+msgstr "Exportar como…"
+
 msgid "Exporting translations…"
 msgstr "Exportando as traducións…"
 
@@ -1461,6 +1458,9 @@ msgstr "Conservar o formato dos ficheiros existentes"
 
 msgid "Advanced"
 msgstr "Avanzado"
+
+msgid "Settings"
+msgstr ""
 
 msgid "Preparing strings…"
 msgstr "Preparando as cadeas…"
@@ -1790,14 +1790,17 @@ msgstr "Gard&ar como…"
 msgid "Compile to MO…"
 msgstr "Compilar a MO…"
 
-msgid "E&xport as HTML…"
-msgstr "E&xportar como HTML…"
+msgid "E&xport to HTML…"
+msgstr ""
 
 msgid "Check for updates…"
 msgstr "Buscar actualizacións…"
 
-msgid "&Preferences…"
-msgstr "&Preferencias…"
+msgid "Settings…"
+msgstr "Preferencias…"
+
+msgid "&Preferences"
+msgstr "&Preferencias"
 
 msgid "E&xit"
 msgstr "&Saír"
@@ -1847,9 +1850,6 @@ msgstr "Buscar seguinte"
 
 msgid "Find Previous"
 msgstr "Buscar anterior"
-
-msgid "&Preferences"
-msgstr "&Preferencias"
 
 msgid "Show string &ID"
 msgstr "Mostrar o &ID da cadea"
@@ -1932,20 +1932,26 @@ msgstr "Sincronizar con Crowdin"
 msgid "Pre-&translate…"
 msgstr "Pre-&traducir…"
 
-msgid "&Purge deleted translations"
-msgstr "&Purgar as traducións eliminadas"
-
-msgid "&Purge Deleted Translations"
-msgstr "&Purgar as traducións eliminadas"
-
 msgid "&Validate translations"
 msgstr "&Validar as traducións"
 
 msgid "&Validate Translations"
 msgstr "&Validar as traducións"
 
+msgid "Remove Same-as-Source Translations"
+msgstr ""
+
+msgid "&Purge deleted translations"
+msgstr "&Purgar as traducións eliminadas"
+
+msgid "&Purge Deleted Translations"
+msgstr "&Purgar as traducións eliminadas"
+
 msgid "&Properties…"
 msgstr "&Propiedades…"
+
+msgid "&Go"
+msgstr "&Ir a"
 
 msgid "&Done and next"
 msgstr "&Feito e continuar coa seguinte"
@@ -2165,7 +2171,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(0 novas, 0 obsoletas)"
 
 msgid "Open"
-msgstr "Abrir"
+msgstr ""
 
 msgid "Open file"
 msgstr "Abrir ficheiro"
@@ -2485,6 +2491,10 @@ msgstr "&Si"
 
 msgid "Yes"
 msgstr "Si"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

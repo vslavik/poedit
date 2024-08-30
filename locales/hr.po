@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2024-02-10 10:15\n"
+"POT-Creation-Date: 2024-08-30 13:42+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Croatian\n"
 "Language: hr_HR\n"
@@ -369,9 +369,6 @@ msgstr "Datoteka „%s” ne postoji."
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "&Idi"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -443,8 +440,8 @@ msgstr "Kompiliraj u …"
 msgid "Compiled Translation Files"
 msgstr "Kompilirane datoteke prijevoda"
 
-msgid "Export as…"
-msgstr "Izvezi kao …"
+msgid "Export to HTML…"
+msgstr ""
 
 msgid "HTML Files"
 msgstr "HTML datoteke"
@@ -685,6 +682,24 @@ msgstr " (promijenjeno)"
 msgid "Failed to update translation memory: %s"
 msgstr "Neuspjelo aktualiziranje prevodilačke memorije: %s"
 
+msgid "Remove same-as-source translations"
+msgstr ""
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr ""
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+
+msgid "Keep"
+msgstr "Zadrži"
+
+msgid "Remove"
+msgstr ""
+
 msgid "Purge deleted translations"
 msgstr "Poništi izbrisane prijevode"
 
@@ -699,9 +714,6 @@ msgstr ""
 "Ako nastaviš s poništavanjem, svi prijevodi označeni kao izbrisani, bit će "
 "trajno uklonjeni. Morat ćeš ih ponovno prevesti, ako se u budućnosti opet "
 "dodaju."
-
-msgid "Keep"
-msgstr "Zadrži"
 
 msgid "Purge"
 msgstr "Poništi"
@@ -736,30 +748,6 @@ msgstr "Pojavljivanja koda"
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr "Pojavljivanja koda"
-
-msgid "&Bookmarks"
-msgstr "&Oznake"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Postavi oznaku %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Idi na oznaku %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Postavi oznaku %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Idi na oznaku %i"
 
 msgid "Hide Sidebar"
 msgstr "Sakrij bočnu traku"
@@ -880,6 +868,13 @@ msgstr "Izvorni tekt — %s"
 
 msgid "unknown language"
 msgstr "nepoznat jezik"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr "Mrežna greška: %s (%d)"
+
+msgid "Unknown error"
+msgstr "Nepoznata greška"
 
 #, c-format
 msgid "Failed command: %s"
@@ -1086,15 +1081,14 @@ msgstr "Aktualizirati sve kataloge u projektu?"
 msgid "Performs update from source code on all files in the project."
 msgstr "Aktualizira sve datoteke projekta iz izvornog koda."
 
-msgid "Catalogs Manager"
-msgstr "Upravljanje katalozima"
-
 msgid "Check for Updates…"
 msgstr "Provjeri nadogradnje …"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr "Postavke …"
+msgid "Catalogs Manager"
+msgstr "Upravljanje katalozima"
+
+msgid "&Preferences…"
+msgstr "&Postavke …"
 
 msgid "&Edit"
 msgstr "&Uredi"
@@ -1352,6 +1346,9 @@ msgstr "Neuspio uvoz prevodilačke memorije iz „%s”."
 msgid "Import error"
 msgstr "Greška prilikom uvoza"
 
+msgid "Export as…"
+msgstr "Izvezi kao …"
+
 msgid "Exporting translations…"
 msgstr "Izvoz prijevoda …"
 
@@ -1458,6 +1455,9 @@ msgstr "Zadrži formatiranje postojećih datoteka"
 
 msgid "Advanced"
 msgstr "Napredno"
+
+msgid "Settings"
+msgstr ""
 
 msgid "Preparing strings…"
 msgstr "Pripremanje izraza …"
@@ -1703,7 +1703,7 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr "Prijevod završava sa „%s”, no izvorni tekst završava sa „%s”."
 
 msgid "Cloud"
-msgstr ""
+msgstr "Oblak"
 
 msgid "Clear Menu"
 msgstr "Isprazni izbornik"
@@ -1792,14 +1792,17 @@ msgstr "Spremi k&ao…"
 msgid "Compile to MO…"
 msgstr "Kompiliraj u MO …"
 
-msgid "E&xport as HTML…"
-msgstr "&Izvezi kao HTML …"
+msgid "E&xport to HTML…"
+msgstr ""
 
 msgid "Check for updates…"
 msgstr "Provjeri nadogradnje …"
 
-msgid "&Preferences…"
-msgstr "&Postavke …"
+msgid "Settings…"
+msgstr "Postavke …"
+
+msgid "&Preferences"
+msgstr "&Postavke"
 
 msgid "E&xit"
 msgstr "&Izlaz"
@@ -1849,9 +1852,6 @@ msgstr "Pronađi sljedeće"
 
 msgid "Find Previous"
 msgstr "Pronađi prethodno"
-
-msgid "&Preferences"
-msgstr "&Postavke"
 
 msgid "Show string &ID"
 msgstr "Prikaži &ID izraza"
@@ -1934,20 +1934,26 @@ msgstr "Sinkronizacija s Crowdinom"
 msgid "Pre-&translate…"
 msgstr "Pret&prevedi …"
 
-msgid "&Purge deleted translations"
-msgstr "&Poništi izbrisane prijevode"
-
-msgid "&Purge Deleted Translations"
-msgstr "&Poništi izbrisane prijevode"
-
 msgid "&Validate translations"
 msgstr "&Provjeri prijevode"
 
 msgid "&Validate Translations"
 msgstr "&Provjeri prijevode"
 
+msgid "Remove Same-as-Source Translations"
+msgstr ""
+
+msgid "&Purge deleted translations"
+msgstr "&Poništi izbrisane prijevode"
+
+msgid "&Purge Deleted Translations"
+msgstr "&Poništi izbrisane prijevode"
+
 msgid "&Properties…"
 msgstr "&Svojstva …"
+
+msgid "&Go"
+msgstr "&Idi"
 
 msgid "&Done and next"
 msgstr "&Gotovo, idi na sljedeći"
@@ -2161,7 +2167,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(novo: 0, zastarjelo: 0)"
 
 msgid "Open"
-msgstr "Otvori"
+msgstr ""
 
 msgid "Open file"
 msgstr "Otvori datoteku"
@@ -2484,6 +2490,10 @@ msgstr "&Da"
 
 msgid "Yes"
 msgstr "Da"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2023-11-17 10:15\n"
+"POT-Creation-Date: 2024-08-30 13:42+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Corsican\n"
 "Language: co_FR\n"
@@ -148,9 +148,9 @@ msgid ""
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
 "U schedariu ùn pò micca esse arregistratu cù u gruppu di caratteri « %s » "
-"cum’è indicatu in e preferenze di traduzzione.\n"
+"cum’è indicatu in i parametri di traduzzione.\n"
 "\n"
-"Hè statu arregistratu in UTF-8 è l’ozzione hè stata mudificata."
+"Hè statu arregistratu in UTF-8 è u parametru hè statu mudificatu."
 
 msgid "Error saving file"
 msgstr "Sbagliu à l’arregistramentu di u schedariu"
@@ -371,9 +371,6 @@ msgstr "U schedariu « %s » ùn esiste micca."
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "&Và"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -447,8 +444,8 @@ msgstr "Compilà ver di…"
 msgid "Compiled Translation Files"
 msgstr "Schedarii di traduzzione cumpilati"
 
-msgid "Export as…"
-msgstr "Espurtà cum’è…"
+msgid "Export to HTML…"
+msgstr "Espurtà versu HTML…"
 
 msgid "HTML Files"
 msgstr "Schedarii HTML"
@@ -467,7 +464,7 @@ msgid ""
 "Translations couldn’t be updated from the source code, because no code was "
 "found in the location specified in the file’s Properties."
 msgstr ""
-"Ùn si pò mudificà e traduzzioni à partesi di u testu d’urigine, perchè "
+"Ùn si pò mudificà e traduzzioni à partesi di u testu d’origine, perchè "
 "alcunu testu ùn hè statu trovu in u locu indicatu in e pruprietà di u "
 "schedariu."
 
@@ -603,7 +600,7 @@ msgstr ""
 "affettate."
 
 msgid "Language of the translation is the same as source language."
-msgstr "A lingua di a traduzzione hè listessa chè quella d'urigine."
+msgstr "A lingua di a traduzzione hè listessa chè quella d'origine."
 
 msgid "Fix Language"
 msgstr "Currege a Lingua"
@@ -652,7 +649,7 @@ msgid "Review"
 msgstr "Verificà"
 
 msgid "Would you like to use English for source text?"
-msgstr "Vi piaceria d’impiegà l'inglese per u testu d’origine ?"
+msgstr "Vi piaceria d’impiegà l’inglese per u testu d’origine ?"
 
 #, c-format
 msgid ""
@@ -697,6 +694,26 @@ msgstr " (mudificatu)"
 msgid "Failed to update translation memory: %s"
 msgstr "Fiascu per mudificà a memoria di a traduzzione: %s"
 
+msgid "Remove same-as-source translations"
+msgstr "Caccià e traduzzioni uguale à l’origine"
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr "Vulete caccià tutte e traduzzioni chì sò uguale à u testu d’origine ?"
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+"St’azzione squasserà tutte e traduzzioni chì currispondenu esattamente à u "
+"testu d’origine. Ùn pò micca esse invertita."
+
+msgid "Keep"
+msgstr "Cunservà"
+
+msgid "Remove"
+msgstr "Caccià"
+
 msgid "Purge deleted translations"
 msgstr "Spurgulà e traduzzioni cacciate"
 
@@ -710,9 +727,6 @@ msgid ""
 msgstr ""
 "S’è voi cuntinuate cusì, tutte e traduzzioni marchate cum’è cacciate seranu "
 "tolte per sempre. Ci vulerà à traducele torna s’elle sò aghjunte à l’avvene."
-
-msgid "Keep"
-msgstr "Cunservà"
 
 msgid "Purge"
 msgstr "Spurgulà"
@@ -747,30 +761,6 @@ msgstr "Occurrenze di testu"
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr "Occurrenze di testu"
-
-msgid "&Bookmarks"
-msgstr "&Indette"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Definisce l’indetta %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Andà à l’indetta %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Definisce l’indetta %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Andà à l’indetta %i"
 
 msgid "Hide Sidebar"
 msgstr "Piattà a barra laterale"
@@ -888,10 +878,17 @@ msgstr "ID"
 
 #, c-format
 msgid "Source text — %s"
-msgstr "Testu d'urigine — %s"
+msgstr "Testu d'origine — %s"
 
 msgid "unknown language"
 msgstr "lingua scunnisciuta"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr "Sbagliu di reta : %s (%d)"
+
+msgid "Unknown error"
+msgstr "Sbagliu scunnisciutu"
 
 #, c-format
 msgid "Failed command: %s"
@@ -961,7 +958,7 @@ msgid "Whole words only"
 msgstr "Solu e parolle sane"
 
 msgid "Find in source texts"
-msgstr "Circà in i testi d'urigine"
+msgstr "Circà in i testi d'origine"
 
 msgid "Find in translations"
 msgstr "Circà in e traduzzioni"
@@ -1102,15 +1099,14 @@ msgstr ""
 "Fà a mudificazione da i testi d’origine versu tutti i schedarii di u "
 "prughjettu."
 
-msgid "Catalogs Manager"
-msgstr "Ghjestiunariu di cataloghi"
-
 msgid "Check for Updates…"
 msgstr "Cuntrollà e nove versioni…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr "Parametri…"
+msgid "Catalogs Manager"
+msgstr "Ghjestiunariu di cataloghi"
+
+msgid "&Preferences…"
+msgstr "&Preferenze…"
 
 msgid "&Edit"
 msgstr "&Mudificà"
@@ -1369,6 +1365,9 @@ msgstr ""
 msgid "Import error"
 msgstr "Sbagliu à l’impurtazione"
 
+msgid "Export as…"
+msgstr "Espurtà cum’è…"
+
 msgid "Exporting translations…"
 msgstr "Espurtazione di i traduzzioni…"
 
@@ -1454,8 +1453,8 @@ msgid ""
 "These settings affect internal formatting of PO files. Adjust them if you "
 "have specific requirements e.g. because of version control."
 msgstr ""
-"Ste preferenze affettanu a forma interna di i schedarii PO. Accunciatele s’è "
-"voi avete una dumanda particulare, per indettu, un cuntrollu di versione."
+"Sti parametri affettanu a forma interna di i schedarii PO. Accunciateli s’è "
+"vo avete una dumanda particulare, per indettu, un cuntrollu di versione."
 
 msgid "Line endings:"
 msgstr "Fine di linea :"
@@ -1475,6 +1474,9 @@ msgstr "Cunservà u furmatu di i schedarii chì esistenu"
 
 msgid "Advanced"
 msgstr "Espertu"
+
+msgid "Settings"
+msgstr "Parametri"
 
 msgid "Preparing strings…"
 msgstr "Approntu di e catene…"
@@ -1624,7 +1626,7 @@ msgid "Excluded paths"
 msgstr "Chjassi esclusi"
 
 msgid "Advanced extraction settings"
-msgstr "Preferenze esperte d’estrazzione"
+msgstr "Parametri esperti d’estrazzione"
 
 msgid "Extract notes for translators from:"
 msgstr "Estrae l’annutazioni per i traduttori da :"
@@ -1724,7 +1726,7 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr "A traduzzione finisce cù « %s », ma u testu d’origine, cù « %s »."
 
 msgid "Cloud"
-msgstr ""
+msgstr "Nivulu"
 
 msgid "Clear Menu"
 msgstr "Viutà sta lista"
@@ -1813,14 +1815,17 @@ msgstr "Arregistrà &cù u nome…"
 msgid "Compile to MO…"
 msgstr "Trasfurmà in un schedariu MO…"
 
-msgid "E&xport as HTML…"
-msgstr "Espurtà cum’è &HTML…"
+msgid "E&xport to HTML…"
+msgstr "Espurtà versu &HTML…"
 
 msgid "Check for updates…"
 msgstr "Cuntrollà e nove versioni…"
 
-msgid "&Preferences…"
-msgstr "&Preferenze…"
+msgid "Settings…"
+msgstr "Parametri…"
+
+msgid "&Preferences"
+msgstr "&Preferenze"
 
 msgid "E&xit"
 msgstr "&Esce"
@@ -1870,9 +1875,6 @@ msgstr "Circà seguente"
 
 msgid "Find Previous"
 msgstr "Circà precedente"
-
-msgid "&Preferences"
-msgstr "&Preferenze"
 
 msgid "Show string &ID"
 msgstr "Affissà &ID di a catena"
@@ -1955,20 +1957,26 @@ msgstr "Sincrunizà cù Crowdin"
 msgid "Pre-&translate…"
 msgstr "Pre-&traduce…"
 
-msgid "&Purge deleted translations"
-msgstr "Sp&urgulà e traduzzioni cacciate"
-
-msgid "&Purge Deleted Translations"
-msgstr "Sp&urgulà e traduzzioni cacciate"
-
 msgid "&Validate translations"
 msgstr "&Validà e traduzzione"
 
 msgid "&Validate Translations"
 msgstr "&Validà e traduzzione"
 
+msgid "Remove Same-as-Source Translations"
+msgstr "Caccià e traduzzioni uguale à l’origine"
+
+msgid "&Purge deleted translations"
+msgstr "Sp&urgulà e traduzzioni cacciate"
+
+msgid "&Purge Deleted Translations"
+msgstr "Sp&urgulà e traduzzioni cacciate"
+
 msgid "&Properties…"
 msgstr "&Pruprietà…"
+
+msgid "&Go"
+msgstr "&Và"
 
 msgid "&Done and next"
 msgstr "&Fattu eppò seguente"
@@ -2118,10 +2126,10 @@ msgid "Charset:"
 msgstr "Gruppu di caratteri :"
 
 msgid "Advanced Extraction Settings…"
-msgstr "Preferenze esperte d’estrazzione…"
+msgstr "Parametri esperti d’estrazzione…"
 
 msgid "Advanced extraction settings…"
-msgstr "Preferenze esperte d’estrazzione…"
+msgstr "Parametri esperti d’estrazzione…"
 
 msgid "Translation properties"
 msgstr "Pruprietà di a traduzzione"
@@ -2184,7 +2192,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(0 nova, 0 anziana)"
 
 msgid "Open"
-msgstr "Apre"
+msgstr ""
 
 msgid "Open file"
 msgstr "Apre u schedariu"
@@ -2510,6 +2518,10 @@ msgstr "&Sì"
 
 msgid "Yes"
 msgstr "Sì"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

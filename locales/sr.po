@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2024-02-05 10:16\n"
+"POT-Creation-Date: 2024-08-30 13:57+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Serbian (Cyrillic)\n"
 "Language: sr_SP\n"
@@ -193,11 +193,11 @@ msgid ""
 "Connect Poedit with supported cloud localization platforms to seamlessly "
 "sync translations managed on them."
 msgstr ""
-"Повежите Poedit са подржаним клауд платформама за локализацију да бисте с "
+"Повежите Poedit са подржаним платформама у облаку за локализацију да бисте с "
 "лакоћом синхронизовали преводе који се налазе на њима."
 
 msgid "How does cloud sync work?"
-msgstr "Како функционише синхронизација са клаудом?"
+msgstr "Како функционише синхронизација у облаку?"
 
 msgid "Account"
 msgstr "Налог"
@@ -209,7 +209,7 @@ msgid "File"
 msgstr "Датотека"
 
 msgid "Open cloud translation"
-msgstr "Отвори превод из клауда"
+msgstr "Отвори превод из облака"
 
 msgid "Manage accounts"
 msgstr "Управљај налозима"
@@ -221,10 +221,10 @@ msgid "Language:"
 msgstr "Језик:"
 
 msgid "Sign in to Cloud Account"
-msgstr "Пријава на налог у клауду"
+msgstr "Пријава на налог у облаку"
 
 msgid "Sign in to cloud account"
-msgstr "Пријава на налог у клауду"
+msgstr "Пријава на налог у облаку"
 
 msgid "No translation projects listed in your account."
 msgstr "Нема преводилачких пројеката на вашем налогу."
@@ -366,9 +366,6 @@ msgstr "Датотека „%s” не постоји."
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "&Навигација"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -441,8 +438,8 @@ msgstr "Компајлирање у…"
 msgid "Compiled Translation Files"
 msgstr "Компајлиране датотеке превода"
 
-msgid "Export as…"
-msgstr "Извези као…"
+msgid "Export to HTML…"
+msgstr "Извоз у HTML…"
 
 msgid "HTML Files"
 msgstr "HTML датотеке"
@@ -465,7 +462,7 @@ msgstr ""
 "локацији која је наведена у својствима датотеке."
 
 msgid "Permission denied."
-msgstr "Забрањен приступ"
+msgstr "Забрањен приступ."
 
 msgid ""
 "You don’t have permission to read source code files from the location "
@@ -684,6 +681,26 @@ msgstr " (измењено)"
 msgid "Failed to update translation memory: %s"
 msgstr "Није могуће ажурирати преводилачку меморију: %s"
 
+msgid "Remove same-as-source translations"
+msgstr "Уклони преводе идентичне извору"
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr "Желите ли да уклоните све преводе које су идентичне изводном тексту?"
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+"Ова акција ће уклонити све преводе који се у потпуности подударају са "
+"изворним текстом. Ово није могуће опозвати."
+
+msgid "Keep"
+msgstr "&Задржи"
+
+msgid "Remove"
+msgstr "Уклони"
+
 msgid "Purge deleted translations"
 msgstr "Чишћење избрисаних превода"
 
@@ -697,9 +714,6 @@ msgid ""
 msgstr ""
 "Ако наставите, трајно ћете уклонити све преводе означене као избрисане. "
 "Мораћете да поново преведете стрингове ако буду додати у будућности."
-
-msgid "Keep"
-msgstr "&Задржи"
 
 msgid "Purge"
 msgstr "&Обриши"
@@ -735,35 +749,11 @@ msgstr "Појављивања у коду"
 msgid "Code occurrences"
 msgstr "Појављивања у коду"
 
-msgid "&Bookmarks"
-msgstr "&Обележивачи"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Додај обележивач %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Иди на обележивач %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Додај обележивач %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Иди на обележивач %i"
-
 msgid "Hide Sidebar"
 msgstr "Сакриј бочну траку"
 
 msgid "Show Sidebar"
-msgstr "&Бочна трака"
+msgstr "Прикажи бочну траку"
 
 msgid "Hide Status Bar"
 msgstr "Сакриј статусну траку"
@@ -878,6 +868,13 @@ msgstr "Изворни текст – %s"
 
 msgid "unknown language"
 msgstr "непознат језик"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr "Грешка на мрежи: %s (%d)"
+
+msgid "Unknown error"
+msgstr "Непозната грешка"
 
 #, c-format
 msgid "Failed command: %s"
@@ -1085,15 +1082,14 @@ msgstr "Желите ли да ажурирате све каталоге у о�
 msgid "Performs update from source code on all files in the project."
 msgstr "Ажурираћете све датотеке у пројекту из изворног кода."
 
+msgid "Check for Updates…"
+msgstr "Провери д&а ли постоје исправке…"
+
 msgid "Catalogs Manager"
 msgstr "Менаџер каталога"
 
-msgid "Check for Updates…"
-msgstr "Потр&ажи ажурирања"
-
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr "Подешавања…"
+msgid "&Preferences…"
+msgstr "&Подешавања…"
 
 msgid "&Edit"
 msgstr "&Уређивање"
@@ -1213,7 +1209,7 @@ msgid "Email:"
 msgstr "&Имејл:"
 
 msgid "you@example.com"
-msgstr "imejl@domen.rs"
+msgstr "adresa@domen.rs"
 
 msgid ""
 "Your name and email address are only used to set the Last-Translator header "
@@ -1351,6 +1347,9 @@ msgstr "Увоз преводилачке меморије из „%s” ниј�
 msgid "Import error"
 msgstr "Грешка при увозу"
 
+msgid "Export as…"
+msgstr "Извези као…"
+
 msgid "Exporting translations…"
 msgstr "Извоз превода…"
 
@@ -1456,6 +1455,9 @@ msgstr "Очувај форматирање постојећих датотек�
 
 msgid "Advanced"
 msgstr "Напредно"
+
+msgid "Settings"
+msgstr "Поставке"
 
 msgid "Preparing strings…"
 msgstr "Припрема стрингова…"
@@ -1700,7 +1702,7 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr "Превод се завршава знаком „%s”, а изворни текст знаком „%s”."
 
 msgid "Cloud"
-msgstr ""
+msgstr "Облак"
 
 msgid "Clear Menu"
 msgstr "Обриши листу"
@@ -1727,7 +1729,7 @@ msgid "Project name:"
 msgstr "Назив пројекта:"
 
 msgid "Browse"
-msgstr "&Прегледај…"
+msgstr "&Потражи"
 
 msgid "Add directory to the list"
 msgstr "Додајте фолдер на листу"
@@ -1757,10 +1759,10 @@ msgid "Open recent"
 msgstr "Отвори &недавне"
 
 msgid "Open cloud translation…"
-msgstr "Отвори превод из клауда…"
+msgstr "Отвори превод из облака…"
 
 msgid "Open Cloud Translation…"
-msgstr "Отвори превод из клауда…"
+msgstr "Отвори превод из облака…"
 
 msgid "&Start window"
 msgstr "&Уводни прозор"
@@ -1789,14 +1791,17 @@ msgstr "Сачувај &као…"
 msgid "Compile to MO…"
 msgstr "Ко&мпајлирај у MO…"
 
-msgid "E&xport as HTML…"
-msgstr "И&звези као HTML…"
+msgid "E&xport to HTML…"
+msgstr "И&звоз у HTML…"
 
 msgid "Check for updates…"
 msgstr "Потр&ажи ажурирања…"
 
-msgid "&Preferences…"
-msgstr "&Подешавања…"
+msgid "Settings…"
+msgstr "Подешавања…"
+
+msgid "&Preferences"
+msgstr "&Подешавања"
 
 msgid "E&xit"
 msgstr "&Изађи"
@@ -1846,9 +1851,6 @@ msgstr "Пронађи &следеће"
 
 msgid "Find Previous"
 msgstr "Пронађи пр&етходно"
-
-msgid "&Preferences"
-msgstr "&Подешавања"
 
 msgid "Show string &ID"
 msgstr "ID &стринга"
@@ -1905,7 +1907,7 @@ msgid "&Show Code Occurrences"
 msgstr "Појављивања у &коду"
 
 msgid "Show sidebar"
-msgstr "&Бочна трака"
+msgstr "Прикажи бочну траку"
 
 msgid "Show status bar"
 msgstr "&Статусна трака"
@@ -1931,20 +1933,26 @@ msgstr "&Синхронизуј са Crowdin-ом"
 msgid "Pre-&translate…"
 msgstr "&Прелиминарни превод…"
 
-msgid "&Purge deleted translations"
-msgstr "&Очисти избрисане преводе"
-
-msgid "&Purge Deleted Translations"
-msgstr "&Очисти избрисане преводе"
-
 msgid "&Validate translations"
 msgstr "П&ровери ваљаност превода"
 
 msgid "&Validate Translations"
 msgstr "П&ровери ваљаност превода"
 
+msgid "Remove Same-as-Source Translations"
+msgstr "Уклони преводе идентичне извору"
+
+msgid "&Purge deleted translations"
+msgstr "&Очисти избрисане преводе"
+
+msgid "&Purge Deleted Translations"
+msgstr "&Очисти избрисане преводе"
+
 msgid "&Properties…"
-msgstr "С&војства"
+msgstr "С&војства…"
+
+msgid "&Go"
+msgstr "&Навигација"
 
 msgid "&Done and next"
 msgstr "&Заврши и настави"
@@ -2007,7 +2015,7 @@ msgid "&GNU gettext Manual"
 msgstr "П&риручник за GNU gettext"
 
 msgid "&About Poedit"
-msgstr "&Основни подаци о Poedit"
+msgstr "&О Poedit-у"
 
 msgid "&About"
 msgstr "&О програму"
@@ -2160,7 +2168,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(0 нових, 0 застарелих)"
 
 msgid "Open"
-msgstr "Отвори"
+msgstr ""
 
 msgid "Open file"
 msgstr "Отвори датотеку"
@@ -2321,7 +2329,7 @@ msgid "Open and edit translation files."
 msgstr "Отворите и уређујте датотеке превода."
 
 msgid "Translate cloud project"
-msgstr "Преведите пројекат у клауду"
+msgstr "Преведите пројекат у облаку"
 
 msgid "Collaborate with other people online."
 msgstr "Сарађујте са другима онлајн."
@@ -2481,6 +2489,10 @@ msgstr "&Да"
 
 msgid "Yes"
 msgstr "Да"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

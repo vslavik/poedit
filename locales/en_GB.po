@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2023-12-09 10:15\n"
+"POT-Creation-Date: 2024-08-30 13:42+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: English, United Kingdom\n"
 "Language: en_GB\n"
@@ -364,9 +364,6 @@ msgstr "File “%s” doesn’t exist."
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "&Go"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -438,8 +435,8 @@ msgstr "Compile to…"
 msgid "Compiled Translation Files"
 msgstr "Compiled Translation Files"
 
-msgid "Export as…"
-msgstr "Export as…"
+msgid "Export to HTML…"
+msgstr "Export to HTML…"
 
 msgid "HTML Files"
 msgstr "HTML Files"
@@ -678,6 +675,27 @@ msgstr " (modified)"
 msgid "Failed to update translation memory: %s"
 msgstr "Failed to update translation memory: %s"
 
+msgid "Remove same-as-source translations"
+msgstr "Remove same-as-source translations"
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr ""
+"Do you want to remove all translations that are identical to the source text?"
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+
+msgid "Keep"
+msgstr "Keep"
+
+msgid "Remove"
+msgstr "Remove"
+
 msgid "Purge deleted translations"
 msgstr "Purge deleted translations"
 
@@ -692,9 +710,6 @@ msgstr ""
 "If you continue with purging, all translations marked as deleted will be "
 "permanently removed. You will have to translate them again if they are added "
 "back in the future."
-
-msgid "Keep"
-msgstr "Keep"
 
 msgid "Purge"
 msgstr "Purge"
@@ -729,30 +744,6 @@ msgstr "Code Occurrences"
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr "Code occurrences"
-
-msgid "&Bookmarks"
-msgstr "&Bookmarks"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Set bookmark %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Go to bookmark %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Set Bookmark %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Go to Bookmark %i"
 
 msgid "Hide Sidebar"
 msgstr "Hide Sidebar"
@@ -873,6 +864,13 @@ msgstr "Source text — %s"
 
 msgid "unknown language"
 msgstr "unknown language"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr "Network error: %s (%d)"
+
+msgid "Unknown error"
+msgstr "Unknown error"
 
 #, c-format
 msgid "Failed command: %s"
@@ -1078,15 +1076,14 @@ msgstr "Update all catalogs in this project?"
 msgid "Performs update from source code on all files in the project."
 msgstr "Performs update from source code on all files in the project."
 
-msgid "Catalogs Manager"
-msgstr "Catalogs Manager"
-
 msgid "Check for Updates…"
 msgstr "Check for Updates…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr "Settings…"
+msgid "Catalogs Manager"
+msgstr "Catalogs Manager"
+
+msgid "&Preferences…"
+msgstr "&Preferences…"
 
 msgid "&Edit"
 msgstr "&Edit"
@@ -1344,6 +1341,9 @@ msgstr "Importing translation memory from “%s” failed."
 msgid "Import error"
 msgstr "Import error"
 
+msgid "Export as…"
+msgstr "Export as…"
+
 msgid "Exporting translations…"
 msgstr "Exporting translations…"
 
@@ -1450,6 +1450,9 @@ msgstr "Preserve formatting of existing files"
 
 msgid "Advanced"
 msgstr "Advanced"
+
+msgid "Settings"
+msgstr "Settings"
 
 msgid "Preparing strings…"
 msgstr "Preparing strings…"
@@ -1691,7 +1694,7 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr "The translation ends with “%s”, but the source text ends with “%s”."
 
 msgid "Cloud"
-msgstr ""
+msgstr "Cloud"
 
 msgid "Clear Menu"
 msgstr "Clear Menu"
@@ -1780,14 +1783,17 @@ msgstr "Save &As…"
 msgid "Compile to MO…"
 msgstr "Compile to MO…"
 
-msgid "E&xport as HTML…"
-msgstr "E&xport as HTML…"
+msgid "E&xport to HTML…"
+msgstr "E&xport to HTML…"
 
 msgid "Check for updates…"
 msgstr "Check for updates…"
 
-msgid "&Preferences…"
-msgstr "&Preferences…"
+msgid "Settings…"
+msgstr "Settings…"
+
+msgid "&Preferences"
+msgstr "&Preferences"
 
 msgid "E&xit"
 msgstr "E&xit"
@@ -1837,9 +1843,6 @@ msgstr "Find Next"
 
 msgid "Find Previous"
 msgstr "Find Previous"
-
-msgid "&Preferences"
-msgstr "&Preferences"
 
 msgid "Show string &ID"
 msgstr "Show string &ID"
@@ -1922,20 +1925,26 @@ msgstr "Sync with Crowdin"
 msgid "Pre-&translate…"
 msgstr "Pre-&translate…"
 
-msgid "&Purge deleted translations"
-msgstr "&Purge deleted translations"
-
-msgid "&Purge Deleted Translations"
-msgstr "&Purge Deleted Translations"
-
 msgid "&Validate translations"
 msgstr "&Validate translations"
 
 msgid "&Validate Translations"
 msgstr "&Validate Translations"
 
+msgid "Remove Same-as-Source Translations"
+msgstr "Remove Same-as-Source Translations"
+
+msgid "&Purge deleted translations"
+msgstr "&Purge deleted translations"
+
+msgid "&Purge Deleted Translations"
+msgstr "&Purge Deleted Translations"
+
 msgid "&Properties…"
 msgstr "&Properties…"
+
+msgid "&Go"
+msgstr "&Go"
 
 msgid "&Done and next"
 msgstr "&Done and next"
@@ -2149,7 +2158,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(0 new, 0 obsolete)"
 
 msgid "Open"
-msgstr "Open"
+msgstr ""
 
 msgid "Open file"
 msgstr "Open file"
@@ -2474,6 +2483,10 @@ msgstr "&Yes"
 
 msgid "Yes"
 msgstr "Yes"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2023-11-17 10:16\n"
+"POT-Creation-Date: 2024-08-30 13:42+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Latvian\n"
 "Language: lv_LV\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==0 ? 0 : n%10==1 && n%100!=11 ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2;\n"
 "X-Crowdin-Project: poedit\n"
 "X-Crowdin-Project-ID: 53425\n"
 "X-Crowdin-Language: lv\n"
@@ -359,9 +359,6 @@ msgstr "Fails “%s” nepastāv."
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "&Iet"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -431,8 +428,8 @@ msgstr "Kompilēt uz…"
 msgid "Compiled Translation Files"
 msgstr "Kompilētie tulkojuma faili"
 
-msgid "Export as…"
-msgstr "Eksportēt kā…"
+msgid "Export to HTML…"
+msgstr ""
 
 msgid "HTML Files"
 msgstr "HTML faili"
@@ -656,6 +653,24 @@ msgstr " (modificēts)"
 msgid "Failed to update translation memory: %s"
 msgstr "Neizdevās atjaunināt tulkojumu atmiņu: %s"
 
+msgid "Remove same-as-source translations"
+msgstr ""
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr ""
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+
+msgid "Keep"
+msgstr "Paturēt"
+
+msgid "Remove"
+msgstr ""
+
 msgid "Purge deleted translations"
 msgstr "&Iztīrīt dzēstos tulkojumus"
 
@@ -670,9 +685,6 @@ msgstr ""
 "Ja jūs turpināsiet ar iztīrīšanu, visi tulkojumi, kas atzīmēti kā dzēsti, "
 "tiks pilnībā izņemti. Iespējams, ka vēlāk tie jums būs jātulko vēlreiz, ja "
 "tie vēlāk tiks pievienoti atpakaļ."
-
-msgid "Keep"
-msgstr "Paturēt"
 
 msgid "Purge"
 msgstr "Iztīrīt"
@@ -707,30 +719,6 @@ msgstr ""
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr ""
-
-msgid "&Bookmarks"
-msgstr "&Grāmatzīmes"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Pievienot grāmatzīmi %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Doties uz grāmatzīmi %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Pievienot grāmatzīmi %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Doties uz grāmatzīmi %i"
 
 msgid "Hide Sidebar"
 msgstr "Slēpt sānjoslu"
@@ -851,6 +839,13 @@ msgstr "Avota teksts — %s"
 
 msgid "unknown language"
 msgstr "nezināma valoda"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr ""
+
+msgid "Unknown error"
+msgstr ""
 
 #, c-format
 msgid "Failed command: %s"
@@ -1050,15 +1045,14 @@ msgstr ""
 msgid "Performs update from source code on all files in the project."
 msgstr ""
 
-msgid "Catalogs Manager"
-msgstr "Katalogu pārvaldnieks"
-
 msgid "Check for Updates…"
 msgstr "Meklēt atjauninājumus…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr ""
+msgid "Catalogs Manager"
+msgstr "Katalogu pārvaldnieks"
+
+msgid "&Preferences…"
+msgstr "&Iestatījumi…"
 
 msgid "&Edit"
 msgstr "R&ediģēt"
@@ -1310,6 +1304,9 @@ msgstr ""
 msgid "Import error"
 msgstr ""
 
+msgid "Export as…"
+msgstr "Eksportēt kā…"
+
 msgid "Exporting translations…"
 msgstr ""
 
@@ -1410,6 +1407,9 @@ msgstr ""
 
 msgid "Advanced"
 msgstr "Papildu"
+
+msgid "Settings"
+msgstr ""
 
 msgid "Preparing strings…"
 msgstr ""
@@ -1727,14 +1727,17 @@ msgstr "Saglabāt &kā…"
 msgid "Compile to MO…"
 msgstr "Kompilēt uz MO…"
 
-msgid "E&xport as HTML…"
-msgstr "E&ksportēt kā HTML…"
+msgid "E&xport to HTML…"
+msgstr ""
 
 msgid "Check for updates…"
 msgstr "Meklēt atjauninājumus…"
 
-msgid "&Preferences…"
-msgstr "&Iestatījumi…"
+msgid "Settings…"
+msgstr ""
+
+msgid "&Preferences"
+msgstr "&Iestatījumi"
 
 msgid "E&xit"
 msgstr "I&ziet"
@@ -1784,9 +1787,6 @@ msgstr "Meklēt komentāros"
 
 msgid "Find Previous"
 msgstr "Atrast iepriekšējo"
-
-msgid "&Preferences"
-msgstr "&Iestatījumi"
 
 msgid "Show string &ID"
 msgstr "Rādīt rindas &ID"
@@ -1869,20 +1869,26 @@ msgstr "Sinhronizēt ar Crowdin"
 msgid "Pre-&translate…"
 msgstr ""
 
-msgid "&Purge deleted translations"
-msgstr "&Iztīrīt dzēstos tulkojumus"
-
-msgid "&Purge Deleted Translations"
-msgstr "Iztīrīt &dzēstos tulkojumus"
-
 msgid "&Validate translations"
 msgstr "&Pārbaudīt tulkojumu"
 
 msgid "&Validate Translations"
 msgstr "&Pārbaudīt tulkojumu"
 
+msgid "Remove Same-as-Source Translations"
+msgstr ""
+
+msgid "&Purge deleted translations"
+msgstr "&Iztīrīt dzēstos tulkojumus"
+
+msgid "&Purge Deleted Translations"
+msgstr "Iztīrīt &dzēstos tulkojumus"
+
 msgid "&Properties…"
 msgstr "&Rekvizīti…"
+
+msgid "&Go"
+msgstr "&Iet"
 
 msgid "&Done and next"
 msgstr "Pa&beigt un pāriet uz nākamo"
@@ -2089,7 +2095,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(0 jaunas, 0 novecojušas)"
 
 msgid "Open"
-msgstr "Atvērt"
+msgstr ""
 
 msgid "Open file"
 msgstr ""
@@ -2400,6 +2406,10 @@ msgstr "&Jā"
 
 msgid "Yes"
 msgstr "Jā"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

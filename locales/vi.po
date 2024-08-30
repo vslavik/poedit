@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2023-11-17 10:16\n"
+"POT-Creation-Date: 2024-08-30 13:57+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -363,9 +363,6 @@ msgstr "Tập tin \"%s\" không tồn tại."
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "Nhả&y đến"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -437,8 +434,8 @@ msgstr "Biên dịch sang…"
 msgid "Compiled Translation Files"
 msgstr "Các tập tin bản dịch đã được biên dịch"
 
-msgid "Export as…"
-msgstr "Xuất ra như…"
+msgid "Export to HTML…"
+msgstr ""
 
 msgid "HTML Files"
 msgstr "Tập tin HTML"
@@ -671,6 +668,24 @@ msgstr " (đã sửa)"
 msgid "Failed to update translation memory: %s"
 msgstr "Gặp lỗi khi cập nhật bộ nhớ dịch: %s"
 
+msgid "Remove same-as-source translations"
+msgstr ""
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr ""
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+
+msgid "Keep"
+msgstr "Giữ lại"
+
+msgid "Remove"
+msgstr ""
+
 msgid "Purge deleted translations"
 msgstr "Xóa bỏ các chuỗi dịch bị đánh dấu là không dùng nữa"
 
@@ -685,9 +700,6 @@ msgstr ""
 "Nếu bạn vẫn muốn thanh lọc, tất cả các chuỗi dịch mà được đánh dấu là đã xoá "
 "sẽ bị gỡ bỏ hoàn toàn khỏi tập tin. Bạn sẽ phải dịch lại chúng nếu người lập "
 "trình sử dụng lại nó trong tương lai."
-
-msgid "Keep"
-msgstr "Giữ lại"
 
 msgid "Purge"
 msgstr "Thanh lọc"
@@ -722,30 +734,6 @@ msgstr "Lần xuất hiện mã"
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr "Lần xuất hiện mã"
-
-msgid "&Bookmarks"
-msgstr "Đánh &dấu"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Đặt dấu trang %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Đi đến dấu trang %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Đặt Dấu Trang %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Đi đến Dấu Trang %i"
 
 msgid "Hide Sidebar"
 msgstr "Ẩn Thanh Công Cụ"
@@ -867,6 +855,13 @@ msgstr "Mã nguồn văn bản — %s"
 
 msgid "unknown language"
 msgstr "không hiểu ngôn ngữ"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr ""
+
+msgid "Unknown error"
+msgstr ""
 
 #, c-format
 msgid "Failed command: %s"
@@ -1069,15 +1064,14 @@ msgstr "Cập nhật tất cả các danh mục trong dự án này?"
 msgid "Performs update from source code on all files in the project."
 msgstr "Thực hiện cập nhật từ mã nguồn trên tất cả các tệp trong dự án."
 
-msgid "Catalogs Manager"
-msgstr "Quản lý các catalog"
-
 msgid "Check for Updates…"
 msgstr "Kiểm tra cập nhật…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr "Cài đặt…"
+msgid "Catalogs Manager"
+msgstr "Quản lý các catalog"
+
+msgid "&Preferences…"
+msgstr "&Cá nhân hóa…"
 
 msgid "&Edit"
 msgstr "&Biên tập"
@@ -1335,6 +1329,9 @@ msgstr "Nhập bộ nhớ bản dịch từ \"%s\" đã thất bại."
 msgid "Import error"
 msgstr "Lỗi nhập dữ liệu"
 
+msgid "Export as…"
+msgstr "Xuất ra như…"
+
 msgid "Exporting translations…"
 msgstr "Xuất các bản dịch…"
 
@@ -1441,6 +1438,9 @@ msgstr "Duy trì định dạng của tập tin đã có"
 
 msgid "Advanced"
 msgstr "Nâng cao"
+
+msgid "Settings"
+msgstr ""
 
 msgid "Preparing strings…"
 msgstr "Đang chuẩn bị các chuỗi…"
@@ -1766,14 +1766,17 @@ msgstr "Lưu &Như…"
 msgid "Compile to MO…"
 msgstr "Biên dịch sang MO…"
 
-msgid "E&xport as HTML…"
-msgstr "&Xuất ra định dạng HTML…"
+msgid "E&xport to HTML…"
+msgstr ""
 
 msgid "Check for updates…"
 msgstr "Kiểm tra cập nhật…"
 
-msgid "&Preferences…"
-msgstr "&Cá nhân hóa…"
+msgid "Settings…"
+msgstr "Cài đặt…"
+
+msgid "&Preferences"
+msgstr "&Cá nhân hóa"
 
 msgid "E&xit"
 msgstr "Thoá&t"
@@ -1823,9 +1826,6 @@ msgstr "Tìm tiếp"
 
 msgid "Find Previous"
 msgstr "Tìm lùi"
-
-msgid "&Preferences"
-msgstr "&Cá nhân hóa"
 
 msgid "Show string &ID"
 msgstr "Hiển thị &ID chuỗi"
@@ -1908,20 +1908,26 @@ msgstr "Đồng bộ với Crowdin"
 msgid "Pre-&translate…"
 msgstr "Dịch &trước…"
 
-msgid "&Purge deleted translations"
-msgstr "&Thanh lọc các chuỗi đã xóa"
-
-msgid "&Purge Deleted Translations"
-msgstr "&Thanh lọc các chuỗi đã xóa"
-
 msgid "&Validate translations"
 msgstr "&Thẩm tra bản dịch"
 
 msgid "&Validate Translations"
 msgstr "&Thẩm tra bản dịch"
 
+msgid "Remove Same-as-Source Translations"
+msgstr ""
+
+msgid "&Purge deleted translations"
+msgstr "&Thanh lọc các chuỗi đã xóa"
+
+msgid "&Purge Deleted Translations"
+msgstr "&Thanh lọc các chuỗi đã xóa"
+
 msgid "&Properties…"
 msgstr "&Thuộc tính…"
+
+msgid "&Go"
+msgstr "Nhả&y đến"
 
 msgid "&Done and next"
 msgstr "&Thực hiện và làm tiếp"
@@ -2131,7 +2137,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(0 mới, 0 cũ)"
 
 msgid "Open"
-msgstr "Mở"
+msgstr ""
 
 msgid "Open file"
 msgstr "Mở tập tin"
@@ -2452,6 +2458,10 @@ msgstr "&Vâng"
 
 msgid "Yes"
 msgstr "Vâng"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

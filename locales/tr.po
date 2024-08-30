@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2024-02-29 10:16\n"
+"POT-Creation-Date: 2024-08-30 13:57+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -50,7 +50,7 @@ msgid "The file “%s” couldn’t be opened."
 msgstr "“%s” dosyası açılamadı."
 
 msgid "Invalid file"
-msgstr "Dosya geçersiz"
+msgstr "Geçersiz dosya"
 
 #, c-format
 msgid "Malformed header: “%s”"
@@ -366,9 +366,6 @@ msgstr "“%s” dosyası yok."
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "&Git"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -440,8 +437,8 @@ msgstr "Şuna derle…"
 msgid "Compiled Translation Files"
 msgstr "Derlenmiş Çeviri Dosyaları"
 
-msgid "Export as…"
-msgstr "Dışa farklı aktar…"
+msgid "Export to HTML…"
+msgstr "HTML’ye aktar…"
 
 msgid "HTML Files"
 msgstr "HTML Dosyaları"
@@ -682,6 +679,26 @@ msgstr " (değiştirildi)"
 msgid "Failed to update translation memory: %s"
 msgstr "Başarısız olan çeviri belleği güncellemesi: %s"
 
+msgid "Remove same-as-source translations"
+msgstr "Kaynakla aynı çevirileri kaldır"
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr "Kaynak metinle aynı olan tüm çevirileri kaldırmak istiyor musunuz?"
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+"Bu eylem, kaynak metinle tam olarak eşleşen tüm çevirileri silecek. Bu geri "
+"alınamaz."
+
+msgid "Keep"
+msgstr "Tut"
+
+msgid "Remove"
+msgstr "Kaldır"
+
 msgid "Purge deleted translations"
 msgstr "Silinmiş çevirileri temizle"
 
@@ -697,9 +714,6 @@ msgstr ""
 "Temizleyerek devam ederseniz, silinmek üzere işaretlenmiş tüm çeviriler "
 "kalıcı olarak kaldırılacaktır. Gelecekte bunlar geri eklenirse, tekrar "
 "çevirmek zorunda kalacaksınız."
-
-msgid "Keep"
-msgstr "Tut"
 
 msgid "Purge"
 msgstr "Temizle"
@@ -734,30 +748,6 @@ msgstr "Kod Oluşumları"
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr "Kod oluşumları"
-
-msgid "&Bookmarks"
-msgstr "Ye&r İşaretleri"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "%i yer işaretini ayarla"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "%i yer işaretine git"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "%i Yer İşaretini Ayarla"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "%i Yer İşaretine Git"
 
 msgid "Hide Sidebar"
 msgstr "Kenar Çubuğunu Gizle"
@@ -825,7 +815,7 @@ msgid "Source text ID"
 msgstr "Kaynak metin kimliği"
 
 msgid "Everything"
-msgstr "Herşey"
+msgstr "Her şey"
 
 #, c-format
 msgid "Form %i"
@@ -879,6 +869,13 @@ msgstr "Kaynak metin — %s"
 
 msgid "unknown language"
 msgstr "bilinmeyen dil"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr "Ağ hatası: %s (%d)"
+
+msgid "Unknown error"
+msgstr "Bilinmeyen hata"
 
 #, c-format
 msgid "Failed command: %s"
@@ -1085,15 +1082,14 @@ msgstr "Bu projedeki tüm kataloglar güncellensin mi?"
 msgid "Performs update from source code on all files in the project."
 msgstr "Projedeki tüm dosyalarda kaynak kodundan güncelleme gerçekleştirir."
 
-msgid "Catalogs Manager"
-msgstr "Katalog Yöneticisi"
-
 msgid "Check for Updates…"
 msgstr "Güncellemeleri Denetle…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr "Ayarlar…"
+msgid "Catalogs Manager"
+msgstr "Katalog Yöneticisi"
+
+msgid "&Preferences…"
+msgstr "&Tercihler…"
 
 msgid "&Edit"
 msgstr "Düz&en"
@@ -1351,6 +1347,9 @@ msgstr "“%s” dosyasından çeviri belleğini aktarma başarısız oldu."
 msgid "Import error"
 msgstr "İçe aktarma hatası"
 
+msgid "Export as…"
+msgstr "Dışa farklı aktar…"
+
 msgid "Exporting translations…"
 msgstr "Çeviriler dışa aktarılıyor…"
 
@@ -1457,6 +1456,9 @@ msgstr "Var olan dosyaların biçimini koru"
 
 msgid "Advanced"
 msgstr "Gelişmiş"
+
+msgid "Settings"
+msgstr "Ayarlar"
 
 msgid "Preparing strings…"
 msgstr "Dizgeler hazırlanıyor…"
@@ -1702,7 +1704,7 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr "Çeviri “%s” ile bitiyor, ancak kaynak metin “%s” ile bitiyor."
 
 msgid "Cloud"
-msgstr ""
+msgstr "Bulut"
 
 msgid "Clear Menu"
 msgstr "Menüyü Temizle"
@@ -1791,14 +1793,17 @@ msgstr "&Farklı Kaydet…"
 msgid "Compile to MO…"
 msgstr "MO olarak Derle…"
 
-msgid "E&xport as HTML…"
-msgstr "HTML olarak &Dışa Aktar…"
+msgid "E&xport to HTML…"
+msgstr "HTML’ye a&ktar…"
 
 msgid "Check for updates…"
 msgstr "Güncellemeleri denetle…"
 
-msgid "&Preferences…"
-msgstr "&Tercihler…"
+msgid "Settings…"
+msgstr "Ayarlar…"
+
+msgid "&Preferences"
+msgstr "&Tercihler"
 
 msgid "E&xit"
 msgstr "Çı&kış"
@@ -1848,9 +1853,6 @@ msgstr "Sonrakini Bul"
 
 msgid "Find Previous"
 msgstr "Öncekini Bul"
-
-msgid "&Preferences"
-msgstr "&Tercihler"
 
 msgid "Show string &ID"
 msgstr "Dizge &kodunu göster"
@@ -1933,20 +1935,26 @@ msgstr "Crowdin ile eşitle"
 msgid "Pre-&translate…"
 msgstr "Ön Ç&eviri Yap…"
 
-msgid "&Purge deleted translations"
-msgstr "Silin&miş çevirileri temizle"
-
-msgid "&Purge Deleted Translations"
-msgstr "Silin&miş Çevirileri Temizle"
-
 msgid "&Validate translations"
 msgstr "Çevirileri &doğrula"
 
 msgid "&Validate Translations"
 msgstr "Çevirileri &Doğrula"
 
+msgid "Remove Same-as-Source Translations"
+msgstr "Kaynakla Aynı Çevirileri Kaldır"
+
+msgid "&Purge deleted translations"
+msgstr "Silin&miş çevirileri temizle"
+
+msgid "&Purge Deleted Translations"
+msgstr "Silin&miş Çevirileri Temizle"
+
 msgid "&Properties…"
 msgstr "Ö&zellikler…"
+
+msgid "&Go"
+msgstr "&Git"
 
 msgid "&Done and next"
 msgstr "&Tamamla ve sonrakine geç"
@@ -2161,7 +2169,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(0 yeni, 0 eski)"
 
 msgid "Open"
-msgstr "Aç"
+msgstr ""
 
 msgid "Open file"
 msgstr "Dosya aç"
@@ -2485,6 +2493,10 @@ msgstr "&Evet"
 
 msgid "Yes"
 msgstr "Evet"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

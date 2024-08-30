@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2023-11-17 10:16\n"
+"POT-Creation-Date: 2024-08-30 13:57+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -120,7 +120,7 @@ msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr "Trasig PO-fil: pluralformen msgstr används utan msgid_plural"
 
 msgid "Couldn’t load the file, it is probably damaged."
-msgstr "Det gick inte att ladda filen, det är förmodligen skadat."
+msgstr "Det gick inte att ladda filen, den är förmodligen skadad."
 
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
@@ -366,9 +366,6 @@ msgstr "Filen \"%s\" finns inte."
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "&Kör"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -443,8 +440,8 @@ msgstr "Kompilera till…"
 msgid "Compiled Translation Files"
 msgstr "Kompilerade översättningsfiler"
 
-msgid "Export as…"
-msgstr "Exportera som…"
+msgid "Export to HTML…"
+msgstr "Exportera till HTML…"
 
 msgid "HTML Files"
 msgstr "HTML-filer"
@@ -686,6 +683,26 @@ msgstr " (ändrad)"
 msgid "Failed to update translation memory: %s"
 msgstr "Det gick inte att uppdatera översättningsminne: %s"
 
+msgid "Remove same-as-source translations"
+msgstr "Ta bort översättningar samma som källtext"
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr "Vill du ta bort alla översättningar som är identiska med källtexten?"
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+"Denna åtgärd kommer att ta bort översättningar som matchar källtexten exakt. "
+"Detta kan inte ångras."
+
+msgid "Keep"
+msgstr "Behåll"
+
+msgid "Remove"
+msgstr "Ta bort"
+
 msgid "Purge deleted translations"
 msgstr "Rensa borttagna översättningar"
 
@@ -700,9 +717,6 @@ msgstr ""
 "Om du fortsätter med rensningen kommer alla översättningar som är märkta för "
 "borttagning att tas bort permanent. Du måste översätta dem igen om de läggs "
 "tillbaka i framtiden."
-
-msgid "Keep"
-msgstr "Behåll"
 
 msgid "Purge"
 msgstr "Rensa"
@@ -737,30 +751,6 @@ msgstr "Kodförekomster"
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr "Kodförekomster"
-
-msgid "&Bookmarks"
-msgstr "&Bokmärken"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Ange bokmärke %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Gå till bokmärke %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Ange bokmärke %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Gå till bokmärke %i"
 
 msgid "Hide Sidebar"
 msgstr "Dölj sidofält"
@@ -881,6 +871,13 @@ msgstr "Källtext — %s"
 
 msgid "unknown language"
 msgstr "okänt språk"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr "Nätverksfel: %s (%d)"
+
+msgid "Unknown error"
+msgstr "Okänt fel"
 
 #, c-format
 msgid "Failed command: %s"
@@ -1087,15 +1084,14 @@ msgstr "Uppdatera alla kataloger i detta projekt?"
 msgid "Performs update from source code on all files in the project."
 msgstr "Utför uppdatering från källkod på alla filer i projektet."
 
-msgid "Catalogs Manager"
-msgstr "Kataloghanterare"
-
 msgid "Check for Updates…"
 msgstr "Sök efter uppdateringar…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr "Inställningar…"
+msgid "Catalogs Manager"
+msgstr "Kataloghanterare"
+
+msgid "&Preferences…"
+msgstr "&Inställningar…"
 
 msgid "&Edit"
 msgstr "&Redigera"
@@ -1353,6 +1349,9 @@ msgstr "Import av översättningsminne från ”%s” misslyckades."
 msgid "Import error"
 msgstr "Importfel"
 
+msgid "Export as…"
+msgstr "Exportera som…"
+
 msgid "Exporting translations…"
 msgstr "Exporterar översättningar…"
 
@@ -1459,6 +1458,9 @@ msgstr "Bevara formateringen av befintliga filer"
 
 msgid "Advanced"
 msgstr "Avancerat"
+
+msgid "Settings"
+msgstr "Inställningar"
 
 msgid "Preparing strings…"
 msgstr "Förbereder strängar…"
@@ -1704,7 +1706,7 @@ msgstr ""
 "Översättningen avslutas med \"%s\", medan källtexten avslutas med \"%s\"."
 
 msgid "Cloud"
-msgstr ""
+msgstr "Moln"
 
 msgid "Clear Menu"
 msgstr "Rensa meny"
@@ -1793,14 +1795,17 @@ msgstr "Spar&a som…"
 msgid "Compile to MO…"
 msgstr "Kompilera till MO…"
 
-msgid "E&xport as HTML…"
-msgstr "E&xportera som HTML…"
+msgid "E&xport to HTML…"
+msgstr "E&xportera till HTML…"
 
 msgid "Check for updates…"
 msgstr "Sök efter uppdateringar…"
 
-msgid "&Preferences…"
-msgstr "&Inställningar…"
+msgid "Settings…"
+msgstr "Inställningar…"
+
+msgid "&Preferences"
+msgstr "&Inställningar"
 
 msgid "E&xit"
 msgstr "&Avsluta"
@@ -1850,9 +1855,6 @@ msgstr "Sök nästa"
 
 msgid "Find Previous"
 msgstr "Hitta föregående"
-
-msgid "&Preferences"
-msgstr "&Inställningar"
 
 msgid "Show string &ID"
 msgstr "Visa sträng-ID"
@@ -1935,20 +1937,26 @@ msgstr "Synkronisera med Crowdin"
 msgid "Pre-&translate…"
 msgstr "Förhandsöversä&tt…"
 
-msgid "&Purge deleted translations"
-msgstr "&Rensa borttagna översättningar"
-
-msgid "&Purge Deleted Translations"
-msgstr "&Rensa borttagna översättningar"
-
 msgid "&Validate translations"
 msgstr "&Validera översättningar"
 
 msgid "&Validate Translations"
 msgstr "&Validera översättningar"
 
+msgid "Remove Same-as-Source Translations"
+msgstr "Ta bort översättningar samma som källtext"
+
+msgid "&Purge deleted translations"
+msgstr "&Rensa borttagna översättningar"
+
+msgid "&Purge Deleted Translations"
+msgstr "&Rensa borttagna översättningar"
+
 msgid "&Properties…"
 msgstr "&Egenskaper…"
+
+msgid "&Go"
+msgstr "&Kör"
 
 msgid "&Done and next"
 msgstr "&Klar och nästa"
@@ -2164,7 +2172,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(0 nya, 0 föråldrade)"
 
 msgid "Open"
-msgstr "Öppna"
+msgstr ""
 
 msgid "Open file"
 msgstr "Öppna fil"
@@ -2489,6 +2497,10 @@ msgstr "&Ja"
 
 msgid "Yes"
 msgstr "Ja"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

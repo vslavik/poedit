@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2023-11-17 10:15\n"
+"POT-Creation-Date: 2024-08-30 13:42+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -364,9 +364,6 @@ msgstr "Lêer “%s” bestaan nie."
 msgid "Poedit"
 msgstr "Poedit "
 
-msgid "&Go"
-msgstr "&Gaan"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -441,8 +438,8 @@ msgstr "Kompileer na…"
 msgid "Compiled Translation Files"
 msgstr "Gekompileerde Vertaallêers"
 
-msgid "Export as…"
-msgstr "Stuur Uit as…"
+msgid "Export to HTML…"
+msgstr ""
 
 msgid "HTML Files"
 msgstr "HTML-lêers"
@@ -685,6 +682,24 @@ msgstr " (verander)"
 msgid "Failed to update translation memory: %s"
 msgstr "Kon nie vertaalgeheue bywerk nie: %s"
 
+msgid "Remove same-as-source translations"
+msgstr ""
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr ""
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+
+msgid "Keep"
+msgstr "Behou"
+
+msgid "Remove"
+msgstr ""
+
 msgid "Purge deleted translations"
 msgstr "Purgeer geskrapte vertalings"
 
@@ -699,9 +714,6 @@ msgstr ""
 "Indien u met purgering voortgaan word alle vertalings wat as “skrap” gemerk "
 "is, verwyder. U sal dit weer moet vertaal sou dit in die toekoms weer "
 "toegevoeg word."
-
-msgid "Keep"
-msgstr "Behou"
 
 msgid "Purge"
 msgstr "Purgeer"
@@ -736,30 +748,6 @@ msgstr "Kodevoorkomste"
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr "Kodevoorkomste"
-
-msgid "&Bookmarks"
-msgstr "&Boekmerke"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Stel boekmerk %i in"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Gaan na boekmerk %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Stel Boekmerk %i In"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Gaan na Boekmerk %i"
 
 msgid "Hide Sidebar"
 msgstr "Versteek Systaaf"
@@ -880,6 +868,13 @@ msgstr "Bronteks — %s"
 
 msgid "unknown language"
 msgstr "onbekende taal"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr "Netwerkfout: %s (%d)"
+
+msgid "Unknown error"
+msgstr "Onbekende fout"
 
 #, c-format
 msgid "Failed command: %s"
@@ -1086,15 +1081,14 @@ msgid "Performs update from source code on all files in the project."
 msgstr ""
 "Dit voer ’n bywerking vanaf die bronkode op alle lêers in die projek uit."
 
-msgid "Catalogs Manager"
-msgstr "Katalogusbestuurder"
-
 msgid "Check for Updates…"
 msgstr "Gaan na vir Bywerkings…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr "Instellings…"
+msgid "Catalogs Manager"
+msgstr "Katalogusbestuurder"
+
+msgid "&Preferences…"
+msgstr "&Voorkeure…"
 
 msgid "&Edit"
 msgstr "W&ysig"
@@ -1352,6 +1346,9 @@ msgstr "Invoer van vertaalgeheue van “%s” het misluk."
 msgid "Import error"
 msgstr "Invoerfout"
 
+msgid "Export as…"
+msgstr "Stuur Uit as…"
+
 msgid "Exporting translations…"
 msgstr "Stuur vertalings uit…"
 
@@ -1458,6 +1455,9 @@ msgstr "Behou formattering van bestaande lêers"
 
 msgid "Advanced"
 msgstr "Gevorderd"
+
+msgid "Settings"
+msgstr ""
 
 msgid "Preparing strings…"
 msgstr "Berei tans stringe voor…"
@@ -1700,7 +1700,7 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr "Die vertaling eindig met “%s” maar die bronteks eindig met “%s”."
 
 msgid "Cloud"
-msgstr ""
+msgstr "Wolk"
 
 msgid "Clear Menu"
 msgstr "Wis kieslys"
@@ -1789,14 +1789,17 @@ msgstr "Bewaar &As…"
 msgid "Compile to MO…"
 msgstr "Kompileer na MO…"
 
-msgid "E&xport as HTML…"
-msgstr "S&Tuur uit as HTML…"
+msgid "E&xport to HTML…"
+msgstr ""
 
 msgid "Check for updates…"
 msgstr "Soek na bywerkings…"
 
-msgid "&Preferences…"
-msgstr "&Voorkeure…"
+msgid "Settings…"
+msgstr "Instellings…"
+
+msgid "&Preferences"
+msgstr "&Voorkeure"
 
 msgid "E&xit"
 msgstr "&Verlaat"
@@ -1846,9 +1849,6 @@ msgstr "Soek Volgende"
 
 msgid "Find Previous"
 msgstr "Soek Vorige"
-
-msgid "&Preferences"
-msgstr "&Voorkeure"
 
 msgid "Show string &ID"
 msgstr "Toon string-&ID"
@@ -1931,20 +1931,26 @@ msgstr "Sinchroniseer met Crowdin"
 msgid "Pre-&translate…"
 msgstr "Vooraf&vertaal…"
 
-msgid "&Purge deleted translations"
-msgstr "&Verwyder vertalings wat vir uitvee gemerk is"
-
-msgid "&Purge Deleted Translations"
-msgstr "&Purgeer Geskrapte Vertalings"
-
 msgid "&Validate translations"
 msgstr "&Valideer vertalings"
 
 msgid "&Validate Translations"
 msgstr "&Valideer Vertalings"
 
+msgid "Remove Same-as-Source Translations"
+msgstr ""
+
+msgid "&Purge deleted translations"
+msgstr "&Verwyder vertalings wat vir uitvee gemerk is"
+
+msgid "&Purge Deleted Translations"
+msgstr "&Purgeer Geskrapte Vertalings"
+
 msgid "&Properties…"
 msgstr "&Eienskappe…"
+
+msgid "&Go"
+msgstr "&Gaan"
 
 msgid "&Done and next"
 msgstr "&Gereed en volgende"
@@ -1953,10 +1959,10 @@ msgid "&Done and Next"
 msgstr "&Gereed en Volgende"
 
 msgid "Previously edited"
-msgstr ""
+msgstr "Voorheen geredigeer"
 
 msgid "Previously Edited"
-msgstr ""
+msgstr "Voorheen geredigeer"
 
 msgid "&Previous translation"
 msgstr "&Vorige vertaling"
@@ -2158,7 +2164,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(0 nuut, 0 verouderd)"
 
 msgid "Open"
-msgstr "Open"
+msgstr ""
 
 msgid "Open file"
 msgstr "Open lêer"
@@ -2483,6 +2489,10 @@ msgstr "&Ja"
 
 msgid "Yes"
 msgstr "Ja"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

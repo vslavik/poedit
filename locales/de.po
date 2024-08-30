@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2024-01-15 10:16\n"
+"POT-Creation-Date: 2024-08-30 13:42+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -334,10 +334,10 @@ msgid "don’t delete temporary files (for debugging)"
 msgstr "Temporäre Dateien nicht entfernen (für Fehlersuche)"
 
 msgid "handle a poedit:// URI"
-msgstr "poedit:// Adresse verwenden"
+msgstr "poedit://-Adresse verwenden"
 
 msgid "go to item at given line number"
-msgstr "zu Element in der angegebenen Zeilennummer springen"
+msgstr "zum Element in der angegebenen Zeilennummer springen"
 
 msgid "Failed to communicate with Poedit process."
 msgstr "Kommunikation mit Poedit-Prozess fehlgeschlagen."
@@ -368,9 +368,6 @@ msgstr "Datei »%s« existiert nicht."
 
 msgid "Poedit"
 msgstr "Poedit"
-
-msgid "&Go"
-msgstr "&Navigieren"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
@@ -446,8 +443,8 @@ msgstr "Kompilieren nach …"
 msgid "Compiled Translation Files"
 msgstr "Kompilierte Übersetzungsdateien"
 
-msgid "Export as…"
-msgstr "Exportieren als …"
+msgid "Export to HTML…"
+msgstr "E&xportieren als HTML …"
 
 msgid "HTML Files"
 msgstr "HTML-Dateien"
@@ -466,8 +463,8 @@ msgid ""
 "Translations couldn’t be updated from the source code, because no code was "
 "found in the location specified in the file’s Properties."
 msgstr ""
-"Übersetzungen konnten nicht aus dem Quelltext aktualisiert werden, weil kein "
-"Code in dem in den Eigenschaften der Datei angegebenen Ort gefunden wurde."
+"Übersetzungen konnten nicht aus dem Quellcode aktualisiert werden, weil kein "
+"Code an dem in den Eigenschaften der Datei angegebenen Ort gefunden wurde."
 
 msgid "Permission denied."
 msgstr "Zugriff verweigert."
@@ -533,7 +530,7 @@ msgid ""
 "probably not work correctly."
 msgstr ""
 "Die Datei wurde sicher gespeichert und in das MO-Format konvertiert, aber "
-"möglicherweise funktioniert es nicht korrekt."
+"möglicherweise funktioniert sie nicht korrekt."
 
 msgid ""
 "The file was saved safely, but it cannot be compiled into the MO format and "
@@ -601,7 +598,7 @@ msgid ""
 "correctly. Other features, such as plural forms, may be affected as well."
 msgstr ""
 "Vorschläge sind nicht verfügbar, wenn die Übersetzungssprache nicht richtig "
-"eingestellt ist. Andere Funktionen wie z. B. Pluralformen, können ebenfalls "
+"eingestellt ist. Andere Funktionen wie z. B. Pluralformen können ebenfalls "
 "betroffen sein."
 
 msgid "Language of the translation is the same as source language."
@@ -696,6 +693,28 @@ msgstr " (geändert)"
 msgid "Failed to update translation memory: %s"
 msgstr "Fehler beim Aktualisieren des Übersetzungsspeichers: %s"
 
+msgid "Remove same-as-source translations"
+msgstr "Übersetzungen mit gleicher Quelle entfernen"
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr ""
+"Sollen alle nicht mit dem Quelltext identischen Übersetzungen entfernt "
+"werden?"
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+"Diese Aktion wird alle Übersetzungen löschen, die genau mit dem Quelltext "
+"übereinstimmen. Dies kann nicht rückgängig gemacht werden."
+
+msgid "Keep"
+msgstr "Behalten"
+
+msgid "Remove"
+msgstr "Entfernen"
+
 msgid "Purge deleted translations"
 msgstr "Ungenutzte Übersetzungen entfernen"
 
@@ -710,9 +729,6 @@ msgstr ""
 "Wenn Sie mit dem Bereinigen fortfahren, werden alle als gelöscht markierten "
 "Texte endgültig gelöscht. Wenn die Texte in Zukunft wieder hinzugefügt "
 "werden, müssen Sie sie erneut übersetzen."
-
-msgid "Keep"
-msgstr "Behalten"
 
 msgid "Purge"
 msgstr "Bereinigen"
@@ -747,30 +763,6 @@ msgstr "Code-Vorkommen"
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr "Code-Vorkommen"
-
-msgid "&Bookmarks"
-msgstr "&Lesezeichen"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Lesezeichen %i festlegen"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Zu Lesezeichen %i springen"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Lesezeichen %i festlegen"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Zu Lesezeichen %i springen"
 
 msgid "Hide Sidebar"
 msgstr "Seitenleiste ausblenden"
@@ -894,6 +886,13 @@ msgid "unknown language"
 msgstr "unbekannte Sprache"
 
 #, c-format
+msgid "Network error: %s (%d)"
+msgstr "Netzwerkfehler: %s (%d)"
+
+msgid "Unknown error"
+msgstr "Unbekannter Fehler"
+
+#, c-format
 msgid "Failed command: %s"
 msgstr "Fehlgeschlagener Befehl: %s"
 
@@ -901,17 +900,17 @@ msgid "Failed to merge gettext catalogs."
 msgstr "Zusammenführen der gettext-Kataloge fehlgeschlagen."
 
 msgid "Open in Editor"
-msgstr "In Editor öffnen"
+msgstr "Im Editor öffnen"
 
 msgid "Open in editor"
-msgstr "In Editor öffnen"
+msgstr "Im Editor öffnen"
 
 msgid ""
 "No information about this string’s occurrences in the source code is "
 "provided in the file."
 msgstr ""
 "In der Datei werden keine Informationen über das Vorkommen dieser "
-"Zeichenkette im Quelltext bereitgestellt."
+"Zeichenkette im Quellcode bereitgestellt."
 
 msgid "No usage information"
 msgstr "Keine Nutzungsinformationen"
@@ -992,7 +991,7 @@ msgid "String to find"
 msgstr "Zu suchende Zeichenkette"
 
 msgid "Replacement string"
-msgstr "Ersatzzeichenkette"
+msgstr "Ersetzungszeichenkette"
 
 #, c-format
 msgid "Cannot execute program: %s"
@@ -1102,15 +1101,14 @@ msgstr ""
 "Führt eine Aktualisierung aus dem Quellcode für alle Dateien im Projekt "
 "durch."
 
-msgid "Catalogs Manager"
-msgstr "Katalogverwaltung"
-
 msgid "Check for Updates…"
 msgstr "Auf Aktualisierungen prüfen …"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr "Einstellungen …"
+msgid "Catalogs Manager"
+msgstr "Katalogverwaltung"
+
+msgid "&Preferences…"
+msgstr "&Einstellungen …"
 
 msgid "&Edit"
 msgstr "&Bearbeiten"
@@ -1369,6 +1367,9 @@ msgstr "Importieren des Übersetzungsspeichers aus »%s« ist fehlgeschlagen."
 msgid "Import error"
 msgstr "Importfehler"
 
+msgid "Export as…"
+msgstr "Exportieren als …"
+
 msgid "Exporting translations…"
 msgstr "Übersetzungen werden exportiert …"
 
@@ -1458,7 +1459,7 @@ msgid ""
 "have specific requirements e.g. because of version control."
 msgstr ""
 "Diese Einstellungen betreffen die interne Formatierung der PO-Dateien. "
-"Passen Sie sie an, wenn Sie, z.B. für Versionskontrolle, bestimmte "
+"Passen Sie sie an, wenn Sie z. B. für Versionskontrolle bestimmte "
 "Anforderungen haben."
 
 msgid "Line endings:"
@@ -1479,6 +1480,9 @@ msgstr "Formatierung vorhandener Dateien beibehalten"
 
 msgid "Advanced"
 msgstr "Erweitert"
+
+msgid "Settings"
+msgstr "Einstellungen"
 
 msgid "Preparing strings…"
 msgstr "Zeichenketten werden vorbereitet …"
@@ -1535,7 +1539,7 @@ msgid ""
 "By default, inaccurate results are also included, but marked as needing "
 "work. Check this option to only include perfect matches."
 msgstr ""
-"Standardmäßig werden ungenaue Ergebnisse auch übernommen und mit »Benötigt "
+"Standardmäßig werden auch ungenaue Ergebnisse übernommen und mit »Benötigt "
 "Überarbeitung« markiert. Wählen Sie diese Option, um nur exakte "
 "Übereinstimmungen zu übernehmen."
 
@@ -1589,10 +1593,10 @@ msgid "Cancelling…"
 msgstr "Abbrechen …"
 
 msgid "Drag Folders or Files Here"
-msgstr "Ordner oder Dateien hierhin ziehen"
+msgstr "Ordner oder Dateien hierherziehen"
 
 msgid "Drag folders or files here"
-msgstr "Ordner oder Dateien hierher ziehen"
+msgstr "Ordner oder Dateien hierherziehen"
 
 msgid "Add Folders…"
 msgstr "Ordner hinzufügen …"
@@ -1654,7 +1658,7 @@ msgid "Team name and email address or URL"
 msgstr "Name des Teams und E-Mail-Adresse oder URL"
 
 msgid "e.g. nplurals=2; plural=(n > 1);"
-msgstr "z.B. nplurals=2; plural=(n != 1);"
+msgstr "z. B. nplurals=2; plural=(n != 1);"
 
 msgid "UTF-8 (recommended)"
 msgstr "UTF-8 (empfohlen)"
@@ -1732,7 +1736,7 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr "Die Übersetzung endet mit »%s«, der Quelltext allerdings mit »%s«."
 
 msgid "Cloud"
-msgstr ""
+msgstr "Cloud"
 
 msgid "Clear Menu"
 msgstr "Menü leeren"
@@ -1783,7 +1787,7 @@ msgid "&Open…"
 msgstr "Ö&ffnen …"
 
 msgid "Open Recent"
-msgstr "Zuletzt geöffnete Dateien"
+msgstr "Benutzte Dokumente"
 
 msgid "Open recent"
 msgstr "Zuletzt verwendete öffnen"
@@ -1821,14 +1825,17 @@ msgstr "Speichern &unter …"
 msgid "Compile to MO…"
 msgstr "MO-Datei erstellen …"
 
-msgid "E&xport as HTML…"
-msgstr "E&xportieren als HTML …"
+msgid "E&xport to HTML…"
+msgstr "E&xportieren als HTML …"
 
 msgid "Check for updates…"
 msgstr "Auf Aktualisierungen prüfen …"
 
-msgid "&Preferences…"
-msgstr "&Einstellungen …"
+msgid "Settings…"
+msgstr "Einstellungen …"
+
+msgid "&Preferences"
+msgstr "&Einstellungen"
 
 msgid "E&xit"
 msgstr "&Beenden"
@@ -1837,10 +1844,10 @@ msgid "Quit"
 msgstr "Beenden"
 
 msgid "Copy from singular"
-msgstr "Von Singular kopieren"
+msgstr "Vom Singular kopieren"
 
 msgid "Copy From Singular"
-msgstr "Von Singular kopieren"
+msgstr "Vom Singular kopieren"
 
 msgid "Translation needs &work"
 msgstr "Übersetzung benötigt &Überarbeitung"
@@ -1878,9 +1885,6 @@ msgstr "Nächstes Vorkommen suchen"
 
 msgid "Find Previous"
 msgstr "Vorheriges Vorkommen suchen"
-
-msgid "&Preferences"
-msgstr "&Einstellungen"
 
 msgid "Show string &ID"
 msgstr "String &ID anzeigen"
@@ -1963,20 +1967,26 @@ msgstr "Mit Crowdin synchronisieren"
 msgid "Pre-&translate…"
 msgstr "Vorüberse&tzung …"
 
-msgid "&Purge deleted translations"
-msgstr "&Ungenutzte Übersetzungen entfernen"
-
-msgid "&Purge Deleted Translations"
-msgstr "&Ungenutzte Übersetzungen entfernen"
-
 msgid "&Validate translations"
 msgstr "&Übersetzungen prüfen"
 
 msgid "&Validate Translations"
 msgstr "&Übersetzungen prüfen"
 
+msgid "Remove Same-as-Source Translations"
+msgstr "Übersetzungen mit gleicher Quelle entfernen"
+
+msgid "&Purge deleted translations"
+msgstr "&Ungenutzte Übersetzungen entfernen"
+
+msgid "&Purge Deleted Translations"
+msgstr "&Ungenutzte Übersetzungen entfernen"
+
 msgid "&Properties…"
 msgstr "&Eigenschaften …"
+
+msgid "&Go"
+msgstr "&Navigieren"
 
 msgid "&Done and next"
 msgstr "&Erledigt und weiter"
@@ -2048,7 +2058,7 @@ msgid "Extractor setup"
 msgstr "Extraktor-Einrichtung"
 
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
-msgstr "Durch Semikola getrennte Liste der Dateiendungen (z.B. *.cpp;*.h):"
+msgstr "Durch Semikola getrennte Liste der Dateiendungen (z. B. *.cpp;*.h):"
 
 msgid "Invocation:"
 msgstr "Aufruf:"
@@ -2193,7 +2203,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(0 neu, 0 veraltet)"
 
 msgid "Open"
-msgstr "Öffnen"
+msgstr ""
 
 msgid "Open file"
 msgstr "Datei öffnen"
@@ -2520,6 +2530,10 @@ msgstr "&Ja"
 
 msgid "Yes"
 msgstr "Ja"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

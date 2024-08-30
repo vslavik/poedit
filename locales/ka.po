@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2024-03-07 10:15\n"
+"POT-Creation-Date: 2024-08-30 13:42+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Georgian\n"
 "Language: ka_GE\n"
@@ -368,9 +368,6 @@ msgstr "ფაილი \"%s\" არ არსებობს."
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "&გადასვლა"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -444,8 +441,8 @@ msgstr "კომპილაცია ფაილში…"
 msgid "Compiled Translation Files"
 msgstr "თარგმანის კომპილირებული ფაილები"
 
-msgid "Export as…"
-msgstr "გატანა როგორც…"
+msgid "Export to HTML…"
+msgstr ""
 
 msgid "HTML Files"
 msgstr "HTML ფაილები"
@@ -675,6 +672,24 @@ msgstr " (შეიცვალა)"
 msgid "Failed to update translation memory: %s"
 msgstr "თარგმანის მეხსიერების განახლების შეცდომა: %s"
 
+msgid "Remove same-as-source translations"
+msgstr ""
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr ""
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+
+msgid "Keep"
+msgstr "შენარჩუნება"
+
+msgid "Remove"
+msgstr ""
+
 msgid "Purge deleted translations"
 msgstr "წაშლილი თარგმანებისგან გაწმენდა"
 
@@ -689,9 +704,6 @@ msgstr ""
 "თუ გაწმენდას გააგრძელებთ, სამუდამოდ წაიშლება ყველა ის თარგმანი, რომლებიც "
 "აღარ გამოიყენება. მომავალში მათი ხელახლა თარგმნა მოგიწევთ, თუ კატალოგს კვლავ "
 "დაემატება."
-
-msgid "Keep"
-msgstr "შენარჩუნება"
 
 msgid "Purge"
 msgstr "გაწმენდა"
@@ -726,30 +738,6 @@ msgstr "კოდი ჩანს"
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr "კოდი ჩანს"
-
-msgid "&Bookmarks"
-msgstr "&სანიშნეები"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "სანიშნის დასმა %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "სანიშნე %i-ზე გადასვლა"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "სანიშნის დასმა %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "სანიშნე %i-ზე გადასვლა"
 
 msgid "Hide Sidebar"
 msgstr "გვერდითა ზოლის დამალვა"
@@ -868,6 +856,13 @@ msgstr "წყაროს ტექსტი - %s"
 
 msgid "unknown language"
 msgstr "უცნობი ენა"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr ""
+
+msgid "Unknown error"
+msgstr "უცნობი შეცდომა"
 
 #, c-format
 msgid "Failed command: %s"
@@ -1068,15 +1063,14 @@ msgstr ""
 msgid "Performs update from source code on all files in the project."
 msgstr ""
 
-msgid "Catalogs Manager"
-msgstr "კატალოგების მმართველი"
-
 msgid "Check for Updates…"
 msgstr "განახლებების შემოწმება…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr "მორგება…"
+msgid "Catalogs Manager"
+msgstr "კატალოგების მმართველი"
+
+msgid "&Preferences…"
+msgstr "&მორგება…"
 
 msgid "&Edit"
 msgstr "&რედაქტირება"
@@ -1329,6 +1323,9 @@ msgstr ""
 msgid "Import error"
 msgstr "შემოტანის შეცდომა"
 
+msgid "Export as…"
+msgstr "გატანა როგორც…"
+
 msgid "Exporting translations…"
 msgstr "თარგმანების გატანა…"
 
@@ -1425,6 +1422,9 @@ msgstr "არსებული ფაილების ფორმატი�
 
 msgid "Advanced"
 msgstr "დამატებითი"
+
+msgid "Settings"
+msgstr ""
 
 msgid "Preparing strings…"
 msgstr "სტრიქონების მომზადება…"
@@ -1656,7 +1656,7 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr ""
 
 msgid "Cloud"
-msgstr ""
+msgstr "ღრუბელი"
 
 msgid "Clear Menu"
 msgstr "მენიუს გასუფთავება"
@@ -1745,14 +1745,17 @@ msgstr "შენახვა როგორც…"
 msgid "Compile to MO…"
 msgstr "კომპილაცია MO ფაილში…"
 
-msgid "E&xport as HTML…"
-msgstr "&HTML-ში გატანა…"
+msgid "E&xport to HTML…"
+msgstr ""
 
 msgid "Check for updates…"
 msgstr "განახლებების შემოწმება…"
 
-msgid "&Preferences…"
-msgstr "&მორგება…"
+msgid "Settings…"
+msgstr "მორგება…"
+
+msgid "&Preferences"
+msgstr "&პარამეტრები"
 
 msgid "E&xit"
 msgstr "გა&სვლა"
@@ -1802,9 +1805,6 @@ msgstr "მომდევნოს მოძებნა"
 
 msgid "Find Previous"
 msgstr "წინანდელის ძიება"
-
-msgid "&Preferences"
-msgstr "&პარამეტრები"
 
 msgid "Show string &ID"
 msgstr "სტრიქონის &ID-ის ჩვენება"
@@ -1887,20 +1887,26 @@ msgstr "Crowdin-თან სინქრონიზაცია"
 msgid "Pre-&translate…"
 msgstr "წინასწარი &თარგმანი…"
 
-msgid "&Purge deleted translations"
-msgstr "წაშლილი თარგმანების &ამოშლა"
-
-msgid "&Purge Deleted Translations"
-msgstr "&წაშლილ თარგმანთა გაწმენდა"
-
 msgid "&Validate translations"
 msgstr "თარგმანის &ვალიდაცია"
 
 msgid "&Validate Translations"
 msgstr "თარგმანის &ვალიდაცია"
 
+msgid "Remove Same-as-Source Translations"
+msgstr ""
+
+msgid "&Purge deleted translations"
+msgstr "წაშლილი თარგმანების &ამოშლა"
+
+msgid "&Purge Deleted Translations"
+msgstr "&წაშლილ თარგმანთა გაწმენდა"
+
 msgid "&Properties…"
 msgstr "&თვისებები…"
+
+msgid "&Go"
+msgstr "&გადასვლა"
 
 msgid "&Done and next"
 msgstr "&დასრულება და შემდეგი"
@@ -2107,7 +2113,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(0 ახალი, 0 მოძველებული)"
 
 msgid "Open"
-msgstr "გახსნა"
+msgstr ""
 
 msgid "Open file"
 msgstr "ფაილის გახსნა"
@@ -2418,6 +2424,10 @@ msgstr "&დიახ"
 
 msgid "Yes"
 msgstr "დიახ"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

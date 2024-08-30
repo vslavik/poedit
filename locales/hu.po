@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2024-03-30 10:15\n"
+"POT-Creation-Date: 2024-08-30 13:42+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -366,9 +366,6 @@ msgstr "A(z) „%s” fájl nem létezik."
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "&Ugrás"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -441,8 +438,8 @@ msgstr "Lefordítás…"
 msgid "Compiled Translation Files"
 msgstr "Lefordított fordítási fájlok"
 
-msgid "Export as…"
-msgstr "Exportálás másként…"
+msgid "Export to HTML…"
+msgstr ""
 
 msgid "HTML Files"
 msgstr "HTML fájlok"
@@ -685,6 +682,24 @@ msgstr " (módosítva)"
 msgid "Failed to update translation memory: %s"
 msgstr "Nem sikerült frissíteni a fordítási memóriát: %s"
 
+msgid "Remove same-as-source translations"
+msgstr ""
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr ""
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+
+msgid "Keep"
+msgstr "Megtartás"
+
+msgid "Remove"
+msgstr ""
+
 msgid "Purge deleted translations"
 msgstr "Törölt fordítások tisztítása"
 
@@ -699,9 +714,6 @@ msgstr ""
 "Ha folytatja a tisztítást, akkor a töröltként megjelölt fordítások végleg "
 "eltávolításra kerülnek. Újra kell fordítania őket, ha ezek a jövőben újra "
 "hozzá lesznek adva."
-
-msgid "Keep"
-msgstr "Megtartás"
 
 msgid "Purge"
 msgstr "Tisztítás"
@@ -736,30 +748,6 @@ msgstr "Kód előfordulásai"
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr "Kód előfordulásai"
-
-msgid "&Bookmarks"
-msgstr "&Könyvjelzők"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "%i könyvjelző beállítása"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Ugrás a(z) %i könyvjelzőre"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "%i könyvjelző beállítása"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Ugrás a(z) %i könyvjelzőre"
 
 msgid "Hide Sidebar"
 msgstr "Oldalsáv elrejtése"
@@ -880,6 +868,13 @@ msgstr "Forrásszöveg – %s"
 
 msgid "unknown language"
 msgstr "ismeretlen nyelv"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr "Hálózati hiba: %s (%d)"
+
+msgid "Unknown error"
+msgstr "Ismeretlen hiba"
 
 #, c-format
 msgid "Failed command: %s"
@@ -1086,15 +1081,14 @@ msgstr "A projekt összes katalógusának frissítése?"
 msgid "Performs update from source code on all files in the project."
 msgstr "A forráskódból frissítést hajt végre a projekt összes fájlján."
 
-msgid "Catalogs Manager"
-msgstr "Katalóguskezelő"
-
 msgid "Check for Updates…"
 msgstr "Frissítések keresése…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr "Beállítások…"
+msgid "Catalogs Manager"
+msgstr "Katalóguskezelő"
+
+msgid "&Preferences…"
+msgstr "&Beállítások…"
 
 msgid "&Edit"
 msgstr "Sz&erkesztés"
@@ -1352,6 +1346,9 @@ msgstr "Nem sikerült a fordítási memória importálása ebből: „%s”."
 msgid "Import error"
 msgstr "Importálási hiba"
 
+msgid "Export as…"
+msgstr "Exportálás másként…"
+
 msgid "Exporting translations…"
 msgstr "Fordítások exportálása…"
 
@@ -1459,6 +1456,9 @@ msgstr "A meglévő fájlok formázásának megőrzése"
 
 msgid "Advanced"
 msgstr "Speciális"
+
+msgid "Settings"
+msgstr ""
 
 msgid "Preparing strings…"
 msgstr "Karakterláncok előkészítése…"
@@ -1703,7 +1703,7 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr "A fordítás végén „%s” van, ellenben a forrásszöveg végén „%s” van."
 
 msgid "Cloud"
-msgstr ""
+msgstr "Felhő"
 
 msgid "Clear Menu"
 msgstr "Menü törlése"
@@ -1792,14 +1792,17 @@ msgstr "Mentés &másként…"
 msgid "Compile to MO…"
 msgstr "Fordítás MO-ra…"
 
-msgid "E&xport as HTML…"
-msgstr "Exportálás HTML-ként…"
+msgid "E&xport to HTML…"
+msgstr ""
 
 msgid "Check for updates…"
 msgstr "Frissítések ellenőrzése…"
 
-msgid "&Preferences…"
-msgstr "&Beállítások…"
+msgid "Settings…"
+msgstr "Beállítások…"
+
+msgid "&Preferences"
+msgstr "&Beállítások"
 
 msgid "E&xit"
 msgstr "K&ilépés"
@@ -1849,9 +1852,6 @@ msgstr "Következő keresése"
 
 msgid "Find Previous"
 msgstr "Előző keresése"
-
-msgid "&Preferences"
-msgstr "&Beállítások"
 
 msgid "Show string &ID"
 msgstr "Karakterlánc-azonosító megjelenítése"
@@ -1934,20 +1934,26 @@ msgstr "Szinkronizáció a Crowdinnel"
 msgid "Pre-&translate…"
 msgstr "&Előfordítás…"
 
-msgid "&Purge deleted translations"
-msgstr "Törölt fordítások &tisztítása"
-
-msgid "&Purge Deleted Translations"
-msgstr "Törölt fordítások &végleges törlése"
-
 msgid "&Validate translations"
 msgstr "Fordítások ér&vényesítése"
 
 msgid "&Validate Translations"
 msgstr "Fordítások ér&vényesítése"
 
+msgid "Remove Same-as-Source Translations"
+msgstr ""
+
+msgid "&Purge deleted translations"
+msgstr "Törölt fordítások &tisztítása"
+
+msgid "&Purge Deleted Translations"
+msgstr "Törölt fordítások &végleges törlése"
+
 msgid "&Properties…"
 msgstr "&Tulajdonságok…"
+
+msgid "&Go"
+msgstr "&Ugrás"
 
 msgid "&Done and next"
 msgstr "&Kész és következő"
@@ -2161,7 +2167,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(0 új, 0 elavult)"
 
 msgid "Open"
-msgstr "Megnyitás"
+msgstr ""
 
 msgid "Open file"
 msgstr "Fájl megnyitása"
@@ -2485,6 +2491,10 @@ msgstr "&Igen"
 
 msgid "Yes"
 msgstr "Igen"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

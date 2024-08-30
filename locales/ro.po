@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2023-11-17 10:16\n"
+"POT-Creation-Date: 2024-08-30 13:57+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -374,9 +374,6 @@ msgstr "Fișierul „%s” nu există."
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "&Mergi la"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -449,8 +446,8 @@ msgstr "Compilare la…"
 msgid "Compiled Translation Files"
 msgstr "Fișiere de traducere compilate"
 
-msgid "Export as…"
-msgstr "Exportă ca…"
+msgid "Export to HTML…"
+msgstr "Exportă în HTML…"
 
 msgid "HTML Files"
 msgstr "Fișiere HTML"
@@ -697,6 +694,27 @@ msgstr " (modificat)"
 msgid "Failed to update translation memory: %s"
 msgstr "Eroare la actualizarea memoriei de traducere: %s"
 
+msgid "Remove same-as-source translations"
+msgstr "Șterge traducerile similare textelor-sursă"
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr ""
+"Dorești să ștergi toate traducerile care sunt identice cu textul-sursă?"
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+"Această acțiune va șterge toate traducerile care se potrivesc exact cu "
+"textul-sursă. Procesul este ireversibil."
+
+msgid "Keep"
+msgstr "Păstrează"
+
+msgid "Remove"
+msgstr "Șterge"
+
 msgid "Purge deleted translations"
 msgstr "Curăță traducerile șterse"
 
@@ -711,9 +729,6 @@ msgstr ""
 "Dacă vei continua curățarea, toate traducerile marcate ca șterse vor fi "
 "eliminate definitiv. Va trebui să le traduci din nou dacă vor fi adăugate "
 "înapoi în viitor."
-
-msgid "Keep"
-msgstr "Păstrează"
 
 msgid "Purge"
 msgstr "Curăță"
@@ -748,30 +763,6 @@ msgstr "Apariții în cod"
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr "Apariții în cod"
-
-msgid "&Bookmarks"
-msgstr "&Semne de carte"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Setează semn de carte %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Mergi la semn de carte %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Setează semn de carte %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Mergi la semn de carte %i"
 
 msgid "Hide Sidebar"
 msgstr "Ascunde bară laterală"
@@ -892,6 +883,13 @@ msgstr "Sursă text — %s"
 
 msgid "unknown language"
 msgstr "limbă necunoscută"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr "Eroare rețea: %s (%d)"
+
+msgid "Unknown error"
+msgstr "Eroare necunoscută"
 
 #, c-format
 msgid "Failed command: %s"
@@ -1099,15 +1097,14 @@ msgid "Performs update from source code on all files in the project."
 msgstr ""
 "Efectuează actualizare din codul sursă pentru toate fișierele din proiect."
 
-msgid "Catalogs Manager"
-msgstr "Administrator cataloage"
-
 msgid "Check for Updates…"
 msgstr "Caută actualizări…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr "Setări…"
+msgid "Catalogs Manager"
+msgstr "Administrator cataloage"
+
+msgid "&Preferences…"
+msgstr "&Preferințe…"
 
 msgid "&Edit"
 msgstr "&Editare"
@@ -1366,6 +1363,9 @@ msgstr "Importarea memorie de traducere din „%s” nu a reușit."
 msgid "Import error"
 msgstr "Eroare importare"
 
+msgid "Export as…"
+msgstr "Exportă ca…"
+
 msgid "Exporting translations…"
 msgstr "Exportare traduceri…"
 
@@ -1472,6 +1472,9 @@ msgstr "Păstrează formatarea fișierelor existente"
 
 msgid "Advanced"
 msgstr "Avansat"
+
+msgid "Settings"
+msgstr "Setări"
 
 msgid "Preparing strings…"
 msgstr "Se pregătesc șirurile…"
@@ -1719,7 +1722,7 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr "Traducerea se termină cu „%s”, dar textul sursă se termină cu „%s”."
 
 msgid "Cloud"
-msgstr ""
+msgstr "Cloud"
 
 msgid "Clear Menu"
 msgstr "Curăță meniu"
@@ -1808,14 +1811,17 @@ msgstr "Salvează &ca…"
 msgid "Compile to MO…"
 msgstr "Compilează în MO…"
 
-msgid "E&xport as HTML…"
-msgstr "E&xportă ca HTML…"
+msgid "E&xport to HTML…"
+msgstr "E&xportă în HTML…"
 
 msgid "Check for updates…"
 msgstr "Caută actualizări…"
 
-msgid "&Preferences…"
-msgstr "&Preferințe…"
+msgid "Settings…"
+msgstr "Setări…"
+
+msgid "&Preferences"
+msgstr "&Preferințe"
 
 msgid "E&xit"
 msgstr "I&eșire"
@@ -1865,9 +1871,6 @@ msgstr "Rezultatul următor"
 
 msgid "Find Previous"
 msgstr "Rezultatul anterior"
-
-msgid "&Preferences"
-msgstr "&Preferințe"
 
 msgid "Show string &ID"
 msgstr "Arată &ID șir"
@@ -1950,20 +1953,26 @@ msgstr "Sincronizează cu Crowdin"
 msgid "Pre-&translate…"
 msgstr "Pre-&traducere…"
 
-msgid "&Purge deleted translations"
-msgstr "&Curăță traducerile șterse"
-
-msgid "&Purge Deleted Translations"
-msgstr "&Curăță traducerile șterse"
-
 msgid "&Validate translations"
 msgstr "&Validează traducerile"
 
 msgid "&Validate Translations"
 msgstr "&Validează traducerile"
 
+msgid "Remove Same-as-Source Translations"
+msgstr "Șterge traducerile care se potrivesc exact cu textul-sursă"
+
+msgid "&Purge deleted translations"
+msgstr "&Curăță traducerile șterse"
+
+msgid "&Purge Deleted Translations"
+msgstr "&Curăță traducerile șterse"
+
 msgid "&Properties…"
 msgstr "&Proprietăți…"
+
+msgid "&Go"
+msgstr "&Mergi la"
 
 msgid "&Done and next"
 msgstr "&Gata și următorul"
@@ -2178,7 +2187,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(0 noi, 0 învechite)"
 
 msgid "Open"
-msgstr "Deschide"
+msgstr ""
 
 msgid "Open file"
 msgstr "Deschide fișier"
@@ -2502,6 +2511,10 @@ msgstr "&Da"
 
 msgid "Yes"
 msgstr "Da"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2023-11-17 10:16\n"
+"POT-Creation-Date: 2024-08-30 13:57+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Uzbek\n"
 "Language: uz_UZ\n"
@@ -356,9 +356,6 @@ msgstr "\"%s\" fayli mavjud emas."
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "&O‘tish"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -428,8 +425,8 @@ msgstr "Quyidagiga kompilyatsiya qilish…"
 msgid "Compiled Translation Files"
 msgstr "Kompilyatsiya qilingan tarjima fayllari"
 
-msgid "Export as…"
-msgstr "Quyidagiday eksport…"
+msgid "Export to HTML…"
+msgstr ""
 
 msgid "HTML Files"
 msgstr "HTML fayllar"
@@ -652,6 +649,24 @@ msgstr " (o‘zgartirilgan)"
 msgid "Failed to update translation memory: %s"
 msgstr "Tarjima xotirasi yangilanmadi: %s"
 
+msgid "Remove same-as-source translations"
+msgstr ""
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr ""
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+
+msgid "Keep"
+msgstr "Saqlab qo‘yish"
+
+msgid "Remove"
+msgstr ""
+
 msgid "Purge deleted translations"
 msgstr "O‘chirilgan tarjimalarni tozalash"
 
@@ -666,9 +681,6 @@ msgstr ""
 "Agar tozalashda davom etsangiz, barcha o‘chirish uchun belgilangan "
 "tarjimalar butunlay o‘chiriladi. Agar ular keyinchalik kerak bo‘lib qolsa, "
 "yana tarjima qilishingiz kerak bo‘ladi."
-
-msgid "Keep"
-msgstr "Saqlab qo‘yish"
 
 msgid "Purge"
 msgstr "Tozalash"
@@ -703,30 +715,6 @@ msgstr ""
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr ""
-
-msgid "&Bookmarks"
-msgstr "&Xatcho‘plar"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "%i xatcho‘pni o‘rnatish"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "%i xatcho‘pga o‘tish"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "%i xatcho‘pni o‘rnatish"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "%i xatcho‘pga o‘tish"
 
 msgid "Hide Sidebar"
 msgstr "Yon panelni yashirish"
@@ -848,6 +836,13 @@ msgstr "Manba matn — %s"
 
 msgid "unknown language"
 msgstr "noma’lum til"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr ""
+
+msgid "Unknown error"
+msgstr ""
 
 #, c-format
 msgid "Failed command: %s"
@@ -1046,14 +1041,13 @@ msgstr ""
 msgid "Performs update from source code on all files in the project."
 msgstr ""
 
-msgid "Catalogs Manager"
-msgstr "Kataloglar menejeri"
-
 msgid "Check for Updates…"
 msgstr "Yangilanishlarni tekshirish…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
+msgid "Catalogs Manager"
+msgstr "Kataloglar menejeri"
+
+msgid "&Preferences…"
 msgstr ""
 
 msgid "&Edit"
@@ -1309,6 +1303,9 @@ msgstr ""
 msgid "Import error"
 msgstr ""
 
+msgid "Export as…"
+msgstr "Quyidagiday eksport…"
+
 msgid "Exporting translations…"
 msgstr ""
 
@@ -1414,6 +1411,9 @@ msgstr "Mavjud fayllarni formatlashni saqlash"
 
 msgid "Advanced"
 msgstr "Qo‘shimcha"
+
+msgid "Settings"
+msgstr ""
 
 msgid "Preparing strings…"
 msgstr ""
@@ -1732,14 +1732,17 @@ msgstr ""
 msgid "Compile to MO…"
 msgstr ""
 
-msgid "E&xport as HTML…"
+msgid "E&xport to HTML…"
 msgstr ""
 
 msgid "Check for updates…"
 msgstr ""
 
-msgid "&Preferences…"
+msgid "Settings…"
 msgstr ""
+
+msgid "&Preferences"
+msgstr "&Parametrlar"
 
 msgid "E&xit"
 msgstr "Chi&qish"
@@ -1789,9 +1792,6 @@ msgstr "Keyingisini topish"
 
 msgid "Find Previous"
 msgstr "Oldingisini topish"
-
-msgid "&Preferences"
-msgstr "&Parametrlar"
 
 msgid "Show string &ID"
 msgstr ""
@@ -1874,20 +1874,26 @@ msgstr "Crowdin bilan sinxronlash"
 msgid "Pre-&translate…"
 msgstr ""
 
-msgid "&Purge deleted translations"
-msgstr "&O‘chirilgan tarjimalarni tozalash"
-
-msgid "&Purge Deleted Translations"
-msgstr "&O‘chirilgan tarjimalarni tozalash"
-
 msgid "&Validate translations"
 msgstr "Tarjimalarni to‘g‘rilash"
 
 msgid "&Validate Translations"
 msgstr "Tarjimalarni &to‘g‘rilash"
 
+msgid "Remove Same-as-Source Translations"
+msgstr ""
+
+msgid "&Purge deleted translations"
+msgstr "&O‘chirilgan tarjimalarni tozalash"
+
+msgid "&Purge Deleted Translations"
+msgstr "&O‘chirilgan tarjimalarni tozalash"
+
 msgid "&Properties…"
 msgstr ""
+
+msgid "&Go"
+msgstr "&O‘tish"
 
 msgid "&Done and next"
 msgstr "&Tayyor va keyingisi"
@@ -2098,7 +2104,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(0 ta yangi, 0 ta eski)"
 
 msgid "Open"
-msgstr "Ochish"
+msgstr ""
 
 msgid "Open file"
 msgstr ""
@@ -2411,6 +2417,10 @@ msgstr "&Ha"
 
 msgid "Yes"
 msgstr "Ha"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2023-12-09 10:15\n"
+"POT-Creation-Date: 2024-08-30 13:57+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
-"n%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Crowdin-Project: poedit\n"
 "X-Crowdin-Project-ID: 53425\n"
 "X-Crowdin-Language: sl\n"
@@ -373,9 +373,6 @@ msgstr "Datoteka »%s« ne obstaja."
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "&Pojdi"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -447,8 +444,8 @@ msgstr "Prevedi v …"
 msgid "Compiled Translation Files"
 msgstr "Pretvorjene prevodne datoteke"
 
-msgid "Export as…"
-msgstr "Izvozi kot ..."
+msgid "Export to HTML…"
+msgstr ""
 
 msgid "HTML Files"
 msgstr "Datoteke HTML"
@@ -698,6 +695,24 @@ msgstr " (spremenjeno)"
 msgid "Failed to update translation memory: %s"
 msgstr "Ni uspela posodobitev pomnilnika prevodov: %s"
 
+msgid "Remove same-as-source translations"
+msgstr ""
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr ""
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+
+msgid "Keep"
+msgstr "Ohrani"
+
+msgid "Remove"
+msgstr ""
+
 msgid "Purge deleted translations"
 msgstr "Odstrani izbrisane prevode"
 
@@ -712,9 +727,6 @@ msgstr ""
 "Če prevode počistite, bodo vsi, ki so označeni kot izbrisani, trajno "
 "izgubljeni. V kolikor se ti nizi v prihodnje znova pojavijo, jih bo treba "
 "ponovno prevesti."
-
-msgid "Keep"
-msgstr "Ohrani"
 
 msgid "Purge"
 msgstr "Počisti"
@@ -749,30 +761,6 @@ msgstr "Pojavitve v kodi"
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr "Pojavitve v kodi"
-
-msgid "&Bookmarks"
-msgstr "&Zaznamki"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Izmenjalka+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Nastavi zaznamek %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Pojdi na zaznamek %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Nastavi zaznamek %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Pojdi na zaznamek %i"
 
 msgid "Hide Sidebar"
 msgstr "Skrij stransko vrstico"
@@ -893,6 +881,13 @@ msgstr "Izvorno besedilo — %s"
 
 msgid "unknown language"
 msgstr "neznani jezik"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr ""
+
+msgid "Unknown error"
+msgstr ""
 
 #, c-format
 msgid "Failed command: %s"
@@ -1098,15 +1093,14 @@ msgstr "Ali želite posodobiti vse kataloge v tem projektu?"
 msgid "Performs update from source code on all files in the project."
 msgstr "Izvede posodobitev iz izvorne kode za vse datoteke v projektu."
 
-msgid "Catalogs Manager"
-msgstr "Upravitelj katalogov"
-
 msgid "Check for Updates…"
 msgstr "Preveri obstoj posodobitev…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr "Nastavitve…"
+msgid "Catalogs Manager"
+msgstr "Upravitelj katalogov"
+
+msgid "&Preferences…"
+msgstr "&Nastavitve ..."
 
 msgid "&Edit"
 msgstr "&Uredi"
@@ -1362,6 +1356,9 @@ msgstr "Uvoz pomnilnika prevodov iz \"%s\" je spodletel."
 msgid "Import error"
 msgstr "Napaka pri uvozu"
 
+msgid "Export as…"
+msgstr "Izvozi kot ..."
+
 msgid "Exporting translations…"
 msgstr "Izvažanje prevodov…"
 
@@ -1469,6 +1466,9 @@ msgstr "Ohrani oblikovanje obstoječih datotek"
 
 msgid "Advanced"
 msgstr "Napredno"
+
+msgid "Settings"
+msgstr ""
 
 msgid "Preparing strings…"
 msgstr "Priprava nizov …"
@@ -1805,14 +1805,17 @@ msgstr "Shrani &kot …"
 msgid "Compile to MO…"
 msgstr "Prevedi v MO ..."
 
-msgid "E&xport as HTML…"
-msgstr "&Izvozi kot HTML ..."
+msgid "E&xport to HTML…"
+msgstr ""
 
 msgid "Check for updates…"
 msgstr "Preveri obstoj posodobitev ..."
 
-msgid "&Preferences…"
-msgstr "&Nastavitve ..."
+msgid "Settings…"
+msgstr "Nastavitve…"
+
+msgid "&Preferences"
+msgstr "Nas&tavitve "
 
 msgid "E&xit"
 msgstr "Iz&hod"
@@ -1862,9 +1865,6 @@ msgstr "Poišči naslednjega"
 
 msgid "Find Previous"
 msgstr "Poišči prejšnjega"
-
-msgid "&Preferences"
-msgstr "Nas&tavitve "
 
 msgid "Show string &ID"
 msgstr "Prikaži &ID niza"
@@ -1947,20 +1947,26 @@ msgstr "Uskladi s Crowdinom"
 msgid "Pre-&translate…"
 msgstr "Vnapre&j prevedi ..."
 
-msgid "&Purge deleted translations"
-msgstr "Poči&sti izbrisane prevode"
-
-msgid "&Purge Deleted Translations"
-msgstr "&Počisti izbrisane prevode"
-
 msgid "&Validate translations"
 msgstr "&Preveri ustreznost prevoda"
 
 msgid "&Validate Translations"
 msgstr "&Preveri ustreznost prevoda"
 
+msgid "Remove Same-as-Source Translations"
+msgstr ""
+
+msgid "&Purge deleted translations"
+msgstr "Poči&sti izbrisane prevode"
+
+msgid "&Purge Deleted Translations"
+msgstr "&Počisti izbrisane prevode"
+
 msgid "&Properties…"
 msgstr "&Lastnosti ..."
+
+msgid "&Go"
+msgstr "&Pojdi"
 
 msgid "&Done and next"
 msgstr "&Dokončano in naprej"
@@ -2175,7 +2181,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(novi: 0, zastareli: 0)"
 
 msgid "Open"
-msgstr "Odpri"
+msgstr ""
 
 msgid "Open file"
 msgstr "Odpri datoteko"
@@ -2499,6 +2505,10 @@ msgstr "&Da"
 
 msgid "Yes"
 msgstr "Da"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Izmenjalka+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

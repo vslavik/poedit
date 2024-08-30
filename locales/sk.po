@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2023-11-20 10:16\n"
+"POT-Creation-Date: 2024-08-30 13:57+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Slovak\n"
 "Language: sk_SK\n"
@@ -368,9 +368,6 @@ msgstr "Súbor „%s\" neexistuje."
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "P&rejsť"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -443,8 +440,8 @@ msgstr "Kompilovať do…"
 msgid "Compiled Translation Files"
 msgstr "Skompilované súbory prekladu"
 
-msgid "Export as…"
-msgstr "Exportovať ako…"
+msgid "Export to HTML…"
+msgstr "Exportovať do HTML…"
 
 msgid "HTML Files"
 msgstr "HTML súbory"
@@ -693,6 +690,27 @@ msgstr " (zmenené)"
 msgid "Failed to update translation memory: %s"
 msgstr "Zlyhala aktualizácia pamäte prekladov: %s"
 
+msgid "Remove same-as-source translations"
+msgstr "Odstrániť preklady rovnaké ako zdroj"
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr ""
+"Chcete odstrániť všetky preklady, ktoré sú totožné so zdrojovým textom?"
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+"Táto akcia odstráni všetky preklady, ktoré sa presne zhodujú so zdrojovým "
+"textom. Túto operáciu nie je možné vrátiť späť."
+
+msgid "Keep"
+msgstr "Zachovať"
+
+msgid "Remove"
+msgstr "Odstrániť"
+
 msgid "Purge deleted translations"
 msgstr "Vyčistiť zmazané preklady"
 
@@ -707,9 +725,6 @@ msgstr ""
 "Ak budete pokračovať s čistením, všetky preklady označené ako zmazané budú "
 "natrvalo odstránené. V prípade, že budú v budúcnosti znovu pridané, budete "
 "ich musieť preložiť znovu."
-
-msgid "Keep"
-msgstr "Zachovať"
 
 msgid "Purge"
 msgstr "Vyčistiť"
@@ -744,30 +759,6 @@ msgstr "Výskyty v kóde"
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr "Výskyty v kóde"
-
-msgid "&Bookmarks"
-msgstr "&Záložky"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Nastaviť záložku: %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Prejsť na záložku: %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Nastaviť záložku %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Prejsť na záložku %i"
 
 msgid "Hide Sidebar"
 msgstr "Skryť bočný panel"
@@ -888,6 +879,13 @@ msgstr "Zdrojový text — %s"
 
 msgid "unknown language"
 msgstr "neznámy jazyk"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr "Chyba siete: %s (%d)"
+
+msgid "Unknown error"
+msgstr "Neznáma chyba"
 
 #, c-format
 msgid "Failed command: %s"
@@ -1095,15 +1093,14 @@ msgstr "Aktualizovať všetky katalógy v tomto projekte?"
 msgid "Performs update from source code on all files in the project."
 msgstr "Vykoná aktualizáciu zdrojového kódu všetkých súborov projektu."
 
-msgid "Catalogs Manager"
-msgstr "Správca katalógov"
-
 msgid "Check for Updates…"
 msgstr "Kontrola aktualizácií…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr "Nastavenia…"
+msgid "Catalogs Manager"
+msgstr "Správca katalógov"
+
+msgid "&Preferences…"
+msgstr "&Predvoľby…"
 
 msgid "&Edit"
 msgstr "&Úpravy"
@@ -1360,6 +1357,9 @@ msgstr "Importovanie prekladovej pamäte do \"%s\" zlyhalo."
 msgid "Import error"
 msgstr "Chyba importu"
 
+msgid "Export as…"
+msgstr "Exportovať ako…"
+
 msgid "Exporting translations…"
 msgstr "Exportovanie prekladov…"
 
@@ -1466,6 +1466,9 @@ msgstr "Zachovať existujúce formátovanie súborov"
 
 msgid "Advanced"
 msgstr "Rozšírené"
+
+msgid "Settings"
+msgstr "Nastavenia"
 
 msgid "Preparing strings…"
 msgstr "Príprava reťazcov…"
@@ -1714,7 +1717,7 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr "Preklad končí „%s\", ale zdrojový text končí „%s\"."
 
 msgid "Cloud"
-msgstr ""
+msgstr "Cloud"
 
 msgid "Clear Menu"
 msgstr "Zmazať ponuku"
@@ -1803,14 +1806,17 @@ msgstr "Uložiť &ako…"
 msgid "Compile to MO…"
 msgstr "Skompilovať do MO súboru…"
 
-msgid "E&xport as HTML…"
-msgstr "E&xportovať ako HTML…"
+msgid "E&xport to HTML…"
+msgstr "E&xportovať do HTML…"
 
 msgid "Check for updates…"
 msgstr "Skontrolovať aktualizácie…"
 
-msgid "&Preferences…"
-msgstr "&Predvoľby…"
+msgid "Settings…"
+msgstr "Nastavenia…"
+
+msgid "&Preferences"
+msgstr "Pred&voľby"
 
 msgid "E&xit"
 msgstr "U&končiť"
@@ -1860,9 +1866,6 @@ msgstr "Hľadať ďalší"
 
 msgid "Find Previous"
 msgstr "Hľadať predošlý"
-
-msgid "&Preferences"
-msgstr "Pred&voľby"
 
 msgid "Show string &ID"
 msgstr "Zobraziť &ID reťazca"
@@ -1945,20 +1948,26 @@ msgstr "Synchronizovať s Crowdinom"
 msgid "Pre-&translate…"
 msgstr "Pred-&preklad…"
 
-msgid "&Purge deleted translations"
-msgstr "&Vyčistiť odstránené preklady"
-
-msgid "&Purge Deleted Translations"
-msgstr "&Vyčistiť odstránené preklady"
-
 msgid "&Validate translations"
 msgstr "&Overiť preklady"
 
 msgid "&Validate Translations"
 msgstr "&Overiť preklady"
 
+msgid "Remove Same-as-Source Translations"
+msgstr "Odstrániť preklady rovnaké ako zdroj"
+
+msgid "&Purge deleted translations"
+msgstr "&Vyčistiť odstránené preklady"
+
+msgid "&Purge Deleted Translations"
+msgstr "&Vyčistiť odstránené preklady"
+
 msgid "&Properties…"
 msgstr "&Vlastnosti…"
+
+msgid "&Go"
+msgstr "P&rejsť"
 
 msgid "&Done and next"
 msgstr "&Dokončiť a prejsť na ďalší"
@@ -2173,7 +2182,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(žiadne nové, žiadne zastaralé)"
 
 msgid "Open"
-msgstr "Otvoriť"
+msgstr ""
 
 msgid "Open file"
 msgstr "Otvoriť súbor"
@@ -2497,6 +2506,10 @@ msgstr "&Áno"
 
 msgid "Yes"
 msgstr "Áno"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

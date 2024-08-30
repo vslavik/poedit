@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2023-11-17 10:16\n"
+"POT-Creation-Date: 2024-08-30 13:42+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -366,9 +366,6 @@ msgstr "ファイル “%s” は存在しません。"
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "移動 (&G)"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -440,8 +437,8 @@ msgstr "形式を指定してコンパイル…"
 msgid "Compiled Translation Files"
 msgstr "翻訳ファイルをコンパイルしました"
 
-msgid "Export as…"
-msgstr "書式を指定してエクスポート…"
+msgid "Export to HTML…"
+msgstr ""
 
 msgid "HTML Files"
 msgstr "HTML ファイル"
@@ -675,6 +672,24 @@ msgstr " (変更済)"
 msgid "Failed to update translation memory: %s"
 msgstr "翻訳メモリを更新できませんでした: %s"
 
+msgid "Remove same-as-source translations"
+msgstr ""
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr ""
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+
+msgid "Keep"
+msgstr "保持する"
+
+msgid "Remove"
+msgstr ""
+
 msgid "Purge deleted translations"
 msgstr "削除された翻訳を一掃する"
 
@@ -688,9 +703,6 @@ msgid ""
 msgstr ""
 "一掃を実行すると、削除済みとしてマークされた翻訳はすべて完全に削除されます。"
 "将来再び追加された場合は翻訳し直す必要があります。"
-
-msgid "Keep"
-msgstr "保持する"
 
 msgid "Purge"
 msgstr "翻訳の一掃"
@@ -725,30 +737,6 @@ msgstr "コードでの出現箇所"
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr "コードでの出現箇所"
-
-msgid "&Bookmarks"
-msgstr "ブックマーク (&B)"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "ブックマーク %i を設定"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "ブックマーク %i へ移動"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "ブックマーク %i を設定"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "ブックマーク %i へ移動"
 
 msgid "Hide Sidebar"
 msgstr "サイドバーを隠す"
@@ -870,6 +858,13 @@ msgstr "ソース テキスト — %s"
 
 msgid "unknown language"
 msgstr "不明な言語"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr ""
+
+msgid "Unknown error"
+msgstr ""
 
 #, c-format
 msgid "Failed command: %s"
@@ -1076,15 +1071,14 @@ msgstr ""
 "プロジェクト内のすべてのファイルのソースコードをもとに、翻訳ファイルの更新を"
 "実行します。"
 
-msgid "Catalogs Manager"
-msgstr "カタログマネージャ"
-
 msgid "Check for Updates…"
 msgstr "アップデートの確認…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr "設定…"
+msgid "Catalogs Manager"
+msgstr "カタログマネージャ"
+
+msgid "&Preferences…"
+msgstr "設定 (&P)…"
 
 msgid "&Edit"
 msgstr "編集 (&E)"
@@ -1340,6 +1334,9 @@ msgstr "「%s」から翻訳メモリをインポートできませんでした�
 msgid "Import error"
 msgstr "インポートエラー"
 
+msgid "Export as…"
+msgstr "書式を指定してエクスポート…"
+
 msgid "Exporting translations…"
 msgstr "翻訳をエクスポート中…"
 
@@ -1444,6 +1441,9 @@ msgstr "既存ファイルのフォーマットを保護する"
 
 msgid "Advanced"
 msgstr "上級者モード"
+
+msgid "Settings"
+msgstr ""
 
 msgid "Preparing strings…"
 msgstr "文字列を準備しています…"
@@ -1772,14 +1772,17 @@ msgstr "名前を付けて保存 (&A)…"
 msgid "Compile to MO…"
 msgstr "MO にコンパイル…"
 
-msgid "E&xport as HTML…"
-msgstr "HTML としてエクスポート (&X)…"
+msgid "E&xport to HTML…"
+msgstr ""
 
 msgid "Check for updates…"
 msgstr "アップデートの確認…"
 
-msgid "&Preferences…"
-msgstr "設定 (&P)…"
+msgid "Settings…"
+msgstr "設定…"
+
+msgid "&Preferences"
+msgstr "設定 (&P)"
 
 msgid "E&xit"
 msgstr "終了 (&X)"
@@ -1829,9 +1832,6 @@ msgstr "次を検索"
 
 msgid "Find Previous"
 msgstr "前を検索"
-
-msgid "&Preferences"
-msgstr "設定 (&P)"
 
 msgid "Show string &ID"
 msgstr "文字列 ID を表示(&I)"
@@ -1914,20 +1914,26 @@ msgstr "Crowdin と同期"
 msgid "Pre-&translate…"
 msgstr "事前翻訳 (&T)…"
 
-msgid "&Purge deleted translations"
-msgstr "削除された翻訳を一掃する (&P)"
-
-msgid "&Purge Deleted Translations"
-msgstr "削除された翻訳を一掃する (&P)"
-
 msgid "&Validate translations"
 msgstr "翻訳を検査 (&V)"
 
 msgid "&Validate Translations"
 msgstr "翻訳を検査 (&V)"
 
+msgid "Remove Same-as-Source Translations"
+msgstr ""
+
+msgid "&Purge deleted translations"
+msgstr "削除された翻訳を一掃する (&P)"
+
+msgid "&Purge Deleted Translations"
+msgstr "削除された翻訳を一掃する (&P)"
+
 msgid "&Properties…"
 msgstr "プロパティ (&P)…"
+
+msgid "&Go"
+msgstr "移動 (&G)"
 
 msgid "&Done and next"
 msgstr "翻訳済みとし、次へ (&D)"
@@ -2142,7 +2148,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(新規 0、使用しないように変更 0)"
 
 msgid "Open"
-msgstr "開く"
+msgstr ""
 
 msgid "Open file"
 msgstr "ファイルを開く"
@@ -2462,6 +2468,10 @@ msgstr "はい (&Y)"
 
 msgid "Yes"
 msgstr "はい"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

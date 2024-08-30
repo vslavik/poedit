@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2023-11-17 10:15\n"
+"POT-Creation-Date: 2024-08-30 13:42+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -365,9 +365,6 @@ msgstr "Файлът „%s“ не съществува."
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "О&бхождане"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -441,8 +438,8 @@ msgstr "Компилиране до…"
 msgid "Compiled Translation Files"
 msgstr "Компилирани преводи"
 
-msgid "Export as…"
-msgstr "Изнасяне като…"
+msgid "Export to HTML…"
+msgstr "Изнасяне като HTML…"
 
 msgid "HTML Files"
 msgstr "HTML файлове"
@@ -680,6 +677,27 @@ msgstr " (незапазен)"
 msgid "Failed to update translation memory: %s"
 msgstr "Актуализирането на паметта с преводи е неуспешно: %s"
 
+msgid "Remove same-as-source translations"
+msgstr "Премахване на преводите, които са еднакви с оригиналния низ"
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr ""
+"Искате ли да премахнете всички преводи, които са еднакви с оригиналния низ?"
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+"Това действие ще изтрие всички преводи, които са абсолютно еднакви с "
+"оригиналния низ. Действието е необратимо."
+
+msgid "Keep"
+msgstr "&Отказ"
+
+msgid "Remove"
+msgstr "Премахване"
+
 msgid "Purge deleted translations"
 msgstr "Прочистване на изтрити преводи"
 
@@ -694,9 +712,6 @@ msgstr ""
 "Ако продължите с прочистването, всички преводи, обозначени като изтрити ще "
 "бъдат премахнати. Ще трябва да ги превеждате отново, ако в последствие бъдат "
 "върнати."
-
-msgid "Keep"
-msgstr "&Отказ"
 
 msgid "Purge"
 msgstr "Прочистване"
@@ -731,30 +746,6 @@ msgstr "Срещания в кода"
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr "Срещания в кода"
-
-msgid "&Bookmarks"
-msgstr "&Отметки"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Добавяне на отметка %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Към отметка %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Добавяне на отметка %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Към отметка %i"
 
 msgid "Hide Sidebar"
 msgstr "&Скриване странична лента"
@@ -875,6 +866,13 @@ msgstr "Изходен текст – %s"
 
 msgid "unknown language"
 msgstr "неизвестен език"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr "Мрежова грешка: %s (%d)"
+
+msgid "Unknown error"
+msgstr "Неизвестна грешка"
 
 #, c-format
 msgid "Failed command: %s"
@@ -1080,15 +1078,14 @@ msgstr "Обновяване на всички каталози в проект�
 msgid "Performs update from source code on all files in the project."
 msgstr "Извършва обновяване от изходния код на всички файлове в проекта."
 
-msgid "Catalogs Manager"
-msgstr "&Управление на каталози"
-
 msgid "Check for Updates…"
 msgstr "Проверка за обновяване…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr "Настройки…"
+msgid "Catalogs Manager"
+msgstr "&Управление на каталози"
+
+msgid "&Preferences…"
+msgstr "&Настройки…"
 
 msgid "&Edit"
 msgstr "&Редактиране"
@@ -1347,6 +1344,9 @@ msgstr "Грешка при внасяне на памет с преводи о�
 msgid "Import error"
 msgstr "Грешка при внасянето"
 
+msgid "Export as…"
+msgstr "Изнасяне като…"
+
 msgid "Exporting translations…"
 msgstr "Изнасяне на преводи…"
 
@@ -1453,6 +1453,9 @@ msgstr "&запазване на формата на съществуващит�
 
 msgid "Advanced"
 msgstr "Разширени"
+
+msgid "Settings"
+msgstr "Настройки"
 
 msgid "Preparing strings…"
 msgstr "Подготвяне на текстовете…"
@@ -1695,7 +1698,7 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr "Преводът завършва с „%s“, а изходният низ с „%s“."
 
 msgid "Cloud"
-msgstr ""
+msgstr "Облак"
 
 msgid "Clear Menu"
 msgstr "Изчистване на менюто"
@@ -1784,14 +1787,17 @@ msgstr "Запазване &като…"
 msgid "Compile to MO…"
 msgstr "Компилиране до файл на MO…"
 
-msgid "E&xport as HTML…"
+msgid "E&xport to HTML…"
 msgstr "Из&насяне като HTML…"
 
 msgid "Check for updates…"
 msgstr "Проверка за обновяване…"
 
-msgid "&Preferences…"
-msgstr "&Настройки…"
+msgid "Settings…"
+msgstr "Настройки…"
+
+msgid "&Preferences"
+msgstr "&Настройки"
 
 msgid "E&xit"
 msgstr "&Изход"
@@ -1841,9 +1847,6 @@ msgstr "&Следващо съвпадение"
 
 msgid "Find Previous"
 msgstr "&Предишно съвпадение"
-
-msgid "&Preferences"
-msgstr "&Настройки"
 
 msgid "Show string &ID"
 msgstr "Показване на &идентификатора на текста"
@@ -1926,20 +1929,26 @@ msgstr "Синхронизиране с Crowdin"
 msgid "Pre-&translate…"
 msgstr "Предварителен &превод…"
 
-msgid "&Purge deleted translations"
-msgstr "&Прочистване на изтрити преводи"
-
-msgid "&Purge Deleted Translations"
-msgstr "&Прочистване на изтрити преводи"
-
 msgid "&Validate translations"
 msgstr "&Валидиране на превода"
 
 msgid "&Validate Translations"
 msgstr "&Валидиране на превода"
 
+msgid "Remove Same-as-Source Translations"
+msgstr "Премахване на преводите, които са еднакви с оригиналния низ"
+
+msgid "&Purge deleted translations"
+msgstr "&Прочистване на изтрити преводи"
+
+msgid "&Purge Deleted Translations"
+msgstr "&Прочистване на изтрити преводи"
+
 msgid "&Properties…"
 msgstr "&Свойства…"
+
+msgid "&Go"
+msgstr "О&бхождане"
 
 msgid "&Done and next"
 msgstr "&Готово, към следващия"
@@ -2156,7 +2165,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(0 нови, 0 неизползвани)"
 
 msgid "Open"
-msgstr "О&тваряне"
+msgstr ""
 
 msgid "Open file"
 msgstr "Отваряне на файл"
@@ -2480,6 +2489,10 @@ msgstr "&Да"
 
 msgid "Yes"
 msgstr "Да"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

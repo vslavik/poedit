@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2023-11-17 10:15\n"
+"POT-Creation-Date: 2024-08-30 13:57+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -369,9 +369,6 @@ msgstr "Kartela “%s” s’ekziston."
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "&Lëvizje"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -444,8 +441,8 @@ msgstr "Përpiloje te…"
 msgid "Compiled Translation Files"
 msgstr "Kartela Përkthimi të Përpiluara"
 
-msgid "Export as…"
-msgstr "Eksportojeni si…"
+msgid "Export to HTML…"
+msgstr "Eksportojeni si HTML…"
 
 msgid "HTML Files"
 msgstr "Kartela HTML"
@@ -684,6 +681,26 @@ msgstr " (i ndryshuar)"
 msgid "Failed to update translation memory: %s"
 msgstr "S’u arrit të përditësohej kujtesë përkthimesh: %s"
 
+msgid "Remove same-as-source translations"
+msgstr "Hiq përkthime njësoj-me-burimin"
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr "Doni të hiqen krejt përkthimet që janë identike me tekstin burim?"
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+"Ky veprim do të heqë çfarëdo përkthimesh që përputhen saktësisht me tekstin "
+"burim. Ky veprim s’mund të zhbëhet."
+
+msgid "Keep"
+msgstr "Mbaji"
+
+msgid "Remove"
+msgstr "Hiqi"
+
 msgid "Purge deleted translations"
 msgstr "Spastroji përkthimet e fshira"
 
@@ -698,9 +715,6 @@ msgstr ""
 "Nëse vazhdoni me spastrimin, krejt përkthimet e shënuara si të fshira do të "
 "hiqen përgjithmonë. Do t’ju duhet t’i ripërktheni, nëse shtohen sërish në të "
 "ardhmen."
-
-msgid "Keep"
-msgstr "Mbaji"
 
 msgid "Purge"
 msgstr "Spastroji"
@@ -735,30 +749,6 @@ msgstr "Hasje Në Kod"
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr "Hasje në kod"
-
-msgid "&Bookmarks"
-msgstr "&Faqerojtës"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Caktoni faqerojtës %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Shko te faqerojtësi %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Caktoni Faqerojtës %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Shko te Faqerojtësi %i"
 
 msgid "Hide Sidebar"
 msgstr "Fshihe Anështyllën"
@@ -879,6 +869,13 @@ msgstr "Teksti burim — %s"
 
 msgid "unknown language"
 msgstr "gjuhë e panjohur"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr "Gabim rrjeti: %s (%d)"
+
+msgid "Unknown error"
+msgstr "Gabim i panjohur"
 
 #, c-format
 msgid "Failed command: %s"
@@ -1083,15 +1080,14 @@ msgstr "Të përditësohen krejt katalogët në këtë projekt?"
 msgid "Performs update from source code on all files in the project."
 msgstr "Kryen përditësim që nga kodi burim mbi krejt kartelat te projekti."
 
-msgid "Catalogs Manager"
-msgstr "Përgjegjës Katalogësh"
-
 msgid "Check for Updates…"
 msgstr "Kontrollo për Përditësime…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr "Rregullime…"
+msgid "Catalogs Manager"
+msgstr "Përgjegjës Katalogësh"
+
+msgid "&Preferences…"
+msgstr "&Parapëlqime…"
 
 msgid "&Edit"
 msgstr "&Përpunoni"
@@ -1351,6 +1347,9 @@ msgstr "Importimi i kujtesës së përkthimeve nga “%s” dështoi."
 msgid "Import error"
 msgstr "Gabim importimi"
 
+msgid "Export as…"
+msgstr "Eksportojeni si…"
+
 msgid "Exporting translations…"
 msgstr "Po eksportohen përkthime…"
 
@@ -1458,6 +1457,9 @@ msgstr "Ruaje formatimin e kartelave ekzistuese"
 
 msgid "Advanced"
 msgstr "Të mëtejshme"
+
+msgid "Settings"
+msgstr "Rregullime"
 
 msgid "Preparing strings…"
 msgstr "Po përgatiten vargjet…"
@@ -1703,7 +1705,7 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr "Përkthimi përfundon me “%s”, por teksti burim përfundon me “%s”."
 
 msgid "Cloud"
-msgstr ""
+msgstr "Re"
 
 msgid "Clear Menu"
 msgstr "Spastroje Menunë"
@@ -1792,14 +1794,17 @@ msgstr "Ruajeni &Si…"
 msgid "Compile to MO…"
 msgstr "Përpilojeni si MO…"
 
-msgid "E&xport as HTML…"
-msgstr "&Eksportojeni si HTML…"
+msgid "E&xport to HTML…"
+msgstr "E&ksportoje si HTML…"
 
 msgid "Check for updates…"
 msgstr "Kontrollo për përditësime…"
 
-msgid "&Preferences…"
-msgstr "&Parapëlqime…"
+msgid "Settings…"
+msgstr "Rregullime…"
+
+msgid "&Preferences"
+msgstr "&Parapëlqime"
 
 msgid "E&xit"
 msgstr "&Dil"
@@ -1849,9 +1854,6 @@ msgstr "Gjej Pasuesin"
 
 msgid "Find Previous"
 msgstr "Gjej të Mëparshmin"
-
-msgid "&Preferences"
-msgstr "&Parapëlqime"
 
 msgid "Show string &ID"
 msgstr "Shfaq &ID vargu"
@@ -1934,20 +1936,26 @@ msgstr "Njëkohësoje me Crowdin-in"
 msgid "Pre-&translate…"
 msgstr "Përkthe p&araprakisht…"
 
-msgid "&Purge deleted translations"
-msgstr "&Spastroji përkthimet e fshira"
-
-msgid "&Purge Deleted Translations"
-msgstr "&Spastroji Përkthimet e Fshira"
-
 msgid "&Validate translations"
 msgstr "&Vleftësoni përkthime"
 
 msgid "&Validate Translations"
 msgstr "&Vleftësoni Përkthime"
 
+msgid "Remove Same-as-Source Translations"
+msgstr "Hiq Përkthime Njësoj-Me-Burimin"
+
+msgid "&Purge deleted translations"
+msgstr "&Spastroji përkthimet e fshira"
+
+msgid "&Purge Deleted Translations"
+msgstr "&Spastroji Përkthimet e Fshira"
+
 msgid "&Properties…"
 msgstr "&Veti…"
+
+msgid "&Go"
+msgstr "&Lëvizje"
 
 msgid "&Done and next"
 msgstr "&U bë, tjetri"
@@ -2162,7 +2170,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(0 të rinj, 0 të vjetruar)"
 
 msgid "Open"
-msgstr "Hap"
+msgstr ""
 
 msgid "Open file"
 msgstr "Hap kartelë"
@@ -2486,6 +2494,10 @@ msgstr "&Po"
 
 msgid "Yes"
 msgstr "Po"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"

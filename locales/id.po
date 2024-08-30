@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2023-12-21 18:55+0100\n"
-"PO-Revision-Date: 2023-11-17 10:16\n"
+"POT-Creation-Date: 2024-08-30 13:42+0200\n"
+"PO-Revision-Date: 2024-08-30 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -368,9 +368,6 @@ msgstr "Berkas \"%s\" tidak ada."
 msgid "Poedit"
 msgstr "Poedit"
 
-msgid "&Go"
-msgstr "&Lompat"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -442,8 +439,8 @@ msgstr "Kompail ke…"
 msgid "Compiled Translation Files"
 msgstr "Berkas Terjemahan Dikompilasi"
 
-msgid "Export as…"
-msgstr "Ekspor sebagai…"
+msgid "Export to HTML…"
+msgstr "Ekspor ke HTML…"
 
 msgid "HTML Files"
 msgstr "Berkas HTML"
@@ -680,6 +677,26 @@ msgstr " (telah diubah)"
 msgid "Failed to update translation memory: %s"
 msgstr "Gagal memperbarui ingatan terjemahan: %s"
 
+msgid "Remove same-as-source translations"
+msgstr ""
+
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
+msgstr ""
+"Apakah Anda ingin menghapus seluruh terjemahan yang identik dengan teks "
+"sumber?"
+
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
+msgstr ""
+
+msgid "Keep"
+msgstr "Pertahankan"
+
+msgid "Remove"
+msgstr "Hapus"
+
 msgid "Purge deleted translations"
 msgstr "Buang terjemahan yang dihapus"
 
@@ -694,9 +711,6 @@ msgstr ""
 "Bila Anda meneruskan pembersihan, semua terjemahan yang ditandai sebagai "
 "terhapus akan dibuang secara permanen. Anda mesti menerjemahkan ulang bila "
 "mereka ditambahkan kembali di masa mendatang."
-
-msgid "Keep"
-msgstr "Pertahankan"
 
 msgid "Purge"
 msgstr "Buang"
@@ -731,30 +745,6 @@ msgstr "Kemunculan Kode"
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
 msgstr "Kemunculan kode"
-
-msgid "&Bookmarks"
-msgstr "&Markah"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Atur markah %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Ke markah %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Atur Markah %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Ke Markah %i"
 
 msgid "Hide Sidebar"
 msgstr "Sembunyikan Bilah Sisi"
@@ -876,6 +866,13 @@ msgstr "Teks sumber — %s"
 
 msgid "unknown language"
 msgstr "bahasa tak dikenal"
+
+#, c-format
+msgid "Network error: %s (%d)"
+msgstr ""
+
+msgid "Unknown error"
+msgstr ""
 
 #, c-format
 msgid "Failed command: %s"
@@ -1081,15 +1078,14 @@ msgstr "Perbarui semua katalog dalam proyek ini?"
 msgid "Performs update from source code on all files in the project."
 msgstr "Lakukan pembaruan dari kode sumber pada semua berkas dalam proyek."
 
-msgid "Catalogs Manager"
-msgstr "Manajer Katalog"
-
 msgid "Check for Updates…"
 msgstr "Periksa Pemutakhiran…"
 
-#. TRANSLATORS: This is Settings app menu that replaces Preferences in macOS 13 Ventura or newer, and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid "Settings…"
-msgstr "Pengaturan…"
+msgid "Catalogs Manager"
+msgstr "Manajer Katalog"
+
+msgid "&Preferences…"
+msgstr "&Preferensi…"
 
 msgid "&Edit"
 msgstr "&Sunting"
@@ -1347,6 +1343,9 @@ msgstr "Mengimpor memori terjemahan dari \"%s\" gagal."
 msgid "Import error"
 msgstr "Kesalahan impor"
 
+msgid "Export as…"
+msgstr "Ekspor sebagai…"
+
 msgid "Exporting translations…"
 msgstr "Mengekspor terjemahan…"
 
@@ -1454,6 +1453,9 @@ msgstr "Pertahankan format berkas yang sudah ada"
 
 msgid "Advanced"
 msgstr "Tingkat lanjut"
+
+msgid "Settings"
+msgstr "Pengaturan"
 
 msgid "Preparing strings…"
 msgstr "Menyiapkan string…"
@@ -1786,14 +1788,17 @@ msgstr "Simp&an Sebagai…"
 msgid "Compile to MO…"
 msgstr "Kompail ke MO…"
 
-msgid "E&xport as HTML…"
+msgid "E&xport to HTML…"
 msgstr "E&kspor sebagai HTML…"
 
 msgid "Check for updates…"
 msgstr "Periksa pemutakhiran…"
 
-msgid "&Preferences…"
-msgstr "&Preferensi…"
+msgid "Settings…"
+msgstr "Pengaturan…"
+
+msgid "&Preferences"
+msgstr "&Preferensi"
 
 msgid "E&xit"
 msgstr "&Keluar"
@@ -1843,9 +1848,6 @@ msgstr "Cari Berikutnya"
 
 msgid "Find Previous"
 msgstr "Cari Sebelumnya"
-
-msgid "&Preferences"
-msgstr "&Preferensi"
 
 msgid "Show string &ID"
 msgstr "Tampilkan &ID string"
@@ -1928,20 +1930,26 @@ msgstr "Selaraskan dengan Crowdin"
 msgid "Pre-&translate…"
 msgstr "Pra&terjemahkan…"
 
-msgid "&Purge deleted translations"
-msgstr "Buang terjemahan yang diha&pus"
-
-msgid "&Purge Deleted Translations"
-msgstr "Buang Terjemahan Yang Diha&pus"
-
 msgid "&Validate translations"
 msgstr "&Validasikan terjemahan"
 
 msgid "&Validate Translations"
 msgstr "&Validasikan Terjemahan"
 
+msgid "Remove Same-as-Source Translations"
+msgstr ""
+
+msgid "&Purge deleted translations"
+msgstr "Buang terjemahan yang diha&pus"
+
+msgid "&Purge Deleted Translations"
+msgstr "Buang Terjemahan Yang Diha&pus"
+
 msgid "&Properties…"
 msgstr "&Properti…"
+
+msgid "&Go"
+msgstr "&Lompat"
 
 msgid "&Done and next"
 msgstr "&Beres dan berikutnya"
@@ -2156,7 +2164,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(0 baru, 0 usang)"
 
 msgid "Open"
-msgstr "Buka"
+msgstr ""
 
 msgid "Open file"
 msgstr "Buka berkas"
@@ -2484,6 +2492,10 @@ msgstr "&Ya"
 
 msgid "Yes"
 msgstr "Ya"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"
