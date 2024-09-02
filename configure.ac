@@ -122,34 +122,45 @@ AC_CHECK_HEADERS([nlohmann/json.hpp])
 WX_CONFIG_CHECK([3.2.4], [WXFOUND=1], [WXFOUND=0], [$WXLIBS_USED], [--unicode])
 
 if test "$WXFOUND" != 1; then
-    AC_MSG_ERROR([
-        Please check that wx-config is in path, the directory
-        where wxWidgets libraries are installed (returned by
-        'wx-config --unicode --libs' command) is in LD_LIBRARY_PATH or
-        equivalent variable and wxWidgets is version 3.0.0 or above,
-        with Unicode build available.
-    ])
+    AC_MSG_ERROR([wxWidgets library is required])
 fi
 
-dnl Check if wxWidgets includes XRC library and if it does, don't build it
-dnl ourselves:
-AC_MSG_CHECKING([if wxWidgets includes XRC])
+dnl Sanity checks for common wxWidgets misconfigurations:
 saved_CXXFLAGS="$CXXFLAGS"
 CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS"
+
+AC_MSG_CHECKING([whether wxWidgets was built with wxUSE_XRC])
 AC_COMPILE_IFELSE(
-	[AC_LANG_PROGRAM([#include <wx/defs.h>], [
+    [AC_LANG_PROGRAM([#include <wx/xrc/xmlres.h>], [
                 #if !defined(wxUSE_XRC) || !wxUSE_XRC
                     #error "XRC not compiled in"
                 #endif
                ])],
-               [
-                AC_MSG_RESULT([yes])
-               ],
-               [
-                AC_MSG_RESULT([no])
-                AC_MSG_ERROR([XRC is required to build poedit!])
-               ])
+    [
+        AC_MSG_RESULT([yes])
+    ],
+    [
+        AC_MSG_RESULT([no])
+        AC_MSG_ERROR([XRC is required to build poedit!])
+    ])
+
+AC_MSG_CHECKING([whether wxWidgets was built with wxUSE_WEBVIEW])
+AC_COMPILE_IFELSE(
+    [AC_LANG_PROGRAM([#include <wx/webview.h>], [
+                #if !defined(wxUSE_WEBVIEW) || !wxUSE_WEBVIEW
+                    #error "wxWebView not compiled in"
+                #endif
+               ])],
+    [
+        AC_MSG_RESULT([yes])
+    ],
+    [
+        AC_MSG_RESULT([no])
+        AC_MSG_ERROR([wxWebView is required to build poedit!])
+    ])
+
 CXXFLAGS="$saved_CXXFLAGS"
+
 
 CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS"
 
