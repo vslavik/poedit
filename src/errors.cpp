@@ -27,7 +27,7 @@
 
 #include <wx/translation.h>
 
-#ifndef __WXOSX__
+#if defined(HAVE_HTTP_CLIENT) && !defined(__WXOSX__)
 #include <cpprest/http_client.h>
 #include <boost/algorithm/string.hpp>
 #endif
@@ -64,7 +64,7 @@ wxString errors::detail::DescribeExceptionImpl(Rethrower& rethrower)
     {
         return e.What();
     }
-#ifndef __WXOSX__
+#if defined(HAVE_HTTP_CLIENT) && !defined(__WXOSX__)
     catch (const web::http::http_exception & e)
     {
         // rephrase the errors more humanly; the default form is too cryptic
@@ -83,7 +83,7 @@ wxString errors::detail::DescribeExceptionImpl(Rethrower& rethrower)
         boost::trim_right(msg);
         return wxString::Format(_("Network error: %s (%d)"), from_c_string(msg.c_str()), e.error_code().value());
     }
-#endif // !__WXOSX__
+#endif // defined(HAVE_HTTP_CLIENT) && !defined(__WXOSX__)
     catch (const std::exception& e)
     {
         return from_c_string(e.what());
