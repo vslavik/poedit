@@ -1360,6 +1360,10 @@ void PoeditApp::OnIdleFixupMenusForMac(wxIdleEvent& event)
 void PoeditApp::OSXOnWillFinishLaunching()
 {
     wxApp::OSXOnWillFinishLaunching();
+
+    // undo wxWidgets messing up system defaults:
+    wxApp::OSXEnableAutomaticTabbing(true);
+
     RecentFiles::Get().MacCreateFakeOpenRecentMenu();
     // We already create the menu item, this would cause duplicates "thanks" to the weird
     // way wx's menubar works on macOS:
