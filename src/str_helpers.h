@@ -203,16 +203,17 @@ public:
     int32_t capacity() { return m_capacity; }
 
     /// Ensure the buffer has a deep copy of the data, if it's not already owned
-    void ensure_owned()
+    UCharBuffer& ensure_owned()
     {
         if (m_owned)
-			return;
+			return *this;
         if (m_capacity == -1)
             m_capacity = u_strlen(m_data) + 1;
         auto copy = new UChar[m_capacity];
         memcpy(copy, m_data, m_capacity * sizeof(UChar));
         m_data = copy;
         m_owned = true;
+		return *this;
 	}
 
 private:
@@ -280,9 +281,19 @@ inline UCharBuffer to_icu(const wxString& str)
     return to_icu(str.wx_str());
 }
 
+inline UCharBuffer to_icu(const wxString&& str)
+{
+    return std::move(to_icu(str.wx_str()).ensure_owned());
+}
+
 inline UCharBuffer to_icu(const std::wstring& str)
 {
     return to_icu(str.c_str());
+}
+
+inline UCharBuffer to_icu(const std::wstring&& str)
+{
+    return std::move(to_icu(str.c_str()).ensure_owned());
 }
 
 inline UCharBuffer to_icu(const std::string& str)

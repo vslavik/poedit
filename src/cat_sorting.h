@@ -106,6 +106,11 @@ protected:
         }
     }
 
+    static str::UCharBuffer ConvertToSortKey(const wxString&& a)
+	{
+		return std::move(ConvertToSortKey(a).ensure_owned());
+	}
+
 private:
     const Catalog& m_catalog;
     SortOrder m_order;
