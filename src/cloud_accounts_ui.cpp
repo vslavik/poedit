@@ -149,10 +149,7 @@ AccountsPanel::AccountsPanel(wxWindow *parent, int flags) : wxPanel(parent, wxID
     m_panelsBook = new wxSimplebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN));
     ColorScheme::SetupWindowColors(m_panelsBook, [=]
     {
-        if (ColorScheme::GetWindowMode(m_panelsBook) == ColorScheme::Light)
-            m_panelsBook->SetBackgroundColour(*wxWHITE);
-        else
-            m_panelsBook->SetBackgroundColour(wxNullColour);
+        m_panelsBook->SetBackgroundColour(ColorScheme::Get(Color::ListControlBg));
     });
 
     sizer->Add(m_panelsBook, wxSizerFlags(1).Expand());

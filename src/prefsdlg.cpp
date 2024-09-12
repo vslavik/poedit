@@ -57,6 +57,7 @@
 #include "edframe.h"
 #include "catalog.h"
 #include "cloud_accounts_ui.h"
+#include "colorscheme.h"
 #include "configuration.h"
 #include "crowdin_gui.h"
 #include "hidpi.h"
@@ -812,18 +813,13 @@ public:
         {
             customExLabel->SetForegroundColour(ExplanationLabel::GetTextColor());
 
+            auto listBg = ColorScheme::Get(Color::ListControlBg);
+            listPanel->SetBackgroundColour(listBg);
 #ifdef __WXOSX__
             // FIXME: In dark mode, listbox color is special and requires NSBox to
-            //        be rendered correctly, so we just use normal background for now:
-            if (ColorScheme::GetWindowMode(this) == ColorScheme::Dark)
-            {
-                listPanel->SetBackgroundColour(wxNullColour);
-            }
-            else
+            //        be rendered correctly, so we just use normal background for now, incl. for the list
+            m_list->SetBackgroundColour(listBg);
 #endif
-            {
-                listPanel->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_LISTBOX));
-            }
         });
 
         m_new->Bind(wxEVT_BUTTON, &ExtractorsPageWindow::OnNewExtractor, this);

@@ -38,6 +38,8 @@ enum class Color : size_t
     Label,
     SecondaryLabel,
 
+    ListControlBg,
+
     ErrorText,
 
     ItemID,

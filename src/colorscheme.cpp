@@ -92,6 +92,18 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
             return wxSystemSettings::GetColour(wxSYS_COLOUR_GRAYTEXT);
             #endif
 
+        case Color::ListControlBg:
+            #ifdef __WXOSX__
+            if (mode == Dark)
+            {
+                // FIXME: In dark mode, listbox color is special and requires NSBox to be rendered correctly;
+                //        this is just passable approximation
+                return wxColour([NSColor underPageBackgroundColor]);
+            }
+            else
+            #endif
+            return wxSystemSettings::GetColour(wxSYS_COLOUR_LISTBOX);
+
         // List items:
 
         case Color::ItemID:
