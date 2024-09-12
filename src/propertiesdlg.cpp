@@ -262,7 +262,11 @@ public:
         SetSizer(sizer);
 
         auto lbl = new wxStaticText(this, wxID_ANY, label);
+#ifdef __WXOSX__
+        sizer->Add(lbl, wxSizerFlags().Expand().Border(wxLEFT|wxBOTTOM, PX(2)));
+#else
         sizer->Add(lbl, wxSizerFlags().Expand());
+#endif
         m_list = new wxListBox(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, nullptr, wxLB_EXTENDED);
         sizer->Add(m_list, wxSizerFlags(1).Expand().BORDER_WIN(wxLEFT, 1));
 
