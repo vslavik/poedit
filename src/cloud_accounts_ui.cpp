@@ -267,13 +267,20 @@ void AccountsPanel::OnSelectAccount(wxDataViewEvent& event)
         return;
     }
 
+    const bool listHasFocus = (wxWindow::FindFocus() == m_list);
+
     SelectAccount(index);
+
+    if (listHasFocus && wxWindow::FindFocus() != m_list)
+    {
+        m_list->SetFocus();
+    }
 }
 
 void AccountsPanel::SelectAccount(unsigned index)
 {
 	m_list->SelectRow(index);
-	m_panelsBook->SetSelection(1 + index);
+	m_panelsBook->ChangeSelection(1 + index);
 }
 
 
