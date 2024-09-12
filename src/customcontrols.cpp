@@ -324,17 +324,35 @@ LearnMoreLink::LearnMoreLink(wxWindow *parent, const wxString& url, wxString lab
 
     wxHyperlinkCtrl::Create(parent, winid, label, url);
 
+    ColorScheme::SetupWindowColors(this, [=]
+    {
 #ifdef __WXOSX__
-    wxColour normal(NSColor.linkColor);
-    wxColour hover([NSColor.linkColor colorWithSystemEffect:NSColorSystemEffectRollover]);
-    SetNormalColour(normal);
-    SetVisitedColour(normal);
-    SetHoverColour(hover);
+        wxColour normal, hover;
+        NSView *view = GetHandle();
+        if (@available(macOS 11.0, *))
+        {
+            // FIXME: This is workaround for wx always overriding appearance to the app-wide system one when
+            //        accessing wxColour components or creating CGColor -- as happens in generic rendering code
+            //        (see wxOSXEffectiveAppearanceSetter)
+            [view.effectiveAppearance performAsCurrentDrawingAppearance: [&]{
+                normal = wxColour(wxCFRetain([NSColor.linkColor CGColor]));
+                hover = wxColour(wxCFRetain([[NSColor.linkColor colorWithSystemEffect:NSColorSystemEffectRollover] CGColor]));
+            }];
+        }
+        else
+        {
+            normal = wxColour(NSColor.linkColor);
+            hover = wxColour([NSColor.linkColor colorWithSystemEffect:NSColorSystemEffectRollover]);
+        }
+        SetNormalColour(normal);
+        SetVisitedColour(normal);
+        SetHoverColour(hover);
 #else
-    SetNormalColour("#2F79BE");
-    SetVisitedColour("#2F79BE");
-    SetHoverColour("#3D8DD5");
+        SetNormalColour("#2F79BE");
+        SetVisitedColour("#2F79BE");
+        SetHoverColour("#3D8DD5");
 #endif
+    });
 
 #ifdef __WXOSX__
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
