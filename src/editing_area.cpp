@@ -434,14 +434,15 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
 #elif defined(__WXOSX__)
     sizer->AddSpacer(PX(2));
 #endif
-    sizer->Add(sourceLineSizer, wxSizerFlags().Expand().Border(wxLEFT, PX(6)));
+    sizer->Add(sourceLineSizer, wxSizerFlags().Expand().Border(wxLEFT, PX(5)));
     sizer->AddSpacer(PX(6));
 
     auto origTextSizer = new wxBoxSizer(wxVERTICAL);
-    origTextSizer->Add(m_labelSingular, wxSizerFlags().Border(wxLEFT|wxTOP, PX(6)));
-    origTextSizer->Add(m_textOrig, wxSizerFlags(1).Expand().Border(wxLEFT|wxRIGHT, PX(4)));
-    origTextSizer->Add(m_labelPlural, wxSizerFlags().Border(wxLEFT, PX(6)));
-    origTextSizer->Add(m_textOrigPlural, wxSizerFlags(1).Expand().Border(wxLEFT|wxRIGHT, PX(4)));
+    origTextSizer->AddSpacer(PX(4));
+    origTextSizer->Add(m_labelSingular, wxSizerFlags().Border(wxLEFT, PX(5)));
+    origTextSizer->Add(m_textOrig, wxSizerFlags(1).Expand());
+    origTextSizer->Add(m_labelPlural, wxSizerFlags().Border(wxLEFT, PX(5)));
+    origTextSizer->Add(m_textOrigPlural, wxSizerFlags(1).Expand());
     sizer->Add(origTextSizer, wxSizerFlags(1).Expand());
 
     if (mode == POT)
@@ -512,9 +513,10 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
 
     m_pluralNotebook = new SegmentedNotebook(this, SegmentStyle::SmallInline);
 
-    sizer->Add(transLineSizer, wxSizerFlags().Expand().Border(wxLEFT|wxTOP, PX(6)));
     sizer->AddSpacer(PX(6));
-    sizer->Add(m_textTrans, wxSizerFlags(1).Expand().Border(wxLEFT|wxRIGHT|wxBOTTOM, PX(4)));
+    sizer->Add(transLineSizer, wxSizerFlags().Expand().Border(wxLEFT, PX(5)));
+    sizer->AddSpacer(PX(6));
+    sizer->Add(m_textTrans, wxSizerFlags(1).Expand());
     sizer->Add(m_pluralNotebook, wxSizerFlags(1).Expand());
 
     ShowPluralFormUI(false);

@@ -252,7 +252,7 @@ public:
         m_wrappingSizer->AddStretchSpacer();
 
         auto topsizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->Add(m_wrappingSizer, wxSizerFlags(1).Expand());
+        topsizer->Add(m_wrappingSizer, wxSizerFlags(1).Expand().Border(wxLEFT | wxRIGHT, PX(2)));
         topsizer->AddSpacer(PX(5));
 #ifdef __WXOSX__
         if (@available(macOS 11.0, *))

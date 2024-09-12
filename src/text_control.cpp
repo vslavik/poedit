@@ -306,8 +306,8 @@ CustomizedTextCtrl::CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long 
     wxTextCtrl::Create(parent, winid, "", wxDefaultPosition, wxDefaultSize, style | ALWAYS_USED_STYLE);
 
     wxTextAttr padding;
-    padding.SetLeftIndent(5);
-    padding.SetRightIndent(5);
+    padding.SetLeftIndent(9);
+    padding.SetRightIndent(9);
     SetDefaultStyle(padding);
 
     Bind(wxEVT_TEXT_COPY, &CustomizedTextCtrl::OnCopy, this);
