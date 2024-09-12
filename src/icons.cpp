@@ -256,3 +256,44 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id_,
 }
 
 #endif // !__WXOSX__
+
+
+wxBitmap GetPoeditAppIcon([[maybe_unused]]int pointSize)
+{
+#if defined(__WXMSW__)
+    const auto scale = HiDPIScalingFactor();
+
+    int loadSize;
+    if (scale == 1.0)
+        loadSize = pointSize;
+    else if (scale == 2.0)
+		loadSize = 2 * pointSize;
+	else
+		loadSize = 256;
+    if (loadSize != 48 && loadSize != 64 && loadSize != 256)
+        loadSize = 256; // 128px etc. is not present
+
+    wxIcon appicon("appicon", wxBITMAP_TYPE_ICO_RESOURCE, loadSize, loadSize);
+
+    if (scale == 1.0 && loadSize == pointSize)
+    {
+        return appicon;
+    }
+    else if (scale == 2.0 && loadSize == 2 * pointSize)
+    {
+        appicon.SetScaleFactor(scale);
+        return appicon;
+    }
+    else
+    {
+        wxBitmap appbmp(appicon);
+        appicon.CopyFromBitmap(wxBitmap(appbmp.ConvertToImage().Scale(PX(pointSize), PX(pointSize), wxIMAGE_QUALITY_BICUBIC)));
+        appicon.SetScaleFactor(scale);
+        return appicon;
+    }
+#elif defined(__WXGTK__)
+    return wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, wxSize(pointSize, pointSize));
+#else
+    return wxArtProvider::GetBitmap("Poedit");
+#endif
+}

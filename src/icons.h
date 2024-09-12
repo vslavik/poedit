@@ -47,4 +47,11 @@ protected:
 };
 #endif
 
+/**
+    Return Poedit's icon appropriately sized.
+
+    @param pointSize Base size of the icons, in points (not pixels!), i.e. 64 or 128
+ */
+extern wxBitmap GetPoeditAppIcon(int pointSize);
+
 #endif // _ICONS_H_

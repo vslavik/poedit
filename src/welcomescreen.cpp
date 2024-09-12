@@ -31,6 +31,7 @@
 #include "edapp.h"
 #include "edframe.h"
 #include "hidpi.h"
+#include "icons.h"
 #include "menus.h"
 #include "recent_files.h"
 #include "str_helpers.h"
@@ -251,28 +252,8 @@ WelcomeWindow::WelcomeWindow()
     }
 #endif
 
-#if defined(__WXMSW__)
-    wxIcon logo;
-    if (HiDPIScalingFactor() == 1.0)
-    {
-        logo.LoadFile("appicon", wxBITMAP_TYPE_ICO_RESOURCE, 128, 128);
-    }
-    else
-    {
-        logo.LoadFile("appicon", wxBITMAP_TYPE_ICO_RESOURCE, 256, 256);
-        if (HiDPIScalingFactor() != 2.0)
-        {
-            wxBitmap bmp;
-            bmp.CopyFromIcon(logo);
-            logo.CopyFromBitmap(wxBitmap(bmp.ConvertToImage().Scale(PX(128), PX(128), wxIMAGE_QUALITY_BICUBIC)));
-        }
-    }
-#elif defined(__WXGTK__)
-    auto logo = wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, wxSize(128, 128));
-#else
-    auto logo = wxArtProvider::GetBitmap("Poedit");
-#endif
-    auto logoWindow = new wxStaticBitmap(this, wxID_ANY, logo, wxDefaultPosition, wxSize(PX(128),PX(128)));
+    auto appicon = GetPoeditAppIcon(128);
+    auto logoWindow = new wxStaticBitmap(this, wxID_ANY, appicon, wxDefaultPosition, wxSize(PX(128),PX(128)));
     leftsizer->Add(logoWindow, wxSizerFlags().Center().Border(wxALL, PX(5)));
 
     auto header = new HeaderStaticText(this, wxID_ANY, _("Welcome to Poedit"));

@@ -27,6 +27,7 @@
 
 #include "customcontrols.h"
 #include "hidpi.h"
+#include "icons.h"
 #include "utility.h"
 
 #include <atomic>
@@ -235,21 +236,9 @@ ProgressWindow::ProgressWindow(wxWindow *parent, const wxString& title, dispatch
     auto topsizer = new wxBoxSizer(wxHORIZONTAL);
     sizer->Add(topsizer, wxSizerFlags(1).Expand().Border(wxALL, PX(20)));
 
-    wxSize logoSize(PX(64), PX(64));
-#if defined(__WXMSW__)
-    wxIcon logo;
-    logo.LoadFile("appicon", wxBITMAP_TYPE_ICO_RESOURCE, 256, 256);
-    {
-        wxBitmap bmp;
-        bmp.CopyFromIcon(logo);
-        logo.CopyFromBitmap(wxBitmap(bmp.ConvertToImage().Scale(logoSize.x, logoSize.y, wxIMAGE_QUALITY_BICUBIC)));
-    }
-#elif defined(__WXGTK__)
-    auto logo = wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, logoSize);
-#else
-    auto logo = wxArtProvider::GetBitmap("Poedit");
-#endif
-    m_image = new wxStaticBitmap(this, wxID_ANY, logo, wxDefaultPosition, logoSize);
+    auto appicon = GetPoeditAppIcon(64);
+    const wxSize logoSize(PX(64), PX(64));
+    m_image = new wxStaticBitmap(this, wxID_ANY, appicon, wxDefaultPosition, logoSize);
     m_image->SetMinSize(logoSize);
     topsizer->Add(m_image, wxSizerFlags().Center().Border(wxTOP, MSW_OR_OTHER(PX(10), 0)));
 
