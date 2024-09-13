@@ -159,7 +159,7 @@
 		B2CE2FF21A94F19D0020A620 /* Prefs-Accounts.png in Resources */ = {isa = PBXBuildFile; fileRef = B2CE2FF01A94F19D0020A620 /* Prefs-Accounts.png */; };
 		B2CE2FF31A94F19D0020A620 /* Prefs-Accounts@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2CE2FF11A94F19D0020A620 /* Prefs-Accounts@2x.png */; };
 		B2CE6D211ACFCD95007E6863 /* GeneratePreviewForURL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2CE6D201ACFCD95007E6863 /* GeneratePreviewForURL.cpp */; };
-		B2CE6D231ACFCD95007E6863 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B2CE6D221ACFCD95007E6863 /* main.c */; };
+		B2CE6D231ACFCD95007E6863 /* qlgenerator_main.c in Sources */ = {isa = PBXBuildFile; fileRef = B2CE6D221ACFCD95007E6863 /* qlgenerator_main.c */; };
 		B2CE6D2B1AD00A0E007E6863 /* PoeditQuicklook.qlgenerator in Copy Quicklook plugin */ = {isa = PBXBuildFile; fileRef = B2CE6D1A1ACFCD95007E6863 /* PoeditQuicklook.qlgenerator */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B2D52B861DE88A3D00E27B35 /* SuggestionPerfectMatch.png in Resources */ = {isa = PBXBuildFile; fileRef = B2D52B841DE88A3D00E27B35 /* SuggestionPerfectMatch.png */; };
 		B2D52B871DE88A3D00E27B35 /* SuggestionPerfectMatch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2D52B851DE88A3D00E27B35 /* SuggestionPerfectMatch@2x.png */; };
@@ -213,7 +213,7 @@
 			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = B2CE6D191ACFCD95007E6863;
-			remoteInfo = PoeditQuicklook;
+			remoteInfo = QuicklookLegacy;
 		};
 		B2D0B1112BFD08DD00527A5A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -546,9 +546,9 @@
 		B2CE2FF01A94F19D0020A620 /* Prefs-Accounts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Prefs-Accounts.png"; sourceTree = "<group>"; };
 		B2CE2FF11A94F19D0020A620 /* Prefs-Accounts@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Prefs-Accounts@2x.png"; sourceTree = "<group>"; };
 		B2CE6D1A1ACFCD95007E6863 /* PoeditQuicklook.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PoeditQuicklook.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
-		B2CE6D1D1ACFCD95007E6863 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B2CE6D1D1ACFCD95007E6863 /* InfoLegacy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = InfoLegacy.plist; sourceTree = "<group>"; };
 		B2CE6D201ACFCD95007E6863 /* GeneratePreviewForURL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GeneratePreviewForURL.cpp; sourceTree = "<group>"; };
-		B2CE6D221ACFCD95007E6863 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		B2CE6D221ACFCD95007E6863 /* qlgenerator_main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = qlgenerator_main.c; sourceTree = "<group>"; };
 		B2D04DFB197A831D00D24B42 /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B2D52B841DE88A3D00E27B35 /* SuggestionPerfectMatch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SuggestionPerfectMatch.png; sourceTree = "<group>"; };
 		B2D52B851DE88A3D00E27B35 /* SuggestionPerfectMatch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SuggestionPerfectMatch@2x.png"; sourceTree = "<group>"; };
@@ -1026,8 +1026,8 @@
 			isa = PBXGroup;
 			children = (
 				B2CE6D201ACFCD95007E6863 /* GeneratePreviewForURL.cpp */,
-				B2CE6D221ACFCD95007E6863 /* main.c */,
-				B2CE6D1D1ACFCD95007E6863 /* Info.plist */,
+				B2CE6D221ACFCD95007E6863 /* qlgenerator_main.c */,
+				B2CE6D1D1ACFCD95007E6863 /* InfoLegacy.plist */,
 			);
 			name = Quicklook;
 			path = src/quicklook;
@@ -1131,9 +1131,9 @@
 			productReference = B24ACD5B16F6201F00399242 /* Poedit.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B2CE6D191ACFCD95007E6863 /* PoeditQuicklook */ = {
+		B2CE6D191ACFCD95007E6863 /* QuicklookLegacy */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B2CE6D261ACFCD95007E6863 /* Build configuration list for PBXNativeTarget "PoeditQuicklook" */;
+			buildConfigurationList = B2CE6D261ACFCD95007E6863 /* Build configuration list for PBXNativeTarget "QuicklookLegacy" */;
 			buildPhases = (
 				B2CE6D151ACFCD95007E6863 /* Sources */,
 				B2CE6D161ACFCD95007E6863 /* Frameworks */,
@@ -1146,8 +1146,8 @@
 			dependencies = (
 				B2D0B1122BFD08DD00527A5A /* PBXTargetDependency */,
 			);
-			name = PoeditQuicklook;
-			productName = PoeditQuicklook;
+			name = QuicklookLegacy;
+			productName = QuicklookLegacy;
 			productReference = B2CE6D1A1ACFCD95007E6863 /* PoeditQuicklook.qlgenerator */;
 			productType = "com.apple.product-type.bundle";
 		};
@@ -1237,7 +1237,7 @@
 				B24ACD5A16F6201F00399242 /* Poedit */,
 				B27115F8170830A800B936D5 /* deps.gettext */,
 				B248B2DD170D765100EBA58E /* GettextTools */,
-				B2CE6D191ACFCD95007E6863 /* PoeditQuicklook */,
+				B2CE6D191ACFCD95007E6863 /* QuicklookLegacy */,
 			);
 		};
 /* End PBXProject section */
@@ -1576,7 +1576,7 @@
 				B2CE6D211ACFCD95007E6863 /* GeneratePreviewForURL.cpp in Sources */,
 				B228A5F521591D7E0050520D /* catalog_xliff.cpp in Sources */,
 				B212FEEE20A7366600FAC68F /* pl_evaluate.cpp in Sources */,
-				B2CE6D231ACFCD95007E6863 /* main.c in Sources */,
+				B2CE6D231ACFCD95007E6863 /* qlgenerator_main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1595,7 +1595,7 @@
 		};
 		B2CE6D281AD00897007E6863 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B2CE6D191ACFCD95007E6863 /* PoeditQuicklook */;
+			target = B2CE6D191ACFCD95007E6863 /* QuicklookLegacy */;
 			targetProxy = B2CE6D271AD00897007E6863 /* PBXContainerItemProxy */;
 		};
 		B2D0B1122BFD08DD00527A5A /* PBXTargetDependency */ = {
@@ -2016,12 +2016,12 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = src/quicklook/Info.plist;
+				INFOPLIST_FILE = src/quicklook/InfoLegacy.plist;
 				INSTALL_PATH = /Library/QuickLook;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				POEDIT_FEATURES = HAVE_CLD2;
 				PRODUCT_BUNDLE_IDENTIFIER = net.poedit.PoeditQuicklook;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = PoeditQuicklook;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = qlgenerator;
 			};
@@ -2049,12 +2049,12 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = src/quicklook/Info.plist;
+				INFOPLIST_FILE = src/quicklook/InfoLegacy.plist;
 				INSTALL_PATH = /Library/QuickLook;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				POEDIT_FEATURES = HAVE_CLD2;
 				PRODUCT_BUNDLE_IDENTIFIER = net.poedit.PoeditQuicklook;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = PoeditQuicklook;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = qlgenerator;
 			};
@@ -2099,7 +2099,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B2CE6D261ACFCD95007E6863 /* Build configuration list for PBXNativeTarget "PoeditQuicklook" */ = {
+		B2CE6D261ACFCD95007E6863 /* Build configuration list for PBXNativeTarget "QuicklookLegacy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B2CE6D241ACFCD95007E6863 /* Debug */,
