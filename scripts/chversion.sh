@@ -46,8 +46,8 @@ replace_ver src/version.h \
             '\(POEDIT_VERSION_SHORT *"\).*\("\)' "\1$VERSION_SHORT\2"
 replace_ver src/version.h \
             '\(POEDIT_VERSION_WIN *\).*' "\1$VER_WIN"
-replace_ver Poedit.xcodeproj/project.pbxproj \
-            '\(POEDIT_VERSION = \).*\(;\)' "\1$VERSION\2"
+replace_ver macos/poedit.xcconfig \
+            '\(MARKETING_VERSION = \).*' "\1$VERSION"
 replace_ver snap/snapcraft.yaml \
             '\(version: \"\).*\("\)' "\1$VERSION\2"
 touch macos/Poedit-Info.plist
