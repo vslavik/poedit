@@ -2009,8 +2009,8 @@
 				ENABLE_TESTABILITY = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"wxUSE_GUI=0",
-					"$(inherited)",
 					MACOS_BUILD_WITHOUT_APPKIT,
+					"$(inherited)",
 				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
@@ -2056,7 +2056,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = src/quicklook/InfoThumbnails.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = QuicklookThumbnails;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -2091,8 +2090,8 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"wxUSE_GUI=0",
-					"$(inherited)",
 					MACOS_BUILD_WITHOUT_APPKIT,
+					"$(inherited)",
 				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
@@ -2308,7 +2307,7 @@
 					deps/cld2,
 					"$(inherited)",
 				);
-				LLVM_LTO = YES;
+				LLVM_LTO = YES_THIN;
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				POEDIT_FEATURES = "";
 				POEDIT_VERSION = "";
@@ -2393,8 +2392,8 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"wxUSE_GUI=0",
-					"$(inherited)",
 					MACOS_BUILD_WITHOUT_APPKIT,
+					"$(inherited)",
 				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -2427,6 +2426,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"wxUSE_GUI=0",
+					MACOS_BUILD_WITHOUT_APPKIT,
 					"$(inherited)",
 				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -2471,7 +2471,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = src/quicklook/InfoThumbnails.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = QuicklookThumbnails;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
