@@ -2497,10 +2497,15 @@ void PoeditFrame::OfferSideloadingSourceText()
     if (!Language::TryGuessFromFilename(filename, &wildcard).IsValid())
         return;
 
+    wxFileName fn(filename);
+
     wildcard.Replace("*", "en");
     wxFileName ref(wildcard);
-    if (!ref.FileExists() || wxFileName(filename) == ref)
+    if (!ref.FileExists() || fn == ref)
         return;
+
+    wxFileName displayRef(ref);
+    displayRef.MakeRelativeTo(fn.GetPath());
 
     AttentionMessage msg
         (
@@ -2508,7 +2513,7 @@ void PoeditFrame::OfferSideloadingSourceText()
             AttentionMessage::Question,
             _("Would you like to use English for source text?")
         );
-    msg.SetExplanation(wxString::Format(_(L"This file uses string IDs instead of source text. Poedit can load English texts from the “%s” file for you."), ref.GetFullName()));
+    msg.SetExplanation(wxString::Format(_(L"This file uses string IDs instead of source text. Poedit can load English texts from the “%s” file for you."), displayRef.GetFullPath()));
     // TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
     msg.AddAction(_("Load English"),[=]{
         SideloadSourceTextFromFile(ref);

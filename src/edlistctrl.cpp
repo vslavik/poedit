@@ -717,7 +717,8 @@ void PoeditListCtrl::UpdateColumns()
     if (m_catalog->HasSideloadedReferenceFile())
     {
         wxFileName fn(m_catalog->GetSideloadedSourceData()->reference_file->GetFileName());
-        sourceTitle += wxString::Format(" [%s]", fn.GetFullName());
+        fn.MakeRelativeTo(wxFileName(m_catalog->GetFileName()).GetPath());
+        sourceTitle += wxString::Format(" [%s]", fn.GetFullPath());
     }
     m_colSource->SetTitle(sourceTitle);
 
