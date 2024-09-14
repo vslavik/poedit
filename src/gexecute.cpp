@@ -81,6 +81,18 @@ struct ProcessOutput
 };
 
 
+#ifdef MACOS_BUILD_WITHOUT_APPKIT
+
+ProcessOutput ExecuteCommandAndCaptureOutput(const CommandInvocation&, const wxExecuteEnv*)
+{
+    // wxExecute() uses NSWorkspace, which is unavailable in extensions; it's the only AppKit
+    // dependency in wxBase and can be avoided
+    wxFAIL_MSG("attempt to execute commands in non-exec binaries: %s");
+    return {666};
+}
+
+#else
+
 bool ReadOutput(wxInputStream& s, std::vector<wxString>& out)
 {
     // the stream could be already at EOF or in wxSTREAM_BROKEN_PIPE state
@@ -145,6 +157,8 @@ ProcessOutput ExecuteCommandAndCaptureOutput(const CommandInvocation& cmd, const
 
     return pout;
 }
+
+#endif
 
 
 #define GETTEXT_VERSION_NUM(x, y, z)  ((x*1000*1000) + (y*1000) + (z))

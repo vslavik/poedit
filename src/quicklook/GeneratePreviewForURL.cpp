@@ -44,6 +44,10 @@
     #error "compiled with GUI features of wx - not needed"
 #endif
 
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_12_0
+    #error "This code should be removed when targeting macOS 12 or newer"
+#endif
+
 namespace
 {
 
