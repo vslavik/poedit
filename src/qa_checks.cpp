@@ -200,7 +200,7 @@ public:
 
     CaseMismatch(Language lang) : m_lang(lang.Lang())
     {
-        m_shouldCheck = (m_lang != "zh" && m_lang != "ja");
+        m_shouldCheck = (m_lang != "zh" && m_lang != "ja" && m_lang != "ka");
     }
 
     bool CheckString(CatalogItemPtr item, const wxString& source, const wxString& translation) override
