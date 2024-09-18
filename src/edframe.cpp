@@ -148,7 +148,7 @@ public:
             }
             else
             {
-                win->SetCursor(*wxSTANDARD_CURSOR);
+                win->SetCursor(wxNullCursor);
             }
         };
         win->Bind(wxEVT_MOTION, motionHandler);
