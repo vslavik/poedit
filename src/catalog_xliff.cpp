@@ -617,11 +617,13 @@ public:
         if (!target)
         {
             auto ws_after = m_node.first_child();
-            auto source = m_node.child("source");
-            target = m_node.insert_child_after("target", source);
+            auto prev = m_node.child("seg-source");
+            if (!prev)
+                prev = m_node.child("source");
+            target = m_node.insert_child_after("target", prev);
             // indent the <target> tag in the same way <source> is indented under its parent:
             if (ws_after.type() == node_pcdata)
-                m_node.insert_child_after(node_pcdata, source).text() = ws_after.text().get();
+                m_node.insert_child_after(node_pcdata, prev).text() = ws_after.text().get();
         }
 
         auto trans = GetTranslation();
