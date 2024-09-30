@@ -59,7 +59,7 @@ jobs:
       run: scripts/build-ota-translations.sh
     - name: Upload OTA updates
       run: |
-        VERSION=$(sed -n -e 's/.*POEDIT_VERSION.* "\([0-9]*\)\.\([0-9]*\).*".*/\1.\2/p' src/version.h)
+        VERSION=$(sed -n -e 's/.*POEDIT_VERSION_SHORT.* "\(.*\)".*/\1/p' src/version.h)
         echo "OTA version: $VERSION"
         curl --fail-with-body -F "version=$VERSION" -F "data=@ota-update.tar" -H "X-Api-Key: ${{secrets.OTA_API_KEY}}" ${{vars.OTA_UPLOAD_ENDPOINT}} >response
         cat response
