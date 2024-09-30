@@ -2982,14 +2982,14 @@ wxMenu *PoeditFrame::CreatePopupMenu(int item)
                  #else
                  wxString(_("Copy from Source Text"))
                  #endif
-                   + "\t" + _("Ctrl+") + "B");
+                   + "\t" + wxGETTEXT_IN_CONTEXT("keyboard key", "Ctrl+") + "B");
     menu->Append(XRCID("menu_clear"),
                  #ifdef __WXMSW__
                  wxString(_("Clear translation"))
                  #else
                  wxString(_("Clear Translation"))
                  #endif
-                   + "\t" + _("Ctrl+") + "K");
+                   + "\t" + wxGETTEXT_IN_CONTEXT("keyboard key", "Ctrl+") + "K");
    menu->Append(XRCID("menu_comment"),
                  #ifdef __WXMSW__
                  wxString(_("Edit comment"))
@@ -2997,7 +2997,7 @@ wxMenu *PoeditFrame::CreatePopupMenu(int item)
                  wxString(_("Edit Comment"))
                  #endif
                  #ifndef __WXOSX__
-                   + "\t" + _("Ctrl+") + "M"
+                   + "\t" + wxGETTEXT_IN_CONTEXT("keyboard key", "Ctrl+") + "M"
                  #endif
                  );
 

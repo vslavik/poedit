@@ -357,7 +357,7 @@ public:
             auto shortcut = wxString::Format(L"⌘%d", index);
         #else
             // TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-            auto shortcut = wxString::Format("%s%d", _("Ctrl+"), index);
+            auto shortcut = wxString::Format("%s%d", wxGETTEXT_IN_CONTEXT("keyboard key", "Ctrl+"), index);
         #endif
             m_info->SetLabel(wxString::Format(L"%s • %s", shortcut, percentStr));
         }
@@ -717,7 +717,7 @@ void SuggestionsSidebarBlock::BuildSuggestionsMenu(int count)
     auto menu = m_suggestionsMenu;
     for (int i = 0; i < count; i++)
     {
-        auto text = wxString::Format("(empty)\t%s%d", _("Ctrl+"), i+1);
+        auto text = wxString::Format("(empty)\t%s%d", wxGETTEXT_IN_CONTEXT("keyboard key", "Ctrl+"), i+1);
         auto item = new wxMenuItem(menu, wxID_ANY, text);
         item->SetBitmap(wxArtProvider::GetBitmap("SuggestionTMTemplate"));
 
@@ -742,9 +742,9 @@ void SuggestionsSidebarBlock::UpdateSuggestionsMenu()
     bool isRTL = m_parent->GetCurrentLanguage().IsRTL();
     wxString formatMask;
     if (isRTL)
-        formatMask = L"\u202b%s\u202c\t" + _("Ctrl+") + "%d";
+        formatMask = L"\u202b%s\u202c\t" + wxGETTEXT_IN_CONTEXT("keyboard key", "Ctrl+") + "%d";
     else
-        formatMask = L"\u202a%s\u202c\t" + _("Ctrl+") + "%d";
+        formatMask = L"\u202a%s\u202c\t" + wxGETTEXT_IN_CONTEXT("keyboard key", "Ctrl+") + "%d";
 
     int index = 0;
     for (auto s: m_suggestions)

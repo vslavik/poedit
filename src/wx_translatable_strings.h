@@ -40,6 +40,7 @@
 // TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 //              ("Poedit" here, but please use "%s")
 _("About %s");
+
 // TRANSLATORS: This is version information in about dialog, "%s" will be
 //              version number when used
 _("Version %s");
@@ -54,31 +55,32 @@ _("%s Preferences");
 
 // application menu:
 
+// TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+//              ("Poedit" here, but please use "%s")
+wxTRANSLATE_IN_CONTEXT("macOS menu item", "About %s");
+
+
 // TRANSLATORS: macOS item in app menu
-_("Services");
+wxTRANSLATE_IN_CONTEXT("macOS menu item", "Services");
 // TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
-_("Hide %s");
+wxTRANSLATE_IN_CONTEXT("macOS menu item", "Hide %s");
 // TRANSLATORS: macOS item in app menu
-_("Hide Others");
+wxTRANSLATE_IN_CONTEXT("macOS menu item", "Hide Others");
 // TRANSLATORS: macOS item in app menu
-_("Show All");
+wxTRANSLATE_IN_CONTEXT("macOS menu item", "Show All");
 // TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
-_("Quit %s");
+wxTRANSLATE_IN_CONTEXT("macOS menu item", "Quit %s");
 // TRANSLATORS: macOS item in app menu
 _(L"Preferences…");
+// TRANSLATORS: macOS item in app menu
 _("Preferences...");
+// TRANSLATORS: macOS item in app menu
+wxTRANSLATE_IN_CONTEXT("macOS menu item", "Preferences...");
 
 
 // --------------------------------------------------------------------------
 // Windows
 // --------------------------------------------------------------------------
-
-// system taskbar categories:
-
-// TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
-_("Recent");
-// TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
-_("Frequent");
 
 
 // --------------------------------------------------------------------------
@@ -116,25 +118,25 @@ STOCKITEM(wxID_YES,                 _("&Yes"),                _("Yes"));
 
 
 /// TRANSLATORS: Keyboard shortcut for display in Windows menus
-_("Ctrl+");
+wxTRANSLATE_IN_CONTEXT("keyboard key", "Ctrl+");
 /// TRANSLATORS: Keyboard shortcut for display in Windows menus
-_("Alt+");
+wxTRANSLATE_IN_CONTEXT("keyboard key", "Alt+");
 /// TRANSLATORS: Keyboard shortcut for display in Windows menus
-_("Shift+");
+wxTRANSLATE_IN_CONTEXT("keyboard key", "Shift+");
 /// TRANSLATORS: Keyboard shortcut for display in Windows menus
-_("Enter");
+wxTRANSLATE_IN_CONTEXT("keyboard key", "Enter");
 /// TRANSLATORS: Keyboard shortcut for display in Windows menus
-_("Up");
+wxTRANSLATE_IN_CONTEXT("keyboard key", "Up");
 /// TRANSLATORS: Keyboard shortcut for display in Windows menus
-_("Down");
+wxTRANSLATE_IN_CONTEXT("keyboard key", "Down");
 /// TRANSLATORS: Keyboard shortcut for display in Windows menus
-_("Left");
+wxTRANSLATE_IN_CONTEXT("keyboard key", "Left");
 /// TRANSLATORS: Keyboard shortcut for display in Windows menus
-_("Right");
+wxTRANSLATE_IN_CONTEXT("keyboard key", "Right");
 
 /// TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
-_("ctrl");
+wxTRANSLATE_IN_CONTEXT("keyboard key", "ctrl");
 /// TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
-_("alt");
+wxTRANSLATE_IN_CONTEXT("keyboard key", "alt");
 /// TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
-_("shift");
+wxTRANSLATE_IN_CONTEXT("keyboard key", "shift");
