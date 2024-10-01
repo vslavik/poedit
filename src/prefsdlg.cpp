@@ -63,7 +63,7 @@
 #include "hidpi.h"
 #include "tm/transmem.h"
 #include "tm/tmx_io.h"
-#include "chooselang.h"
+#include "uilang.h"
 #include "errors.h"
 #include "extractors/extractor_legacy.h"
 #include "spellchecking.h"

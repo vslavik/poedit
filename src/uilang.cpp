@@ -23,7 +23,7 @@
  *
  */
 
-#include "chooselang.h"
+#include "uilang.h"
 
 #if NEED_CHOOSELANG_UI
 

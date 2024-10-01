@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef _CHOOSELANG_H_
-#define _CHOOSELANG_H_
+#ifndef Poedit_uilang_h
+#define Poedit_uilang_h
 
 #include <wx/string.h>
 #include <wx/intl.h>
@@ -43,6 +43,6 @@ void ChangeUILanguage();
 /** Return currently chosen language. Calls ChooseLanguage if necessary. */
 wxString GetUILanguage();
 
-#endif // NEED_CHOOSELANG_UI
-
 #endif
+
+#endif // Poedit_uilang_h

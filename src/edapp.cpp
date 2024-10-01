@@ -89,7 +89,7 @@
 #include "filemonitor.h"
 #include "manager.h"
 #include "prefsdlg.h"
-#include "chooselang.h"
+#include "uilang.h"
 #include "customcontrols.h"
 #include "gexecute.h"
 #include "hidpi.h"
