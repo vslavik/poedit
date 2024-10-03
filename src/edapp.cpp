@@ -550,33 +550,26 @@ void PoeditApp::SetupLanguage()
     wxTranslations *trans = new wxTranslations();
     wxTranslations::Set(trans);
 
-    // workaround wx bug, see https://github.com/wxWidgets/wxWidgets/pull/24297
-    class PoeditTranslationsLoader : public wxFileTranslationsLoader
-    {
-    public:
-        wxArrayString GetAvailableTranslations(const wxString& domain) const override
-        {
-            auto all = wxFileTranslationsLoader::GetAvailableTranslations(domain);
-            all.push_back("en");
-            return all;
-        }
-    };
-    trans->SetLoader(new PoeditTranslationsLoader);
+    auto loader = new PoeditTranslationsLoader;
+    trans->SetLoader(loader);
 
     int language = wxLANGUAGE_DEFAULT;
+    Language uilang;
 
 #if NEED_CHOOSELANG_UI
-    auto uilang = GetUILanguage();
-    if (!uilang.empty())
+    uilang = GetUILanguage();
+    if (uilang)
     {
-        auto langinfo = wxLocale::FindLanguageInfo(uilang);
+        auto langinfo = wxLocale::FindLanguageInfo(uilang.Code());
         if (langinfo)
-        {
             language = langinfo->Language;
-            // keep 'uilang' for use below 
-        }
     }
+    else
 #endif
+    {
+        // this returns always valid language, possibly English
+        uilang = loader->DetermineBestUILanguage();
+    }
 
     // Properly set locale is important for some aspects of GTK+ as well as
     // other things. It's also the common thing to do, so don't break
@@ -588,67 +581,42 @@ void PoeditApp::SetupLanguage()
         m_locale.reset(new wxLocale());
         if (!m_locale->Init(language, wxLOCALE_DONT_LOAD_DEFAULT))
             m_locale.reset();
-
-#if NEED_CHOOSELANG_UI
-        if (!uilang.empty())
-            trans->SetLanguage(uilang);
-#endif
     }
 
+    trans->SetLanguage(uilang.LanguageTag());
     trans->AddStdCatalog();
     trans->AddCatalog("poedit");
 
-    wxString bestTrans = trans->GetBestTranslation("poedit");
-    Language uiLang = Language::TryParse(bestTrans.ToStdWstring());
+    g_layoutDirection = uilang.IsRTL() ? wxLayout_RightToLeft : wxLayout_LeftToRight;
+
     UErrorCode err = U_ZERO_ERROR;
-    uloc_setDefault(uiLang.IcuLocaleName().c_str(), &err);
+    uloc_setDefault(uilang.IcuLocaleName().c_str(), &err);
 #if defined(HAVE_HTTP_CLIENT) && !defined(__WXOSX__)
-    http_client::set_ui_language(uiLang.LanguageTag());
+    http_client::set_ui_language(uilang.LanguageTag());
 #endif
 
     char icuVerStr[U_MAX_VERSION_STRING_LENGTH] = {0};
     UVersionInfo icuVer;
     u_getVersion(icuVer);
     u_versionToString(icuVer, icuVerStr);
-    wxLogTrace("poedit", "ICU version %s, using UI language '%s'", icuVerStr, uiLang.LanguageTag());
-
-    const wxLanguageInfo *info = wxLocale::FindLanguageInfo(bestTrans);
-    g_layoutDirection = info ? info->LayoutDirection : wxLayout_Default;
+    wxLogTrace("poedit", "ICU version %s, using UI language '%s'", icuVerStr, uilang.LanguageTag());
 
 #ifdef __WXMSW__
-    AppUpdates::Get().SetLanguage(bestTrans.utf8_string());
+    AppUpdates::Get().SetLanguage(uilang.Code());
 #endif
 
 #ifdef SUPPORTS_OTA_UPDATES
-    SetupOTALanguageUpdate(trans, bestTrans);
+    SetupOTALanguageUpdate(trans, uilang);
 #endif
 }
 
 #ifdef SUPPORTS_OTA_UPDATES
-void PoeditApp::SetupOTALanguageUpdate(wxTranslations *trans, const wxString& lang)
+void PoeditApp::SetupOTALanguageUpdate(wxTranslations *trans, const Language& lang)
 {
-    if (lang == "en" || lang == "en_US")
+    auto langMO = lang.Code();
+
+    if (langMO == "en" || langMO == "en_US")
         return;
-
-    // normalize language code for requests
-    wxString langMO(lang);
-    if (langMO == "zh-Hans")
-        langMO = "zh_CN";
-    else if (langMO == "zh-Hant")
-        langMO = "zh_TW";
-    else
-        langMO.Replace("-", "_");
-
-#if defined(__UNIX__) && !defined(__WXOSX__)
-    // GetBestTranslation() can fall back to the locale there, so check if we ship this translation
-    auto avail = trans->GetAvailableTranslations("poedit");
-    if (std::find(avail.begin(), avail.end(), lang) == avail.end())
-    {
-        langMO = lang.BeforeFirst('_');
-        if (std::find(avail.begin(), avail.end(), langMO) == avail.end())
-            return;
-    }
-#endif
 
     auto version = str::to_utf8(GetMajorAppVersion());
 
@@ -664,7 +632,7 @@ void PoeditApp::SetupOTALanguageUpdate(wxTranslations *trans, const wxString& la
         return;
     Config::OTATranslationLastCheck(now);
 
-    wxFileName mofile(dir + "/" + lang + "/poedit-ota.mo");
+    wxFileName mofile(dir + "/" + langMO + "/poedit-ota.mo");
     wxFileName::Mkdir(mofile.GetPath(), wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
 
     http_client::headers hdrs;

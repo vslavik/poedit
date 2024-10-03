@@ -25,30 +25,149 @@
 
 #include "uilang.h"
 
-#if NEED_CHOOSELANG_UI
-
 #include "language.h"
+#include "str_helpers.h"
 
-#include <wx/wx.h>
 #include <wx/config.h>
-#include <wx/translation.h>
+#include <wx/uilocale.h>
+
+#include <unicode/uloc.h>
+
+
+namespace
+{
+
+template<typename T>
+inline void to_vector(T&& list, std::vector<std::string>& strings, std::vector<const char*>& cstrings)
+{
+    strings.reserve(list.size());
+    cstrings.reserve(list.size());
+    for (const auto& s: list)
+    {
+        strings.push_back(str::to_utf8(s));
+        cstrings.push_back(strings.back().c_str());
+    }
+}
+
+// converts to POSIX-like locale, is idempotent
+inline wxString as_posix(const wxString& tag)
+{
+    wxString s(tag);
+    s.Replace("-", "_");
+    s.Replace("zh_Hans", "zh_CN");
+    s.Replace("zh_Hant", "zh_TW");
+    s.Replace("_Latn", "@latin");
+    return s;
+}
+
+// converts to language tag, is idempotent
+inline wxString as_tag(const wxString& posix)
+{
+    wxString s(posix);
+    s.Replace("_", "-");
+    s.Replace("zh-CN", "zh-Hans");
+    s.Replace("zh-TW", "zh-Hant");
+    s.Replace("@latin", "-Latn");
+    return s;
+}
+
+} // anonymous namespace
+
+
+/**
+    Customized loader for translations.
+
+    The primary purpose of this class is to overcome wx bugs or shortcomings:
+
+    - https://github.com/wxWidgets/wxWidgets/pull/24297
+    - https://github.com/wxWidgets/wxWidgets/pull/24804
+
+    Note that this relies on specific knowledge of Poedit's shipping data, it
+    is _not_ a universal replacement!
+ */
+Language PoeditTranslationsLoader::DetermineBestUILanguage() const
+{
+    std::vector<std::string> available, preferred;
+    std::vector<const char*> cavailable, cpreferred;
+    to_vector(GetAvailableTranslations("poedit"), available, cavailable);
+    to_vector(wxUILocale::GetPreferredUILanguages(), preferred, cpreferred);
+
+    char best[ULOC_FULLNAME_CAPACITY];
+    UAcceptResult result;
+    UErrorCode status = U_ZERO_ERROR;
+    UEnumeration *enumLangs = uenum_openCharStringsEnumeration(cavailable.data(), (int32_t)cavailable.size(), &status);
+    if (U_FAILURE(status))
+        return Language::English();
+
+    status = U_ZERO_ERROR;
+    uloc_acceptLanguage(best, std::size(best), &result, cpreferred.data(), (int32_t)cpreferred.size(), enumLangs, &status);
+    uenum_close(enumLangs);
+    if (U_FAILURE(status) || result == ULOC_ACCEPT_FAILED)
+        return Language::English();
+
+    char tag[ULOC_FULLNAME_CAPACITY];
+    status = U_ZERO_ERROR;
+    uloc_toLanguageTag(best, tag, std::size(tag), false, &status);
+    if (U_FAILURE(status))
+        return Language::English();
+
+    return Language::FromLanguageTag(tag);
+}
+
+
+wxArrayString PoeditTranslationsLoader::GetAvailableTranslations(const wxString& domain) const
+{
+    auto all = wxFileTranslationsLoader::GetAvailableTranslations(domain);
+
+    for (auto& lang: all)
+        lang = as_tag(lang);
+    all.push_back("en");
+    all.push_back("be_Latn");
+
+    return all;
+}
+
+
+wxMsgCatalog *PoeditTranslationsLoader::LoadCatalog(const wxString& domain, const wxString& lang_)
+{
+#ifdef __WXOSX__
+    auto lang = (domain == "poedit-ota") ? as_posix(lang_) : as_tag(lang_);
+#else
+    auto lang = as_posix(lang_);
+#endif
+
+    return wxFileTranslationsLoader::LoadCatalog(domain, lang);
+}
+
+
+#if NEED_CHOOSELANG_UI
 
 static void SaveUILanguage(const wxString& lang)
 {
     if (lang.empty())
         wxConfig::Get()->Write("ui_language", "default");
     else
-        wxConfig::Get()->Write("ui_language", lang);
+        wxConfig::Get()->Write("ui_language", as_tag(lang));
 }
 
-wxString GetUILanguage()
+
+Language GetUILanguage()
 {
-    wxString lng = wxConfig::Get()->Read("ui_language");
-    if (!lng.empty() && lng != "default")
-        return lng;
-    else
-        return "";
+    std::string lng = str::to_utf8(as_tag(wxConfig::Get()->Read("ui_language")));
+    if (lng.empty() || lng == "default")
+        return Language();
+
+    auto lang = Language::FromLanguageTag(lng);
+    if (!lang)
+        lang = Language::TryParse(lng); // backward compatibility
+
+    auto all = wxTranslations::Get()->GetAvailableTranslations("poedit");
+    if (all.Index(lang.LanguageTag(), false) == wxNOT_FOUND)
+        return Language();
+
+    return lang;
 }
+
 
 static bool ChooseLanguage(wxString *value)
 {
@@ -58,7 +177,6 @@ static bool ChooseLanguage(wxString *value)
     {
         wxBusyCursor bcur;
         langs = wxTranslations::Get()->GetAvailableTranslations("poedit");
-        langs.insert(langs.begin(), "en");
         langs.Sort();
 
         arr.push_back(_("(Use default language)"));
@@ -70,7 +188,7 @@ static bool ChooseLanguage(wxString *value)
     }
 
     auto current = GetUILanguage();
-    int choice = current.empty() ? 0 : langs.Index(current) + 1;
+    int choice = current ? 0 : langs.Index(current.LanguageTag()) + 1;
 
     choice = wxGetSingleChoiceIndex(_("Select your preferred language"), _("Language selection"), arr, choice);
     if ( choice == -1 )

@@ -26,8 +26,11 @@
 #ifndef Poedit_uilang_h
 #define Poedit_uilang_h
 
-#include <wx/string.h>
+#include "language.h"
+
 #include <wx/intl.h>
+#include <wx/string.h>
+#include <wx/translation.h>
 
 #ifdef __WXMSW__
     #define NEED_CHOOSELANG_UI 1
@@ -35,13 +38,41 @@
     #define NEED_CHOOSELANG_UI 0
 #endif
 
+
+/**
+    Customized loader for translations.
+
+    The primary purpose of this class is to overcome wx bugs or shortcomings:
+
+    - https://github.com/wxWidgets/wxWidgets/pull/24297
+    - https://github.com/wxWidgets/wxWidgets/pull/24804
+
+    Note that this relies on specific knowledge of Poedit's shipping data, it
+    is _not_ a universal replacement!
+ */
+class PoeditTranslationsLoader : public wxFileTranslationsLoader
+{
+public:
+    /**
+        Use ICU to determine UI languages; replaces wxTranslations::GetBestTranslation().
+
+        Always returns a valid language (using English as fallback).
+     */
+    Language DetermineBestUILanguage() const;
+
+    // overrides to use language tags:
+    wxArrayString GetAvailableTranslations(const wxString& domain) const override;
+    wxMsgCatalog *LoadCatalog(const wxString& domain, const wxString& lang_) override;
+};
+
+
 #if NEED_CHOOSELANG_UI
 
 /// Let the user change UI language
 void ChangeUILanguage();
 
 /** Return currently chosen language. Calls ChooseLanguage if necessary. */
-wxString GetUILanguage();
+Language GetUILanguage();
 
 #endif
 

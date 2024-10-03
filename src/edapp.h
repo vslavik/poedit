@@ -36,6 +36,7 @@
 
 #include "prefsdlg.h"
 
+class Language;
 class WXDLLIMPEXP_FWD_BASE wxConfigBase;
 class WXDLLIMPEXP_FWD_BASE wxSingleInstanceChecker;
 
@@ -108,7 +109,7 @@ class PoeditApp : public wxApp, public MenusManager
 
         void SetupLanguage();
 #ifdef SUPPORTS_OTA_UPDATES
-        void SetupOTALanguageUpdate(wxTranslations *trans, const wxString& lang);
+        void SetupOTALanguageUpdate(wxTranslations *trans, const Language& lang);
 #endif
 
         // App-global menu commands:

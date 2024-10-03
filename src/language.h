@@ -50,6 +50,8 @@ public:
     Language() : m_direction(TextDirection::LTR) {}
 
     bool IsValid() const { return !m_code.empty(); }
+    explicit operator bool() const { return IsValid(); }
+
     const std::string& Code() const { return m_code; }
     std::wstring WCode() const { return std::wstring(m_code.begin(), m_code.end()); }
 
