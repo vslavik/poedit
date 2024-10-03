@@ -151,9 +151,9 @@ const DisplayNamesData& GetDisplayNamesData()
         int32_t count = uloc_countAvailable();
         data.sortedNames.reserve(count);
 
-        char language[128] = {0};
-        char script[128] = {0};
-        char country[128] = {0};
+        char language[ULOC_LANG_CAPACITY] = {0};
+        char script[ULOC_SCRIPT_CAPACITY] = {0};
+        char country[ULOC_COUNTRY_CAPACITY] = {0};
         char variant[128] = {0};
 
         for (int i = 0; i < count; i++)
@@ -443,7 +443,7 @@ Language Language::FromLanguageTag(const std::string& tag)
     if (tag.empty())
         return Language(); // invalid
 
-    char locale[512];
+    char locale[ULOC_FULLNAME_CAPACITY];
     UErrorCode status = U_ZERO_ERROR;
     auto len = uloc_forLanguageTag(tag.c_str(), locale, 512, NULL, &status);
     if (U_FAILURE(status) || !len)
@@ -453,17 +453,49 @@ Language Language::FromLanguageTag(const std::string& tag)
     lang.m_tag = tag;
     lang.m_icuLocale = locale;
 
-    char buf[512];
-    if (uloc_getLanguage(locale, buf, 512, &status))
-        lang.m_code = buf;
-    if (uloc_getCountry(locale, buf, 512, &status))
-        lang.m_code += "_" + std::string(buf);
+    status = U_ZERO_ERROR;
+    char b_lang[ULOC_LANG_CAPACITY];
+    if (uloc_getLanguage(locale, b_lang, std::size(b_lang), &status))
+        lang.m_code = b_lang;
+
+    status = U_ZERO_ERROR;
+    char b_country[ULOC_COUNTRY_CAPACITY];
+    if (uloc_getCountry(locale, b_country, std::size(b_country), &status))
+        lang.m_code += "_" + std::string(b_country);
+
+    std::string variant;
+
+    status = U_ZERO_ERROR;
+    char b_script[ULOC_SCRIPT_CAPACITY];
+    if (uloc_getScript(locale, b_script, std::size(b_script), &status))
+    {
+        if (*b_script && strcmp(b_lang, "zh") == 0)
+        {
+            if (strcmp(b_script, "Hans") == 0)
+                lang.m_code = "zh_CN";
+            else if (strcmp(b_script, "Hant") == 0)
+                lang.m_code = "zh_TW";
+        }
+        else if (strcmp(b_script, "Latn") == 0)
+        {
+            variant = "latin";
+        }
+        else if (strcmp(b_script, "Cyrl") == 0)
+        {
+            // add @cyrillic only if it's not the default already
+            if (strcmp(b_lang, "sr") != 0)
+                variant = "cyrillic";
+        }
+    }
 
     // ICU converts private use subtag into 'x' keyword, e.g. de-DE-x-formal => de_DE@x=formal
     static const std::regex re_private_subtag("@x=([^@]+)$");
     std::cmatch m;
     if (std::regex_search(locale, m, re_private_subtag))
-        lang.m_code += "@" + m.str(1);
+        variant = m.str(1);
+
+    if (!variant.empty())
+        lang.m_code += "@" + variant;
 
     lang.m_direction = DoIsRTL(lang) ? TextDirection::RTL : TextDirection::LTR;
 
