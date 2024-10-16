@@ -278,6 +278,8 @@ void PoeditListCtrl::Model::SetCatalog(CatalogPtr catalog)
     if (!catalog)
     {
         Reset(0);
+        m_mapListToCatalog.clear();
+        m_mapCatalogToList.clear();
         return;
     }
 
@@ -827,6 +829,13 @@ void PoeditListCtrl::SizeColumns()
 
 void PoeditListCtrl::CatalogChanged(const CatalogPtr& catalog)
 {
+    if (!catalog)
+    {
+        m_catalog.reset();
+        m_model->SetCatalog(nullptr);
+        return;
+    }
+
     wxWindowUpdateLocker no_updates(this);
 
     const int oldCount = m_model->GetCount();
@@ -839,9 +848,6 @@ void PoeditListCtrl::CatalogChanged(const CatalogPtr& catalog)
     // now read the new catalog:
     m_catalog = catalog;
     m_model->SetCatalog(catalog);
-
-    if (!m_catalog)
-        return;
 
     UpdateColumns();
 
