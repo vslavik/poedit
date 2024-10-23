@@ -406,6 +406,8 @@ bool FindTextInStringAndDo(S& str, const wxString& text, bool wholeWords, F&& ha
 bool IsTextInString(wxString str, const wxString& text,
                     bool ignoreCase, bool wholeWords, bool ignoreAmp, bool ignoreUnderscore)
 {
+    if (str.empty())
+        return false;
     if (ignoreCase)
         str.MakeLower();
     if (ignoreAmp)
@@ -444,6 +446,7 @@ enum FoundState
     Found_Not = 0,
     Found_InOrig,
     Found_InOrigPlural,
+    Found_InMetadata,
     Found_InTrans,
     Found_InComments,
     Found_InExtractedComments
@@ -527,6 +530,16 @@ bool FindFrame::DoFind(int dir)
                 found = Found_InOrigPlural;
                 break;
             }
+            if (IsTextInString(dt->GetContext(), text, ignoreCase, wholeWords, ignoreAmp, ignoreUnderscore))
+            {
+                found = Found_InMetadata;
+                break;
+            }
+            if (IsTextInString(dt->GetSymbolicId(), text, ignoreCase, wholeWords, ignoreAmp, ignoreUnderscore))
+            {
+                found = Found_InMetadata;
+                break;
+            }
         }
         if (inComments)
         {
@@ -572,6 +585,7 @@ bool FindFrame::DoFind(int dir)
                   txt = m_editingArea->Ctrl_PluralTranslation(trans);
               }
               break;
+            case Found_InMetadata:
             case Found_InComments:
             case Found_InExtractedComments:
             case Found_Not:
