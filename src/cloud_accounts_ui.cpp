@@ -83,16 +83,11 @@ ServiceSelectionPanel::ServiceSelectionPanel(wxWindow *parent) : wxPanel(parent,
 
 void ServiceSelectionPanel::AddService(AccountDetailPanel *account)
 {
-    bool isFirst = GetChildren().empty();
-    auto content = CreateServiceContent(account);
-    size_t pos = (!isFirst && time(NULL) % 2 == 0 /* aka rand() w/o need to seed */)
-                 ? m_sizer->GetItemCount()
-                 : 0;
-    size_t posLine = (pos == 0) ? 1 : pos;
+    if (!GetChildren().empty())
+        m_sizer->Add(new wxStaticLine(this, wxID_ANY), wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(24)));
 
-    m_sizer->Insert(pos, content, wxSizerFlags(1).Expand());
-    if (!isFirst)
-        m_sizer->Insert(posLine, new wxStaticLine(this, wxID_ANY), wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(24)));
+    auto content = CreateServiceContent(account);
+    m_sizer->Add(content, wxSizerFlags(1).Expand());
 }
 
 
