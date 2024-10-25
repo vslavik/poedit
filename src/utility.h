@@ -201,6 +201,11 @@ inline wxString MaskForType(const char *extensions, const wxString& description,
 }
 
 
+#if wxUSE_GUI && defined(__WXMSW__)
+bool IsRunningUnderScreenReader();
+#endif
+
+
 // ----------------------------------------------------------------------
 // TempDirectory
 // ----------------------------------------------------------------------

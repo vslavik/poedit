@@ -117,6 +117,15 @@ wxFileName MakeFileName(const wxString& path)
     return fn;
 }
 
+#if wxUSE_GUI && defined(__WXMSW__)
+bool IsRunningUnderScreenReader()
+{
+    BOOL running;
+    BOOL ret = SystemParametersInfo(SPI_GETSCREENREADER, 0, &running, 0);
+    return ret && running;
+}
+#endif
+
 // ----------------------------------------------------------------------
 // TempDirectory
 // ----------------------------------------------------------------------

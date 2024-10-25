@@ -183,9 +183,7 @@ bool Windows10MenubarMixin::ShouldUseCustomMenu() const
 
     // Detect screen readers and use normal menubar with them, because the
     // mCtrl one isn't accessible.
-    BOOL running;
-    BOOL ret = SystemParametersInfo(SPI_GETSCREENREADER, 0, &running, 0);
-    if (ret && running)
+    if (IsRunningUnderScreenReader())
         return false;
 
     return true;

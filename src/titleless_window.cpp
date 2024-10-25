@@ -201,9 +201,7 @@ bool TitlelessWindowBase<T>::ShouldRemoveChrome()
         return false;
 
     // Detect screen readers and use normal titlebars to not confuse them
-    BOOL running;
-    BOOL ret = SystemParametersInfo(SPI_GETSCREENREADER, 0, &running, 0);
-    if (ret && running)
+    if (IsRunningUnderScreenReader())
         return false;
 
     return true;
