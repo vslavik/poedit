@@ -386,6 +386,17 @@ private:
 };
 
 
+SegmentedNotebookBase *SegmentedNotebook::Create(wxWindow* parent, SegmentStyle style)
+{
+#ifdef __WXMSW__
+    // Return regular notebook for screenreaders:
+    if (IsRunningUnderScreenReader())
+        return new SegmentedNotebookFallback(parent, style);
+#endif
+
+	return new SegmentedNotebook(parent, style);
+}
+
 SegmentedNotebook::SegmentedNotebook(wxWindow *parent, SegmentStyle style)
     : wxSimplebook(parent, wxID_ANY)
 {
@@ -492,9 +503,10 @@ int SegmentedNotebook::DoSetSelection(size_t n, int flags)
 }
 
 
-#else // !HAS_SEGMENTED_NOTEBOOK
+#endif // !HAS_SEGMENTED_NOTEBOOK
 
-SegmentedNotebook::SegmentedNotebook(wxWindow *parent, SegmentStyle style)
+
+SegmentedNotebookFallback::SegmentedNotebookFallback(wxWindow *parent, SegmentStyle style)
     : wxNotebook(parent, -1, wxDefaultPosition, wxDefaultSize, wxNB_NOPAGETHEME)
 {
     wxFont font = GetFont();
@@ -516,5 +528,3 @@ SegmentedNotebook::SegmentedNotebook(wxWindow *parent, SegmentStyle style)
     font.SetFractionalPointSize(size);
     SetOwnFont(font);
 }
-
-#endif // !HAS_SEGMENTED_NOTEBOOK

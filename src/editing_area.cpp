@@ -511,7 +511,7 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
     // in case of plurals form, this is the control for n=1:
     m_textTransSingularForm = nullptr;
 
-    m_pluralNotebook = new SegmentedNotebook(this, SegmentStyle::SmallInline);
+    m_pluralNotebook = SegmentedNotebook::Create(this, SegmentStyle::SmallInline);
 
     sizer->AddSpacer(PX(6));
     sizer->Add(transLineSizer, wxSizerFlags().Expand().Border(wxLEFT, PX(5)));

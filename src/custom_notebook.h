@@ -32,6 +32,9 @@
     #include <wx/notebook.h>
 #endif
 
+#if defined(__WXOSX__) || defined(__WXMSW__)
+#define HAS_SEGMENTED_NOTEBOOK
+#endif
 
 /// Possible styles of SegmentedNotebook
 enum class SegmentStyle
@@ -44,10 +47,13 @@ enum class SegmentStyle
     SidebarPanels
 };
 
-#if defined(__WXOSX__) || defined(__WXMSW__)
-    #define HAS_SEGMENTED_NOTEBOOK
-#endif
+typedef wxBookCtrlBase SegmentedNotebookBase;
 
+class SegmentedNotebookFallback : public wxNotebook
+{
+public:
+    SegmentedNotebookFallback(wxWindow* parent, SegmentStyle style);
+};
 
 #ifdef HAS_SEGMENTED_NOTEBOOK
 
@@ -59,7 +65,8 @@ enum class SegmentStyle
 class SegmentedNotebook : public wxSimplebook
 {
 public:
-    SegmentedNotebook(wxWindow *parent, SegmentStyle style);
+	/// Creates a new SegmentedNotebook. May return an ordinary notebook e.g. in presence of screenreaders
+    static SegmentedNotebookBase *Create(wxWindow *parent, SegmentStyle style);
 
     int ChangeSelection(size_t page) override;
     bool InsertPage(size_t n, wxWindow *page, const wxString& text, bool bSelect = false, int imageId = NO_IMAGE) override;
@@ -71,6 +78,8 @@ public:
     wxSizer *GetTabsExtensibleArea() const;
 
 protected:
+    SegmentedNotebook(wxWindow* parent, SegmentStyle style);
+
     wxWindow *DoRemovePage(size_t page) override;
     int DoSetSelection(size_t n, int flags) override;
 
@@ -88,7 +97,9 @@ private:
 class SegmentedNotebook : public wxNotebook
 {
 public:
-    SegmentedNotebook(wxWindow *parent, SegmentStyle style);
+    static SegmentedNotebookBase *Create(wxWindow* parent, SegmentStyle style)
+        { return new SegmentedNotebookFallback(parent, style); }
+
     wxSizer *GetTabsExtensibleArea() const { return nullptr; }
 };
 
