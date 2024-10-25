@@ -760,9 +760,6 @@ PoeditFrame::~PoeditFrame()
     m_catalog.reset();
     m_pendingHumanEditedItem.reset();
     m_navigationHistory.clear();
-
-    // shutdown the spellchecker:
-    InitSpellchecker();
 }
 
 
