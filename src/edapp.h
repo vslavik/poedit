@@ -120,10 +120,12 @@ class PoeditApp : public wxApp, public MenusManager
         void OnAbout(wxCommandEvent& event);
         void OnWelcomeWindow(wxCommandEvent& event);
         void OnManager(wxCommandEvent& event);
-        void OnQuit(wxCommandEvent& event);
         void OnPreferences(wxCommandEvent& event);
         void OnHelp(wxCommandEvent& event);
         void OnGettextManual(wxCommandEvent& event);
+
+        void OnQuit(wxCommandEvent& event);
+		void OnQueryEndSession(wxCloseEvent& event);
 
 #ifdef HAS_UPDATES_CHECK
         void OnCheckForUpdates(wxCommandEvent& event);

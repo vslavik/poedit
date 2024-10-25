@@ -34,6 +34,7 @@
 #include <wx/log.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/xrc/xh_all.h>
+#include <wx/scopeguard.h>
 #include <wx/stdpaths.h>
 #include <wx/filename.h>
 #include <wx/filedlg.h>
@@ -976,6 +977,9 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
    EVT_MENU           (wxID_CLOSE, PoeditApp::OnCloseWindowCommand)
    EVT_IDLE           (PoeditApp::OnIdleFixupMenusForMac)
 #endif
+#ifdef __WXMSW__
+	EVT_QUERY_END_SESSION(PoeditApp::OnQueryEndSession)
+#endif
 END_EVENT_TABLE()
 
 namespace
@@ -1307,6 +1311,30 @@ void PoeditApp::OnQuit(wxCommandEvent&)
 
 #endif
 }
+
+
+#ifdef __WXMSW__
+void PoeditApp::OnQueryEndSession(wxCloseEvent& event)
+{
+    // check if we weren't called in the last 5 seconds (WM_QUERYENDSESSION timeout)
+    // to avoid querying the user multiple times:
+    static time_t s_lastCallTime = 0;
+    const time_t now = time(nullptr);
+	wxON_BLOCK_EXIT_SET(s_lastCallTime, now);
+
+    if (now - s_lastCallTime < 2)
+        return;
+
+	for (auto w : PoeditFrame::GetInstances())
+	{
+        if (!w->AskIfCanDiscardCurrentDoc())
+		{
+			event.Veto();
+			return;
+		}
+	}
+}
+#endif // __WXMSW__
 
 
 void PoeditApp::EditPreferences()

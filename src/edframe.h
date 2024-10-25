@@ -96,6 +96,9 @@ class PoeditFrame : public PoeditFrameBase
          */
         static PoeditFrame *Find(const wxString& catalog);
 
+		/// Return all instances of PoeditFrame
+		static const auto& GetInstances() { return ms_instances; }
+
         /// Returns true if at least one one window has unsaved changes
         static bool AnyWindowIsModified();
 
@@ -205,7 +208,7 @@ class PoeditFrame : public PoeditFrameBase
         void SetAccelerators();
 
         // if there's modified catalog, ask user to save it; return true
-        // if it's save to discard m_catalog and load new data
+        // if it's safe to discard m_catalog and load new data
         template<typename TFunctor1, typename TFunctor2>
         void DoIfCanDiscardCurrentDoc(const TFunctor1& completionHandler, const TFunctor2& failureHandler);
         template<typename TFunctor1>
