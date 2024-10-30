@@ -171,7 +171,7 @@ wxString PrettyPrintFormatTag(const wxString& fmt)
 
 
 /// Tag-like label, with background rounded rect
-class EditingArea::TagLabel : public wxWindow
+class EditingArea::TagLabel : public wxPanel
 {
 public:
     enum Mode
@@ -180,7 +180,7 @@ public:
         Ellipsize
     };
 
-    TagLabel(wxWindow *parent, Color fg, Color bg, wxWindowID labelChildID = wxID_ANY) : wxWindow(parent, wxID_ANY)
+    TagLabel(wxWindow *parent, Color fg, Color bg, wxWindowID labelChildID = wxID_ANY) : wxPanel(parent, wxID_ANY)
     {
         m_icon = nullptr;
 
