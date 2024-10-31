@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2024-08-30 13:57+0200\n"
-"PO-Revision-Date: 2024-08-30 10:16\n"
+"POT-Creation-Date: 2024-10-31 12:30+0100\n"
+"PO-Revision-Date: 2024-10-01 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -172,18 +172,6 @@ msgstr "nepodprta različica (%s)"
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
 msgstr "Okvarjena oznaka v prevajalskem nizu."
-
-msgid "(Use default language)"
-msgstr "(uporabi privzeti jezik)"
-
-msgid "Language selection"
-msgstr "Izbor jezika"
-
-msgid "Select your preferred language"
-msgstr "Izberite želeni jezik"
-
-msgid "You must restart Poedit for this change to take effect."
-msgstr "Poedit morate ponovno zagnati, da bo sprememba začela veljati."
 
 msgid "Add Account"
 msgstr "Dodaj račun"
@@ -445,7 +433,7 @@ msgid "Compiled Translation Files"
 msgstr "Pretvorjene prevodne datoteke"
 
 msgid "Export to HTML…"
-msgstr ""
+msgstr "Izvozi v HTML …"
 
 msgid "HTML Files"
 msgstr "Datoteke HTML"
@@ -696,22 +684,24 @@ msgid "Failed to update translation memory: %s"
 msgstr "Ni uspela posodobitev pomnilnika prevodov: %s"
 
 msgid "Remove same-as-source translations"
-msgstr ""
+msgstr "Odstrani prevode, ki so enaki viru"
 
 msgid ""
 "Do you want to remove all translations that are idential to the source text?"
-msgstr ""
+msgstr "Ali želite odstraniti vse prevode, ki so enaki izvornemu besedilu?"
 
 msgid ""
 "This action will delete any translations that match the source text exactly. "
 "This cannot be undone."
 msgstr ""
+"S tem dejanjem bo izbrisan prevod, ki je povsem skladen z izvornim "
+"besedilom. Tega dejanja ni mogoče razveljaviti."
 
 msgid "Keep"
 msgstr "Ohrani"
 
 msgid "Remove"
-msgstr ""
+msgstr "Odstrani"
 
 msgid "Purge deleted translations"
 msgstr "Odstrani izbrisane prevode"
@@ -739,6 +729,7 @@ msgstr "Kopiraj iz izvornega besedila"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Ctrl+"
 msgstr "Krmilka+"
 
@@ -884,10 +875,10 @@ msgstr "neznani jezik"
 
 #, c-format
 msgid "Network error: %s (%d)"
-msgstr ""
+msgstr "Omrežna napaka: %s (%d)"
 
 msgid "Unknown error"
-msgstr ""
+msgstr "Neznana napaka"
 
 #, c-format
 msgid "Failed command: %s"
@@ -1468,7 +1459,7 @@ msgid "Advanced"
 msgstr "Napredno"
 
 msgid "Settings"
-msgstr ""
+msgstr "Nastavitve"
 
 msgid "Preparing strings…"
 msgstr "Priprava nizov …"
@@ -1716,7 +1707,7 @@ msgstr ""
 "Prevod se konča z znakom \"%s\", toda izborno besedilo se konča z \"%s\"."
 
 msgid "Cloud"
-msgstr ""
+msgstr "Oblak"
 
 msgid "Clear Menu"
 msgstr "Počisti meni"
@@ -1806,7 +1797,7 @@ msgid "Compile to MO…"
 msgstr "Prevedi v MO ..."
 
 msgid "E&xport to HTML…"
-msgstr ""
+msgstr "Izvozi v &HTML …"
 
 msgid "Check for updates…"
 msgstr "Preveri obstoj posodobitev ..."
@@ -2281,6 +2272,18 @@ msgstr "Zbirka podatkov pomnilnika prevodov je poškodovana: %s (%d)."
 msgid "Translation memory error: %s (%d)."
 msgstr "Napaka pomnilnika prevodov: %s (%d)."
 
+msgid "(Use default language)"
+msgstr "(uporabi privzeti jezik)"
+
+msgid "Language selection"
+msgstr "Izbor jezika"
+
+msgid "Select your preferred language"
+msgstr "Izberite želeni jezik"
+
+msgid "You must restart Poedit for this change to take effect."
+msgstr "Poedit morate ponovno zagnati, da bo sprememba začela veljati."
+
 msgid "Cannot create temporary directory."
 msgstr "Ni mogoče ustvariti začasne mape."
 
@@ -2370,25 +2373,37 @@ msgstr "O %s"
 msgid "%s Preferences"
 msgstr "Nastavitve %s"
 
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#, c-format
+msgctxt "macOS menu item"
+msgid "About %s"
+msgstr "O %s"
+
 #. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
 msgid "Services"
 msgstr "Storitve"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
 #, c-format
+msgctxt "macOS menu item"
 msgid "Hide %s"
 msgstr "Skrij %s"
 
 #. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
 msgid "Hide Others"
 msgstr "Skrij druge"
 
 #. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
 msgid "Show All"
 msgstr "Prikaži vse"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
 #, c-format
+msgctxt "macOS menu item"
 msgid "Quit %s"
 msgstr "Izhod iz %s"
 
@@ -2396,16 +2411,14 @@ msgstr "Izhod iz %s"
 msgid "Preferences…"
 msgstr "Nastavitve ..."
 
+#. TRANSLATORS: macOS item in app menu
 msgid "Preferences..."
 msgstr "Nastavitve ..."
 
-#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
-msgid "Recent"
-msgstr "Nedavno"
-
-#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
-msgid "Frequent"
-msgstr "Pogosto"
+#. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
+msgid "Preferences..."
+msgstr "Nastavitve ..."
 
 msgid "&Apply"
 msgstr "&Uporabi"
@@ -2507,41 +2520,51 @@ msgid "Yes"
 msgstr "Da"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Alt+"
 msgstr "Izmenjalka+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Shift+"
 msgstr "Dvigalka+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Enter"
 msgstr "Vnašalka"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Up"
 msgstr "Navzgor"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Down"
 msgstr "Navzdol"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Left"
 msgstr "Levo"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Right"
 msgstr "Desno"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+msgctxt "keyboard key"
 msgid "ctrl"
 msgstr "krmilka"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+msgctxt "keyboard key"
 msgid "alt"
 msgstr "izmenjalka"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+msgctxt "keyboard key"
 msgid "shift"
 msgstr "dvigalka"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2024-08-30 13:57+0200\n"
-"PO-Revision-Date: 2024-08-31 10:15\n"
+"POT-Creation-Date: 2024-10-31 12:30+0100\n"
+"PO-Revision-Date: 2024-10-01 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -166,18 +166,6 @@ msgstr "versión no admitida (%s)"
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
 msgstr "Marcación errónea en la cadena de traducción."
-
-msgid "(Use default language)"
-msgstr "(Usar idioma predeterminado)"
-
-msgid "Language selection"
-msgstr "Selección de idioma"
-
-msgid "Select your preferred language"
-msgstr "Seleccione el idioma que prefiera"
-
-msgid "You must restart Poedit for this change to take effect."
-msgstr "Debe reiniciar Poedit para que los cambios surtan efecto."
 
 msgid "Add Account"
 msgstr "Añadir cuenta"
@@ -687,22 +675,25 @@ msgid "Failed to update translation memory: %s"
 msgstr "No se pudo actualizar la memoria de traducciones: %s"
 
 msgid "Remove same-as-source translations"
-msgstr ""
+msgstr "Quitar traducciones iguales a la fuente"
 
 msgid ""
 "Do you want to remove all translations that are idential to the source text?"
 msgstr ""
+"¿Quiere eliminar todas las traducciones que son idénticas al texto fuente?"
 
 msgid ""
 "This action will delete any translations that match the source text exactly. "
 "This cannot be undone."
 msgstr ""
+"Esta acción borrará cualquier traducción que coincida exactamente con el "
+"texto original. Esto no se puede deshacer."
 
 msgid "Keep"
 msgstr "Conservar"
 
 msgid "Remove"
-msgstr ""
+msgstr "Quitar"
 
 msgid "Purge deleted translations"
 msgstr "Purgar traducciones eliminadas"
@@ -730,6 +721,7 @@ msgstr "Copiar del texto original"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
@@ -1715,7 +1707,7 @@ msgstr ""
 "La traducción termina con «%s», pero el texto original termina con «%s»."
 
 msgid "Cloud"
-msgstr ""
+msgstr "Nube"
 
 msgid "Clear Menu"
 msgstr "Vaciar menú"
@@ -1805,7 +1797,7 @@ msgid "Compile to MO…"
 msgstr "Compilar en MO…"
 
 msgid "E&xport to HTML…"
-msgstr ""
+msgstr "E&xportar a HTML…"
 
 msgid "Check for updates…"
 msgstr "Buscar actualizaciones…"
@@ -1953,7 +1945,7 @@ msgid "&Validate Translations"
 msgstr "&Validar traducciones"
 
 msgid "Remove Same-as-Source Translations"
-msgstr ""
+msgstr "Quitar traducciones iguales a la fuente"
 
 msgid "&Purge deleted translations"
 msgstr "&Purgar traducciones sin usar"
@@ -2284,6 +2276,18 @@ msgstr "La base de datos de la memoria de traducción está dañada: %s (%d)."
 msgid "Translation memory error: %s (%d)."
 msgstr "Error de la memoria de traducción: %s (%d)."
 
+msgid "(Use default language)"
+msgstr "(Usar idioma predeterminado)"
+
+msgid "Language selection"
+msgstr "Selección de idioma"
+
+msgid "Select your preferred language"
+msgstr "Seleccione el idioma que prefiera"
+
+msgid "You must restart Poedit for this change to take effect."
+msgstr "Debe reiniciar Poedit para que los cambios surtan efecto."
+
 msgid "Cannot create temporary directory."
 msgstr "No se puede crear la carpeta temporal."
 
@@ -2375,25 +2379,37 @@ msgstr "Acerca de %s"
 msgid "%s Preferences"
 msgstr "Preferencias de %s"
 
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#, c-format
+msgctxt "macOS menu item"
+msgid "About %s"
+msgstr "Acerca de %s"
+
 #. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
 msgid "Services"
 msgstr "Servicios"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
 #, c-format
+msgctxt "macOS menu item"
 msgid "Hide %s"
 msgstr "Ocultar %s"
 
 #. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
 msgid "Hide Others"
 msgstr "Ocultar el resto"
 
 #. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
 msgid "Show All"
 msgstr "Mostrar todo"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
 #, c-format
+msgctxt "macOS menu item"
 msgid "Quit %s"
 msgstr "Salir de %s"
 
@@ -2401,16 +2417,14 @@ msgstr "Salir de %s"
 msgid "Preferences…"
 msgstr "Preferencias…"
 
+#. TRANSLATORS: macOS item in app menu
 msgid "Preferences..."
 msgstr "Preferencias…"
 
-#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
-msgid "Recent"
-msgstr "Recientes"
-
-#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
-msgid "Frequent"
-msgstr "Frecuentes"
+#. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
+msgid "Preferences..."
+msgstr "Preferencias…"
 
 msgid "&Apply"
 msgstr "&Aplicar"
@@ -2512,41 +2526,51 @@ msgid "Yes"
 msgstr "Sí"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Alt+"
 msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Shift+"
 msgstr "Mayús+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Enter"
 msgstr "Intro"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Up"
 msgstr "Arriba"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Down"
 msgstr "Abajo"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Left"
 msgstr "Izquierda"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Right"
 msgstr "Derecha"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+msgctxt "keyboard key"
 msgid "ctrl"
 msgstr "ctrl"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+msgctxt "keyboard key"
 msgid "alt"
 msgstr "alt"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+msgctxt "keyboard key"
 msgid "shift"
 msgstr "mayús"

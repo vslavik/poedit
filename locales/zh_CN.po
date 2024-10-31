@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2024-08-30 13:57+0200\n"
-"PO-Revision-Date: 2024-08-30 10:16\n"
+"POT-Creation-Date: 2024-10-31 12:30+0100\n"
+"PO-Revision-Date: 2024-10-07 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -80,7 +80,7 @@ msgstr "Poedit 无法识别该文件的格式。"
 
 msgid ""
 "This JSON file isn’t a translations file and cannot be edited in Poedit."
-msgstr "该 JSON 文件不是一份翻译文件，不能使用 Poedit 编辑。"
+msgstr "该 JSON 文件不是一份翻译文件，无法使用 Poedit 编辑。"
 
 #, c-format
 msgid "Reading file content failed with the following error: %s"
@@ -91,12 +91,12 @@ msgid ""
 "File “%s” is read-only and cannot be saved.\n"
 "Please save it under different name."
 msgstr ""
-"文件“%s”为只读，不能保存。\n"
+"文件“%s”为只读，无法保存。\n"
 "请使用其他名称保存。"
 
 #, c-format
 msgid "Couldn’t save file %s."
-msgstr "不能保存文件 %s。"
+msgstr "无法保存文件 %s。"
 
 msgid "Screenshots:"
 msgstr "屏幕截图："
@@ -111,13 +111,13 @@ msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "文件“%2$s”的第 %1$d 行已损坏（不是有效的 %3$s 数据）。"
 
 msgid "Broken PO file: singular form msgstr used together with msgid_plural"
-msgstr "PO文件不当：单数形式的 msgstr 被用在 msgid_plural"
+msgstr "损坏的PO文件：单数形式的 msgstr 被用在 msgid_plural"
 
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
-msgstr "PO文件不当：复数形式的 msgstr 被用在没有 msgid_plural 的位置"
+msgstr "损坏的PO文件：复数形式的 msgstr 被用在没有 msgid_plural 的位置"
 
 msgid "Couldn’t load the file, it is probably damaged."
-msgstr "未能加载文件，该文件可能已损坏。"
+msgstr "无法加载文件，该文件可能已损坏。"
 
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
@@ -126,7 +126,7 @@ msgstr "加载文件时遇到错误。有些数据可能缺失或损坏。"
 
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
-msgstr "在精确格式化文件时有一个问题（但文件保存正确）。"
+msgstr "在精确格式化文件时出现了问题（但文件已完整保存）。"
 
 #, c-format
 msgid ""
@@ -135,7 +135,7 @@ msgid ""
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"不能按翻译设置中所指定的将文件保存为 “%s” 字符集。\n"
+"无法按翻译设置中所指定的将文件保存为 “%s” 字符集。\n"
 "\n"
 "将保存为 UTF-8 字符集，设置也会相应地被修改。"
 
@@ -157,18 +157,6 @@ msgstr "不支持的版本 (%s)"
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
 msgstr "翻译文件中的标记不正确。"
-
-msgid "(Use default language)"
-msgstr "（使用默认语言）"
-
-msgid "Language selection"
-msgstr "语言选择"
-
-msgid "Select your preferred language"
-msgstr "选择您的首选语言"
-
-msgid "You must restart Poedit for this change to take effect."
-msgstr "您必须重新启动 Poedit 才能使这个更改生效。"
 
 msgid "Add Account"
 msgstr "添加账户"
@@ -253,7 +241,7 @@ msgid "Not authorized, please sign in again."
 msgstr "未授权，请尝试重新登录。"
 
 msgid "Downloading translations is disabled in this project."
-msgstr "此项目禁用了下载翻译。"
+msgstr "此项目禁用了翻译下载。"
 
 msgid "Sign In"
 msgstr "登录"
@@ -303,7 +291,7 @@ msgid "&Help"
 msgstr "帮助(&H)"
 
 msgid "MO files can’t be directly edited in Poedit."
-msgstr "MO 文件不能直接在 Poedit 中编辑。"
+msgstr "无法在 Poedit 中直接编辑MO 文件。"
 
 msgid "Error opening file"
 msgstr "打开文件时出错"
@@ -373,7 +361,9 @@ msgstr "重新载入文件"
 msgid ""
 "Do you want to reload the file from disk? Your unsaved edits in Poedit will "
 "be lost if you do."
-msgstr "您要从磁盘重载此文件？如此您会失去在 Poedit 内未保存的更改。"
+msgstr ""
+"你想要从磁盘上重新载入文件吗？如果你这样做，你在 Poedit 中未保存的编辑将会丢"
+"失。"
 
 msgid "Ignore"
 msgstr "忽略"
@@ -400,7 +390,7 @@ msgid "Don’t Save"
 msgstr "不保存"
 
 msgid "The changes made by the other application will be lost if you save."
-msgstr "如您保存，则会失去由其它程序所作的更改。"
+msgstr "如果您保存，另一个应用程序所作的更改将丢失。"
 
 msgid "Cancel"
 msgstr "取消"
@@ -466,7 +456,7 @@ msgstr ""
 "文件夹 中重新允许。"
 
 msgid "Translation entries in the file are probably incorrect."
-msgstr "文件内的翻译条目或许是错误的。"
+msgstr "文件内的翻译条目可能是有误的。"
 
 msgid "Updating the file failed. Click on 'Details >>' for details."
 msgstr "更新文件失败。详细信息请点击 '详细信息 >>'。"
@@ -494,20 +484,20 @@ msgstr "文件已被安全地保存。"
 msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
-msgstr "文件已安全地保存，并编译成 MO 格式的文件，但它可能不能正常工作。"
+msgstr "文件已安全地保存，并编译成 MO 格式的文件，但它可能无法正常工作。"
 
 msgid ""
 "The file was saved safely, but it cannot be compiled into the MO format and "
 "used."
-msgstr "文件已安全地保存，但它不能被编译成 MO 格式并使用。"
+msgstr "文件已安全地保存，但它无法被编译成 MO 格式并使用。"
 
 msgid ""
 "The file was compiled into the MO format, but it will probably not work "
 "correctly."
-msgstr "文件被编译成 MO 格式，但它可能不能正确工作。"
+msgstr "文件被编译成 MO 格式，但它可能无法正常工作。"
 
 msgid "The file cannot be compiled into the MO format and used."
-msgstr "文件不能编译成 MO 格式并使用。"
+msgstr "文件无法编译成 MO 格式并使用。"
 
 msgid "No problems with the translation found."
 msgstr "翻译中未发现问题。"
@@ -646,7 +636,7 @@ msgstr "确定移除所有与源文本相同的翻译吗？"
 msgid ""
 "This action will delete any translations that match the source text exactly. "
 "This cannot be undone."
-msgstr "此操作将移除与源文本完全匹配的所有翻译。不能撤消此操作。"
+msgstr "此操作将移除与源文本完全匹配的所有翻译。该操作不可逆。"
 
 msgid "Keep"
 msgstr "保持"
@@ -679,6 +669,7 @@ msgstr "复制源文本"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
@@ -927,7 +918,7 @@ msgstr "替换字符串"
 
 #, c-format
 msgid "Cannot execute program: %s"
-msgstr "不能执行程序： %s"
+msgstr "无法执行程序： %s"
 
 #. TRANSLATORS: placeholder/hint in language controls
 msgid "Language name or code"
@@ -943,7 +934,7 @@ msgid "All strings"
 msgstr "所有字符串"
 
 msgid "Couldn’t download Localazy project details."
-msgstr "未能下载 Localazy 项目详情。"
+msgstr "无法下载 Localazy 项目详情。"
 
 msgid "There was an error when uploading translations to Localazy."
 msgstr "上传翻译到 Localazy 出错。"
@@ -1564,7 +1555,7 @@ msgid "UTF-8 (recommended)"
 msgstr "UTF-8（推荐）"
 
 msgid "Please save the file first. This section cannot be edited until then."
-msgstr "请先保存文件。以下内容在此之前不能被编辑。"
+msgstr "请先保存文件。以下内容在文件保存之前无法被编辑。"
 
 msgid "Placeholders correctness"
 msgstr "占位符正确性"
@@ -2186,8 +2177,20 @@ msgstr "翻译记忆数据库已损坏：%s (%d)。"
 msgid "Translation memory error: %s (%d)."
 msgstr "翻译记忆错误：%s (%d)。"
 
+msgid "(Use default language)"
+msgstr "（使用默认语言）"
+
+msgid "Language selection"
+msgstr "语言选择"
+
+msgid "Select your preferred language"
+msgstr "选择您的首选语言"
+
+msgid "You must restart Poedit for this change to take effect."
+msgstr "您必须重新启动 Poedit 以使变更生效。"
+
 msgid "Cannot create temporary directory."
-msgstr "不能创建临时目录。"
+msgstr "无法创建临时目录。"
 
 msgid "There are no translations. That’s unusual."
 msgstr "找不到翻译文件，这不正常。"
@@ -2271,25 +2274,37 @@ msgstr "关于 %s"
 msgid "%s Preferences"
 msgstr "%s 首选项"
 
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#, c-format
+msgctxt "macOS menu item"
+msgid "About %s"
+msgstr "关于 %s"
+
 #. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
 msgid "Services"
 msgstr "服务"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
 #, c-format
+msgctxt "macOS menu item"
 msgid "Hide %s"
 msgstr "隐藏 %s"
 
 #. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
 msgid "Hide Others"
 msgstr "隐藏其他"
 
 #. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
 msgid "Show All"
 msgstr "全部显示"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
 #, c-format
+msgctxt "macOS menu item"
 msgid "Quit %s"
 msgstr "退出 %s"
 
@@ -2297,16 +2312,14 @@ msgstr "退出 %s"
 msgid "Preferences…"
 msgstr "首选项…"
 
+#. TRANSLATORS: macOS item in app menu
 msgid "Preferences..."
 msgstr "首选项..."
 
-#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
-msgid "Recent"
-msgstr "最近"
-
-#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
-msgid "Frequent"
-msgstr "频繁"
+#. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
+msgid "Preferences..."
+msgstr "首选项..."
 
 msgid "&Apply"
 msgstr "应用(&A)"
@@ -2408,41 +2421,51 @@ msgid "Yes"
 msgstr "是"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Alt+"
 msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Shift+"
 msgstr "Shift+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Enter"
 msgstr "Enter"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Up"
 msgstr "Up"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Down"
 msgstr "Down"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Left"
 msgstr "左"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Right"
 msgstr "右"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+msgctxt "keyboard key"
 msgid "ctrl"
 msgstr "ctrl"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+msgctxt "keyboard key"
 msgid "alt"
 msgstr "alt"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+msgctxt "keyboard key"
 msgid "shift"
 msgstr "shift"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2024-08-30 13:42+0200\n"
-"PO-Revision-Date: 2024-08-30 10:16\n"
+"POT-Creation-Date: 2024-10-31 12:30+0100\n"
+"PO-Revision-Date: 2024-10-01 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Georgian\n"
 "Language: ka_GE\n"
@@ -167,18 +167,6 @@ msgstr "მხარდაუჭერელი ვერსია (%s)"
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
 msgstr "დაზიანებული მარკირებათარგმანის ხაზში."
-
-msgid "(Use default language)"
-msgstr "(გამოიყენე სისტემის სტანდარტული ენა)"
-
-msgid "Language selection"
-msgstr "ენის არჩევა"
-
-msgid "Select your preferred language"
-msgstr "აირჩიეთ თქვენთვის სასურველი ენა"
-
-msgid "You must restart Poedit for this change to take effect."
-msgstr "თქვენ უნდა გადატვირთოთ Poedit, რათა ეს ცვლილება ძალაში შევიდეს."
 
 msgid "Add Account"
 msgstr "ანგარიშის დამატება"
@@ -442,7 +430,7 @@ msgid "Compiled Translation Files"
 msgstr "თარგმანის კომპილირებული ფაილები"
 
 msgid "Export to HTML…"
-msgstr ""
+msgstr "გატანა HTML-ში…"
 
 msgid "HTML Files"
 msgstr "HTML ფაილები"
@@ -688,7 +676,7 @@ msgid "Keep"
 msgstr "შენარჩუნება"
 
 msgid "Remove"
-msgstr ""
+msgstr "წაშლა"
 
 msgid "Purge deleted translations"
 msgstr "წაშლილი თარგმანებისგან გაწმენდა"
@@ -716,6 +704,7 @@ msgstr "საწყისი ტექსტიდან კოპირებ�
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
@@ -859,7 +848,7 @@ msgstr "უცნობი ენა"
 
 #, c-format
 msgid "Network error: %s (%d)"
-msgstr ""
+msgstr "ქსელის შეცდომა: %s (%d)"
 
 msgid "Unknown error"
 msgstr "უცნობი შეცდომა"
@@ -918,7 +907,7 @@ msgid "Options"
 msgstr "პარამეტრები"
 
 msgid "Ignore case"
-msgstr "რეგისტრის იგნორი"
+msgstr "რეგისტრის გამოტოვება"
 
 msgid "Wrap around"
 msgstr "სიტყვების გადატანა"
@@ -1201,7 +1190,7 @@ msgid "Editing"
 msgstr "რედაქტირება"
 
 msgid "Automatically compile MO file when saving"
-msgstr ""
+msgstr "MO ფაილის ავტომატური კომპილაცია შენახვისას"
 
 msgid "Show summary after updating files"
 msgstr "ფაილების განახლების შემდეგ შეჯამების ჩვენება"
@@ -1424,7 +1413,7 @@ msgid "Advanced"
 msgstr "დამატებითი"
 
 msgid "Settings"
-msgstr ""
+msgstr "მორგება"
 
 msgid "Preparing strings…"
 msgstr "სტრიქონების მომზადება…"
@@ -1746,7 +1735,7 @@ msgid "Compile to MO…"
 msgstr "კომპილაცია MO ფაილში…"
 
 msgid "E&xport to HTML…"
-msgstr ""
+msgstr "&გატანა HTML-ში…"
 
 msgid "Check for updates…"
 msgstr "განახლებების შემოწმება…"
@@ -2207,6 +2196,18 @@ msgstr ""
 msgid "Translation memory error: %s (%d)."
 msgstr "თარგმანის მეხსიერების შეცდომა: %s (%d)."
 
+msgid "(Use default language)"
+msgstr "(გამოიყენე სისტემის სტანდარტული ენა)"
+
+msgid "Language selection"
+msgstr "ენის არჩევა"
+
+msgid "Select your preferred language"
+msgstr "აირჩიეთ თქვენთვის სასურველი ენა"
+
+msgid "You must restart Poedit for this change to take effect."
+msgstr "თქვენ უნდა გადატვირთოთ Poedit, რათა ეს ცვლილება ძალაში შევიდეს."
+
 msgid "Cannot create temporary directory."
 msgstr "დროებითი საქაღალდის შექმნა შეუძლებელია."
 
@@ -2289,25 +2290,37 @@ msgstr "%s-ის შესახებ"
 msgid "%s Preferences"
 msgstr "%s-ის პარამეტრები"
 
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#, c-format
+msgctxt "macOS menu item"
+msgid "About %s"
+msgstr "%s-ის შესახებ"
+
 #. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
 msgid "Services"
 msgstr "სერვისები"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
 #, c-format
+msgctxt "macOS menu item"
 msgid "Hide %s"
 msgstr "%s-ის დამალვა"
 
 #. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
 msgid "Hide Others"
 msgstr "სხვების დამალვა"
 
 #. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
 msgid "Show All"
 msgstr "ყველას ჩვენება"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
 #, c-format
+msgctxt "macOS menu item"
 msgid "Quit %s"
 msgstr "%s-დან გასვლა"
 
@@ -2315,16 +2328,14 @@ msgstr "%s-დან გასვლა"
 msgid "Preferences…"
 msgstr "პარამეტრები…"
 
+#. TRANSLATORS: macOS item in app menu
 msgid "Preferences..."
 msgstr "პარამეტრები..."
 
-#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
-msgid "Recent"
-msgstr "ახლახანს"
-
-#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
-msgid "Frequent"
-msgstr "ხშირი"
+#. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
+msgid "Preferences..."
+msgstr "პარამეტრები..."
 
 msgid "&Apply"
 msgstr "&დადასტურება"
@@ -2426,41 +2437,51 @@ msgid "Yes"
 msgstr "დიახ"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Alt+"
 msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Shift+"
 msgstr "Shift+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Enter"
 msgstr "Enter"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Up"
 msgstr "მაღლა"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Down"
 msgstr "ქვემოთ"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Left"
 msgstr "მარცხნივ"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Right"
 msgstr "მარჯვნივ"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+msgctxt "keyboard key"
 msgid "ctrl"
 msgstr "ctrl"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+msgctxt "keyboard key"
 msgid "alt"
 msgstr "alt"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+msgctxt "keyboard key"
 msgid "shift"
 msgstr "shift"

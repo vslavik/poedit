@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2024-08-30 13:42+0200\n"
-"PO-Revision-Date: 2024-08-30 10:16\n"
+"POT-Creation-Date: 2024-10-31 12:30+0100\n"
+"PO-Revision-Date: 2024-10-22 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Danish\n"
 "Language: da_DK\n"
@@ -76,7 +76,7 @@ msgid "All Translation Files"
 msgstr "Alle oversættelsesfiler"
 
 msgid "The file is in a format not recognized by Poedit."
-msgstr "Filen har et af Poedit ukendt format."
+msgstr "Filen er i et format, som Poedit ikke genkender."
 
 msgid ""
 "This JSON file isn’t a translations file and cannot be edited in Poedit."
@@ -85,7 +85,7 @@ msgstr ""
 
 #, c-format
 msgid "Reading file content failed with the following error: %s"
-msgstr "Læsning af filindhold mislykkedes med flg. fejl: %s"
+msgstr "Læsning af filindhold mislykkedes med følgende fejl: %s"
 
 #, c-format
 msgid ""
@@ -100,7 +100,7 @@ msgid "Couldn’t save file %s."
 msgstr "Kunne ikke gemme filen %s."
 
 msgid "Screenshots:"
-msgstr "Skærmfoto:"
+msgstr "Skærmbilleder:"
 
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
@@ -113,20 +113,20 @@ msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "Linje %d af filen “%s” er beskadiget (ikke gyldig %s-data)."
 
 msgid "Broken PO file: singular form msgstr used together with msgid_plural"
-msgstr "PO-filfejl: Entalsform msgstr anvendt sammen med msgid_plural"
+msgstr "Defekt PO-fil: entalsform msgstr brugt sammen med msgid_plural"
 
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
-msgstr "PO-filfejl: Flertalsform msgstr anvendt uden msgid_plural"
+msgstr "Defekt PO-fil: flertalsform msgstr brugt uden msgid_plural"
 
 msgid "Couldn’t load the file, it is probably damaged."
-msgstr "Kunne ikke indlæse filen, den er sandsynligvis ødelagt."
+msgstr "Kunne ikke indlæse filen. Den er sandsynligvis beskadiget."
 
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
-"Fejl under indlæsning af filen. Visse data kan som følge heraf mangle eller "
-"være ødelagte."
+"Fejl opstod under indlæsning af filen. Nogle data kan derfor mangle eller "
+"være beskadiget."
 
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
@@ -153,30 +153,18 @@ msgstr "\"%s\" er ikke en gyldig POT-fil."
 
 #, c-format
 msgid "Error while loading XLIFF file: %s"
-msgstr "En fejl opstod under indlæsningen af XLIFF-filen %s"
+msgstr "Fejl under indlæsning af XLIFF-fil: %s"
 
 #, c-format
 msgid "unsupported version (%s)"
-msgstr "uunderstøttet version (%s)"
+msgstr "ikke-understøttet version (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
 msgstr "Fejlbehæftet markup i oversættelsesstrengen."
 
-msgid "(Use default language)"
-msgstr "(vælg standardsprog)"
-
-msgid "Language selection"
-msgstr "Sprogvalg"
-
-msgid "Select your preferred language"
-msgstr "Vælg dit foretrukne sprog"
-
-msgid "You must restart Poedit for this change to take effect."
-msgstr "Du skal genstarte Poedit før denne ændring træder i kraft."
-
 msgid "Add Account"
-msgstr "Tilføj konto"
+msgstr "Tilføj Konto"
 
 msgid "Add account"
 msgstr "Tilføj konto"
@@ -306,7 +294,7 @@ msgid "&Copy"
 msgstr "Kopiér (&C)"
 
 msgid "Learn more"
-msgstr "Find ud af mere"
+msgstr "Få mere at vide"
 
 msgid "&Help"
 msgstr "&Hjælp"
@@ -719,6 +707,7 @@ msgstr "Kopiér fra kildetekst"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
@@ -2258,6 +2247,18 @@ msgstr "Oversættelses databasen er ødelagt: %s (%d)."
 msgid "Translation memory error: %s (%d)."
 msgstr "Oversættelses hukommelsesfejl: %s (%d)."
 
+msgid "(Use default language)"
+msgstr "(Brug standardsprog)"
+
+msgid "Language selection"
+msgstr "Sprogvalg"
+
+msgid "Select your preferred language"
+msgstr "Vælg dit foretrukne sprog"
+
+msgid "You must restart Poedit for this change to take effect."
+msgstr "Du skal genstarte Poedit før denne ændring træder i kraft."
+
 msgid "Cannot create temporary directory."
 msgstr "Kan ikke oprette midlertidig mappe."
 
@@ -2347,25 +2348,37 @@ msgstr "Om %s"
 msgid "%s Preferences"
 msgstr "%s indstillinger"
 
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#, c-format
+msgctxt "macOS menu item"
+msgid "About %s"
+msgstr "Om %s"
+
 #. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
 msgid "Services"
 msgstr "Tjenester"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
 #, c-format
+msgctxt "macOS menu item"
 msgid "Hide %s"
 msgstr "Skjul %s"
 
 #. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
 msgid "Hide Others"
 msgstr "Skjul øvrige"
 
 #. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
 msgid "Show All"
 msgstr "Vis alle"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
 #, c-format
+msgctxt "macOS menu item"
 msgid "Quit %s"
 msgstr "Afslut %s"
 
@@ -2373,16 +2386,14 @@ msgstr "Afslut %s"
 msgid "Preferences…"
 msgstr "Indstillinger…"
 
+#. TRANSLATORS: macOS item in app menu
 msgid "Preferences..."
 msgstr "Indstillinger..."
 
-#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
-msgid "Recent"
-msgstr "Seneste"
-
-#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
-msgid "Frequent"
-msgstr "Mest brugte"
+#. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
+msgid "Preferences..."
+msgstr "Præferencer..."
 
 msgid "&Apply"
 msgstr "&Anvend"
@@ -2484,41 +2495,51 @@ msgid "Yes"
 msgstr "Ja"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Alt+"
 msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Shift+"
 msgstr "Skift+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Enter"
-msgstr "Enter"
+msgstr "Retur"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Up"
 msgstr "Op"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Down"
 msgstr "Ned"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Left"
 msgstr "Venstre"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Right"
 msgstr "Højre"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+msgctxt "keyboard key"
 msgid "ctrl"
 msgstr "ctrl"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+msgctxt "keyboard key"
 msgid "alt"
 msgstr "alt"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+msgctxt "keyboard key"
 msgid "shift"
 msgstr "skift"

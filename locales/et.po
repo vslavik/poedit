@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2024-08-30 13:57+0200\n"
-"PO-Revision-Date: 2024-09-04 15:08\n"
+"POT-Creation-Date: 2024-10-31 12:30+0100\n"
+"PO-Revision-Date: 2024-10-09 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Estonian\n"
 "Language: et_EE\n"
@@ -165,18 +165,6 @@ msgstr "toetamata versioon (%s)"
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
 msgstr "Katkestatud märgistus tõlkestringis."
-
-msgid "(Use default language)"
-msgstr "(Kasuta vaikekeelt)"
-
-msgid "Language selection"
-msgstr "Keelevalik"
-
-msgid "Select your preferred language"
-msgstr "Vali enda meeliskeel"
-
-msgid "You must restart Poedit for this change to take effect."
-msgstr "Selle muudatuse jõustumiseks peab Poedit-i taaskäivitama."
 
 msgid "Add Account"
 msgstr "Lisa konto"
@@ -677,13 +665,7 @@ msgid "Failed to update translation memory: %s"
 msgstr "Tõlkemälu uuendamine ebaõnnestus: %s"
 
 msgid "Remove same-as-source translations"
-msgstr ""
-"Eemaldage allikaga samad tõlked\n"
-"\n"
-"\n"
-"\n"
-"\n"
-"Eemaldage samad tõlked kui tõlke allikas olevad"
+msgstr "Eemaldage allikaga samad tõlked"
 
 msgid ""
 "Do you want to remove all translations that are idential to the source text?"
@@ -727,8 +709,9 @@ msgstr "Kopeeri lähtetekst"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Ctrl+"
-msgstr "Ctrl+"
+msgstr "Juhtklahv+"
 
 msgid "Clear translation"
 msgstr "Tõlke eemaldamine"
@@ -2263,6 +2246,18 @@ msgstr "Tõlkemälu on kahjustada saanud: %s (%d)."
 msgid "Translation memory error: %s (%d)."
 msgstr "Tõlkemälu viga: %s (%d)."
 
+msgid "(Use default language)"
+msgstr "(Kasuta vaikekeelt)"
+
+msgid "Language selection"
+msgstr "Keelevalik"
+
+msgid "Select your preferred language"
+msgstr "Vali enda meeliskeel"
+
+msgid "You must restart Poedit for this change to take effect."
+msgstr "Selle muudatuse jõustumiseks peab Poedit-i taaskäivitama."
+
 msgid "Cannot create temporary directory."
 msgstr "Pole võimalik luua ajutist kataloogi."
 
@@ -2351,25 +2346,37 @@ msgstr "Programmist %s"
 msgid "%s Preferences"
 msgstr "%s Eelistused"
 
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#, c-format
+msgctxt "macOS menu item"
+msgid "About %s"
+msgstr "Programmist %s"
+
 #. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
 msgid "Services"
 msgstr "Teenused"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
 #, c-format
+msgctxt "macOS menu item"
 msgid "Hide %s"
 msgstr "Peida %s"
 
 #. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
 msgid "Hide Others"
 msgstr "Peida teised"
 
 #. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
 msgid "Show All"
-msgstr "Näita kõiki"
+msgstr "Kuva kõik"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
 #, c-format
+msgctxt "macOS menu item"
 msgid "Quit %s"
 msgstr "Lõpeta %s"
 
@@ -2377,16 +2384,14 @@ msgstr "Lõpeta %s"
 msgid "Preferences…"
 msgstr "Eelistused…"
 
+#. TRANSLATORS: macOS item in app menu
 msgid "Preferences..."
 msgstr "Eelistused..."
 
-#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
-msgid "Recent"
-msgstr "Hiljutised"
-
-#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
-msgid "Frequent"
-msgstr "Sagedased"
+#. TRANSLATORS: macOS item in app menu
+msgctxt "macOS menu item"
+msgid "Preferences..."
+msgstr "Eelistused..."
 
 msgid "&Apply"
 msgstr "&Rakenda"
@@ -2488,41 +2493,51 @@ msgid "Yes"
 msgstr "Jah"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Alt+"
-msgstr "Alt+"
+msgstr "Muuteklahv+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Shift+"
-msgstr "Shift+"
+msgstr "Tõstuklahv+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Enter"
-msgstr "Enter"
+msgstr "Sisestusklahv"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Up"
 msgstr "Üles"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Down"
 msgstr "Alla"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Left"
 msgstr "Vasak"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgctxt "keyboard key"
 msgid "Right"
 msgstr "Parem"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+msgctxt "keyboard key"
 msgid "ctrl"
 msgstr "ctrl"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+msgctxt "keyboard key"
 msgid "alt"
-msgstr "alt"
+msgstr "muuteklahv"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+msgctxt "keyboard key"
 msgid "shift"
-msgstr "shift"
+msgstr "tõstuklahv ehk registriklahv"
