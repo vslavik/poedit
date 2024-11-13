@@ -436,6 +436,9 @@ bool POCatalogParser::Parse()
                 mtranslations.Add(str);
             }
 
+            if (m_ignoreTranslations)
+                mtranslations.clear();
+
             if (!OnEntry(mstr, msgid_plural, true,
                          has_context, msgctxt,
                          mtranslations,
