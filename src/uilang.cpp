@@ -122,7 +122,6 @@ wxArrayString PoeditTranslationsLoader::GetAvailableTranslations(const wxString&
     for (auto& lang: all)
         lang = as_tag(lang);
     all.push_back("en");
-    all.push_back("be_Latn");
 
     return all;
 }
