@@ -174,10 +174,14 @@ private:
         wxIcon icon(fullname, wxBITMAP_TYPE_ICO, desiredSize, desiredSize);
         if (!icon.IsOk())
             icon.LoadFile(fullname, wxBITMAP_TYPE_ICO);
+
+        if (!icon.IsOk())
+            return wxNullBitmap;
+
 #ifndef __WXMSW__
         // There is no guarantee that the desired size given at icon construction
         // has been taken into account - only wxMSW seems to use it
-        if (icon.IsOk() && (icon.GetWidth() != desiredSize || icon.GetHeight() != desiredSize))
+        if (icon.GetWidth() != desiredSize || icon.GetHeight() != desiredSize)
         {
             wxImage image = icon.ConvertToImage();
             image.Rescale(desiredSize, desiredSize, wxIMAGE_QUALITY_HIGH);
