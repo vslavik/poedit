@@ -152,6 +152,20 @@ private:
 };
 
 
+// Exception thrown when HTTP request fails with error status code
+class http_response_error : public std::runtime_error
+{
+public:
+    http_response_error(int status, const std::string& what) : std::runtime_error(what), m_status(status) {}
+
+    int status_code() const { return m_status; }
+
+private:
+    int m_status;
+};
+
+
+
 /**
     Client for accessing HTTP REST APIs.
  */

@@ -29,13 +29,6 @@
 #include "version.h"
 
 
-class http_exception : public std::runtime_error
-{
-public:
-    http_exception(const std::string& what) : std::runtime_error(what) {}
-};
-
-
 class http_client::impl
 {
 public:
@@ -208,7 +201,7 @@ private:
         try
         {
             m_owner.on_error_response(status_code, desc);
-            BOOST_THROW_EXCEPTION(http_exception(desc));
+            BOOST_THROW_EXCEPTION(http_response_error(status_code, desc));
         }
         catch (...)
         {

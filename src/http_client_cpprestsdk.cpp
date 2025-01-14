@@ -259,7 +259,7 @@ private:
         if (msg.empty())
             msg = str::to_utf8(r.reason_phrase());
         m_owner.on_error_response(status_code, msg);
-        BOOST_THROW_EXCEPTION(http::http_exception(status_code, msg));
+        BOOST_THROW_EXCEPTION(http_response_error(status_code, msg));
     }
 
     // convert to wstring

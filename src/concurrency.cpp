@@ -29,8 +29,11 @@
 #include <wx/log.h>
 
 // All this is for rethrow_for_boost:
-#if defined(HAVE_HTTP_CLIENT) && !defined(__WXOSX__)
-#include <cpprest/http_msg.h>
+#if defined(HAVE_HTTP_CLIENT)
+  #include "http_client.h"
+  #ifndef __WXOSX__
+    #include <cpprest/http_msg.h>
+  #endif
 #endif
 
 using namespace dispatch;
@@ -66,8 +69,11 @@ exception_ptr dispatch::current_exception()
     {
         return boost::current_exception();
     }
-#if defined(HAVE_HTTP_CLIENT) && !defined(__WXOSX__)
+#if defined(HAVE_HTTP_CLIENT)
+    CATCH_AND_WRAP(http_response_error)
+  #ifndef __WXOSX__
     CATCH_AND_WRAP(web::http::http_exception)
+  #endif
 #endif
     CATCH_AND_WRAP(Exception)
     CATCH_AND_WRAP(std::runtime_error)
