@@ -336,6 +336,12 @@ dispatch::future<CrowdinClient::ProjectDetails> CrowdinClient::GetProjectDetails
         // Handle project info
         const json& d = r["data"];
 
+        if (get_value(d, "type", 0) != 0)
+        {
+            // TRANSLATORS: Crowdin has string-based and file-based project kinds (see https://support.crowdin.com/creating-project/#file-based-project)
+            throw Exception(_("String-based Crowdin projects are not supported."));
+        }
+
         if (get_value(d, "publicDownloads", false) == false)
             throw Exception(_("Downloading translations is disabled in this project."));
 
