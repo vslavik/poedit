@@ -240,12 +240,6 @@ PKG_CHECK_MODULES([PUGIXML], [pugixml >= 1.9],
             dnl use bundled copy
         ])
 
-AC_CHECK_HEADERS([dtl/dtl.hpp],
-        [ ],
-        [
-            AC_MSG_ERROR([missing dtl c++ header-only library])
-        ])
-
 
 dnl Check for Compact Language Detector 2
 dnl (used for better language detection and for non-English source languages)

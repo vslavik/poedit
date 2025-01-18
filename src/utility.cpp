@@ -44,7 +44,7 @@
     #include <unistd.h>
 #endif
 
-#include <dtl/dtl.hpp>
+#include "../deps/dtl/dtl/dtl.hpp"
 
 #include "str_helpers.h"
 
@@ -119,7 +119,7 @@ wxFileName MakeFileName(const wxString& path)
     return fn;
 }
 
-/// A convertor from dtl's to 
+/// A convertor from dtl's to our own diff action type
 Diff::Action dtl2DiffAction(dtl::edit_t lastType) {
     switch (lastType) {
         case dtl::SES_DELETE: return Diff::Action::Delete;
