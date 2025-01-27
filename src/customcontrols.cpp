@@ -129,6 +129,11 @@ wxString WrapTextAtWidth(const wxString& text_, int width, Language lang, wxWind
         else if (pos > 0 && text[pos-1] == '\n') // forced line feed
         {
             out += substr;
+            out += '\n';
+#ifdef BIDI_NEEDS_DIRECTION_ON_EACH_LINE
+            if (directionMark)
+                out += directionMark;
+#endif
             lineStart = pos;
             previousSubstr.clear();
         }
