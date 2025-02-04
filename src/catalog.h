@@ -338,6 +338,7 @@ class Catalog
             PO,
             POT,
             XLIFF,
+            XCLOC,
             JSON,
             JSON_FLUTTER
         };

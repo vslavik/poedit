@@ -25,6 +25,7 @@ poedit_SOURCES = \
                  catalog.cpp catalog.h \
                  catalog_po.cpp catalog_po.h \
                  catalog_json.cpp catalog_json.h \
+                 catalog_xcloc.cpp catalog_xcloc.h \
                  catalog_xliff.cpp catalog_xliff.h \
                  uilang.cpp uilang.h \
                  cloud_sync.h \

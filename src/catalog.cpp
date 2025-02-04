@@ -28,6 +28,7 @@
 #include "catalog_po.h"
 #include "catalog_xliff.h"
 #include "catalog_json.h"
+#include "catalog_xcloc.h"
 
 #include "configuration.h"
 #include "errors.h"
@@ -589,6 +590,8 @@ wxString MaskForType(Catalog::Type t)
             return MaskForType("*.pot", _("POT Translation Templates"));
         case Catalog::Type::XLIFF:
             return MaskForType("*.xlf;*.xliff", _("XLIFF Translation Files"));
+        case Catalog::Type::XCLOC:
+            return MaskForType("*.xcloc", _("Xcode Localization Catalog"));
         case Catalog::Type::JSON:
             return MaskForType("*.json", _("JSON Translation Files"));
         case Catalog::Type::JSON_FLUTTER:
@@ -602,9 +605,9 @@ wxString MaskForType(Catalog::Type t)
 
 wxString Catalog::GetAllTypesFileMask()
 {
-    return MaskForType("*.po;*.pot;*.xlf;*.xliff;*.json;*.arb", _("All Translation Files"), /*showExt=*/false) +
+    return MaskForType("*.po;*.pot;*.xlf;*.xliff;*.xcloc;*.json;*.arb", _("All Translation Files"), /*showExt=*/false) +
         "|" +
-        GetTypesFileMask({ Type::PO, Type::POT, Type::XLIFF, Type::JSON, Type::JSON_FLUTTER });
+        GetTypesFileMask({ Type::PO, Type::POT, Type::XLIFF, Type::JSON, Type::JSON_FLUTTER, Type::XCLOC });
 }
 
 wxString Catalog::GetTypesFileMask(std::initializer_list<Type> types)
@@ -1110,6 +1113,7 @@ CatalogPtr Catalog::Create(Type type)
             return CatalogPtr(new POCatalog(type));
 
         case Type::XLIFF:
+        case Type::XCLOC:
         case Type::JSON:
         case Type::JSON_FLUTTER:
             wxFAIL_MSG("empty XLIFF/JSON creation not implemented");
@@ -1138,6 +1142,10 @@ CatalogPtr Catalog::Create(const wxString& filename, int flags)
     else if (JSONCatalog::CanLoadFile(ext))
     {
         cat = JSONCatalog::Open(filename);
+    }
+    else if (XCLOCCatalog::CanLoadFile(ext))
+    {
+        cat = XCLOCCatalog::Open(filename);
     }
 
     if (!cat)

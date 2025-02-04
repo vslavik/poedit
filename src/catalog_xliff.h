@@ -126,6 +126,14 @@ protected:
     XLIFFCatalog(pugi::xml_document&& doc)
         : Catalog(Type::XLIFF), m_doc(std::move(doc)) {}
 
+    struct InstanceCreatorImpl
+    {
+        virtual ~InstanceCreatorImpl() {}
+        virtual std::shared_ptr<XLIFFCatalog> CreateFromDoc(pugi::xml_document&& doc, const std::string& xliff_version) = 0;
+    };
+
+    static std::shared_ptr<XLIFFCatalog> OpenImpl(const wxString& filename, InstanceCreatorImpl& creator);
+
     virtual void Parse(pugi::xml_node root) = 0;
 
 protected:

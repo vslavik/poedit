@@ -1495,6 +1495,7 @@ void PoeditFrame::EditCatalogProperties()
 
         // Only language can be changed for other file types:
         case Catalog::Type::XLIFF:
+        case Catalog::Type::XCLOC:
         case Catalog::Type::JSON:
         case Catalog::Type::JSON_FLUTTER:
         {
