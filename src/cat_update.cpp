@@ -36,6 +36,7 @@
 #include <wx/listbox.h>
 #include <wx/log.h>
 #include <wx/msgdlg.h>
+#include <wx/numformatter.h>
 #include <wx/stattext.h>
 #include <wx/xrc/xmlres.h>
 
@@ -200,7 +201,17 @@ POCatalogPtr ExtractPOTFromSources(POCatalogPtr catalog, UpdateResultReason& rea
     {
         auto files = Extractor::CollectAllFiles(*spec);
 
-        progress.message(_(L"Extracting translatable strings…"));
+        progress.message
+        (
+            // TRANSLATORS: %s is the number of files
+            wxString::Format
+            (
+                wxPLURAL(L"Extracting translatable strings from %s file…",
+                         L"Extracting translatable strings from %s files…",
+                         (int)files.size()),
+                wxNumberFormatter::ToString((long)files.size())
+            )
+        );
 
         if (!files.empty())
         {
