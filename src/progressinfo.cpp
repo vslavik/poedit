@@ -227,6 +227,8 @@ ProgressObserver::~ProgressObserver()
 }
 
 
+thread_local ProgressWindow *ProgressWindow::ms_activeWindow = nullptr;
+
 ProgressWindow::ProgressWindow(wxWindow *parent, const wxString& title, dispatch::cancellation_token_ptr cancellationToken)
     : TitlelessDialog(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE & ~wxCLOSE_BOX)
 {

@@ -30,6 +30,7 @@
 #include "errors.h"
 #include "titleless_window.h"
 
+#include <wx/scopeguard.h>
 #include <wx/string.h>
 #include <wx/windowptr.h>
 
@@ -39,6 +40,8 @@ class WXDLLIMPEXP_FWD_CORE wxStaticBitmap;
 class WXDLLIMPEXP_FWD_CORE wxStaticText;
 class WXDLLIMPEXP_FWD_CORE wxGauge;
 class SecondaryLabel;
+
+class ProgressWindow;
 
 
 /**
@@ -113,6 +116,10 @@ protected:
         auto bg = dispatch::async([=]
         {
             Progress progress(1, *m_progress, 1);
+
+            ms_activeWindow = this;
+            wxON_BLOCK_EXIT_SET(ms_activeWindow, nullptr);
+
             task();
         })
         .then_on_main([=]
@@ -154,6 +161,12 @@ protected:
     }
 
 public:
+    /**
+        Returns currently active window (or nullptr) for the current thread.
+        Should only be used from within an active task.
+     */
+    static ProgressWindow *GetActive() { return ms_activeWindow; }
+
     template<typename TBackgroundJob, typename TCompletion>
     static void RunTaskThenDo(wxWindow *parent, const wxString& title,
                               const TBackgroundJob& task, const TCompletion& completionHandler)
@@ -217,6 +230,8 @@ private:
     wxGauge *m_gauge;
 
     dispatch::cancellation_token_ptr m_cancellationToken;
+
+    static thread_local ProgressWindow *ms_activeWindow;
 };
 
 
