@@ -478,31 +478,47 @@ bool XLIFFCatalog::CanLoadFile(const wxString& extension)
 }
 
 
-std::shared_ptr<XLIFFCatalog> XLIFFCatalog::Open(const wxString& filename)
+std::shared_ptr<XLIFFCatalog> XLIFFCatalog::OpenImpl(const wxString& filename, InstanceCreatorImpl& creator)
 {
     xml_document doc;
     auto result = doc.load_file(filename.fn_str(), PUGI_PARSE_FLAGS);
     if (!result)
         throw XLIFFReadException(result.description());
 
-    std::shared_ptr<XLIFFCatalog> cat;
-
     auto xliff_root = doc.child("xliff");
     std::string xliff_version = xliff_root.attribute("version").value();
-    if (xliff_version == "1.0")
-        cat.reset(new XLIFF1Catalog(std::move(doc), 0));
-    else if (xliff_version == "1.1")
-        cat.reset(new XLIFF1Catalog(std::move(doc), 1));
-    else if (xliff_version == "1.2")
-        cat.reset(new XLIFF1Catalog(std::move(doc), 2));
-    else if (xliff_version == "2.0" || xliff_version == "2.1")
-        cat.reset(new XLIFF2Catalog(std::move(doc)));
-    else
+
+    auto cat = creator.CreateFromDoc(std::move(doc), xliff_version);
+    if (!cat)
         throw XLIFFReadException(wxString::Format(_("unsupported version (%s)"), xliff_version));
 
     cat->Parse(xliff_root);
 
     return cat;
+}
+
+
+std::shared_ptr<XLIFFCatalog> XLIFFCatalog::Open(const wxString& filename)
+{
+    struct Creator : public InstanceCreatorImpl
+    {
+        std::shared_ptr<XLIFFCatalog> CreateFromDoc(pugi::xml_document&& doc, const std::string& xliff_version) override
+        {
+            if (xliff_version == "1.0")
+                return std::make_shared<XLIFF1Catalog>(std::move(doc), 0);
+            else if (xliff_version == "1.1")
+                return std::make_shared<XLIFF1Catalog>(std::move(doc), 1);
+            else if (xliff_version == "1.2")
+                return std::make_shared<XLIFF1Catalog>(std::move(doc), 2);
+            else if (xliff_version == "2.0" || xliff_version == "2.1")
+                return std::make_shared<XLIFF2Catalog>(std::move(doc));
+            else
+                return nullptr;
+        }
+    };
+
+    Creator c;
+    return OpenImpl(filename, c);
 }
 
 

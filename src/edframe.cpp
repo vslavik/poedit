@@ -1495,6 +1495,7 @@ void PoeditFrame::EditCatalogProperties()
 
         // Only language can be changed for other file types:
         case Catalog::Type::XLIFF:
+        case Catalog::Type::XCLOC:
         case Catalog::Type::JSON:
         case Catalog::Type::JSON_FLUTTER:
         {
@@ -2782,7 +2783,27 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
 
     Catalog::ValidationResults validation_results;
     Catalog::CompilationStatus mo_compilation_status = Catalog::CompilationStatus::NotDone;
-    if ( !m_catalog->Save(catalog, true, validation_results, mo_compilation_status) )
+
+    bool was_ok = false;
+    try
+    {
+        was_ok = m_catalog->Save(catalog, true, validation_results, mo_compilation_status);
+    }
+    catch (...)
+    {
+        was_ok = false;
+        wxMessageDialog dlg
+        (
+            this,
+            wxString::Format(_(L"The file “%s” couldn’t be saved."), wxFileName(catalog).GetFullName()),
+            _("Error saving file"),
+            wxOK | wxICON_ERROR
+        );
+        dlg.SetExtendedMessage(DescribeCurrentException());
+        dlg.ShowModal();
+    }
+
+    if (!was_ok)
     {
         if (tmUpdateThread.valid())
             tmUpdateThread.wait();

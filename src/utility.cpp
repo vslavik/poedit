@@ -228,7 +228,7 @@ TempOutputFileFor::TempOutputFileFor(const wxString& filename) : m_filenameFinal
     NSURL *tempdirUrl =
         [[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory
                                                inDomain:NSUserDomainMask
-                                      appropriateForURL:[fileUrl URLByDeletingLastPathComponent]
+                                      appropriateForURL:fileUrl
                                                  create:YES
                                                   error:nil];
     if (tempdirUrl)
