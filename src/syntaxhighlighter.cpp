@@ -214,7 +214,7 @@ const wchar_t* RE_PHP_FORMAT = LR"(%(\d+\$)?[-+]{0,2}([ 0]|'.)?-?\d*(\..?\d+)?[%
 
 // c-format per http://en.cppreference.com/w/cpp/io/c/fprintf,
 //              http://pubs.opengroup.org/onlinepubs/9699919799/functions/fprintf.html
-#define RE_C_FORMAT_BASE LR"(%(\d+\$)?[-+ #0]{0,5}(\d+|\*)?(\.(\d+|\*))?(hh|ll|[hljztL])?[%csdioxXufFeEaAgGnp])"
+#define RE_C_FORMAT_BASE LR"(%(\d+\$)?[-+ #0]{0,5}(\d+|\*)?(\.(\d+|\*))?((hh|ll|[hljztL])?[%csdioxXufFeEaAgGnp]|<[A-Za-z0-9]+>))"
 const wchar_t* RE_C_FORMAT = RE_C_FORMAT_BASE;
 const wchar_t* RE_OBJC_FORMAT =  L"%@|" RE_C_FORMAT_BASE;
 const wchar_t* RE_CXX20_FORMAT = LR"((\{\{)|(\}\})|(\{[^}]*\}))";
