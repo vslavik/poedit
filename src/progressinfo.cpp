@@ -41,6 +41,7 @@
 #include <wx/gauge.h>
 #include <wx/stattext.h>
 #include <wx/dialog.h>
+#include <wx/scopeguard.h>
 #include <wx/sizer.h>
 #include <wx/button.h>
 #include <wx/config.h>
@@ -273,6 +274,68 @@ ProgressWindow::ProgressWindow(wxWindow *parent, const wxString& title, dispatch
         CenterOnParent();
 }
 
+
+void ProgressWindow::DoRunTask(std::function<void()>&& task,
+                               std::function<void()>&& completionHandler,
+                               bool forceModal)
+{
+    m_progress = std::make_shared<Progress>(1);
+    attach(*m_progress);
+
+    // don't show any flushed log output until the modal progress window closes:
+    // FIXME: proper UI for showing logged errors directly within
+    wxLog::Suspend();
+
+    auto bg = dispatch::async([this, task = std::move(task)]
+    {
+        Progress progress(1, *m_progress, 1);
+
+        ms_activeWindow = this;
+        wxON_BLOCK_EXIT_SET(ms_activeWindow, nullptr);
+
+        task();
+    })
+    .then_on_main([=]
+    {
+        // make sure EndModal() is only called within event loop, i.e. not before
+        // Show*Modal() was called (which could happen if `bg` finished instantly):
+        CallAfter([=]{
+            EndModal(wxID_OK);
+            wxLog::Resume();
+        });
+    })
+    .catch_all([=](dispatch::exception_ptr e){
+        // make sure EndModal() is only called within event loop, i.e. not before
+        // Show*Modal() was called (which could happen if `bg` finished instantly):
+        CallAfter([=]{
+            // TODO: handle errors better -- show error inline, indicate to caller (possibly rethrow on main?)
+            wxLogError(DescribeException(e));
+            EndModal(wxID_CANCEL);
+            wxLog::Resume();
+        });
+    });
+
+    if (forceModal || !GetParent())
+    {
+        ShowModal();
+        detach();
+        m_progress.reset();
+        if (completionHandler)
+            completionHandler();
+    }
+    else
+    {
+        ShowWindowModalThenDo([this, completionHandler = std::move(completionHandler)](int /*retcode*/)
+        {
+            detach();
+            m_progress.reset();
+            if (completionHandler)
+                completionHandler();
+        });
+    }
+}
+
+
 void ProgressWindow::update_message(const wxString& text)
 {
     if (m_cancellationToken && m_cancellationToken->is_cancelled())
@@ -283,6 +346,7 @@ void ProgressWindow::update_message(const wxString& text)
         m_message->SetLabel(text);
     });
 }
+
 
 void ProgressWindow::update_progress(double completedFraction)
 {

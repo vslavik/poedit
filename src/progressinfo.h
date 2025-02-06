@@ -30,10 +30,10 @@
 #include "errors.h"
 #include "titleless_window.h"
 
-#include <wx/scopeguard.h>
 #include <wx/string.h>
 #include <wx/windowptr.h>
 
+#include <functional>
 #include <memory>
 
 class WXDLLIMPEXP_FWD_CORE wxStaticBitmap;
@@ -103,62 +103,9 @@ protected:
     ProgressWindow(wxWindow *parent, const wxString& title,
                    dispatch::cancellation_token_ptr cancellationToken = dispatch::cancellation_token_ptr());
 
-    template<typename TBackgroundJob, typename TCompletion>
-    void DoRunTask(const TBackgroundJob& task, const TCompletion& completionHandler, bool forceModal = false)
-    {
-        m_progress = std::make_shared<Progress>(1);
-        attach(*m_progress);
-
-        // don't show any flushed log output until the modal progress window closes:
-        // FIXME: proper UI for showing logged errors directly within
-        wxLog::Suspend();
-
-        auto bg = dispatch::async([=]
-        {
-            Progress progress(1, *m_progress, 1);
-
-            ms_activeWindow = this;
-            wxON_BLOCK_EXIT_SET(ms_activeWindow, nullptr);
-
-            task();
-        })
-        .then_on_main([=]
-        {
-            // make sure EndModal() is only called within event loop, i.e. not before
-            // Show*Modal() was called (which could happen if `bg` finished instantly):
-            CallAfter([=]{
-                EndModal(wxID_OK);
-                wxLog::Resume();
-            });
-        })
-        .catch_all([=](dispatch::exception_ptr e){
-            // make sure EndModal() is only called within event loop, i.e. not before
-            // Show*Modal() was called (which could happen if `bg` finished instantly):
-            CallAfter([=]{
-                // TODO: handle errors better -- show error inline, indicate to caller (possibly rethrow on main?)
-                wxLogError(DescribeException(e));
-                EndModal(wxID_CANCEL);
-                wxLog::Resume();
-            });
-        });
-
-        if (forceModal || !GetParent())
-        {
-            ShowModal();
-            detach();
-            m_progress.reset();
-            completionHandler();
-        }
-        else
-        {
-            ShowWindowModalThenDo([=](int /*retcode*/)
-            {
-                detach();
-                m_progress.reset();
-                completionHandler();
-            });
-        }
-    }
+    void DoRunTask(std::function<void()>&& task,
+                   std::function<void()>&& completionHandler = nullptr,
+                   bool forceModal = false);
 
 public:
     /**
@@ -198,7 +145,7 @@ public:
                         const TBackgroundJob& task)
     {
         wxWindowPtr<ProgressWindow> window(new ProgressWindow(parent, title));
-        window->DoRunTask(task, [=]{}, true);
+        window->DoRunTask(task, nullptr, /*forceModal=*/true);
     }
 
     template<typename TBackgroundJob>
@@ -207,7 +154,7 @@ public:
     {
         auto token = std::make_shared<dispatch::cancellation_token>();
         wxWindowPtr<ProgressWindow> window(new ProgressWindow(parent, title, token));
-        window->DoRunTask([=]{ task(token); }, []{}, true);
+        window->DoRunTask([=]{ task(token); }, nullptr, /*forceModal=*/true);
         return !token->is_cancelled();
     }
 
