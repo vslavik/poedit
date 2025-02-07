@@ -320,6 +320,7 @@ void ProgressWindow::DoRunTask(std::function<void()>&& task,
         ShowModal();
         detach();
         m_progress.reset();
+        Hide();
         if (completionHandler)
             completionHandler();
     }
@@ -329,6 +330,7 @@ void ProgressWindow::DoRunTask(std::function<void()>&& task,
         {
             detach();
             m_progress.reset();
+            Hide();
             if (completionHandler)
                 completionHandler();
         });

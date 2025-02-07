@@ -121,7 +121,7 @@ public:
         wxWindowPtr<ProgressWindow> window(new ProgressWindow(parent, title));
         window->DoRunTask(task, [=]{
             completionHandler();
-            window->Hide();
+            (void)window; // important to keep a reference and not destroy too early
         });
     }
 
@@ -136,7 +136,7 @@ public:
         },
         [=]{
             completionHandler(!token->is_cancelled());
-            window->Hide();
+            (void)window; // important to keep a reference and not destroy too early
         });
     }
 
