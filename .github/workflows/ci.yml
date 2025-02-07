@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v4
     - name: Checkout submodules
       # submodules are not used by the build, but needed for `make dist`:
-      run: git submodule update --init deps/json deps/pugixml
+      run: git submodule update --init deps/json deps/pugixml deps/dtl
     - name: Install dependencies
       run: |
         sudo apt-get update && \
