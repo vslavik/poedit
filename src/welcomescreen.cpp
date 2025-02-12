@@ -148,8 +148,9 @@ EmptyPOScreenPanel::EmptyPOScreenPanel(PoeditFrame *parent, bool isGettext)
         auto explain = new AutoWrappingText(this, wxID_ANY, _(L"Translatable entries aren’t added manually in the Gettext system, but are automatically extracted from source code. This way, they stay up to date and accurate. Translators typically use PO template files (POTs) prepared for them by the developer."));
         sizer->Add(explain, wxSizerFlags().Expand().Border(wxTOP, PX(10)));
 
-        auto learnMore = new LearnMoreLink(this, "http://www.gnu.org/software/gettext/manual/html_node/", _("(Learn more about GNU gettext)"));
-        sizer->Add(learnMore, wxSizerFlags().Border(wxBOTTOM, PX(15)).Align(wxALIGN_RIGHT));
+        auto learnMore = new LearnMoreLink(this, "http://www.gnu.org/software/gettext/manual/html_node/", _("Learn more about GNU gettext"));
+        sizer->Add(learnMore, wxSizerFlags().Border(wxBOTTOM|wxTOP, PX(4)).Align(wxALIGN_LEFT));
+        sizer->AddSpacer(PX(8));
 
         auto explain2 = new wxStaticText(this, wxID_ANY, _("The simplest way to fill this file with translations is to update it from a POT:"));
         sizer->Add(explain2, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(10)));
