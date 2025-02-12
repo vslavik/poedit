@@ -170,7 +170,7 @@ protected:
 
         @see SetSummaryContent()
      */
-    bool ShowSummary(const BackgroundTaskResult& data);
+    bool ShowSummary(const BackgroundTaskResult& data, const wxArrayString& errors);
 
     /**
         Adds summary content to the UI.

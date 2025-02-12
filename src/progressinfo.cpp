@@ -39,6 +39,7 @@
 #include <wx/evtloop.h>
 #include <wx/log.h>
 #include <wx/gauge.h>
+#include <wx/msgdlg.h>
 #include <wx/stattext.h>
 #include <wx/dialog.h>
 #include <wx/scopeguard.h>
@@ -228,6 +229,71 @@ ProgressObserver::~ProgressObserver()
 }
 
 
+namespace
+{
+
+class CapturingThreadLogger : public wxLog
+{
+public:
+    CapturingThreadLogger(std::shared_ptr<wxArrayString> buffer) : m_buffer(buffer)
+    {
+        m_previous = wxLog::SetThreadActiveTarget(this);
+    }
+
+    ~CapturingThreadLogger()
+    {
+        wxLog::SetThreadActiveTarget(m_previous);
+    }
+
+protected:
+    void DoLogRecord(wxLogLevel level, const wxString& msg, [[maybe_unused]] const wxLogRecordInfo& info) override
+    {
+        if (level <= wxLOG_Warning)
+        {
+            m_buffer->push_back(msg);
+        }
+        else if ( level == wxLOG_Debug || level == wxLOG_Trace )
+        {
+            wxLog::LogTextAtLevel(level, msg);
+        }
+        // else: ignore
+    }
+
+private:
+    std::shared_ptr<wxArrayString> m_buffer;
+    wxLog *m_previous;
+};
+
+
+wxWindowPtr<wxMessageDialog> CreateErrorDialog(wxWindow *parent, [[maybe_unused]] wxStaticText *title, const wxArrayString& errors)
+{
+    if (errors.empty())
+        return {};
+
+    wxString text;
+    wxString extended;
+
+    if (errors.size() == 1)
+    {
+        text = _("An error occurred.");
+        extended = errors.front();
+    }
+    else
+    {
+        text = wxString::Format(wxPLURAL("%d error occurred.", "%d errors occurred.", (int)errors.size()), (int)errors.size());
+        extended = wxJoin(errors, '\n', 0);
+    }
+
+    wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog(parent, text, MSW_OR_OTHER(title->GetLabel(), ""), wxOK | wxICON_ERROR));
+    if (!extended.empty())
+        dlg->SetExtendedMessage(extended);
+
+    return dlg;
+}
+
+} // anonymous namespace
+
+
 thread_local ProgressWindow *ProgressWindow::ms_activeWindow = nullptr;
 
 ProgressWindow::ProgressWindow(wxWindow *parent, const wxString& title, dispatch::cancellation_token_ptr cancellationToken)
@@ -293,13 +359,32 @@ ProgressWindow::ProgressWindow(wxWindow *parent, const wxString& title, dispatch
 }
 
 
-bool ProgressWindow::ShowSummary(const BackgroundTaskResult& data)
+bool ProgressWindow::ShowSummary(const BackgroundTaskResult& data, const wxArrayString& errors)
 {
     if (!data)
         return false;
 
     if (!SetSummaryContent(data))
         return false;
+
+    if (!errors.empty())
+    {
+        wxString text;
+        if (errors.size() == 1)
+        {
+            text = _("Error: ") + errors.front();
+        }
+        else
+        {
+            text = wxString::Format(wxPLURAL("%d error occurred:", "%d errors occurred:", (int)errors.size()), (int)errors.size());
+            text += '\n';
+            text += wxJoin(errors, '\n', 0);
+        }
+
+        auto errctrl = new SelectableAutoWrappingText(this, wxID_ANY, text);
+        errctrl->SetForegroundColour(ColorScheme::Get(Color::ErrorText));
+        m_infoSizer->Add(errctrl, wxSizerFlags().Expand().Border(wxTOP, PX(8)));
+    }
 
     m_gauge->SetValue(PROGRESS_BAR_RANGE);
 #ifdef __WXOSX__
@@ -387,15 +472,15 @@ void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
                                std::function<void()>&& completionHandler,
                                bool forceModal)
 {
+    const bool runModally = forceModal || !GetParent();
+
+    auto loggedErrors = std::make_shared<wxArrayString>();
     m_progress = std::make_shared<Progress>(1);
     attach(*m_progress);
 
-    // don't show any flushed log output until the modal progress window closes:
-    // FIXME: proper UI for showing logged errors directly within
-    wxLog::Suspend();
-
-    auto bg = dispatch::async([this, task = std::move(task)]
+    auto bg = dispatch::async([=, task = std::move(task)]
     {
+        CapturingThreadLogger logger(loggedErrors);
         Progress progress(1, *m_progress, 1);
 
         ms_activeWindow = this;
@@ -408,41 +493,63 @@ void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
         // make sure EndModal() is only called within event loop, i.e. not before
         // Show*Modal() was called (which could happen if `bg` finished instantly):
         CallAfter([=]{
-            bool summaryShown = result ? ShowSummary(result) : false;
-            if (!summaryShown)
+            bool summaryShown = result ? ShowSummary(result, *loggedErrors) : false;
+            if (summaryShown)
+            {
+                loggedErrors->clear();  // for handling below
+            }
+            else
+            {
                 EndModal(wxID_OK);
-            wxLog::Resume();
+            }
         });
     })
     .catch_all([=](dispatch::exception_ptr e){
+        loggedErrors->push_back(DescribeException(e));
         // make sure EndModal() is only called within event loop, i.e. not before
         // Show*Modal() was called (which could happen if `bg` finished instantly):
         CallAfter([=]{
-            // TODO: handle errors better -- show error inline, indicate to caller (possibly rethrow on main?)
-            wxLogError(DescribeException(e));
             EndModal(wxID_CANCEL);
-            wxLog::Resume();
         });
     });
 
-    if (forceModal || !GetParent())
+    if (runModally)
     {
         ShowModal();
         detach();
         m_progress.reset();
         Hide();
+
+        if (!loggedErrors->empty())
+        {
+            auto error = CreateErrorDialog(GetParent(), m_title, *loggedErrors);
+            error->ShowModal();
+        }
+
         if (completionHandler)
             completionHandler();
     }
     else
     {
-        ShowWindowModalThenDo([this, completionHandler = std::move(completionHandler)](int /*retcode*/)
+        ShowWindowModalThenDo([=, completionHandler = std::move(completionHandler)](int /*retcode*/)
         {
             detach();
             m_progress.reset();
             Hide();
-            if (completionHandler)
+
+            if (!loggedErrors->empty())
+            {
+                auto error = CreateErrorDialog(GetParent(), m_title, *loggedErrors);
+                error->ShowWindowModalThenDo([completionHandler,error](int /*retcode*/){
+                    if (completionHandler)
+                        completionHandler();
+                });
+            }
+            else
+            {
+                if (completionHandler)
                 completionHandler();
+            }
         });
     }
 }
