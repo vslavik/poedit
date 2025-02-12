@@ -44,6 +44,7 @@
 #include <wx/dialog.h>
 #include <wx/scopeguard.h>
 #include <wx/sizer.h>
+#include <wx/thread.h>
 #include <wx/button.h>
 #include <wx/config.h>
 
@@ -478,10 +479,21 @@ void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
     m_progress = std::make_shared<Progress>(1);
     attach(*m_progress);
 
+    auto windowShownSemaphore = std::make_shared<wxSemaphore>();
+    Bind(wxEVT_SHOW, [=](wxShowEvent& e){
+        windowShownSemaphore->Post();
+        e.Skip();
+    });
+
     auto bg = dispatch::async([=, task = std::move(task)]
     {
         CapturingThreadLogger logger(loggedErrors);
         Progress progress(1, *m_progress, 1);
+
+        // Wait until progress window is shown. This greatly simplifies handling of exceptional
+        // states, showing summaries etc. below, because the window is guaranteed to be visible
+        // and (window-)modally showing even if the task finishes immediately.
+        windowShownSemaphore->Wait();
 
         ms_activeWindow = this;
         wxON_BLOCK_EXIT_SET(ms_activeWindow, nullptr);
@@ -490,27 +502,19 @@ void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
     })
     .then_on_main([=](BackgroundTaskResult result)
     {
-        // make sure EndModal() is only called within event loop, i.e. not before
-        // Show*Modal() was called (which could happen if `bg` finished instantly):
-        CallAfter([=]{
-            bool summaryShown = result ? ShowSummary(result, *loggedErrors) : false;
-            if (summaryShown)
-            {
-                loggedErrors->clear();  // for handling below
-            }
-            else
-            {
-                EndModal(wxID_OK);
-            }
-        });
+        bool summaryShown = result ? ShowSummary(result, *loggedErrors) : false;
+        if (summaryShown)
+        {
+            loggedErrors->clear();  // for handling below
+        }
+        else
+        {
+            EndModal(wxID_OK);
+        }
     })
     .catch_all([=](dispatch::exception_ptr e){
         loggedErrors->push_back(DescribeException(e));
-        // make sure EndModal() is only called within event loop, i.e. not before
-        // Show*Modal() was called (which could happen if `bg` finished instantly):
-        CallAfter([=]{
-            EndModal(wxID_CANCEL);
-        });
+        EndModal(wxID_CANCEL);
     });
 
     if (runModally)
