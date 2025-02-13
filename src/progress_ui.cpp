@@ -78,33 +78,6 @@ private:
     wxLog *m_previous;
 };
 
-
-wxWindowPtr<wxMessageDialog> CreateErrorDialog(wxWindow *parent, [[maybe_unused]] wxStaticText *title, const wxArrayString& errors)
-{
-    if (errors.empty())
-        return {};
-
-    wxString text;
-    wxString extended;
-
-    if (errors.size() == 1)
-    {
-        text = _("An error occurred.");
-        extended = errors.front();
-    }
-    else
-    {
-        text = wxString::Format(wxPLURAL("%d error occurred.", "%d errors occurred.", (int)errors.size()), (int)errors.size());
-        extended = wxJoin(errors, '\n', 0);
-    }
-
-    wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog(parent, text, MSW_OR_OTHER(title->GetLabel(), ""), wxOK | wxICON_ERROR));
-    if (!extended.empty())
-        dlg->SetExtendedMessage(extended);
-
-    return dlg;
-}
-
 } // anonymous namespace
 
 
@@ -282,6 +255,36 @@ bool ProgressWindow::SetSummaryContent(const BackgroundTaskResult& data)
 }
 
 
+wxWindowPtr<wxMessageDialog> ProgressWindow::CreateErrorDialog(const wxArrayString& errors)
+{
+    if (errors.empty())
+        return {};
+
+    wxString text;
+    wxString extended;
+
+    if (errors.size() == 1)
+    {
+        text = !m_errorMessage.empty() ? m_errorMessage : _("An error occurred.");
+        extended = errors.front();
+    }
+    else
+    {
+        if (m_errorMessage.empty())
+            text = wxString::Format(wxPLURAL("%d error occurred.", "%d errors occurred.", (int)errors.size()), (int)errors.size());
+        else
+            text = m_errorMessage;
+        extended = wxJoin(errors, '\n', 0);
+    }
+
+    wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog(GetParent(), text, MSW_OR_OTHER(m_title->GetLabel(), ""), wxOK | wxICON_ERROR));
+    if (!extended.empty())
+        dlg->SetExtendedMessage(extended);
+
+    return dlg;
+}
+
+
 void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
                                std::function<void()>&& completionHandler,
                                bool forceModal)
@@ -339,7 +342,7 @@ void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
 
         if (!loggedErrors->empty())
         {
-            auto error = CreateErrorDialog(GetParent(), m_title, *loggedErrors);
+            auto error = CreateErrorDialog(*loggedErrors);
             error->ShowModal();
         }
 
@@ -356,7 +359,7 @@ void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
 
             if (!loggedErrors->empty())
             {
-                auto error = CreateErrorDialog(GetParent(), m_title, *loggedErrors);
+                auto error = CreateErrorDialog(*loggedErrors);
                 error->ShowWindowModalThenDo([completionHandler,error](int /*retcode*/){
                     if (completionHandler)
                         completionHandler();

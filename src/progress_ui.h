@@ -42,6 +42,7 @@ class WXDLLIMPEXP_FWD_CORE wxBoxSizer;
 class WXDLLIMPEXP_FWD_CORE wxStaticBitmap;
 class WXDLLIMPEXP_FWD_CORE wxStaticText;
 class WXDLLIMPEXP_FWD_CORE wxGauge;
+class WXDLLIMPEXP_FWD_CORE wxMessageDialog;
 class SecondaryLabel;
 
 
@@ -110,6 +111,14 @@ public:
         RunTaskTempl(std::move(task), std::move(completionHandler));
     }
 
+    /**
+        Sets custom error message to use as the "header" message in case of errors.
+        Detailed errors are shown in the details.
+
+        This message is only used if no summary window was shown
+     */
+    void SetErrorMessage(const wxString& message) { m_errorMessage = message; }
+
 protected:
     template<typename TBackgroundJob, typename TCompletion>
     void RunTaskTempl(TBackgroundJob&& task,
@@ -167,6 +176,7 @@ protected:
     wxBoxSizer *AddSummaryDetailLine();
     void AddSummaryDetailLine(const wxString& label, const wxString& value);
 
+    wxWindowPtr<wxMessageDialog> CreateErrorDialog(const wxArrayString& errors);
 
     // ProgressObserver overrides:
     void update_message(const wxString& text) override;
@@ -179,6 +189,7 @@ protected:
 
 private:
     std::shared_ptr<Progress> m_progress;
+    wxString m_errorMessage;
 
     wxStaticBitmap *m_image;
     wxStaticText *m_title;
