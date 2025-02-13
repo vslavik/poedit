@@ -61,7 +61,7 @@ poedit_SOURCES = \
                  pluralforms/pl_evaluate.cpp pluralforms/pl_evaluate.h \
                  prefsdlg.cpp prefsdlg.h \
                  pretranslate.cpp pretranslate.h \
-                 progressinfo.h progressinfo.cpp \
+                 progress.h progress_ui.h progress.cpp progress_ui.cpp \
                  propertiesdlg.cpp propertiesdlg.h \
                  qa_checks.cpp qa_checks.h \
                  recent_files.cpp recent_files.h \

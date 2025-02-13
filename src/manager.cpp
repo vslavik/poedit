@@ -55,7 +55,7 @@
 #include "edframe.h"
 #include "hidpi.h"
 #include "menus.h"
-#include "progressinfo.h"
+#include "progress_ui.h"
 #include "utility.h"
 
 

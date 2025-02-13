@@ -27,7 +27,7 @@
 
 #include "errors.h"
 #include "extractors/extractor.h"
-#include "progressinfo.h"
+#include "progress_ui.h"
 #include "utility.h"
 
 #include <wx/config.h>

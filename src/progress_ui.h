@@ -23,11 +23,12 @@
  *
  */
 
-#ifndef Poedit_progressinfo_h
-#define Poedit_progressinfo_h
+#ifndef Poedit_progressui_h
+#define Poedit_progressui_h
 
 #include "concurrency.h"
 #include "errors.h"
+#include "progress.h"
 #include "titleless_window.h"
 
 #include <wx/string.h>
@@ -42,58 +43,6 @@ class WXDLLIMPEXP_FWD_CORE wxStaticBitmap;
 class WXDLLIMPEXP_FWD_CORE wxStaticText;
 class WXDLLIMPEXP_FWD_CORE wxGauge;
 class SecondaryLabel;
-
-
-/**
-    Accurate progress tracking for both simple and composed operations.
-
-    Modelled after https://developer.apple.com/documentation/foundation/nsprogress
- */
-class Progress
-{
-public:
-    Progress(int totalCount);
-    Progress(int totalCount, Progress& parent, int parentCountTaken);
-
-    Progress(const Progress&) = delete;
-    ~Progress();
-
-    void message(const wxString& text);
-    void increment(int count = 1);
-    void set(int count);
-
-private:
-    class impl;
-    std::shared_ptr<impl> m_impl;
-
-    static thread_local std::weak_ptr<impl> ms_threadImplicitParent;
-    std::weak_ptr<impl> m_previousImplicitParent;
-
-    void init(impl *implObj);
-
-    friend class ProgressObserver;
-};
-
-
-/**
-    Base class for UI objects (window, progress bar) observing progress of
-    some operation.
- */
-class ProgressObserver
-{
-public:
-    ProgressObserver() : m_observedProgress(nullptr) {}
-    virtual ~ProgressObserver();
-
-    void attach(Progress& observedProgress);
-    void detach();
-
-    virtual void update_message(const wxString& text) = 0;
-    virtual void update_progress(double completedFraction) = 0;
-
-private:
-    Progress *m_observedProgress;
-};
 
 
 /// Structured result of a background task run under ProgressWindow
@@ -267,4 +216,4 @@ private:
 };
 
 
-#endif // Poedit_progressinfo_h
+#endif // Poedit_progressui_h

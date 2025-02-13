@@ -75,7 +75,7 @@
 #include "findframe.h"
 #include "tm/transmem.h"
 #include "language.h"
-#include "progressinfo.h"
+#include "progress_ui.h"
 #include "commentdlg.h"
 #include "main_toolbar.h"
 #include "manager.h"

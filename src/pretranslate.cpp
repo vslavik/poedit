@@ -28,7 +28,7 @@
 #include "configuration.h"
 #include "customcontrols.h"
 #include "hidpi.h"
-#include "progressinfo.h"
+#include "progress_ui.h"
 #include "str_helpers.h"
 #include "tm/transmem.h"
 #include "utility.h"
