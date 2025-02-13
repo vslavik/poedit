@@ -77,14 +77,40 @@ struct BackgroundTaskResult
  */
 class ProgressWindow : public TitlelessDialog, public ProgressObserver
 {
-protected:
+public:
+    /**
+        Creates the progress window.
+
+        @param parent             Parent window, if any.
+        @param title              Title of the operation.
+        @param cancellationToken  Cancellation token to use for the task. If provided, the window
+                                  will show a "Cancel" button and the task should check the token
+                                  for cancellation requests.
+     */
     ProgressWindow(wxWindow *parent, const wxString& title,
                    dispatch::cancellation_token_ptr cancellationToken = dispatch::cancellation_token_ptr());
 
-    void DoRunTask(std::function<BackgroundTaskResult()>&& task,
-                   std::function<void()>&& completionHandler,
-                   bool forceModal);
+    /**
+        Returns currently active window (or nullptr) for the current thread.
+        Should only be used from within an active task.
+     */
+    static ProgressWindow *GetActive() { return ms_activeWindow; }
 
+    /// Runs the task modally, i.e. blocking any other execution in the app.
+    template<typename TBackgroundJob>
+    void RunTaskModal(TBackgroundJob&& task)
+    {
+        RunTaskTempl(std::move(task), nullptr, /*forceModal=*/true);
+    }
+
+    /// Runs the task window-modal (if given a parent) or app-modal (if not)
+    template<typename TBackgroundJob, typename TCompletion>
+    void RunTaskThenDo(TBackgroundJob&& task, TCompletion&& completionHandler)
+    {
+        RunTaskTempl(std::move(task), std::move(completionHandler));
+    }
+
+protected:
     template<typename TBackgroundJob, typename TCompletion>
     void RunTaskTempl(TBackgroundJob&& task,
                       TCompletion&& completionHandler,
@@ -107,6 +133,11 @@ protected:
             forceModal
         );
     }
+
+    void DoRunTask(std::function<BackgroundTaskResult()>&& task,
+                   std::function<void()>&& completionHandler,
+                   bool forceModal);
+
 
     /**
         Shows summary of the task's run, as returned by the task function
@@ -136,59 +167,8 @@ protected:
     wxBoxSizer *AddSummaryDetailLine();
     void AddSummaryDetailLine(const wxString& label, const wxString& value);
 
-public:
-    /**
-        Returns currently active window (or nullptr) for the current thread.
-        Should only be used from within an active task.
-     */
-    static ProgressWindow *GetActive() { return ms_activeWindow; }
 
-    template<typename TProgressWindowClass = ProgressWindow, typename TBackgroundJob, typename TCompletion>
-    static void RunTaskThenDo(wxWindow *parent, const wxString& title,
-                              TBackgroundJob&& task, TCompletion&& completionHandler)
-    {
-        wxWindowPtr<ProgressWindow> window(new TProgressWindowClass(parent, title));
-        window->RunTaskTempl(task, [window, completionHandler = std::move(completionHandler)]{
-            completionHandler();
-            (void)window; // important to keep a reference and not destroy too early
-        });
-    }
-
-    template<typename TProgressWindowClass = ProgressWindow, typename TBackgroundJob, typename TCompletion>
-    static void RunCancellableTaskThenDo(wxWindow *parent, const wxString& title,
-                                         TBackgroundJob&& task, const TCompletion& completionHandler)
-    {
-        auto token = std::make_shared<dispatch::cancellation_token>();
-        wxWindowPtr<ProgressWindow> window(new TProgressWindowClass(parent, title, token));
-
-        window->RunTaskTempl
-        (
-            [token, task = std::move(task)]{ return task(token); },
-            [token, window, completionHandler = std::move(completionHandler)]{
-                completionHandler(!token->is_cancelled());
-                (void)window; // important to keep a reference and not destroy too early
-            }
-        );
-    }
-
-    template<typename TProgressWindowClass = ProgressWindow, typename TBackgroundJob>
-    static void RunTask(wxWindow *parent, const wxString& title,
-                        TBackgroundJob&& task)
-    {
-        wxWindowPtr<ProgressWindow> window(new TProgressWindowClass(parent, title));
-        window->RunTaskTempl(task, nullptr, /*forceModal=*/true);
-    }
-
-    template<typename TProgressWindowClass = ProgressWindow, typename TBackgroundJob>
-    static bool RunCancellableTask(wxWindow *parent, const wxString& title,
-                                   TBackgroundJob&& task)
-    {
-        auto token = std::make_shared<dispatch::cancellation_token>();
-        wxWindowPtr<ProgressWindow> window(new TProgressWindowClass(parent, title, token));
-        window->RunTaskTempl([=]{ return task(token); }, nullptr, /*forceModal=*/true);
-        return !token->is_cancelled();
-    }
-
+    // ProgressObserver overrides:
     void update_message(const wxString& text) override;
     void update_progress(double completedFraction) override;
 
