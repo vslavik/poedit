@@ -42,6 +42,8 @@ class Progress
 public:
     Progress(int totalCount);
     Progress(int totalCount, Progress& parent, int parentCountTaken);
+    Progress(size_t totalCount) : Progress(int(totalCount)) {}
+    Progress(long totalCount) : Progress(int(totalCount)) {}
 
     Progress(const Progress&) = delete;
     ~Progress();
