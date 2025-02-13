@@ -396,20 +396,10 @@ void ProgressWindow::update_progress(double completedFraction)
 }
 
 
-void ProgressWindow::UpdateMessage(const wxString& text)
-{
-    if (m_cancellationToken && m_cancellationToken->is_cancelled())
-        return;
-
-    m_progressMessage->SetLabel(text);
-    m_progressMessage->Refresh();
-    m_progressMessage->Update();
-}
-
 void ProgressWindow::OnCancel(wxCommandEvent&)
 {
     ((wxButton*)FindWindow(wxID_CANCEL))->Enable(false);
-    UpdateMessage(_(L"Cancelling…"));
+    m_progressMessage->SetLabel(_(L"Cancelling…"));
     m_gauge->Pulse();
     m_cancellationToken->cancel();
 }

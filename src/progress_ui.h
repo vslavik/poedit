@@ -192,8 +192,6 @@ public:
     void update_message(const wxString& text) override;
     void update_progress(double completedFraction) override;
 
-    void UpdateMessage(const wxString& text); // TODO: remove
-
 protected:
     const int PROGRESS_BAR_RANGE = 100;
 
