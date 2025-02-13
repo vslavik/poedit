@@ -27,6 +27,7 @@
 
 #include "catalog.h"
 #include "errors.h"
+#include "progress.h"
 #include "str_helpers.h"
 #include "utility.h"
 
@@ -575,8 +576,11 @@ void TranslationMemoryImpl::ExportData(TranslationMemory::IOInterface& destinati
     {
         auto reader = m_mng->Reader();
         int32_t numDocs = reader->maxDoc();
+        Progress progress(numDocs);
+
         for (int32_t i = 0; i < numDocs; i++)
         {
+            progress.increment();
             if (reader->isDeleted(i))
                 continue;
             auto doc = reader->document(i);
@@ -734,6 +738,8 @@ public:
 
     void Insert(const CatalogPtr& cat) override
     {
+        Progress progress(cat->items().size());
+
         auto srclang = cat->GetSourceLanguage();
         auto lang = cat->GetLanguage();
         if (!lang.IsValid() || !srclang.IsValid())
@@ -745,6 +751,7 @@ public:
             // want to save old entries in the TM too, so that we harvest as
             // much useful translations as we can.
             Insert(srclang, lang, item);
+            progress.increment();
         }
     }
 

@@ -66,6 +66,7 @@
 #include "uilang.h"
 #include "errors.h"
 #include "extractors/extractor_legacy.h"
+#include "progress_ui.h"
 #include "spellchecking.h"
 #include "str_helpers.h"
 #include "utility.h"
@@ -543,35 +544,16 @@ private:
             wxArrayString paths;
             dlg->GetPaths(paths);
 
-            wxProgressDialog progress(_("Translation Memory"),
-                                      _(L"Importing translations…"),
-                                      (int)paths.size() * 2 + 1,
-                                      this,
-                                      wxPD_APP_MODAL|wxPD_AUTO_HIDE|wxPD_CAN_ABORT);
             auto tm = TranslationMemory::Get().GetWriter();
-            int step = 0;
-            for (size_t i = 0; i < paths.size(); i++)
+
+            DoImportIntoTM(paths, [=](const wxString& p)
             {
-                try
-                {
-                    auto cat = Catalog::Create(paths[i]);
-                    if (!progress.Update(++step))
-                        break;
-                    tm->Insert(cat);
-                    if (!progress.Update(++step))
-                        break;
-                }
-                catch (...)
-                {
-                    wxLogError(_(L"Error loading translation file “%s”."), paths[i]);
-                    progress.Update(++step);
-                    if (!progress.Update(++step))
-                        break;
-                }
-            }
-            progress.Pulse(_(L"Finalizing…"));
-            tm->Commit();
-            UpdateStats();
+                Progress subprogress(1);
+                auto cat = Catalog::Create(p);
+                tm->Insert(cat);
+                tm->Commit();
+                return cat->GetCount();
+            });
         }
     }
 
@@ -595,45 +577,60 @@ private:
 
             wxArrayString paths;
             dlg->GetPaths(paths);
+            DoImportIntoTM(paths, [=](const wxString& p)
+            {
+                std::ifstream f;
+                f.open(p.fn_str());
+                int count = TMX::ImportFromFile(f, TranslationMemory::Get());
+                f.close();
+                return count;
+            });
+        }
+    }
 
-            wxProgressDialog progress(_("Translation Memory"),
-                                      _(L"Importing translations…"),
-                                      (int)paths.size() + 1,
-                                      this,
-                                      wxPD_APP_MODAL|wxPD_AUTO_HIDE|wxPD_CAN_ABORT);
-            progress.Pulse();
+    template<typename T>
+    void DoImportIntoTM(const wxArrayString& paths, T&& doImportFile)
+    {
+        auto cancellation = std::make_shared<dispatch::cancellation_token>();
+        wxWindowPtr<ProgressWindow> progress(new ProgressWindow(this, _(L"Importing translations…"), cancellation));
+        progress->SetErrorMessage(_("Importing translation memory failed."));
+
+        progress->RunTaskModal([=]() -> BackgroundTaskResult
+        {
+            Progress progress(paths.size());
+
+            int count = 0;
             for (auto p: paths)
             {
+                if (cancellation->is_cancelled())
+                    break;
+
+                auto pname = wxFileName(p).GetFullName();
+                Progress subprogress(1);
+                subprogress.message(wxString::Format(_(L"Importing from “%s”…"), pname));
+
                 try
                 {
-                    std::ifstream f;
-                    f.open(p.fn_str());
-                    TMX::ImportFromFile(f, TranslationMemory::Get());
-                    f.close();
-
-                    if (!progress.Pulse())
-                        break;
+                    count += doImportFile(p);
                 }
                 catch (...)
                 {
-                    wxWindowPtr<wxMessageDialog> err(new wxMessageDialog
-                    (
-                            this,
-                            wxString::Format(_(L"Importing translation memory from “%s” failed."), p),
-                            _("Import error"),
-                            wxOK | wxICON_ERROR
-                        ));
-                    err->SetExtendedMessage(DescribeCurrentException());
-                    // FIXME: can't use ShowWindowModalThenDo, as would be better, because multiple
-                    //        errors may occur in this loop. See https://github.com/vslavik/poedit/issues/748
-                    if (paths.size() == 1)
-                        err->ShowWindowModalThenDo([err](int){});
-                    else
-                        err->ShowModal();
+                    wxLogError(("%s: %s"), pname, DescribeCurrentException());
                 }
             }
-            UpdateStats();
-        }
+
+            if (count == 0)
+                return {};
+
+            return wxString::Format
+                   (
+                       // TRANSLATORS: %s is a (formatted) number here
+                       wxPLURAL("%s translation was imported.", "%s translations were imported.", count),
+                       wxNumberFormatter::ToString((long)count)
+                   );
+        });
+
+        UpdateStats();
     }
 
     void OnExportTMX(wxCommandEvent&)
@@ -655,32 +652,16 @@ private:
                 return;
 
             auto p = dlg->GetPath();
-            wxProgressDialog progress(_("Translation Memory"),
-                                      _(L"Exporting translations…"),
-                                      1,
-                                      this,
-                                      wxPD_APP_MODAL|wxPD_AUTO_HIDE|wxPD_CAN_ABORT);
-            progress.Pulse();
 
-            try
+            wxWindowPtr<ProgressWindow> progress(new ProgressWindow(this, _(L"Exporting translations…")));
+            progress->SetErrorMessage(wxString::Format(_(L"Exporting translation memory to “%s” failed."), wxFileName(p).GetFullName()));
+            progress->RunTaskModal([=]()
             {
                 std::ofstream f;
                 f.open(p.fn_str());
                 TMX::ExportToFile(TranslationMemory::Get(), f);
                 f.close();
-            }
-            catch (...)
-            {
-                wxWindowPtr<wxMessageDialog> err(new wxMessageDialog
-                (
-                        this,
-                        wxString::Format(_(L"Exporting translation memory to “%s” failed."), p),
-                        _("Export error"),
-                        wxOK | wxICON_ERROR
-                    ));
-                err->SetExtendedMessage(DescribeCurrentException());
-                err->ShowWindowModalThenDo([err](int){});
-            }
+            });
         }
     }
 
