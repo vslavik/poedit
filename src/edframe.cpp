@@ -1302,21 +1302,20 @@ void PoeditFrame::OnExportToHTML(wxCommandEvent&)
     });
 }
 
-bool PoeditFrame::ExportCatalogToHTML(const wxString& filename)
+void PoeditFrame::ExportCatalogToHTML(const wxString& filename)
 {
-    wxBusyCursor bcur;
-
-    TempOutputFileFor tempfile(filename);
-    std::ofstream f;
-    f.open(tempfile.FileName().fn_str());
-    m_catalog->ExportToHTML(f);
-    f.close();
-    if (!tempfile.Commit())
+    wxWindowPtr<ProgressWindow> progress(new ProgressWindow(this, _("Exporting to HTML")));
+    progress->RunTaskThenDo([=]()
     {
-        wxLogError(_(L"Couldn’t save file %s."), filename);
-        return false;
-    }
-    return true;
+        TempOutputFileFor tempfile(filename);
+        std::ofstream f;
+        f.open(tempfile.FileName().fn_str());
+        m_catalog->ExportToHTML(f);
+        f.close();
+        if (!tempfile.Commit())
+            throw Exception(wxString::Format(_(L"Couldn’t save file %s."), filename));
+    },
+    [progress](){});
 }
 
 

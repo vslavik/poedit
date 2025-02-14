@@ -332,7 +332,7 @@ private:
 
         void OnCompileMO(wxCommandEvent& event);
         void OnExportToHTML(wxCommandEvent& event);
-        bool ExportCatalogToHTML(const wxString& filename);
+        void ExportCatalogToHTML(const wxString& filename);
 
         void OnSize(wxSizeEvent& event);
 
