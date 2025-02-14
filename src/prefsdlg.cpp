@@ -657,10 +657,15 @@ private:
             progress->SetErrorMessage(wxString::Format(_(L"Exporting translation memory to “%s” failed."), wxFileName(p).GetFullName()));
             progress->RunTaskModal([=]()
             {
+                TempOutputFileFor tempfile(p);
+
                 std::ofstream f;
-                f.open(p.fn_str());
+                f.open(tempfile.FileName().fn_str());
                 TMX::ExportToFile(TranslationMemory::Get(), f);
                 f.close();
+
+                if ( !tempfile.Commit() )
+                    throw Exception(wxString::Format(_(L"Couldn’t save file %s."), wxFileName(p).GetFullName()));
             });
         }
     }
