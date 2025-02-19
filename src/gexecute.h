@@ -23,8 +23,10 @@
  *
  */
 
-#ifndef _GEXECUTE_H_
-#define _GEXECUTE_H_
+#ifndef Poedit_gexecute_h
+#define Poedit_gexecute_h
+
+#include "subprocess.h"
 
 #include <wx/string.h>
 #include <vector>
@@ -52,8 +54,31 @@ extern bool ExecuteGettextAndParseOutput(const wxString& cmdline,
 extern wxString QuoteCmdlineArg(const wxString& s);
 
 #if defined(__WXOSX__) || defined(__WXMSW__)
+
 extern wxString GetGettextPackagePath();
-extern wxString GetGettextBinaryPath(const wxString& program);
+extern wxString GetGettextBinariesPath();
+
+inline wxString GetGettextBinaryPath(const wxString& program)
+{
+    return subprocess::try_find_program(program, GetGettextBinariesPath());
+}
+
+#else
+
+inline wxString GetGettextBinaryPath(const wxString& program) { return program; }
+
 #endif
 
-#endif // _GEXECUTE_H_
+// Specialized runner for executing gettext tools
+class GettextRunner : public subprocess::Runner
+{
+public:
+    GettextRunner();
+
+
+
+protected:
+    void preprocess_args(subprocess::Arguments& args) const override;
+};
+
+#endif // Poedit_gexecute_h
