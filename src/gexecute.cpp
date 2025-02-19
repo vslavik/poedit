@@ -322,10 +322,12 @@ bool ExecuteGettextAndParseOutput(const wxString& cmdline, GettextErrors& errors
 
 wxString QuoteCmdlineArg(const wxString& s)
 {
+    if (s.find_first_of(L" \t\\\"'") == std::string::npos)
+            return s;  // no quoting needed
+
     wxString s2(s);
-#ifdef __UNIX__
+    s2.Replace("\\", "\\\\");
     s2.Replace("\"", "\\\"");
-#endif
     return "\"" + s2 + "\"";
 }
 
