@@ -69,6 +69,7 @@ poedit_SOURCES = \
                  spellchecking.h spellchecking.cpp \
                  static_ids.h \
                  str_helpers.h \
+                 subprocess.h subprocess.cpp \
                  syntaxhighlighter.cpp syntaxhighlighter.h \
                  text_control.h text_control.cpp \
                  titleless_window.h titleless_window.cpp \
