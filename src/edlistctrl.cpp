@@ -858,13 +858,22 @@ void PoeditListCtrl::CatalogChanged(const CatalogPtr& catalog)
 
 void PoeditListCtrl::RefreshAllItems()
 {
-    // Can't use Cleared() here because it messes up selection and scroll position
+    // Can't use Cleared() here because it messes up selection and scroll position and
+    // implementations across platforms are inconsistent. Doing notification for all items
+    // is reasonably fast except on macOS, where it is *extremely* inefficient and where
+    // Cleared() messes up position. Fortunately, native reloadData is fast and equivalent
+    // to reloading individual rows, so we can do just that.
+#ifdef __WXOSX__
+    NSTableView *tableView = (NSTableView*)[((NSScrollView*)GetHandle()) documentView];
+    [tableView reloadData];
+#else
     const int count = m_model->GetCount();
     wxDataViewItemArray items;
     items.reserve(count);
     for (int i = 0; i < count; i++)
         items.push_back(m_model->GetItem(i));
     m_model->ItemsChanged(items);
+#endif
 }
 
 
