@@ -216,12 +216,15 @@ POCatalogPtr ExtractPOTFromSources(POCatalogPtr catalog, UpdateResultReason& rea
         if (!files.empty())
         {
             TempDirectory tmpdir;
-            auto potFile = Extractor::ExtractWithAll(tmpdir, *spec, files);
-            if (!potFile.empty())
+            auto result = Extractor::ExtractWithAll(tmpdir, *spec, files);
+            if (result)
             {
                 try
                 {
-                    auto pot = POCatalog::Create(potFile, Catalog::CreationFlag_IgnoreHeader);
+                    // FIXME: Don't do this, provide nice UI
+                    result.errors.log_all();
+
+                    auto pot = POCatalog::Create(result.pot_file, Catalog::CreationFlag_IgnoreHeader);
                     return pot;
                 }
                 catch (...)

@@ -59,6 +59,12 @@ struct ParsedGettextErrors
 
     /// Output all issues to wxLogError.
     void log_all();
+
+    ParsedGettextErrors& operator+=(const ParsedGettextErrors& other)
+    {
+        items.insert(items.end(), other.items.begin(), other.items.end());
+        return *this;
+    }
 };
 
 
