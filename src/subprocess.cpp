@@ -34,6 +34,7 @@
 #include <wx/filename.h>
 #include <wx/process.h>
 #include <wx/mstream.h>
+#include <wx/timer.h>
 #include <wx/txtstrm.h>
 
 
@@ -44,34 +45,52 @@ namespace
 class Process : public wxProcess
 {
 public:
-    Process() = default;
+    Process() : m_timer(this)
+    {
+    }
+
+    void watch_pipes()
+    {
+        Bind(wxEVT_TIMER, &Process::on_timer, this);
+        m_timer.Start(100/*ms*/);
+    }
 
     subprocess::Output make_output(int status)
     {
-        return {status, extract_stream(GetInputStream()), extract_stream(GetErrorStream())};
+        read_available_output();
+        return {status, m_stdout.str(), m_stderr.str()};
     }
 
 protected:
-    std::string extract_stream(wxInputStream *s)
+    void read_available_output(std::ostringstream& oss, wxInputStream *s)
     {
         if (!s || !s->CanRead())
-            return std::string();
+            return;
 
-        // the stream could be already at EOF or in wxSTREAM_BROKEN_PIPE state
-        s->Reset();
-        std::ostringstream oss;
         char buffer[4096];
         while (true)
         {
             s->Read(buffer, sizeof(buffer));
             size_t bytesRead = s->LastRead();
             if (!bytesRead)
-                break; // EOF
+                break; // EOF or temporarily no more data
             oss.write(buffer, bytesRead);
         }
-
-        return oss.str();
     }
+
+    void read_available_output()
+    {
+        read_available_output(m_stdout, GetInputStream());
+        read_available_output(m_stderr, GetErrorStream());
+    }
+
+    void on_timer(wxTimerEvent&)
+    {
+        read_available_output();
+    }
+
+    wxTimer m_timer;
+    std::ostringstream m_stdout, m_stderr;
 };
 
 
@@ -197,6 +216,8 @@ dispatch::future<Output> Runner::do_run_async(Arguments&& argv)
                 wxLogTrace("poedit.execute", "  failed to launch child process(%d): %s", (int)retval, argv.pretty_print());
                 BOOST_THROW_EXCEPTION(Exception(wxString::Format(_("Cannot execute program: %s"), argv.pretty_print())));
             }
+
+            process->watch_pipes();
         }
         catch (...)
         {
