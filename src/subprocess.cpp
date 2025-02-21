@@ -154,14 +154,14 @@ wxString Arguments::pretty_print() const
 }
 
 
-wxEnvVariableHashMap& Runner::env()
+wxExecuteEnv& Runner::wxenv()
 {
     if (!m_env)
     {
         m_env = std::make_shared<wxExecuteEnv>();
         wxGetEnvMap(&m_env->env);
     }
-    return m_env->env;
+    return *m_env;
 }
 
 

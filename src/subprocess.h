@@ -158,13 +158,19 @@ public:
     virtual ~Runner() {}
 
     /// Returns environment variables map used for execution
-    wxEnvVariableHashMap& env();
+    wxEnvVariableHashMap& env()
+    {
+        return wxenv().env;
+    }
 
     /// Add environment variable to the environment used for execution
     void env(const wxString& var, const wxString& value)
     {
         env()[var] = value;
     }
+
+    /// Sets working directory of the child process
+    void set_cwd(const wxString& cwd) { wxenv().cwd = cwd; }
 
     /// Sets the path where to look for programs.
     void set_primary_path(const wxString& path) { m_primaryPath = path; }
@@ -232,6 +238,8 @@ protected:
     dispatch::future<Output> do_run_async(Arguments&& argv);
     Output do_run_sync(Arguments&& argv);
 
+    wxExecuteEnv& wxenv();
+
 protected:
     std::shared_ptr<wxExecuteEnv> m_env;
     wxString m_primaryPath;
@@ -251,7 +259,7 @@ inline std::vector<wxString> Output::extract_lines(const std::string&) { return 
 inline void Runner::preprocess_args(Arguments&) const {}
 inline dispatch::future<Output> Runner::do_run_async(Arguments&&) { wxASSERT(false); throw std::logic_error("not implemented"); }
 inline Output Runner::do_run_sync(Arguments&&) { wxASSERT(false); throw std::logic_error("not implemented"); }
-inline wxEnvVariableHashMap& Runner::env() { wxASSERT(false); throw std::logic_error("not implemented"); }
+inline wxExecuteEnv& Runner::wxenv() { wxASSERT(false); throw std::logic_error("not implemented"); }
 
 #endif // MACOS_BUILD_WITHOUT_APPKIT
 
