@@ -62,19 +62,6 @@ struct ParsedGettextErrors
 };
 
 
-
-/** Executes command. Writes stderr output to \a stderrOutput if not NULL,
-    and logs it with wxLogError otherwise.
-    \return true if program exited with exit code 0, false otherwise.
- */
-extern bool ExecuteGettext(const wxString& cmdline);
-
-/// Like ExecuteGettext(), but stores error output parsed into per-item entries.
-extern bool ExecuteGettextAndParseOutput(const wxString& cmdline,
-                                         ParsedGettextErrors& errors);
-
-extern wxString QuoteCmdlineArg(const wxString& s);
-
 #if defined(__WXOSX__) || defined(__WXMSW__)
 
 extern wxString GetGettextPackagePath();

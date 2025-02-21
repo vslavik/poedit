@@ -137,25 +137,6 @@ void log_errors_with_filter(const ParsedGettextErrors& errors, Functor&& filter)
 } // anonymous namespace
 
 
-bool ExecuteGettext(const wxString& cmdline)
-{
-    GettextRunner gtr;
-    auto output = gtr.run_command_sync(cmdline);
-    gtr.parse_stderr(output).log_errors();
-
-    return output.exit_code == 0;
-}
-
-
-bool ExecuteGettextAndParseOutput(const wxString& cmdline, ParsedGettextErrors& errors)
-{
-    GettextRunner gtr;
-    auto output = gtr.run_command_sync(cmdline);
-    errors = gtr.parse_stderr(output);
-    return output.exit_code == 0;
-}
-
-
 void ParsedGettextErrors::log_errors()
 {
     log_errors_with_filter(*this, [](const auto& e){ return e.level == Error; });
@@ -264,19 +245,6 @@ ParsedGettextErrors parse_gettext_stderr(const subprocess::Output& output, const
     );
 
     return out;
-}
-
-
-
-wxString QuoteCmdlineArg(const wxString& s)
-{
-    if (s.find_first_of(L" \t\\\"'") == std::string::npos)
-            return s;  // no quoting needed
-
-    wxString s2(s);
-    s2.Replace("\\", "\\\\");
-    s2.Replace("\"", "\\\"");
-    return "\"" + s2 + "\"";
 }
 
 

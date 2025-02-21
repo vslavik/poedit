@@ -238,10 +238,12 @@ wxString LegacyExtractorSpec::BuildCommand(const std::vector<wxString>& files,
                                            const wxString& output,
                                            const wxString& charset) const
 {
+    using subprocess::quote_arg;
+
     wxString cmdline, kline, fline;
 
     cmdline = Command;
-    cmdline.Replace("%o", QuoteCmdlineArg(output));
+    cmdline.Replace("%o", quote_arg(output));
 
     for (auto&kw: keywords)
     {
@@ -263,7 +265,7 @@ wxString LegacyExtractorSpec::BuildCommand(const std::vector<wxString>& files,
 #endif
 
         wxString dummy = FileItem;
-        dummy.Replace("%f", QuoteCmdlineArg(fn));
+        dummy.Replace("%f", quote_arg(fn));
         fline << " " << dummy;
     }
 
@@ -328,7 +330,15 @@ wxString LegacyExtractor::Extract(TempDirectory& tmpdir,
         wxString tempfile = tmpdir.CreateFileName(GetId() + "_extracted.pot");
 
         CurrentWorkingDirectoryChanger cwd(sourceSpec.BasePath);
-        if (!ExecuteGettext(m_spec.BuildCommand(batchfiles, sourceSpec.Keywords, tempfile, sourceSpec.Charset)))
+
+        GettextRunner runner;
+        auto cmdline = m_spec.BuildCommand(batchfiles, sourceSpec.Keywords, tempfile, sourceSpec.Charset);
+        auto output = runner.run_command_sync(cmdline);
+
+        // FIXME: Don't do that here, report as part of return value instead
+        runner.parse_stderr(output).log_all();
+
+        if (output.failed())
         {
             throw ExtractionException(ExtractionError::Unspecified);
         }

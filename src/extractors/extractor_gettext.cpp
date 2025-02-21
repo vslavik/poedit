@@ -101,6 +101,8 @@ public:
                      const SourceCodeSpec& sourceSpec,
                      const std::vector<wxString>& files) const override
     {
+        using subprocess::quote_arg;
+
         auto basepath = sourceSpec.BasePath;
 #ifdef __WXMSW__
         basepath = CliSafeFileName(basepath);
@@ -130,10 +132,10 @@ public:
         cmdline.Printf
         (
             "xgettext --force-po -o %s --directory=%s --files-from=%s --from-code=%s",
-            QuoteCmdlineArg(outfile),
-            QuoteCmdlineArg(basepath),
-            QuoteCmdlineArg(filelist.GetName()),
-            QuoteCmdlineArg(!sourceSpec.Charset.empty() ? sourceSpec.Charset : "UTF-8")
+            quote_arg(outfile),
+            quote_arg(basepath),
+            quote_arg(filelist.GetName()),
+            quote_arg(!sourceSpec.Charset.empty() ? sourceSpec.Charset : "UTF-8")
         );
 
         auto additional = GetAdditionalFlags();
@@ -142,7 +144,7 @@ public:
 
         for (auto& kw: sourceSpec.Keywords)
         {
-            cmdline += wxString::Format(" -k%s", QuoteCmdlineArg(kw));
+            cmdline += wxString::Format(" -k%s", quote_arg(kw));
         }
 
         wxString extraFlags;
@@ -158,7 +160,13 @@ public:
         if (!extraFlags.empty())
             cmdline += " " + extraFlags;
 
-        if (!ExecuteGettext(cmdline))
+        GettextRunner runner;
+        auto output = runner.run_command_sync(cmdline);
+
+        // FIXME: Don't do that here, report as part of return value instead
+        runner.parse_stderr(output).log_all();
+
+        if (output.failed())
             throw ExtractionException(ExtractionError::Unspecified);
 
         return outfile;

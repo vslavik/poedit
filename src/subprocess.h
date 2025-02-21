@@ -43,7 +43,24 @@ namespace subprocess
    or unmodified @a program value if it does not. Used to run external binaries from known
    locations.
  */
-wxString try_find_program(const wxString& program, const wxString& primary_path);
+extern wxString try_find_program(const wxString& program, const wxString& primary_path);
+
+/**
+    Quota @a s for safe passing to a command line in Runner.run_command_*() functions.
+
+    It is recommended to use array- or pack-taking version of Runner.run_*() functions
+    instead.
+ */
+inline wxString quote_arg(const wxString& s)
+{
+    if (s.find_first_of(L" \t\\\"'") == std::string::npos)
+            return s;  // no quoting needed
+
+    wxString s2(s);
+    s2.Replace("\\", "\\\\");
+    s2.Replace("\"", "\\\"");
+    return "\"" + s2 + "\"";
+}
 
 
 /// Collected result of running a command.

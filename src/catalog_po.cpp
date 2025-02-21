@@ -42,6 +42,7 @@
 #include <wx/datetime.h>
 #include <wx/config.h>
 #include <wx/textfile.h>
+#include <wx/scopeguard.h>
 #include <wx/stdpaths.h>
 #include <wx/strconv.h>
 #include <wx/memtext.h>
@@ -1209,13 +1210,14 @@ bool POCatalog::Save(const wxString& po_file, bool save_mo,
     // to the usual format. This is a (barely) passable fix for #25 until
     // proper preservation of formatting is implemented.
 
-    int msgcat_ok = false;
+    bool msgcat_ok = false;
     {
+        wxArrayString args { "msgcat", "--force-po" };
+
         int wrapping = DEFAULT_WRAPPING;
         if (wxConfig::Get()->ReadBool("keep_crlf", true))
             wrapping = m_fileWrappingWidth;
 
-        wxString wrappingFlag;
         if (wrapping == DEFAULT_WRAPPING)
         {
             if (wxConfig::Get()->ReadBool("wrap_po_files", true))
@@ -1229,26 +1231,26 @@ bool POCatalog::Save(const wxString& po_file, bool save_mo,
         }
 
         if (wrapping == NO_WRAPPING)
-            wrappingFlag = " --no-wrap";
+            args.push_back("--no-wrap");
         else if (wrapping != DEFAULT_WRAPPING)
-            wrappingFlag.Printf(" --width=%d", wrapping);
+            args.push_back(wxString::Format("--width=%d", wrapping));
 
         TempOutputFileFor po_file_temp2_obj(po_file_temp);
         const wxString po_file_temp2 = po_file_temp2_obj.FileName();
-        auto msgcatCmd = wxString::Format("msgcat --force-po%s -o %s %s",
-                                          wrappingFlag,
-                                          QuoteCmdlineArg(po_file_temp2),
-                                          QuoteCmdlineArg(po_file_temp));
-        wxLogTrace("poedit", "formatting file with %s", msgcatCmd);
+
+        args.push_back("-o");
+        args.push_back(po_file_temp2);
+        args.push_back(po_file_temp);
+
+        wxLogTrace("poedit", "formatting file with %s", wxJoin(args, ' '));
 
         // Ignore msgcat errors output (but not exit code), because it
         //   a) complains about things DoValidate() already complained above
         //   b) issues warnings about source-extraction things (e.g. using non-ASCII
         //      msgids) that, while correct, are not something a *translator* can
         //      do anything about.
-        wxLogNull null;
-        msgcat_ok = ExecuteGettext(msgcatCmd) &&
-                    wxFileExists(po_file_temp2);
+        GettextRunner runner;
+        msgcat_ok = runner.run_sync(args) && wxFileExists(po_file_temp2);
 
         // msgcat always outputs Unix line endings, so we need to reformat the file
         if (msgcat_ok && outputCrlf == wxTextFileType_Dos)
@@ -1301,14 +1303,7 @@ bool POCatalog::Save(const wxString& po_file, bool save_mo,
         {
             // Ignore msgfmt errors output (but not exit code), because it
             // complains about things DoValidate() already complained above.
-            wxLogNull null;
-
-            if ( ExecuteGettext
-                  (
-                      wxString::Format("msgfmt -o %s %s",
-                                       QuoteCmdlineArg(mo_file_temp),
-                                       QuoteCmdlineArg(CliSafeFileName(po_file)))
-                  ) )
+            if (GettextRunner().run_sync("msgfmt", "-o", mo_file_temp, CliSafeFileName(po_file)))
             {
                 mo_compilation_status = CompilationStatus::Success;
             }
@@ -1431,16 +1426,13 @@ bool POCatalog::CompileToMO(const wxString& mo_file,
     TempOutputFileFor mo_file_temp_obj(mo_file);
     const wxString mo_file_temp = mo_file_temp_obj.FileName();
 
-    {
-        // Ignore msgfmt errors output (but not exit code), because it
-        // complains about things DoValidate() already complained above.
-        wxLogNull null;
-        ExecuteGettext(wxString::Format("msgfmt -o %s %s",
-                                        QuoteCmdlineArg(mo_file_temp),
-                                        QuoteCmdlineArg(po_file_temp)));
-    }
+    GettextRunner runner;
+    runner.run_sync("msgfmt", "-o", mo_file_temp, po_file_temp);
 
-    // Don't check return code:
+    // Ignore msgfmt errors output (but not exit code), because it
+    // complains about things DoValidate() already complained above.
+    //
+    // Don't check return code either:
     // msgfmt has the ugly habit of sometimes returning non-zero
     // exit code, reporting "fatal errors" and *still* producing a usable
     // .mo file. If this happens, don't pretend the file wasn't created.
@@ -1654,9 +1646,7 @@ bool POCatalog::FixDuplicateItems()
         return false;
     }
 
-    ExecuteGettext(wxString::Format("msguniq -o %s %s",
-                                    QuoteCmdlineArg(CliSafeFileName(po_file_fixed)),
-                                    QuoteCmdlineArg(CliSafeFileName(po_file_temp))));
+    GettextRunner().run_sync("msguniq", "-o", CliSafeFileName(po_file_fixed), CliSafeFileName(po_file_temp));
 
     if (!wxFileName::FileExists(po_file_fixed))
         return false;
@@ -1775,6 +1765,7 @@ POCatalogPtr POCatalog::CreateFromPOT(POCatalogPtr pot)
 bool POCatalog::Merge(const POCatalogPtr& refcat)
 {
     wxString oldname = m_fileName;
+    wxON_BLOCK_EXIT_SET(m_fileName, oldname);
 
     TempDirectory tmpdir;
     if ( !tmpdir.IsOk() )
@@ -1787,25 +1778,23 @@ bool POCatalog::Merge(const POCatalogPtr& refcat)
     refcat->DoSaveOnly(tmp1, wxTextFileType_Unix);
     DoSaveOnly(tmp2, wxTextFileType_Unix);
 
-    wxString flags("-q --force-po --previous");
+    std::vector<wxString> args { "msgmerge", "-q", "--force-po", "--previous" };
     if (Config::MergeBehavior() == Merge_None)
     {
-        flags += " --no-fuzzy-matching";
+        args.push_back(" --no-fuzzy-matching");
     }
 
-    bool succ = ExecuteGettext
-                (
-                    wxString::Format
-                    (
-                        "msgmerge %s -o %s %s %s",
-                        flags,
-                        QuoteCmdlineArg(tmp3),
-                        QuoteCmdlineArg(tmp2),
-                        QuoteCmdlineArg(tmp1)
-                    )
-                );
+    args.push_back("-o");
+    args.push_back(tmp3);
+    args.push_back(tmp2);
+    args.push_back(tmp1);
 
-    if (succ)
+    GettextRunner runner;
+    auto output = runner.run_sync(args);
+    // FIXME: Don't do that here, report as part of return value instead
+    runner.parse_stderr(output).log_errors();
+
+    if (output)
     {
         const wxString charset = m_header.Charset;
 
@@ -1819,7 +1808,5 @@ bool POCatalog::Merge(const POCatalogPtr& refcat)
         m_header.Charset = charset;
     }
 
-    m_fileName = oldname;
-
-    return succ;
+    return (bool)output;
 }
