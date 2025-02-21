@@ -59,6 +59,8 @@ struct Output
     std::vector<wxString> std_err_lines() const
         { return extract_lines(std_err); }
 
+    bool failed() const { return exit_code != 0; }
+
     explicit operator bool() const { return exit_code == 0; }
 
 private:
@@ -89,6 +91,8 @@ public:
     }
 
     Arguments(const wxString& cmdline);
+
+    const std::wstring& program() const { return m_args.front(); }
 
     const std::vector<std::wstring>& args() const{ return m_args; }
 
@@ -224,6 +228,7 @@ protected:
 // wxExecute() uses NSWorkspace, which is unavailable in extensions; it's the only AppKit
 // dependency in wxBase and we can avoid linking that in.
 
+inline wxString try_find_program(const wxString& program, const wxString&) { return program; }
 inline Arguments::Arguments(const wxString&) {}
 inline std::vector<wxString> Output::extract_lines(const std::string&) { return {}; }
 inline void Runner::preprocess_args(Arguments&) const {}

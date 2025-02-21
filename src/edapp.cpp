@@ -585,6 +585,10 @@ void PoeditApp::SetupLanguage()
     }
 
     trans->SetLanguage(uilang.LanguageTag());
+
+    // gettext-tools is needed for parsing of a few strings, we add it with lowest priority
+    trans->AddCatalog("gettext-tools");
+    // wx and Poedit's translations are added with higher priority:
     trans->AddStdCatalog();
     trans->AddCatalog("poedit");
 

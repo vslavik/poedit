@@ -1698,28 +1698,23 @@ Catalog::ValidationResults POCatalog::Validate(const wxString& fileWithSameConte
 
 void POCatalog::ValidateWithMsgfmt(Catalog::ValidationResults& res, const wxString& po_file)
 {
-    GettextErrors err;
-    ExecuteGettextAndParseOutput
-    (
-        wxString::Format("msgfmt -o /dev/null -c %s", QuoteCmdlineArg(CliSafeFileName(po_file))),
-        err
-    );
+    GettextRunner gtr;
+    auto output = gtr.run_sync("msgfmt", "-o", "/dev/null", "-c", CliSafeFileName(po_file));
+    auto errors = gtr.parse_stderr(output);
 
-    res.errors += (int)err.size();
-
-    for ( GettextErrors::const_iterator i = err.begin(); i != err.end(); ++i )
+    for (auto& i: errors.items)
     {
-        if ( i->line != -1 )
+        if (i.has_location())
         {
-            auto item = FindItemByLine(i->line);
-            if ( item )
+            auto item = FindItemByLine(i.line);
+            if (item)
             {
-                item->SetIssue(CatalogItem::Issue::Error, i->text);
-                continue;
+                res.errors++;
+                item->SetIssue(CatalogItem::Issue::Error, i.text);
             }
         }
-        // if not matched to an item:
-        wxLogError(i->text);
+        // else: ignore msgfmt output w/o a location because msgfmt outputs status information
+        //       (e.g. "N errors found") to stderr too
     }
 }
 

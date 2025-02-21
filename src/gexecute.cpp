@@ -36,7 +36,7 @@
 #include <wx/filename.h>
 
 #include <regex>
-#include <boost/throw_exception.hpp>
+#include <boost/algorithm/string.hpp>
 
 #include "concurrency.h"
 #include "gexecute.h"
@@ -51,7 +51,7 @@ namespace
 #define GETTEXT_VERSION_NUM(x, y, z)  ((x*1000*1000) + (y*1000) + (z))
 
 // Determine gettext version, return it in the form of XXXYYYZZZ number for version x.y.z
-uint32_t GetGettextVersion()
+uint32_t gettext_version()
 {
     static uint32_t s_version = 0;
     if (!s_version)
@@ -60,7 +60,6 @@ uint32_t GetGettextVersion()
         s_version = GETTEXT_VERSION_NUM(0, 18, 0);
 
         auto p = GettextRunner().run_sync("msgcat", "--version");
-
         if (p.exit_code == 0 && !p.std_out.empty())
         {
             std::smatch m;
@@ -76,69 +75,197 @@ uint32_t GetGettextVersion()
     return s_version;
 }
 
-} // anonymous namespace
 
-
-bool ExecuteGettext(const wxString& cmdline)
+/// Extracts error that are possibly multiline from the output
+template<typename Functor>
+void process_error_output(const std::wstring& program, const subprocess::Output& output, Functor&& handle)
 {
-    auto output = GettextRunner().run_command_sync(cmdline);
+    wxString prefix1, prefix2;
+    if (!program.empty())
+    {
+        prefix1 = wxString::Format("%s: ", program);
+        prefix2 = wxString::Format("%s: ", GetGettextBinaryPath(program));
+    }
 
     wxString pending;
-    for (auto& ln: output.std_err_lines())
+    for (auto ln: output.std_err_lines())
     {
+        if (!program.empty())
+        {
+            if (ln.starts_with(prefix1))
+                ln = ln.substr(prefix1.length());
+            else if (ln.starts_with(prefix2))
+                ln = ln.substr(prefix2.length());
+        }
+
         // special handling of multiline errors
         if (ln[0] == ' ' || ln[0] == '\t')
         {
-            pending += "\n\t" + ln.Strip(wxString::both);
+            pending += '\n';
+            pending += ln.Strip(wxString::both);
         }
         else
         {
             if (!pending.empty())
-                wxLogError("%s", pending);
-
+                handle(pending);
             pending = ln;
         }
     }
 
     if (!pending.empty())
-        wxLogError("%s", pending);
-
-    return output.exit_code == 0;
+        handle(pending);
 }
 
-
-bool ExecuteGettextAndParseOutput(const wxString& cmdline, GettextErrors& errors)
+template<typename Functor>
+void log_errors_with_filter(const ParsedGettextErrors& errors, Functor&& filter)
 {
-    auto output = GettextRunner().run_command_sync(cmdline);
-
-    static const std::wregex RE_ERROR(L".*\\.po:([0-9]+)(:[0-9]+)?: (.*)");
-
-    for (const auto& ewx: output.std_err_lines())
+    for (const auto& e: errors.items)
     {
-        const auto e = ewx.ToStdWstring();
-        wxLogTrace("poedit.execute", "  stderr: %s", e.c_str());
+        if (!filter(e))
+            continue;
 
-        GettextError rec;
+        wxString prefix;
+        if (e.has_location())
+            prefix += wxString::Format("%s:%d: ", e.file, e.line);
+        if (e.level == ParsedGettextErrors::Warning)
+            prefix += _("warning: ");
 
-        std::wsmatch match;
-        if (std::regex_match(e, match, RE_ERROR))
-        {
-            rec.line = std::stoi(match.str(1));
-            rec.text = match.str(3);
-            errors.push_back(rec);
-            wxLogTrace("poedit.execute",
-                       _T("        => parsed error = \"%s\" at %d"),
-                       rec.text.c_str(), rec.line);
-        }
-        else
-        {
-            wxLogTrace("poedit.execute", "        (unrecognized line!)");
-            // FIXME: handle the rest of output gracefully too
-        }
+        wxLogError("%s%s", prefix, e.text);
     }
+}
+
+} // anonymous namespace
+
+
+bool ExecuteGettext(const wxString& cmdline)
+{
+    GettextRunner gtr;
+    auto output = gtr.run_command_sync(cmdline);
+    gtr.parse_stderr(output).log_errors();
 
     return output.exit_code == 0;
 }
+
+
+bool ExecuteGettextAndParseOutput(const wxString& cmdline, ParsedGettextErrors& errors)
+{
+    GettextRunner gtr;
+    auto output = gtr.run_command_sync(cmdline);
+    errors = gtr.parse_stderr(output);
+    return output.exit_code == 0;
+}
+
+
+void ParsedGettextErrors::log_errors()
+{
+    log_errors_with_filter(*this, [](const auto& e){ return e.level == Error; });
+}
+
+
+void ParsedGettextErrors::log_all()
+{
+    log_errors_with_filter(*this, [](const auto&){ return true; });
+}
+
+
+ParsedGettextErrors parse_gettext_stderr(const subprocess::Output& output, const std::wstring& program)
+{
+    ParsedGettextErrors out;
+
+    struct StdPrefixEater
+    {
+        StdPrefixEater()
+            : m_prefixWarning(str::to_wstring(wxGetTranslation("warning: ", "gettext-tools"))),
+              m_prefixError(str::to_wstring(wxGetTranslation("error: ", "gettext-tools")))
+        {}
+
+        inline void eat_std_prefixes(std::wstring& err, ParsedGettextErrors::Item& rec)
+        {
+            if (boost::starts_with(err, m_prefixError))
+            {
+                err = err.substr(m_prefixError.length());
+                // this is the default already, but let's be explicit:
+                rec.level = ParsedGettextErrors::Error;
+            }
+            else if (boost::starts_with(err, m_prefixWarning))
+            {
+                err = err.substr(m_prefixWarning.length());
+                rec.level = ParsedGettextErrors::Warning;
+            }
+        }
+
+        std::wstring m_prefixWarning, m_prefixError;
+    };
+    StdPrefixEater eater;
+
+    process_error_output
+    (
+        program,
+        output,
+        [&](const wxString& err_)
+        {
+            wxLogTrace("poedit.execute", "  stderr: %s", err_);
+            auto err = str::to_wstring(err_);
+            ParsedGettextErrors::Item rec;
+
+            // recognizing standard prefixes first simplifies differentiating between then and file:line locations:
+            eater.eat_std_prefixes(err, rec);
+
+            static const std::wregex RE_LOCATION(L"^([^:\r\n]+):([0-9]+): ", std::regex_constants::ECMAScript | std::regex_constants::optimize);
+            std::wsmatch match;
+            if (std::regex_search(err, match, RE_LOCATION) && match.position() == 0)
+            {
+                rec.file = match.str(1);
+                rec.line = std::stoi(match.str(2));
+                err = err.substr(match.length());
+            }
+
+            // have to do again, as the standard format is e.g. "test.c:7: warning: text..."
+            eater.eat_std_prefixes(err, rec);
+
+            rec.text = err;
+
+            wxLogTrace("poedit.execute",
+                       _T("        => parsed %s = \"%s\" at %s:%d"),
+                       rec.level == ParsedGettextErrors::Error ? _T("error") : _T("warning"),
+                       rec.text, rec.file, rec.line);
+
+            if (!rec.has_location() && err.find(L'\n') != std::string::npos)
+            {
+                // Handle this special case:
+                //
+                // xgettext: warning: msgid '%d foo' is used without plural and with plural.
+                //                    test.c:13: Here is the occurrence without plural.
+                //                    test.c:12: Here is the occurrence with plural.
+                //                    Workaround: If the msgid is a sentence, change the wording of the sentence; otherwise, use contexts for disambiguation.
+                //
+                // Pre-parsing already put all this into a single string, removed the xgettext: and warning: prefixes,
+                // but didn't find any location. Let's try to extract the locations from the text.
+                std::vector<std::wstring> lines;
+                boost::split(lines, err, [](auto& x){ return x == L'\n'; });
+                bool found = false;
+                for (auto& line: lines)
+                {
+                    if (std::regex_search(line, match, RE_LOCATION) && match.position() == 0)
+                    {
+                        found = true;
+                        rec.file = match.str(1);
+                        rec.line = std::stoi(match.str(2));
+                        // keep the text as-is
+                        out.items.push_back(rec);
+                    }
+                }
+                if (found)
+                    return;  // don't add the error again below
+            }
+
+            out.items.push_back(rec);
+        }
+    );
+
+    return out;
+}
+
 
 
 wxString QuoteCmdlineArg(const wxString& s)
@@ -191,9 +318,11 @@ GettextRunner::GettextRunner()
 
 void GettextRunner::preprocess_args(subprocess::Arguments& args) const
 {
+    m_program = args.program();
+
     // gettext 0.22 started converting MO files to UTF-8 by default. Don't do that.
     // See https://git.savannah.gnu.org/gitweb/?p=gettext.git;a=commit;h=5412a4f79929004cb6db15d545e07dc953330e8d
-    if (args.args()[0] == L"msgfmt" && GetGettextVersion() >= GETTEXT_VERSION_NUM(0, 22, 0))
+    if (args.program() == L"msgfmt" && gettext_version() >= GETTEXT_VERSION_NUM(0, 22, 0))
     {
         args.insert(1, L"--no-convert");
     }
