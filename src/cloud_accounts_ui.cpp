@@ -125,8 +125,11 @@ wxSizer *ServiceSelectionPanel::CreateServiceContent(AccountDetailPanel *account
 
 AccountsPanel::AccountsPanel(wxWindow *parent, int flags) : wxPanel(parent, wxID_ANY)
 {
+    wxBoxSizer *wrappingSizer = new wxBoxSizer(wxVERTICAL);
+    SetSizer(wrappingSizer);
+
     wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
-    SetSizer(topsizer);
+    wrappingSizer->Add(topsizer, wxSizerFlags(1).Expand().Border(wxALL, PX(1)));
 
     topsizer->Add(new ExplanationLabel(this, _("Connect Poedit with supported cloud localization platforms to seamlessly sync translations managed on them.")),
                   wxSizerFlags().Expand().Border(wxBOTTOM, PX(2)));
