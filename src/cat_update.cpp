@@ -281,11 +281,8 @@ bool PerformUpdateFromSources(POCatalogPtr catalog, UpdateResultReason& reason)
 
 bool PerformUpdateFromSourcesWithUI(wxWindow *parent,
                                     POCatalogPtr catalog,
-                                    UpdateResultReason& reason,
-                                    int flags)
+                                    UpdateResultReason& reason)
 {
-    const bool skipSummary = (flags & Update_DontShowSummary);
-
     POCatalogPtr pot;
 
     auto cancellation = std::make_shared<dispatch::cancellation_token>();
@@ -309,7 +306,7 @@ bool PerformUpdateFromSourcesWithUI(wxWindow *parent,
         return false;
 
     bool cancelledByUser = false;
-    if (skipSummary || ShowMergeSummary(parent, catalog, pot, &cancelledByUser))
+    if (ShowMergeSummary(parent, catalog, pot, &cancelledByUser))
     {
         succ = catalog->UpdateFromPOT(pot);
     }

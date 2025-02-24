@@ -48,11 +48,6 @@ struct UpdateResultReason
     wxString file;
 };
 
-enum UpdateFlags
-{
-    Update_DontShowSummary = 1
-};
-
 /**
     Update catalog from source code, if configured, and provide UI
     during the operation.
@@ -61,8 +56,7 @@ bool PerformUpdateFromSources(POCatalogPtr catalog, UpdateResultReason& reason);
 
 bool PerformUpdateFromSourcesWithUI(wxWindow *parent,
                                     POCatalogPtr catalog,
-                                    UpdateResultReason& reason,
-                                    int flags = 0);
+                                    UpdateResultReason& reason);
 
 /**
     Similarly for updating from a POT file.
