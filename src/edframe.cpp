@@ -1761,7 +1761,6 @@ void PoeditFrame::OnUpdateFromPOT(wxCommandEvent&)
                                 m_modified = true;
                                 UpdateTitle();
                             }
-                            RefreshControls();
                         }
                     }
                 }
