@@ -55,7 +55,7 @@
 #include "edframe.h"
 #include "hidpi.h"
 #include "menus.h"
-#include "progressinfo.h"
+#include "progress_ui.h"
 #include "utility.h"
 
 
@@ -575,14 +575,15 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent&)
          if (retval != wxID_YES)
             return;
 
-        ProgressWindow::RunCancellableTaskThenDo(this, ("Updating project catalogs"),
-        [=](dispatch::cancellation_token_ptr cancellationToken)
+        auto cancellation = std::make_shared<dispatch::cancellation_token>();
+        wxWindowPtr<ProgressWindow> progress(new ProgressWindow(this, _("Updating project catalogs"), cancellation));
+        progress->RunTaskThenDo([=]()
         {
             Progress progress((int)m_catalogs.GetCount());
 
             for (size_t i = 0; i < m_catalogs.GetCount(); i++)
             {
-                if (cancellationToken->is_cancelled())
+                if (cancellation->is_cancelled())
                     return;
 
                 wxString f = m_catalogs[i];
@@ -606,7 +607,7 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent&)
                 }
              }
         },
-        [=](bool /*finished*/)
+        [=]()
         {
             UpdateListCat();
         });

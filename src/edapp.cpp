@@ -96,6 +96,7 @@
 #include "http_client.h"
 #include "icons.h"
 #include "version.h"
+#include "progress_ui.h"
 #include "recent_files.h"
 #include "str_helpers.h"
 #include "tm/transmem.h"

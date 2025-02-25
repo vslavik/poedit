@@ -34,6 +34,7 @@
 #include <wx/translation.h>
 
 #include "errors.h"
+#include "progress.h"
 #include "pugixml.h"
 #include "version.h"
 
@@ -75,7 +76,7 @@ std::wstring extract_seg(xml_node node)
 } // anonymous namespace
 
 
-void TMX::ImportFromFile(std::istream& file, TranslationMemory& tm)
+int TMX::ImportFromFile(std::istream& file, TranslationMemory& tm)
 {
     xml_document doc;
     auto result = doc.load(file);
@@ -104,8 +105,13 @@ void TMX::ImportFromFile(std::istream& file, TranslationMemory& tm)
 
     tm.ImportData([=,&counter,&body](auto& writer)
     {
-        for (auto tu: body.children("tu"))
+        auto tu_children = body.children("tu");
+        Progress progress((int)std::distance(tu_children.begin(), tu_children.end()));
+
+        for (auto tu: tu_children)
         {
+            progress.increment();
+
             auto tuDate = extract_date(tu, defaultDate);
             std::string tuSrclang = tu.attribute("srclang").value();
             if (tuSrclang.empty())
@@ -155,8 +161,7 @@ void TMX::ImportFromFile(std::istream& file, TranslationMemory& tm)
         }
     });
 
-    if (counter == 0)
-        throw Exception(_("No translations were found in the TMX file."));
+    return counter;
 }
 
 

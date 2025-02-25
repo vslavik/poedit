@@ -28,7 +28,7 @@
 #include "configuration.h"
 #include "customcontrols.h"
 #include "hidpi.h"
-#include "progressinfo.h"
+#include "progress_ui.h"
 #include "str_helpers.h"
 #include "tm/transmem.h"
 #include "utility.h"
@@ -148,10 +148,12 @@ template<typename T>
 int PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, const PreTranslateOptions& options)
 {
     int matches = 0;
-    ProgressWindow::RunCancellableTask(window, _(L"Pre-translating…"),
-    [=,&matches](dispatch::cancellation_token_ptr cancellationToken)
+
+    auto cancellation = std::make_shared<dispatch::cancellation_token>();
+    wxWindowPtr<ProgressWindow> progress(new ProgressWindow(window, _(L"Pre-translating…"), cancellation));
+    progress->RunTaskModal([=,&matches]()
     {
-        matches = PreTranslateCatalogImpl(catalog, range, options, cancellationToken);
+        matches = PreTranslateCatalogImpl(catalog, range, options, cancellation);
     });
 
     return matches;

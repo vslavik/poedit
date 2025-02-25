@@ -175,8 +175,6 @@ AutoWrappingText::AutoWrappingText(wxWindow *parent, wxWindowID winid, const wxS
       m_text(label),
       m_wrapWidth(-1)
 {
-    m_text.Replace("\n", " ");
-
     SetMinSize(wxDefaultSize);
     Bind(wxEVT_SIZE, &AutoWrappingText::OnSize, this);
 }

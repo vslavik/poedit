@@ -27,7 +27,7 @@
 
 #include "errors.h"
 #include "extractors/extractor.h"
-#include "progressinfo.h"
+#include "progress_ui.h"
 #include "utility.h"
 
 #include <wx/config.h>
@@ -36,6 +36,7 @@
 #include <wx/listbox.h>
 #include <wx/log.h>
 #include <wx/msgdlg.h>
+#include <wx/numformatter.h>
 #include <wx/stattext.h>
 #include <wx/xrc/xmlres.h>
 
@@ -200,7 +201,17 @@ POCatalogPtr ExtractPOTFromSources(POCatalogPtr catalog, UpdateResultReason& rea
     {
         auto files = Extractor::CollectAllFiles(*spec);
 
-        progress.message(_(L"Extracting translatable strings…"));
+        progress.message
+        (
+            // TRANSLATORS: %s is the number of files
+            wxString::Format
+            (
+                wxPLURAL(L"Extracting translatable strings from %s file…",
+                         L"Extracting translatable strings from %s files…",
+                         (int)files.size()),
+                wxNumberFormatter::ToString((long)files.size())
+            )
+        );
 
         if (!files.empty())
         {
@@ -277,11 +288,16 @@ bool PerformUpdateFromSourcesWithUI(wxWindow *parent,
 
     POCatalogPtr pot;
 
-    bool succ = ProgressWindow::RunCancellableTask(parent, _("Updating translations"),
-    [&reason,&pot,catalog](dispatch::cancellation_token_ptr /*cancellationToken*/)
+    auto cancellation = std::make_shared<dispatch::cancellation_token>();
+    wxWindowPtr<ProgressWindow> progress(new ProgressWindow(parent, _("Updating translations"), cancellation));
+
+    progress->RunTaskModal([&reason,&pot,catalog,cancellation]
     {
+        // TODO: handle cancellation
         pot = ExtractPOTFromSources(catalog, reason);
     });
+
+    bool succ = !cancellation->is_cancelled();
 
     if (!succ)
     {
