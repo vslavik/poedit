@@ -64,6 +64,26 @@ struct BackgroundTaskResult
 
 
 /**
+    Exception thrown by background tasks to indicate an error with additional details.
+
+    When used in a task run under ProgressWindow, the exception will be caught and
+    displayed as wxMessageDialog with "message" being the main, more generic message,
+    and "details" being the extended explanation of the error.
+ */
+class BackgroundTaskException : public Exception
+{
+public:
+    BackgroundTaskException(const wxString& message, const wxString& details = wxString())
+        : Exception(message), m_details(details) {}
+
+    const wxString& Details() const { return m_details; }
+
+private:
+    wxString m_details;
+};
+
+
+/**
     Window showing progress of a long-running task.
 
     Must be used in conjuction with the static RunTaskXXX functions.
@@ -115,7 +135,9 @@ public:
         Sets custom error message to use as the "header" message in case of errors.
         Detailed errors are shown in the details.
 
-        This message is only used if no summary window was shown
+        This message is only used if no summary window was shown.
+
+        It is also overriden if a BackgroundTaskException is thrown.
      */
     void SetErrorMessage(const wxString& message) { m_errorMessage = message; }
 

@@ -328,7 +328,15 @@ void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
             EndModal(wxID_OK);
         }
     })
-    .catch_all([=](dispatch::exception_ptr e){
+    .catch_ex<BackgroundTaskException>([=](auto& e)
+    {
+        SetErrorMessage(e.What());
+        if (!e.Details().empty())
+            loggedErrors->push_back(e.Details());
+        EndModal(wxID_CANCEL);
+    })
+    .catch_all([=](dispatch::exception_ptr e)
+    {
         loggedErrors->push_back(DescribeException(e));
         EndModal(wxID_CANCEL);
     });
