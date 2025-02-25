@@ -2286,8 +2286,6 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
 
         m_catalog = cat;
         m_fileMonitor->SetFile(m_catalog->GetFileName());
-        m_pendingHumanEditedItem.reset();
-        m_navigationHistory.clear();
 
         if (m_catalog->empty())
         {
@@ -2296,12 +2294,13 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
         else
         {
             EnsureAppropriateContentView();
-            // This must be done as soon as possible, otherwise the list would be
-            // confused. GetCurrentItem() could return nullptr or something invalid,
-            // causing crash in UpdateToTextCtrl() called from
-            // UpdateEditingUIAfterChange() just few lines below.
-            NotifyCatalogChanged(m_catalog);
         }
+
+        // This must be done as soon as possible, otherwise the list would be
+        // confused. GetCurrentItem() could return nullptr or something invalid,
+        // causing crash in UpdateToTextCtrl() called from
+        // UpdateEditingUIAfterChange() just few lines below.
+        NotifyCatalogChanged(m_catalog);
 
         m_fileExistsOnDisk = true;
         m_modified = false;
@@ -2589,6 +2588,9 @@ void PoeditFrame::RefreshControls(int flags)
 
 void PoeditFrame::NotifyCatalogChanged(const CatalogPtr& cat)
 {
+    m_pendingHumanEditedItem.reset();
+    m_navigationHistory.clear();
+
     if (m_sidebar)
         m_sidebar->ResetCatalog();
     if (m_list)
