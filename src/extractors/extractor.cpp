@@ -349,17 +349,14 @@ wxString Extractor::ConcatCatalogs(TempDirectory& tmpdir, const std::vector<wxSt
     }
     filelist.Write(wxTextFileType_Unix, wxConvFile);
 
-    auto cmd = wxString::Format
-               (
-                   "msgcat --force-po -o %s --files-from=%s",
-                   QuoteCmdlineArg(outfile),
-                   QuoteCmdlineArg(filelist.GetName())
-               );
-    bool succ = ExecuteGettext(cmd);
-
-    if (!succ)
+    GettextRunner gt;
+    auto output = gt.run_sync("msgcat",
+                              "--force-po",
+                              "-o", outfile,
+                              "--files-from", filelist.GetName());
+    if (output.failed())
     {
-        wxLogError(_("Failed command: %s"), cmd.c_str());
+        wxLogError("msgcat: %s", output.std_err);
         wxLogError(_("Failed to merge gettext catalogs."));
         throw ExtractionException(ExtractionError::Unspecified);
     }

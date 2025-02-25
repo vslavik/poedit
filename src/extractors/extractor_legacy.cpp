@@ -71,29 +71,6 @@ inline void DoReadLegacyExtractors(wxConfigBase *cfg, F&& action)
     cfg->SetPath(oldpath);
 }
 
-// FIXME: Do this in subprocess, avoid changing CWD altogether in main process
-class CurrentWorkingDirectoryChanger
-{
-public:
-    CurrentWorkingDirectoryChanger(const wxString& path)
-    {
-        if (!path.empty() && path != ".")
-        {
-            m_old = wxGetCwd();
-            wxSetWorkingDirectory(path);
-        }
-    }
-
-    ~CurrentWorkingDirectoryChanger()
-    {
-        if (!m_old.empty())
-            wxSetWorkingDirectory(m_old);
-    }
-
-private:
-    wxString m_old;
-};
-
 } // anonymous namespace
 
 void LegacyExtractorsDB::Read(wxConfigBase *cfg)
@@ -238,10 +215,12 @@ wxString LegacyExtractorSpec::BuildCommand(const std::vector<wxString>& files,
                                            const wxString& output,
                                            const wxString& charset) const
 {
+    using subprocess::quote_arg;
+
     wxString cmdline, kline, fline;
 
     cmdline = Command;
-    cmdline.Replace("%o", QuoteCmdlineArg(output));
+    cmdline.Replace("%o", quote_arg(output));
 
     for (auto&kw: keywords)
     {
@@ -263,7 +242,7 @@ wxString LegacyExtractorSpec::BuildCommand(const std::vector<wxString>& files,
 #endif
 
         wxString dummy = FileItem;
-        dummy.Replace("%f", QuoteCmdlineArg(fn));
+        dummy.Replace("%f", quote_arg(fn));
         fline << " " << dummy;
     }
 
@@ -327,8 +306,15 @@ wxString LegacyExtractor::Extract(TempDirectory& tmpdir,
 
         wxString tempfile = tmpdir.CreateFileName(GetId() + "_extracted.pot");
 
-        CurrentWorkingDirectoryChanger cwd(sourceSpec.BasePath);
-        if (!ExecuteGettext(m_spec.BuildCommand(batchfiles, sourceSpec.Keywords, tempfile, sourceSpec.Charset)))
+        GettextRunner runner;
+        runner.set_cwd(sourceSpec.BasePath);
+        auto cmdline = m_spec.BuildCommand(batchfiles, sourceSpec.Keywords, tempfile, sourceSpec.Charset);
+        auto output = runner.run_command_sync(cmdline);
+
+        // FIXME: Don't do that here, report as part of return value instead
+        runner.parse_stderr(output).log_all();
+
+        if (output.failed())
         {
             throw ExtractionException(ExtractionError::Unspecified);
         }

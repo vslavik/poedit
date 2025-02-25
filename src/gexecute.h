@@ -23,37 +23,88 @@
  *
  */
 
-#ifndef _GEXECUTE_H_
-#define _GEXECUTE_H_
+#ifndef Poedit_gexecute_h
+#define Poedit_gexecute_h
+
+#include "subprocess.h"
 
 #include <wx/string.h>
+
 #include <vector>
 
 
-struct GettextError
+/// Parsed gettext errors output.
+struct ParsedGettextErrors
 {
-    int line;
-    wxString text;
+    enum Level
+    {
+        Warning,
+        Error
+    };
+
+    struct Item
+    {
+        wxString text;
+        Level level = Error;
+        wxString file;
+        int line = -1;
+
+        bool has_location() const { return line != -1; }
+    };
+
+    std::vector<Item> items;
+
+    /// Output errors only to wxLogError.
+    void log_errors();
+
+    /// Output all issues to wxLogError.
+    void log_all();
 };
 
-typedef std::vector<GettextError> GettextErrors;
-
-
-/** Executes command. Writes stderr output to \a stderrOutput if not NULL,
-    and logs it with wxLogError otherwise.
-    \return true if program exited with exit code 0, false otherwise.
- */
-extern bool ExecuteGettext(const wxString& cmdline);
-
-/// Like ExecuteGettext(), but stores error output parsed into per-item entries.
-extern bool ExecuteGettextAndParseOutput(const wxString& cmdline,
-                                         GettextErrors& errors);
-
-extern wxString QuoteCmdlineArg(const wxString& s);
 
 #if defined(__WXOSX__) || defined(__WXMSW__)
+
 extern wxString GetGettextPackagePath();
-extern wxString GetGettextBinaryPath(const wxString& program);
+extern wxString GetGettextBinariesPath();
+
+inline wxString GetGettextBinaryPath(const wxString& program)
+{
+    return subprocess::try_find_program(program, GetGettextBinariesPath());
+}
+
+#else
+
+inline wxString GetGettextBinaryPath(const wxString& program) { return program; }
+
 #endif
 
-#endif // _GEXECUTE_H_
+/**
+    Extract gettext-formatted errors from stderr output.
+
+    Providing @a program enables filtering out of gettext's message prefixes.
+
+    @see GettextRunner::parse_stderr() for better API.
+ */
+extern ParsedGettextErrors parse_gettext_stderr(const subprocess::Output& output, const std::wstring& program = {});
+
+
+// Specialized runner for executing gettext tools
+class GettextRunner : public subprocess::Runner
+{
+public:
+    GettextRunner();
+
+    /// Extract gettext-formatted errors from stderr output.
+    ParsedGettextErrors parse_stderr(const subprocess::Output& output) const
+    {
+        return parse_gettext_stderr(output, m_program);
+    }
+
+protected:
+    void preprocess_args(subprocess::Arguments& args) const override;
+
+    // last program executed
+    mutable std::wstring m_program;
+};
+
+#endif // Poedit_gexecute_h
