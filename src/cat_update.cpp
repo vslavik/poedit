@@ -291,13 +291,11 @@ bool PerformUpdateFromSourcesWithUI(wxWindow *parent,
     auto cancellation = std::make_shared<dispatch::cancellation_token>();
     wxWindowPtr<ProgressWindow> progress(new ProgressWindow(parent, _("Updating translations"), cancellation));
 
-    progress->RunTaskModal([&reason,&pot,catalog,cancellation]
+    bool succ = progress->RunTaskModal([&reason,&pot,catalog,cancellation]
     {
         // TODO: handle cancellation
         pot = ExtractPOTFromSources(catalog, reason);
     });
-
-    bool succ = !cancellation->is_cancelled();
 
     if (!succ)
     {

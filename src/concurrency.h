@@ -637,6 +637,12 @@ inline auto on_main(F&& f) -> future<typename detail::future_unwrapper<typename 
 
 
 
+/// Helper exception for when the task was cancelled via cancellation_token
+class cancellation_exception : public std::exception
+{
+};
+
+
 /// MT-safe token for cancelling long-running async operations.
 class cancellation_token
 {
@@ -648,6 +654,13 @@ public:
 
     /// Should the operation be cancelled?
     bool is_cancelled() const { return m_cancelled; }
+
+    /// Throw execution_cancelled if the operation should be cancelled
+    void throw_if_cancelled() const
+    {
+        if (is_cancelled())
+            BOOST_THROW_EXCEPTION( cancellation_exception() );
+    }
 
 private:
     std::atomic_bool m_cancelled;

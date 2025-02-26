@@ -95,6 +95,17 @@ private:
     shown to the user. If non-fatal errors happen during execution and are logged with
     wxLogError, they will be shown to the user as well (as part of summary, if shown,
     otherwise as separate window).
+
+    The window may optionally be initialized with a cancellation token. If provided, the
+    window will show a "Cancel" button and the RunTask* methods will return false if cancelled.
+
+    Note that the background task may not be able to honor the cancellation request, e.g. when
+    it is done too late in execution. To check if the job was cancelled, you should check RunTask*
+    return value not @a cancellationToken state.
+
+    If the task supports cancellation, it should indicate successful cancellation by either
+    returning empty summary
+
  */
 class ProgressWindow : public TitlelessDialog, public ProgressObserver
 {
@@ -117,14 +128,26 @@ public:
      */
     static ProgressWindow *GetActive() { return ms_activeWindow; }
 
-    /// Runs the task modally, i.e. blocking any other execution in the app.
+    /**
+        Runs the task modally, i.e. blocking any other execution in the app.
+
+        Returns true on success (no fatal errors, no cancellation).
+     */
     template<typename TBackgroundJob>
-    void RunTaskModal(TBackgroundJob&& task)
+    bool RunTaskModal(TBackgroundJob&& task)
     {
-        RunTaskTempl(std::move(task), nullptr, /*forceModal=*/true);
+        bool retval = false;
+        RunTaskTempl(std::move(task), [&](bool status){ retval = status; }, /*forceModal=*/true);
+        return retval;
     }
 
-    /// Runs the task window-modal (if given a parent) or app-modal (if not)
+    /**
+        Runs the task window-modal (if given a parent) or app-modal (if not)
+
+        @param completionHandler Lambda expression to call after the task completes.
+                                 This can either take a bool argument (indicating success or
+                                 failure-or-cancellation) or not, if you don't care about the result.
+     */
     template<typename TBackgroundJob, typename TCompletion>
     void RunTaskThenDo(TBackgroundJob&& task, TCompletion&& completionHandler)
     {
@@ -142,6 +165,11 @@ public:
     void SetErrorMessage(const wxString& message) { m_errorMessage = message; }
 
 protected:
+    std::function<void(bool)> WrapCompletionHandler(std::function<void(bool)>&& f)
+        { return f; }
+    std::function<void(bool)> WrapCompletionHandler(std::function<void()>&& f)
+        { return [f = std::move(f)](bool){ f(); /*ignore return value*/ }; }
+
     template<typename TBackgroundJob, typename TCompletion>
     void RunTaskTempl(TBackgroundJob&& task,
                       TCompletion&& completionHandler,
@@ -160,13 +188,13 @@ protected:
                     return task();
                 }
             },
-            std::move(completionHandler),
+            WrapCompletionHandler(completionHandler),
             forceModal
         );
     }
 
     void DoRunTask(std::function<BackgroundTaskResult()>&& task,
-                   std::function<void()>&& completionHandler,
+                   std::function<void(bool)>&& completionHandler,
                    bool forceModal);
 
 

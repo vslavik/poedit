@@ -286,7 +286,7 @@ wxWindowPtr<wxMessageDialog> ProgressWindow::CreateErrorDialog(const wxArrayStri
 
 
 void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
-                               std::function<void()>&& completionHandler,
+                               std::function<void(bool)>&& completionHandler,
                                bool forceModal)
 {
     const bool runModally = forceModal || !GetParent();
@@ -325,8 +325,15 @@ void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
         }
         else
         {
-            EndModal(wxID_OK);
+            if (m_cancellationToken && m_cancellationToken->is_cancelled() && !result)
+                EndModal(wxID_CANCEL);
+            else
+                EndModal(wxID_OK);
         }
+    })
+    .catch_ex<dispatch::cancellation_exception>([=](auto&)
+    {
+        EndModal(wxID_CANCEL);
     })
     .catch_ex<BackgroundTaskException>([=](auto& e)
     {
@@ -343,7 +350,7 @@ void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
 
     if (runModally)
     {
-        ShowModal();
+        bool success = ShowModal() != wxID_CANCEL;
         detach();
         m_progress.reset();
         Hide();
@@ -352,14 +359,15 @@ void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
         {
             auto error = CreateErrorDialog(*loggedErrors);
             error->ShowModal();
+            success = false;
         }
 
         if (completionHandler)
-            completionHandler();
+            completionHandler(success);
     }
     else
     {
-        ShowWindowModalThenDo([=, completionHandler = std::move(completionHandler)](int /*retcode*/)
+        ShowWindowModalThenDo([=, completionHandler = std::move(completionHandler)](int retcode)
         {
             detach();
             m_progress.reset();
@@ -370,13 +378,13 @@ void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
                 auto error = CreateErrorDialog(*loggedErrors);
                 error->ShowWindowModalThenDo([completionHandler,error](int /*retcode*/){
                     if (completionHandler)
-                        completionHandler();
+                        completionHandler(false);
                 });
             }
             else
             {
                 if (completionHandler)
-                completionHandler();
+                    completionHandler(retcode != wxID_CANCEL);
             }
         });
     }

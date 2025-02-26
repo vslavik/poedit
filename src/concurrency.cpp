@@ -76,6 +76,7 @@ exception_ptr dispatch::current_exception()
   #endif
 #endif
     CATCH_AND_WRAP(Exception)
+    CATCH_AND_WRAP(cancellation_exception)
     CATCH_AND_WRAP(std::runtime_error)
     CATCH_AND_WRAP(std::logic_error)
     CATCH_AND_WRAP(std::exception)
