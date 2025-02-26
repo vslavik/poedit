@@ -26,45 +26,29 @@
 #ifndef Poedit_cat_update_h
 #define Poedit_cat_update_h
 
-#include "catalog_po.h"
+#include "catalog.h"
 
 class WXDLLIMPEXP_FWD_CORE wxWindow;
 
 
-/// Result of PerformUpdateFromSources()
-struct UpdateResultReason
-{
-    enum Code
-    {
-        CancelledByUser,
-        Unspecified,
-        NoSourcesFound,
-        PermissionDenied
-    };
-
-    UpdateResultReason(Code c = Unspecified) : code(c) {}
-
-    Code code;
-    wxString file;
-};
+/**
+    Update catalog from source code w/o any UI or detailed error reporting.
+ */
+bool PerformUpdateFromSourcesSimple(CatalogPtr catalog);
 
 /**
     Update catalog from source code, if configured, and provide UI
     during the operation.
  */
-bool PerformUpdateFromSources(POCatalogPtr catalog, UpdateResultReason& reason);
-
 bool PerformUpdateFromSourcesWithUI(wxWindow *parent,
-                                    POCatalogPtr catalog,
-                                    UpdateResultReason& reason);
+                                    CatalogPtr catalog);
 
 /**
-    Similarly for updating from a POT file.
+    Similarly for updating from a reference file (i.e. POT).
  */
-bool PerformUpdateFromPOTWithUI(wxWindow *parent,
-                                POCatalogPtr catalog,
-                                const wxString& pot_file,
-                                UpdateResultReason& reason);
+bool PerformUpdateFromReferenceWithUI(wxWindow *parent,
+                                      CatalogPtr catalog,
+                                      const wxString& reference_file);
 
 
 #endif // Poedit_cat_update_h

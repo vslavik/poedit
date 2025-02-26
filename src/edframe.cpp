@@ -1592,28 +1592,34 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
         locker.reset(new wxWindowUpdateLocker(m_list));
 
 
-    UpdateResultReason reason;
     bool succ;
 
     if (pot_file.empty())
     {
-        if (cat->HasSourcesAvailable())
+        if (!cat->HasSourcesAvailable())
         {
-            succ = PerformUpdateFromSourcesWithUI(this, cat, reason);
+            wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog
+                (
+                    this,
+                    _("Source code not available."),
+                    MSW_OR_OTHER(_("Updating failed"), ""),
+                    wxOK | wxICON_ERROR
+                ));
+            wxString expl = _(L"Translations couldn’t be updated from the source code, because no code was found in the location specified in the file’s Properties.");
+            dlg->SetExtendedMessage(expl);
+            dlg->ShowWindowModalThenDo([dlg](int){});
+            return false;
+        }
 
-            locker.reset();
-            EnsureAppropriateContentView();
-            NotifyCatalogChanged(m_catalog);
-        }
-        else
-        {
-            reason = UpdateResultReason::NoSourcesFound;
-            succ = false;
-        }
+        succ = PerformUpdateFromSourcesWithUI(this, cat);
+
+        locker.reset();
+        EnsureAppropriateContentView();
+        NotifyCatalogChanged(m_catalog);
     }
     else
     {
-        succ = PerformUpdateFromPOTWithUI(this, cat, pot_file, reason);
+        succ = PerformUpdateFromReferenceWithUI(this, cat, pot_file);
 
         locker.reset();
         EnsureAppropriateContentView();
@@ -1622,69 +1628,6 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
 
     m_modified = succ || m_modified;
     UpdateStatusBar();
-
-    if (!succ)
-    {
-        // FIXME: nicer UI than this
-        wxString msgSuffix;
-        if (!reason.file.empty() && reason.file != ".")
-            msgSuffix += "\n\n" + wxString::Format(_("In: %s"), reason.file);
-
-        switch (reason.code)
-        {
-            case UpdateResultReason::NoSourcesFound:
-            {
-                wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog
-                    (
-                        this,
-                        _("Source code not available."),
-                        MSW_OR_OTHER(_("Updating failed"), ""),
-                        wxOK | wxICON_ERROR
-                    ));
-                wxString expl = _(L"Translations couldn’t be updated from the source code, because no code was found in the location specified in the file’s Properties.");
-                expl += msgSuffix;
-                dlg->SetExtendedMessage(expl);
-                dlg->ShowWindowModalThenDo([dlg](int){});
-                break;
-            }
-            case UpdateResultReason::PermissionDenied:
-            {
-                wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog
-                    (
-                        this,
-                        _("Permission denied."),
-                        MSW_OR_OTHER(_("Updating failed"), ""),
-                        wxOK | wxICON_ERROR
-                    ));
-                wxString expl = _(L"You don’t have permission to read source code files from the location specified in the file’s Properties.");
-            #ifdef __WXOSX__
-                if (@available(macOS 13.0, *))
-                {
-                    // TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-                    expl += "\n\n" + _("If you previously denied access to your files, you can allow it in System Settings > Privacy & Security > Files & Folders.");
-                }
-                else if (@available(macOS 10.15, *))
-                {
-                    // TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-                    expl += "\n\n" + _("If you previously denied access to your files, you can allow it in System Preferences > Security & Privacy > Privacy > Files & Folders.");
-                }
-            #endif
-                expl += msgSuffix;
-                dlg->SetExtendedMessage(expl);
-                dlg->ShowWindowModalThenDo([dlg](int){});
-                break;
-            }
-            case UpdateResultReason::Unspecified:
-            {
-                wxLogWarning(_("Translation entries in the file are probably incorrect."));
-                wxLogError(
-                   _("Updating the file failed. Click on 'Details >>' for details."));
-                break;
-            }
-            case UpdateResultReason::CancelledByUser:
-                break;
-        }
-    }
 
     return succ;
 }

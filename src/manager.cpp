@@ -597,8 +597,7 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent&)
                     Progress subtask(1, progress, 1);
 
                     auto cat = POCatalog::Create(f);
-                    UpdateResultReason reason;
-                    if (PerformUpdateFromSources(cat, reason))
+                    if (PerformUpdateFromSourcesSimple(cat))
                     {
                         Catalog::ValidationResults validation_results;
                         Catalog::CompilationStatus mo_status;
