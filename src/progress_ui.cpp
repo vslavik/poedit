@@ -129,7 +129,7 @@ ProgressWindow::ProgressWindow(wxWindow *parent, const wxString& title, dispatch
 
     m_buttonSizer = new wxBoxSizer(wxHORIZONTAL);
     m_buttonSizer->AddStretchSpacer();
-    sizer->Add(m_buttonSizer, wxSizerFlags().Expand().Border(wxRIGHT|wxBOTTOM, PX(20)));
+    sizer->Add(m_buttonSizer, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT|wxBOTTOM, PX(20)));
 
     if (cancellationToken)
     {
@@ -173,6 +173,8 @@ bool ProgressWindow::ShowSummary(const BackgroundTaskResult& data, const wxArray
         m_infoSizer->Add(errctrl, wxSizerFlags().Expand().Border(wxTOP, PX(8)));
     }
 
+    if (m_cancellationProgress)
+        m_buttonSizer->Hide(m_cancellationProgress);
     m_gauge->SetValue(PROGRESS_BAR_RANGE);
 #ifdef __WXOSX__
     m_gauge->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
@@ -393,9 +395,6 @@ void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
 
 void ProgressWindow::update_message(const wxString& text)
 {
-    if (m_cancellationToken && m_cancellationToken->is_cancelled())
-        return;
-
     dispatch::on_main([=]
     {
         m_progressMessage->SetLabel(text);
@@ -408,8 +407,6 @@ void ProgressWindow::update_progress(double completedFraction)
     dispatch::on_main([=]
     {
         auto value = std::min((int)std::lround(completedFraction * PROGRESS_BAR_RANGE), PROGRESS_BAR_RANGE);
-        if (m_cancellationToken && m_cancellationToken->is_cancelled())
-            return; // don't update anymore
         m_gauge->SetValue(value);
     });
 }
@@ -418,7 +415,12 @@ void ProgressWindow::update_progress(double completedFraction)
 void ProgressWindow::OnCancel(wxCommandEvent&)
 {
     ((wxButton*)FindWindow(wxID_CANCEL))->Enable(false);
-    m_progressMessage->SetLabel(_(L"Cancelling…"));
-    m_gauge->Pulse();
+
+    m_cancellationProgress = new ActivityIndicator(this);
+    m_buttonSizer->Insert(0, m_cancellationProgress, wxSizerFlags().Center().Border(wxLEFT, PX(64+10)));
+    m_buttonSizer->Layout();
+
+    m_cancellationProgress->Start(_(L"Cancelling…"));
+
     m_cancellationToken->cancel();
 }

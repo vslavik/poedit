@@ -43,6 +43,7 @@ class WXDLLIMPEXP_FWD_CORE wxStaticBitmap;
 class WXDLLIMPEXP_FWD_CORE wxStaticText;
 class WXDLLIMPEXP_FWD_CORE wxGauge;
 class WXDLLIMPEXP_FWD_CORE wxMessageDialog;
+class ActivityIndicator;
 class SecondaryLabel;
 
 
@@ -248,6 +249,7 @@ private:
     wxBoxSizer *m_infoSizer = nullptr, *m_detailsSizer = nullptr, *m_buttonSizer = nullptr;
     wxButton *m_okButton = nullptr;
     wxButton *m_cancelButton = nullptr;
+    ActivityIndicator *m_cancellationProgress = nullptr;
 
     dispatch::cancellation_token_ptr m_cancellationToken;
 
