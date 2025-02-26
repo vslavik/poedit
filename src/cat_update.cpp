@@ -156,32 +156,6 @@ void GetMergeSummary(CatalogPtr po, CatalogPtr refcat,
     }
 }
 
-/** Shows a dialog with merge summary.
-    \see GetMergeSummary, Merge
-
-    \return true if the merge was OK'ed by the user, false otherwise
- */
-bool ShowMergeSummary(wxWindow *parent, CatalogPtr po, CatalogPtr refcat, bool *cancelledByUser)
-{
-    if (cancelledByUser)
-        *cancelledByUser = false;
-    if (wxConfig::Get()->ReadBool("show_summary", false))
-    {
-        wxArrayString snew, sobsolete;
-        GetMergeSummary(po, refcat, snew, sobsolete);
-        MergeSummaryDialog sdlg(parent);
-        sdlg.TransferTo(snew, sobsolete);
-
-        bool ok = (sdlg.ShowModal() == wxID_OK);
-
-        if (cancelledByUser)
-            *cancelledByUser = !ok;
-        return ok;
-    }
-    else
-        return true;
-}
-
 POCatalogPtr ExtractPOTFromSources(POCatalogPtr catalog, UpdateResultReason& reason)
 {
     Progress progress(1);
@@ -306,14 +280,7 @@ bool PerformUpdateFromSourcesWithUI(wxWindow *parent,
     if (!pot)
         return false;
 
-    bool cancelledByUser = false;
-    if (ShowMergeSummary(parent, catalog, pot, &cancelledByUser))
-    {
-        succ = catalog->UpdateFromPOT(pot);
-    }
-
-    if (cancelledByUser)
-        reason = UpdateResultReason::CancelledByUser;
+    succ = catalog->UpdateFromPOT(pot);
 
     return succ;
 }
@@ -334,17 +301,7 @@ bool PerformUpdateFromPOTWithUI(wxWindow *parent,
         if (pot->HasDuplicateItems())
             pot->FixDuplicateItems();
 
-        bool cancelledByUser = false;
-        if (ShowMergeSummary(parent, catalog, pot, &cancelledByUser))
-        {
-            return catalog->UpdateFromPOT(pot);
-        }
-        else
-        {
-            if (cancelledByUser)
-                reason = UpdateResultReason::CancelledByUser;
-            return false;
-        }
+        return catalog->UpdateFromPOT(pot);
     }
     catch (...)
     {

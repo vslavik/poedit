@@ -201,8 +201,6 @@ public:
 
         m_compileMo = new wxCheckBox(this, wxID_ANY, _("Automatically compile MO file when saving"));
         sizer->Add(m_compileMo);
-        m_showSummary = new wxCheckBox(this, wxID_ANY, _("Show summary after updating files"));
-        sizer->Add(m_showSummary, wxSizerFlags().PXBorder(wxTOP));
 
         sizer->AddSpacer(PX(10));
 
@@ -281,7 +279,6 @@ public:
         m_userName->SetValue(cfg.Read("translator_name", wxEmptyString));
         m_userEmail->SetValue(cfg.Read("translator_email", wxEmptyString));
         m_compileMo->SetValue(cfg.ReadBool("compile_mo", true));
-        m_showSummary->SetValue(cfg.ReadBool("show_summary", false));
         m_focusToText->SetValue(cfg.ReadBool("focus_to_text", false));
 
         if (IsSpellcheckingAvailable())
@@ -314,7 +311,6 @@ public:
         cfg.Write("translator_name", m_userName->GetValue());
         cfg.Write("translator_email", m_userEmail->GetValue());
         cfg.Write("compile_mo", m_compileMo->GetValue());
-        cfg.Write("show_summary", m_showSummary->GetValue());
         cfg.Write("focus_to_text", m_focusToText->GetValue());
 
         if (IsSpellcheckingAvailable())
@@ -342,7 +338,7 @@ public:
 
 private:
     wxTextCtrl *m_userName, *m_userEmail;
-    wxCheckBox *m_compileMo, *m_showSummary, *m_focusToText, *m_spellchecking;
+    wxCheckBox *m_compileMo, *m_focusToText, *m_spellchecking;
     wxCheckBox *m_useFontList, *m_useFontText;
     wxFontPickerCtrl *m_fontList, *m_fontText;
 #if NEED_CHOOSELANG_UI
