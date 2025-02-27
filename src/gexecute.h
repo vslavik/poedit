@@ -50,6 +50,8 @@ struct ParsedGettextErrors
         int line = -1;
 
         bool has_location() const { return line != -1; }
+
+        wxString pretty_print() const;
     };
 
     std::vector<Item> items;

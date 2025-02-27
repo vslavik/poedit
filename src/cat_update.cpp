@@ -40,6 +40,7 @@
 #include <wx/listbox.h>
 #include <wx/log.h>
 #include <wx/msgdlg.h>
+#include <wx/notebook.h>
 #include <wx/numformatter.h>
 #include <wx/sizer.h>
 #include <wx/statbmp.h>
@@ -86,28 +87,60 @@ void MergeSummaryDialog::TransferTo(const MergeResults& r)
                (int)r.added.size(), (int)r.removed.size());
     XRCCTRL(*this, "items_count", wxStaticText)->SetLabel(sum);
 
-    wxListBox *listbox;
+    wxNotebook *notebook = XRCCTRL(*this, "notebook", wxNotebook);
 
-    listbox = XRCCTRL(*this, "new_strings", wxListBox);
+    if (!r.removed.empty())
+    {
+        wxListBox *listbox = XRCCTRL(*this, "obsolete_strings", wxListBox);
 #ifdef __WXOSX__
-    if (@available(macOS 11.0, *))
-        ((NSTableView*)[((NSScrollView*)listbox->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
+        if (@available(macOS 11.0, *))
+            ((NSTableView*)[((NSScrollView*)listbox->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
 #endif
 
-    for (auto& s: r.added)
+        for (auto& s: r.removed)
+        {
+            listbox->Append(s);
+        }
+    }
+    else
     {
-        listbox->Append(s);
+        notebook->DeletePage(2);
     }
 
-    listbox = XRCCTRL(*this, "obsolete_strings", wxListBox);
+    if (!r.added.empty())
+    {
+        wxListBox *listbox = XRCCTRL(*this, "new_strings", wxListBox);
 #ifdef __WXOSX__
-    if (@available(macOS 11.0, *))
-        ((NSTableView*)[((NSScrollView*)listbox->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
+        if (@available(macOS 11.0, *))
+            ((NSTableView*)[((NSScrollView*)listbox->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
 #endif
 
-    for (auto& s: r.removed)
+        for (auto& s: r.added)
+        {
+            listbox->Append(s);
+        }
+    }
+    else
     {
-        listbox->Append(s);
+        notebook->DeletePage(1);
+    }
+
+    if (!r.errors.items.empty())
+    {
+        wxListBox *listbox = XRCCTRL(*this, "issues", wxListBox);
+    #ifdef __WXOSX__
+        if (@available(macOS 11.0, *))
+            ((NSTableView*)[((NSScrollView*)listbox->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
+    #endif
+
+        for (auto& i: r.errors.items)
+        {
+            listbox->Append(i.pretty_print());
+        }
+    }
+    else
+    {
+        notebook->DeletePage(0);
     }
 }
 
@@ -498,18 +531,15 @@ void MergeProgressWindow::AddViewDetails(const MergeResults& r)
         line->Add(label, wxSizerFlags().Center());
     }
 
-    if (!r.added.empty() || !r.removed.empty())
-    {
-        auto sizer = GetButtonSizer();
-        auto button = new wxButton(this, wxID_ANY, MSW_OR_OTHER(_(L"View details…"), _(L"View Details…")));
-        sizer->Insert(0, button);
-        sizer->InsertStretchSpacer(1);
+    auto sizer = GetButtonSizer();
+    auto button = new wxButton(this, wxID_ANY, MSW_OR_OTHER(_(L"View details…"), _(L"View Details…")));
+    sizer->Insert(0, button);
+    sizer->InsertStretchSpacer(1);
 
-        button->Bind(wxEVT_BUTTON, [=](wxCommandEvent&)
-        {
-            auto dlg = new MergeSummaryDialog(this);
-            dlg->TransferTo(r);
-            dlg->ShowModal();
-        });
-    }
+    button->Bind(wxEVT_BUTTON, [=](wxCommandEvent&)
+    {
+        auto dlg = new MergeSummaryDialog(this);
+        dlg->TransferTo(r);
+        dlg->ShowModal();
+    });
 }

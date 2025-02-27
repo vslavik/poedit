@@ -130,11 +130,22 @@ void log_errors_with_filter(const ParsedGettextErrors& errors, Functor&& filter)
         if (e.level == ParsedGettextErrors::Warning)
             prefix += _("warning: ");
 
-        wxLogError("%s%s", prefix, e.text);
+        wxLogError("%s", e.pretty_print());
     }
 }
 
 } // anonymous namespace
+
+
+wxString ParsedGettextErrors::Item::pretty_print() const
+{
+    wxString prefix;
+    if (has_location())
+        prefix = wxString::Format("%s:%d: ", file, line);
+    if (level == ParsedGettextErrors::Warning)
+        prefix += _("warning: ");
+    return prefix + text;
+}
 
 
 void ParsedGettextErrors::log_errors()

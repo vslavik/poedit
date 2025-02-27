@@ -7,8 +7,22 @@
       <minsize>300,200d</minsize>
       <orient>wxVERTICAL</orient>
       <object class="sizeritem">
-        <object class="wxNotebook">
+        <object class="wxNotebook" name="notebook">
           <variant platform="mac">small</variant>
+          <object class="notebookpage">
+            <object class="wxPanel">
+              <object class="wxBoxSizer">
+                <orient>wxVERTICAL</orient>
+                <object class="sizeritem">
+                  <object class="wxListBox" name="issues"/>
+                  <border>5d</border>
+                  <option>1</option>
+                  <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
+                </object>
+              </object>
+            </object>
+            <label>Issues</label>
+          </object>
           <object class="notebookpage">
             <object class="wxPanel">
               <object class="wxBoxSizer">
