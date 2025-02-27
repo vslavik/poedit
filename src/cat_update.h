@@ -28,6 +28,7 @@
 
 #include "catalog.h"
 #include "gexecute.h"
+#include "progress_ui.h"
 
 #include <vector>
 
@@ -48,6 +49,18 @@ struct MergeResults
     ParsedGettextErrors errors;
 };
 
+
+/// Specialization of ProgressWindow that shows issues and allows viewing merge results.
+class MergeProgressWindow : public ProgressWindow
+{
+public:
+    using ProgressWindow::ProgressWindow;
+
+protected:
+    bool SetSummaryContent(const BackgroundTaskResult& data) override;
+
+    void AddViewDetails(const MergeResults& r);
+};
 
 
 /**

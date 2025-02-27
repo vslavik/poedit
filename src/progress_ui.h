@@ -223,9 +223,13 @@ protected:
     virtual bool SetSummaryContent(const BackgroundTaskResult& data);
 
     // Helpers for creating summary UI:
+
+    wxBoxSizer *GetDetailsSizer() { return m_detailsSizer; }
+    wxBoxSizer *GetButtonSizer() { return m_buttonSizer; }
+
     void AddSummaryText(const wxString& text);
     wxBoxSizer *AddSummaryDetailLine();
-    void AddSummaryDetailLine(const wxString& label, const wxString& value);
+    wxBoxSizer *AddSummaryDetailLine(const wxString& label, const wxString& value);
 
     wxWindowPtr<wxMessageDialog> CreateErrorDialog(const wxArrayString& errors);
 
@@ -246,7 +250,7 @@ private:
     wxStaticText *m_title;
     SecondaryLabel *m_progressMessage;
     wxGauge *m_gauge;
-    wxBoxSizer *m_infoSizer = nullptr, *m_detailsSizer = nullptr, *m_buttonSizer = nullptr;
+    wxBoxSizer *m_infoSizer = nullptr, *m_infoSummarySizer = nullptr, *m_errorsSizer = nullptr, *m_detailsSizer = nullptr, *m_buttonSizer = nullptr;
     wxButton *m_okButton = nullptr;
     wxButton *m_cancelButton = nullptr;
     ActivityIndicator *m_cancellationProgress = nullptr;

@@ -26,11 +26,14 @@
 #include "cat_update.h"
 
 #include "catalog_po.h"
+#include "colorscheme.h"
 #include "errors.h"
 #include "extractors/extractor.h"
+#include "hidpi.h"
 #include "progress_ui.h"
 #include "utility.h"
 
+#include <wx/button.h>
 #include <wx/config.h>
 #include <wx/dialog.h>
 #include <wx/intl.h>
@@ -38,6 +41,8 @@
 #include <wx/log.h>
 #include <wx/msgdlg.h>
 #include <wx/numformatter.h>
+#include <wx/sizer.h>
+#include <wx/statbmp.h>
 #include <wx/stattext.h>
 #include <wx/xrc/xmlres.h>
 
@@ -54,14 +59,8 @@ class MergeSummaryDialog : public wxDialog
         MergeSummaryDialog(wxWindow *parent);
         ~MergeSummaryDialog();
 
-        /** Reads data from catalog and fill dialog's controls.
-            \param snew      list of strings that are new to the catalog
-            \param sobsolete list of strings that no longer appear in the
-                             catalog (as compared to catalog's state before
-                             parsing sources).
-         */
-        void TransferTo(const wxArrayString& snew, 
-                        const wxArrayString& sobsolete);
+        /// Reads data from catalog and fill dialog's controls.
+        void TransferTo(const MergeResults& r);
 };
 
 
@@ -80,25 +79,24 @@ MergeSummaryDialog::~MergeSummaryDialog()
 }
 
 
-void MergeSummaryDialog::TransferTo(const wxArrayString& snew, const wxArrayString& sobsolete)
+void MergeSummaryDialog::TransferTo(const MergeResults& r)
 {
     wxString sum;
     sum.Printf(_("(New: %i, obsolete: %i)"),
-               (int)snew.GetCount(), (int)sobsolete.GetCount());
+               (int)r.added.size(), (int)r.removed.size());
     XRCCTRL(*this, "items_count", wxStaticText)->SetLabel(sum);
 
     wxListBox *listbox;
-    size_t i;
-    
+
     listbox = XRCCTRL(*this, "new_strings", wxListBox);
 #ifdef __WXOSX__
     if (@available(macOS 11.0, *))
         ((NSTableView*)[((NSScrollView*)listbox->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
 #endif
 
-    for (i = 0; i < snew.GetCount(); i++)
+    for (auto& s: r.added)
     {
-        listbox->Append(snew[i]);
+        listbox->Append(s);
     }
 
     listbox = XRCCTRL(*this, "obsolete_strings", wxListBox);
@@ -107,9 +105,9 @@ void MergeSummaryDialog::TransferTo(const wxArrayString& snew, const wxArrayStri
         ((NSTableView*)[((NSScrollView*)listbox->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
 #endif
 
-    for (i = 0; i < sobsolete.GetCount(); i++)
+    for (auto& s: r.removed)
     {
-        listbox->Append(sobsolete[i]);
+        listbox->Append(s);
     }
 }
 
@@ -210,6 +208,7 @@ InterimResults ExtractPOTFromSources(CatalogPtr catalog)
         throw ExtractionException(ExtractionError::NoSourcesFound);
     }
 
+    InterimResults output;
     auto files = Extractor::CollectAllFiles(*spec);
 
     progress.message
@@ -233,12 +232,9 @@ InterimResults ExtractPOTFromSources(CatalogPtr catalog)
 
         try
         {
-            // FIXME: Don't do this, provide nice UI
-            result.errors.log_all();
-
-            auto pot = POCatalog::Create(result.pot_file, Catalog::CreationFlag_IgnoreHeader);
-
-            return InterimResults{ pot };
+            output.errors = result.errors;
+            output.reference = POCatalog::Create(result.pot_file, Catalog::CreationFlag_IgnoreHeader);
+            return output;
         }
         catch (...)
         {
@@ -346,7 +342,7 @@ bool DoPerformUpdateWithUI(wxWindow *parent,
     auto cancellation = std::make_shared<dispatch::cancellation_token>();
     auto data = std::make_shared<InterimResults>();
 
-    wxWindowPtr<ProgressWindow> progress(new ProgressWindow(parent, _("Updating translations"), cancellation));
+    wxWindowPtr<ProgressWindow> progress(new MergeProgressWindow(parent, _("Updating translations"), cancellation));
 
     bool ok = progress->RunTaskModal([catalog,cancellation,funcObtainPOT,timeCostObtainPOT,data]() -> BackgroundTaskResult
     {
@@ -379,6 +375,7 @@ bool DoPerformUpdateWithUI(wxWindow *parent,
         }
 
         BackgroundTaskResult bg;
+        bg.user_data = merge;
 
         if (merge.changes_count() == 0)
         {
@@ -440,4 +437,79 @@ bool PerformUpdateFromReferenceWithUI(wxWindow *parent,
     return DoPerformUpdateWithUI(parent, catalog,
                                  50,
                                  [=]{ return LoadReferenceFile(reference_file); });
+}
+
+
+bool MergeProgressWindow::SetSummaryContent(const BackgroundTaskResult& data)
+{
+    if (!ProgressWindow::SetSummaryContent(data))
+        return false;
+
+    if (!data.user_data.has_value())
+        return true;  // nothing more to show
+
+    if (auto r = std::any_cast<MergeResults>(&data.user_data))
+    {
+        AddViewDetails(*r);
+    }
+    else if (auto e = std::any_cast<ParsedGettextErrors>(&data.user_data))
+    {
+        MergeResults mr;
+        mr.errors = *e;
+        AddViewDetails(mr);
+    }
+
+    return true;
+}
+
+
+void MergeProgressWindow::AddViewDetails(const MergeResults& r)
+{
+    if (r.errors.items.empty() && r.added.empty() && r.removed.empty())
+        return;  // nothing at all to show
+
+    if (!r.errors.items.empty())
+    {
+        auto msg = wxString::Format
+        (
+         wxPLURAL("%d issue with the source strings was detected.",
+                  "%d issues with the source strings were detected.",
+                  (int)r.errors.items.size()),
+         (int)r.errors.items.size()
+         );
+
+        auto sizer = GetDetailsSizer();
+        auto line = new wxBoxSizer(wxHORIZONTAL);
+        sizer->Insert(0, line, wxSizerFlags().Expand().Border(wxBOTTOM, PX(6)));
+
+        line->Add(new wxStaticBitmap(this, wxID_ANY, wxArtProvider::GetBitmap("StatusWarning")), wxSizerFlags().Center().Border(wxTOP|wxBOTTOM, PX(2)));
+        line->AddSpacer(PX(6));
+
+        auto label = new wxStaticText(this, wxID_ANY, msg);
+#if defined(__WXOSX__) || defined(__WXGTK__)
+        label->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
+#ifndef __WXGTK__
+        ColorScheme::SetupWindowColors(this, [=]
+                                       {
+            label->SetForegroundColour(ColorScheme::Get(Color::ItemFuzzy));
+        });
+#endif
+        line->Add(label, wxSizerFlags().Center());
+    }
+
+    if (!r.added.empty() || !r.removed.empty())
+    {
+        auto sizer = GetButtonSizer();
+        auto button = new wxButton(this, wxID_ANY, MSW_OR_OTHER(_(L"View details…"), _(L"View Details…")));
+        sizer->Insert(0, button);
+        sizer->InsertStretchSpacer(1);
+
+        button->Bind(wxEVT_BUTTON, [=](wxCommandEvent&)
+        {
+            auto dlg = new MergeSummaryDialog(this);
+            dlg->TransferTo(r);
+            dlg->ShowModal();
+        });
+    }
 }

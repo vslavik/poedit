@@ -107,7 +107,7 @@ ProgressWindow::ProgressWindow(wxWindow *parent, const wxString& title, dispatch
 #endif
     m_title->SetFont(titleFont);
     m_infoSizer->Add(m_title, wxSizerFlags().Left().Border(wxBOTTOM, PX(3)));
-    m_gauge = new wxGauge(this, wxID_ANY, PROGRESS_BAR_RANGE, wxDefaultPosition, wxSize(PX(350), -1), wxGA_SMOOTH);
+    m_gauge = new wxGauge(this, wxID_ANY, PROGRESS_BAR_RANGE, wxDefaultPosition, wxSize(PX(380), -1), wxGA_SMOOTH);
     m_gauge->Pulse();
     m_infoSizer->Add(m_gauge, wxSizerFlags().Expand());
     m_progressMessage = new SecondaryLabel(this, "");
@@ -125,11 +125,21 @@ ProgressWindow::ProgressWindow(wxWindow *parent, const wxString& title, dispatch
 
     topsizer->Add(m_image, wxSizerFlags().Top().Border(wxTOP, topMarginImage));
     topsizer->AddSpacer(PX(10));
-    topsizer->Add(m_infoSizer, wxSizerFlags(1).Top().Border(wxTOP,topMarginInfo));
+    topsizer->Add(m_infoSizer, wxSizerFlags(1).Top().Border(wxTOP, topMarginInfo));
+
+    m_infoSummarySizer = new wxBoxSizer(wxVERTICAL);
+    m_infoSizer->Add(m_infoSummarySizer, wxSizerFlags().Expand());
+
+    m_errorsSizer = new wxBoxSizer(wxVERTICAL);
+    m_infoSizer->Add(m_errorsSizer, wxSizerFlags().Expand().Border(wxTOP, PX(8)));
+
+    m_detailsSizer = new wxBoxSizer(wxVERTICAL);
+    m_infoSizer->Add(m_detailsSizer, wxSizerFlags().Expand().Border(wxTOP, PX(8)));
 
     m_buttonSizer = new wxBoxSizer(wxHORIZONTAL);
     m_buttonSizer->AddStretchSpacer();
-    sizer->Add(m_buttonSizer, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT|wxBOTTOM, PX(20)));
+
+    m_infoSizer->Add(m_buttonSizer, wxSizerFlags().Expand().Border(wxTOP, PX(20)));
 
     if (cancellationToken)
     {
@@ -170,7 +180,7 @@ bool ProgressWindow::ShowSummary(const BackgroundTaskResult& data, const wxArray
 
         auto errctrl = new SelectableAutoWrappingText(this, wxID_ANY, text);
         errctrl->SetForegroundColour(ColorScheme::Get(Color::ErrorText));
-        m_infoSizer->Add(errctrl, wxSizerFlags().Expand().Border(wxTOP, PX(8)));
+        m_errorsSizer->Add(errctrl, wxSizerFlags().Expand().Border(wxTOP, PX(8)));
     }
 
     if (m_cancellationProgress)
@@ -192,9 +202,9 @@ bool ProgressWindow::ShowSummary(const BackgroundTaskResult& data, const wxArray
     m_okButton->SetDefault();
     m_okButton->SetFocus();
 
-    auto sizer = GetSizer();
-    sizer->Layout();
-    sizer->SetSizeHints(this);
+    m_infoSizer->Layout();
+    GetSizer()->Layout();
+    GetSizer()->SetSizeHints(this);
 
 #ifdef __WXMSW__
     Refresh();
@@ -207,32 +217,27 @@ bool ProgressWindow::ShowSummary(const BackgroundTaskResult& data, const wxArray
 void ProgressWindow::AddSummaryText(const wxString& text)
 {
     auto summary = new AutoWrappingText(this, wxID_ANY, text);
-    m_infoSizer->Add(summary, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
+    m_infoSummarySizer->Add(summary, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
 }
 
 
 wxBoxSizer *ProgressWindow::AddSummaryDetailLine()
 {
-    if (!m_detailsSizer)
-    {
-        m_detailsSizer = new wxBoxSizer(wxVERTICAL);
-        m_infoSizer->Add(m_detailsSizer, wxSizerFlags().Expand().Border(wxTOP, PX(8)));
-    }
-
+    auto sizer = GetDetailsSizer();
     auto row = new wxBoxSizer(wxHORIZONTAL);
-    m_detailsSizer->AddSpacer(PX(2));
-    m_detailsSizer->Add(row, wxSizerFlags().Expand().Border(wxRIGHT, PX(2)));
+    sizer->AddSpacer(PX(2));
+    sizer->Add(row, wxSizerFlags().Expand().Border(wxRIGHT, PX(2)));
     return row;
 }
 
 
-void ProgressWindow::AddSummaryDetailLine(const wxString& label, const wxString& value)
+wxBoxSizer *ProgressWindow::AddSummaryDetailLine(const wxString& label, const wxString& value)
 {
     auto row = AddSummaryDetailLine();
-
     row->Add(new SecondaryLabel(this, label), wxSizerFlags().Center());
     row->AddStretchSpacer();
     row->Add(new SecondaryLabel(this, value), wxSizerFlags().Center());
+    return row;
 }
 
 
@@ -417,7 +422,7 @@ void ProgressWindow::OnCancel(wxCommandEvent&)
     ((wxButton*)FindWindow(wxID_CANCEL))->Enable(false);
 
     m_cancellationProgress = new ActivityIndicator(this);
-    m_buttonSizer->Insert(0, m_cancellationProgress, wxSizerFlags().Center().Border(wxLEFT, PX(64+10)));
+    m_buttonSizer->Insert(0, m_cancellationProgress, wxSizerFlags().Center());
     m_buttonSizer->Layout();
 
     m_cancellationProgress->Start(_(L"Cancelling…"));
