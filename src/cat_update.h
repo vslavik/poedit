@@ -27,8 +27,27 @@
 #define Poedit_cat_update_h
 
 #include "catalog.h"
+#include "gexecute.h"
+
+#include <vector>
 
 class WXDLLIMPEXP_FWD_CORE wxWindow;
+
+
+
+/// Summary data about the result of merging two catalogs.
+struct MergeResults
+{
+    // Added and removed strings (as their summary representation, not the full items)
+    std::vector<wxString> added;
+    std::vector<wxString> removed;
+
+    int changes_count() const { return int(added.size() + removed.size()); }
+
+    // Any errors/warnings that occurred during the merge
+    ParsedGettextErrors errors;
+};
+
 
 
 /**

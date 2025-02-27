@@ -116,50 +116,71 @@ void MergeSummaryDialog::TransferTo(const wxArrayString& snew, const wxArrayStri
 
 inline wxString ItemMergeSummary(const CatalogItemPtr& item)
 {
-    wxString s = item->GetString();
+    wxString s = item->GetRawString();
     if ( item->HasPlural() )
-        s += "|" + item->GetPluralString();
+        s += " | " + item->GetRawPluralString();
     if ( item->HasContext() )
         s += wxString::Format(" [%s]", item->GetContext());
 
     return s;
 }
 
-/** Returns list of strings that are new in reference catalog
-    (compared to this one) and that are not present in \a refcat
-    (i.e. are obsoleted).
 
-    \see ShowMergeSummary
- */
-void GetMergeSummary(CatalogPtr po, CatalogPtr refcat,
-                     wxArrayString& snew, wxArrayString& sobsolete)
+void ComputeMergeResults(MergeResults& r, CatalogPtr po, CatalogPtr refcat)
 {
-    wxASSERT( snew.empty() );
-    wxASSERT( sobsolete.empty() );
+    Progress progress(2);
+
+    r.added.clear();
+    r.removed.clear();
+
+    // First collect all strings from both sides, then diff the sets.
+    // Run the two sides in parallel for speed up on large files.
 
     std::set<wxString> strsThis, strsRef;
 
-    for (auto& i: po->items())
-        strsThis.insert(ItemMergeSummary(i));
-    for (auto& i: refcat->items())
-        strsRef.insert(ItemMergeSummary(i));
-
-    for (auto& i: strsThis)
+    auto collect1 = dispatch::async([&]
     {
-        if (strsRef.find(i) == strsRef.end())
-            sobsolete.Add(i);
-    }
+        for (auto& i: po->items())
+            strsThis.insert(ItemMergeSummary(i));
+    });
 
-    for (auto& i: strsRef)
+    auto collect2 = dispatch::async([&]
     {
-        if (strsThis.find(i) == strsThis.end())
-            snew.Add(i);
-    }
+        for (auto& i: refcat->items())
+            strsRef.insert(ItemMergeSummary(i));
+    });
+
+    collect1.get();
+    collect2.get();
+    progress.increment();
+
+    auto add1 = dispatch::async([&]
+    {
+        for (auto& i: strsThis)
+        {
+            if (strsRef.find(i) == strsRef.end())
+                r.removed.push_back(i);
+        }
+    });
+
+    auto add2 = dispatch::async([&]
+    {
+        for (auto& i: strsRef)
+        {
+            if (strsThis.find(i) == strsThis.end())
+                r.added.push_back(i);
+        }
+    });
+
+    add1.get();
+    add2.get();
+    progress.increment();
 }
 
 struct InterimResults
 {
     CatalogPtr reference;
+    ParsedGettextErrors errors;
 };
 
 
@@ -338,15 +359,43 @@ bool DoPerformUpdateWithUI(wxWindow *parent,
 
         cancellation->throw_if_cancelled();
 
+        MergeResults merge;
+        merge.errors = data->errors;
+
         {
-            Progress subtask(1, p, 100 - timeCostObtainPOT);
+            Progress subtask(1, p, (100 - timeCostObtainPOT) / 2);
+            subtask.message(_(L"Determining differences…"));
+            ComputeMergeResults(merge, catalog, data->reference);
+        }
+
+        cancellation->throw_if_cancelled();
+
+        {
+            Progress subtask(1, p, (100 - timeCostObtainPOT) / 2);
             subtask.message(_(L"Merging differences…"));
             auto merged_ok = MergeCatalogWithReference(catalog, data->reference);
             if (!merged_ok)
                 BOOST_THROW_EXCEPTION( BackgroundTaskException(_("Failed to load file with extracted translations.")) );
         }
 
-        return {};
+        BackgroundTaskResult bg;
+
+        if (merge.changes_count() == 0)
+        {
+            bg.summary = _("Translation file is already up to date, no changes to strings were made.");
+        }
+        else
+        {
+            bg.summary = wxString::Format
+                         (
+                             wxPLURAL("Translation file was updated with %s change.", "Translation file was updated with %s changes.", merge.changes_count()),
+                             wxNumberFormatter::ToString((long)merge.changes_count())
+                          );
+            bg.details.emplace_back(_("New strings to translate:"), wxNumberFormatter::ToString((long)merge.added.size()));
+            bg.details.emplace_back(_("Removed strings (no longer used):"), wxNumberFormatter::ToString((long)merge.removed.size()));
+        }
+
+        return bg;
     });
 
     return ok;
@@ -379,7 +428,7 @@ bool PerformUpdateFromSourcesWithUI(wxWindow *parent,
                                     CatalogPtr catalog)
 {
     return DoPerformUpdateWithUI(parent, catalog,
-                                 80,
+                                 90,
                                  [=]{ return ExtractPOTFromSourcesWithExplanatoryErrors(catalog); });
 }
 
