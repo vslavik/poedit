@@ -245,8 +245,15 @@ Output Runner::do_run_sync(Arguments&& argv)
     process.Redirect();
     wxLogTrace("poedit.execute", "executing process (sync): %s", argv.pretty_print());
     auto retval = wxExecute(argv, wxEXEC_BLOCK | wxEXEC_NODISABLE | wxEXEC_NOEVENTS, &process, m_env.get());
-    if (retval != 0)
+    if (retval == -1)
+    {
+        wxLogTrace("poedit.execute", "  failed to launch child process(%d): %s", (int)retval, argv.pretty_print());
+        BOOST_THROW_EXCEPTION(Exception(wxString::Format(_("Cannot execute program: %s"), argv.pretty_print())));
+    }
+    else if (retval != 0)
+    {
         wxLogTrace("poedit.execute", "  execution failed with exit code %d", (int)retval);
+    }
 
     return process.make_output((int)retval);
 }
