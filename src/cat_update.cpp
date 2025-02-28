@@ -61,7 +61,7 @@ class MergeSummaryDialog : public wxDialog
         ~MergeSummaryDialog();
 
         /// Reads data from catalog and fill dialog's controls.
-        void TransferTo(const MergeResults& r);
+        void TransferTo(const MergeStats& r);
 };
 
 
@@ -80,7 +80,7 @@ MergeSummaryDialog::~MergeSummaryDialog()
 }
 
 
-void MergeSummaryDialog::TransferTo(const MergeResults& r)
+void MergeSummaryDialog::TransferTo(const MergeStats& r)
 {
     wxString sum;
     sum.Printf(_("(New: %i, obsolete: %i)"),
@@ -157,7 +157,7 @@ inline wxString ItemMergeSummary(const CatalogItemPtr& item)
 }
 
 
-void ComputeMergeResults(MergeResults& r, CatalogPtr po, CatalogPtr refcat)
+void ComputeMergeResults(MergeStats& r, CatalogPtr po, CatalogPtr refcat)
 {
     Progress progress(2);
 
@@ -215,14 +215,17 @@ struct InterimResults
 };
 
 
-bool MergeCatalogWithReference(CatalogPtr catalog, CatalogPtr reference)
+MergeResult MergeCatalogWithReference(CatalogPtr catalog, CatalogPtr reference)
 {
     auto po_catalog = std::dynamic_pointer_cast<POCatalog>(catalog);
     auto po_ref = std::dynamic_pointer_cast<POCatalog>(reference);
     if (!po_catalog || !po_ref)
-        return false;
+        return {};
 
-    return po_catalog->UpdateFromPOT(po_ref);
+    if (!po_catalog->UpdateFromPOT(po_ref))
+        return {};
+
+    return {po_catalog};
 }
 
 
@@ -367,17 +370,19 @@ InterimResults LoadReferenceFile(const wxString& ref_file)
 
 
 template<typename Func>
-bool DoPerformUpdateWithUI(wxWindow *parent,
-                           CatalogPtr catalog,
-                           int timeCostObtainPOT,
-                           Func&& funcObtainPOT)
+CatalogPtr DoPerformUpdateWithUI(wxWindow *parent,
+                                 CatalogPtr catalog,
+                                 int timeCostObtainPOT,
+                                 Func&& funcObtainPOT)
 {
     auto cancellation = std::make_shared<dispatch::cancellation_token>();
     auto data = std::make_shared<InterimResults>();
 
     wxWindowPtr<ProgressWindow> progress(new MergeProgressWindow(parent, _("Updating translations"), cancellation));
 
-    bool ok = progress->RunTaskModal([catalog,cancellation,funcObtainPOT,timeCostObtainPOT,data]() -> BackgroundTaskResult
+    CatalogPtr output_catalog;
+
+    bool ok = progress->RunTaskModal([&output_catalog,catalog,cancellation,funcObtainPOT,timeCostObtainPOT,data]() -> BackgroundTaskResult
     {
         Progress p(100);
 
@@ -388,13 +393,13 @@ bool DoPerformUpdateWithUI(wxWindow *parent,
 
         cancellation->throw_if_cancelled();
 
-        MergeResults merge;
-        merge.errors = data->errors;
+        MergeStats stats;
+        stats.errors = data->errors;
 
         {
             Progress subtask(1, p, (100 - timeCostObtainPOT) / 2);
             subtask.message(_(L"Determining differences…"));
-            ComputeMergeResults(merge, catalog, data->reference);
+            ComputeMergeResults(stats, catalog, data->reference);
         }
 
         cancellation->throw_if_cancelled();
@@ -402,15 +407,18 @@ bool DoPerformUpdateWithUI(wxWindow *parent,
         {
             Progress subtask(1, p, (100 - timeCostObtainPOT) / 2);
             subtask.message(_(L"Merging differences…"));
-            auto merged_ok = MergeCatalogWithReference(catalog, data->reference);
-            if (!merged_ok)
+            auto merged = MergeCatalogWithReference(catalog, data->reference);
+            if (!merged)
                 BOOST_THROW_EXCEPTION( BackgroundTaskException(_("Failed to load file with extracted translations.")) );
+
+            output_catalog = merged.updated_catalog;
+            stats.errors += merged.errors;
         }
 
         BackgroundTaskResult bg;
-        bg.user_data = merge;
+        bg.user_data = stats;
 
-        if (merge.changes_count() == 0)
+        if (stats.changes_count() == 0)
         {
             bg.summary = _("Translation file is already up to date, no changes to strings were made.");
         }
@@ -418,24 +426,24 @@ bool DoPerformUpdateWithUI(wxWindow *parent,
         {
             bg.summary = wxString::Format
                          (
-                             wxPLURAL("Translation file was updated with %s change.", "Translation file was updated with %s changes.", merge.changes_count()),
-                             wxNumberFormatter::ToString((long)merge.changes_count())
+                             wxPLURAL("Translation file was updated with %s change.", "Translation file was updated with %s changes.", stats.changes_count()),
+                             wxNumberFormatter::ToString((long)stats.changes_count())
                           );
-            bg.details.emplace_back(_("New strings to translate:"), wxNumberFormatter::ToString((long)merge.added.size()));
-            bg.details.emplace_back(_("Removed strings (no longer used):"), wxNumberFormatter::ToString((long)merge.removed.size()));
+            bg.details.emplace_back(_("New strings to translate:"), wxNumberFormatter::ToString((long)stats.added.size()));
+            bg.details.emplace_back(_("Removed strings (no longer used):"), wxNumberFormatter::ToString((long)stats.removed.size()));
         }
 
         return bg;
     });
 
-    return ok;
+    return ok ? output_catalog : nullptr;
 }
 
 
 } // anonymous namespace
 
 
-bool PerformUpdateFromSourcesSimple(CatalogPtr catalog)
+MergeResult PerformUpdateFromSourcesSimple(CatalogPtr catalog)
 {
     Progress p(100);
 
@@ -444,18 +452,19 @@ bool PerformUpdateFromSourcesSimple(CatalogPtr catalog)
         Progress subtask(1, p, 90);
         data = ExtractPOTFromSources(catalog);
         if (!data.reference)
-            return false;
+            return {};
     }
     {
         Progress subtask(1, p, 10);
         subtask.message(_(L"Merging differences…"));
-        return MergeCatalogWithReference(catalog, data.reference);
+        auto merged = MergeCatalogWithReference(catalog, data.reference);
+        merged.errors += data.errors;
+        return merged;
     }
 }
 
 
-bool PerformUpdateFromSourcesWithUI(wxWindow *parent,
-                                    CatalogPtr catalog)
+CatalogPtr PerformUpdateFromSourcesWithUI(wxWindow *parent, CatalogPtr catalog)
 {
     return DoPerformUpdateWithUI(parent, catalog,
                                  90,
@@ -463,9 +472,9 @@ bool PerformUpdateFromSourcesWithUI(wxWindow *parent,
 }
 
 
-bool PerformUpdateFromReferenceWithUI(wxWindow *parent,
-                                      CatalogPtr catalog,
-                                      const wxString& reference_file)
+CatalogPtr PerformUpdateFromReferenceWithUI(wxWindow *parent,
+                                            CatalogPtr catalog,
+                                            const wxString& reference_file)
 {
     return DoPerformUpdateWithUI(parent, catalog,
                                  50,
@@ -481,22 +490,22 @@ bool MergeProgressWindow::SetSummaryContent(const BackgroundTaskResult& data)
     if (!data.user_data.has_value())
         return true;  // nothing more to show
 
-    if (auto r = std::any_cast<MergeResults>(&data.user_data))
+    if (auto r = std::any_cast<MergeStats>(&data.user_data))
     {
         AddViewDetails(*r);
     }
     else if (auto e = std::any_cast<ParsedGettextErrors>(&data.user_data))
     {
-        MergeResults mr;
-        mr.errors = *e;
-        AddViewDetails(mr);
+        MergeStats ms;
+        ms.errors = *e;
+        AddViewDetails(ms);
     }
 
     return true;
 }
 
 
-void MergeProgressWindow::AddViewDetails(const MergeResults& r)
+void MergeProgressWindow::AddViewDetails(const MergeStats& r)
 {
     if (!r.errors && r.added.empty() && r.removed.empty())
         return;  // nothing at all to show

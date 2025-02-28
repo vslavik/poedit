@@ -1592,7 +1592,7 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
         locker.reset(new wxWindowUpdateLocker(m_list));
 
 
-    bool succ;
+    CatalogPtr updated_catalog;
 
     if (pot_file.empty())
     {
@@ -1611,54 +1611,37 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
             return false;
         }
 
-        succ = PerformUpdateFromSourcesWithUI(this, cat);
-
-        locker.reset();
-        EnsureAppropriateContentView();
-        NotifyCatalogChanged(m_catalog);
+        updated_catalog = PerformUpdateFromSourcesWithUI(this, cat);
     }
     else
     {
-        succ = PerformUpdateFromReferenceWithUI(this, cat, pot_file);
-
-        locker.reset();
-        EnsureAppropriateContentView();
-        NotifyCatalogChanged(m_catalog);
+        updated_catalog = PerformUpdateFromReferenceWithUI(this, cat, pot_file);
     }
 
-    m_modified = succ || m_modified;
-    UpdateStatusBar();
+    if (!updated_catalog)
+        return false;
 
-    return succ;
+    m_catalog = updated_catalog;
+    m_modified = true;
+
+    locker.reset();
+    EnsureAppropriateContentView();
+    NotifyCatalogChanged(m_catalog);
+    RefreshControls();
+
+    if (Config::UseTM() && Config::MergeBehavior() == Merge_UseTM)
+    {
+        if (PreTranslateCatalog(this, m_catalog, PreTranslateOptions(PreTranslate_OnlyGoodQuality)))
+            RefreshControls();
+    }
+
+    return true;
 }
 
 void PoeditFrame::OnUpdateFromSources(wxCommandEvent&)
 {
     DoIfCanDiscardCurrentDoc([=]{
-        try
-        {
-            if (UpdateCatalog())
-            {
-                if (Config::UseTM() && Config::MergeBehavior() == Merge_UseTM)
-                {
-                    if (PreTranslateCatalog(this, m_catalog, PreTranslateOptions(PreTranslate_OnlyGoodQuality)))
-                    {
-                        if (!m_modified)
-                        {
-                            m_modified = true;
-                            UpdateTitle();
-                        }
-                        RefreshControls();
-                    }
-                }
-            }
-        }
-        catch (...)
-        {
-            wxLogError("%s", DescribeCurrentException());
-        }
-
-        RefreshControls();
+        UpdateCatalog();
     });
 }
 
@@ -1691,27 +1674,8 @@ void PoeditFrame::OnUpdateFromPOT(wxCommandEvent&)
                 return;
             auto pot_file = dlg->GetPath();
             wxConfig::Get()->Write("last_file_path", wxPathOnly(pot_file));
-            try
-            {
-                if (UpdateCatalog(pot_file))
-                {
-                    if (Config::UseTM() && Config::MergeBehavior() == Merge_UseTM)
-                    {
-                        if (PreTranslateCatalog(this, m_catalog, PreTranslateOptions(PreTranslate_OnlyGoodQuality)))
-                        {
-                            if (!m_modified)
-                            {
-                                m_modified = true;
-                                UpdateTitle();
-                            }
-                        }
-                    }
-                }
-            }
-            catch (...)
-            {
-                wxLogError("%s", DescribeCurrentException());
-            }
+
+            UpdateCatalog(pot_file);
         }
 
         RefreshControls();

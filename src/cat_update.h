@@ -37,7 +37,7 @@ class WXDLLIMPEXP_FWD_CORE wxWindow;
 
 
 /// Summary data about the result of merging two catalogs.
-struct MergeResults
+struct MergeStats
 {
     // Added and removed strings (as their summary representation, not the full items)
     std::vector<wxString> added;
@@ -50,6 +50,16 @@ struct MergeResults
 };
 
 
+/// Resulting data from a merge operation.
+struct MergeResult
+{
+    CatalogPtr updated_catalog;
+    ParsedGettextErrors errors;
+
+    explicit operator bool() const { return updated_catalog != nullptr; }
+};
+
+
 /// Specialization of ProgressWindow that shows issues and allows viewing merge results.
 class MergeProgressWindow : public ProgressWindow
 {
@@ -59,28 +69,42 @@ public:
 protected:
     bool SetSummaryContent(const BackgroundTaskResult& data) override;
 
-    void AddViewDetails(const MergeResults& r);
+    void AddViewDetails(const MergeStats& r);
 };
 
 
 /**
     Update catalog from source code w/o any UI or detailed error reporting.
+
+    The returned catalog may be the same as @a catalog (which may be modified
+    in place), or it may be a new instance.
+
+    FIXME: Make this non-modifying in place
  */
-bool PerformUpdateFromSourcesSimple(CatalogPtr catalog);
+MergeResult PerformUpdateFromSourcesSimple(CatalogPtr catalog);
 
 /**
     Update catalog from source code, if configured, and provide UI
     during the operation.
+
+    The returned catalog may be the same as @a catalog (which may be modified
+    in place), or it may be a new instance.
+
+    FIXME: Make this non-modifying in place
  */
-bool PerformUpdateFromSourcesWithUI(wxWindow *parent,
-                                    CatalogPtr catalog);
+CatalogPtr PerformUpdateFromSourcesWithUI(wxWindow *parent, CatalogPtr catalog);
 
 /**
     Similarly for updating from a reference file (i.e. POT).
+
+    The returned catalog may be the same as @a catalog (which may be modified
+    in place), or it may be a new instance.
+
+    FIXME: Make this non-modifying in place
  */
-bool PerformUpdateFromReferenceWithUI(wxWindow *parent,
-                                      CatalogPtr catalog,
-                                      const wxString& reference_file);
+CatalogPtr PerformUpdateFromReferenceWithUI(wxWindow *parent,
+                                            CatalogPtr catalog,
+                                            const wxString& reference_file);
 
 
 #endif // Poedit_cat_update_h
