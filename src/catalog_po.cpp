@@ -475,10 +475,14 @@ bool POCatalogParser::Parse()
 
                 deletedLines.Add(line);
             }
-            if (!OnDeletedEntry(deletedLines,
-                                mflags, mrefs, mcomment, mextractedcomments, mlinenum))
+
+            if (!m_ignoreTranslations)
             {
-                return false;
+                if (!OnDeletedEntry(deletedLines,
+                                    mflags, mrefs, mcomment, mextractedcomments, mlinenum))
+                {
+                    return false;
+                }
             }
 
             mcomment = mstr = msgid_plural = mflags = wxEmptyString;
