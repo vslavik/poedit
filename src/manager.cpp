@@ -587,22 +587,15 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent&)
                     return;
 
                 wxString f = m_catalogs[i];
-                PoeditFrame *fr = PoeditFrame::Find(f);
-                if (fr)
-                {
-                    fr->UpdateCatalog();
-                }
-                else
-                {
-                    Progress subtask(1, progress, 1);
 
-                    auto cat = POCatalog::Create(f);
-                    if (PerformUpdateFromSourcesSimple(cat))
-                    {
-                        Catalog::ValidationResults validation_results;
-                        Catalog::CompilationStatus mo_status;
-                        cat->Save(f, false, validation_results, mo_status);
-                    }
+                Progress subtask(1, progress, 1);
+
+                auto cat = POCatalog::Create(f);
+                if (auto merged = PerformUpdateFromSourcesSimple(cat))
+                {
+                    Catalog::ValidationResults validation_results;
+                    Catalog::CompilationStatus mo_status;
+                    merged.updated_catalog->Save(f, false, validation_results, mo_status);
                 }
              }
         },
