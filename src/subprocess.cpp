@@ -70,6 +70,8 @@ protected:
         char buffer[4096];
         while (true)
         {
+            if (!s->CanRead())
+                break;
             s->Read(buffer, sizeof(buffer));
             size_t bytesRead = s->LastRead();
             if (!bytesRead)
