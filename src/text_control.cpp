@@ -420,6 +420,10 @@ wxString CustomizedTextCtrl::DoCopyText(long from, long to)
 
 void CustomizedTextCtrl::DoPasteText(long from, long to, const wxString& s)
 {
+#ifdef __WXOSX__
+    DisableAutomaticSubstitutions disableAuto(this);
+#endif
+
     Replace(from, to, s);
 }
 
@@ -785,6 +789,10 @@ wxString AnyTranslatableTextCtrl::DoCopyText(long from, long to)
 
 void AnyTranslatableTextCtrl::DoPasteText(long from, long to, const wxString& s)
 {
+#ifdef __WXOSX__
+    DisableAutomaticSubstitutions disableAuto(this);
+#endif
+
     Replace(from, to, EscapePlainText(bidi::strip_pointless_control_chars(s, m_language.Direction())));
 }
 
