@@ -125,7 +125,7 @@ void MergeSummaryDialog::TransferTo(const MergeResults& r)
         notebook->DeletePage(1);
     }
 
-    if (!r.errors.items.empty())
+    if (r.errors)
     {
         wxListBox *listbox = XRCCTRL(*this, "issues", wxListBox);
     #ifdef __WXOSX__
@@ -498,10 +498,10 @@ bool MergeProgressWindow::SetSummaryContent(const BackgroundTaskResult& data)
 
 void MergeProgressWindow::AddViewDetails(const MergeResults& r)
 {
-    if (r.errors.items.empty() && r.added.empty() && r.removed.empty())
+    if (!r.errors && r.added.empty() && r.removed.empty())
         return;  // nothing at all to show
 
-    if (!r.errors.items.empty())
+    if (r.errors)
     {
         auto msg = wxString::Format
         (

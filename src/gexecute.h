@@ -56,6 +56,8 @@ struct ParsedGettextErrors
 
     std::vector<Item> items;
 
+    explicit operator bool() const { return !items.empty(); }
+
     /// Output errors only to wxLogError.
     void log_errors();
 
