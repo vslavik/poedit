@@ -192,7 +192,7 @@ ParsedGettextErrors parse_gettext_stderr(const subprocess::Output& output, const
             // recognizing standard prefixes first simplifies differentiating between then and file:line locations:
             eater.eat_std_prefixes(err, rec);
 
-            static const std::wregex RE_LOCATION(L"^([^:\r\n]+):([0-9]+): ", std::regex_constants::ECMAScript | std::regex_constants::optimize);
+            static const std::wregex RE_LOCATION(L"^([^\r\n]+):([0-9]+): ", std::regex_constants::ECMAScript | std::regex_constants::optimize);
             std::wsmatch match;
             if (std::regex_search(err, match, RE_LOCATION) && match.position() == 0)
             {
