@@ -121,13 +121,7 @@ private:
 
 #if defined(HAVE_DISPATCH)
 
-enum class queue
-{
-    main,
-    priority_default
-};
-
-extern void dispatch_async_cxx(boost::executors::work&& f, queue q = queue::priority_default);
+extern void dispatch_async_cxx(boost::executors::work&& f);
 
 class background_queue_executor : public custom_executor
 {
@@ -172,10 +166,14 @@ public:
     void submit(work&& closure)
     {
 #ifdef HAVE_DISPATCH
-        dispatch_async_cxx(std::forward<work>(closure), queue::main);
-#else
-        wxTheApp->CallAfter(std::forward<work>(closure));
+        // Note that we intentially don't use dispatch_async_cxx() and dispatch_get_main_queue() here,
+        // but rather choose to channel everything through wxApp::CallAfter(). This is because
+        // the main queue is serial and won't process further blocks if it is already executing another.
+        // This leads to deadlocks when e.g. a modal dialog is shown, from .then_on_main() handler, and
+        // it then needs to schedule something on the main thread again.
+        // See e.g. https://www.thecave.com/2015/08/10/dispatch-async-to-main-queue-doesnt-work-with-modal-window-on-mac-os-x/
 #endif
+        wxTheApp->CallAfter(std::forward<work>(closure));
     }
 };
 
