@@ -20,6 +20,7 @@ endif
 poedit_SOURCES = \
                  app_updates.cpp app_updates.h \
                  attentionbar.cpp attentionbar.h \
+                 cat_operations.h cat_operations.cpp \
                  cat_update.h cat_update.cpp \
                  cat_sorting.cpp cat_sorting.h \
                  catalog.cpp catalog.h \

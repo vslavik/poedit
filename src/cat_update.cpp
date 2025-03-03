@@ -145,88 +145,11 @@ void MergeSummaryDialog::TransferTo(const MergeStats& r)
 }
 
 
-inline wxString ItemMergeSummary(const CatalogItemPtr& item)
-{
-    wxString s = item->GetRawString();
-    if ( item->HasPlural() )
-        s += " | " + item->GetRawPluralString();
-    if ( item->HasContext() )
-        s += wxString::Format(" [%s]", item->GetContext());
-
-    return s;
-}
-
-
-void ComputeMergeResults(MergeStats& r, CatalogPtr po, CatalogPtr refcat)
-{
-    Progress progress(2);
-
-    r.added.clear();
-    r.removed.clear();
-
-    // First collect all strings from both sides, then diff the sets.
-    // Run the two sides in parallel for speed up on large files.
-
-    std::set<wxString> strsThis, strsRef;
-
-    auto collect1 = dispatch::async([&]
-    {
-        for (auto& i: po->items())
-            strsThis.insert(ItemMergeSummary(i));
-    });
-
-    auto collect2 = dispatch::async([&]
-    {
-        for (auto& i: refcat->items())
-            strsRef.insert(ItemMergeSummary(i));
-    });
-
-    collect1.get();
-    collect2.get();
-    progress.increment();
-
-    auto add1 = dispatch::async([&]
-    {
-        for (auto& i: strsThis)
-        {
-            if (strsRef.find(i) == strsRef.end())
-                r.removed.push_back(i);
-        }
-    });
-
-    auto add2 = dispatch::async([&]
-    {
-        for (auto& i: strsRef)
-        {
-            if (strsThis.find(i) == strsThis.end())
-                r.added.push_back(i);
-        }
-    });
-
-    add1.get();
-    add2.get();
-    progress.increment();
-}
-
 struct InterimResults
 {
     CatalogPtr reference;
     ParsedGettextErrors errors;
 };
-
-
-MergeResult MergeCatalogWithReference(CatalogPtr catalog, CatalogPtr reference)
-{
-    auto po_catalog = std::dynamic_pointer_cast<POCatalog>(catalog);
-    auto po_ref = std::dynamic_pointer_cast<POCatalog>(reference);
-    if (!po_catalog || !po_ref)
-        return {};
-
-    if (!po_catalog->UpdateFromPOT(po_ref))
-        return {};
-
-    return {po_catalog};
-}
 
 
 InterimResults ExtractPOTFromSources(CatalogPtr catalog)
@@ -400,7 +323,7 @@ dispatch::future<CatalogPtr> DoPerformUpdateWithUI(wxWindow *parent,
         {
             Progress subtask(1, p, (100 - timeCostObtainPOT) / 2);
             subtask.message(_(L"Determining differences…"));
-            ComputeMergeResults(stats, catalog, data.reference);
+            ComputeMergeStats(stats, catalog, data.reference);
         }
 
         cancellation->throw_if_cancelled();

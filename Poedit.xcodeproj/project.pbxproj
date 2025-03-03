@@ -216,6 +216,7 @@
 		B2FE296B1AC85FFF005588E4 /* keytar_mac.cc in Sources */ = {isa = PBXBuildFile; fileRef = B2FE29691AC85FFF005588E4 /* keytar_mac.cc */; };
 		BF1EDE1EB234996AAD0D9164 /* catalog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CAC16F629D30018AF7E /* catalog.cpp */; };
 		CE84DDEAB7912A33832B960D /* ThumbnailProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E3E2780DE9804824D0B5FF4 /* ThumbnailProvider.m */; };
+		E5B44A7E46AD1775AE457D82 /* cat_operations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29480734785C8BC93F556CF6 /* cat_operations.cpp */; };
 		F9A6A70A2A290ADC67FF625D /* QuicklookPreview.appex in Copy Gettext bundle and extensions */ = {isa = PBXBuildFile; fileRef = F99D32BE79516DF3871487AD /* QuicklookPreview.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FAFD3DBF94A0EBA28531C6B2 /* catalog_po.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2BC828920A1F0DC007652D6 /* catalog_po.cpp */; };
 /* End PBXBuildFile section */
@@ -329,11 +330,13 @@
 /* Begin PBXFileReference section */
 		10F1342DED004E0BE40CBB35 /* subprocess.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = subprocess.h; sourceTree = "<group>"; };
 		1A56755064DA87E1BCD83DBE /* PreviewProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreviewProvider.h; sourceTree = "<group>"; };
+		29480734785C8BC93F556CF6 /* cat_operations.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cat_operations.cpp; sourceTree = "<group>"; };
 		2A58EC80C5A47E2902E5DBC7 /* ThumbnailProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThumbnailProvider.h; sourceTree = "<group>"; };
 		2C13766ECFA88FF598316DBA /* uilang.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = uilang.cpp; sourceTree = "<group>"; };
 		2E49B156226EE8BCE26F9F19 /* QuicklookThumbnails.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = QuicklookThumbnails.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		42A5059AF0EA6425563FCB12 /* progress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = progress.h; sourceTree = "<group>"; };
 		4A11FA9FF60E6EC720F40F25 /* catalog_xcloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = catalog_xcloc.h; sourceTree = "<group>"; };
+		58131D867D3426B85BA8487C /* cat_operations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cat_operations.h; sourceTree = "<group>"; };
 		5BA775F29C57EB5164B2B792 /* catalog_xcloc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = catalog_xcloc.cpp; sourceTree = "<group>"; };
 		667D6946D93751EBDFC25FE8 /* InfoThumbnails.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = InfoThumbnails.plist; sourceTree = "<group>"; };
 		740C80154CE061778D7E5155 /* subprocess.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = subprocess.cpp; sourceTree = "<group>"; };
@@ -964,6 +967,8 @@
 				5BA775F29C57EB5164B2B792 /* catalog_xcloc.cpp */,
 				10F1342DED004E0BE40CBB35 /* subprocess.h */,
 				740C80154CE061778D7E5155 /* subprocess.cpp */,
+				58131D867D3426B85BA8487C /* cat_operations.h */,
+				29480734785C8BC93F556CF6 /* cat_operations.cpp */,
 			);
 			name = "Non-GUI";
 			path = src;
@@ -1795,6 +1800,7 @@
 				49CB09B8277DDFCE6533BE41 /* progress_ui.cpp in Sources */,
 				43518E06F21ED7EB8D754F2B /* progress.cpp in Sources */,
 				7A7175DB2942BF59C950E93F /* subprocess.cpp in Sources */,
+				E5B44A7E46AD1775AE457D82 /* cat_operations.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

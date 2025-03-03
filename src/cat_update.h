@@ -27,38 +27,13 @@
 #define Poedit_cat_update_h
 
 #include "catalog.h"
+#include "cat_operations.h"
 #include "concurrency.h"
-#include "gexecute.h"
 #include "progress_ui.h"
 
 #include <vector>
 
 class WXDLLIMPEXP_FWD_CORE wxWindow;
-
-
-
-/// Summary data about the result of merging two catalogs.
-struct MergeStats
-{
-    // Added and removed strings (as their summary representation, not the full items)
-    std::vector<wxString> added;
-    std::vector<wxString> removed;
-
-    int changes_count() const { return int(added.size() + removed.size()); }
-
-    // Any errors/warnings that occurred during the merge
-    ParsedGettextErrors errors;
-};
-
-
-/// Resulting data from a merge operation.
-struct MergeResult
-{
-    CatalogPtr updated_catalog;
-    ParsedGettextErrors errors;
-
-    explicit operator bool() const { return updated_catalog != nullptr; }
-};
 
 
 /// Specialization of ProgressWindow that shows issues and allows viewing merge results.
