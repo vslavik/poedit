@@ -1578,21 +1578,20 @@ void PoeditFrame::UpdateAfterPreferencesChange()
 }
 
 
-bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
+void PoeditFrame::UpdateCatalog(const wxString& pot_file)
 {
     auto cat = std::dynamic_pointer_cast<POCatalog>(m_catalog);
     if (!cat)
-        return false;
+        return;
 
     // This ensures that the list control won't be redrawn during Update()
     // call when a dialog box is hidden; another alternative would be to call
     // m_list->CatalogChanged(NULL) here
-    std::unique_ptr<wxWindowUpdateLocker> locker;
+    std::shared_ptr<wxWindowUpdateLocker> locker;
     if (m_list)
         locker.reset(new wxWindowUpdateLocker(m_list));
 
-
-    CatalogPtr updated_catalog;
+    dispatch::future<CatalogPtr> bg_work;
 
     if (pot_file.empty())
     {
@@ -1608,34 +1607,34 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
             wxString expl = _(L"Translations couldn’t be updated from the source code, because no code was found in the location specified in the file’s Properties.");
             dlg->SetExtendedMessage(expl);
             dlg->ShowWindowModalThenDo([dlg](int){});
-            return false;
+            return;
         }
 
-        updated_catalog = PerformUpdateFromSourcesWithUI(this, cat);
+        bg_work = PerformUpdateFromSourcesWithUI(this, cat);
     }
     else
     {
-        updated_catalog = PerformUpdateFromReferenceWithUI(this, cat, pot_file);
+        bg_work = PerformUpdateFromReferenceWithUI(this, cat, pot_file);
     }
 
-    if (!updated_catalog)
-        return false;
-
-    m_catalog = updated_catalog;
-    m_modified = true;
-
-    locker.reset();
-    EnsureAppropriateContentView();
-    NotifyCatalogChanged(m_catalog);
-    RefreshControls();
-
-    if (Config::UseTM() && Config::MergeBehavior() == Merge_UseTM)
+    bg_work.then_on_main([=](CatalogPtr updated_catalog)
     {
-        if (PreTranslateCatalog(this, m_catalog, PreTranslateOptions(PreTranslate_OnlyGoodQuality)))
-            RefreshControls();
-    }
+        if (!updated_catalog)
+            return;
 
-    return true;
+        m_catalog = updated_catalog;
+        m_modified = true;
+
+        EnsureAppropriateContentView();
+        NotifyCatalogChanged(m_catalog);
+        RefreshControls();
+
+        if (Config::UseTM() && Config::MergeBehavior() == Merge_UseTM)
+        {
+            if (PreTranslateCatalog(this, m_catalog, PreTranslateOptions(PreTranslate_OnlyGoodQuality)))
+                RefreshControls();
+        }
+    });
 }
 
 void PoeditFrame::OnUpdateFromSources(wxCommandEvent&)

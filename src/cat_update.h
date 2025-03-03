@@ -27,6 +27,7 @@
 #define Poedit_cat_update_h
 
 #include "catalog.h"
+#include "concurrency.h"
 #include "gexecute.h"
 #include "progress_ui.h"
 
@@ -92,7 +93,8 @@ MergeResult PerformUpdateFromSourcesSimple(CatalogPtr catalog);
 
     FIXME: Make this non-modifying in place
  */
-CatalogPtr PerformUpdateFromSourcesWithUI(wxWindow *parent, CatalogPtr catalog);
+dispatch::future<CatalogPtr>
+PerformUpdateFromSourcesWithUI(wxWindow *parent, CatalogPtr catalog);
 
 /**
     Similarly for updating from a reference file (i.e. POT).
@@ -102,9 +104,8 @@ CatalogPtr PerformUpdateFromSourcesWithUI(wxWindow *parent, CatalogPtr catalog);
 
     FIXME: Make this non-modifying in place
  */
-CatalogPtr PerformUpdateFromReferenceWithUI(wxWindow *parent,
-                                            CatalogPtr catalog,
-                                            const wxString& reference_file);
+dispatch::future<CatalogPtr>
+PerformUpdateFromReferenceWithUI(wxWindow *parent, CatalogPtr catalog, const wxString& reference_file);
 
 
 #endif // Poedit_cat_update_h

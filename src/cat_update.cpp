@@ -370,36 +370,37 @@ InterimResults LoadReferenceFile(const wxString& ref_file)
 
 
 template<typename Func>
-CatalogPtr DoPerformUpdateWithUI(wxWindow *parent,
-                                 CatalogPtr catalog,
-                                 int timeCostObtainPOT,
-                                 Func&& funcObtainPOT)
+dispatch::future<CatalogPtr> DoPerformUpdateWithUI(wxWindow *parent,
+                                                   CatalogPtr catalog,
+                                                   int timeCostObtainPOT,
+                                                   Func&& funcObtainPOT)
 {
-    auto cancellation = std::make_shared<dispatch::cancellation_token>();
-    auto data = std::make_shared<InterimResults>();
+    auto promise = std::make_shared<dispatch::promise<CatalogPtr>>();
+    auto merge_result = std::make_shared<MergeResult>();
 
+    auto cancellation = std::make_shared<dispatch::cancellation_token>();
     wxWindowPtr<ProgressWindow> progress(new MergeProgressWindow(parent, _("Updating translations"), cancellation));
 
-    CatalogPtr output_catalog;
-
-    bool ok = progress->RunTaskModal([&output_catalog,catalog,cancellation,funcObtainPOT,timeCostObtainPOT,data]() -> BackgroundTaskResult
+    progress->RunTaskThenDo([merge_result,catalog,cancellation,funcObtainPOT,timeCostObtainPOT]() -> BackgroundTaskResult
     {
+        InterimResults data;
+
         Progress p(100);
 
         {
             Progress subtask(1, p, timeCostObtainPOT);
-            *data = funcObtainPOT();
+            data = funcObtainPOT();
         }
 
         cancellation->throw_if_cancelled();
 
         MergeStats stats;
-        stats.errors = data->errors;
+        stats.errors = data.errors;
 
         {
             Progress subtask(1, p, (100 - timeCostObtainPOT) / 2);
             subtask.message(_(L"Determining differences…"));
-            ComputeMergeResults(stats, catalog, data->reference);
+            ComputeMergeResults(stats, catalog, data.reference);
         }
 
         cancellation->throw_if_cancelled();
@@ -407,12 +408,11 @@ CatalogPtr DoPerformUpdateWithUI(wxWindow *parent,
         {
             Progress subtask(1, p, (100 - timeCostObtainPOT) / 2);
             subtask.message(_(L"Merging differences…"));
-            auto merged = MergeCatalogWithReference(catalog, data->reference);
-            if (!merged)
+            *merge_result = MergeCatalogWithReference(catalog, data.reference);
+            if (!(*merge_result))
                 BOOST_THROW_EXCEPTION( BackgroundTaskException(_("Failed to load file with extracted translations.")) );
 
-            output_catalog = merged.updated_catalog;
-            stats.errors += merged.errors;
+            stats.errors += merge_result->errors;
         }
 
         BackgroundTaskResult bg;
@@ -434,9 +434,13 @@ CatalogPtr DoPerformUpdateWithUI(wxWindow *parent,
         }
 
         return bg;
+    },
+    [progress,promise,merge_result](bool ok)
+    {
+        promise->set_value(ok && merge_result ? merge_result->updated_catalog : nullptr);
     });
 
-    return ok ? output_catalog : nullptr;
+    return promise->get_future();
 }
 
 
@@ -464,7 +468,8 @@ MergeResult PerformUpdateFromSourcesSimple(CatalogPtr catalog)
 }
 
 
-CatalogPtr PerformUpdateFromSourcesWithUI(wxWindow *parent, CatalogPtr catalog)
+dispatch::future<CatalogPtr>
+PerformUpdateFromSourcesWithUI(wxWindow *parent, CatalogPtr catalog)
 {
     return DoPerformUpdateWithUI(parent, catalog,
                                  90,
@@ -472,9 +477,8 @@ CatalogPtr PerformUpdateFromSourcesWithUI(wxWindow *parent, CatalogPtr catalog)
 }
 
 
-CatalogPtr PerformUpdateFromReferenceWithUI(wxWindow *parent,
-                                            CatalogPtr catalog,
-                                            const wxString& reference_file)
+dispatch::future<CatalogPtr>
+PerformUpdateFromReferenceWithUI(wxWindow *parent, CatalogPtr catalog, const wxString& reference_file)
 {
     return DoPerformUpdateWithUI(parent, catalog,
                                  50,

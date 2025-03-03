@@ -130,7 +130,7 @@ class PoeditFrame : public PoeditFrameBase
         /** Updates catalog and sets m_modified flag. Updates from POT
             if \a pot_file is not empty and from sources otherwise.
          */
-        bool UpdateCatalog(const wxString& pot_file = wxEmptyString);
+        void UpdateCatalog(const wxString& pot_file = wxEmptyString);
 
         void UpdateAfterPreferencesChange();
         static void UpdateAllAfterPreferencesChange();
