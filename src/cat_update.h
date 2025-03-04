@@ -26,51 +26,61 @@
 #ifndef Poedit_cat_update_h
 #define Poedit_cat_update_h
 
-#include "catalog_po.h"
+#include "catalog.h"
+#include "cat_operations.h"
+#include "concurrency.h"
+#include "progress_ui.h"
+
+#include <vector>
 
 class WXDLLIMPEXP_FWD_CORE wxWindow;
 
 
-/// Result of PerformUpdateFromSources()
-struct UpdateResultReason
+/// Specialization of ProgressWindow that shows issues and allows viewing merge results.
+class MergeProgressWindow : public ProgressWindow
 {
-    enum Code
-    {
-        CancelledByUser,
-        Unspecified,
-        NoSourcesFound,
-        PermissionDenied
-    };
+public:
+    using ProgressWindow::ProgressWindow;
 
-    UpdateResultReason(Code c = Unspecified) : code(c) {}
+protected:
+    bool SetSummaryContent(const BackgroundTaskResult& data) override;
 
-    Code code;
-    wxString file;
+    void AddViewDetails(const MergeStats& r);
 };
 
-enum UpdateFlags
-{
-    Update_DontShowSummary = 1
-};
+
+/**
+    Update catalog from source code w/o any UI or detailed error reporting.
+
+    The returned catalog may be the same as @a catalog (which may be modified
+    in place), or it may be a new instance.
+
+    FIXME: Make this non-modifying in place
+ */
+MergeResult PerformUpdateFromSourcesSimple(CatalogPtr catalog);
 
 /**
     Update catalog from source code, if configured, and provide UI
     during the operation.
- */
-bool PerformUpdateFromSources(POCatalogPtr catalog, UpdateResultReason& reason);
 
-bool PerformUpdateFromSourcesWithUI(wxWindow *parent,
-                                    POCatalogPtr catalog,
-                                    UpdateResultReason& reason,
-                                    int flags = 0);
+    The returned catalog may be the same as @a catalog (which may be modified
+    in place), or it may be a new instance.
+
+    FIXME: Make this non-modifying in place
+ */
+dispatch::future<CatalogPtr>
+PerformUpdateFromSourcesWithUI(wxWindow *parent, CatalogPtr catalog);
 
 /**
-    Similarly for updating from a POT file.
+    Similarly for updating from a reference file (i.e. POT).
+
+    The returned catalog may be the same as @a catalog (which may be modified
+    in place), or it may be a new instance.
+
+    FIXME: Make this non-modifying in place
  */
-bool PerformUpdateFromPOTWithUI(wxWindow *parent,
-                                POCatalogPtr catalog,
-                                const wxString& pot_file,
-                                UpdateResultReason& reason);
+dispatch::future<CatalogPtr>
+PerformUpdateFromReferenceWithUI(wxWindow *parent, CatalogPtr catalog, const wxString& reference_file);
 
 
 #endif // Poedit_cat_update_h

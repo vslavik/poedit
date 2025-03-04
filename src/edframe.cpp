@@ -1578,144 +1578,69 @@ void PoeditFrame::UpdateAfterPreferencesChange()
 }
 
 
-bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
+void PoeditFrame::UpdateCatalog(const wxString& pot_file)
 {
     auto cat = std::dynamic_pointer_cast<POCatalog>(m_catalog);
     if (!cat)
-        return false;
+        return;
 
     // This ensures that the list control won't be redrawn during Update()
     // call when a dialog box is hidden; another alternative would be to call
     // m_list->CatalogChanged(NULL) here
-    std::unique_ptr<wxWindowUpdateLocker> locker;
+    std::shared_ptr<wxWindowUpdateLocker> locker;
     if (m_list)
         locker.reset(new wxWindowUpdateLocker(m_list));
 
-
-    UpdateResultReason reason;
-    bool succ;
+    dispatch::future<CatalogPtr> bg_work;
 
     if (pot_file.empty())
     {
-        if (cat->HasSourcesAvailable())
+        if (!cat->HasSourcesAvailable())
         {
-            succ = PerformUpdateFromSourcesWithUI(this, cat, reason);
+            wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog
+                (
+                    this,
+                    _("Source code not available."),
+                    MSW_OR_OTHER(_("Updating failed"), ""),
+                    wxOK | wxICON_ERROR
+                ));
+            wxString expl = _(L"Translations couldn’t be updated from the source code, because no code was found in the location specified in the file’s Properties.");
+            dlg->SetExtendedMessage(expl);
+            dlg->ShowWindowModalThenDo([dlg](int){});
+            return;
+        }
 
-            locker.reset();
-            EnsureAppropriateContentView();
-            NotifyCatalogChanged(m_catalog);
-        }
-        else
-        {
-            reason = UpdateResultReason::NoSourcesFound;
-            succ = false;
-        }
+        bg_work = PerformUpdateFromSourcesWithUI(this, cat);
     }
     else
     {
-        succ = PerformUpdateFromPOTWithUI(this, cat, pot_file, reason);
+        bg_work = PerformUpdateFromReferenceWithUI(this, cat, pot_file);
+    }
 
-        locker.reset();
+    bg_work.then_on_main([=](CatalogPtr updated_catalog)
+    {
+        if (!updated_catalog)
+            return;
+
+        m_catalog = updated_catalog;
+        m_modified = true;
+
         EnsureAppropriateContentView();
         NotifyCatalogChanged(m_catalog);
-    }
+        RefreshControls();
 
-    m_modified = succ || m_modified;
-    UpdateStatusBar();
-
-    if (!succ)
-    {
-        // FIXME: nicer UI than this
-        wxString msgSuffix;
-        if (!reason.file.empty() && reason.file != ".")
-            msgSuffix += "\n\n" + wxString::Format(_("In: %s"), reason.file);
-
-        switch (reason.code)
+        if (Config::UseTM() && Config::MergeBehavior() == Merge_UseTM)
         {
-            case UpdateResultReason::NoSourcesFound:
-            {
-                wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog
-                    (
-                        this,
-                        _("Source code not available."),
-                        MSW_OR_OTHER(_("Updating failed"), ""),
-                        wxOK | wxICON_ERROR
-                    ));
-                wxString expl = _(L"Translations couldn’t be updated from the source code, because no code was found in the location specified in the file’s Properties.");
-                expl += msgSuffix;
-                dlg->SetExtendedMessage(expl);
-                dlg->ShowWindowModalThenDo([dlg](int){});
-                break;
-            }
-            case UpdateResultReason::PermissionDenied:
-            {
-                wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog
-                    (
-                        this,
-                        _("Permission denied."),
-                        MSW_OR_OTHER(_("Updating failed"), ""),
-                        wxOK | wxICON_ERROR
-                    ));
-                wxString expl = _(L"You don’t have permission to read source code files from the location specified in the file’s Properties.");
-            #ifdef __WXOSX__
-                if (@available(macOS 13.0, *))
-                {
-                    // TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-                    expl += "\n\n" + _("If you previously denied access to your files, you can allow it in System Settings > Privacy & Security > Files & Folders.");
-                }
-                else if (@available(macOS 10.15, *))
-                {
-                    // TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-                    expl += "\n\n" + _("If you previously denied access to your files, you can allow it in System Preferences > Security & Privacy > Privacy > Files & Folders.");
-                }
-            #endif
-                expl += msgSuffix;
-                dlg->SetExtendedMessage(expl);
-                dlg->ShowWindowModalThenDo([dlg](int){});
-                break;
-            }
-            case UpdateResultReason::Unspecified:
-            {
-                wxLogWarning(_("Translation entries in the file are probably incorrect."));
-                wxLogError(
-                   _("Updating the file failed. Click on 'Details >>' for details."));
-                break;
-            }
-            case UpdateResultReason::CancelledByUser:
-                break;
+            if (PreTranslateCatalog(this, m_catalog, PreTranslateOptions(PreTranslate_OnlyGoodQuality)))
+                RefreshControls();
         }
-    }
-
-    return succ;
+    });
 }
 
 void PoeditFrame::OnUpdateFromSources(wxCommandEvent&)
 {
     DoIfCanDiscardCurrentDoc([=]{
-        try
-        {
-            if (UpdateCatalog())
-            {
-                if (Config::UseTM() && Config::MergeBehavior() == Merge_UseTM)
-                {
-                    if (PreTranslateCatalog(this, m_catalog, PreTranslateOptions(PreTranslate_OnlyGoodQuality)))
-                    {
-                        if (!m_modified)
-                        {
-                            m_modified = true;
-                            UpdateTitle();
-                        }
-                        RefreshControls();
-                    }
-                }
-            }
-        }
-        catch (...)
-        {
-            wxLogError("%s", DescribeCurrentException());
-        }
-
-        RefreshControls();
+        UpdateCatalog();
     });
 }
 
@@ -1748,28 +1673,8 @@ void PoeditFrame::OnUpdateFromPOT(wxCommandEvent&)
                 return;
             auto pot_file = dlg->GetPath();
             wxConfig::Get()->Write("last_file_path", wxPathOnly(pot_file));
-            try
-            {
-                if (UpdateCatalog(pot_file))
-                {
-                    if (Config::UseTM() && Config::MergeBehavior() == Merge_UseTM)
-                    {
-                        if (PreTranslateCatalog(this, m_catalog, PreTranslateOptions(PreTranslate_OnlyGoodQuality)))
-                        {
-                            if (!m_modified)
-                            {
-                                m_modified = true;
-                                UpdateTitle();
-                            }
-                            RefreshControls();
-                        }
-                    }
-                }
-            }
-            catch (...)
-            {
-                wxLogError("%s", DescribeCurrentException());
-            }
+
+            UpdateCatalog(pot_file);
         }
 
         RefreshControls();
@@ -2287,8 +2192,6 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
 
         m_catalog = cat;
         m_fileMonitor->SetFile(m_catalog->GetFileName());
-        m_pendingHumanEditedItem.reset();
-        m_navigationHistory.clear();
 
         if (m_catalog->empty())
         {
@@ -2297,12 +2200,13 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
         else
         {
             EnsureAppropriateContentView();
-            // This must be done as soon as possible, otherwise the list would be
-            // confused. GetCurrentItem() could return nullptr or something invalid,
-            // causing crash in UpdateToTextCtrl() called from
-            // UpdateEditingUIAfterChange() just few lines below.
-            NotifyCatalogChanged(m_catalog);
         }
+
+        // This must be done as soon as possible, otherwise the list would be
+        // confused. GetCurrentItem() could return nullptr or something invalid,
+        // causing crash in UpdateToTextCtrl() called from
+        // UpdateEditingUIAfterChange() just few lines below.
+        NotifyCatalogChanged(m_catalog);
 
         m_fileExistsOnDisk = true;
         m_modified = false;
@@ -2590,6 +2494,9 @@ void PoeditFrame::RefreshControls(int flags)
 
 void PoeditFrame::NotifyCatalogChanged(const CatalogPtr& cat)
 {
+    m_pendingHumanEditedItem.reset();
+    m_navigationHistory.clear();
+
     if (m_sidebar)
         m_sidebar->ResetCatalog();
     if (m_list)

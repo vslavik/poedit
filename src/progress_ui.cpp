@@ -107,7 +107,7 @@ ProgressWindow::ProgressWindow(wxWindow *parent, const wxString& title, dispatch
 #endif
     m_title->SetFont(titleFont);
     m_infoSizer->Add(m_title, wxSizerFlags().Left().Border(wxBOTTOM, PX(3)));
-    m_gauge = new wxGauge(this, wxID_ANY, PROGRESS_BAR_RANGE, wxDefaultPosition, wxSize(PX(350), -1), wxGA_SMOOTH);
+    m_gauge = new wxGauge(this, wxID_ANY, PROGRESS_BAR_RANGE, wxDefaultPosition, wxSize(PX(380), -1), wxGA_SMOOTH);
     m_gauge->Pulse();
     m_infoSizer->Add(m_gauge, wxSizerFlags().Expand());
     m_progressMessage = new SecondaryLabel(this, "");
@@ -125,11 +125,21 @@ ProgressWindow::ProgressWindow(wxWindow *parent, const wxString& title, dispatch
 
     topsizer->Add(m_image, wxSizerFlags().Top().Border(wxTOP, topMarginImage));
     topsizer->AddSpacer(PX(10));
-    topsizer->Add(m_infoSizer, wxSizerFlags(1).Top().Border(wxTOP,topMarginInfo));
+    topsizer->Add(m_infoSizer, wxSizerFlags(1).Top().Border(wxTOP, topMarginInfo));
+
+    m_infoSummarySizer = new wxBoxSizer(wxVERTICAL);
+    m_infoSizer->Add(m_infoSummarySizer, wxSizerFlags().Expand());
+
+    m_errorsSizer = new wxBoxSizer(wxVERTICAL);
+    m_infoSizer->Add(m_errorsSizer, wxSizerFlags().Expand().Border(wxTOP, PX(8)));
+
+    m_detailsSizer = new wxBoxSizer(wxVERTICAL);
+    m_infoSizer->Add(m_detailsSizer, wxSizerFlags().Expand().Border(wxTOP, PX(8)));
 
     m_buttonSizer = new wxBoxSizer(wxHORIZONTAL);
     m_buttonSizer->AddStretchSpacer();
-    sizer->Add(m_buttonSizer, wxSizerFlags().Expand().Border(wxRIGHT|wxBOTTOM, PX(20)));
+
+    m_infoSizer->Add(m_buttonSizer, wxSizerFlags().Expand().Border(wxTOP, PX(20)));
 
     if (cancellationToken)
     {
@@ -170,9 +180,11 @@ bool ProgressWindow::ShowSummary(const BackgroundTaskResult& data, const wxArray
 
         auto errctrl = new SelectableAutoWrappingText(this, wxID_ANY, text);
         errctrl->SetForegroundColour(ColorScheme::Get(Color::ErrorText));
-        m_infoSizer->Add(errctrl, wxSizerFlags().Expand().Border(wxTOP, PX(8)));
+        m_errorsSizer->Add(errctrl, wxSizerFlags().Expand().Border(wxTOP, PX(8)));
     }
 
+    if (m_cancellationProgress)
+        m_buttonSizer->Hide(m_cancellationProgress);
     m_gauge->SetValue(PROGRESS_BAR_RANGE);
 #ifdef __WXOSX__
     m_gauge->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
@@ -190,9 +202,9 @@ bool ProgressWindow::ShowSummary(const BackgroundTaskResult& data, const wxArray
     m_okButton->SetDefault();
     m_okButton->SetFocus();
 
-    auto sizer = GetSizer();
-    sizer->Layout();
-    sizer->SetSizeHints(this);
+    m_infoSizer->Layout();
+    GetSizer()->Layout();
+    GetSizer()->SetSizeHints(this);
 
 #ifdef __WXMSW__
     Refresh();
@@ -205,32 +217,27 @@ bool ProgressWindow::ShowSummary(const BackgroundTaskResult& data, const wxArray
 void ProgressWindow::AddSummaryText(const wxString& text)
 {
     auto summary = new AutoWrappingText(this, wxID_ANY, text);
-    m_infoSizer->Add(summary, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
+    m_infoSummarySizer->Add(summary, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
 }
 
 
 wxBoxSizer *ProgressWindow::AddSummaryDetailLine()
 {
-    if (!m_detailsSizer)
-    {
-        m_detailsSizer = new wxBoxSizer(wxVERTICAL);
-        m_infoSizer->Add(m_detailsSizer, wxSizerFlags().Expand().Border(wxTOP, PX(8)));
-    }
-
+    auto sizer = GetDetailsSizer();
     auto row = new wxBoxSizer(wxHORIZONTAL);
-    m_detailsSizer->AddSpacer(PX(2));
-    m_detailsSizer->Add(row, wxSizerFlags().Expand().Border(wxRIGHT, PX(2)));
+    sizer->AddSpacer(PX(2));
+    sizer->Add(row, wxSizerFlags().Expand().Border(wxRIGHT, PX(2)));
     return row;
 }
 
 
-void ProgressWindow::AddSummaryDetailLine(const wxString& label, const wxString& value)
+wxBoxSizer *ProgressWindow::AddSummaryDetailLine(const wxString& label, const wxString& value)
 {
     auto row = AddSummaryDetailLine();
-
     row->Add(new SecondaryLabel(this, label), wxSizerFlags().Center());
     row->AddStretchSpacer();
     row->Add(new SecondaryLabel(this, value), wxSizerFlags().Center());
+    return row;
 }
 
 
@@ -286,7 +293,7 @@ wxWindowPtr<wxMessageDialog> ProgressWindow::CreateErrorDialog(const wxArrayStri
 
 
 void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
-                               std::function<void()>&& completionHandler,
+                               std::function<void(bool)>&& completionHandler,
                                bool forceModal)
 {
     const bool runModally = forceModal || !GetParent();
@@ -325,17 +332,32 @@ void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
         }
         else
         {
-            EndModal(wxID_OK);
+            if (m_cancellationToken && m_cancellationToken->is_cancelled() && !result)
+                EndModal(wxID_CANCEL);
+            else
+                EndModal(wxID_OK);
         }
     })
-    .catch_all([=](dispatch::exception_ptr e){
+    .catch_ex<dispatch::cancellation_exception>([=](auto&)
+    {
+        EndModal(wxID_CANCEL);
+    })
+    .catch_ex<BackgroundTaskException>([=](auto& e)
+    {
+        SetErrorMessage(e.What());
+        if (!e.Details().empty())
+            loggedErrors->push_back(e.Details());
+        EndModal(wxID_CANCEL);
+    })
+    .catch_all([=](dispatch::exception_ptr e)
+    {
         loggedErrors->push_back(DescribeException(e));
         EndModal(wxID_CANCEL);
     });
 
     if (runModally)
     {
-        ShowModal();
+        bool success = ShowModal() != wxID_CANCEL;
         detach();
         m_progress.reset();
         Hide();
@@ -344,14 +366,15 @@ void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
         {
             auto error = CreateErrorDialog(*loggedErrors);
             error->ShowModal();
+            success = false;
         }
 
         if (completionHandler)
-            completionHandler();
+            completionHandler(success);
     }
     else
     {
-        ShowWindowModalThenDo([=, completionHandler = std::move(completionHandler)](int /*retcode*/)
+        ShowWindowModalThenDo([=, completionHandler = std::move(completionHandler)](int retcode)
         {
             detach();
             m_progress.reset();
@@ -362,13 +385,13 @@ void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
                 auto error = CreateErrorDialog(*loggedErrors);
                 error->ShowWindowModalThenDo([completionHandler,error](int /*retcode*/){
                     if (completionHandler)
-                        completionHandler();
+                        completionHandler(false);
                 });
             }
             else
             {
                 if (completionHandler)
-                completionHandler();
+                    completionHandler(retcode != wxID_CANCEL);
             }
         });
     }
@@ -377,9 +400,6 @@ void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
 
 void ProgressWindow::update_message(const wxString& text)
 {
-    if (m_cancellationToken && m_cancellationToken->is_cancelled())
-        return;
-
     dispatch::on_main([=]
     {
         m_progressMessage->SetLabel(text);
@@ -392,8 +412,6 @@ void ProgressWindow::update_progress(double completedFraction)
     dispatch::on_main([=]
     {
         auto value = std::min((int)std::lround(completedFraction * PROGRESS_BAR_RANGE), PROGRESS_BAR_RANGE);
-        if (m_cancellationToken && m_cancellationToken->is_cancelled())
-            return; // don't update anymore
         m_gauge->SetValue(value);
     });
 }
@@ -402,7 +420,12 @@ void ProgressWindow::update_progress(double completedFraction)
 void ProgressWindow::OnCancel(wxCommandEvent&)
 {
     ((wxButton*)FindWindow(wxID_CANCEL))->Enable(false);
-    m_progressMessage->SetLabel(_(L"Cancelling…"));
-    m_gauge->Pulse();
+
+    m_cancellationProgress = new ActivityIndicator(this);
+    m_buttonSizer->Insert(0, m_cancellationProgress, wxSizerFlags().Center());
+    m_buttonSizer->Layout();
+
+    m_cancellationProgress->Start(_(L"Cancelling…"));
+
     m_cancellationToken->cancel();
 }

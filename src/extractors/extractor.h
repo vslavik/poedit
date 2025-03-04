@@ -34,6 +34,7 @@
 
 #include <wx/string.h>
 
+#include "gexecute.h"
 #include "utility.h"
 
 
@@ -68,6 +69,19 @@ public:
 
     ExtractionError error;
     wxString file;
+};
+
+
+/// Complete result of running an extraction task.
+struct ExtractionOutput
+{
+    /// POT file containing extracted strings.
+    wxString pot_file;
+
+    /// Errors/warnings that occurred during extraction.
+    ParsedGettextErrors errors;
+
+    explicit operator bool() const { return !pot_file.empty(); }
 };
 
 
@@ -106,13 +120,10 @@ public:
     /**
         Extracts translations from given source files using all
         available extractors.
-
-        Returns filename of the created POT file, which is stored in @a tmpdir
-        or empty string on failure.
      */
-    static wxString ExtractWithAll(TempDirectory& tmpdir,
-                                   const SourceCodeSpec& sourceSpec,
-                                   const std::vector<wxString>& files);
+    static ExtractionOutput ExtractWithAll(TempDirectory& tmpdir,
+                                           const SourceCodeSpec& sourceSpec,
+                                           const std::vector<wxString>& files);
 
     // Extractor helpers:
 
@@ -156,13 +167,10 @@ public:
     /**
         Extracts translations from given source files using all
         available extractors.
-
-        Returns filename of the created POT file, which is stored in @a tmpdir
-        or empty string on failure.
      */
-    virtual wxString Extract(TempDirectory& tmpdir,
-                             const SourceCodeSpec& sourceSpec,
-                             const std::vector<wxString>& files) const = 0;
+    virtual ExtractionOutput Extract(TempDirectory& tmpdir,
+                                     const SourceCodeSpec& sourceSpec,
+                                     const std::vector<wxString>& files) const = 0;
 
 protected:
     Extractor() : m_priority(Priority::Default) {}
@@ -171,8 +179,8 @@ protected:
     /// Check if file is supported based on its extension
     bool HasKnownExtension(const wxString& file) const;
 
-    /// Concatenates catalogs using msgcat
-    static wxString ConcatCatalogs(TempDirectory& tmpdir, const std::vector<wxString>& files);
+    /// Concatenates partial outputs using msgcat
+    static ExtractionOutput ConcatPartials(TempDirectory& tmpdir, const std::vector<ExtractionOutput>& partials);
 
 private:
     Priority m_priority;

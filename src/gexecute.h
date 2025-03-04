@@ -50,15 +50,25 @@ struct ParsedGettextErrors
         int line = -1;
 
         bool has_location() const { return line != -1; }
+
+        wxString pretty_print() const;
     };
 
     std::vector<Item> items;
+
+    explicit operator bool() const { return !items.empty(); }
 
     /// Output errors only to wxLogError.
     void log_errors();
 
     /// Output all issues to wxLogError.
     void log_all();
+
+    ParsedGettextErrors& operator+=(const ParsedGettextErrors& other)
+    {
+        items.insert(items.end(), other.items.begin(), other.items.end());
+        return *this;
+    }
 };
 
 

@@ -76,6 +76,7 @@ exception_ptr dispatch::current_exception()
   #endif
 #endif
     CATCH_AND_WRAP(Exception)
+    CATCH_AND_WRAP(cancellation_exception)
     CATCH_AND_WRAP(std::runtime_error)
     CATCH_AND_WRAP(std::logic_error)
     CATCH_AND_WRAP(std::exception)
@@ -90,19 +91,9 @@ exception_ptr dispatch::current_exception()
 
 #include <dispatch/dispatch.h>
 
-void detail::dispatch_async_cxx(boost::executors::work&& f, detail::queue q)
+void detail::dispatch_async_cxx(boost::executors::work&& f)
 {
-    dispatch_queue_t dq = 0;
-    switch (q)
-    {
-        case detail::queue::main:
-            dq = dispatch_get_main_queue();
-            break;
-        case detail::queue::priority_default:
-            dq = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-            break;
-    }
-
+    dispatch_queue_t dq = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(dq, [f{std::move(f)}]() mutable {
         try
         {

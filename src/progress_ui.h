@@ -43,6 +43,7 @@ class WXDLLIMPEXP_FWD_CORE wxStaticBitmap;
 class WXDLLIMPEXP_FWD_CORE wxStaticText;
 class WXDLLIMPEXP_FWD_CORE wxGauge;
 class WXDLLIMPEXP_FWD_CORE wxMessageDialog;
+class ActivityIndicator;
 class SecondaryLabel;
 
 
@@ -64,6 +65,26 @@ struct BackgroundTaskResult
 
 
 /**
+    Exception thrown by background tasks to indicate an error with additional details.
+
+    When used in a task run under ProgressWindow, the exception will be caught and
+    displayed as wxMessageDialog with "message" being the main, more generic message,
+    and "details" being the extended explanation of the error.
+ */
+class BackgroundTaskException : public Exception
+{
+public:
+    BackgroundTaskException(const wxString& message, const wxString& details = wxString())
+        : Exception(message), m_details(details) {}
+
+    const wxString& Details() const { return m_details; }
+
+private:
+    wxString m_details;
+};
+
+
+/**
     Window showing progress of a long-running task.
 
     Must be used in conjuction with the static RunTaskXXX functions.
@@ -75,6 +96,17 @@ struct BackgroundTaskResult
     shown to the user. If non-fatal errors happen during execution and are logged with
     wxLogError, they will be shown to the user as well (as part of summary, if shown,
     otherwise as separate window).
+
+    The window may optionally be initialized with a cancellation token. If provided, the
+    window will show a "Cancel" button and the RunTask* methods will return false if cancelled.
+
+    Note that the background task may not be able to honor the cancellation request, e.g. when
+    it is done too late in execution. To check if the job was cancelled, you should check RunTask*
+    return value not @a cancellationToken state.
+
+    If the task supports cancellation, it should indicate successful cancellation by either
+    returning empty summary
+
  */
 class ProgressWindow : public TitlelessDialog, public ProgressObserver
 {
@@ -97,14 +129,26 @@ public:
      */
     static ProgressWindow *GetActive() { return ms_activeWindow; }
 
-    /// Runs the task modally, i.e. blocking any other execution in the app.
+    /**
+        Runs the task modally, i.e. blocking any other execution in the app.
+
+        Returns true on success (no fatal errors, no cancellation).
+     */
     template<typename TBackgroundJob>
-    void RunTaskModal(TBackgroundJob&& task)
+    bool RunTaskModal(TBackgroundJob&& task)
     {
-        RunTaskTempl(std::move(task), nullptr, /*forceModal=*/true);
+        bool retval = false;
+        RunTaskTempl(std::move(task), [&](bool status){ retval = status; }, /*forceModal=*/true);
+        return retval;
     }
 
-    /// Runs the task window-modal (if given a parent) or app-modal (if not)
+    /**
+        Runs the task window-modal (if given a parent) or app-modal (if not)
+
+        @param completionHandler Lambda expression to call after the task completes.
+                                 This can either take a bool argument (indicating success or
+                                 failure-or-cancellation) or not, if you don't care about the result.
+     */
     template<typename TBackgroundJob, typename TCompletion>
     void RunTaskThenDo(TBackgroundJob&& task, TCompletion&& completionHandler)
     {
@@ -115,11 +159,18 @@ public:
         Sets custom error message to use as the "header" message in case of errors.
         Detailed errors are shown in the details.
 
-        This message is only used if no summary window was shown
+        This message is only used if no summary window was shown.
+
+        It is also overriden if a BackgroundTaskException is thrown.
      */
     void SetErrorMessage(const wxString& message) { m_errorMessage = message; }
 
 protected:
+    std::function<void(bool)> WrapCompletionHandler(std::function<void(bool)>&& f)
+        { return f; }
+    std::function<void(bool)> WrapCompletionHandler(std::function<void()>&& f)
+        { return [f = std::move(f)](bool){ f(); /*ignore return value*/ }; }
+
     template<typename TBackgroundJob, typename TCompletion>
     void RunTaskTempl(TBackgroundJob&& task,
                       TCompletion&& completionHandler,
@@ -138,13 +189,13 @@ protected:
                     return task();
                 }
             },
-            std::move(completionHandler),
+            WrapCompletionHandler(completionHandler),
             forceModal
         );
     }
 
     void DoRunTask(std::function<BackgroundTaskResult()>&& task,
-                   std::function<void()>&& completionHandler,
+                   std::function<void(bool)>&& completionHandler,
                    bool forceModal);
 
 
@@ -172,9 +223,13 @@ protected:
     virtual bool SetSummaryContent(const BackgroundTaskResult& data);
 
     // Helpers for creating summary UI:
+
+    wxBoxSizer *GetDetailsSizer() { return m_detailsSizer; }
+    wxBoxSizer *GetButtonSizer() { return m_buttonSizer; }
+
     void AddSummaryText(const wxString& text);
     wxBoxSizer *AddSummaryDetailLine();
-    void AddSummaryDetailLine(const wxString& label, const wxString& value);
+    wxBoxSizer *AddSummaryDetailLine(const wxString& label, const wxString& value);
 
     wxWindowPtr<wxMessageDialog> CreateErrorDialog(const wxArrayString& errors);
 
@@ -195,9 +250,10 @@ private:
     wxStaticText *m_title;
     SecondaryLabel *m_progressMessage;
     wxGauge *m_gauge;
-    wxBoxSizer *m_infoSizer = nullptr, *m_detailsSizer = nullptr, *m_buttonSizer = nullptr;
+    wxBoxSizer *m_infoSizer = nullptr, *m_infoSummarySizer = nullptr, *m_errorsSizer = nullptr, *m_detailsSizer = nullptr, *m_buttonSizer = nullptr;
     wxButton *m_okButton = nullptr;
     wxButton *m_cancelButton = nullptr;
+    ActivityIndicator *m_cancellationProgress = nullptr;
 
     dispatch::cancellation_token_ptr m_cancellationToken;
 

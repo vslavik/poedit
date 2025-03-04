@@ -286,20 +286,20 @@ LegacyExtractor::LegacyExtractor(const LegacyExtractorSpec& spec)
 }
 
 
-wxString LegacyExtractor::Extract(TempDirectory& tmpdir,
-                                  const SourceCodeSpec& sourceSpec,
-                                  const std::vector<wxString>& files) const
+ExtractionOutput LegacyExtractor::Extract(TempDirectory& tmpdir,
+                                          const SourceCodeSpec& sourceSpec,
+                                          const std::vector<wxString>& files) const
 {
     // cmdline's length is limited by OS/shell, this is maximal number
     // of files we'll pass to the parser at one run:
     const int BATCH_SIZE = 16;
 
-    std::vector<wxString> batchfiles, tempfiles;
-    size_t i, last = 0;
+    std::vector<ExtractionOutput> partials;
 
+    size_t i, last = 0;
     while (last < files.size())
     {
-        batchfiles.clear();
+        std::vector<wxString> batchfiles;
         for (i = last; i < last + BATCH_SIZE && i < files.size(); i++)
             batchfiles.push_back(files[i]);
         last = i;
@@ -310,19 +310,18 @@ wxString LegacyExtractor::Extract(TempDirectory& tmpdir,
         runner.set_cwd(sourceSpec.BasePath);
         auto cmdline = m_spec.BuildCommand(batchfiles, sourceSpec.Keywords, tempfile, sourceSpec.Charset);
         auto output = runner.run_command_sync(cmdline);
-
-        // FIXME: Don't do that here, report as part of return value instead
-        runner.parse_stderr(output).log_all();
+        auto err = runner.parse_stderr(output);
 
         if (output.failed())
         {
+            err.log_all();
             throw ExtractionException(ExtractionError::Unspecified);
         }
 
-        tempfiles.push_back(tempfile);
+        partials.push_back({tempfile, err});
     }
 
-    return ConcatCatalogs(tmpdir, tempfiles);
+    return ConcatPartials(tmpdir, partials);
 }
 
 

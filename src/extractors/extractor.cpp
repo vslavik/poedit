@@ -203,14 +203,14 @@ Extractor::FilesList Extractor::CollectAllFiles(const SourceCodeSpec& sources)
 }
 
 
-wxString Extractor::ExtractWithAll(TempDirectory& tmpdir,
-                                   const SourceCodeSpec& sourceSpec,
-                                   const std::vector<wxString>& files_)
+ExtractionOutput Extractor::ExtractWithAll(TempDirectory& tmpdir,
+                                           const SourceCodeSpec& sourceSpec,
+                                           const std::vector<wxString>& files_)
 {
     auto files = files_;
     wxLogTrace("poedit.extractor", "extracting from %d files", (int)files.size());
 
-    std::vector<wxString> subPots;
+    std::vector<ExtractionOutput> partials;
 
     for (auto ex: CreateAllExtractors(sourceSpec))
     {
@@ -219,9 +219,9 @@ wxString Extractor::ExtractWithAll(TempDirectory& tmpdir,
             continue;
 
         wxLogTrace("poedit.extractor", " .. using extractor '%s' for %d files", ex->GetId(), (int)ex_files.size());
-        auto subPot = ex->Extract(tmpdir, sourceSpec, ex_files);
-        if (!subPot.empty())
-            subPots.push_back(subPot);
+        auto sub = ex->Extract(tmpdir, sourceSpec, ex_files);
+        if (sub)
+            partials.push_back(sub);
 
         if (files.size() > ex_files.size())
         {
@@ -240,20 +240,20 @@ wxString Extractor::ExtractWithAll(TempDirectory& tmpdir,
         }
     }
 
-    wxLogTrace("poedit.extractor", "extraction finished with %d unrecognized files and %d sub-POTs", (int)files.size(), (int)subPots.size());
+    wxLogTrace("poedit.extractor", "extraction finished with %d unrecognized files and %d sub-POTs", (int)files.size(), (int)partials.size());
 
-    if (subPots.empty())
+    if (partials.empty())
     {
         throw ExtractionException(ExtractionError::NoSourcesFound);
     }
-    else if (subPots.size() == 1)
+    else if (partials.size() == 1)
     {
-        return subPots.front();
+        return partials.front();
     }
     else
     {
-        wxLogTrace("poedit.extractor", "merging %d subPOTs", (int)subPots.size());
-        return ConcatCatalogs(tmpdir, subPots);
+        wxLogTrace("poedit.extractor", "merging %d subPOTs", (int)partials.size());
+        return ConcatPartials(tmpdir, partials);
     }
 }
 
@@ -319,23 +319,25 @@ void Extractor::RegisterWildcard(const wxString& wildcard)
 }
 
 
-wxString Extractor::ConcatCatalogs(TempDirectory& tmpdir, const std::vector<wxString>& files)
+ExtractionOutput Extractor::ConcatPartials(TempDirectory& tmpdir, const std::vector<ExtractionOutput>& partials)
 {
-    if (files.empty())
+    if (partials.empty())
     {
-        return "";
+        return {};
     }
-    else if (files.size() == 1)
+    else if (partials.size() == 1)
     {
-        return files.front();
+        return partials.front();
     }
 
-    auto outfile = tmpdir.CreateFileName("concatenated.pot");
+    ExtractionOutput result;
+    result.pot_file = tmpdir.CreateFileName("concatenated.pot");
 
     wxTextFile filelist;
     filelist.Create(tmpdir.CreateFileName("gettext_filelist.txt"));
-    for (auto fn: files)
+    for (auto& p: partials)
     {
+        auto fn = p.pot_file;
 #ifdef __WXMSW__
         // Gettext tools can't handle Unicode filenames well (due to using
         // char* arguments), so work around this by using the short names.
@@ -346,13 +348,14 @@ wxString Extractor::ConcatCatalogs(TempDirectory& tmpdir, const std::vector<wxSt
         }
 #endif
         filelist.AddLine(fn);
+        result.errors += p.errors;
     }
     filelist.Write(wxTextFileType_Unix, wxConvFile);
 
     GettextRunner gt;
     auto output = gt.run_sync("msgcat",
                               "--force-po",
-                              "-o", outfile,
+                              "-o", result.pot_file,
                               "--files-from", filelist.GetName());
     if (output.failed())
     {
@@ -361,7 +364,7 @@ wxString Extractor::ConcatCatalogs(TempDirectory& tmpdir, const std::vector<wxSt
         throw ExtractionException(ExtractionError::Unspecified);
     }
 
-    return outfile;
+    return result;
 }
 
 

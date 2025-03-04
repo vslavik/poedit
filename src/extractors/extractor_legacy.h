@@ -132,9 +132,9 @@ public:
 
     wxString GetId() const override { return m_id; }
 
-    wxString Extract(TempDirectory& tmpdir,
-                     const SourceCodeSpec& sourceSpec,
-                     const std::vector<wxString>& files) const override;
+    ExtractionOutput Extract(TempDirectory& tmpdir,
+                             const SourceCodeSpec& sourceSpec,
+                             const std::vector<wxString>& files) const override;
 
 private:
     wxString m_id;

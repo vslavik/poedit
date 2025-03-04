@@ -97,9 +97,9 @@ const char * const GETTEXT_EXTENSIONS[] = {
 class GettextExtractorBase : public Extractor
 {
 public:
-    wxString Extract(TempDirectory& tmpdir,
-                     const SourceCodeSpec& sourceSpec,
-                     const std::vector<wxString>& files) const override
+    ExtractionOutput Extract(TempDirectory& tmpdir,
+                             const SourceCodeSpec& sourceSpec,
+                             const std::vector<wxString>& files) const override
     {
         using subprocess::quote_arg;
 
@@ -162,14 +162,15 @@ public:
 
         GettextRunner runner;
         auto output = runner.run_command_sync(cmdline);
-
-        // FIXME: Don't do that here, report as part of return value instead
-        runner.parse_stderr(output).log_all();
+        auto err = runner.parse_stderr(output);
 
         if (output.failed())
+        {
+            err.log_all();
             throw ExtractionException(ExtractionError::Unspecified);
+        }
 
-        return outfile;
+        return {outfile, err};
     }
     
 protected:
