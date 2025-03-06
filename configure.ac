@@ -168,7 +168,7 @@ CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS"
 WXRC_CHECK([], [AC_MSG_ERROR([wxrc is needed to compile Poedit.])])
 
 
-AC_CHECK_FUNCS([mkdtemp])
+AC_CHECK_FUNCS([mkdtemp], [], [AC_MSG_ERROR([mkdtemp is required])])
 
 
 PKG_CHECK_MODULES([ICU], [icu-uc icu-i18n >= 54],

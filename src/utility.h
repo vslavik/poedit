@@ -26,12 +26,6 @@
 #ifndef Poedit_utility_h
 #define Poedit_utility_h
 
-#ifndef HAVE_MKDTEMP
-    #ifdef __WXOSX__
-        #define HAVE_MKDTEMP
-    #endif
-#endif
-
 #include <map>
 
 #include <wx/arrstr.h>

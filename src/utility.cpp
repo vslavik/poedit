@@ -134,7 +134,7 @@ bool TempDirectory::ms_keepFiles = false;
 
 TempDirectory::TempDirectory()
 {
-#ifdef HAVE_MKDTEMP
+#ifdef __UNIX__
     wxString path = wxFileName::GetTempDir();
     path += "/poeditXXXXXX";
     wxCharBuffer buf(path.fn_str());
