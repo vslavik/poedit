@@ -1363,7 +1363,10 @@ bool POCatalog::CompileToMO(const wxString& mo_file,
     TempDirectory tmpdir;
     if ( !tmpdir.IsOk() )
         return false;
-    wxString po_file_temp = tmpdir.CreateFileName("output.po");
+
+    wxFileName mofn(mo_file);
+    mofn.GetFullName();
+    wxString po_file_temp = tmpdir.CreateFileName(mofn.GetName() + ".po");
 
     if ( !DoSaveOnly(po_file_temp, wxTextFileType_Unix) )
     {

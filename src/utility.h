@@ -215,6 +215,8 @@ public:
 
     bool IsOk() const { return !m_dir.empty(); }
 
+    const wxString& DirName() const { return m_dir; }
+
     // creates new file name in that directory
     wxString CreateFileName(const wxString& suffix);
 
