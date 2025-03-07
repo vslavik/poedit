@@ -51,10 +51,6 @@
 #include <set>
 #include <algorithm>
 
-#ifdef __WXOSX__
-#import <Foundation/Foundation.h>
-#endif
-
 // TODO: split into different file
 #if wxUSE_GUI
     #include <wx/msgdlg.h>
@@ -1136,22 +1132,6 @@ wxString FormatStringForFile(const wxString& text)
 } // anonymous namespace
 
 
-#ifdef __WXOSX__
-
-@interface CompiledMOFilePresenter : NSObject<NSFilePresenter>
-@property (atomic, copy) NSURL *presentedItemURL;
-@property (atomic, copy) NSURL *primaryPresentedItemURL;
-@end
-
-@implementation CompiledMOFilePresenter
-- (NSOperationQueue *)presentedItemOperationQueue {
-     return [NSOperationQueue mainQueue];
-}
-@end
-
-#endif // __WXOSX__
-
-
 bool POCatalog::Save(const wxString& po_file, bool save_mo,
                      ValidationResults& validation_results, CompilationStatus& mo_compilation_status)
 {
@@ -1331,45 +1311,11 @@ bool POCatalog::Save(const wxString& po_file, bool save_mo,
         // Move the MO from temporary location to the final one, if it was created
         if (mo_compilation_status == CompilationStatus::Success)
         {
-#ifdef __WXOSX__
-            NSURL *mofileUrl = [NSURL fileURLWithPath:str::to_NS(mo_file)];
-            NSURL *mofiletempUrl = [NSURL fileURLWithPath:str::to_NS(mo_file_temp)];
-            bool sandboxed = (getenv("APP_SANDBOX_CONTAINER_ID") != NULL);
-            CompiledMOFilePresenter *presenter = nil;
-            if (sandboxed)
-            {
-                presenter = [CompiledMOFilePresenter new];
-                presenter.presentedItemURL = mofileUrl;
-                presenter.primaryPresentedItemURL = [NSURL fileURLWithPath:str::to_NS(po_file)];
-                [NSFileCoordinator addFilePresenter:presenter];
-                [NSFileCoordinator filePresenters];
-            }
-            NSFileCoordinator *coo = [[NSFileCoordinator alloc] initWithFilePresenter:presenter];
-            [coo coordinateWritingItemAtURL:mofileUrl options:NSFileCoordinatorWritingForReplacing error:nil byAccessor:^(NSURL *newURL) {
-                NSURL *resultingUrl;
-                BOOL ok = [[NSFileManager defaultManager] replaceItemAtURL:newURL
-                                                             withItemAtURL:mofiletempUrl
-                                                            backupItemName:nil
-                                                                   options:0
-                                                          resultingItemURL:&resultingUrl
-                                                                     error:nil];
-                if (!ok)
-                {
-                    wxLogError(_(L"Couldn’t save file %s."), mo_file.c_str());
-                    mo_compilation_status = CompilationStatus::Error;
-                }
-            }];
-            if (sandboxed)
-            {
-                [NSFileCoordinator removeFilePresenter:presenter];
-            }
-#else // !__WXOSX__
             if ( !mo_file_temp_obj.Commit() )
             {
                 wxLogError(_(L"Couldn’t save file %s."), mo_file.c_str());
                 mo_compilation_status = CompilationStatus::Error;
             }
-#endif // __WXOSX__/!__WXOSX__
         }
     }
 
