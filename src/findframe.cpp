@@ -43,6 +43,8 @@
 #include <gdk/gdkkeysyms.h>
 #endif
 
+#include <regex>
+
 #include "catalog.h"
 #include "text_control.h"
 #include "edframe.h"
@@ -410,10 +412,18 @@ bool IsTextInString(wxString str, const wxString& text,
         return false;
     if (ignoreCase)
         str.MakeLower();
-    if (ignoreAmp)
-        str.Replace("&", "");
-    if (ignoreUnderscore)
-        str.Replace("_", "");
+
+    if (ignoreAmp && str.find(_T('&')) != wxString::npos)
+    {
+        static std::wregex re(L"&(\\w)");
+        str = std::regex_replace(str::to_wstring(str), re, L"$1");
+    }
+
+    if (ignoreUnderscore && str.find(_T('_')) != wxString::npos)
+    {
+        static std::wregex re(L"_(\\w)");
+        str = std::regex_replace(str::to_wstring(str), re, L"$1");
+    }
 
     return FindTextInStringAndDo(str, text, wholeWords,
                                  [=](const wxString&,size_t,size_t){ return wxString::npos;/*just 1 hit*/ });
