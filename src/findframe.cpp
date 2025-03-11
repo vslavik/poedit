@@ -52,6 +52,7 @@
 #include "edlistctrl.h"
 #include "findframe.h"
 #include "hidpi.h"
+#include "unicode_helpers.h"
 #include "utility.h"
 
 namespace
@@ -410,8 +411,9 @@ bool IsTextInString(wxString str, const wxString& text,
 {
     if (str.empty())
         return false;
+
     if (ignoreCase)
-        str.MakeLower();
+        str = unicode::fold_case(str);
 
     if (ignoreAmp && str.find(_T('&')) != wxString::npos)
     {
@@ -484,11 +486,7 @@ bool FindFrame::DoFind(int dir)
     FoundState found = Found_Not;
     CatalogItemPtr lastItem;
 
-    wxString textc;
-    wxString text(ms_text);
-
-    if (ignoreCase)
-        text.MakeLower();
+    wxString text(ignoreCase ? unicode::fold_case(ms_text) : ms_text);
 
     // Only ignore mnemonics when searching if the text being searched for
     // doesn't contain them. That's a reasonable heuristics: most of the time,
@@ -604,9 +602,8 @@ bool FindFrame::DoFind(int dir)
 
         if (txt)
         {
-            textc = txt->GetValue();
-            if (ignoreCase)
-                textc.MakeLower();
+            auto textc = ignoreCase ? unicode::fold_case(txt->GetValue()) : txt->GetValue();
+
             FindTextInStringAndDo
             (
                 textc, text, wholeWords,
