@@ -37,8 +37,23 @@
 namespace
 {
 
+// Return whether uloc_acceptLanguage() is working correctly
+inline bool icu_has_correct_accept_language()
+{
+    // ICU 67.1 reimplemented uloc_acceptLanguage() to use the same algorithm as LocaleMatcher:
+    // https://unicode-org.atlassian.net/browse/ICU-20700
+    // Without this, it couldn't be reliably used to determine the best language from OS-provided
+    // list of locales that might be too specific (e.g. cs-CZ). Unfortunately, Windows 10 shipped
+    // with ICU 64.2, so we need to handle older versions at least somehow too.
+    UVersionInfo version;
+    u_getVersion(version);
+    auto major = version[0];
+    auto minor = version[1];
+    return major > 67 || (major == 67 && minor >= 1);
+}
+
 template<typename T>
-inline void to_vector(T&& list, std::vector<std::string>& strings, std::vector<const char*>& cstrings)
+inline void to_vectors(T&& list, std::vector<std::string>& strings, std::vector<const char*>& cstrings)
 {
     strings.reserve(list.size());
     cstrings.reserve(list.size());
@@ -71,6 +86,43 @@ inline wxString as_tag(const wxString& posix)
     return s;
 }
 
+
+auto get_preferred_languages()
+{
+    auto langs = wxUILocale::GetPreferredUILanguages();
+
+    if (!icu_has_correct_accept_language())
+    {
+        // Windows 10's ICU won't accept "cs" translation if "cs-CZ" is in preferred list, so
+        // patch up the list by adding "base" languages to the end of the list too, much like
+        // wx-3.2's implementation does.
+        auto size = langs.size();
+        for (size_t i = 0; i < size; ++i)
+        {
+            auto& lang = langs[i];
+            lang = as_tag(lang);
+
+            auto pos = lang.rfind('-');
+            if (pos != wxString::npos)
+            {
+                auto lang2(lang);
+                while (true)
+                {
+                    lang2 = lang2.substr(0, pos);
+                    langs.push_back(lang2);
+                    if (lang2 == "sr-Cyrl")
+						langs.push_back("sr");
+                    if ((pos = lang.rfind('-')) == wxString::npos)
+                        break;
+                }
+            }
+        }
+    }
+
+    return langs;
+}
+
+
 } // anonymous namespace
 
 
@@ -89,8 +141,8 @@ Language PoeditTranslationsLoader::DetermineBestUILanguage() const
 {
     std::vector<std::string> available, preferred;
     std::vector<const char*> cavailable, cpreferred;
-    to_vector(GetAvailableTranslations("poedit"), available, cavailable);
-    to_vector(wxUILocale::GetPreferredUILanguages(), preferred, cpreferred);
+    to_vectors(GetAvailableTranslations("poedit"), available, cavailable);
+    to_vectors(get_preferred_languages(), preferred, cpreferred);
 
     char best[ULOC_FULLNAME_CAPACITY];
     UAcceptResult result;
