@@ -212,6 +212,31 @@ inline bool is_numeric_only(const std::string& s)
 }
 
 
+inline void xliff_prefix_id(std::string& id, xml_node node, const char *nameAttr)
+{
+    std::string prefix;
+    for (auto p = node.parent(); p; p = p.parent())
+    {
+        if (strcmp(p.name(), "group") == 0)
+        {
+            auto gid = p.attribute(nameAttr);
+            if (!gid)
+                gid = p.attribute("id");
+            if (gid)
+            {
+                prefix.insert(0, " / ");
+                prefix.insert(0, gid.value());
+                continue; // go to grandparent
+            }
+        }
+        // stop at first non-group or unnamed parent:
+        break;
+    }
+
+    if (!prefix.empty())
+        id.insert(0, prefix);
+}
+
 
 class MetadataExtractor : public pugi::xml_tree_walker
 {
@@ -591,7 +616,10 @@ public:
             id = node.attribute("id").value();
         // some tools (e.g. Xcode, tool-id="com.apple.dt.xcode") use ID same as text; numeric only is useless to translator too
         if (!id.empty() && id != m_string && !is_numeric_only(id))
+        {
+            xliff_prefix_id(id, node, "resname");
             m_symbolicId = str::to_wx(id);
+        }
 
         auto target = node.child("target");
         if (target)
@@ -774,7 +802,10 @@ public:
             id = unit().attribute("id").value();
         // some tools (e.g. Xcode, tool-id="com.apple.dt.xcode") use ID same as text; numeric only is useless to translator too
         if (!id.empty() && id != m_string && !is_numeric_only(id))
+        {
+            xliff_prefix_id(id, unit(), "name");
             m_symbolicId = str::to_wx(id);
+        }
 
         auto target = node.child("target");
         if (target)
