@@ -180,6 +180,11 @@ public:
         Ellipsize
     };
 
+    bool AcceptsFocus() const override
+    {
+		return wxPanel::AcceptsFocus();
+    }
+
     TagLabel(wxWindow *parent, Color fg, Color bg, wxWindowID labelChildID = wxID_ANY) : wxPanel(parent, wxID_ANY)
     {
         m_icon = nullptr;
@@ -208,6 +213,8 @@ public:
         #endif
             UpdateColor();
         });
+
+        m_container.DisableSelfFocus();
     }
 
     void SetLabel(const wxString& text) override
