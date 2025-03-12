@@ -45,6 +45,15 @@ remove_empty_lproj_string_files()
     done
 }
 
+# Create sr-Latn files from sr-Cyrl ones:
+build_sr_latin()
+{
+    recode-sr-latin <locales/sr.po >locales/sr@latin.po
+    recode-sr-latin <locales/win/windows_strings-Serbian_Cyrillic.rc >locales/win/windows_strings-Serbian_Latin.rc
+    recode-sr-latin <locales/macos/sr.lproj/InfoPlist.strings >locales/macos/sr-Latn.lproj/InfoPlist.strings
+    recode-sr-latin <locales/macos/sr.lproj/MoveApplication.strings >locales/macos/sr-Latn.lproj/MoveApplication.strings
+}
+
 # Massage RC files from Crowdin to be actually usable:
 fixup_windows_rc_files()
 {
@@ -101,6 +110,7 @@ fixup_po_files()
 remove_unsupported_languages
 
 remove_empty_lproj_string_files
+build_sr_latin
 fixup_windows_rc_files
 fixup_po_files
 
