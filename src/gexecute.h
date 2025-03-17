@@ -88,6 +88,9 @@ inline wxString GetGettextBinaryPath(const wxString& program) { return program; 
 
 #endif
 
+/// Checks if installed gettext tools are recent enough.
+extern bool check_gettext_version(int major, int minor, int patch = 0);
+
 /**
     Extract gettext-formatted errors from stderr output.
 

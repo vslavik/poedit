@@ -48,7 +48,7 @@
 namespace
 {
 
-#define GETTEXT_VERSION_NUM(x, y, z)  ((x*1000*1000) + (y*1000) + (z))
+#define GETTEXT_VERSION_NUM(x, y, z)  ((uint32_t)(((x)*1000*1000) + ((y)*1000) + (z)))
 
 // Determine gettext version, return it in the form of XXXYYYZZZ number for version x.y.z
 uint32_t gettext_version()
@@ -135,6 +135,12 @@ void log_errors_with_filter(const ParsedGettextErrors& errors, Functor&& filter)
 }
 
 } // anonymous namespace
+
+
+bool check_gettext_version(int major, int minor, int patch)
+{
+    return gettext_version() >= GETTEXT_VERSION_NUM(major, minor, patch);
+}
 
 
 wxString ParsedGettextErrors::Item::pretty_print() const
@@ -308,7 +314,7 @@ void GettextRunner::preprocess_args(subprocess::Arguments& args) const
 
     // gettext 0.22 started converting MO files to UTF-8 by default. Don't do that.
     // See https://git.savannah.gnu.org/gitweb/?p=gettext.git;a=commit;h=5412a4f79929004cb6db15d545e07dc953330e8d
-    if (args.program() == L"msgfmt" && gettext_version() >= GETTEXT_VERSION_NUM(0, 22, 0))
+    if (args.program() == L"msgfmt" && check_gettext_version(0, 22))
     {
         args.insert(1, L"--no-convert");
     }
