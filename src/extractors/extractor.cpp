@@ -355,6 +355,9 @@ ExtractionOutput Extractor::ConcatPartials(TempDirectory& tmpdir, const std::vec
     GettextRunner gt;
     auto output = gt.run_sync("msgcat",
                               "--force-po",
+                              // avoid corrupted content of duplicate "" headers
+                              // FIXME: merge headers intelligently, e.g. pick latest POT-Creation-Date
+                              "--use-first",
                               "-o", result.pot_file,
                               "--files-from", filelist.GetName());
     if (output.failed())
