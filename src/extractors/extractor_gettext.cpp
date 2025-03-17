@@ -186,6 +186,11 @@ public:
     {
         for (const char * const *e = GETTEXT_EXTENSIONS; *e != nullptr; e++)
             RegisterExtension(*e);
+
+        if (check_gettext_version(0, 24))
+        {
+            RegisterExtension("rs"); // Rust
+        }
     }
 
     wxString GetId() const override { return "gettext"; }
