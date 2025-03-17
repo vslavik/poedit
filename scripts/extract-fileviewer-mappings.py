@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
-# Update plural forms expressions from the data collected by Unicode Consortium
-# (see http://www.unicode.org/cldr/charts/supplemental/language_plural_rules.html),
-# but from a JSON version by Transifex folks
+# Update support code for PrismJS syntax highlighter.
 
 import os.path
 import sys
@@ -14,8 +12,8 @@ import subprocess
 from tempfile import TemporaryDirectory
 import xml.etree.ElementTree as ET
 
-PRISM_COMPONENTS_URL = 'https://github.com/PrismJS/prism/raw/master/components.json'
-LANGUAGE_MAP_URL = 'https://github.com/blakeembrey/language-map/raw/master/languages.json'
+PRISM_COMPONENTS_URL = 'https://github.com/PrismJS/prism/raw/refs/heads/master/components.json'
+LANGUAGE_MAP_URL = 'https://github.com/blakeembrey/language-map/raw/refs/heads/main/languages.json'
 
 # resolve ambiguities:
 OVERRIDES = {
