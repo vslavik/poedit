@@ -123,7 +123,7 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
 
 wxString CrowdinLoginPanel::GetServiceDescription() const
 {
-    return _("Crowdin is an online localization management platform and collaborative translation tool.");
+    return _("Crowdin is an online translation management platform and collaborative translation tool. We use Crowdin ourselves to translate Poedit into many languages, and we love it.");
 }
 
 wxString CrowdinLoginPanel::GetServiceLearnMoreURL() const

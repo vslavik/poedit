@@ -70,59 +70,6 @@ inline std::vector<CloudAccountClient*> GetSignedInAccounts()
 } // anonymous namespace
 
 
-ServiceSelectionPanel::ServiceSelectionPanel(wxWindow *parent) : wxPanel(parent, wxID_ANY)
-{
-    auto topsizer = new wxBoxSizer(wxVERTICAL);
-    SetSizer(topsizer);
-    m_sizer = new wxBoxSizer(wxVERTICAL);
-    topsizer->AddStretchSpacer();
-    topsizer->Add(m_sizer, wxSizerFlags().Expand().Border(wxALL, PX(16)));
-    topsizer->AddStretchSpacer();
-}
-
-
-void ServiceSelectionPanel::AddService(AccountDetailPanel *account)
-{
-    if (!GetChildren().empty())
-        m_sizer->Add(new wxStaticLine(this, wxID_ANY), wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(24)));
-
-    auto content = CreateServiceContent(account);
-    m_sizer->Add(content, wxSizerFlags(1).Expand());
-}
-
-
-wxSizer *ServiceSelectionPanel::CreateServiceContent(AccountDetailPanel *account)
-{
-    auto sizer = new wxBoxSizer(wxVERTICAL);
-
-    auto logo = new StaticBitmap(this, account->GetServiceLogo());
-    logo->SetCursor(wxCURSOR_HAND);
-    logo->Bind(wxEVT_LEFT_UP, [=](wxMouseEvent&){ wxLaunchDefaultBrowser(account->GetServiceLearnMoreURL()); });
-    sizer->Add(logo, wxSizerFlags().PXDoubleBorder(wxBOTTOM));
-    auto explain = new ExplanationLabel(this, account->GetServiceDescription());
-    sizer->Add(explain, wxSizerFlags().Expand());
-
-    auto signIn = new wxButton(this, wxID_ANY, MSW_OR_OTHER(_("Add account"), _("Add Account")));
-    signIn->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){ account->SignIn(); });
-#ifdef __WXMSW__
-    signIn->SetBackgroundColour(GetBackgroundColour());
-#endif
-
-    auto learnMore = new LearnMoreLink(this,
-                                       account->GetServiceLearnMoreURL(),
-                                       // TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
-                                       wxString::Format(_("Learn more about %s"), account->GetServiceName()));
-
-    auto buttons = new wxBoxSizer(wxHORIZONTAL);
-    sizer->Add(buttons, wxSizerFlags().Expand().Border(wxTOP, PX(16)));
-    buttons->Add(learnMore, wxSizerFlags().Center());
-    buttons->AddStretchSpacer();
-    buttons->Add(signIn, wxSizerFlags());
-
-    return sizer;
-}
-
-
 AccountsPanel::AccountsPanel(wxWindow *parent, int flags) : wxPanel(parent, wxID_ANY)
 {
     wxBoxSizer *wrappingSizer = new wxBoxSizer(wxVERTICAL);
@@ -152,9 +99,6 @@ AccountsPanel::AccountsPanel(wxWindow *parent, int flags) : wxPanel(parent, wxID
 
     sizer->Add(m_panelsBook, wxSizerFlags(1).Expand());
 
-    m_introPanel = new ServiceSelectionPanel(m_panelsBook);
-    m_panelsBook->AddPage(m_introPanel, "");
-
     AddAccount("Crowdin", "AccountCrowdin", new CrowdinLoginPanel(m_panelsBook));
     AddAccount("Localazy", "AccountLocalazy", new LocalazyLoginPanel(m_panelsBook));
 
@@ -176,27 +120,19 @@ AccountsPanel::AccountsPanel(wxWindow *parent, int flags) : wxPanel(parent, wxID
 
 void AccountsPanel::InitializeAfterShown()
 {
-    if (IsSignedIn())
+    // select 1st available signed-in service if we can and hide the intro panel:
+    if (m_list->GetSelectedRow() == wxNOT_FOUND)
     {
-        // select 1st available signed-in service if we can and hide the intro panel:
-        if (m_list->GetSelectedRow() == wxNOT_FOUND)
+        unsigned toSelect = 0;
+        for (unsigned i = 0; i < m_panels.size(); i++)
         {
-            for (unsigned i = 0; i < m_panels.size(); i++)
+            if (m_panels[i]->IsSignedIn())
             {
-                if (m_panels[i]->IsSignedIn())
-                {
-                    SelectAccount(i);
-                    break;
-                }
+                toSelect = i;
+                break;
             }
         }
-    }
-    else
-    {
-        // don't show the list yet if no account was signed in:
-        auto sizer = m_list->GetContainingSizer();
-        sizer->Hide(m_list);
-        sizer->Layout();
+        SelectAccount(toSelect);
     }
 
     // perform first-show initialization:
@@ -211,8 +147,6 @@ void AccountsPanel::AddAccount(const wxString& name, const wxString& iconId, Acc
     auto pos = (unsigned)m_panels.size();
     m_panels.push_back(panel);
     m_panelsBook->AddPage(panel, "");
-
-    m_introPanel->AddService(panel);
 
     m_list->AppendFormattedItem(wxArtProvider::GetBitmap(iconId), name, " ... ");
 
@@ -275,7 +209,7 @@ void AccountsPanel::OnSelectAccount(wxDataViewEvent& event)
 void AccountsPanel::SelectAccount(unsigned index)
 {
 	m_list->SelectRow(index);
-	m_panelsBook->ChangeSelection(1 + index);
+	m_panelsBook->ChangeSelection(index);
 }
 
 

@@ -99,23 +99,6 @@ public:
 };
 
 
-/// Panel for choosing a service if the user doesn't have any yet
-class ServiceSelectionPanel : public wxPanel
-{
-public:
-    ServiceSelectionPanel(wxWindow *parent);
-
-    /// Add service information
-    void AddService(AccountDetailPanel *account);
-
-protected:
-    wxSizer *CreateServiceContent(AccountDetailPanel *account);
-
-private:
-    wxBoxSizer *m_sizer;
-};
-
-
 /// Window showing all supported accounts in a list-detail view
 class AccountsPanel : public wxPanel, public AnyAccountPanelBase
 {
@@ -141,7 +124,6 @@ protected:
 private:
     IconAndSubtitleListCtrl *m_list;
     wxSimplebook *m_panelsBook;
-    ServiceSelectionPanel *m_introPanel;
     std::vector<AccountDetailPanel*> m_panels;
 };
 
