@@ -37,6 +37,7 @@
 
 #include <wx/dialog.h>
 #include <wx/sizer.h>
+#include <wx/stattext.h>
 #include <wx/panel.h>
 
 class WXDLLIMPEXP_FWD_CORE wxBoxSizer;
@@ -154,10 +155,21 @@ public:
 
     CloudEditLoginDialog(wxWindow *parent, const wxString& title) : wxDialog(parent, wxID_ANY, title)
     {
-        auto topsizer = new wxBoxSizer(wxHORIZONTAL);
+        auto topsizer = new wxBoxSizer(wxVERTICAL);
+
+#ifdef __WXOSX__
+        auto titleLabel = new wxStaticText(this, wxID_ANY, title);
+        titleLabel->SetFont(titleLabel->GetFont().Bold());
+        topsizer->AddSpacer(PX(4));
+        topsizer->Add(titleLabel, wxSizerFlags().Border(wxTOP|wxLEFT|wxRIGHT, PX(16)));
+        topsizer->AddSpacer(PX(10));
+#else
+        topsizer->AddSpacer(PX(16));
+#endif
+
         m_panel = new LoginPanel(this, LoginPanel::AddCancelButton | LoginPanel::SlimBorders);
         m_panel->SetClientSize(m_panel->GetBestSize());
-        topsizer->Add(m_panel, wxSizerFlags(1).Expand().Border(wxALL, PX(16)));
+        topsizer->Add(m_panel, wxSizerFlags(1).Expand().Border(wxBOTTOM|wxLEFT|wxRIGHT, PX(16)));
         SetSizerAndFit(topsizer);
         CenterOnParent();
 
