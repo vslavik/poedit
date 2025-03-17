@@ -50,4 +50,6 @@ replace_ver macos/poedit.xcconfig \
             '\(MARKETING_VERSION = \).*' "\1$VERSION"
 replace_ver snap/snapcraft.yaml \
             '\(version: \"\).*\("\)' "\1$VERSION\2"
+replace_ver scripts/refresh-pot.sh \
+            '\(POEDIT_VERSION="\).*\("\)' "\1$VERSION\2"
 touch macos/Poedit-Info.plist

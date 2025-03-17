@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-PACKAGE_VERSION=2.1
+POEDIT_VERSION="3.6"
 
 [ -n "${WXRC}" ] || WXRC=wxrc
 
@@ -9,7 +9,7 @@ XGETTEXT_ARGS="-C -F \
               -kwxGETTEXT_IN_CONTEXT:1c,2 -kwxGETTEXT_IN_CONTEXT_PLURAL:1c,2,3 \
               --add-comments=TRANSLATORS \
               --from-code=UTF-8 \
-              --package-name=Poedit --package-version=${PACKAGE_VERSION} \
+              --package-name=Poedit --package-version=${POEDIT_VERSION} \
               --msgid-bugs-address=help@poedit.net"
 
 
