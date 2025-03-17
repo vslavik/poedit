@@ -5,9 +5,9 @@ from collections import OrderedDict
 from glob import glob
 from ninja_syntax import Writer
 
-GETTEXT_VERSION = "0.22.5"  # use of " important for Xcode build!
+GETTEXT_VERSION = "0.23.1"  # use of " important for Xcode build!
 GETTEXT_TARBALL = 'gettext-%s.tar.gz' % GETTEXT_VERSION
-GETTEXT_SHA256 = 'ec1705b1e969b83a9f073144ec806151db88127f5e40fe5a94cb6c8fa48996a0'
+GETTEXT_SHA256 = '52a578960fe308742367d75cd1dff8552c5797bd0beba7639e12bdcda28c0e49'
 
 _exclusion_list = [
     '.DS_Store',
@@ -121,6 +121,15 @@ with open('build.ninja', 'w') as buildfile:
                                      '--prefix=/',
                                      'CC=$cc',
                                      'CXX=$cxx',
+                                     # GNU gettext checks against and won't use macOS-provided iconv(), see here:
+                                     # https://mail.gnu.org/archive/html/bug-gnulib/2024-05/msg00375.html
+                                     # They are not wrong about it being POSIX-broken, but it doesn't seem to
+                                     # materially affect Poedit's use (conversions of catalogs are avoided and
+                                     # other contexts are OK with this particular issue). And as this is a
+                                     # runtime difference, we've been using "bad" iconv() implementation
+                                     # for over a year, so...
+                                     # FIXME: replace CFLocale patches similarly
+                                     'am_cv_func_iconv_works=yes',
                                      # When running configure under Xcode,
                                      # SIGALRM is ignored and this doesn't play
                                      # nice with some of the (useless - gnulib)

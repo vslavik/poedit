@@ -17,12 +17,12 @@ rule download
       $url...
   pool = console
 build $
-    $builddir/gettext-0.22.5.tar.gz: $
+    $builddir/gettext-0.23.1.tar.gz: $
     download
   url = $
-      https://ftp.gnu.org/pub/gnu/gettext/gettext-0.22.5.tar.gz
+      https://ftp.gnu.org/pub/gnu/gettext/gettext-0.23.1.tar.gz
   sha256 = $
-      ec1705b1e969b83a9f073144ec806151db88127f5e40fe5a94cb6c8fa48996a0
+      52a578960fe308742367d75cd1dff8552c5797bd0beba7639e12bdcda28c0e49
 rule gettext_build
   command = echo $
       'note: ⋯  $
@@ -55,7 +55,7 @@ rule gettext_build
       && echo $
       'note: ⋯  $
       tar -x -f $
-      "$builddir/gettext-0.22.5.tar.gz" $
+      "$builddir/gettext-0.23.1.tar.gz" $
       -C $
       "$workdir" $
       --strip-components $
@@ -63,7 +63,7 @@ rule gettext_build
       tmp=`mktemp` $
       && tar -x $
       -f $
-      "$builddir/gettext-0.22.5.tar.gz" $
+      "$builddir/gettext-0.23.1.tar.gz" $
       -C $
       "$workdir" $
       --strip-components $
@@ -395,7 +395,7 @@ rule gettext_build
 build $
     $intdir/gettext.done: $
     gettext_build $
-    $builddir/gettext-0.22.5.tar.gz $
+    $builddir/gettext-0.23.1.tar.gz $
     gettext/gettext-macos-catalina-dont-touch-parent-dirs.patch $
     gettext/gettext-smaller-build.patch
   name = gettext
@@ -406,6 +406,7 @@ build $
       --prefix=/ $
       CC=$cc $
       CXX=$cxx $
+      am_cv_func_iconv_works=yes $
       CFLAGS="$cflags $
       -Dalarm=alarm_disabled" $
       CXXFLAGS="$cxxflags" $
