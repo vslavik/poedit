@@ -119,8 +119,5 @@ scripts/do-update-translations-lists.sh
 
 git status
 echo ""
-exit_code=0
-for i in locales/*.po ; do
-    msgfmt -c -o /dev/null $i || exit_code=$?
-done
-exit $exit_code
+
+uv run scripts/check-translations.sh
