@@ -58,8 +58,17 @@ struct BackgroundTaskResult
         return !summary.empty() || !details.empty() || user_data.has_value();
     }
 
+    /// Larger text summary shown after finishing the task
     wxString summary;
+
+    /**
+        Further details (e.g. stats) about the operation. Each pair is a label-value pair,
+        shown in a table. If the value is empty, the label is shown as wrapped text, i.e.
+        can be longer.
+     */
     std::vector<std::pair<wxString, wxString>> details;
+
+    /// Additional user data for custom implementations of ProgressWindow::SetSummaryContent()
     std::any user_data;
 };
 

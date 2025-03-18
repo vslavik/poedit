@@ -234,9 +234,19 @@ wxBoxSizer *ProgressWindow::AddSummaryDetailLine()
 wxBoxSizer *ProgressWindow::AddSummaryDetailLine(const wxString& label, const wxString& value)
 {
     auto row = AddSummaryDetailLine();
-    row->Add(new SecondaryLabel(this, label), wxSizerFlags().Center());
-    row->AddStretchSpacer();
-    row->Add(new SecondaryLabel(this, value), wxSizerFlags().Center());
+
+    if (value.empty())
+    {
+        row->Add(new ExplanationLabel(this, label), wxSizerFlags(1).Center());
+    }
+    else
+    {
+        row->Add(new SecondaryLabel(this, label), wxSizerFlags().Center());
+        row->AddStretchSpacer();
+        row->Add(new SecondaryLabel(this, value), wxSizerFlags().Center());
+    }
+    row->AddSpacer(PX(2));
+
     return row;
 }
 
