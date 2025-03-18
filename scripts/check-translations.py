@@ -49,7 +49,7 @@ def _print_error(fn, entry, text, github):
             rich.print(entry)
 
 
-def process_po(filename, stderr, github):
+def process_po(filename, stderr, github, remove_errors):
     """
     Parse and pretty-print errors in the file.
     The error format is: <file>:<line>: <error>
@@ -68,27 +68,33 @@ def process_po(filename, stderr, github):
         _print_error(filename, entry, line, github)
         if entry:
             errors.append(entry)
+    if remove_errors and errors:
+        for entry in errors:
+            if entry.msgid: # don't remove header
+                po.remove(entry)
+        po.save(filename)
 
 
-def check_translations(po_files, github=False):
+def check_translations(po_files, github=False, remove_errors=False):
     status = True
     for po_file in po_files:
         result = subprocess.run(['msgfmt', '-v', '-c', '-o', '/dev/null', po_file], capture_output=True, text=True)
         if result.returncode != 0:
             status = False
-            process_po(po_file, result.stderr, github)
+            process_po(po_file, result.stderr, github, remove_errors)
     return status
-
 
 
 def main():
     parser = argparse.ArgumentParser(description='Check correctness of translation PO files.')
     parser.add_argument('--github', action='store_true', help='Format output for GitHub Actions')
+    parser.add_argument('--remove-errors', action='store_true', help='Remove entries with errors')
     args = parser.parse_args()
 
     po_files = glob.glob('locales/*.po')
-    status = check_translations(po_files, args.github)
-    sys.exit(0 if status else 1)
+    status = check_translations(po_files, args.github, args.remove_errors)
+    if not status:
+        sys.exit(1)
 
 
 if __name__ == "__main__":

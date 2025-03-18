@@ -9,15 +9,14 @@ function finish {
 }
 trap finish EXIT
 
-# check PO files for errors and remove the ones that won't compile:
+# fixup Crowdin downloads:
+recode-sr-latin <locales/sr.po >locales/sr@latin.po
+
+# check PO files for errors and fix the ones that won't compile:
+uv run scripts/check-translations.py --github --remove-errors || touch ota-had-errors
+# double-check that fixes were correct:
 for po in locales/*.po ; do
-    if ! stderr=$(msgfmt -c -o /dev/null "$po" 2>&1) ; then
-        echo "::error title=Failed to compile $po::`echo $stderr`"
-        echo "::group::cat -n $po"
-        cat -n "$po"
-        echo "::endgroup::"
-        rm "$po"
-    fi
+    msgfmt -c -o /dev/null $po
 done
 
 # compile PO files, taking care to make them reproducible, i.e. not change if the actual
@@ -36,4 +35,3 @@ done
 
 # create a tarball of all updates:
 tar -C "$DESTDIR" -cf ota-update.tar .
-
