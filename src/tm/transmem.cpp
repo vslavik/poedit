@@ -365,7 +365,8 @@ std::wstring get_text_field(DocumentPtr doc, const std::wstring& field)
 void postprocess_results(SuggestionsList& results)
 {
     std::stable_sort(results.begin(), results.end());
-    results.resize(MAX_RESULTS);
+    if (results.size() > MAX_RESULTS)
+        results.resize(MAX_RESULTS);
 }
 
 
