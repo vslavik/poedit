@@ -182,17 +182,20 @@ Stats PreTranslateCatalogImpl(CatalogPtr catalog, const T& range, PreTranslateOp
 }
 
 
-template<typename T>
-int PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, const PreTranslateOptions& options)
+template<typename T, typename TCompletion>
+void PreTranslateCatalog(wxWindow *window,
+                         CatalogPtr catalog, const T& range,
+                         const PreTranslateOptions& options,
+                         TCompletion&& completionHandler)
 {
-    int matches = 0;
+    auto changesMade = std::make_shared<bool>(false);
 
     auto cancellation = std::make_shared<dispatch::cancellation_token>();
     wxWindowPtr<ProgressWindow> progress(new ProgressWindow(window, _(L"Pre-translating…"), cancellation));
-    progress->RunTaskModal([=,&matches]()
+    progress->RunTaskThenDo([=]()
     {
         auto stats = PreTranslateCatalogImpl(catalog, range, options, cancellation);
-        matches = stats.matched;
+        *changesMade = stats.matched > 0;
 
         BackgroundTaskResult bg;
         if (stats.matched)
@@ -216,9 +219,12 @@ int PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, co
         }
 
         return bg;
+    },
+    [changesMade,progress,completionHandler=std::move(completionHandler)](bool success)
+    {
+        if (success && *changesMade)
+            completionHandler();
     });
-
-    return matches;
 }
 
 } // anonymous namespace
@@ -226,9 +232,7 @@ int PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, co
 
 void PreTranslateCatalogAuto(wxWindow *window, CatalogPtr catalog, const PreTranslateOptions& options, std::function<void()> onChangesMade)
 {
-    auto matched = PreTranslateCatalog(window, catalog, catalog->items(), options);
-    if (matched)
-        onChangesMade();
+    PreTranslateCatalog(window, catalog, catalog->items(), options, std::move(onChangesMade));
 }
 
 
@@ -331,8 +335,6 @@ void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list, CatalogPtr catal
         settings.exactNotFuzzy = noFuzzy->GetValue();
         Config::PretranslateSettings(settings);
 
-        int matches = 0;
-
         PreTranslateOptions options;
         if (settings.onlyExact)
             options.flags |= PreTranslate_OnlyExact;
@@ -341,16 +343,11 @@ void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list, CatalogPtr catal
 
         if (list->HasMultipleSelection())
         {
-            matches = PreTranslateCatalog(window, catalog, list->GetSelectedCatalogItems(), options);
+            PreTranslateCatalog(window, catalog, list->GetSelectedCatalogItems(), options, std::move(onChangesMade));
         }
         else
         {
-            matches = PreTranslateCatalog(window, catalog, catalog->items(), options);
+            PreTranslateCatalog(window, catalog, catalog->items(), options, std::move(onChangesMade));
         }
-
-        if (matches == 0)
-            return;
-
-        onChangesMade();
     });
 }
