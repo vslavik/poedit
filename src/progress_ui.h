@@ -114,8 +114,7 @@ private:
     return value not @a cancellationToken state.
 
     If the task supports cancellation, it should indicate successful cancellation by either
-    returning empty summary
-
+    returning empty summary or throwing dispatch::cancellation_exception.
  */
 class ProgressWindow : public TitlelessDialog, public ProgressObserver
 {
