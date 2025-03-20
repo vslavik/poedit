@@ -60,10 +60,16 @@ struct MergeResult
  */
 extern void ComputeMergeStats(MergeStats& r, CatalogPtr catalog, CatalogPtr reference);
 
+
 /**
     Merges catalog with a reference catalog, updating catalog with new strings
     present in @a reference and removing strings that are no longer present there.
 
+    @note The returned updated_catalog may be the same as @a catalog, but it may also be
+          a new object, possibly also @a reference. Don't make assumptions about it and
+          always treat it as an entirely new object.
+
+    @warning The @a reference object cannot be used after being passed to this function!
  */
 extern MergeResult MergeCatalogWithReference(CatalogPtr catalog, CatalogPtr reference);
 

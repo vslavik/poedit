@@ -1580,10 +1580,6 @@ void PoeditFrame::UpdateAfterPreferencesChange()
 
 void PoeditFrame::UpdateCatalog(const wxString& pot_file)
 {
-    auto cat = std::dynamic_pointer_cast<POCatalog>(m_catalog);
-    if (!cat)
-        return;
-
     // This ensures that the list control won't be redrawn during Update()
     // call when a dialog box is hidden; another alternative would be to call
     // m_list->CatalogChanged(NULL) here
@@ -1595,6 +1591,10 @@ void PoeditFrame::UpdateCatalog(const wxString& pot_file)
 
     if (pot_file.empty())
     {
+        auto cat = std::dynamic_pointer_cast<POCatalog>(m_catalog);
+        if (!cat)
+            return;
+
         if (!cat->HasSourcesAvailable())
         {
             wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog
@@ -1614,7 +1614,7 @@ void PoeditFrame::UpdateCatalog(const wxString& pot_file)
     }
     else
     {
-        bg_work = PerformUpdateFromReferenceWithUI(this, cat, pot_file);
+        bg_work = PerformUpdateFromReferenceWithUI(this, m_catalog, pot_file);
     }
 
     bg_work.then_on_main([=](CatalogPtr updated_catalog)
@@ -1660,12 +1660,16 @@ void PoeditFrame::OnUpdateFromPOT(wxCommandEvent&)
         if (path.empty())
             path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
 
+        auto fileMask = (m_catalog->GetFileType() == Catalog::Type::PO)
+                        ? Catalog::GetTypesFileMask({Catalog::Type::POT, Catalog::Type::PO})
+                        : m_catalog->GetFileMask();
+
         wxWindowPtr<wxFileDialog> dlg(
             new wxFileDialog(this,
-                             MACOS_OR_OTHER("", _("Open translation template")),
+                             MACOS_OR_OTHER("", _("Open reference file")),
                              path,
                              wxEmptyString,
-                             Catalog::GetTypesFileMask({Catalog::Type::POT, Catalog::Type::PO}),
+                             fileMask,
                              wxFD_OPEN | wxFD_FILE_MUST_EXIST));
 
         // dlg->ShowWindowModalThenDo([=](int retcode){
@@ -1685,10 +1689,21 @@ void PoeditFrame::OnUpdateFromPOT(wxCommandEvent&)
 
 void PoeditFrame::OnUpdateFromPOTUpdate(wxUpdateUIEvent& event)
 {
-    if (!m_catalog || m_catalog->GetFileType() != Catalog::Type::PO)
-        event.Enable(false);
-    else
-        OnHasCatalogUpdate(event);
+    OnHasCatalogUpdate(event);
+
+    switch (m_catalog->GetFileType())
+    {
+        case Catalog::Type::POT:
+            event.Enable(false);
+            // fall through
+        case Catalog::Type::PO:
+            event.SetText(MSW_OR_OTHER(_(L"Update from &POT file…"), _(L"Update from &POT File…")));
+            break;
+
+        default:
+            event.Enable(false);
+            break;
+    };
 }
 
 #ifdef HAVE_HTTP_CLIENT

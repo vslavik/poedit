@@ -101,15 +101,22 @@ void ComputeMergeStats(MergeStats& r, CatalogPtr po, CatalogPtr refcat)
 }
 
 
+MergeResult MergeCatalogWithReferencePO(POCatalogPtr catalog, POCatalogPtr ref)
+{
+    if (!catalog || !ref)
+        return {};
+
+    if (!catalog->UpdateFromPOT(ref))
+        return {};
+
+    return {catalog};
+}
+
+
 MergeResult MergeCatalogWithReference(CatalogPtr catalog, CatalogPtr reference)
 {
     auto po_catalog = std::dynamic_pointer_cast<POCatalog>(catalog);
     auto po_ref = std::dynamic_pointer_cast<POCatalog>(reference);
-    if (!po_catalog || !po_ref)
-        return {};
 
-    if (!po_catalog->UpdateFromPOT(po_ref))
-        return {};
-
-    return {po_catalog};
+    return MergeCatalogWithReferencePO(po_catalog, po_ref);
 }
