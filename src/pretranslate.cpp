@@ -38,18 +38,55 @@
 #include <wx/dialog.h>
 #include <wx/intl.h>
 #include <wx/msgdlg.h>
+#include <wx/numformatter.h>
 #include <wx/sizer.h>
 #include <wx/windowptr.h>
 
 
+namespace
+{
+
+enum class ResType
+{
+    None = 0,  // no matches
+    Rejected,  // found matches, but rejected by settings
+    Fuzzy,     // approximate match
+    Exact      // exact match
+};
+
+inline bool translated(ResType r) { return r >= ResType::Fuzzy; }
+
+
+struct Stats
+{
+    int total = 0;
+    int matched = 0;
+    int exact = 0;
+    int fuzzy = 0;
+
+    explicit operator bool() const { return matched > 0; }
+
+    void add(ResType r)
+    {
+        total++;
+        if (translated(r))
+            matched++;
+        if (r == ResType::Exact)
+            exact++;
+        else if (r == ResType::Fuzzy)
+            fuzzy++;
+    }
+};
+
+
 template<typename T>
-int PreTranslateCatalogImpl(CatalogPtr catalog, const T& range, PreTranslateOptions options, dispatch::cancellation_token_ptr cancellation_token)
+Stats PreTranslateCatalogImpl(CatalogPtr catalog, const T& range, PreTranslateOptions options, dispatch::cancellation_token_ptr cancellation_token)
 {
     if (range.empty())
-        return 0;
+        return {};
 
     if (!Config::UseTM())
-        return 0;
+        return {};
 
     TranslationMemory& tm = TranslationMemory::Get();
     auto srclang = catalog->GetSourceLanguage();
@@ -60,51 +97,52 @@ int PreTranslateCatalogImpl(CatalogPtr catalog, const T& range, PreTranslateOpti
     top_progress.message(_(L"Preparing strings…"));
 
     // Function to apply fetched suggestions to a catalog item:
-    auto process_results = [=](CatalogItemPtr dt, unsigned index, const SuggestionsList& results) -> bool
+    auto process_results = [=](CatalogItemPtr dt, unsigned index, const SuggestionsList& results) -> ResType
+    {
+        if (results.empty())
+            return ResType::None;
+        auto& res = results.front();
+        if ((flags & PreTranslate_OnlyExact) && !res.IsExactMatch())
+            return ResType::Rejected;
+
+        if ((flags & PreTranslate_OnlyGoodQuality) && res.score < 0.80)
+            return ResType::None;
+
+        dt->SetTranslation(res.text, index);
+        dt->SetPreTranslated(true);
+
+        bool isFuzzy = true;
+        if (res.IsExactMatch() && (flags & PreTranslate_ExactNotFuzzy))
         {
-            if (results.empty())
-                return false;
-            auto& res = results.front();
-            if ((flags & PreTranslate_OnlyExact) && !res.IsExactMatch())
-                return false;
-
-            if ((flags & PreTranslate_OnlyGoodQuality) && res.score < 0.80)
-                return false;
-
-            dt->SetTranslation(res.text, index);
-            dt->SetPreTranslated(true);
-
-            bool isFuzzy = true;
-            if (res.IsExactMatch() && (flags & PreTranslate_ExactNotFuzzy))
+            if (results.size() > 1 && results[1].IsExactMatch())
             {
-                if (results.size() > 1 && results[1].IsExactMatch())
-                {
-                    // more than one exact match is ambiguous, so keep it flagged for review
-                }
-                else
-                {
-                    isFuzzy = false;
-                }
+                // more than one exact match is ambiguous, so keep it flagged for review
             }
-            dt->SetFuzzy(isFuzzy);
+            else
+            {
+                isFuzzy = false;
+            }
+        }
+        dt->SetFuzzy(isFuzzy);
 
-            return true;
-        };
+        return res.IsExactMatch() ? ResType::Exact : ResType::Fuzzy;
+    };
 
-    std::vector<dispatch::future<bool>> operations;
+    std::vector<dispatch::future<ResType>> operations;
     for (auto dt: range)
     {
         if (dt->IsTranslated() && !dt->IsFuzzy())
             continue;
 
-        operations.push_back(dispatch::async([=,&tm]{
+        operations.push_back(dispatch::async([=,&tm]() -> ResType
+        {
             if (cancellation_token->is_cancelled())
-                return false;
+                return {};
 
             auto results = tm.Search(srclang, lang, str::to_wstring(dt->GetString()));
-            bool ok = process_results(dt, 0, results);
+            auto rt = process_results(dt, 0, results);
 
-            if (ok && dt->HasPlural())
+            if (translated(rt) && dt->HasPlural())
             {
                 switch (lang.nplurals())
                 {
@@ -119,49 +157,82 @@ int PreTranslateCatalogImpl(CatalogPtr catalog, const T& range, PreTranslateOpti
                 }
             }
 
-            return ok;
+            return rt;
         }));
     }
 
     Progress progress((int)operations.size());
     progress.message(_(L"Pre-translating from translation memory…"));
 
-    int matches = 0;
+    Stats stats;
     for (auto& op: operations)
     {
         if (cancellation_token->is_cancelled())
             break;
 
-        if (op.get())
-        {
-            matches++;
-            progress.message(wxString::Format(wxPLURAL("Pre-translated %u string", "Pre-translated %u strings", matches), matches));
-        }
+        auto rt = op.get();
+        stats.add(rt);
+        if (translated(rt))
+            progress.message(wxString::Format(wxPLURAL("Pre-translated %u string", "Pre-translated %u strings", stats.matched), stats.matched));
 
         progress.increment();
     }
 
-    return matches;
+    return stats;
 }
 
-template<typename T>
-int PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, const PreTranslateOptions& options)
+
+template<typename T, typename TCompletion>
+void PreTranslateCatalog(wxWindow *window,
+                         CatalogPtr catalog, const T& range,
+                         const PreTranslateOptions& options,
+                         TCompletion&& completionHandler)
 {
-    int matches = 0;
+    auto changesMade = std::make_shared<bool>(false);
 
     auto cancellation = std::make_shared<dispatch::cancellation_token>();
     wxWindowPtr<ProgressWindow> progress(new ProgressWindow(window, _(L"Pre-translating…"), cancellation));
-    progress->RunTaskModal([=,&matches]()
+    progress->RunTaskThenDo([=]()
     {
-        matches = PreTranslateCatalogImpl(catalog, range, options, cancellation);
-    });
+        auto stats = PreTranslateCatalogImpl(catalog, range, options, cancellation);
+        *changesMade = stats.matched > 0;
 
-    return matches;
+        BackgroundTaskResult bg;
+        if (stats.matched)
+        {
+            bg.summary = wxString::Format(wxPLURAL("%d entry was pre-translated.",
+                                                   "%d entries were pre-translated.",
+                                                   stats.matched), stats.matched);
+
+            if (stats.exact < stats.matched || !(options.flags & PreTranslate_ExactNotFuzzy))
+            {
+                bg.details.emplace_back(_("The translations were marked as needing work, because they may be inaccurate. You should review them for correctness."), "");
+            }
+
+            bg.details.emplace_back(_("Exact matches from TM"), wxNumberFormatter::ToString((long)stats.exact));
+            bg.details.emplace_back(_("Approximate matches from TM"), wxNumberFormatter::ToString((long)stats.fuzzy));
+        }
+        else
+        {
+            bg.summary = _("No entries could be pre-translated.");
+            bg.details.emplace_back(_(L"The TM doesn’t contain any strings similar to the content of this file. It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually."), "");
+        }
+
+        return bg;
+    },
+    [changesMade,progress,completionHandler=std::move(completionHandler)](bool success)
+    {
+        if (success && *changesMade)
+            completionHandler();
+    });
 }
 
-int PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const PreTranslateOptions& options)
+} // anonymous namespace
+
+
+void PreTranslateCatalogAuto(wxWindow *window, CatalogPtr catalog, const PreTranslateOptions& options, std::function<void()> onChangesMade)
 {
-    return PreTranslateCatalog(window, catalog, catalog->items(), options);
+    PreTranslateCatalog(window, catalog, catalog->items(), options, std::move(onChangesMade));
 }
 
 
@@ -264,8 +335,6 @@ void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list, CatalogPtr catal
         settings.exactNotFuzzy = noFuzzy->GetValue();
         Config::PretranslateSettings(settings);
 
-        int matches = 0;
-
         PreTranslateOptions options;
         if (settings.onlyExact)
             options.flags |= PreTranslate_OnlyExact;
@@ -274,44 +343,11 @@ void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list, CatalogPtr catal
 
         if (list->HasMultipleSelection())
         {
-            matches = PreTranslateCatalog(window, catalog, list->GetSelectedCatalogItems(), options);
-            if (matches == 0)
-                return;
+            PreTranslateCatalog(window, catalog, list->GetSelectedCatalogItems(), options, std::move(onChangesMade));
         }
         else
         {
-            matches = PreTranslateCatalog(window, catalog, options);
-            if (matches == 0)
-                return;
+            PreTranslateCatalog(window, catalog, catalog->items(), options, std::move(onChangesMade));
         }
-
-        onChangesMade();
-
-        wxString msg, details;
-
-        if (matches)
-        {
-            msg = wxString::Format(wxPLURAL("%d entry was pre-translated.",
-                                            "%d entries were pre-translated.",
-                                            matches), matches);
-            details = _("The translations were marked as needing work, because they may be inaccurate. You should review them for correctness.");
-        }
-        else
-        {
-            msg = _("No entries could be pre-translated.");
-            details = _(L"The TM doesn’t contain any strings similar to the content of this file. It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually.");
-        }
-
-        wxWindowPtr<wxMessageDialog> resultsDlg(
-            new wxMessageDialog
-                (
-                    window,
-                    msg,
-                    _("Pre-translate"),
-                    wxOK | wxICON_INFORMATION
-                )
-        );
-        resultsDlg->SetExtendedMessage(details);
-        resultsDlg->ShowWindowModalThenDo([resultsDlg](int){});
     });
 }

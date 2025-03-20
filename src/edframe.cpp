@@ -1631,8 +1631,10 @@ void PoeditFrame::UpdateCatalog(const wxString& pot_file)
 
         if (Config::UseTM() && Config::MergeBehavior() == Merge_UseTM)
         {
-            if (PreTranslateCatalog(this, m_catalog, PreTranslateOptions(PreTranslate_OnlyGoodQuality)))
+            PreTranslateCatalogAuto(this, m_catalog, PreTranslateOptions(PreTranslate_OnlyGoodQuality), [=]
+            {
                 RefreshControls();
+            });
         }
     });
 }

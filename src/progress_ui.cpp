@@ -225,7 +225,7 @@ wxBoxSizer *ProgressWindow::AddSummaryDetailLine()
 {
     auto sizer = GetDetailsSizer();
     auto row = new wxBoxSizer(wxHORIZONTAL);
-    sizer->AddSpacer(PX(2));
+    sizer->AddSpacer(PX(4));
     sizer->Add(row, wxSizerFlags().Expand().Border(wxRIGHT, PX(2)));
     return row;
 }
@@ -234,9 +234,18 @@ wxBoxSizer *ProgressWindow::AddSummaryDetailLine()
 wxBoxSizer *ProgressWindow::AddSummaryDetailLine(const wxString& label, const wxString& value)
 {
     auto row = AddSummaryDetailLine();
-    row->Add(new SecondaryLabel(this, label), wxSizerFlags().Center());
-    row->AddStretchSpacer();
-    row->Add(new SecondaryLabel(this, value), wxSizerFlags().Center());
+
+    if (value.empty())
+    {
+        row->Add(new ExplanationLabel(this, label), wxSizerFlags(1).Center());
+    }
+    else
+    {
+        row->Add(new SecondaryLabel(this, label), wxSizerFlags().Center());
+        row->AddStretchSpacer();
+        row->Add(new SecondaryLabel(this, value), wxSizerFlags().Center());
+    }
+
     return row;
 }
 
