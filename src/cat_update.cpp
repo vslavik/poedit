@@ -99,7 +99,7 @@ void MergeSummaryDialog::TransferTo(const MergeStats& r)
 
         for (auto& s: r.removed)
         {
-            listbox->Append(s);
+            listbox->Append(s.to_string());
         }
     }
     else
@@ -117,7 +117,7 @@ void MergeSummaryDialog::TransferTo(const MergeStats& r)
 
         for (auto& s: r.added)
         {
-            listbox->Append(s);
+            listbox->Append(s.to_string());
         }
     }
     else

@@ -33,9 +33,37 @@
 /// Summary data about the result of merging two catalogs.
 struct MergeStats
 {
+    struct Key
+    {
+        wxString str, str_plural, context, sym_id;
+
+        Key(const wxString& sym_id_) : sym_id(sym_id_) {}
+        Key(const wxString& str_, const wxString& str_plural_, const wxString& context_)
+            : str(str_), str_plural(str_plural_), context(context_) {}
+        Key(const wxString& str_, const wxString& str_plural_, const wxString& context_, const wxString& sym_id_)
+            : str(str_), str_plural(str_plural_), context(context_), sym_id(sym_id_) {}
+
+        auto operator<(const Key& other) const
+        {
+            return std::tie(str, str_plural, context, sym_id) < std::tie(other.str, other.str_plural, other.context, other.sym_id);
+        }
+
+        wxString to_string() const
+        {
+            wxString s = str;
+            if (!str_plural.empty())
+                s += " | " + str_plural;
+            if (s.empty())
+                s = sym_id;
+            if (!context.empty())
+                s += wxString::Format(" [%s]", context);
+            return s;
+        }
+    };
+
     // Added and removed strings (as their summary representation, not the full items)
-    std::vector<wxString> added;
-    std::vector<wxString> removed;
+    std::vector<Key> added;
+    std::vector<Key> removed;
 
     int changes_count() const { return int(added.size() + removed.size()); }
 

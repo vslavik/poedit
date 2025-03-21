@@ -29,21 +29,37 @@
 #include "concurrency.h"
 #include "progress.h"
 
+#include <map>
 #include <set>
 
 
 namespace
 {
 
-inline wxString ItemMergeSummary(const CatalogItemPtr& item)
+inline MergeStats::Key make_key_full(const CatalogItemPtr& i)
 {
-    wxString s = item->GetRawString();
-    if ( item->HasPlural() )
-        s += " | " + item->GetRawPluralString();
-    if ( item->HasContext() )
-        s += wxString::Format(" [%s]", item->GetContext());
+    return {i->GetRawString(), i->GetRawPluralString(), i->GetContext(), i->GetRawSymbolicId()};
+}
 
-    return s;
+template<auto MakeKey = make_key_full, typename TFunc>
+inline void build_item_keys(CatalogPtr cat, TFunc&& f)
+{
+    for (auto& i: cat->items())
+    {
+        f(MakeKey(i), i);
+    }
+}
+
+template<auto MakeKey = make_key_full, typename T>
+inline void build_item_map(T& map, CatalogPtr cat)
+{
+    build_item_keys<MakeKey>(cat, [&](auto&& key, CatalogItemPtr i){ map.emplace(key, i); });
+}
+
+template<auto MakeKey = make_key_full, typename T>
+inline void build_item_set(T& map, CatalogPtr cat)
+{
+    build_item_keys<MakeKey>(cat, [&](auto&& key, CatalogItemPtr){ map.insert(key); });
 }
 
 } // anonymous namespace
@@ -59,19 +75,10 @@ void ComputeMergeStats(MergeStats& r, CatalogPtr po, CatalogPtr refcat)
     // First collect all strings from both sides, then diff the sets.
     // Run the two sides in parallel for speed up on large files.
 
-    std::set<wxString> strsThis, strsRef;
+    std::set<MergeStats::Key> strsThis, strsRef;
 
-    auto collect1 = dispatch::async([&]
-    {
-        for (auto& i: po->items())
-            strsThis.insert(ItemMergeSummary(i));
-    });
-
-    auto collect2 = dispatch::async([&]
-    {
-        for (auto& i: refcat->items())
-            strsRef.insert(ItemMergeSummary(i));
-    });
+    auto collect1 = dispatch::async([&]{ build_item_set(strsThis, po); });
+    auto collect2 = dispatch::async([&]{ build_item_set(strsRef, refcat); });
 
     collect1.get();
     collect2.get();
