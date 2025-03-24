@@ -4,6 +4,9 @@ POEDIT_VERSION="3.6"
 
 [ -n "${WXRC}" ] || WXRC=wxrc
 
+POTFILE=locales/poedit.pot
+POTFILE_QL=locales/poedit-quicklook.pot
+
 XGETTEXT_ARGS="-C -F \
               -k_ -kwxGetTranslation -kwxTRANSLATE -kwxTRANSLATE_IN_CONTEXT:1c,2 -kwxPLURAL:1,2 \
               -kwxGETTEXT_IN_CONTEXT:1c,2 -kwxGETTEXT_IN_CONTEXT_PLURAL:1c,2,3 \
@@ -27,27 +30,11 @@ remove_date_only_changes()
 }
 
 
-cd locales
+find src -name "*.cpp" | sort | xargs xgettext ${XGETTEXT_ARGS}       -o $POTFILE
+find src -name "*.h"   | sort | xargs xgettext ${XGETTEXT_ARGS}    -j -o $POTFILE
+${WXRC} --gettext src/resources/*.xrc | xgettext ${XGETTEXT_ARGS}  -j -o $POTFILE -
 
-find ../src -name "*.cpp" | sort | xargs xgettext ${XGETTEXT_ARGS}             -o _poedit.pot
-find ../src -name "*.h"   | sort | xargs xgettext ${XGETTEXT_ARGS}          -j -o _poedit.pot
-${WXRC} --gettext ../src/resources/*.xrc | xgettext ${XGETTEXT_ARGS}        -j -o _poedit.pot -
+msggrep -N src/export_html.cpp $POTFILE -o $POTFILE_QL
 
-msggrep -N ../src/export_html.cpp _poedit.pot -o poedit-quicklook.pot
-
-# -F is incompatible with --no-location, results in weird order, so remove location info
-# in a secondary pass:
-msgcat --no-location -o poedit.pot _poedit.pot
-rm _poedit.pot
-
-remove_date_only_changes poedit.pot
-
-# Merge with PO files:
-if [ "x$1" != "x--no-po" ] ; then
-    for p in *.po ; do
-        msgmerge --quiet -o $p.tmp --no-fuzzy-matching --no-location $p poedit.pot
-        msgattrib --no-obsolete -o $p $p.tmp
-        rm $p.tmp
-        remove_date_only_changes $p
-    done
-fi
+remove_date_only_changes $POTFILE
+remove_date_only_changes $POTFILE_QL
