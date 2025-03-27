@@ -22,7 +22,7 @@
     <SignTool Condition="'$(SignTool)' == ''"></SignTool>
     <SignToolTimestamp Condition="'$(SignToolTimestamp)' == ''">http://timestamp.digicert.com</SignToolTimestamp>
     <SignToolFlags Condition="'$(SignToolFlags)' == ''">-fd sha256 -td sha256 -tr $(SignToolTimestamp) -d Poedit -du https://poedit.net</SignToolFlags>
-    <InnoCC>..\packages\Tools.InnoSetup.6.3.1\tools\ISCC.exe</InnoCC>
+    <InnoCC>..\packages\Tools.InnoSetup.6.4.2\tools\ISCC.exe</InnoCC>
     <InnoSignToolArgs Condition="'$(SignTool)' != ''">/dSIGNTOOL=default /Sdefault="$(SignTool) $(SignToolFlags) $f"</InnoSignToolArgs>
     <InnoFlags>/dCONFIG=$(Configuration) $(InnoSignToolArgs)</InnoFlags>
   </PropertyGroup>
