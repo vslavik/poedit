@@ -120,10 +120,25 @@ MergeResult MergeCatalogWithReferencePO(POCatalogPtr catalog, POCatalogPtr ref)
 }
 
 
-MergeResult MergeCatalogWithReference(CatalogPtr catalog, CatalogPtr reference)
+MergeResult MergeCatalogWithReferenceRaw(CatalogPtr catalog, CatalogPtr reference)
 {
     auto po_catalog = std::dynamic_pointer_cast<POCatalog>(catalog);
     auto po_ref = std::dynamic_pointer_cast<POCatalog>(reference);
 
     return MergeCatalogWithReferencePO(po_catalog, po_ref);
+}
+
+
+MergeResult MergeCatalogWithReference(CatalogPtr catalog, CatalogPtr reference)
+{
+    auto sideloaded = catalog->GetSideloadedSourceData();
+
+    auto r = MergeCatalogWithReferenceRaw(catalog, reference);
+
+    if (sideloaded && r.updated_catalog)
+    {
+        r.updated_catalog->SideloadSourceDataFromReferenceFile(sideloaded->reference_file);
+    }
+
+    return r;
 }
