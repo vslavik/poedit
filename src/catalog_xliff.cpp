@@ -630,7 +630,7 @@ public:
             std::string state = target.attribute("state").value();
             if (state == "needs-adaptation" || state == "needs-l10n")
                 m_isFuzzy = true;
-            else if (m_isTranslated && (state == "new" || state == "needs-translation"))
+            else if (m_isTranslated && (state == "new" || state == "needs-translation" || state == "needs-review-translation"))
                 m_isFuzzy = true;
         }
         else
