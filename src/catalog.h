@@ -219,7 +219,7 @@ class CatalogItem
         void SetPreTranslated(bool pre) { m_isPreTranslated = pre; }
 
         /// Sets the comment.
-        void SetComment(const wxString& c) { m_comment = c; }
+        void SetComment(const wxString& c);
 
 
         // -------------------------------------------------------------------

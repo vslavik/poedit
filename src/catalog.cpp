@@ -884,12 +884,25 @@ std::string CatalogItem::GetFormatFlag() const
 
 void CatalogItem::SetFuzzy(bool fuzzy)
 {
+    if (fuzzy == m_isFuzzy)
+        return;
+
     if (!fuzzy && m_isFuzzy)
         m_oldMsgid.clear();
     m_isFuzzy = fuzzy;
 
     UpdateInternalRepresentation();
 }
+
+void CatalogItem::SetComment(const wxString& c)
+{
+    if (c == m_comment)
+        return;
+
+    m_comment = c;
+    UpdateInternalRepresentation();
+}
+
 
 wxString CatalogItem::GetTranslation(unsigned idx) const
 {
@@ -971,17 +984,21 @@ void CatalogItem::SetTranslationFromSource()
 
 void CatalogItem::ClearTranslation()
 {
+    bool modified = m_isFuzzy != false;
     m_isFuzzy = false;
     m_isPreTranslated = false;
     m_isTranslated = false;
     for (auto& t: m_translations)
     {
         if (!t.empty())
-            m_isModified = true;
+            modified = true;
         t.clear();
     }
 
-    UpdateInternalRepresentation();
+    m_isModified = modified;
+
+    if (modified)
+        UpdateInternalRepresentation();
 }
 
 unsigned CatalogItem::GetPluralFormsCount() const
