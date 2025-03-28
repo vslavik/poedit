@@ -213,6 +213,8 @@ public:
     TempDirectory();
     ~TempDirectory();
 
+    TempDirectory(const TempDirectory&) = delete;
+
     bool IsOk() const { return !m_dir.empty(); }
 
     const wxString& DirName() const { return m_dir; }
@@ -241,6 +243,8 @@ class TempOutputFileFor
 public:
     explicit TempOutputFileFor(const wxString& filename);
     explicit TempOutputFileFor(const wxFileName& filename) : TempOutputFileFor(filename.GetFullPath()) {}
+
+    TempOutputFileFor(const TempOutputFileFor&) = delete;
 
     ~TempOutputFileFor();
 
