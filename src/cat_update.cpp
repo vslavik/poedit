@@ -27,14 +27,17 @@
 
 #include "catalog_po.h"
 #include "colorscheme.h"
+#include "custom_notebook.h"
 #include "errors.h"
 #include "extractors/extractor.h"
 #include "hidpi.h"
 #include "progress_ui.h"
 #include "utility.h"
 
+#include <wx/artprov.h>
 #include <wx/button.h>
 #include <wx/config.h>
+#include <wx/dataview.h>
 #include <wx/dialog.h>
 #include <wx/intl.h>
 #include <wx/listbox.h>
@@ -42,34 +45,102 @@
 #include <wx/msgdlg.h>
 #include <wx/notebook.h>
 #include <wx/numformatter.h>
+#include <wx/panel.h>
 #include <wx/sizer.h>
 #include <wx/statbmp.h>
 #include <wx/stattext.h>
-#include <wx/xrc/xmlres.h>
+#include <wx/stdpaths.h>
+#include <wx/wupdlock.h>
 
 
 namespace
 {
 
-/** This class provides simple dialog that displays list
-  * of changes made in the catalog.
-  */
+inline auto variant_vector(std::initializer_list<wxVariant>&& init)
+{
+    return wxVector<wxVariant>(init.begin(), init.end());
+}
+
+
+
+class SummaryList : public wxDataViewListCtrl
+{
+public:
+    SummaryList(wxWindow *parent, int flags = 0)
+        : wxDataViewListCtrl(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+                             flags | wxDV_ROW_LINES | wxDV_VARIABLE_LINE_HEIGHT | wxBORDER_NONE)
+    {
+        SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#ifdef __WXOSX__
+        if (@available(macOS 11.0, *))
+            ((NSTableView*)[((NSScrollView*)GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
+#endif
+    }
+};
+
+
+/// This class provides simple dialog that displays list of changes made in the catalog.
 class MergeSummaryDialog : public wxDialog
 {
-    public:
-        MergeSummaryDialog(wxWindow *parent);
-        ~MergeSummaryDialog();
+public:
+    MergeSummaryDialog(wxWindow *parent);
+    ~MergeSummaryDialog();
 
-        /// Reads data from catalog and fill dialog's controls.
-        void TransferTo(const MergeStats& r);
+    /// Reads data from catalog and fill dialog's controls.
+    void TransferTo(const MergeStats& r);
+
+private:
+    SegmentedNotebookBase *m_notebook;
 };
 
 
 MergeSummaryDialog::MergeSummaryDialog(wxWindow *parent)
+    // TRANSLATORS: Title of window showing summary (added/removed strings, issues) of updating translations from sources or POT file
+    : wxDialog(parent, wxID_ANY, MSW_OR_OTHER(_("Update summary"), _("Update Summary")),
+               wxDefaultPosition, wxDefaultSize,
+               wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
-    wxXmlResource::Get()->LoadDialog(this, parent, "summary");
+    SetName("summary");
 
-    RestoreWindowState(this, wxDefaultSize, WinState_Size);
+#ifdef __WXMSW__
+    SetIcons(wxIconBundle(wxStandardPaths::Get().GetResourcesDir() + "\\Resources\\Poedit.ico"));
+#endif
+
+    auto topsizer = new wxBoxSizer(wxVERTICAL);
+    SetSizer(topsizer);
+
+    auto panel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN));
+
+    ColorScheme::SetupWindowColors(panel, [=]
+    {
+        if (ColorScheme::GetWindowMode(panel) == ColorScheme::Light)
+            panel->SetBackgroundColour(*wxWHITE);
+        else
+            panel->SetBackgroundColour(GetDefaultAttributes().colBg);
+    });
+    topsizer->Add(panel, wxSizerFlags(1).Expand().Border(wxLEFT|wxRIGHT|wxTOP, PX(20)));
+
+    auto sizer = new wxBoxSizer(wxVERTICAL);
+    panel->SetSizer(sizer);
+
+    m_notebook = SegmentedNotebook::Create(panel, SegmentStyle::SidebarPanels);
+    sizer->Add(m_notebook, wxSizerFlags(1).Expand().Border(wxTOP, PX(1)));
+
+    auto buttons = CreateButtonSizer(wxOK);
+    auto ok = static_cast<wxButton*>(FindWindow(wxID_OK));
+    ok->SetLabel(_("Close"));
+    ok->SetDefault();
+
+#ifdef __WXOSX__
+    topsizer->AddSpacer(PX(5));
+    topsizer->Add(buttons, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT|wxBOTTOM, PX(10)));
+#else
+    topsizer->AddSpacer(PX(10));
+    topsizer->Add(buttons, wxSizerFlags().Expand().Border(wxRIGHT, PX(15)));
+    topsizer->AddSpacer(PX(15));
+#endif
+
+    RestoreWindowState(this, wxSize(PX(700), PX(500)), WinState_Size);
     CentreOnParent();
 }
 
@@ -82,65 +153,53 @@ MergeSummaryDialog::~MergeSummaryDialog()
 
 void MergeSummaryDialog::TransferTo(const MergeStats& r)
 {
-    wxString sum;
-    sum.Printf(_("(New: %i, obsolete: %i)"),
-               (int)r.added.size(), (int)r.removed.size());
-    XRCCTRL(*this, "items_count", wxStaticText)->SetLabel(sum);
+    wxWindowUpdateLocker lock(this);
 
-    wxNotebook *notebook = XRCCTRL(*this, "notebook", wxNotebook);
-
-    if (!r.removed.empty())
+    if (r.errors)
     {
-        wxListBox *listbox = XRCCTRL(*this, "obsolete_strings", wxListBox);
-#ifdef __WXOSX__
-        if (@available(macOS 11.0, *))
-            ((NSTableView*)[((NSScrollView*)listbox->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
-#endif
+        auto list = new SummaryList(m_notebook);
+        m_notebook->AddPage(list, _("Issues"));
 
-        for (auto& s: r.removed)
+        // TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+        list->AppendTextColumn(_("File"), wxDATAVIEW_CELL_INERT, wxCOL_WIDTH_AUTOSIZE);
+        // TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+        list->AppendTextColumn(_("Line"), wxDATAVIEW_CELL_INERT, wxCOL_WIDTH_AUTOSIZE, wxALIGN_RIGHT);
+        // TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+        list->AppendTextColumn(_("Issue"), wxDATAVIEW_CELL_INERT, wxCOL_WIDTH_AUTOSIZE);
+
+        for (auto& i: r.errors.items)
         {
-            listbox->Append(s.to_string());
+            if (i.has_location())
+                list->AppendItem(variant_vector({i.file, wxString::Format("%d", i.line), i.text}));
+            else
+                list->AppendItem(variant_vector({"", "", i.text}));
         }
-    }
-    else
-    {
-        notebook->DeletePage(2);
     }
 
     if (!r.added.empty())
     {
-        wxListBox *listbox = XRCCTRL(*this, "new_strings", wxListBox);
-#ifdef __WXOSX__
-        if (@available(macOS 11.0, *))
-            ((NSTableView*)[((NSScrollView*)listbox->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
-#endif
+        auto list = new SummaryList(m_notebook, wxDV_NO_HEADER);
+        m_notebook->AddPage(list, MSW_OR_OTHER(_("New strings"), _("New Strings")));
+
+        list->AppendTextColumn(MSW_OR_OTHER(_("New strings"), _("New Strings")), wxDATAVIEW_CELL_INERT, wxCOL_WIDTH_AUTOSIZE);
 
         for (auto& s: r.added)
         {
-            listbox->Append(s.to_string());
+            list->AppendItem(variant_vector({s.to_string()}));
         }
     }
-    else
-    {
-        notebook->DeletePage(1);
-    }
 
-    if (r.errors)
+    if (!r.removed.empty())
     {
-        wxListBox *listbox = XRCCTRL(*this, "issues", wxListBox);
-    #ifdef __WXOSX__
-        if (@available(macOS 11.0, *))
-            ((NSTableView*)[((NSScrollView*)listbox->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
-    #endif
+        auto list = new SummaryList(m_notebook, wxDV_NO_HEADER);
+        m_notebook->AddPage(list, MSW_OR_OTHER(_("Removed strings"), _("Removed Strings")));
 
-        for (auto& i: r.errors.items)
+        list->AppendTextColumn(MSW_OR_OTHER(_("Removed strings"), _("Removed Strings")), wxDATAVIEW_CELL_INERT, wxCOL_WIDTH_AUTOSIZE);
+
+        for (auto& s: r.removed)
         {
-            listbox->Append(i.pretty_print());
+            list->AppendItem(variant_vector({s.to_string()}));
         }
-    }
-    else
-    {
-        notebook->DeletePage(0);
     }
 }
 

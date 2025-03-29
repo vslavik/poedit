@@ -94,7 +94,6 @@ XRC_RESOURCES = \
         $(srcdir)/resources/menus.xrc \
         $(srcdir)/resources/prefs.xrc \
         $(srcdir)/resources/properties.xrc \
-        $(srcdir)/resources/summary.xrc \
         $(srcdir)/resources/toolbar.xrc
 
 compiled_xrc.cpp: $(XRC_RESOURCES)
