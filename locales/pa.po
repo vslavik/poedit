@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2024-10-31 12:30+0100\n"
-"PO-Revision-Date: 2024-10-25 10:16\n"
+"POT-Creation-Date: 2025-03-21 15:42+0100\n"
+"PO-Revision-Date: 2025-03-22 10:17\n"
 "Last-Translator: \n"
 "Language-Team: Punjabi\n"
 "Language: pa_IN\n"
@@ -17,733 +17,1190 @@ msgstr ""
 "X-Crowdin-File: /locales/poedit.pot\n"
 "X-Crowdin-File-ID: 3\n"
 
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#: src/aboutbox.cpp:135 src/wx_translatable_strings.h:42
+#, c-format
+msgid "About %s"
+msgstr "%s ਬਾਰੇ"
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#: src/aboutbox.cpp:167 src/welcomescreen.cpp:265
+#: src/wx_translatable_strings.h:46
+#, c-format
+msgid "Version %s"
+msgstr "%s ਵਰਜ਼ਨ"
+
+#: src/aboutbox.cpp:168
+msgid "Based on the open source version →"
+msgstr "ਓਪਨ ਸੋਰਸ ਵਰਜ਼ਨ ਉੱਤੇ ਅਧਾਰਿਤ →"
+
+#: src/aboutbox.cpp:174
+msgid "Acknowledgements"
+msgstr "ਧੰਨਵਾਦ"
+
+#: src/aboutbox.cpp:175
+msgid "License Agreement"
+msgstr "ਲਸੰਸ ਇਕਰਾਰਨਾਮਾ"
+
+#: src/aboutbox.cpp:182 src/prefsdlg.cpp:503
+msgid "Terms of Use"
+msgstr "ਵਰਤੋਂ ਦੀਆਂ ਸ਼ਰਤਾਂ"
+
+#: src/aboutbox.cpp:183
+msgid "Privacy Policy"
+msgstr "ਪਰਦੇਦਾਰੀ ਨੀਤੀ"
+
+#: src/aboutbox.cpp:244
+#, c-format
+msgid "Licensed to %s"
+msgstr "%s ਨੂੰ ਲਸੰਸ ਦਿੱਤਾ"
+
+#: src/aboutbox.cpp:246
+msgid "Free version (please upgrade!)"
+msgstr "ਮੁਫ਼ਤ ਵਰਜ਼ਨ (ਅੱਪਗਰੇਡ ਕਰੋ ਜੀ!)"
+
+#: src/attentionbar.cpp:83
 msgid "Hide this notification message"
 msgstr "ਇਹ ਸੂਚਨਾ ਸੁਨੇਹਾ ਓਹਲੇ ਕਰੋ"
 
+#: src/attentionbar.cpp:291
 msgid "Don’t Show Again"
 msgstr "ਮੁੜ ਨਾ ਦਿਖਾਓ"
 
+#: src/attentionbar.cpp:291
 msgid "Don’t show again"
 msgstr "ਮੁੜ ਨਾ ਦਿਖਾਓ"
 
+#: src/cat_operations.cpp:123
+msgid "Both files must be of the same file format."
+msgstr ""
+
+#: src/cat_update.cpp:93
 #, c-format
 msgid "(New: %i, obsolete: %i)"
 msgstr "(ਨਵੇਂ: %i, ਬਰਤਰਫ਼: %i)"
 
-msgid "Collecting source files…"
-msgstr "ਸਰੋਤ ਫ਼ਾਈਲਾਂ ਨੂੰ ਇਕੱਠਾ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ…"
+#: src/cat_update.cpp:98
+msgid "Update Summary"
+msgstr ""
 
-msgid "Extracting translatable strings…"
-msgstr "ਅਨੁਵਾਦ ਕਰਨਯੋਗ ਸਤਰਾਂ ਕੱਢੀਆਂ ਜਾ ਰਹੀਆਂ ਹਨ…"
+#. TRANSLATORS: Title of window showing summary (added/removed strings, issues) of updating translations from sources or POT file
+#: src/cat_update.cpp:98 src/resources/summary.xrc:4
+msgid "Update summary"
+msgstr "ਅੱਪਡੇਟ ਸੰਖੇਪ"
 
-msgid "Failed to load file with extracted translations."
-msgstr "ਕੱਢੇ ਗਏ ਅਨੁਵਾਦਾਂ ਵਾਲੀ ਫ਼ਾਈਲ ਲੋਡ ਕਰਨਾ ਅਸਫ਼ਲ ਰਿਹਾ।"
+#: src/cat_update.cpp:100 src/resources/summary.xrc:24
+msgid "Issues"
+msgstr ""
 
-msgid "Merging differences…"
-msgstr "ਫ਼ਰਕਾਂ ਨੂੰ ਮਿਲਾਇਆ ਜਾ ਰਿਹਾ ਹੈ…"
+#: src/cat_update.cpp:101
+msgid "New Strings"
+msgstr ""
 
+#: src/cat_update.cpp:101 src/resources/summary.xrc:45
+msgid "New strings"
+msgstr "ਨਵੀਂਆਂ ਸਤਰਾਂ"
+
+#: src/cat_update.cpp:102
+msgid "Removed Strings"
+msgstr ""
+
+#: src/cat_update.cpp:102
+msgid "Removed strings"
+msgstr ""
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:105 src/cloud_accounts_ui.cpp:263 src/manager.cpp:404
+#: src/recent_files.cpp:555 src/wx_translatable_strings.h:104
+msgid "File"
+msgstr "ਫ਼ਾਈਲ"
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:107
+msgid "Line"
+msgstr ""
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:109
+msgid "Issue"
+msgstr ""
+
+#: src/cat_update.cpp:205 src/cat_update.cpp:461
 msgid "Updating translations"
 msgstr "ਅਨੁਵਾਦ ਅੱਪਡੇਟ ਕੀਤੇ ਜਾ ਰਹੇ ਹਨ"
 
+#: src/cat_update.cpp:206
+#, c-format
+msgid "Found %d template file supported by Poedit Pro."
+msgid_plural "Found %d template files supported by Poedit Pro."
+msgstr[0] ""
+msgstr[1] ""
+
+#. TRANSLATORS: %s is a filename here, e.g. "mainpage.twig"
+#: src/cat_update.cpp:208
+msgid "Poedit Pro can extract strings from template files, but this functionality isn’t available in the free version. Would you like to upgrade to the Pro version?"
+msgstr "Poedit Pro ਟੈਮਪਲੇਟ ਫ਼ਾਈਲਾਂ ਵਿੱਚੋਂ ਸਤਰਾਂ ਕੱਢਕੇ ਦੇ ਸਕਦਾ ਹੈ। ਪਰ ਇਹ ਸੁਵਿਧਾ ਮੁਫ਼ਤ ਵਰਜਨ ਵਿੱਚ ਮੌਜੂਦ ਨਹੀਂ ਹੈ। ਕੀ ਤੁਸੀਂ Pro ਵਰਜਨ ਲੈਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
+
+#: src/cat_update.cpp:211 src/licensing_ui.cpp:691 src/sidebar_pro.cpp:1212
+msgid "Learn More"
+msgstr "ਹੋਰ ਜਾਣੋ"
+
+#: src/cat_update.cpp:211 src/customcontrols.cpp:326 src/licensing_ui.cpp:691
+#: src/sidebar_pro.cpp:1212
+msgid "Learn more"
+msgstr "ਹੋਰ ਜਾਣੋ"
+
+#: src/cat_update.cpp:216
+msgid "Don’t ask again"
+msgstr "ਮੁੜ ਨਾ ਪੁੱਛੋ"
+
+#: src/cat_update.cpp:217
+msgid "Skip templates"
+msgstr "ਟੈਂਪਲੇਟਾਂ ਨੂੰ ਛੱਡੋ"
+
+#: src/cat_update.cpp:226
+msgid "Found the following template files:"
+msgstr ""
+
+#: src/cat_update.cpp:245
+msgid "Don’t Ask Again"
+msgstr "ਮੁੜ ਨਾ ਪੁੱਛੋ"
+
+#: src/cat_update.cpp:246
+msgid "Skip Templates"
+msgstr "ਟੈਪਲੇਟਾਂ ਨੂੰ ਛੱਡੋ"
+
+#: src/cat_update.cpp:297
+msgid "Collecting source files…"
+msgstr "ਸਰੋਤ ਫ਼ਾਈਲਾਂ ਨੂੰ ਇਕੱਠਾ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ…"
+
+#: src/cat_update.cpp:321
+#, c-format
+msgid "Extracting translatable strings from %s file…"
+msgid_plural "Extracting translatable strings from %s files…"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/cat_update.cpp:348
+#, c-format
+msgid "Failed to extract WordPress metadata from file %s."
+msgstr "ਫ਼ਾਈਲ %s ਵਿੱਚੋਂ WordPress ਮੈਟਾਡੇਟਾ ਨੂੰ ਕੱਢਣਾ ਅਸਫ਼ਲ ਰਿਹਾ।"
+
+#: src/cat_update.cpp:356 src/cat_update.cpp:492
+msgid "Failed to load file with extracted translations."
+msgstr "ਕੱਢੇ ਗਏ ਅਨੁਵਾਦਾਂ ਵਾਲੀ ਫ਼ਾਈਲ ਲੋਡ ਕਰਨਾ ਅਸਫ਼ਲ ਰਿਹਾ।"
+
+#: src/cat_update.cpp:380
+#, c-format
+msgid "In: %s"
+msgstr "ਇਸ ਵਿੱਚ: %s"
+
+#: src/cat_update.cpp:387 src/edframe.cpp:1778
+msgid "Source code not available."
+msgstr "ਸਰੋਤ ਕੋਡ ਮੌਜੂਦ ਨਹੀਂ ਹੈ।"
+
+#: src/cat_update.cpp:388 src/edframe.cpp:1782
+msgid "Translations couldn’t be updated from the source code, because no code was found in the location specified in the file’s Properties."
+msgstr "ਅਨੁਵਾਦਾਂ ਨੂੰ ਸਰੋਤ ਕੋਡ ਤੋਂ ਅੱਪਡੇਟ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ, ਕਿਉਂਕਿ ਫ਼ਾਈਲ ਦੀਆਂ ਪ੍ਰਾਪਟੀਆਂ ਵਿੱਚ ਦੱਸੇ ਟਿਕਾਣੇ 'ਤੇ ਕੋਈ ਕੋਡ ਨਹੀਂ ਮਿਲਿਆ।"
+
+#: src/cat_update.cpp:392
+msgid "Permission denied."
+msgstr "ਇਜਾਜ਼ਤ ਨਹੀਂ ਦਿੱਤੀ ਗਈ।"
+
+#: src/cat_update.cpp:393
+msgid "You don’t have permission to read source code files from the location specified in the file’s Properties."
+msgstr "ਤੁਹਾਡੇ ਕੋਲ ਫ਼ਾਈਲ ਦੀਆਂ ਪ੍ਰਾਪਟੀਆਂ ਵਿੱਚ ਦੱਸੇ ਟਿਕਾਣੇ 'ਤੇ ਦਿੱਤੀਆਂ ਸਰੋਤ ਕੋਡ ਫ਼ਾਈਲਾਂ ਨੂੰ ਪੜ੍ਹਨ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਹੈ।"
+
+#. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
+#: src/cat_update.cpp:398
+msgid "If you previously denied access to your files, you can allow it in System Settings > Privacy & Security > Files & Folders."
+msgstr "ਜੇਕਰ ਤੁਹਾਨੂੰ ਪਹਿਲਾਂ ਵੀ ਤੁਹਾਡੀਆਂ ਫ਼ਾਈਲਾਂ ਤੱਕ ਜਾਣ ਨਹੀਂ ਦਿੱਤਾ ਗਿਆ, ਤਾਂ ਤੁਸੀਂ ਸਿਸਟਮ ਸੈਟਿੰਗਾਂ > ਪਰਦੇਦਾਰੀ ਤੇ ਸੁਰੱਖਿਆ > ਫ਼ਾਈਲਾਂ ਅਤੇ ਫ਼ੋਲਡਰਾਂ ਵਿੱਚ ਇਹ ਇਜਾਜ਼ਤ ਦੇ ਸਕਦੇ ਹੋ।"
+
+#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
+#: src/cat_update.cpp:403
+msgid "If you previously denied access to your files, you can allow it in System Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr "ਜੇਕਰ ਤੁਹਾਨੂੰ ਪਹਿਲਾਂ ਵੀ ਤੁਹਾਡੀਆਂ ਫ਼ਾਈਲਾਂ ਤੱਕ ਜਾਣ ਨਹੀਂ ਦਿੱਤਾ ਗਿਆ, ਤਾਂ ਤੁਸੀਂ ਸਿਸਟਮ ਤਰਜੀਹਾਂ > ਸੁਰੱਖਿਆ ਅਤੇ ਪਰਦੇਦਾਰੀ > ਪਰਦੇਦਾਰੀ > ਫ਼ਾਈਲਾਂ ਅਤੇ ਫ਼ੋਲਡਰਾਂ ਵਿੱਚ ਇਹ ਇਜਾਜ਼ਤ ਦੇ ਸਕਦੇ ਹੋ।"
+
+#: src/cat_update.cpp:409
+msgid "Failed to extract strings from source code."
+msgstr ""
+
+#: src/cat_update.cpp:443 src/edapp.cpp:1186 src/edframe.cpp:952
+#: src/edframe.cpp:2955
 #, c-format
 msgid "The file “%s” couldn’t be opened."
 msgstr "ਫ਼ਾਈਲ “%s” ਖੋਲ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕੀ ਹੈ।"
 
-msgid "Invalid file"
-msgstr "ਗਲਤ ਫ਼ਾਈਲ"
+#: src/cat_update.cpp:481
+msgid "Determining differences…"
+msgstr ""
 
+#: src/cat_update.cpp:489 src/cat_update.cpp:547
+msgid "Merging differences…"
+msgstr "ਫ਼ਰਕਾਂ ਨੂੰ ਮਿਲਾਇਆ ਜਾ ਰਿਹਾ ਹੈ…"
+
+#: src/cat_update.cpp:502
+msgid "Translation file is already up to date, no changes to strings were made."
+msgstr ""
+
+#: src/cat_update.cpp:508
+#, c-format
+msgid "Translation file was updated with %s change."
+msgid_plural "Translation file was updated with %s changes."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/cat_update.cpp:511
+msgid "New strings to translate:"
+msgstr ""
+
+#: src/cat_update.cpp:512
+msgid "Removed strings (no longer used):"
+msgstr ""
+
+#: src/cat_update.cpp:517
+msgid "Template files skipped (Pro-only):"
+msgstr ""
+
+#: src/cat_update.cpp:605
+#, c-format
+msgid "%d issue with the source strings was detected."
+msgid_plural "%d issues with the source strings were detected."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/cat_update.cpp:632
+msgid "View Details…"
+msgstr ""
+
+#: src/cat_update.cpp:632
+msgid "View details…"
+msgstr ""
+
+#: src/catalog.cpp:125
 #, c-format
 msgid "Malformed header: “%s”"
 msgstr "ਨੁਕਸਦਾਰ ਸਿਰਲੇਖ: “%s”"
 
+#: src/catalog.cpp:588
 msgid "PO Translation Files"
 msgstr "PO ਅਨੁਵਾਦ ਫਾਈਲਾਂ"
 
+#: src/catalog.cpp:590
 msgid "POT Translation Templates"
 msgstr "POT ਅਨੁਵਾਦ ਟੈਂਪਲੇਟ"
 
+#: src/catalog.cpp:592
 msgid "XLIFF Translation Files"
 msgstr "XLIFF ਅਨੁਵਾਦ ਫ਼ਾਈਲਾਂ"
 
+#: src/catalog.cpp:594
+msgid "Xcode Localization Catalog"
+msgstr ""
+
+#: src/catalog.cpp:596
 msgid "JSON Translation Files"
 msgstr "JSON ਅਨੁਵਾਦ ਫ਼ਾਈਲਾਂ"
 
 #. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+#: src/catalog.cpp:599
 msgid "Flutter Translation Files"
 msgstr "ਫਲੱਟਰ ਅਨੁਵਾਦ ਫ਼ਾਈਲਾਂ"
 
+#: src/catalog.cpp:608
 msgid "All Translation Files"
 msgstr "ਸਾਰੀਆਂ ਅਨੁਵਾਦ ਫ਼ਾਇਲਾਂ"
 
+#: src/catalog.cpp:1152
 msgid "The file is in a format not recognized by Poedit."
 msgstr "ਫਾਇਲ ਦਾ ਫਾਰਮੈਟ ਅਜਿਹਾ ਹੈ, ਜਿਸ ਨੂੰ ਪੋ-ਐਡਿਟ ਪਛਾਣਦਾ ਨਹੀਂ ਹੈ।"
 
-msgid ""
-"This JSON file isn’t a translations file and cannot be edited in Poedit."
-msgstr ""
-"ਇਹ JSON ਫ਼ਾਈਲ ਅਨੁਵਾਦ ਵਾਲੀ ਫ਼ਾਈਲ ਨਹੀਂ ਹੈ ਅਤੇ ਇਸ ਦਾ ਸੰਪਾਦਨ Poedit ਵਿੱਚ ਨਹੀਂ ਕੀਤਾ ਜਾ "
-"ਸਕਦਾ।"
+#: src/catalog_json.cpp:91
+msgid "This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgstr "ਇਹ JSON ਫ਼ਾਈਲ ਅਨੁਵਾਦ ਵਾਲੀ ਫ਼ਾਈਲ ਨਹੀਂ ਹੈ ਅਤੇ ਇਸ ਦਾ ਸੰਪਾਦਨ Poedit ਵਿੱਚ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।"
 
+#: src/catalog_json.cpp:140
 #, c-format
 msgid "Reading file content failed with the following error: %s"
 msgstr "ਅੱਗੇ ਦਿੱਤੀ ਗੜਬੜ ਕਰਕੇ ਫ਼ਾਈਲ ਦੀ ਸਮੱਗਰੀ ਨੂੰ ਪੜ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ: %s"
 
+#: src/catalog_json.cpp:151 src/catalog_po.cpp:1142 src/catalog_xliff.cpp:556
 #, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
+msgid "File “%s” is read-only and cannot be saved.\n"
 "Please save it under different name."
-msgstr ""
-"ਫ਼ਾਈਲ “%s” ਸਿਰਫ਼ ਪੜ੍ਹਨ ਲਈ ਹੈ ਅਤੇ ਸੰਭਾਲੀ ਨਹੀਂ ਜਾ ਸਕਦੀ।\n"
+msgstr "ਫ਼ਾਈਲ “%s” ਸਿਰਫ਼ ਪੜ੍ਹਨ ਲਈ ਹੈ ਅਤੇ ਸੰਭਾਲੀ ਨਹੀਂ ਜਾ ਸਕਦੀ।\n"
 "ਇਸ ਨੂੰ ਕਿਸੇ ਵੱਖਰੇ ਨਾਂ ਨਾਲ ਸੰਭਾਲੋ।"
 
+#: src/catalog_json.cpp:165 src/catalog_po.cpp:1178 src/catalog_po.cpp:1260
+#: src/catalog_po.cpp:1316 src/catalog_po.cpp:1373 src/catalog_po.cpp:1404
+#: src/catalog_po.cpp:1598 src/catalog_xliff.cpp:567 src/edframe.cpp:1339
+#: src/prefsdlg.cpp:757
 #, c-format
 msgid "Couldn’t save file %s."
 msgstr "%s ਫਾਈਲ ਸੰਭਾਲੀ ਨਹੀਂ ਜਾ ਸਕੀ।"
 
+#: src/catalog_json.cpp:503
 msgid "Screenshots:"
 msgstr "ਸਕਰੀਨਸ਼ਾਟ:"
 
+#: src/catalog_po.cpp:130
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
 msgstr[0] ""
 msgstr[1] "ਫ਼ਾਈਲ “%s” ਦੀਆਂ %i ਕਤਾਰਾਂ ਸਹੀ ਤਰ੍ਹਾਂ ਲੋਡ ਨਹੀਂ ਹੋਈਆਂ।"
 
+#: src/catalog_po.cpp:145
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "ਫ਼ਾਈਲ “%2$s” ਦੀ ਕਤਾਰ %1$d ਵਿੱਚ ਖਰਾਬੀ ਹੈ (ਵਾਜਬ %3$s ਡਾਟਾ ਨਹੀਂ)।"
 
+#: src/catalog_po.cpp:352
 msgid "Broken PO file: singular form msgstr used together with msgid_plural"
 msgstr "ਖਰਾਬ PO ਫ਼ਾਈਲ: ਇੱਕਵਚਨ ਕਿਸਮ msgstr ਨੂੰ msgid_plural ਨਾਲ ਇਕੱਠੇ ਵਰਤਿਆ"
 
+#: src/catalog_po.cpp:404
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr "ਖਰਾਬ PO ਫ਼ਾਈਲ: ਬਹੁਵਚਨ ਕਿਸਮ msgstr ਨੂੰ msgid_plural ਤੋਂ ਬਿਨਾਂ ਵਰਤਿਆ"
 
+#: src/catalog_po.cpp:926 src/catalog_po.cpp:940 src/catalog_po.cpp:953
+#: src/catalog_po.cpp:965
 msgid "Couldn’t load the file, it is probably damaged."
 msgstr "ਫ਼ਾਈਲ ਨੂੰ ਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ ਸ਼ਾਇਦ ਇਹ ਖ਼ਰਾਬ ਹੈ।"
 
-msgid ""
-"There were errors when loading the file. Some data may be missing or "
-"corrupted as the result."
+#: src/catalog_po.cpp:945
+msgid "There were errors when loading the file. Some data may be missing or corrupted as the result."
 msgstr "ਫ਼ਾਈਲ ਲੋਡ ਕਰਨ ਵਿੱਚ ਗਲਤੀਆਂ ਸਨ। ਨਤੀਜੇ ਵਜੋਂ ਸ਼ਾਇਦ ਕੁਝ ਡਾਟਾ ਗੁੰਮ ਜਾਂ ਖਰਾਬ ਹੋਵੇ।"
 
-msgid ""
-"There was a problem formatting the file nicely (but it was saved all right)."
+#: src/catalog_po.cpp:1269
+msgid "There was a problem formatting the file nicely (but it was saved all right)."
 msgstr "ਫਾਈਲ ਨੂੰ ਸਹੀ ਤਰ੍ਹਾਂ ਫਾਰਮੇਟ ਕਰਨ ਵੇਲੇ ਖ਼ਾਮੀ ਆਈ (ਪਰ ਇਹ ਠੀਕ ਤਰ੍ਹਾਂ ਸੰਭਾਲੀ ਗਈ)।"
 
+#: src/catalog_po.cpp:1521
 #, c-format
-msgid ""
-"The file couldn’t be saved in “%s” charset as specified in translation "
-"settings.\n"
-"\n"
+msgid "The file couldn’t be saved in “%s” charset as specified in translation settings.\n\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
-msgstr ""
-"ਅਨੁਵਾਦ ਦੀਆਂ ਸੈਟਿੰਗਾਂ ਮੁਤਾਬਕ ਫ਼ਾਈਲ “%s” ਅੱਖਰ-ਸਮੂਹ ਵਿੱਚ ਸੰਭਾਲੀ ਨਹੀਂ ਜਾ ਸਕਦੀ।\n"
-"\n"
+msgstr "ਅਨੁਵਾਦ ਦੀਆਂ ਸੈਟਿੰਗਾਂ ਮੁਤਾਬਕ ਫ਼ਾਈਲ “%s” ਅੱਖਰ-ਸਮੂਹ ਵਿੱਚ ਸੰਭਾਲੀ ਨਹੀਂ ਜਾ ਸਕਦੀ।\n\n"
 "ਇਹ UTF-8 ਵਿੱਚ ਸੰਭਾਲੀ ਹੋਣ ਕਰਕੇ ਸੈਟਿੰਗ ਨੂੰ ਉਸ ਮੁਤਾਬਕ ਸੋਧਿਆ ਗਿਆ।"
 
+#: src/catalog_po.cpp:1523 src/edframe.cpp:3221
 msgid "Error saving file"
 msgstr "ਫ਼ਾਈਲ ਸੰਭਾਲਣ ਵੇਲੇ ਖਾਮੀ"
 
+#: src/catalog_po.cpp:1674
 #, c-format
 msgid "“%s” is not a valid POT file."
 msgstr "“%s” ਜਾਇਜ਼ POT ਫਾਈਲ ਨਹੀਂ ਹੈ।"
 
+#: src/catalog_xcloc.cpp:85 src/catalog_xcloc.cpp:88
+msgid "Unexpectedly missing content in the XCLOC file."
+msgstr ""
+
+#: src/catalog_xcloc.cpp:99
+msgid "Saving in a different location is not supported for XCLOC files."
+msgstr ""
+
+#: src/catalog_xliff.cpp:473
 #, c-format
 msgid "Error while loading XLIFF file: %s"
 msgstr "XLIFF ਫ਼ਾਈਲ ਨੂੰ ਲੋਡ ਕਰਨ ਵੇਲੇ ਗੜਬੜ ਹੋਈ: %s"
 
+#: src/catalog_xliff.cpp:518
 #, c-format
 msgid "unsupported version (%s)"
 msgstr "ਅਸਮਰਥਿਤ ਵਰਜਨ (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
+#: src/catalog_xliff.cpp:679 src/catalog_xliff.cpp:866
 msgid "Broken markup in translation string."
 msgstr "ਅਨੁਵਾਦ ਸਤਰ ਵਿੱਚ ਖਰਾਬ ਮਾਰਕਅੱਪ।"
 
-msgid "Add Account"
-msgstr "ਖਾਤਾ ਜੋੜੋ"
-
-msgid "Add account"
-msgstr "ਖਾਤਾ ਜੋੜੋ"
-
-#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
-#, c-format
-msgid "Learn more about %s"
-msgstr "%s ਬਾਰੇ ਹੋਰ ਜਾਣੋ"
-
-msgid ""
-"Connect Poedit with supported cloud localization platforms to seamlessly "
-"sync translations managed on them."
+#: src/cloud_accounts_ui.cpp:82
+msgid "Connect Poedit with supported cloud localization platforms to seamlessly sync translations managed on them."
 msgstr ""
 
+#: src/cloud_accounts_ui.cpp:85 src/welcomescreen.cpp:295
 msgid "How does cloud sync work?"
 msgstr "ਕਲਾਉਡ ਸਿੰਕ ਕਿਵੇਂ ਕੰਮ ਕਰਦਾ ਹੈ?"
 
+#: src/cloud_accounts_ui.cpp:96
 msgid "Account"
 msgstr "ਖਾਤਾ"
 
+#: src/cloud_accounts_ui.cpp:159
 msgid "(not signed in)"
 msgstr "(ਸਾਈਨ ਇਨ ਨਹੀਂ ਹੈ)"
 
-msgid "File"
-msgstr "ਫ਼ਾਈਲ"
-
+#: src/cloud_accounts_ui.cpp:353
 msgid "Open cloud translation"
 msgstr "ਕਲਾਉਡ ਅਨੁਵਾਦ ਖੋਲ੍ਹੋ"
 
+#: src/cloud_accounts_ui.cpp:365
 msgid "Manage accounts"
 msgstr "ਖਾਤਿਆਂ ਦਾ ਇੰਤਜ਼ਾਮ ਕਰੋ"
 
+#: src/cloud_accounts_ui.cpp:374 src/export_html.cpp:77
 msgid "Project:"
 msgstr "ਪਰੋਜੈਕਟ:"
 
+#: src/cloud_accounts_ui.cpp:378 src/export_html.cpp:79
+#: src/resources/prefs.xrc:11 src/resources/prefs.xrc:15
+#: src/resources/properties.xrc:54 src/wordpress/wordpress_gui.cpp:228
+#: src/wordpress/wordpress_gui.cpp:354
 msgid "Language:"
 msgstr "ਭਾਸ਼ਾ:"
 
+#: src/cloud_accounts_ui.cpp:433
 msgid "Sign in to Cloud Account"
 msgstr "ਕਲਾਉਡ ਖਾਤੇ ਵਿੱਚ ਸਾਈਨ ਇਨ ਕਰੋ"
 
+#: src/cloud_accounts_ui.cpp:433
 msgid "Sign in to cloud account"
 msgstr "ਕਲਾਉਡ ਖਾਤੇ ਵਿੱਚ ਸਾਈਨ ਇਨ ਕਰੋ"
 
+#: src/cloud_accounts_ui.cpp:524
 msgid "No translation projects listed in your account."
 msgstr "ਤੁਹਾਡੇ ਖਾਤੇ ਵਿੱਚ ਕੋਈ ਅਨੁਵਾਦ ਪ੍ਰੋਜੈਕਟ ਨਹੀਂ ਹੈ।"
 
+#: src/cloud_accounts_ui.cpp:633 src/crowdin_gui.cpp:347
 msgid "Downloading latest translations…"
 msgstr "ਤਾਜ਼ੇ ਅਨੁਵਾਦਾਂ ਨੂੰ ਡਾਊਨਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ…"
 
 #. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#: src/cloud_accounts_ui.cpp:729
 #, c-format
 msgid "Sign in to %s"
 msgstr "%s ਵਿੱਚ ਸਾਈਨ ਇਨ ਕਰੋ"
 
+#: src/cloud_sync.h:99
 msgid "Syncing"
 msgstr "ਸਿੰਕ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#: src/cloud_sync.h:116
 #, c-format
 msgid "Uploading translations to %s…"
 msgstr "ਅਨੁਵਾਦ %s ਉੱਤੇ ਅੱਪਲੋਡ ਕੀਤੇ ਜਾ ਰਹੇ ਹਨ…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#: src/cloud_sync.h:168
 #, c-format
 msgid "Uploading translations to %s failed."
 msgstr "ਅਨੁਵਾਦ %s ਉੱਤੇ ਅੱਪਲੋਡ ਕਰਨ ਥਈ ਅਸਫ਼ਲ ਹੈ।"
 
+#: src/cloud_sync.h:169
 msgid "Syncing error"
 msgstr "ਸਿੰਕ ਕਰਨ ਵਿੱਚ ਗਲਤੀ"
 
+#: src/commentdlg.cpp:48
 msgid "Add"
 msgstr "ਜੋੜੋ"
 
+#: src/crowdin_client.cpp:144
 msgid "Unknown Crowdin error."
 msgstr "ਅਣਪਛਾਤੀ Crowdin ਗਲਤੀ ਹੈ।"
 
+#: src/crowdin_client.cpp:154
 msgid "Not authorized, please sign in again."
 msgstr "ਅਧਿਕਾਰ ਨਹੀਂ ਹੈ, ਦੁਬਾਰਾ ਸਾਈਨ ਇਨ ਕਰੋ।"
 
+#. TRANSLATORS: Crowdin has string-based and file-based project kinds (see https://support.crowdin.com/creating-project/#file-based-project)
+#: src/crowdin_client.cpp:346
+msgid "String-based Crowdin projects are not supported."
+msgstr ""
+
+#: src/crowdin_client.cpp:350
 msgid "Downloading translations is disabled in this project."
 msgstr "ਇਸ ਪ੍ਰੋਜੈਕਟ ਦੇ ਅਨੁਵਾਦ ਡਾਊਨਲੋਡ ਕਰਨ ਦੀ ਸੁਵਿਧਾ ਬੰਦ ਹੈ।"
 
+#: src/crowdin_gui.cpp:94 src/localazy_gui.cpp:105
 msgid "Sign In"
 msgstr "ਸਾਈਨ ਇਨ"
 
+#: src/crowdin_gui.cpp:94 src/localazy_gui.cpp:105
 msgid "Sign in"
 msgstr "ਸਾਈਨ ਇਨ"
 
+#: src/crowdin_gui.cpp:96 src/localazy_gui.cpp:107
 msgid "Sign Out"
 msgstr "ਸਾਈਨ ਆਉਟ"
 
+#: src/crowdin_gui.cpp:96 src/localazy_gui.cpp:107
 msgid "Sign out"
 msgstr "ਸਾਈਨ ਆਉਟ"
 
+#: src/crowdin_gui.cpp:103
 msgid "Learn more about Crowdin"
 msgstr "Crowdin ਬਾਰੇ ਹੋਰ ਜਾਣੋ"
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool."
+#: src/crowdin_gui.cpp:134
+msgid "Crowdin is an online translation management platform and collaborative translation tool. We use Crowdin ourselves to translate Poedit into many languages, and we love it."
 msgstr ""
-"Crowdin ਆਨਲਾਈਨ ਲੋਕਾਲਾਈਜ਼ੇਸ਼ਨ ਇੰਤਜ਼ਾਮ ਕਰਨ ਵਾਲਾ ਮੰਚ ਅਤੇ ਮਿਲਕੇ ਅਨੁਵਾਦ ਕਰਨ ਦਾ ਸਾਧਨ ਹੈ।"
 
+#: src/crowdin_gui.cpp:198 src/localazy_gui.cpp:210
 msgid "Waiting for authentication…"
 msgstr "ਪਰਮਾਣਕਿਤਾ ਦੀ ਉਡੀਕ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ…"
 
+#: src/crowdin_gui.cpp:199 src/localazy_gui.cpp:211
 msgid "Updating user information…"
 msgstr "ਵਰਤੋਂਕਾਰ ਜਾਣਕਾਰੀ ਨੂੰ ਅੱਪਡੇਟ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ…"
 
+#: src/crowdin_gui.cpp:306
 msgid "Sign in to Crowdin"
 msgstr "Crowdin ਵਿੱਚ ਦਾਖਲ ਹੋਵੋ"
 
+#: src/crowdin_gui.cpp:326
 msgid "Syncing with Crowdin failed."
 msgstr "Crowdin ਨਾਲ ਸਮਕਾਲੀਕਰਨ ਅਸਫਲ ਰਿਹਾ।"
 
+#: src/crowdin_gui.cpp:327
 msgid "Crowdin error"
 msgstr "Crowdin ਗਲਤੀ"
 
+#: src/crowdin_gui.cpp:335
 msgid "Uploading translations…"
 msgstr "ਅਨੁਵਾਦਾਂ ਨੂੰ ਅੱਪਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ…"
 
+#: src/customcontrols.cpp:282 src/wx_translatable_strings.h:98
 msgid "&Copy"
 msgstr "ਕਾਪੀ ਕਰੋ(&C)"
 
-msgid "Learn more"
-msgstr "ਹੋਰ ਜਾਣੋ"
-
+#: src/edapp.cpp:510 src/resources/menus.xrc:377 src/resources/menus.xrc:494
+#: src/wx_translatable_strings.h:105
 msgid "&Help"
 msgstr "ਮਦਦ(&H)"
 
+#: src/edapp.cpp:800
 msgid "MO files can’t be directly edited in Poedit."
 msgstr "MO ਫ਼ਾਈਲਾਂ ਦਾ Poedit ਵਿੱਚ ਸਿੱਧੇ ਸੰਪਾਦਨ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।"
 
+#: src/edapp.cpp:801
 msgid "Error opening file"
 msgstr "ਫਾਈਲ ਖੋਲ੍ਹਣ ਦੌਰਾਨ ਗਲਤੀ"
 
-msgid ""
-"Please open and edit the corresponding PO file instead. When you save it, "
-"the MO file will be updated as well."
-msgstr ""
-"ਕਿਰਪਾ ਕਰਕੇ ਇਸਦੀ ਬਜਾਏ ਸਬੰਧਿਤ PO ਫ਼ਾਈਲ ਖੋਲ੍ਹ ਕੇ ਸੰਪਾਦਨ ਕਰੋ। ਇਸਦੇ ਸੰਭਾਲੇ ਜਾਣ 'ਤੇ MO ਫ਼ਾਈਲ ਵੀ "
-"ਅੱਪਡੇਟ ਹੋ ਜਾਵੇਗੀ।"
+#: src/edapp.cpp:803
+msgid "Please open and edit the corresponding PO file instead. When you save it, the MO file will be updated as well."
+msgstr "ਕਿਰਪਾ ਕਰਕੇ ਇਸਦੀ ਬਜਾਏ ਸਬੰਧਿਤ PO ਫ਼ਾਈਲ ਖੋਲ੍ਹ ਕੇ ਸੰਪਾਦਨ ਕਰੋ। ਇਸਦੇ ਸੰਭਾਲੇ ਜਾਣ 'ਤੇ MO ਫ਼ਾਈਲ ਵੀ ਅੱਪਡੇਟ ਹੋ ਜਾਵੇਗੀ।"
 
+#: src/edapp.cpp:844
 msgid "don’t delete temporary files (for debugging)"
 msgstr "ਅਸਥਾਈ ਫ਼ਾਈਲਾਂ ਨਾ ਮਿਟਾਓ (ਡੀਬੱਗਿੰਗ ਲਈ)"
 
+#: src/edapp.cpp:846
 msgid "handle a poedit:// URI"
 msgstr "poedit:// URI ਹੈਂਡਲ ਕਰੋ"
 
+#: src/edapp.cpp:848
 msgid "go to item at given line number"
 msgstr "ਦਿੱਤੇ ਸਤਰ ਨੰਬਰ 'ਤੇ ਆਈਟਮ 'ਤੇ ਜਾਓ"
 
+#: src/edapp.cpp:871
 msgid "Failed to communicate with Poedit process."
 msgstr "Poedit ਪ੍ਰਕਿਰਿਆ ਨਾਲ ਸੰਚਾਰ ਨਹੀਂ ਹੋਇਆ।"
 
+#: src/edapp.cpp:993 src/edapp.cpp:998
 #, c-format
 msgid "Unhandled exception occurred: %s"
 msgstr "ਨਾ-ਸਾਂਭਣਯੋਗ ਅਪਵਾਦ: %s"
 
+#: src/edapp.cpp:1156
 msgid "Select translation template"
 msgstr "ਅਨੁਵਾਦ ਟੈਂਪਲੇਟ ਚੁਣੋ"
 
+#: src/edapp.cpp:1187 src/edframe.cpp:953 src/edframe.cpp:2687
+#: src/edframe.cpp:2956
+msgid "Invalid file"
+msgstr "ਗਲਤ ਫ਼ਾਈਲ"
+
+#: src/edapp.cpp:1220 src/wordpress/wordpress_gui.cpp:137
+msgid "WordPress"
+msgstr "ਵਰਡਪ੍ਰੈੱਸ"
+
+#: src/edapp.cpp:1271 src/edframe.cpp:2859
 msgid "Select translation file"
 msgstr "ਅਨੁਵਾਦ ਫਾਈਲ ਚੁਣੋ"
 
+#: src/edapp.cpp:1373
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit ਵਰਤਣ ਲਈ ਸੌਖਾ ਅਨੁਵਾਦ ਸੰਪਾਦਕ ਹੈ।"
 
+#: src/edframe.cpp:445
 msgid "You can’t drop more than one file on Poedit window."
 msgstr "ਤੁਸੀਂ Poedit ਵਿੰਡੋ ਵਿੱਚ ਇੱਕ ਤੋਂ ਵੱਧ ਫ਼ਾਈਲਾਂ ਨਹੀਂ ਸੁੱਟ ਸਕਦੇ।"
 
+#: src/edframe.cpp:452
 #, c-format
 msgid "File “%s” is not a translation file."
 msgstr "ਫਾਈਲ “%s” ਅਨੁਵਾਦ ਵਾਲੀ ਫਾਈਲ ਨਹੀਂ ਹੈ।"
 
+#: src/edframe.cpp:459 src/recent_files.cpp:349
 #, c-format
 msgid "File “%s” doesn’t exist."
 msgstr "ਫ਼ਾਈਲ “%s” ਮੌਜੂਦ ਨਹੀਂ ਹੈ।"
 
+#: src/edframe.cpp:476
 msgid "Poedit"
 msgstr "ਪੋਆਡਿਟ"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
+#: src/edframe.cpp:890
 #, c-format
-msgid ""
-"Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgid "Spellchecking is disabled, because the dictionary for %s isn’t installed."
 msgstr "ਸ਼ਬਦ-ਜੋੜ ਜਾਂਚ ਬੰਦ ਹੈ, ਕਿਉਂਕਿ %s ਦਾ ਸ਼ਬਦਕੋਸ਼ ਸਥਾਪਤ ਨਹੀਂ ਕੀਤਾ ਗਿਆ ਹੈ।"
 
+#: src/edframe.cpp:894
 msgid "Install"
 msgstr "ਇੰਸਟਾਲ ਕਰੋ"
 
+#: src/edframe.cpp:986 src/edframe.cpp:1161
 #, c-format
 msgid "The file “%s” has been changed by another application."
 msgstr "ਫ਼ਾਈਲ “%s” ਨੂੰ ਕਿਸੇ ਹੋਰ ਐਪਲੀਕੇਸ਼ਨ ਨੇ ਬਦਲ ਦਿੱਤਾ ਹੈ।"
 
+#: src/edframe.cpp:987 src/edframe.cpp:991
 msgid "Reload file"
 msgstr "ਫ਼ਾਈਲ ਮੁੜ-ਲੋਡ ਕਰੋ"
 
-msgid ""
-"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
-"be lost if you do."
-msgstr ""
-"ਕੀ ਤੁਸੀਂ ਡਿਸਕ ਤੋਂ ਫ਼ਾਈਲ ਮੁੜ-ਲੋਡ ਕਰਨੀ ਹੈ? ਅਜਿਹਾ ਕਰਨ ਨਾਲ Poedit ਵਿੱਚ ਨਾ-ਸੰਭਾਲੇ ਸੰਪਾਦਨ ਖੁੰਝ "
-"ਜਾਣਗੇ।"
+#: src/edframe.cpp:990
+msgid "Do you want to reload the file from disk? Your unsaved edits in Poedit will be lost if you do."
+msgstr "ਕੀ ਤੁਸੀਂ ਡਿਸਕ ਤੋਂ ਫ਼ਾਈਲ ਮੁੜ-ਲੋਡ ਕਰਨੀ ਹੈ? ਅਜਿਹਾ ਕਰਨ ਨਾਲ Poedit ਵਿੱਚ ਨਾ-ਸੰਭਾਲੇ ਸੰਪਾਦਨ ਖੁੰਝ ਜਾਣਗੇ।"
 
+#. TRANSLATORS: Button next to a QA warning: causes the warning to be dismissed
+#: src/edframe.cpp:991 src/editing_area.cpp:325 src/editing_area.cpp:377
 msgid "Ignore"
 msgstr "ਅਣਗੌਲਿਆ ਕਰੋ"
 
+#: src/edframe.cpp:991
 msgid "Reload File"
 msgstr "ਫਾਈਲ ਮੁੜ-ਲੋਡ ਕਰੋ"
 
+#: src/edframe.cpp:1095
 msgid "The file has been modified. Do you want to save changes?"
 msgstr "ਫ਼ਾਈਲ ਸੋਧੀ ਗਈ। ਕੀ ਤੁਸੀਂ ਤਬਦੀਲੀਆਂ ਸੰਭਾਲਣੀਆਂ ਹਨ?"
 
+#: src/edframe.cpp:1096
 msgid "Save changes"
 msgstr "ਤਬਦੀਲੀਆਂ ਸੰਭਾਲੋ"
 
+#: src/edframe.cpp:1099
 msgid "Your changes will be lost if you don’t save them."
 msgstr "ਜੇ ਤੁਸੀਂ ਤਬਦੀਲੀਆਂ ਨਹੀਂ ਸੰਭਾਲਦੇ ਤਾਂ ਉਹ ਖੁੰਝ ਜਾਣਗੀਆਂ।"
 
+#: src/edframe.cpp:1102 src/edframe.cpp:1162 src/sidebar_terminology.cpp:70
+#: src/wx_translatable_strings.h:115
 msgid "Save"
 msgstr "ਸੰਭਾਲੋ"
 
+#: src/edframe.cpp:1104
 msgid "Do&n’t save"
 msgstr "ਨਾ ਸੰਭਾਲੋ(&n)"
 
+#: src/edframe.cpp:1106
 msgid "Don’t Save"
 msgstr "ਨਾ ਸੰਭਾਲੋ"
 
+#: src/edframe.cpp:1165
 msgid "The changes made by the other application will be lost if you save."
 msgstr "ਜੇਕਰ ਤੁਸੀਂ ਸੰਭਾਲਦੇ ਹੋ, ਤਾਂ ਕਿਸੇ ਹੋਰ ਐਪਲੀਕੇਸ਼ਨ ਵੱਲੋਂ ਕੀਤੀਆਂ ਤਬਦੀਲੀਆਂ ਖੁੰਝ ਜਾਣਗੀਆਂ।"
 
+#: src/edframe.cpp:1166 src/edframe.cpp:2268 src/licensing_ui.cpp:284
+#: src/prefsdlg.cpp:770 src/prefsdlg.cpp:1103 src/resources/comment.xrc:41
+#: src/resources/manager.xrc:63 src/sidebar_terminology.cpp:73
+#: src/wx_translatable_strings.h:94
 msgid "Cancel"
 msgstr "ਰੱਦ ਕਰੋ"
 
+#: src/edframe.cpp:1166
 msgid "Save Anyway"
 msgstr "ਫ਼ਿਰ ਵੀ ਸੰਭਾਲੋ"
 
+#: src/edframe.cpp:1166
 msgid "Save anyway"
 msgstr "ਫ਼ਿਰ ਵੀ ਸੰਭਾਲੋ"
 
+#: src/edframe.cpp:1219
 msgid "Save as…"
 msgstr "…ਵਜੋਂ ਸੰਭਾਲੋ"
 
+#: src/edframe.cpp:1268
 msgid "Compile to…"
 msgstr "ਇੱਥੇ ਕੰਪਾਇਲ ਕਰੋ…"
 
+#: src/edframe.cpp:1271
 msgid "Compiled Translation Files"
 msgstr "ਕੰਪਾਇਲ ਕੀਤੀਆਂ ਅਨੁਵਾਦ ਫਾਈਲਾਂ"
 
+#: src/edframe.cpp:1312
 msgid "Export to HTML…"
 msgstr "…HTML ਵਜੋਂ ਦਰਾਮਦ ਕਰੋ"
 
+#: src/edframe.cpp:1315
 msgid "HTML Files"
 msgstr "HTML ਫਾਈਲਾਂ"
 
+#: src/edframe.cpp:1330
+msgid "Exporting to HTML"
+msgstr ""
+
+#: src/edframe.cpp:1364
+msgid "Export to Excel"
+msgstr "Excel ਵਜੋਂ ਦਰਾਮਦ ਕਰੋ"
+
+#: src/edframe.cpp:1367 src/edframe.cpp:1401
+msgid "Excel Files"
+msgstr "Excel ਫ਼ਾਇਲਾਂ"
+
+#: src/edframe.cpp:1379
+msgid "Exporting to Excel"
+msgstr ""
+
+#: src/edframe.cpp:1398
+msgid "Import from Excel"
+msgstr "Excel ਤੋਂ ਬਰਾਮਦ ਕਰੋ"
+
+#: src/edframe.cpp:1423
+msgid "Importing from Excel"
+msgstr ""
+
+#. TRANSLATORS: %s is filename of Excel file
+#: src/edframe.cpp:1440
 #, c-format
-msgid "In: %s"
-msgstr "ਇਸ ਵਿੱਚ: %s"
+msgid "The “%s” file does not appear to contain any translations intended for this file."
+msgstr ""
 
-msgid "Source code not available."
-msgstr "ਸਰੋਤ ਕੋਡ ਮੌਜੂਦ ਨਹੀਂ ਹੈ।"
+#: src/edframe.cpp:1445
+msgid "No translations were updated from the Excel file."
+msgstr ""
 
+#. TRANSLATORS: %s is a (formatted) number here
+#: src/edframe.cpp:1452
+#, c-format
+msgid "%s string was updated from the Excel file."
+msgid_plural "%s strings were updated from the Excel file."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/edframe.cpp:1456
+msgid "Translations updated:"
+msgstr ""
+
+#: src/edframe.cpp:1457
+msgid "Strings matched in translation file:"
+msgstr ""
+
+#: src/edframe.cpp:1458
+msgid "Excel rows processed:"
+msgstr ""
+
+#: src/edframe.cpp:1779
 msgid "Updating failed"
 msgstr "ਅੱਪਡੇਟ ਕਰਨਾ ਅਸਫ਼ਲ ਰਿਹਾ।"
 
-msgid ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the file’s Properties."
+#: src/edframe.cpp:1852
+msgid "Open reference file"
 msgstr ""
-"ਅਨੁਵਾਦਾਂ ਨੂੰ ਸਰੋਤ ਕੋਡ ਤੋਂ ਅੱਪਡੇਟ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ, ਕਿਉਂਕਿ ਫ਼ਾਈਲ ਦੀਆਂ ਪ੍ਰਾਪਟੀਆਂ ਵਿੱਚ ਦੱਸੇ ਟਿਕਾਣੇ "
-"'ਤੇ ਕੋਈ ਕੋਡ ਨਹੀਂ ਮਿਲਿਆ।"
 
-msgid "Permission denied."
-msgstr "ਇਜਾਜ਼ਤ ਨਹੀਂ ਦਿੱਤੀ ਗਈ।"
+#: src/edframe.cpp:1883 src/resources/menus.xrc:267
+msgid "Update from &POT File…"
+msgstr "&POT ਫਾਈਲ ਤੋਂ ਅੱਪਡੇਟ…"
 
-msgid ""
-"You don’t have permission to read source code files from the location "
-"specified in the file’s Properties."
+#: src/edframe.cpp:1883 src/resources/menus.xrc:266
+msgid "Update from &POT file…"
+msgstr "&POT ਫਾਈਲ ਤੋਂ ਅੱਪਡੇਟ…"
+
+#: src/edframe.cpp:1887
+msgid "Update from Reference File…"
 msgstr ""
-"ਤੁਹਾਡੇ ਕੋਲ ਫ਼ਾਈਲ ਦੀਆਂ ਪ੍ਰਾਪਟੀਆਂ ਵਿੱਚ ਦੱਸੇ ਟਿਕਾਣੇ 'ਤੇ ਦਿੱਤੀਆਂ ਸਰੋਤ ਕੋਡ ਫ਼ਾਈਲਾਂ ਨੂੰ ਪੜ੍ਹਨ ਦੀ ਇਜਾਜ਼ਤ "
-"ਨਹੀਂ ਹੈ।"
 
-#. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Settings > Privacy & Security > Files & Folders."
+#: src/edframe.cpp:1887
+msgid "Update from reference file…"
 msgstr ""
-"ਜੇਕਰ ਤੁਹਾਨੂੰ ਪਹਿਲਾਂ ਵੀ ਤੁਹਾਡੀਆਂ ਫ਼ਾਈਲਾਂ ਤੱਕ ਜਾਣ ਨਹੀਂ ਦਿੱਤਾ ਗਿਆ, ਤਾਂ ਤੁਸੀਂ ਸਿਸਟਮ ਸੈਟਿੰਗਾਂ > "
-"ਪਰਦੇਦਾਰੀ ਤੇ ਸੁਰੱਖਿਆ > ਫ਼ਾਈਲਾਂ ਅਤੇ ਫ਼ੋਲਡਰਾਂ ਵਿੱਚ ਇਹ ਇਜਾਜ਼ਤ ਦੇ ਸਕਦੇ ਹੋ।"
 
-#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
-msgstr ""
-"ਜੇਕਰ ਤੁਹਾਨੂੰ ਪਹਿਲਾਂ ਵੀ ਤੁਹਾਡੀਆਂ ਫ਼ਾਈਲਾਂ ਤੱਕ ਜਾਣ ਨਹੀਂ ਦਿੱਤਾ ਗਿਆ, ਤਾਂ ਤੁਸੀਂ ਸਿਸਟਮ ਤਰਜੀਹਾਂ > "
-"ਸੁਰੱਖਿਆ ਅਤੇ ਪਰਦੇਦਾਰੀ > ਪਰਦੇਦਾਰੀ > ਫ਼ਾਈਲਾਂ ਅਤੇ ਫ਼ੋਲਡਰਾਂ ਵਿੱਚ ਇਹ ਇਜਾਜ਼ਤ ਦੇ ਸਕਦੇ ਹੋ।"
-
-msgid "Translation entries in the file are probably incorrect."
-msgstr "ਇਸ ਫ਼ਾਈਲ ਵਿੱਚ ਅਨੁਵਾਦ ਇੰਦਰਾਜ ਸ਼ਾਇਦ ਗਲਤ ਹਨ।"
-
-msgid "Updating the file failed. Click on 'Details >>' for details."
-msgstr "ਫ਼ਾਈਲ ਅੱਪਡੇਟ ਨਹੀਂ ਹੋ ਸਕੀ। ਵੇਰਵਿਆਂ ਲਈ 'ਵੇਰਵੇ >>' 'ਤੇ ਕਲਿੱਕ ਕਰੋ।"
-
-msgid "Open translation template"
-msgstr "ਅਨੁਵਾਦ ਟੈਂਪਲੇਟ ਖੋਲ੍ਹੋ"
-
+#: src/edframe.cpp:2020
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "ਟਰਾਂਸਲੇਸ਼ਨ ਵਿੱਚ %d ਮਸਲਾ ਮਿਲਿਆ।"
 msgstr[1] "ਅਨੁਵਾਦ ਵਿੱਚ %d ਮਸਲੇ ਮਿਲੇ।"
 
+#: src/edframe.cpp:2025 src/edframe.cpp:2071
 msgid "Validation results"
 msgstr "ਪ੍ਰਮਾਣੀਕਰਨ ਦੇ ਨਤੀਜੇ"
 
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
-"ਖਾਮੀਆਂ ਵਾਲੇ ਇੰਦਰਾਜਾਂ ਨੂੰ ਸੂਚੀ ਵਿੱਚ ਲਾਲ ਰੰਗ ਲਗਾਇਆ ਗਿਆ। ਕਿਸੇ ਇੰਦਰਾਜ ਨੂੰ ਚੁਣਨ ਨਾਲ ਉਸ ਵਿਚਲੀ "
-"ਖਾਮੀ ਦੇ ਵੇਰਵੇ ਦਿਸਣਗੇ।"
+#: src/edframe.cpp:2028
+msgid "Entries with errors were marked in red in the list. Details of the error will be shown when you select such an entry."
+msgstr "ਖਾਮੀਆਂ ਵਾਲੇ ਇੰਦਰਾਜਾਂ ਨੂੰ ਸੂਚੀ ਵਿੱਚ ਲਾਲ ਰੰਗ ਲਗਾਇਆ ਗਿਆ। ਕਿਸੇ ਇੰਦਰਾਜ ਨੂੰ ਚੁਣਨ ਨਾਲ ਉਸ ਵਿਚਲੀ ਖਾਮੀ ਦੇ ਵੇਰਵੇ ਦਿਸਣਗੇ।"
 
+#: src/edframe.cpp:2037
 msgid "The file was saved safely."
 msgstr "ਫ਼ਾਈਲ ਸੁਰੱਖਿਅਤ ਢੰਗ ਨਾਲ ਸੰਭਾਲੀ ਗਈ।"
 
-msgid ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
-msgstr ""
-"ਫ਼ਾਈਲ ਸਹੀ ਤਰ੍ਹਾਂ ਸੰਭਾਲੀ ਅਤੇ MO ਫ਼ਾਰਮੈਟ ਵਿੱਚ ਕੰਪਾਇਲ ਕੀਤੀ ਗਈ, ਪਰ ਸ਼ਾਇਦ ਇਹ ਸਹੀ ਢੰਗ ਨਾਲ ਕੰਮ "
-"ਨਾ ਕਰੇ।"
+#: src/edframe.cpp:2040
+msgid "The file was saved safely and compiled into the MO format, but it will probably not work correctly."
+msgstr "ਫ਼ਾਈਲ ਸਹੀ ਤਰ੍ਹਾਂ ਸੰਭਾਲੀ ਅਤੇ MO ਫ਼ਾਰਮੈਟ ਵਿੱਚ ਕੰਪਾਇਲ ਕੀਤੀ ਗਈ, ਪਰ ਸ਼ਾਇਦ ਇਹ ਸਹੀ ਢੰਗ ਨਾਲ ਕੰਮ ਨਾ ਕਰੇ।"
 
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-msgstr ""
-"ਫ਼ਾਈਲ ਸਹੀ ਤਰ੍ਹਾਂ ਸੰਭਾਲੀ ਗਈ, ਪਰ ਇਹ MO ਫ਼ਾਰਮੈਟ ਵਿੱਚ ਕੰਪਾਇਲ ਨਹੀਂ ਕੀਤੀ ਅਤੇ ਵਰਤੀ ਨਹੀਂ ਜਾ "
-"ਸਕਦੀ।"
+#: src/edframe.cpp:2043
+msgid "The file was saved safely, but it cannot be compiled into the MO format and used."
+msgstr "ਫ਼ਾਈਲ ਸਹੀ ਤਰ੍ਹਾਂ ਸੰਭਾਲੀ ਗਈ, ਪਰ ਇਹ MO ਫ਼ਾਰਮੈਟ ਵਿੱਚ ਕੰਪਾਇਲ ਨਹੀਂ ਕੀਤੀ ਅਤੇ ਵਰਤੀ ਨਹੀਂ ਜਾ ਸਕਦੀ।"
 
-msgid ""
-"The file was compiled into the MO format, but it will probably not work "
-"correctly."
+#: src/edframe.cpp:2052
+msgid "The file was compiled into the MO format, but it will probably not work correctly."
 msgstr "ਫ਼ਾਈਲ MO ਫ਼ਾਰਮੈਟ ਵਿੱਚ ਕੰਪਾਇਲ ਕੀਤੀ ਗਈ, ਪਰ ਸ਼ਾਇਦ ਇਹ ਸਹੀ ਤਰ੍ਹਾਂ ਕੰਮ ਨਾ ਕਰੇ।"
 
+#: src/edframe.cpp:2056
 msgid "The file cannot be compiled into the MO format and used."
 msgstr "ਫ਼ਾਈਲ MO ਫ਼ਾਰਮੈਟ ਵਿੱਚ ਕੰਪਾਇਲ ਕੀਤੀ ਅਤੇ ਵਰਤੀ ਨਹੀਂ ਜਾ ਸਕਦੀ।"
 
+#: src/edframe.cpp:2070
 msgid "No problems with the translation found."
 msgstr "ਅਨੁਵਾਦ ਵਿੱਚ ਕੋਈ ਖਾਮੀ ਨਹੀ ਲੱਭੀ।"
 
+#: src/edframe.cpp:2080
 #, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural ""
-"The translation is ready for use, but %d entries are not translated yet."
+msgid_plural "The translation is ready for use, but %d entries are not translated yet."
 msgstr[0] "ਟਰਾਂਸਲੇਸ਼ਨ ਵਰਤੇ ਜਾਣ ਲਈ ਤਿਆਰ ਹੈ, ਪਰ %d ਐਂਟਰੀ ਹਾਲੇ ਟਰਾਂਸਲੇਟ ਨਹੀਂ ਹੈ।"
 msgstr[1] "ਟਰਾਂਸਲੇਸ਼ਨ ਵਰਤੇ ਜਾਣ ਲਈ ਤਿਆਰ ਹੈ, ਪਰ %d ਐਂਟਰੀਆਂ ਹਾਲੇ ਟਰਾਂਸਲੇਟ ਨਹੀਂ ਹਨ।"
 
+#: src/edframe.cpp:2085
 msgid "The translation is ready for use."
 msgstr "ਅਨੁਵਾਦ ਵਰਤੇ ਜਾਣ ਲਈ ਤਿਆਰ ਹੈ।"
 
+#: src/edframe.cpp:2251
+msgid "Translation Quality Warnings"
+msgstr "ਅਨੁਵਾਦ ਗੁਣਵੱਤਾ ਦੀਆਂ ਚੇਤਾਵਨੀਆਂ"
+
+#: src/edframe.cpp:2254
+msgid "Poedit performs automated quality checks on translations. You can configure which categories of checks are useful for you and disable unwanted ones here."
+msgstr "Poedit ਵੱਲੋਂ ਅਨੁਵਾਦਾਂ ਦੀ ਗੁਣਵੱਤਾ ਲਈ ਆਪਣੇ-ਆਪ ਜਾਚਾਂ ਕੀਤੀਆਂ ਜਾਂਦੀਆਂ ਹਨ। ਤੁਸੀਂ ਇੱਥੇ ਜਾਚਾਂ ਦੀਆਂ ਉਨ੍ਹਾਂ ਸ਼੍ਰੇਣੀਆਂ ਨੂੰ ਤੈਅ ਕਰ ਸਕਦੇ ਹੋ ਜੋ ਤੁਹਾਡੇ ਲਈ ਲਾਹੇਵੰਦ ਹਨ ਅਤੇ ਬਾਕੀਆਂ ਨੂੰ ਬੰਦ ਕਰ ਸਕਦੇ ਹੋ।"
+
+#: src/edframe.cpp:2265 src/resources/manager.xrc:55
+#: src/resources/summary.xrc:87 src/sidebar_pro.cpp:1146
+#: src/wx_translatable_strings.h:108
+msgid "OK"
+msgstr "ਠੀਕ ਹੈ"
+
+#: src/edframe.cpp:2510 src/prefsdlg.cpp:484 src/sidebar_pro.cpp:705
+msgid "Contributing translations improves the quality of online suggestions for everybody — the more people do it, the better the suggestions can be. Your translations are submitted anonymously and are available to other translators using Poedit or other CAT tools."
+msgstr "ਅਨੁਵਾਦਾਂ ਵਿੱਚ ਯੋਗਦਾਨ ਪਾਉਣ ਨਾਲ ਹਰੇਕ ਲਈ ਔਨਲਾਈਨ ਸੁਝਾਵਾਂ ਦੀ ਗੁਣਵੱਤਾ ਵਧਦੀ ਹੈ — ਜਿੰਨੇ ਲੋਕ ਅਨੁਵਾਦ ਕਰਨਗੇ, ਓਨੇ ਬਿਹਤਰ ਸੁਝਾਅ ਮਿਲਣਗੇ। ਅਨੁਵਾਦ ਗੁਮਨਾਮ ਤਰੀਕੇ ਨਾਲ ਸਪੁਰਦ ਕੀਤੇ ਜਾਂਦੇ ਹਨ ਅਤੇ ਹੋਰਾਂ ਅਨੁਵਾਦਕਾਂ ਲਈ Poedit ਜਾਂ ਹੋਰ CAT ਸੰਦ ਵਰਤਣ ਵੇਲੇ ਉਪਲਬਧ ਹਨ।"
+
+#: src/edframe.cpp:2515
+msgid "Can Poedit contribute your translations of this file to the online translation memory?"
+msgstr "ਕੀ Poedit ਇਸ ਫ਼ਾਈਲ ਦੇ ਤੁਹਾਡੇ ਅਨੁਵਾਦਾਂ ਨੂੰ ਯੋਗਦਾਨ ਵਜੋਂ ਔਨਲਾਈਨ ਅਨੁਵਾਦ ਮੈਮੋਰੀ ਵਿੱਚ ਜੋੜ ਸਕਦਾ ਹੈ?"
+
+#. TRANSLATORS: Try to keep this as short as the original. If you can't, break it into two lines.
+#: src/edframe.cpp:2519 src/sidebar_pro.cpp:701
+msgid "Apply to all files I edit"
+msgstr "ਸਾਰੀਆਂ ਫ਼ਾਈਲਾਂ 'ਤੇ ਲਾਗੂ ਕਰੋ | ਸੋਧੋ"
+
+#: src/edframe.cpp:2520
+msgid "Contribute"
+msgstr "ਯੋਗਦਾਨ"
+
+#: src/edframe.cpp:2527
+msgid "Keep Private"
+msgstr "ਪ੍ਰਾਈਵੇਟ ਰੱਖੋ"
+
+#: src/edframe.cpp:2527
+msgid "Keep private"
+msgstr "ਪ੍ਰਾਈਵੇਟ ਰੱਖੋ"
+
+#: src/edframe.cpp:2686
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr "Poedit ਨੇ ਫ਼ਾਈਲ “%s” ਵਿਚਲੀ ਅਢੁਕਵੀਂ ਸਮੱਗਰੀ ਨੂੰ ਆਪਣੇ-ਆਪ ਠੀਕ ਕੀਤਾ।"
 
-msgid ""
-"The file contained duplicate items, which is not allowed in PO files and "
-"would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as needing work and correct "
-"them if necessary."
-msgstr ""
-"ਫ਼ਾਈਲ ਵਿੱਚ ਦੂਹਰੀਆਂ ਆਈਟਮਾਂ ਹਨ, ਜੋ PO ਫ਼ਾਈਲਾਂ ਲਈ ਠੀਕ ਨਹੀਂ ਅਤੇ ਜਿਸ ਕਰਕੇ ਫ਼ਾਈਲ ਵਰਤੀ ਨਹੀਂ ਜਾ "
-"ਸਕਦੀ। Poedit ਨੇ ਸਮੱਸਿਆ ਠੀਕ ਕੀਤੀ, ਪਰ ਤੁਹਾਨੂੰ ਕਿਸੇ ਵੀ ਉਸ ਆਈਟਮ ਦੇ ਅਨੁਵਾਦ ਦੀ ਸਮੀਖਿਆ ਕਰਨੀ "
-"ਪਵੇਗੀ ਜਿਸ 'ਤੇ 'ਕੰਮ ਕਰਨ ਦੀ ਲੋੜ ਹੈ' ਦਾ ਨਿਸ਼ਾਨ ਲੱਗੇ ਅਤੇ ਲੋੜ ਮੁਤਾਬਕ ਉਸਨੂੰ ਠੀਕ ਕਰਨਾ ਪਵੇਗਾ।"
+#: src/edframe.cpp:2691
+msgid "The file contained duplicate items, which is not allowed in PO files and would prevent the file from being used. Poedit fixed the issue, but you should review translations of any items marked as needing work and correct them if necessary."
+msgstr "ਫ਼ਾਈਲ ਵਿੱਚ ਦੂਹਰੀਆਂ ਆਈਟਮਾਂ ਹਨ, ਜੋ PO ਫ਼ਾਈਲਾਂ ਲਈ ਠੀਕ ਨਹੀਂ ਅਤੇ ਜਿਸ ਕਰਕੇ ਫ਼ਾਈਲ ਵਰਤੀ ਨਹੀਂ ਜਾ ਸਕਦੀ। Poedit ਨੇ ਸਮੱਸਿਆ ਠੀਕ ਕੀਤੀ, ਪਰ ਤੁਹਾਨੂੰ ਕਿਸੇ ਵੀ ਉਸ ਆਈਟਮ ਦੇ ਅਨੁਵਾਦ ਦੀ ਸਮੀਖਿਆ ਕਰਨੀ ਪਵੇਗੀ ਜਿਸ 'ਤੇ 'ਕੰਮ ਕਰਨ ਦੀ ਲੋੜ ਹੈ' ਦਾ ਨਿਸ਼ਾਨ ਲੱਗੇ ਅਤੇ ਲੋੜ ਮੁਤਾਬਕ ਉਸਨੂੰ ਠੀਕ ਕਰਨਾ ਪਵੇਗਾ।"
 
+#: src/edframe.cpp:2707
 msgid "Language of the translation isn’t set."
 msgstr "ਅਨੁਵਾਦ ਦੀ ਭਾਸ਼ਾ ਸੈੱਟ ਨਹੀਂ ਹੈ।"
 
+#: src/edframe.cpp:2709
 msgid "Set Language"
 msgstr "ਭਾਸ਼ਾ ਦਿਓ"
 
+#: src/edframe.cpp:2709
 msgid "Set language"
 msgstr "ਭਾਸ਼ਾ ਦਿਓ"
 
 #. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-msgid ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
-msgstr ""
-"ਅਨੁਵਾਦ ਦੀ ਭਾਸ਼ਾ ਸਹੀ ਤਰ੍ਹਾਂ ਸੈੱਟ ਨਾ ਹੋਣ 'ਤੇ ਸੁਝਾਅ ਨਹੀਂ ਮਿਲਣਗੇ। ਹੋਰ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ, ਜਿਵੇਂ ਕਿ ਬਹੁਵਚਨ "
-"ਬਣਾਉਣ 'ਤੇ ਵੀ ਸ਼ਾਇਦ ਅਸਰ ਪਵੇ।"
+#: src/edframe.cpp:2712 src/edframe.cpp:2728
+msgid "Suggestions are not available if the translation language is not set correctly. Other features, such as plural forms, may be affected as well."
+msgstr "ਅਨੁਵਾਦ ਦੀ ਭਾਸ਼ਾ ਸਹੀ ਤਰ੍ਹਾਂ ਸੈੱਟ ਨਾ ਹੋਣ 'ਤੇ ਸੁਝਾਅ ਨਹੀਂ ਮਿਲਣਗੇ। ਹੋਰ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ, ਜਿਵੇਂ ਕਿ ਬਹੁਵਚਨ ਬਣਾਉਣ 'ਤੇ ਵੀ ਸ਼ਾਇਦ ਅਸਰ ਪਵੇ।"
 
+#: src/edframe.cpp:2726 src/pretranslate.cpp:508
 msgid "Language of the translation is the same as source language."
 msgstr "ਅਨੁਵਾਦ ਦੀ ਭਾਸ਼ਾ ਅਤੇ ਸਰੋਤ ਦੀ ਭਾਸ਼ਾ ਇੱਕੋ ਹੈ।"
 
+#: src/edframe.cpp:2729
 msgid "Fix Language"
 msgstr "ਭਾਸ਼ਾ ਨੂੰ ਠੀਕ ਕਰੋ"
 
+#: src/edframe.cpp:2729
 msgid "Fix language"
 msgstr "ਭਾਸ਼ਾ ਨੂੰ ਠੀਕ ਕਰੋ"
 
-msgid ""
-"This file has entries with plural forms, but doesn’t have Plural-Forms "
-"header configured."
+#: src/edframe.cpp:2746
+msgid "This file has entries with plural forms, but doesn’t have Plural-Forms header configured."
 msgstr "ਇਸ ਫ਼ਾਈਲ ਵਿੱਚ ਬਹੁਵਚਨ ਵਾਲੇ ਇੰਦਰਾਜ ਹਨ, ਪਰ ਬਹੁਵਚਨ ਵਾਲਾ ਸਿਰਲੇਖ ਤੈਅ ਨਹੀਂ ਹੈ।"
 
-msgid ""
-"Entries in this file have different plural forms count from what the file’s "
-"Plural-Forms header says"
-msgstr ""
-"ਇਸ ਫ਼ਾਈਲ ਵਿਚਲੇ ਇੰਦਰਾਜਾਂ ਦੇ ਵੱਖੋ-ਵੱਖਰੇ ਬਹੁਵਚਨ ਹਨ ਜੋ ਇਸ ਫ਼ਾਈਲ ਦੇ ਬਹੁਵਚਨ ਵਾਲੇ ਸਿਰਲੇਖ ਦੇ ਉਲਟ ਹੈ"
+#: src/edframe.cpp:2750
+msgid "Entries in this file have different plural forms count from what the file’s Plural-Forms header says"
+msgstr "ਇਸ ਫ਼ਾਈਲ ਵਿਚਲੇ ਇੰਦਰਾਜਾਂ ਦੇ ਵੱਖੋ-ਵੱਖਰੇ ਬਹੁਵਚਨ ਹਨ ਜੋ ਇਸ ਫ਼ਾਈਲ ਦੇ ਬਹੁਵਚਨ ਵਾਲੇ ਸਿਰਲੇਖ ਦੇ ਉਲਟ ਹੈ"
 
+#: src/edframe.cpp:2759
 msgid "Required header Plural-Forms is missing."
 msgstr "ਬਹੁਵਚਨ ਲਈ ਲੋੜੀਂਦਾ ਸਿਰਲੇਖ ਮੌਜੂਦ ਨਹੀਂ ਹੈ।"
 
+#: src/edframe.cpp:2763
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "ਬਹੁਵਚਨ ਸਿਰਲੇਖ (\"%s\") ਵਿੱਚ ਵਾਕ-ਵਿਉਂਤ ਖਾਮੀ।"
 
+#: src/edframe.cpp:2775
 msgid "Fix the Header"
 msgstr "ਸਿਰਲੇਖ ਠੀਕ ਕਰੋ"
 
+#: src/edframe.cpp:2775
 msgid "Fix the header"
 msgstr "ਸਿਰਲੇਖ ਠੀਕ ਕਰੋ"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
+#: src/edframe.cpp:2793
 #, c-format
 msgid "Plural forms expression used by the file is unusual for %s."
 msgstr "ਇਸ ਫ਼ਾਈਲ ਵਿੱਚ ਵਰਤਿਆ ਬਹੁਵਚਨ ਕਥਨ %s ਮੁਤਾਬਕ ਠੀਕ ਨਹੀਂ ਹੈ।"
 
 #. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
+#: src/edframe.cpp:2798
 msgid "Review"
 msgstr "ਪੜਤਾਲ"
 
+#. TRANSLATORS: "original" as in "used in this file originally, as it was when opened"
+#: src/edframe.cpp:2834
+msgid "String IDs (original)"
+msgstr "ਸਤਰ ID (ਅਸਲ)"
+
+#: src/edframe.cpp:2839 src/edframe.cpp:2942 src/edlistctrl.cpp:739
+#: src/export_html.cpp:146
+msgid "unknown language"
+msgstr "ਅਣਜਾਣ ਭਾਸ਼ਾ"
+
+#. TRANSLATORS: "original" as in "used in this file originally, as it was when opened"; "%s" is language name
+#: src/edframe.cpp:2841
+#, c-format
+msgid "%s (original)"
+msgstr "%s (ਅਸਲ)"
+
+#: src/edframe.cpp:2853
+msgid "Load from Another File…"
+msgstr "ਹੋਰ ਫ਼ਾਈਲ ਤੋਂ ਲੋਡ ਕਰੋ…"
+
+#: src/edframe.cpp:2853
+msgid "Load from another file…"
+msgstr "ਹੋਰ ਫ਼ਾਈਲ ਤੋਂ ਲੋਡ ਕਰੋ…"
+
+#: src/edframe.cpp:2897
 msgid "Would you like to use English for source text?"
 msgstr "ਕੀ ਤੁਸੀਂ ਅੰਗਰੇਜ਼ੀ ਨੂੰ ਸਰੋਤ ਲਿਖਤ ਵਜੋਂ ਵਰਤਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
 
+#: src/edframe.cpp:2899
 #, c-format
-msgid ""
-"This file uses string IDs instead of source text. Poedit can load English "
-"texts from the “%s” file for you."
+msgid "This file uses string IDs instead of source text. Poedit can load English texts from the “%s” file for you."
 msgstr ""
 
 #. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+#: src/edframe.cpp:2901
 msgid "Load English"
 msgstr "ਅੰਗਰੇਜ਼ੀ ਲੋਡ ਕਰੋ"
 
+#: src/edframe.cpp:3034 src/export_html.cpp:103
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
 msgstr "ਅਨੁਵਾਦ ਕੀਤਾ: %2$d ਵਿੱਚੋਂ %1$d (%3$d %%)"
 
+#: src/edframe.cpp:3038 src/export_html.cpp:105
 #, c-format
 msgid "Remaining: %d"
 msgstr "ਬਾਕੀ: %d"
 
+#: src/edframe.cpp:3043
 #, c-format
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "%d ਗਲਤੀ"
 msgstr[1] "%d ਗਲਤੀਆਂ"
 
+#: src/edframe.cpp:3048 src/export_html.cpp:117
 #, c-format
 msgid "%d entry"
 msgid_plural "%d entries"
 msgstr[0] "%d ਦਾਖਲ ਚੀਜ਼"
 msgstr[1] "%d ਦਾਖਲ ਚੀਜ਼ਾਂ"
 
+#: src/edframe.cpp:3077
 msgid " (unsaved)"
 msgstr " (ਨਾ-ਸੰਭਾਲਿਆ)"
 
+#: src/edframe.cpp:3118
 msgid " (modified)"
 msgstr " (ਸੋਧੀ)"
 
+#: src/edframe.cpp:3188 src/edframe.cpp:3192
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "ਅਨੁਵਾਦ ਮੈਮੋਰੀ ਅੱਪਡੇਟ ਕਰਨ ਲਈ ਫੇਲ੍ਹ: %s"
 
+#: src/edframe.cpp:3220
+#, c-format
+msgid "The file “%s” couldn’t be saved."
+msgstr ""
+
+#: src/edframe.cpp:3330 src/resources/menus.xrc:288
 msgid "Remove same-as-source translations"
 msgstr ""
 
-msgid ""
-"Do you want to remove all translations that are idential to the source text?"
+#: src/edframe.cpp:3332
+msgid "Do you want to remove all translations that are idential to the source text?"
 msgstr ""
 
-msgid ""
-"This action will delete any translations that match the source text exactly. "
-"This cannot be undone."
+#: src/edframe.cpp:3333
+msgid "This action will delete any translations that match the source text exactly. This cannot be undone."
 msgstr ""
 
+#: src/edframe.cpp:3337 src/edframe.cpp:3364
 msgid "Keep"
 msgstr "ਰੱਖੋ"
 
+#: src/edframe.cpp:3337
 msgid "Remove"
 msgstr "ਹਟਾਓ"
 
+#: src/edframe.cpp:3356
 msgid "Purge deleted translations"
 msgstr "ਹਟਾਏ ਗਏ ਅਨੁਵਾਦ ਨੂੰ ਕੱਢੋ"
 
+#: src/edframe.cpp:3358
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr "ਕੀ ਤੁਸੀਂ ਸਭ ਅਨੁਵਾਦਾਂ ਨੂੰ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ, ਜੋ ਕਿ ਹੁਣ ਵਰਤੋਂ ਯੋਗ ਨਹੀਂ ਹਨ?"
 
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
+#: src/edframe.cpp:3360
+msgid "If you continue with purging, all translations marked as deleted will be permanently removed. You will have to translate them again if they are added back in the future."
 msgstr ""
 
+#: src/edframe.cpp:3364
 msgid "Purge"
 msgstr ""
 
+#: src/edframe.cpp:3432 src/resources/menus.xrc:113
 msgid "Copy from source text"
 msgstr "ਸਰੋਤ ਲਿਖਤ ਤੋਂ ਕਾਪੀ ਕਰੋ"
 
+#: src/edframe.cpp:3434 src/resources/menus.xrc:114
 msgid "Copy from Source Text"
 msgstr "ਸਰੋਤ ਲਿਖਤ ਤੋਂ ਕਾਪੀ ਕਰੋ"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/edframe.cpp:3436 src/edframe.cpp:3443 src/edframe.cpp:3451
+#: src/sidebar.cpp:422 src/sidebar.cpp:835 src/sidebar.cpp:861
+#: src/sidebar.cpp:863 src/wx_translatable_strings.h:123
 msgctxt "keyboard key"
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
+#: src/edframe.cpp:3439 src/resources/menus.xrc:108
 msgid "Clear translation"
 msgstr "ਅਨੁਵਾਦ ਮਿਟਾਓ"
 
+#: src/edframe.cpp:3441 src/resources/menus.xrc:109
 msgid "Clear Translation"
 msgstr "ਅਨੁਵਾਦ ਮਿਟਾਓ"
 
+#: src/edframe.cpp:3446 src/resources/comment.xrc:4 src/sidebar.cpp:251
 msgid "Edit comment"
 msgstr "ਟਿੱਪਣੀ ਸੋਧ"
 
+#: src/edframe.cpp:3448 src/sidebar.cpp:254
 msgid "Edit Comment"
 msgstr "ਟਿੱਪਣੀ ਸੋਧੋ"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
+#: src/edframe.cpp:3459 src/fileviewer.cpp:100
 msgid "Code Occurrences"
 msgstr "ਕੋਡ ਮੌਜੂਦਗੀਆਂ"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
+#: src/edframe.cpp:3459
 msgid "Code occurrences"
 msgstr "ਕੋਡ ਮੌਜੂਦਗੀਆਂ"
 
+#: src/edframe.cpp:3683
 msgid "Hide Sidebar"
 msgstr "ਬਾਹੀ ਓਹਲੇ ਕਰੋ"
 
+#: src/edframe.cpp:3685 src/resources/menus.xrc:242
 msgid "Show Sidebar"
 msgstr "ਬਾਹੀ ਵੇਖਾਓ"
 
+#: src/edframe.cpp:3716
 msgid "Hide Status Bar"
 msgstr "ਹਾਲਤ ਪੱਟੀ ਓਹਲੇ ਕਰੋ"
 
+#: src/edframe.cpp:3718 src/resources/menus.xrc:248
 msgid "Show Status Bar"
 msgstr "ਹਾਲਤ ਪੱਟੀ ਵੇਖਾਓ"
 
+#: src/editing_area.cpp:326
+msgid "Dismiss and ignore the warning."
+msgstr "ਖ਼ਾਰਜ ਕਰੋ ਤੇ ਚੇਤਾਵਨੀ ਅਣਡਿੱਠੀ ਕਰੋ।"
+
+#. TRANSLATORS: Reverse of the "Ignore" button, undoes that action
+#: src/editing_area.cpp:377
+msgid "Don’t ignore"
+msgstr "ਅਣਡਿੱਠਾ ਨਾ ਕਰੋ"
+
+#: src/editing_area.cpp:411
 msgid "String length in characters: translation | source"
 msgstr "ਅੱਖਰਾਂ ਵਿੱਚ ਸਤਰ ਦੀ ਲੰਬਾਈ: ਟਰਾਂਸਲੇਸ਼ਨ | ਸਰੋਤ"
 
+#: src/editing_area.cpp:414
 msgid "String length in characters"
 msgstr "ਅੱਖਰਾਂ ਵਿੱਚ ਸਤਰ ਦੀ ਲੰਬਾਈ"
 
+#: src/editing_area.cpp:461 src/editing_area.cpp:787 src/edlistctrl.cpp:663
+#: src/edlistctrl.cpp:717 src/export_html.cpp:143
 msgid "Source text"
 msgstr "ਸਰੋਤ ਲਿਖਤ"
 
+#: src/editing_area.cpp:483 src/editing_area.cpp:853 src/editing_area.cpp:869
 msgid "Singular"
 msgstr "ਇੱਕ ਵਚਨ"
 
+#: src/editing_area.cpp:488 src/editing_area.cpp:874
 msgid "Plural"
 msgstr "ਬਹੁਵਚਨ"
 
+#: src/editing_area.cpp:534 src/sidebar_terminology.cpp:57
+#: src/sidebar_terminology.cpp:186 src/statistics.cpp:284
+#: src/statistics.cpp:411
 msgid "Translation"
 msgstr "ਅਨੁਵਾਦ"
 
+#: src/editing_area.cpp:543
 msgid "Pre-translated"
 msgstr "ਕੱਚਾ-ਅਨੁਵਾਦ"
 
+#: src/editing_area.cpp:566
 msgid "Needs Work"
 msgstr "ਕੰਮ ਕਰਨ ਦੀ ਲੋੜ ਹੈ"
 
@@ -755,664 +1212,1269 @@ msgstr "ਕੰਮ ਕਰਨ ਦੀ ਲੋੜ ਹੈ"
 #. "needs review" implies that somebody else should review the string after
 #. I am done with it (i.e. consider it good), while "needs work" implies I
 #. need to return to it and finish the translation.
+#: src/editing_area.cpp:566
 msgid "Needs work"
 msgstr "ਕੰਮ ਕਰਨ ਦੀ ਲੋੜ ਹੈ"
 
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
+#: src/editing_area.cpp:638
+msgid "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
-msgstr ""
-"POT ਫਾਈਲਾਂ ਸਿਰਫ਼ ਟੈਂਪਲੇਟ ਹੁੰਦੀਆਂ ਹਨ ਅਤੇ ਖੁਦ ਕੋਈ ਟਰਾਂਸਲੇਸ਼ਨ ਨਹੀਂ ਰੱਖਦੀਆਂ।\n"
+msgstr "POT ਫਾਈਲਾਂ ਸਿਰਫ਼ ਟੈਂਪਲੇਟ ਹੁੰਦੀਆਂ ਹਨ ਅਤੇ ਖੁਦ ਕੋਈ ਟਰਾਂਸਲੇਸ਼ਨ ਨਹੀਂ ਰੱਖਦੀਆਂ।\n"
 "ਟਰਾਂਸਲੇਸ਼ਨ ਕਰਨ ਲਈ ਟੈਂਪਲੇਟ ਦੇ ਅਧਾਰ ਉੱਤੇ ਨਵੀਂ PO ਫਾਈਲ ਬਣਾਓ।"
 
+#: src/editing_area.cpp:645
 msgid "Create new translation"
 msgstr "ਨਵਾਂ ਅਨੁਵਾਦ ਬਣਾਓ"
 
+#: src/editing_area.cpp:646
 msgid "Make a new translation from this POT file."
 msgstr "ਇਸ POT ਫਾਈਲ ਤੋਂ ਨਵੀਂ ਟਰਾਂਸਲੇਸ਼ਨ ਬਣਾਓ।"
 
 #. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+#: src/editing_area.cpp:785 src/edlistctrl.cpp:711 src/export_html.cpp:137
 msgid "Source text ID"
 msgstr "ਸਰੋਤ ਲਿਖਤ ID"
 
+#: src/editing_area.cpp:840
 msgid "Everything"
 msgstr "ਹਰ ਚੀਜ਼"
 
+#: src/editing_area.cpp:845
 #, c-format
 msgid "Form %i"
 msgstr "ਫਾਰਮ %i"
 
+#: src/editing_area.cpp:847
 #, c-format
 msgid "Form %i (unused)"
 msgstr "ਫਾਰਮ %i (unused)"
 
+#: src/editing_area.cpp:858
 msgid "Zero"
 msgstr "ਸਿਫ਼ਰ"
 
+#: src/editing_area.cpp:860
 msgid "One"
 msgstr "ਇੱਕ"
 
+#: src/editing_area.cpp:862
 msgid "Two"
 msgstr "ਦੋ"
 
+#: src/editing_area.cpp:876
 msgid "Other"
 msgstr "ਹੋਰ"
 
 #. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#: src/editing_area.cpp:1060
 #, c-format
 msgid "String context: %s"
 msgstr ""
 
 #. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#: src/editing_area.cpp:1067
 #, c-format
 msgid "String identifier: %s"
 msgstr "ਸਤਰ ਪਛਾਣਕਰਤਾ: %s"
 
+#: src/editing_area.cpp:1075
 #, c-format
 msgid "%s Format"
 msgstr "%s ਫਾਰਮੈਟ"
 
 #. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#: src/editing_area.cpp:1075
 #, c-format
 msgid "%s format"
 msgstr "%s ਫਾਰਮੈਟ"
 
+#: src/edlistctrl.cpp:668 src/edlistctrl.cpp:740 src/export_html.cpp:145
 #, c-format
 msgid "Translation — %s"
 msgstr "ਅਨੁਵਾਦ — %s"
 
+#: src/edlistctrl.cpp:672
 msgid "ID"
 msgstr "ਆਈਡੀ"
 
+#: src/edlistctrl.cpp:716 src/export_html.cpp:142
 #, c-format
 msgid "Source text — %s"
 msgstr "ਸਰੋਤ ਲਿਖਤ — %s"
 
-msgid "unknown language"
-msgstr "ਅਣਜਾਣ ਭਾਸ਼ਾ"
-
+#: src/errors.cpp:84
 #, c-format
 msgid "Network error: %s (%d)"
 msgstr "ਨੈੱਟਵਰਕ ਗਲਤੀ: %s (%d)"
 
+#: src/errors.cpp:93
 msgid "Unknown error"
 msgstr "ਅਣਪਛਾਤੀ ਗਲਤੀ"
 
-#, c-format
-msgid "Failed command: %s"
-msgstr "ਕਮਾਂਡ ਫੇਲ੍ਹ ਹੋਈ: %s"
+#: src/excel_io.cpp:261 src/excel_io.cpp:298 src/excel_io.cpp:302
+msgid "Failed to create the Excel file."
+msgstr ""
 
+#: src/excel_io.cpp:351 src/excel_io.cpp:395 src/excel_io.cpp:419
+msgid "Failed to import from Excel file."
+msgstr ""
+
+#: src/excel_io.cpp:428
+msgid "Excel Import"
+msgstr ""
+
+#. TRANSLATORS: Shown above a list of columns and their meaning
+#: src/excel_io.cpp:442
+msgid "Import from Excel columns as:"
+msgstr ""
+
+#: src/excel_io.cpp:452
+msgid "ID:"
+msgstr "ID:"
+
+#: src/excel_io.cpp:460
+msgid "Context:"
+msgstr ""
+
+#: src/excel_io.cpp:467
+msgid "Source text ID:"
+msgstr "ਸਰੋਤ ਲਿਖਤ ID:"
+
+#: src/excel_io.cpp:467
+msgid "Source text:"
+msgstr "ਸਰੋਤ ਲਿਖਤ:"
+
+#: src/excel_io.cpp:478
+msgid "Translation:"
+msgstr "ਅਨੁਵਾਦ:"
+
+#: src/excel_io.cpp:485 src/sidebar_terminology.cpp:192
+msgid "Import"
+msgstr "ਇੰਪੋਰਟ ਕਰੋ"
+
+#: src/extractors/extractor.cpp:373
 msgid "Failed to merge gettext catalogs."
 msgstr "gettext ਸਾਰਨੀਆਂ ਵਿੱਚ ਮਿਲਾਨ ਕਰਨਾ ਅਸਫ਼ਲ ਰਿਹਾ।"
 
+#: src/fileviewer.cpp:132
 msgid "Open in Editor"
 msgstr "ਐਡੀਟਰ ਵਿੱਚ ਖੋਲ੍ਹੋ"
 
+#: src/fileviewer.cpp:132
 msgid "Open in editor"
 msgstr "ਐਡੀਟਰ ਵਿੱਚ ਖੋਲ੍ਹੋ"
 
-msgid ""
-"No information about this string’s occurrences in the source code is "
-"provided in the file."
+#: src/fileviewer.cpp:256
+msgid "No information about this string’s occurrences in the source code is provided in the file."
 msgstr ""
 
+#: src/fileviewer.cpp:256
 msgid "No usage information"
 msgstr "ਕੋਈ ਵਰਤੋਂ ਜਾਣਕਾਰੀ ਨਹੀਂ"
 
+#: src/fileviewer.cpp:262
 #, c-format
 msgid "%d code occurrence"
 msgid_plural "%d code occurrences"
 msgstr[0] ""
 msgstr[1] ""
 
+#: src/fileviewer.cpp:283
 msgid "Source code not found"
 msgstr "ਸਰੋਤ ਕੋਡ ਨਹੀਂ ਮਿਲਿਆ"
 
-msgid ""
-"Poedit cannot show source code where the string is used, because the file is "
-"either not available in the referenced location or it is a symbolic "
-"reference that doesn’t point to a real file."
+#: src/fileviewer.cpp:284
+msgid "Poedit cannot show source code where the string is used, because the file is either not available in the referenced location or it is a symbolic reference that doesn’t point to a real file."
 msgstr ""
 
+#: src/fileviewer.cpp:298
 msgid "File cannot be opened"
 msgstr "ਫਾਈਲ ਖੋਲ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕਦੀ ਹੈ"
 
+#: src/fileviewer.cpp:299
 #, c-format
 msgid "Poedit was unable to open the “%s” file."
 msgstr "Poedit “%s” ਫ਼ਾਈਲ ਖੋਲ੍ਹਣ ਲਈ ਅਸਮਰੱਥ ਸੀ।"
 
+#: src/findframe.cpp:83 src/findframe.cpp:101 src/findframe.cpp:300
+#: src/resources/menus.xrc:156
 msgid "Find"
 msgstr "ਲੱਭੋ"
 
+#: src/findframe.cpp:102 src/findframe.cpp:300
 msgid "Replace"
 msgstr "ਤਬਦੀਲ"
 
 #. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+#: src/findframe.cpp:118
 msgid "Options"
 msgstr "ਚੋਣਾਂ"
 
+#: src/findframe.cpp:122
 msgid "Ignore case"
 msgstr "ਅੱਖਰ ਅਕਾਰ ਨੂੰ ਅਣਡਿੱਠਾ ਕਰੋ"
 
+#: src/findframe.cpp:123
 msgid "Wrap around"
 msgstr "ਪਾਸਿਓ ਸਮੇਟੋ"
 
+#: src/findframe.cpp:124
 msgid "Whole words only"
 msgstr "ਪੂਰੇ ਸ਼ਬਦ ਹੀ"
 
+#: src/findframe.cpp:125
 msgid "Find in source texts"
 msgstr "ਸਰੋਤ ਟੈਕਸਟ ਵਿੱਚ ਲੱਭੋ"
 
+#: src/findframe.cpp:126
 msgid "Find in translations"
 msgstr "ਅਨੁਵਾਦ ਵਿੱਚ ਲੱਭੋ"
 
+#: src/findframe.cpp:127
 msgid "Find in comments"
 msgstr "ਟਿੱਪਣੀ ਵਿੱਚ ਖੋਜ"
 
+#: src/findframe.cpp:148 src/licensing_ui.cpp:535 src/titleless_window.cpp:82
+#: src/wx_translatable_strings.h:96
 msgid "Close"
 msgstr "ਬੰਦ ਕਰੋ"
 
+#: src/findframe.cpp:149
 msgid "Replace &All"
 msgstr "ਸਾਰਿਆਂ ਨੂੰ ਬਦਲੋ(&A)"
 
+#: src/findframe.cpp:149
 msgid "Replace &all"
 msgstr "ਸਾਰਿਆਂ ਨੂੰ ਬਦਲੋ(&a)"
 
+#: src/findframe.cpp:150
 msgid "&Replace"
 msgstr "ਬਦਲੋ(&R)"
 
+#: src/findframe.cpp:151
 msgid "< &Previous"
 msgstr "< ਪਿੱਛੇ(&P)"
 
+#: src/findframe.cpp:152
 msgid "&Next >"
 msgstr "ਅੱਗੇ(&N) >"
 
+#: src/findframe.cpp:235
 msgid "String to find"
 msgstr "ਲੱਭਣ ਲਈ ਸਤਰ"
 
+#: src/findframe.cpp:236
 msgid "Replacement string"
 msgstr "ਬਦਲਵੀ ਸਤਰ"
 
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "ਪ੍ਰੋਗਰਾਮ ਚਲਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ: %s"
+#: src/gexecute.cpp:131 src/gexecute.cpp:146 src/gexecute.cpp:170
+msgid "warning: "
+msgstr ""
+
+#: src/gexecute.cpp:171
+msgid "error: "
+msgstr ""
+
+#: src/glossary.cpp:273 src/glossary.cpp:277
+msgid "Failed to read the CSV file."
+msgstr ""
 
 #. TRANSLATORS: placeholder/hint in language controls
+#: src/languagectrl.cpp:138
 msgid "Language name or code"
 msgstr "ਭਾਸ਼ਾ ਦਾ ਨਾਂ ਜਾਂ ਕੋਡ"
 
+#: src/languagectrl.cpp:210
 msgid "Translation Language"
 msgstr "ਅਨੁਵਾਦ ਭਾਸ਼ਾ"
 
+#: src/languagectrl.cpp:217
 msgid "Language of the translation:"
 msgstr "ਅਨੁਵਾਦ ਦੀ ਭਾਸ਼ਾ:"
 
+#: src/licensing.cpp:196 src/licensing.cpp:206
+msgid "Invalid license key"
+msgstr "ਗੈਰ-ਵਾਜਬ ਲਸੰਸ ਕੁੰਜੀ"
+
+#: src/licensing.cpp:211
+msgid "Subscription expired"
+msgstr "ਸਬਸਕ੍ਰਿਪਸ਼ਨ ਦੀ ਮਿਆਦ ਪੁੱਗ ਗਈ"
+
+#: src/licensing.cpp:218
+#, c-format
+msgid "App updates expired, license is only valid for version %s"
+msgstr ""
+
+#: src/licensing.cpp:224
+#, c-format
+msgid "License key only valid for older Poedit version (%s)"
+msgstr "ਲਸੰਸ ਕੁੰਜੀ Poedit ਦੇ ਪੁਰਾਣੇ ਵਰਜ਼ਨ (%s) ਲਈ ਹੀ ਵਾਜਬ ਹੈ"
+
+#: src/licensing.cpp:231
+msgid "Maximum allowed activations exceeded"
+msgstr ""
+
+#: src/licensing.cpp:236 src/licensing.cpp:263
+#, c-format
+msgid "Unknown activation error (%s)"
+msgstr ""
+
+#: src/licensing_ui.cpp:92 src/licensing_ui.cpp:97 src/licensing_ui.cpp:859
+#: src/licensing_ui.cpp:872 src/licensing_ui.cpp:884
+msgid "Poedit Activation"
+msgstr "Poedit ਐਕਟੀਵੇਸ਼ਨ"
+
+#: src/licensing_ui.cpp:92 src/licensing_ui.cpp:102
+#: src/marketing_services.cpp:49 src/wx/main_toolbar.cpp:155
+#: src/wx/main_toolbar.cpp:182
+msgid "Upgrade to Pro"
+msgstr "ਪ੍ਰੋ ਲਈ ਅਪਗਰੇਡ ਕਰੋ"
+
+#: src/licensing_ui.cpp:248
+msgid "Please enter your license key:"
+msgstr "ਆਪਣੀ ਲਸੰਸ ਕੁੰਜੀ ਦਿਓ:"
+
+#: src/licensing_ui.cpp:257
+msgid "You should find your key in the confirmation email you received after you purchased Poedit. Activation requires internet connection."
+msgstr ""
+
+#: src/licensing_ui.cpp:262
+msgid "Retrieve lost license key"
+msgstr ""
+
+#: src/licensing_ui.cpp:271
+msgid "Buy Online…"
+msgstr "ਆਨਲਾਈਨ ਖਰੀਦੋ…"
+
+#: src/licensing_ui.cpp:271
+msgid "Buy online…"
+msgstr "ਆਨਲਾਈਨ ਖਰੀਦੋ…"
+
+#: src/licensing_ui.cpp:286 src/licensing_ui.cpp:290
+msgid "Activate"
+msgstr "ਸਰਗਰਮ ਕਰੋ"
+
+#: src/licensing_ui.cpp:316
+msgid "Activating your license…"
+msgstr "…ਤੁਹਾਡਾ ਲਸੰਸ ਸਰਗਰਮ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
+
+#: src/licensing_ui.cpp:327
+msgid "Would you like to hear about new versions?"
+msgstr ""
+
+#: src/licensing_ui.cpp:328
+msgid "We’ll send you an email when a new major version is released. No marketing, no spammy newsletters. Just very rare heads-up about new versions."
+msgstr ""
+
+#: src/licensing_ui.cpp:331 src/licensing_ui.cpp:690
+msgid "No, thanks"
+msgstr "ਨਹੀਂ, ਧੰਨਵਾਦ"
+
+#: src/licensing_ui.cpp:331
+msgid "Notify me"
+msgstr "ਮੈਨੂੰ ਸੂਚਿਤ ਕਰੋ"
+
+#: src/licensing_ui.cpp:358
+msgid "Upgrade your Pro license"
+msgstr "ਆਪਣੇ Pro ਪਸੰਸ ਨੂੰ ਅੱਪਗਰੇਡ ਕਰੋ"
+
+#: src/licensing_ui.cpp:377
+msgid "Renew your license"
+msgstr "ਆਪਣੇ ਲਸੰਸ ਨੂੰ ਨਵਿਆਇਓ"
+
+#: src/licensing_ui.cpp:395
+msgid "Add more devices"
+msgstr "ਹੋਰ ਡਿਵਾਈਸ ਜੋੜੋ"
+
+#: src/licensing_ui.cpp:440
+msgid "Thank you!"
+msgstr "ਤੁਹਾਡਾ ਧੰਨਵਾਦ ਹੈ!"
+
+#: src/licensing_ui.cpp:446
+msgid "Your copy is upgraded to Poedit Pro."
+msgstr "ਤੁਹਾਡੀ ਕਾਪੀ ਨੂੰ ਪੋ-ਐਡਿਟ ਪ੍ਰੋ ਲਈ ਅੱਪਗਰੇਡ ਕੀਤਾ ਗਿਆ।"
+
+#: src/licensing_ui.cpp:450 src/licensing_ui.cpp:454
+msgid "Manage License"
+msgstr "ਲਸੰਸ ਦਾ ਇੰਤਜ਼ਾਮ"
+
+#: src/licensing_ui.cpp:454
+msgid "Manage license"
+msgstr "ਲਸੰਸ ਦਾ ਇੰਤਜ਼ਾਮ"
+
+#. TRANSLATORS: "Renew" as a verb meaning making something that stopped working (a subscription) work again by prolonging it for another period.
+#: src/licensing_ui.cpp:479 src/licensing_ui.cpp:862 src/licensing_ui.cpp:875
+#: src/licensing_ui.cpp:1161
+msgid "Renew"
+msgstr "ਨਵਿਆਓ"
+
+#: src/licensing_ui.cpp:497
+msgid "Deactivate"
+msgstr "ਨਾ-ਸਰਗਰਮ ਕਰੋ"
+
+#: src/licensing_ui.cpp:509
+msgid "Deactivating your license…"
+msgstr "ਤੁਹਾਡੇ ਲਸੰਸ ਨੂੰ ਨਾ-ਸਰਗਰਮ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ…"
+
+#: src/licensing_ui.cpp:567
+msgid "Upgrade to Poedit Pro to Unlock WordPress Extras"
+msgstr ""
+
+#: src/licensing_ui.cpp:568 src/licensing_ui.cpp:589
+msgid "Upgrade to take advantage of Pro’s extra smarts: it understands WordPress themes and plugins and sets everything up for you. You can focus on translating and don’t have to worry about the technical details. With the free version, you would have to do everything manually yourself."
+msgstr ""
+
+#: src/licensing_ui.cpp:571
+msgid "Upgrade to Poedit Pro to Unlock Statistics"
+msgstr ""
+
+#: src/licensing_ui.cpp:574
+msgid "Upgrade to Poedit Pro to Unlock Online Suggestions"
+msgstr ""
+
+#: src/licensing_ui.cpp:577
+msgid "Upgrade to Poedit Pro to Unlock Templates Support"
+msgstr ""
+
+#: src/licensing_ui.cpp:581
+msgid "Upgrade to Poedit Pro to Unlock Extra Features"
+msgstr ""
+
+#: src/licensing_ui.cpp:588
+msgid "WordPress extras require upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:593
+msgid "Statistics require upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:596
+msgid "Online TM suggestions require upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:599
+msgid "Templates support requires upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:602
+msgid "Customizable warnings require upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:605
+msgid "Customizable file extensions require upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:608
+msgid "Terminology search and glossaries require upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:611
+msgid "Replacing source text requires upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:614
+msgid "Merging translation files requires upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:617
+msgid "Excel import and export require upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:649
+msgid "Purchasing the full version will unlock additional features in Poedit, including:"
+msgstr ""
+
+#: src/licensing_ui.cpp:663
+msgid "Suggestions from online translation memory"
+msgstr ""
+
+#: src/licensing_ui.cpp:664
+msgid "Machine translation with DeepL, Google Translate or Microsoft Translator"
+msgstr ""
+
+#: src/licensing_ui.cpp:665
+msgid "Worry-free setup for WordPress themes and plugins"
+msgstr ""
+
+#: src/licensing_ui.cpp:666
+msgid "Extract strings from Twig or Blade templates"
+msgstr ""
+
+#: src/licensing_ui.cpp:667
+msgid "Word count and statistics"
+msgstr "ਸ਼ਬਦ ਗਿਣਤੀ ਅਤੇ ਅੰਕੜੇ"
+
+#: src/licensing_ui.cpp:668
+msgid "Excel import and export"
+msgstr ""
+
+#: src/licensing_ui.cpp:669
+msgid "Merging translation files for all file formats"
+msgstr ""
+
+#: src/licensing_ui.cpp:670
+msgid "Customizable QA checks and warnings"
+msgstr ""
+
+#: src/licensing_ui.cpp:671
+msgid "Replace source text with translations from another file"
+msgstr ""
+
+#: src/licensing_ui.cpp:672
+msgid "Terminology search and glossaries"
+msgstr ""
+
+#: src/licensing_ui.cpp:673
+msgid "Personal priority support"
+msgstr "ਨਿੱਜੀ ਤਰਜੀਹੀ ਸਹਿਯੋਗ"
+
+#: src/licensing_ui.cpp:679
+msgid "Enter license key"
+msgstr "ਲਸੰਸ ਕੁੰਜੀ ਦਿਓ"
+
+#: src/licensing_ui.cpp:689
+msgid "Upgrade…"
+msgstr "ਅੱਪਗਰੇਡ ਕਰੋ…"
+
+#: src/licensing_ui.cpp:754 src/licensing_ui.cpp:780
+#, c-format
+msgid "Licensed to: %s"
+msgstr "ਲਸੰਸ ਦਿੱਤਾ: %s"
+
+#. TRANSLATORS: %s is replaced at runtime with e.g. "Poedit Pro" or "Poedit Pro+"
+#: src/licensing_ui.cpp:756 src/licensing_ui.cpp:785
+#, c-format
+msgid "License type: %s"
+msgstr "ਲਸੰਸ ਦੀ ਕਿਸਮ: %s"
+
+#: src/licensing_ui.cpp:780
+msgid "(personal license)"
+msgstr "(ਨਿੱਜੀ ਲਸੰਸ)"
+
+#: src/licensing_ui.cpp:859
+msgid "Subscription expired."
+msgstr "ਸਬਸਕ੍ਰਿਪਸ਼ਨ ਦੀ ਮਿਆਦ ਪੁੱਗ ਗਈ।"
+
+#: src/licensing_ui.cpp:861
+msgid "Your license was deactivated on this computer because your subscription expired."
+msgstr ""
+
+#: src/licensing_ui.cpp:871
+#, c-format
+msgid "Your license was deactivated on this computer because it only includes app updates up to Poedit version %s."
+msgstr ""
+
+#: src/licensing_ui.cpp:872
+msgid "App updates expired."
+msgstr ""
+
+#: src/licensing_ui.cpp:884
+msgid "License deactivated."
+msgstr ""
+
+#: src/licensing_ui.cpp:886
+msgid "Your license was deactivated on this computer. Please email help@poedit.net if you are not sure why this happened."
+msgstr ""
+
+#. TRANSLATORS: %s is a placeholder for subscription name, e.g. Pro+ or Pro
+#: src/licensing_ui.cpp:1112
+#, c-format
+msgid "Your %s subscription expired."
+msgstr ""
+
+#. TRANSLATORS: "Expired" as in ended e.g. after 1 year
+#: src/licensing_ui.cpp:1117
+msgid "Machine translation service expired."
+msgstr ""
+
+#. TRANSLATORS: "standard" here is the same word as the standalone string "Standard".
+#: src/licensing_ui.cpp:1125
+msgid "Machine translation quality is reduced to standard."
+msgstr ""
+
+#: src/localazy_client.cpp:385
 msgid "All strings"
 msgstr "ਨਵੀਂਆਂ ਸਤਰਾਂ"
 
+#: src/localazy_client.cpp:404
 msgid "Couldn’t download Localazy project details."
 msgstr ""
 
+#: src/localazy_client.cpp:476 src/localazy_client.cpp:490
 msgid "There was an error when uploading translations to Localazy."
 msgstr ""
 
+#: src/localazy_gui.cpp:103
 msgid "Projects"
 msgstr "ਪਰੋਜੈਕਟ"
 
-msgid ""
-"Localazy is a highly automated localization platform allowing anyone to "
-"translate their products and content into multiple languages easily."
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#: src/localazy_gui.cpp:115
+#, c-format
+msgid "Learn more about %s"
+msgstr "%s ਬਾਰੇ ਹੋਰ ਜਾਣੋ"
+
+#: src/localazy_gui.cpp:146
+msgid "Localazy is a highly automated localization platform allowing anyone to translate their products and content into multiple languages easily."
 msgstr ""
 
+#: src/localazy_gui.cpp:241
 msgid "Add Project"
 msgstr "ਪਰੋਜੈਕਟ ਜੋੜੋ"
 
+#: src/localazy_gui.cpp:241
 msgid "Add project"
 msgstr "ਪਰੋਜੈਕਟ ਜੋੜੋ"
 
+#: src/manager.cpp:117
 msgid "Poedit - Catalogs manager"
 msgstr "ਪੋਆਡਿਟ - ਕੈਟਾਲਾਗ ਮੈਨੇਜਰ"
 
+#: src/manager.cpp:162 src/prefsdlg.cpp:877
 msgid "Edit…"
 msgstr "ਸੋਧੋ…"
 
+#: src/manager.cpp:167
 msgid "Create new translations project"
 msgstr "ਨਵਾਂ ਭਾਸ਼ਾ ਅਨੁਵਾਦ ਪ੍ਰੋਜੈਕਟ ਬਣਾਓ"
 
+#: src/manager.cpp:168
 msgid "Delete the project"
 msgstr "ਪਰੋਜੈਕਟ ਹਟਾਓ"
 
+#: src/manager.cpp:169
 msgid "Edit the project"
 msgstr "ਪਰੋਜੈਕਟ ਸੋਧ"
 
+#: src/manager.cpp:199 src/resources/toolbar.xrc:41 src/statistics.cpp:258
+msgid "Statistics"
+msgstr "ਅੰਕੜੇ"
+
+#: src/manager.cpp:200 src/resources/toolbar.xrc:42
+msgid "Show translation statistics"
+msgstr "ਅਨੁਵਾਦ ਅੰਕੜੇ ਵੇਖੋ"
+
+#: src/manager.cpp:202
 msgid "Update all"
 msgstr "ਸਭ ਅੱਪਡੇਟ"
 
+#: src/manager.cpp:203
 msgid "Update all catalogs in the project"
 msgstr "ਪਰੋਜੈਕਟ ਵਿਚਲੀਆਂ ਸਭ ਕੈਟਾਲਾਗ ਅੱਪਡੇਟ"
 
+#: src/manager.cpp:405
 msgid "Total"
 msgstr "ਕੁੱਲ"
 
+#: src/manager.cpp:406
 msgid "Untrans"
 msgstr "ਨਾ-ਅਨੁਵਾਦ"
 
+#: src/manager.cpp:407
 msgctxt "column/row header"
 msgid "Needs Work"
 msgstr "ਕੰਮ ਕਰਨ ਦੀ ਲੋੜ ਹੈ"
 
+#: src/manager.cpp:408
 msgid "Errors"
 msgstr "ਗ਼ਲਤੀਆਂ"
 
+#: src/manager.cpp:409
 msgid "Last modified"
 msgstr "ਆਖਰੀ ਸੋਧ"
 
+#: src/manager.cpp:440 src/propertiesdlg.cpp:478
 msgid "Select directory"
 msgstr "ਡਾਇਰੈਕਟਰੀ ਚੁਣੋ"
 
+#: src/manager.cpp:460
 msgid "Directories:"
 msgstr "ਡਾਇਰੈਕਟਰੀ:"
 
+#: src/manager.cpp:532
 msgid "<unnamed>"
 msgstr "<ਬੇਨਾਮ>"
 
+#: src/manager.cpp:570
 #, c-format
 msgid "Do you want to delete project “%s”?"
 msgstr ""
 
+#: src/manager.cpp:571
 msgid "Delete project"
 msgstr "ਪਰੋਜੈਕਟ ਨੂੰ ਹਟਾਓ"
 
+#: src/manager.cpp:574
 msgid "Deleting the project will not delete any translation files."
 msgstr ""
 
+#: src/manager.cpp:602
 msgid "Confirmation"
 msgstr "ਤਸਦੀਕ"
 
+#: src/manager.cpp:602
 msgid "Update all catalogs in this project?"
 msgstr ""
 
+#: src/manager.cpp:603
 msgid "Performs update from source code on all files in the project."
 msgstr ""
 
+#: src/manager.cpp:612
+msgid "Updating project catalogs"
+msgstr ""
+
+#: src/menus.cpp:138
 msgid "Check for Updates…"
 msgstr "ਅੱਪਡੇਟ ਲਈ ਜਾਂਚ ਕਰੋ…"
 
+#: src/menus.cpp:140
 msgid "Catalogs Manager"
 msgstr "ਕੈਟਲਾਗ ਮੈਨੇਜਰ"
 
+#: src/menus.cpp:143
+msgid "License…"
+msgstr "ਲਸੰਸ..."
+
+#: src/menus.cpp:155
 msgid "&Preferences…"
 msgstr "ਮੇਰੀ ਪਸੰਦ(&P)…"
 
+#: src/menus.cpp:170 src/resources/menus.xrc:95 src/resources/menus.xrc:450
+#: src/wx_translatable_strings.h:102
 msgid "&Edit"
 msgstr "ਸੋਧੋ(&E)"
 
+#: src/menus.cpp:190 src/wx_translatable_strings.h:118
 msgid "Undo"
 msgstr "ਵਾਪਸ"
 
+#: src/menus.cpp:191 src/wx_translatable_strings.h:113
 msgid "Redo"
 msgstr "ਵਾਪਿਸ ਕਰੋ"
 
+#: src/menus.cpp:200
 msgid "Paste and Match Style"
 msgstr "ਚੇਪੋ ਅਤੇ ਮਿਲਾਨ ਸਟਾਈਲ"
 
+#: src/menus.cpp:203 src/prefsdlg.cpp:1103 src/sidebar_terminology.cpp:77
+#: src/wx_translatable_strings.h:100
 msgid "Delete"
 msgstr "ਹਟਾਓ"
 
+#: src/menus.cpp:212
 msgid "Spelling and Grammar"
 msgstr "ਸ਼ਬਦ-ਜੋੜ ਅਤੇ ਵਿਆਕਰਨ"
 
+#: src/menus.cpp:214
 msgid "Show Spelling and Grammar"
 msgstr "ਸ਼ਬਦ-ਜੋੜ ਅਤੇ ਵਿਆਕਰਨ ਵੇਖਾਓ"
 
+#: src/menus.cpp:215
 msgid "Check Document Now"
 msgstr "ਦਸਤਾਵੇਜ਼ ਦੀ ਹੁਣੇ ਜਾਂਚ ਕਰੋ"
 
+#: src/menus.cpp:217
 msgid "Check Spelling While Typing"
 msgstr "ਲਿਖਣ ਦੇ ਨਾਲ ਨਾਲ ਹੀ ਸ਼ਬਦ-ਜੋੜ ਚੈੱਕ ਕਰੋ"
 
+#: src/menus.cpp:218
 msgid "Check Grammar With Spelling"
 msgstr "ਲਿਖਣ ਦੇ ਨਾਲ ਨਾਲ ਵਿਆਕਰਨ ਦੀ ਜਾਂਚ ਕਰੋ"
 
+#: src/menus.cpp:219
 msgid "Correct Spelling Automatically"
 msgstr "ਆਪਣੇ-ਆਪ ਹੀ ਸ਼ਬਦ-ਜੋੜ ਠੀਕ ਕਰੋ"
 
+#: src/menus.cpp:222
 msgid "Substitutions"
 msgstr "ਤਬਾਦਲੇ"
 
+#: src/menus.cpp:224
 msgid "Show Substitutions"
 msgstr "ਤਬਾਦਲੇ ਦਿਖਾਓ"
 
+#: src/menus.cpp:226
 msgid "Smart Copy/Paste"
 msgstr "ਚੁਸਤ ਕਾਪੀ ਕਰਨਾ/ਚੇਪਣਾ"
 
+#: src/menus.cpp:227
 msgid "Smart Quotes"
 msgstr "ਸਮਾਰਟ ਕੋਟ"
 
+#: src/menus.cpp:228
 msgid "Smart Dashes"
 msgstr "ਸਮਾਰਟ ਡੈਸ਼ਾਂ"
 
+#: src/menus.cpp:229
 msgid "Smart Links"
 msgstr "ਸਮਾਰਟ ਲਿੰਕਾਂ"
 
+#: src/menus.cpp:230
 msgid "Text Replacement"
 msgstr "ਲਿਖਤ ਤਬਾਦਲਾ"
 
+#: src/menus.cpp:233
 msgid "Transformations"
 msgstr "ਟਰਾਂਸਫਰਮੇਸ਼ਨ"
 
+#: src/menus.cpp:235
 msgid "Make Upper Case"
 msgstr "ਅੱਪਰਕੇਸ ਬਣਾਓ"
 
+#: src/menus.cpp:236
 msgid "Make Lower Case"
 msgstr "ਲੋਅਰਕੇਸ ਬਣਾਓ"
 
+#: src/menus.cpp:237
 msgid "Capitalize"
 msgstr "ਅੰਗਰੇਜ਼ੀ ਦੇ ਵੱਡੇ ਅੱਖਰ"
 
+#: src/menus.cpp:240
 msgid "Speech"
 msgstr "ਸਪੀਚ"
 
+#: src/menus.cpp:242
 msgid "Start Speaking"
 msgstr "ਬੋਲਣਾ ਸ਼ੁਰੂ ਕਰੋ"
 
+#: src/menus.cpp:243
 msgid "Stop Speaking"
 msgstr "ਬੋਲਣਾ ਰੋਕੋ"
 
+#: src/menus.cpp:246 src/resources/menus.xrc:177 src/resources/menus.xrc:460
 msgid "&View"
 msgstr "ਵੇਖੋ(&V)"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:252
 msgid "Show Toolbar"
 msgstr "ਟੂਲਬਾਰ ਦਿਖਾਓ"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:255
 msgid "Customize Toolbar…"
 msgstr "ਟੂਲਬਾਰ ਨੂੰ ਕਸਟਮਾਈਜ਼ ਕਰੋ…"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:258
 msgid "Enter Full Screen"
 msgstr "ਪੂਰੀ ਸਕਰੀਨ ਉਤੇ ਜਾਓ"
 
+#: src/menus.cpp:265 src/menus.cpp:296 src/resources/menus.xrc:352
+#: src/resources/menus.xrc:469
 msgid "Window"
 msgstr "ਵਿੰਡੋ"
 
+#: src/menus.cpp:266
 msgid "Minimize"
 msgstr "ਘੱਟੋ-ਘੱਟ"
 
+#: src/menus.cpp:267
 msgid "Zoom"
 msgstr "ਜ਼ੂਮ"
 
+#: src/menus.cpp:269 src/welcomescreen.cpp:222 src/welcomescreen.cpp:262
 msgid "Welcome to Poedit"
 msgstr "ਪੋਐਡਿਟ ਵਲੋਂ ਜੀ ਆਇਆਂ ਨੂੰ"
 
+#: src/menus.cpp:274
 msgid "Bring All to Front"
 msgstr "ਸਭ ਤੋਂ ਅੱਗੇ ਲਿਆਓ"
 
+#: src/prefsdlg.cpp:177
 msgid "Information about the translator"
 msgstr "ਅਨੁਵਾਦਕ ਬਾਰੇ ਜਾਣਕਾਰੀ"
 
+#: src/prefsdlg.cpp:184
 msgid "Name:"
 msgstr "ਨਾਂ:"
 
+#: src/prefsdlg.cpp:187
 msgid "Your Name"
 msgstr "ਤੁਹਾਡਾ ਨਾਂ"
 
+#: src/prefsdlg.cpp:189
 msgid "Email:"
 msgstr "ਈਮੇਲ:"
 
+#: src/prefsdlg.cpp:192
 msgid "you@example.com"
 msgstr "you@example.com"
 
-msgid ""
-"Your name and email address are only used to set the Last-Translator header "
-"of GNU gettext files."
-msgstr ""
-"ਤੁਹਾਡਾ ਨਾਂ ਅਤੇ ਈਮੇਲ ਐਡਰੈੱਸ, ਜੋ ਹੇਠਾਂ ਦਿੱਤਾ ਜਾਵੇਗਾ, ਨੂੰ GNU gettext ਫਾਇਲਾਂ ਵਿੱਚ Last-"
-"Translator ਹੈੱਡਰ ਲਈ ਵਰਤਿਆ ਜਾਵੇਗਾ।"
+#: src/prefsdlg.cpp:195
+msgid "Your name and email address are only used to set the Last-Translator header of GNU gettext files."
+msgstr "ਤੁਹਾਡਾ ਨਾਂ ਅਤੇ ਈਮੇਲ ਐਡਰੈੱਸ, ਜੋ ਹੇਠਾਂ ਦਿੱਤਾ ਜਾਵੇਗਾ, ਨੂੰ GNU gettext ਫਾਇਲਾਂ ਵਿੱਚ Last-Translator ਹੈੱਡਰ ਲਈ ਵਰਤਿਆ ਜਾਵੇਗਾ।"
 
+#: src/prefsdlg.cpp:204
 msgid "Editing"
 msgstr "ਸੋਧਿਆ ਜਾਂਦਾ ਹੈ"
 
+#: src/prefsdlg.cpp:207
 msgid "Automatically compile MO file when saving"
 msgstr "ਸੰਭਾਲਣ ਉੱਤੇ ਆਟੋਮੈਟਿਕ ਹੀ MO ਫ਼ਾਈਲ ਕੰਪਾਈਲ ਕਰੋ"
 
-msgid "Show summary after updating files"
-msgstr "ਫਾਈਲਾਂ ਅੱਪਡੇਟ ਕਰਨ ਦੇ ਬਾਅਦ ਸਾਰ ਵੇਖਾਓ"
-
+#: src/prefsdlg.cpp:212
 msgid "Check spelling"
 msgstr "ਸ਼ਬਦ-ਜੋੜ ਜਾਂਚ ਕਰੋ"
 
+#: src/prefsdlg.cpp:214
 msgid "Always change focus to text input field"
 msgstr "ਹਮੇਸ਼ਾ ਪਾਠ ਲਿਖਣ ਖੇਤਰ 'ਤੇ ਹੀ ਕੇਂਦਰਿਤ ਕਰੋ"
 
-msgid ""
-"Never let the list of strings take focus. If enabled, you must use Ctrl-"
-"arrows for keyboard navigation but you can also type text immediately, "
-"without having to press Tab to change focus."
-msgstr ""
-"ਸਤਰਾਂ ਦੀ ਸੂਚੀ ਕਦੇ ਕੇਂਦਰਿਤ ਨਾ ਹੋਣ ਦਿਉ। ਜੇ ਏਦਾਂ ਹੈ ਤਾਂ ਤੁਸੀਂ ਕੀਬੋਰਡ ਦੇ Ctrl- ਤੀਰ ਬਟਨਾਂ ਨਾਲ ਚੱਲ "
-"ਸਕਦੇ ਹੋ, ਪਰ ਤੁਸੀ Tab ਦਬਾਏ ਬਿਨਾਂ ਵੀ ਤੁਰੰਤ ਲਿਖ ਸਕਦੇ ਹੋ।"
+#: src/prefsdlg.cpp:216
+msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
+msgstr "ਸਤਰਾਂ ਦੀ ਸੂਚੀ ਕਦੇ ਕੇਂਦਰਿਤ ਨਾ ਹੋਣ ਦਿਉ। ਜੇ ਏਦਾਂ ਹੈ ਤਾਂ ਤੁਸੀਂ ਕੀਬੋਰਡ ਦੇ Ctrl- ਤੀਰ ਬਟਨਾਂ ਨਾਲ ਚੱਲ ਸਕਦੇ ਹੋ, ਪਰ ਤੁਸੀ Tab ਦਬਾਏ ਬਿਨਾਂ ਵੀ ਤੁਰੰਤ ਲਿਖ ਸਕਦੇ ਹੋ।"
 
+#: src/prefsdlg.cpp:224
 msgid "Appearance"
 msgstr "ਦਿੱਖ"
 
+#: src/prefsdlg.cpp:231
 msgid "Use custom list font:"
 msgstr "ਪਸੰਦੀਦਾ ਸੂਚੀ ਫ਼ੋਟ ਵਰਤੋਂ:"
 
+#: src/prefsdlg.cpp:234
 msgid "Use custom text fields font:"
 msgstr "ਪਸੰਦੀਦਾ ਪਾਠ ਖੇਤਰ ਫ਼ੋਂਟ ਵਰਤੋਂ:"
 
+#: src/prefsdlg.cpp:245
 msgid "Change UI language"
 msgstr "UI ਭਾਸ਼ਾ ਬਦਲੋ"
 
 #. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
+#: src/prefsdlg.cpp:255
 msgid "(requires Windows 8 or newer)"
 msgstr "(ਵਿੰਡੋਜ਼ 8 ਜਾਂ ਨਵੀਂ ਚਾਹੀਦੀ ਹੈ)"
 
+#: src/prefsdlg.cpp:358
 msgid "General"
 msgstr "ਆਮ"
 
+#: src/prefsdlg.cpp:380
 msgid "Use translation memory"
 msgstr "ਅਨੁਵਾਦ ਮੈਮੋਰੀ ਵਰਤੋਂ"
 
+#: src/prefsdlg.cpp:390
 msgid "Manage…"
 msgstr "…ਇੰਤਜ਼ਾਮ"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
+#: src/prefsdlg.cpp:397
 msgid "When updating from sources"
 msgstr "ਜਦੋਂ ਸਰੋਤ ਤੋਂ ਅੱਪਡੇਟ ਕੀਤਾ ਜਾਂਦਾ ਹੈ"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
+#: src/prefsdlg.cpp:400
 msgid "fuzzy match within the file"
 msgstr ""
 
 #. TRANSLATORS: Preceded by "When updating from sources"
+#: src/prefsdlg.cpp:402
 msgid "pre-translate from TM"
 msgstr "TM ਤੋਂ ਕੱਚਾ ਅਨੁਵਾਦ ਕਰੋ"
 
-msgid ""
-"Poedit can attempt to fill in new entries from only previous translations in "
-"the file or from your entire translation memory. Using the TM won’t be very "
-"effective if it’s near-empty, but it will get better as you add more "
-"translations to it."
+#: src/prefsdlg.cpp:418
+msgid "Poedit can attempt to fill in new entries from only previous translations in the file or from your entire translation memory. Using the TM won’t be very effective if it’s near-empty, but it will get better as you add more translations to it."
 msgstr ""
 
+#: src/prefsdlg.cpp:454
+msgid "Use suggestions from online collaborative TM"
+msgstr ""
+
+#: src/prefsdlg.cpp:469
+msgid "Poedit uses a large online translation memory that includes both contributed human translations and state-of-the-art machine translations."
+msgstr ""
+
+#: src/prefsdlg.cpp:472 src/sidebar_pro.cpp:698
+msgid "Contribute my translations to the online TM"
+msgstr ""
+
+#: src/prefsdlg.cpp:473 src/sidebar_pro.cpp:699
+msgid "Keep my translations private"
+msgstr "ਮੇਰੇ ਅਨੁਵਾਦ ਨੂੰ ਪ੍ਰਾਈਵੇਟ ਰੱਖੋ"
+
+#: src/prefsdlg.cpp:474
+msgid "Ask me for each file individually"
+msgstr "ਹਰ ਫਾਇਲ ਲਈ ਵੱਖੋ-ਵੱਖ ਮੈਨੂੰ ਪੁੱਛੋ"
+
+#: src/prefsdlg.cpp:492 src/sidebar_pro.cpp:159
+msgid "Change Settings…"
+msgstr "ਸੈਟਿੰਗਾਂ ਨੂੰ ਬਦਲੋ…"
+
+#: src/prefsdlg.cpp:492 src/sidebar_pro.cpp:159
+msgid "Change settings…"
+msgstr "ਸੈਟਿੰਗਾਂ ਨੂੰ ਬਦਲੋ…"
+
+#: src/prefsdlg.cpp:580
 msgid "Stored translations:"
 msgstr "ਸੰਭਾਲੇ ਹੋਏ ਅਨੁਵਾਦ:"
 
+#: src/prefsdlg.cpp:581
 msgid "Database size on disk:"
 msgstr "ਡਿਸਕ ਉੱਤੇ ਡਾਟਾਬੇਸ:"
 
+#: src/prefsdlg.cpp:596
 msgid "Import Translation Files…"
 msgstr "ਅਨੁਵਾਦ ਫਾਈਲਾਂ ਇੰਪੋਰਟ ਕਰੋ…"
 
+#: src/prefsdlg.cpp:596
 msgid "Import translation files…"
 msgstr "ਅਨੁਵਾਦ ਫਾਈਲਾਂ ਇੰਪੋਰਟ ਕਰੋ…"
 
+#: src/prefsdlg.cpp:598
 msgid "Import From TMX…"
 msgstr "TMX ਤੋਂ ਇੰਪੋਰਟ ਕਰੋ…"
 
+#: src/prefsdlg.cpp:598
 msgid "Import from TMX…"
 msgstr "TMX ਤੋਂ ਇੰਪੋਰਟ ਕਰੋ…"
 
+#: src/prefsdlg.cpp:599
 msgid "Export To TMX…"
 msgstr ""
 
+#: src/prefsdlg.cpp:599
 msgid "Export to TMX…"
 msgstr ""
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+#: src/prefsdlg.cpp:602 src/prefsdlg.cpp:770
 msgid "Reset"
 msgstr "ਮੁੜ-ਸੈੱਟ ਕਰੋ"
 
+#: src/prefsdlg.cpp:621
 msgid "Select translation files to import"
 msgstr "ਇੰਪੋਰਟ ਕਰਨ ਲਈ ਅਨੁਵਾਦ ਫਾਈਲਾਂ ਚੁਣੋ"
 
-msgid "Translation Memory"
-msgstr "ਅਨੁਵਾਦ ਮੈਮੋਰੀ"
-
-msgid "Importing translations…"
-msgstr "ਅਨੁਵਾਦ ਇੰਪੋਰਟ ਕੀਤੇ ਜਾ ਰਹੇ ਹਨ…"
-
-#, c-format
-msgid "Error loading translation file “%s”."
-msgstr "“%s” ਅਨੁਵਾਦ ਫਾਈਲ ਲੋਡ ਕਰਨ ਵਿੱਚ ਸਮੱਸਿਆ ਖੜ੍ਹੀ ਹੋਈ।"
-
-msgid "Finalizing…"
-msgstr "ਮੁਕੰਮਲ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ…"
-
+#: src/prefsdlg.cpp:654
 msgid "Select TMX files to import"
 msgstr ""
 
+#: src/prefsdlg.cpp:657 src/prefsdlg.cpp:733
 msgid "TMX Files"
 msgstr "TMX ਫਾਈਲਾਂ"
 
+#: src/prefsdlg.cpp:684
+msgid "Importing translations…"
+msgstr "ਅਨੁਵਾਦ ਇੰਪੋਰਟ ਕੀਤੇ ਜਾ ਰਹੇ ਹਨ…"
+
+#: src/prefsdlg.cpp:685
+msgid "Importing translation memory failed."
+msgstr ""
+
+#: src/prefsdlg.cpp:699
 #, c-format
-msgid "Importing translation memory from “%s” failed."
+msgid "Importing from “%s”…"
 msgstr ""
 
-msgid "Import error"
-msgstr ""
+#. TRANSLATORS: %s is a (formatted) number here
+#: src/prefsdlg.cpp:717
+#, c-format
+msgid "%s translation was imported."
+msgid_plural "%s translations were imported."
+msgstr[0] ""
+msgstr[1] ""
 
+#: src/prefsdlg.cpp:730
 msgid "Export as…"
 msgstr "…ਵਜੋਂ ਐਕਸਪੋਰਟ"
 
+#: src/prefsdlg.cpp:745
 msgid "Exporting translations…"
 msgstr ""
 
+#: src/prefsdlg.cpp:746
 #, c-format
 msgid "Exporting translation memory to “%s” failed."
 msgstr ""
 
-msgid "Export error"
-msgstr ""
-
+#: src/prefsdlg.cpp:764
 msgid "Reset translation memory"
 msgstr ""
 
+#: src/prefsdlg.cpp:765
 msgid "Are you sure you want to reset the translation memory?"
 msgstr ""
 
-msgid ""
-"Resetting the translation memory will irrevocably delete all stored "
-"translations from it. You can’t undo this operation."
+#: src/prefsdlg.cpp:766
+msgid "Resetting the translation memory will irrevocably delete all stored translations from it. You can’t undo this operation."
 msgstr ""
 
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
+#: src/prefsdlg.cpp:808
 msgid "TM"
 msgstr "TM"
 
-msgid ""
-"Source code extractors are used to find translatable strings in the source "
-"code files and extract them so that they can be translated."
+#: src/prefsdlg.cpp:810 src/sidebar_terminology.cpp:638
+msgid "Translation Memory"
+msgstr "ਅਨੁਵਾਦ ਮੈਮੋਰੀ"
+
+#: src/prefsdlg.cpp:830
+msgid "Source code extractors are used to find translatable strings in the source code files and extract them so that they can be translated."
 msgstr ""
 
+#: src/prefsdlg.cpp:843
 msgid "Custom Extractors:"
 msgstr ""
 
+#: src/prefsdlg.cpp:843
 msgid "Custom extractors:"
 msgstr ""
 
+#: src/prefsdlg.cpp:929
 msgid "GNU gettext"
 msgstr "GNU gettext"
 
-msgid ""
-"Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
-"+, C#, Perl, Python, Java, JavaScript and others)."
+#: src/prefsdlg.cpp:935
+msgid "Supports all programming languages recognized by GNU gettext tools (PHP, C/C++, C#, Perl, Python, Java, JavaScript and others)."
 msgstr ""
 
+#. TRANSLATORS: Templates for themes etc. - e.g. Twig or Volt templates
+#: src/prefsdlg.cpp:945
+msgid "Templates"
+msgstr "ਟੈਂਪਲੇਟ"
+
+#: src/prefsdlg.cpp:946
+msgid "(Twig, Volt, Blade)"
+msgstr ""
+
+#: src/prefsdlg.cpp:961
+msgid "Extracts translations from template files."
+msgstr ""
+
+#: src/prefsdlg.cpp:964
+msgid "Enable"
+msgstr "ਸਮਰੱਥ ਕਰੋ"
+
+#: src/prefsdlg.cpp:1096
 msgid "Delete extractor"
 msgstr ""
 
+#: src/prefsdlg.cpp:1097
 #, c-format
 msgid "Are you sure you want to delete the “%s” extractor?"
 msgstr ""
 
+#: src/prefsdlg.cpp:1135
 msgid "Extractors"
 msgstr ""
 
+#: src/prefsdlg.cpp:1193
 msgid "Accounts"
 msgstr "ਖਾਤੇ"
 
+#: src/prefsdlg.cpp:1213
 msgid "Automatically check for updates"
 msgstr "ਆਟੋਮੈਟਿਕ ਅੱਪਡੇਟ ਲਈ ਜਾਂਚ ਕਰੋ"
 
+#: src/prefsdlg.cpp:1216
 msgid "Include beta versions"
 msgstr "ਬੀਟਾ ਵਰਜਨ ਸਮੇਤ"
 
-msgid ""
-"Beta versions contain the latest new features and improvements, but may be a "
-"bit less stable."
+#: src/prefsdlg.cpp:1219
+msgid "Beta versions contain the latest new features and improvements, but may be a bit less stable."
 msgstr ""
 
+#: src/prefsdlg.cpp:1248
 msgid "Updates"
 msgstr "ਅੱਪਡੇਟ"
 
-msgid ""
-"These settings affect internal formatting of PO files. Adjust them if you "
-"have specific requirements e.g. because of version control."
+#: src/prefsdlg.cpp:1266
+msgid "These settings affect internal formatting of PO files. Adjust them if you have specific requirements e.g. because of version control."
 msgstr ""
 
+#: src/prefsdlg.cpp:1270
 msgid "Line endings:"
 msgstr "ਲਾਈਨ ਸਮਾਪਤੀ:"
 
+#: src/prefsdlg.cpp:1273
 msgid "Unix (recommended)"
 msgstr "ਯੂਨੈਕਸ (ਸਿਫਾਰਸ਼ੀ)"
 
+#: src/prefsdlg.cpp:1274
 msgid "Windows"
 msgstr "Windows"
 
 #. TRANSLATORS: Followed by text control for entering number; wraps text at given width
+#: src/prefsdlg.cpp:1278
 msgid "Wrap at:"
 msgstr ""
 
+#: src/prefsdlg.cpp:1289
 msgid "Preserve formatting of existing files"
 msgstr ""
 
+#: src/prefsdlg.cpp:1341
 msgid "Advanced"
 msgstr "ਤਕਨੀਕੀ"
 
+#: src/prefsdlg.cpp:1369
 msgid "Settings"
 msgstr ""
 
+#: src/pretranslate.cpp:129
 msgid "Preparing strings…"
 msgstr ""
 
+#: src/pretranslate.cpp:239
 msgid "Pre-translating from translation memory…"
 msgstr ""
 
+#: src/pretranslate.cpp:250 src/pretranslate.cpp:296
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
 msgstr[0] ""
 msgstr[1] ""
 
+#: src/pretranslate.cpp:259
+msgid "Uploading strings for cloud pre-translation…"
+msgstr ""
+
+#: src/pretranslate.cpp:300 src/pretranslate.cpp:357
 msgid "Pre-translating…"
 msgstr ""
 
+#: src/pretranslate.cpp:366
+#, c-format
+msgid "%d entry was pre-translated."
+msgid_plural "%d entries were pre-translated."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/pretranslate.cpp:372
+msgid "The translations were marked as needing work, because they may be inaccurate. You should review them for correctness."
+msgstr ""
+
+#: src/pretranslate.cpp:375
+msgid "Exact matches from TM"
+msgstr ""
+
+#: src/pretranslate.cpp:376
+msgid "Approximate matches from TM"
+msgstr ""
+
+#. TRANSLATORS: shown instead of number when user disabled this kind of pre-translation results
+#: src/pretranslate.cpp:383
+msgid "disabled"
+msgstr ""
+
+#: src/pretranslate.cpp:384
+msgid "Machine translation"
+msgstr ""
+
+#: src/pretranslate.cpp:389
+msgid "No entries could be pre-translated."
+msgstr ""
+
+#: src/pretranslate.cpp:390
+msgid "The TM doesn’t contain any strings similar to the content of this file. It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually."
+msgstr ""
+
+#: src/pretranslate.cpp:418
 msgid "Cannot pre-translate without source text."
 msgstr ""
 
@@ -1426,1037 +2488,2096 @@ msgstr ""
 #. some users into thinking it's all that needs to be done (spoken from
 #. experience). "Pre-translate" nicely expresses that it's only the step done
 #. *before* actual translation.
+#: src/pretranslate.cpp:419 src/pretranslate.cpp:434 src/pretranslate.cpp:443
+#: src/pretranslate.cpp:489 src/pretranslate.cpp:616
+#: src/resources/toolbar.xrc:48 src/sidebar_pro.cpp:983
 msgid "Pre-translate"
 msgstr ""
 
-msgid ""
-"Pre-translation requires that source text is available. It doesn’t work if "
-"only IDs without the actual text are used."
+#: src/pretranslate.cpp:423
+msgid "Pre-translation requires that source text is available. It doesn’t work if only IDs without the actual text are used."
 msgstr ""
 
+#: src/pretranslate.cpp:433
 msgid "Cannot pre-translate from unknown language."
 msgstr ""
 
-msgid ""
-"Pre-translation requires that source text’s language is known. Poedit "
-"couldn’t detect it in this file."
+#: src/pretranslate.cpp:438
+msgid "Pre-translation requires that source text’s language is known. Poedit couldn’t detect it in this file."
 msgstr ""
 
+#: src/pretranslate.cpp:448
+msgid "Use online suggestions"
+msgstr ""
+
+#: src/pretranslate.cpp:449
+msgid "Try to fetch translations from the online TM as well. Notice that the translations will not be perfect and will still need to be corrected by a human translator."
+msgstr ""
+
+#: src/pretranslate.cpp:476
 msgid "Only fill in exact matches"
 msgstr ""
 
-msgid ""
-"By default, inaccurate results are also included, but marked as needing "
-"work. Check this option to only include perfect matches."
+#: src/pretranslate.cpp:479
+msgid "By default, inaccurate results are also included, but marked as needing work. Check this option to only include perfect matches."
 msgstr ""
 
+#: src/pretranslate.cpp:481
+msgid "By default, inaccurate results and machine translation are also included, but marked as needing work. Check this option to only include perfect human translations."
+msgstr ""
+
+#: src/pretranslate.cpp:483
 msgid "Don’t mark exact matches as needing work"
 msgstr ""
 
-msgid ""
-"Only enable if you trust the quality of your TM. By default, all matches "
-"from the TM are marked as needing work and should be reviewed before use."
+#: src/pretranslate.cpp:484
+msgid "Don’t mark machine translation as needing work"
 msgstr ""
 
-msgid ""
-"Pre-translation automatically finds exact or fuzzy matches for untranslated "
-"strings in the translation memory and fills in their translations."
+#: src/pretranslate.cpp:486
+msgid "Only enable if you trust the quality of your TM. By default, all matches from the TM are marked as needing work and should be reviewed before use."
 msgstr ""
 
+#: src/pretranslate.cpp:493
+msgid "Pre-translation automatically finds exact or fuzzy matches for untranslated strings in the translation memory and fills in their translations."
+msgstr ""
+
+#: src/pretranslate.cpp:495
+msgid "Pre-translation automatically searches existing translations and uses machine translation to fill in initial translations for strings that are not yet translated."
+msgstr ""
+
+#: src/pretranslate.cpp:533
+msgid "Machine translation:"
+msgstr "ਮਸ਼ੀਨੀ ਅਨੁਵਾਦ:"
+
+#. TRANSLATORS: "Upgrade" as in upgrading from Pro to Pro+ version; "provider" is machine translation provider. This string needs to be as short as possible.
+#: src/pretranslate.cpp:545
+msgid "Upgrade for more providers"
+msgstr ""
+
+#. TRANSLATORS: Part of larger line of UI: "Machine translation: [e.g. Google] with tone of voice: [formal/informal/automatic]". If "tone of voice" sounds weird, you can use "formality". See https://support.deepl.com/hc/en-us/articles/4406432463762-About-the-formal-informal-feature for explanation of what tone of voice / formality is.
+#: src/pretranslate.cpp:556
+msgid "with tone of voice:"
+msgstr ""
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:562
+msgid "automatic"
+msgstr "ਆਟੋਮੈਟਿਕ"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:564
+msgid "formal"
+msgstr "ਰਸਮੀ"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:566
+msgid "informal"
+msgstr "ਗ਼ੈਰ-ਰਸਮੀ"
+
+#: src/pretranslate.cpp:651 src/sidebar_pro.cpp:551
+msgid "Exceeded machine translation quota."
+msgstr ""
+
+#: src/pretranslate.cpp:660
 #, c-format
-msgid "%d entry was pre-translated."
-msgid_plural "%d entries were pre-translated."
+msgid "Machine translation usage: %d / %d\n"
+"%s"
+msgstr ""
+
+#: src/pretranslate.cpp:660
+msgid "Quota is rolling monthly."
+msgstr ""
+
+#: src/pretranslate.cpp:663 src/sidebar_pro.cpp:475
+msgid "Add machine translation credit"
+msgstr ""
+
+#: src/progress_ui.cpp:172 src/wx_translatable_strings.h:151
+msgid "Error: "
+msgstr ""
+
+#: src/progress_ui.cpp:176
+#, c-format
+msgid "%d error occurred:"
+msgid_plural "%d errors occurred:"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid ""
-"The translations were marked as needing work, because they may be "
-"inaccurate. You should review them for correctness."
+#: src/progress_ui.cpp:285
+msgid "An error occurred."
 msgstr ""
 
-msgid "No entries could be pre-translated."
-msgstr ""
+#: src/progress_ui.cpp:291
+#, c-format
+msgid "%d error occurred."
+msgid_plural "%d errors occurred."
+msgstr[0] ""
+msgstr[1] ""
 
-msgid ""
-"The TM doesn’t contain any strings similar to the content of this file. It "
-"is only effective for semi-automatic translations after Poedit learns enough "
-"from files that you translated manually."
-msgstr ""
-
+#: src/progress_ui.cpp:438
 msgid "Cancelling…"
 msgstr "ਰੱਦ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ…"
 
+#. TRANSLATORS: This text is shown as a hint/advice. The %s→%s part is replaced with menu item pointer, "File→New WordPress Translation".
+#: src/propertiesdlg.cpp:92
+#, c-format
+msgid "Use %s→%s for full WordPress functionality."
+msgstr ""
+
+#: src/propertiesdlg.cpp:93 src/resources/menus.xrc:5
+#: src/resources/menus.xrc:384 src/wx_translatable_strings.h:104
+msgid "&File"
+msgstr "ਫ਼ਾਈਲ(&F)"
+
+#: src/propertiesdlg.cpp:94 src/resources/menus.xrc:17
+#: src/resources/menus.xrc:396
+msgid "New WordPress Translation…"
+msgstr ""
+
+#: src/propertiesdlg.cpp:94 src/resources/menus.xrc:16
+#: src/resources/menus.xrc:395
+msgid "New WordPress translation…"
+msgstr ""
+
+#: src/propertiesdlg.cpp:366
 msgid "Drag Folders or Files Here"
 msgstr "ਫੋਲਡਰ ਜਾਂ ਫ਼ਾਈਲਾਂ ਇੱਥੇ ਖਿੱਚੋ"
 
+#: src/propertiesdlg.cpp:366
 msgid "Drag folders or files here"
 msgstr "ਫੋਲਡਰ ਜਾਂ ਫਾਈਲਾਂ ਇੱਥੇ ਖਿੱਚੋ"
 
+#: src/propertiesdlg.cpp:471
 msgid "Add Folders…"
 msgstr "ਫੋਲਡਰ ਜੋੜੋ…"
 
+#: src/propertiesdlg.cpp:471
 msgid "Add folders…"
 msgstr "ਫੋਲਡਰ ਜੋੜੋ…"
 
+#: src/propertiesdlg.cpp:472
 msgid "Add Files…"
 msgstr "ਫ਼ਾਈਲਾਂ ਜੋੜੋ…"
 
+#: src/propertiesdlg.cpp:472
 msgid "Add files…"
 msgstr "ਫ਼ਾਈਲਾਂ ਜੋੜੋ…"
 
+#: src/propertiesdlg.cpp:474
 msgid "Add Wildcard…"
 msgstr ""
 
+#: src/propertiesdlg.cpp:474
 msgid "Add wildcard…"
 msgstr ""
 
 #. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+#: src/propertiesdlg.cpp:545
 msgid "Reveal in Finder"
 msgstr "Finder ਵਿੱਚ ਦਿਖਾਓ"
 
 #. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+#: src/propertiesdlg.cpp:548
 msgid "Show in Explorer"
 msgstr "ਐਕਸਪਲੋਰਰ ਵਿੱਚ ਵੇਖਾਓ"
 
+#: src/propertiesdlg.cpp:550
 msgid "Show in Folder"
 msgstr "ਫੋਲਡਰ ਵਿੱਚ ਵੇਖਾਓ"
 
+#: src/propertiesdlg.cpp:581
 msgid "Paths"
 msgstr "ਮਾਰਗ"
 
+#: src/propertiesdlg.cpp:601
 msgid "Excluded paths"
 msgstr ""
 
+#: src/propertiesdlg.cpp:619
 msgid "Advanced extraction settings"
 msgstr ""
 
+#: src/propertiesdlg.cpp:625
 msgid "Extract notes for translators from:"
 msgstr ""
 
+#: src/propertiesdlg.cpp:627
 msgid "Comments prefixed with:"
 msgstr ""
 
+#: src/propertiesdlg.cpp:636
 msgid "All comments"
 msgstr ""
 
+#: src/propertiesdlg.cpp:639
 msgid "Additional xgettext flags:"
 msgstr ""
 
+#: src/propertiesdlg.cpp:779
 msgid "Additional keywords"
 msgstr "ਵਾਧੂ ਕੀਵਰਡ"
 
+#: src/propertiesdlg.cpp:810
 msgid "Name of the project the translation is for"
 msgstr "ਅਨੁਵਾਦ ਦੇ ਪ੍ਰੋਜੈਕਟ ਦਾ ਨਾਂ"
 
+#: src/propertiesdlg.cpp:811
 msgid "Team name and email address or URL"
 msgstr "ਟੀਮ ਦਾ ਨਾਂ ਅਤੇ ਈਮੇਲ ਐਡਰੈਸ ਜਾਂ URL"
 
+#: src/propertiesdlg.cpp:812
 msgid "e.g. nplurals=2; plural=(n > 1);"
 msgstr "ਜਿਵੇਂ nplurals=2; plural=(n > 1);"
 
+#: src/propertiesdlg.cpp:817
+msgid "Custom file extensions are being used."
+msgstr ""
+
+#: src/propertiesdlg.cpp:872
 msgid "UTF-8 (recommended)"
 msgstr "UTF-8 (ਸਿਫਾਰਸ਼ੀ)"
 
+#: src/propertiesdlg.cpp:1055
 msgid "Please save the file first. This section cannot be edited until then."
 msgstr ""
 
+#: src/propertiesdlg.cpp:1177
+msgid "File Extensions"
+msgstr ""
+
+#: src/propertiesdlg.cpp:1189
+msgid "Extension or Wildcard"
+msgstr ""
+
+#: src/propertiesdlg.cpp:1191
+msgid "Extractor"
+msgstr ""
+
+#: src/propertiesdlg.cpp:1266
+msgid "(unknown)"
+msgstr ""
+
+#: src/qa_checks.cpp:153
 msgid "Placeholders correctness"
 msgstr ""
 
+#: src/qa_checks.cpp:208
 #, c-format
 msgid "Placeholder “%s” is missing from translation."
 msgstr "ਅਨੁਵਾਦ ਵਿੱਚੋਂ “%s” ਨਿਸ਼ਾਨ ਖੁੰਝਿਆ ਹੈ।"
 
+#: src/qa_checks.cpp:220
 #, c-format
 msgid "Superfluous placeholder “%s” that isn’t in source text."
 msgstr ""
 
+#: src/qa_checks.cpp:256
 msgid "Plural form translations"
 msgstr ""
 
+#: src/qa_checks.cpp:277
 msgid "Not all plural forms are translated."
 msgstr ""
 
+#: src/qa_checks.cpp:289
 msgid "Inconsistent upper/lower case"
 msgstr ""
 
+#: src/qa_checks.cpp:305
 msgid "The translation should start as a sentence."
 msgstr ""
 
+#: src/qa_checks.cpp:313
 msgid "The translation should start with a lowercase character."
 msgstr ""
 
+#: src/qa_checks.cpp:331
 msgid "Inconsistent whitespace"
 msgstr ""
 
+#: src/qa_checks.cpp:345
 msgid "The translation doesn’t start with a space."
 msgstr "ਅਨੁਵਾਦ ਖਾਲੀ ਥਾਂ ਨਾਲ ਸ਼ੁਰੂ ਨਹੀਂ ਹੁੰਦਾ ਹੈ।"
 
+#: src/qa_checks.cpp:351
 msgid "The translation starts with a space, but the source text doesn’t."
 msgstr "ਅਨੁਵਾਦ ਖਾਲੀ ਥਾਂ ਨਾਲ ਸ਼ੁਰੂ ਹੁੰਦਾ ਹੈ, ਪਰ ਸਰੋਤ ਲਿਖਤ ਵਿੱਚ ਮੌਜੂਦ ਨਹੀਂ ਹੈ।"
 
+#: src/qa_checks.cpp:357
 msgid "The translation is missing a newline at the end."
 msgstr "ਅਨੁਵਾਦ ਦੇ ਅੰਤ ਵਿੱਚ ਨਵੀਂ-ਲਾਈਨ ਮੌਜੂਦ ਨਹੀਂ ਹੈ।"
 
+#: src/qa_checks.cpp:363
 msgid "The translation ends with a newline, but the source text doesn’t."
 msgstr "ਅਨੁਵਾਦ ਨਵੀਂ ਲਾਈਨ ਨਾਲ ਖਤਮ ਹੁੰਦਾ ਹੈ, ਪਰ ਸਰੋਤ ਲਿਖਤ ਵਿੱਚ ਨਹੀਂ ਹੈ।"
 
+#: src/qa_checks.cpp:369
 msgid "The translation is missing a space at the end."
 msgstr "ਅਨੁਵਾਦ ਦੇ ਆਖੀਰ ਵਿੱਚ ਖਾਲੀ ਥਾਂ ਨਹੀਂ ਹੈ।"
 
+#: src/qa_checks.cpp:375
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "ਅਨੁਵਾਦ ਖਾਲੀ ਥਾਂ ਨਾਲ ਖਤਮ ਹੁੰਦਾ ਹੈ, ਪਰ ਸਰੋਤ ਲਿਖਤ ਵਿੱਚ ਨਹੀਂ ਹੈ।"
 
+#: src/qa_checks.cpp:390
 msgid "Punctuation checks"
 msgstr "ਵਿਸ਼ਰਾਮ-ਚਿੰਨ੍ਹ ਦੀ ਜਾਂਚ"
 
+#: src/qa_checks.cpp:455
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr "ਅਨੁਵਾਦ “%s” ਨਾਲ ਖਤਮ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।"
 
+#: src/qa_checks.cpp:467
 #, c-format
 msgid "The translation should not end with “%s”."
 msgstr "ਅਨੁਵਾਦ “%s” ਨਾਲ ਖਤਮ ਨਹੀਂ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।"
 
+#: src/qa_checks.cpp:488
 #, c-format
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
 msgstr "ਅਨੁਵਾਦ “%s” ਨਾਲ ਖਤਮ ਹੁੰਦਾ ਹੈ, ਪਰ ਸਰੋਤ ਲਿਖਤ “%s” ਨਾਲ ਖਤਮ ਨਹੀਂ ਹੁੰਦੀ ਹੈ।"
 
+#: src/recent_files.cpp:223
 msgid "Cloud"
 msgstr ""
 
+#: src/recent_files.cpp:404
 msgid "Clear Menu"
 msgstr "ਮੇਨੂ ਸਾਫ਼ ਕਰੋ"
 
+#: src/recent_files.cpp:404
 msgid "Clear menu"
 msgstr "ਮੇਨੂ ਸਾਫ਼ ਕਰੋ"
 
+#: src/resources/comment.xrc:10
 msgid "Comment:"
 msgstr "ਟਿੱਪਣੀ:"
 
+#: src/resources/comment.xrc:33
 msgid "Update"
 msgstr "ਅੱਪਡੇਟ"
 
+#: src/resources/comment.xrc:48 src/wx_translatable_strings.h:100
 msgid "&Delete"
 msgstr "ਹਟਾਓ(&D)"
 
+#: src/resources/comment.xrc:49
 msgid "Delete the comment"
 msgstr "ਟਿੱਪਣੀ ਹਟਾਓ"
 
+#: src/resources/manager.xrc:4
 msgid "Edit project"
 msgstr "ਪਰੋਜੈਕਟ ਸੋਧੋ"
 
+#: src/resources/manager.xrc:9
 msgid "Project name:"
 msgstr "ਪਰੋਜੈਕਟ ਨਾਂ:"
 
+#: src/resources/manager.xrc:39
 msgid "Browse"
 msgstr "ਝਲਕ"
 
+#: src/resources/manager.xrc:41
 msgid "Add directory to the list"
 msgstr "ਡਾਇਰੈਕਟਰੀ ਲਿਸਟ ਵਿੱਚ ਸ਼ਾਮਲ"
 
-msgid "OK"
-msgstr "ਠੀਕ ਹੈ"
-
-msgid "&File"
-msgstr "ਫ਼ਾਈਲ(&F)"
-
+#: src/resources/menus.xrc:8 src/resources/menus.xrc:387
 msgid "&New…"
 msgstr "ਨਵਾਂ(&N)…"
 
+#: src/resources/menus.xrc:12 src/resources/menus.xrc:391
 msgid "New from &POT/PO file…"
 msgstr "&POT/PO ਫ਼ਾਈਲ ਤੋਂ ਨਵਾਂ…"
 
+#: src/resources/menus.xrc:13 src/resources/menus.xrc:392
 msgid "New From &POT/PO File…"
 msgstr "&POT/PO ਫ਼ਾਈਲ ਤੋਂ ਨਵਾਂ…"
 
+#: src/resources/menus.xrc:21 src/resources/menus.xrc:400
+#: src/wx_translatable_strings.h:109
 msgid "&Open…"
 msgstr "ਖੋਲ੍ਹੋ(&O)…"
 
+#: src/resources/menus.xrc:25 src/resources/menus.xrc:404
 msgid "Open Recent"
 msgstr "ਸੱਜਰੇ ਖੋਲ੍ਹੇ"
 
+#: src/resources/menus.xrc:26 src/resources/menus.xrc:405
 msgid "Open recent"
 msgstr "ਸੱਜਰੇ ਖੋਲ੍ਹੋ"
 
+#: src/resources/menus.xrc:29 src/resources/menus.xrc:408
 msgid "Open cloud translation…"
 msgstr "ਕਲਾਉਡ ਅਨੁਵਾਦ ਖੋਲ੍ਹੋ…"
 
+#: src/resources/menus.xrc:30 src/resources/menus.xrc:409
 msgid "Open Cloud Translation…"
 msgstr "ਕਲਾਉਡ ਅਨੁਵਾਦ ਖੋਲ੍ਹੋ…"
 
+#: src/resources/menus.xrc:34 src/resources/menus.xrc:413
 msgid "&Start window"
 msgstr "ਸ਼ੁਰੂਆਤੀ ਵਿੰਡੋ(&S)"
 
+#: src/resources/menus.xrc:35 src/resources/menus.xrc:414
 msgid "&Start Window"
 msgstr "ਸ਼ੁਰੂਆਤੀ ਵਿੰਡੋ(&S)"
 
+#: src/resources/menus.xrc:39 src/resources/menus.xrc:419
 msgid "Catalogs &manager"
 msgstr "ਕੈਟਾਲਾਗ ਮੈਨੇਜਰ(&m)"
 
+#: src/resources/menus.xrc:40 src/resources/menus.xrc:420
 msgid "Catalogs &Manager"
 msgstr "ਕੈਟਾਲਾਗ ਮੈਨੇਜਰ(&M)"
 
+#: src/resources/menus.xrc:44 src/resources/menus.xrc:424
+#: src/wx_translatable_strings.h:96
 msgid "&Close"
 msgstr "ਬੰਦ ਕਰੋ(&C)"
 
+#: src/resources/menus.xrc:48 src/wx_translatable_strings.h:115
 msgid "&Save"
 msgstr "ਸੰਭਾਲੋ(&S)"
 
+#: src/resources/menus.xrc:52
 msgid "Save &as…"
 msgstr "…ਵਜੋਂ ਸੰਭਾਲੋ(&a)"
 
+#: src/resources/menus.xrc:53
 msgid "Save &As…"
 msgstr "…ਵਜੋਂ ਸੰਭਾਲੋ(&A)"
 
+#: src/resources/menus.xrc:58
 msgid "Compile to MO…"
 msgstr "…MO ਵਜੋਂ ਕੰਪਾਈਲ ਕਰੋ"
 
+#: src/resources/menus.xrc:62
 msgid "E&xport to HTML…"
 msgstr ""
 
+#: src/resources/menus.xrc:66
+msgid "Export to Excel…"
+msgstr ""
+
+#: src/resources/menus.xrc:69
+msgid "Import from Excel…"
+msgstr ""
+
+#: src/resources/menus.xrc:73 src/resources/menus.xrc:428
 msgid "Check for updates…"
 msgstr "ਅੱਪਡੇਟਾਂ ਲਈ ਜਾਂਚ ਕਰੋ…"
 
+#: src/resources/menus.xrc:76 src/resources/menus.xrc:431
+msgid "&License…"
+msgstr "ਲਸੰਸ(&L)…"
+
+#: src/resources/menus.xrc:79 src/resources/menus.xrc:434
 msgid "Settings…"
 msgstr "ਸੈਟਿੰਗਾਂ…"
 
+#: src/resources/menus.xrc:83 src/resources/menus.xrc:438
+#: src/wx_translatable_strings.h:112
 msgid "&Preferences"
 msgstr "ਮੇਰੀ ਪਸੰਦ(&P)"
 
+#: src/resources/menus.xrc:90 src/resources/menus.xrc:445
 msgid "E&xit"
 msgstr "ਬਾਹਰ(&x)"
 
+#: src/resources/menus.xrc:91 src/resources/menus.xrc:446
+#: src/wx_translatable_strings.h:103
 msgid "Quit"
 msgstr "ਬਾਹਰ"
 
+#: src/resources/menus.xrc:118
 msgid "Copy from singular"
 msgstr ""
 
+#: src/resources/menus.xrc:119
 msgid "Copy From Singular"
 msgstr ""
 
+#: src/resources/menus.xrc:124
 msgid "Translation needs &work"
 msgstr "ਅਨੁਵਾਦ ਉੱਤੇ ਕੰਮ ਕਰਨ ਵਾਲਾ ਹੈ(&w)"
 
+#: src/resources/menus.xrc:125
 msgid "Translation Needs &Work"
 msgstr "ਅਨੁਵਾਦ ਉੱਤੇ ਕੰਮ ਕਰਨ ਵਾਲਾ ਹੈ(&w)"
 
+#: src/resources/menus.xrc:130
 msgid "Edit &comment"
 msgstr "ਟਿੱਪਣੀ ਸੋਧ(&c)"
 
+#: src/resources/menus.xrc:131
 msgid "Edit &Comment"
 msgstr "ਟਿੱਪਣੀ ਸੋਧ(&C)"
 
 #. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
+#: src/resources/menus.xrc:136 src/sidebar.cpp:651 src/sidebar_pro.cpp:219
 msgid "Suggestions"
 msgstr "ਸੁਝਾਅ"
 
+#: src/resources/menus.xrc:139 src/resources/menus.xrc:158
 msgid "&Find…"
 msgstr "ਲੱਭੋ(&F)…"
 
+#: src/resources/menus.xrc:144
 msgid "Replace…"
 msgstr "ਬਦਲੋ…"
 
+#: src/resources/menus.xrc:148
 msgid "Find next"
 msgstr "ਅੱਗੇ ਲੱਭੋ"
 
+#: src/resources/menus.xrc:152
 msgid "Find previous"
 msgstr "ਪਿੱਛੇ ਲੱਭੋ"
 
+#: src/resources/menus.xrc:162
 msgid "Find and Replace…"
 msgstr "…ਲੱਭੋ ਤੇ ਬਦਲੋ"
 
+#: src/resources/menus.xrc:166
 msgid "Find Next"
 msgstr "ਅੱਗੇ ਲੱਭੋ"
 
+#: src/resources/menus.xrc:170
 msgid "Find Previous"
 msgstr "ਪਿੱਛੇ ਲੱਭੋ"
 
+#: src/resources/menus.xrc:179
 msgid "Show string &ID"
 msgstr ""
 
+#: src/resources/menus.xrc:180
 msgid "Show String &ID"
 msgstr ""
 
+#: src/resources/menus.xrc:184
 msgid "Show warnings"
 msgstr "ਚਿਤਾਵਨੀ ਦਿਖਾਓ"
 
+#: src/resources/menus.xrc:185
 msgid "Show Warnings"
 msgstr "ਚਿਤਾਵਨੀ ਦਿਖਾਓ"
 
+#: src/resources/menus.xrc:189
+msgid "Customize warnings…"
+msgstr ""
+
+#: src/resources/menus.xrc:190
+msgid "Customize Warnings…"
+msgstr ""
+
+#: src/resources/menus.xrc:194
 msgid "Sort by &file order"
 msgstr ""
 
+#: src/resources/menus.xrc:195
 msgid "Sort by &File Order"
 msgstr ""
 
+#: src/resources/menus.xrc:199
 msgid "Sort by &source"
 msgstr ""
 
+#: src/resources/menus.xrc:200
 msgid "Sort by &Source"
 msgstr ""
 
+#: src/resources/menus.xrc:204
 msgid "Sort by &translation"
 msgstr ""
 
+#: src/resources/menus.xrc:205
 msgid "Sort by &Translation"
 msgstr ""
 
+#: src/resources/menus.xrc:210
 msgid "&Group by context"
 msgstr ""
 
+#: src/resources/menus.xrc:211
 msgid "&Group By Context"
 msgstr ""
 
+#: src/resources/menus.xrc:215
 msgid "Entries with errors first"
 msgstr ""
 
+#: src/resources/menus.xrc:216
 msgid "Entries with Errors First"
 msgstr ""
 
+#: src/resources/menus.xrc:220
 msgid "&Untranslated entries first"
 msgstr "ਗ਼ੈਰ-ਅਨੁਵਾਦ ਐਂਟਰੀਆਂ ਪਹਿਲਾਂ(&U)"
 
+#: src/resources/menus.xrc:221
 msgid "&Untranslated Entries First"
 msgstr "ਗ਼ੈਰ-ਅਨੁਵਾਦ ਐਂਟਰੀਆਂ ਪਹਿਲਾਂ(&U)"
 
+#: src/resources/menus.xrc:226
+msgid "Show &suggestions tab"
+msgstr ""
+
+#: src/resources/menus.xrc:227
+msgid "Show &Suggestions Tab"
+msgstr ""
+
+#: src/resources/menus.xrc:231
+msgid "Show &terminology tab"
+msgstr ""
+
+#: src/resources/menus.xrc:232
+msgid "Show &Terminology Tab"
+msgstr ""
+
+#: src/resources/menus.xrc:236
 msgid "&Show code occurrences"
 msgstr ""
 
+#: src/resources/menus.xrc:237
 msgid "&Show Code Occurrences"
 msgstr ""
 
+#: src/resources/menus.xrc:241
 msgid "Show sidebar"
 msgstr "ਬਾਹੀ ਵੇਖਾਓ"
 
+#: src/resources/menus.xrc:247
 msgid "Show status bar"
 msgstr "ਹਾਲਤ ਪੱਟੀ ਵੇਖਾਓ"
 
+#: src/resources/menus.xrc:255 src/resources/menus.xrc:463
 msgid "&Translation"
 msgstr "ਟਰਾਂਸਲੇਸ਼ਨ(&T)"
 
+#: src/resources/menus.xrc:258 src/statistics.cpp:312 src/statistics.cpp:415
+#: src/statistics.cpp:427
+msgid "Source Text"
+msgstr "ਸਰੋਤ ਪਾਠ"
+
+#: src/resources/menus.xrc:262
 msgid "&Update from source code"
 msgstr "ਸਰੋਤ ਕੋਡ ਤੋਂ ਅੱਪਡੇਟ ਕਰੋ(&U)"
 
+#: src/resources/menus.xrc:263
 msgid "&Update from Source Code"
 msgstr "ਸਰੋਤ ਕੋਡ ਤੋਂ ਅੱਪਡੇਟ ਕਰੋ(&U)"
 
-msgid "Update from &POT file…"
-msgstr "&POT ਫਾਈਲ ਤੋਂ ਅੱਪਡੇਟ…"
-
-msgid "Update from &POT File…"
-msgstr "&POT ਫਾਈਲ ਤੋਂ ਅੱਪਡੇਟ…"
-
+#: src/resources/menus.xrc:270
 msgid "Sync with Crowdin"
 msgstr "Crowdin ਨਾਲ ਸਿੰਕ ਕਰੋ"
 
+#: src/resources/menus.xrc:274 src/resources/menus.xrc:275
 msgid "Pre-&translate…"
 msgstr "ਕੱਚਾ-ਅਨੁਵਾਦ(&t)…"
 
+#: src/resources/menus.xrc:279
 msgid "&Validate translations"
 msgstr ""
 
+#: src/resources/menus.xrc:280
 msgid "&Validate Translations"
 msgstr ""
 
+#: src/resources/menus.xrc:284
+msgid "&Statistics"
+msgstr "ਅੰਕੜੇ(&S)"
+
+#: src/resources/menus.xrc:289
 msgid "Remove Same-as-Source Translations"
 msgstr ""
 
+#: src/resources/menus.xrc:292
 msgid "&Purge deleted translations"
 msgstr "ਹਟਾਏ ਗਏ ਅਨੁਵਾਦ ਨੂੰ ਕੱਢੋ(&P)"
 
+#: src/resources/menus.xrc:293
 msgid "&Purge Deleted Translations"
 msgstr "ਹਟਾਏ ਗਏ ਅਨੁਵਾਦ ਨੂੰ ਕੱਢੋ(&P)"
 
+#: src/resources/menus.xrc:297
 msgid "&Properties…"
 msgstr "ਵਿਸ਼ੇਸ਼ਤਾ(&P)…"
 
+#: src/resources/menus.xrc:304 src/resources/menus.xrc:466
 msgid "&Go"
 msgstr "ਜਾਓ(&G)"
 
+#: src/resources/menus.xrc:307
 msgid "&Done and next"
 msgstr "ਮੁਕੰਮਲ ਤੇ ਅੱਗੇ(&D)"
 
+#: src/resources/menus.xrc:308
 msgid "&Done and Next"
 msgstr "ਮੁਕੰਮਲ ਤੇ ਅੱਗੇ(&D)"
 
+#: src/resources/menus.xrc:314
 msgid "Previously edited"
 msgstr ""
 
+#: src/resources/menus.xrc:315
 msgid "Previously Edited"
 msgstr ""
 
+#: src/resources/menus.xrc:320
 msgid "&Previous translation"
 msgstr "ਪਿਛਲਾ ਅਨੁਵਾਦ(&P)"
 
+#: src/resources/menus.xrc:321
 msgid "&Previous Translation"
 msgstr "ਪਿਛਲਾ ਅਨੁਵਾਦ(&P)"
 
+#: src/resources/menus.xrc:325
 msgid "&Next translation"
 msgstr "ਅਗਲਾ ਅਨੁਵਾਦ(&N)"
 
+#: src/resources/menus.xrc:326
 msgid "&Next Translation"
 msgstr "ਅਗਲਾ ਅਨੁਵਾਦ(&N)"
 
+#: src/resources/menus.xrc:330
 msgid "P&revious unfinished"
 msgstr ""
 
+#: src/resources/menus.xrc:331
 msgid "P&revious Unfinished"
 msgstr ""
 
+#: src/resources/menus.xrc:335
 msgid "Ne&xt unfinished"
 msgstr ""
 
+#: src/resources/menus.xrc:336
 msgid "Ne&xt Unfinished"
 msgstr ""
 
+#: src/resources/menus.xrc:341
 msgid "Previous plural form"
 msgstr ""
 
+#: src/resources/menus.xrc:342
 msgid "Previous Plural Form"
 msgstr ""
 
+#: src/resources/menus.xrc:346
 msgid "Next plural form"
 msgstr ""
 
+#: src/resources/menus.xrc:347
 msgid "Next Plural Form"
 msgstr ""
 
+#: src/resources/menus.xrc:356 src/resources/menus.xrc:473
 msgid "&Online help"
 msgstr "ਆਨਲਾਈਨ ਮਦਦ(&O)"
 
+#: src/resources/menus.xrc:357 src/resources/menus.xrc:474
 msgid "&Online Help"
 msgstr "ਆਨਲਾਈਨ ਮਦਦ(&O)"
 
+#: src/resources/menus.xrc:363 src/resources/menus.xrc:480
 msgid "&GNU gettext manual"
 msgstr "&GNU gettext ਦਸਤਾਵੇਜ਼"
 
+#: src/resources/menus.xrc:364 src/resources/menus.xrc:481
 msgid "&GNU gettext Manual"
 msgstr "&GNU gettext ਦਸਤਾਵੇਜ਼"
 
+#: src/resources/menus.xrc:368 src/resources/menus.xrc:485
+msgid "Email &support…"
+msgstr ""
+
+#: src/resources/menus.xrc:369 src/resources/menus.xrc:486
+msgid "Email &Support…"
+msgstr ""
+
+#: src/resources/menus.xrc:373 src/resources/menus.xrc:490
 msgid "&About Poedit"
 msgstr "ਪੋਐਡਿਟ ਬਾਰੇ(&A)"
 
+#: src/resources/menus.xrc:374 src/resources/menus.xrc:375
+#: src/resources/menus.xrc:491 src/resources/menus.xrc:492
 msgid "&About"
 msgstr "ਇਸ ਬਾਰੇ(&A)"
 
+#: src/resources/prefs.xrc:4
 msgid "Extractor setup"
 msgstr ""
 
+#: src/resources/prefs.xrc:27
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "ਇਕਸਟੈਸ਼ਨਾਂ ਦੀ ਲਿਸਟ ਅਰਧ ਕਾਮਿਆਂ ਨਾਲ ਲਿਖੋ (ਜਿਵੇ ਕਿ *.cpp;*.h):"
 
+#: src/resources/prefs.xrc:43
 msgid "Invocation:"
 msgstr "ਸਹਾਇਤਾ :"
 
+#: src/resources/prefs.xrc:47
 msgid "Command to extract translations:"
 msgstr ""
 
-msgid ""
-"This is the command used to launch the extractor.\n"
+#: src/resources/prefs.xrc:61
+msgid "This is the command used to launch the extractor.\n"
 "%o expands to the name of output file, %K to list\n"
 "of keywords, %F to list of input files,\n"
 "%C to charset flag (see below)."
 msgstr ""
 
+#: src/resources/prefs.xrc:70
 msgid "An item in keywords list:"
 msgstr "ਸ਼ਬਦ ਲਿਸਟ 'ਚ ਇੱਕ ਇਕਾਈ:"
 
-msgid ""
-"This will be attached to the command line once\n"
+#: src/resources/prefs.xrc:84
+msgid "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
-msgstr ""
-"ਇਹ ਇੱਕ ਵਾਰ ਕਮਾਂਡ ਲਾਇਨ ਨਾਲ ਹਰੇਕ ਇੰਪੁੱਟ ਫਾਇਲ ਲ਼ਈ ਜੁਡ਼ ਜਾਵੇਗਾ।\n"
+msgstr "ਇਹ ਇੱਕ ਵਾਰ ਕਮਾਂਡ ਲਾਇਨ ਨਾਲ ਹਰੇਕ ਇੰਪੁੱਟ ਫਾਇਲ ਲ਼ਈ ਜੁਡ਼ ਜਾਵੇਗਾ।\n"
 "%k ਫਾਇਲ ਨਾਂ ਫੈਲਾ ਦੇਵੇਗਾ।"
 
+#: src/resources/prefs.xrc:93
 msgid "An item in input files list:"
 msgstr "ਇੰਪੁੱਟ ਫਾਇਲ ਲਿਸਟ ਵਿੱਚ ਇਕਾਈ:"
 
+#: src/resources/prefs.xrc:107
 #, c-format
-msgid ""
-"This will be attached to the command line once\n"
+msgid "This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
-msgstr ""
-"ਇਹ ਇੱਕ ਵਾਰ ਕਮਾਂਡ ਲਾਇਨ ਨਾਲ ਹਰੇਕ ਇੰਪੁੱਟ ਫਾਇਲ ਲਈ ਜੁਡ਼ ਜਾਵੇਗਾ।\n"
+msgstr "ਇਹ ਇੱਕ ਵਾਰ ਕਮਾਂਡ ਲਾਇਨ ਨਾਲ ਹਰੇਕ ਇੰਪੁੱਟ ਫਾਇਲ ਲਈ ਜੁਡ਼ ਜਾਵੇਗਾ।\n"
 "%f ਫਾਇਲ ਨਾਂ ਫੈਲਾ ਦੇਵੇਗਾ।"
 
+#: src/resources/prefs.xrc:116 src/resources/properties.xrc:124
 msgid "Source code charset:"
 msgstr "ਸਰੋਤ ਕੋਡ ਅੱਖਰ ਸਮੂਹ:"
 
+#: src/resources/prefs.xrc:130
 #, c-format
-msgid ""
-"This will be attached to the command line\n"
+msgid "This will be attached to the command line\n"
 "only if source code charset was given. %c expands to charset value."
-msgstr ""
-"ਇਹ ਇੱਕ ਵਾਰ ਕਮਾਂਡ ਲਾਇਨ ਨਾਲ ਹਰੇਕ ਇੰਪੁੱਟ ਫਾਇਲ ਲ਼ਈ ਜੁਡ਼ ਜਾਵੇਗਾ।\n"
+msgstr "ਇਹ ਇੱਕ ਵਾਰ ਕਮਾਂਡ ਲਾਇਨ ਨਾਲ ਹਰੇਕ ਇੰਪੁੱਟ ਫਾਇਲ ਲ਼ਈ ਜੁਡ਼ ਜਾਵੇਗਾ।\n"
 "%c ਫਾਇਲ ਨਾਂ ਫੈਲਾ ਦੇਵੇਗਾ।"
 
+#: src/resources/properties.xrc:4 src/resources/properties.xrc:153
 msgid "Translation Properties"
 msgstr "ਅਨੁਵਾਦ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ"
 
+#: src/resources/properties.xrc:19
 msgid "Project name and version:"
 msgstr "ਪਰੋਜੈਕਟ ਨਾਂ ਅਤੇ ਵਰਜ਼ਨ:"
 
+#: src/resources/properties.xrc:34
 msgid "Language team:"
 msgstr "ਭਾਸ਼ਾ ਟੀਮ:"
 
+#: src/resources/properties.xrc:66
 msgid "Plural forms:"
 msgstr "ਬਹੁਵਚਨ ਰੂਪ:"
 
+#: src/resources/properties.xrc:73
 msgid "Use default rules for this language"
 msgstr "ਇਹ ਭਾਸ਼ਾ ਲਈ ਡਿਫਾਲਟ ਨਿਯਮ ਵਰਤੋਂ"
 
+#: src/resources/properties.xrc:82
 msgid "Use custom expression"
 msgstr ""
 
+#: src/resources/properties.xrc:98
 msgid "Learn about plural forms"
 msgstr ""
 
+#: src/resources/properties.xrc:112
 msgid "Charset:"
 msgstr "ਅੱਖਰ-ਸੈਟ :"
 
+#: src/resources/properties.xrc:138
 msgid "Advanced Extraction Settings…"
 msgstr ""
 
+#: src/resources/properties.xrc:139
 msgid "Advanced extraction settings…"
 msgstr ""
 
+#: src/resources/properties.xrc:154
 msgid "Translation properties"
 msgstr "ਅਨੁਵਾਦ ਵਿਸ਼ੇਸ਼ਤਾ"
 
+#: src/resources/properties.xrc:157
 msgid "Sources Paths"
 msgstr ""
 
+#: src/resources/properties.xrc:158
 msgid "Sources paths"
 msgstr ""
 
+#: src/resources/properties.xrc:164
 msgid "Extract text from source files in the following directories:"
 msgstr ""
 
+#: src/resources/properties.xrc:173
 msgid "Base path:"
 msgstr "ਮੁੱਖ ਮਾਰਗ:"
 
+#: src/resources/properties.xrc:227
+msgid "Customize File Extensions…"
+msgstr ""
+
+#: src/resources/properties.xrc:228
+msgid "Customize file extensions…"
+msgstr ""
+
+#: src/resources/properties.xrc:241
 msgid "Sources Keywords"
 msgstr "ਸਰੋਤ ਸ਼ਬਦ"
 
+#: src/resources/properties.xrc:242
 msgid "Sources keywords"
 msgstr "ਸਰੋਤ ਕੀਵਰਡ"
 
-msgid ""
-"Use these keywords (function names) to recognize translatable strings\n"
+#: src/resources/properties.xrc:248
+msgid "Use these keywords (function names) to recognize translatable strings\n"
 "in source files:"
 msgstr ""
 
+#: src/resources/properties.xrc:264
 msgid "Also use default keywords for supported languages"
 msgstr ""
 
+#: src/resources/properties.xrc:271
 msgid "Learn about gettext keywords"
 msgstr "gettext ਕੀਵਰਡ ਬਾਰੇ ਜਾਣੋ"
 
-msgid "Update summary"
-msgstr "ਅੱਪਡੇਟ ਸੰਖੇਪ"
-
-msgid ""
-"These strings were found in the sources but were not in the file.\n"
+#: src/resources/summary.xrc:32
+msgid "These strings were found in the sources but were not in the file.\n"
 "Poedit will add them to the file now."
 msgstr ""
 
-msgid "New strings"
-msgstr "ਨਵੀਂਆਂ ਸਤਰਾਂ"
-
-msgid ""
-"These strings are no longer in the source code.\n"
+#: src/resources/summary.xrc:53
+msgid "These strings are no longer in the source code.\n"
 "Poedit will remove them from the file now."
 msgstr ""
 
+#: src/resources/summary.xrc:66
 msgid "Obsolete strings"
 msgstr "ਪੁਰਾਣੀਆਂ ਸਤਰਾਂ"
 
+#: src/resources/summary.xrc:79
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 ਨਵਾਂ, 0 ਪੁਰਾਣਾ)"
 
-msgid "Open"
-msgstr ""
-
+#: src/resources/toolbar.xrc:13 src/resources/toolbar.xrc:17
 msgid "Open file"
 msgstr "ਫ਼ਾਈਲ ਖੋਲ੍ਹੋ"
 
+#: src/resources/toolbar.xrc:22 src/resources/toolbar.xrc:26
 msgid "Save file"
 msgstr "ਫ਼ਾਈਲ ਸੰਭਾਲੋ"
 
+#: src/resources/toolbar.xrc:34
 msgid "Validate"
 msgstr "ਤਸਦੀਕ ਕਰੋ"
 
+#: src/resources/toolbar.xrc:35
 msgid "Check for errors in the translation"
 msgstr ""
 
+#: src/resources/toolbar.xrc:49
+msgid "Pre-translate strings that don’t have a translation yet"
+msgstr ""
+
+#: src/resources/toolbar.xrc:57 src/wx/main_toolbar.cpp:136
 msgid "Update from code"
 msgstr "ਕੋਡ ਤੋਂ ਅੱਪਡੇਟ ਕਰੋ"
 
+#: src/resources/toolbar.xrc:58 src/wx/main_toolbar.cpp:136
 msgid "Update from Code"
 msgstr "ਕੋਡ ਤੋਂ ਅੱਪਡੇਟ ਕਰੋ"
 
+#: src/resources/toolbar.xrc:59 src/wx/main_toolbar.cpp:137
 msgid "Update from source code"
 msgstr "ਸਰੋਤ ਕੋਡ ਤੋਂ ਅੱਪਡੇਟ ਕਰੋ"
 
+#: src/resources/toolbar.xrc:67
 msgid "Sidebar"
 msgstr "ਬਾਹੀ"
 
+#: src/resources/toolbar.xrc:68
 msgid "Show or hide the sidebar"
 msgstr "ਬਾਹੀ ਵੇਖੋ ਜਾਂ ਓਹਲੇ ਕਰੋ"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
+#: src/sidebar.cpp:139
 msgid "Previous source text"
 msgstr "ਪਿਛਲੀ ਸਰੋਤ ਲਿਖਤ"
 
-msgid ""
-"The old source text (before it changed during an update) that the now-"
-"inaccurate translation corresponds to."
+#: src/sidebar.cpp:142
+msgid "The old source text (before it changed during an update) that the now-inaccurate translation corresponds to."
 msgstr ""
 
+#: src/sidebar.cpp:168
 msgid "Notes for translators"
 msgstr ""
 
+#: src/sidebar.cpp:201
 msgid "Comment"
 msgstr "ਟਿੱਪਣੀ"
 
+#: src/sidebar.cpp:231 src/sidebar.cpp:250
 msgid "Add comment"
 msgstr "ਟਿੱਪਣੀ ਜੋੜੋ"
 
+#: src/sidebar.cpp:233 src/sidebar.cpp:235 src/sidebar.cpp:253
 msgid "Add Comment"
 msgstr "ਟਿੱਪਣੀ ਜੋੜੋ"
 
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:436
+msgid "from your TM"
+msgstr "ਤੁਹਾਡੀ TM ਤੋਂ"
+
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:441
+msgid "machine translation"
+msgstr "ਮਸ਼ੀਨੀ ਅਨੁਵਾਦ"
+
+#. TRANSLATORS: This is followed by a logo of e.g. Microsoft Translator, forming a sentence e.g. "translated by MS Translator"
+#: src/sidebar.cpp:449
+msgid "translated by"
+msgstr "ਅਨੁਵਾਦ ਕੀਤਾ"
+
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:456
+msgid "human translation"
+msgstr "ਇਨਸਾਨੀ ਅਨੁਵਾਦ"
+
+#: src/sidebar.cpp:592
 msgid "Delete From Translation Memory"
 msgstr "ਅਨੁਵਾਦ ਮੈਮੋਰੀ ਵਿੱਚੋਂ ਹਟਾਓ"
 
+#: src/sidebar.cpp:592
 msgid "Delete from translation memory"
 msgstr "ਅਨੁਵਾਦ ਮੈਮੋਰੀ ਵਿੱਚੋਂ ਹਟਾਓ"
 
+#: src/sidebar.cpp:593
+msgid "Report Bad Translation"
+msgstr "ਖ਼ਰਾਬ ਅਨੁਵਾਦ ਵਜੋਂ ਰਿਪੋਰਟ ਕਰੋ"
+
+#: src/sidebar.cpp:593
+msgid "Report bad translation"
+msgstr "ਖ਼ਰਾਬ ਅਨੁਵਾਦ ਵਜੋਂ ਰਿਪੋਰਟ ਕਰੋ"
+
+#: src/sidebar.cpp:652
 msgid "Translation suggestions"
 msgstr "ਅਨੁਵਾਦ ਲਈ ਸੁਝਾਅ"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
+#: src/sidebar.cpp:695
 msgid "No matches found"
 msgstr "ਕੋਈ ਮੇਲ ਨਹੀਂ ਲੱਭਿਆ"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (macOS, Linux).
+#: src/sidebar.cpp:698
 msgid "No Matches Found"
 msgstr "ਕੋਈ ਮੇਲ ਨਹੀਂ ਲੱਭੇ"
 
+#: src/sidebar.cpp:734 src/sidebar_pro.cpp:325
 msgid "This string was found in Poedit’s translation memory."
 msgstr "ਇਹ ਲਾਈਨ ਪੋਐਡਿਟ ਦੀ ਅਨੁਵਾਦ ਮੈਮੋਰੀ ਵਿੱਚ ਲੱਭੀ ਸੀ।"
 
-msgid ""
-"Translation suggestions require that source text is available. They don’t "
-"work if only IDs without the actual text are used."
+#: src/sidebar.cpp:984
+msgid "Translation suggestions require that source text is available. They don’t work if only IDs without the actual text are used."
 msgstr ""
 
-msgid ""
-"Translation suggestions require that source text’s language is known. Poedit "
-"couldn’t detect it in this file."
+#: src/sidebar.cpp:989
+msgid "Translation suggestions require that source text’s language is known. Poedit couldn’t detect it in this file."
 msgstr ""
 
+#. TRANSLATORS: Tooltip explaining the Quality: label
+#: src/sidebar_pro.cpp:86
+msgid "Currently enabled quality level of online suggestions"
+msgstr ""
+
+#. TRANSLATORS: Quality level for the "Quality: %s" label; needs to be short
+#: src/sidebar_pro.cpp:121
+msgid "Premium"
+msgstr "ਪ੍ਰੀਮੀਅਮ"
+
+#. TRANSLATORS: Quality level for the "Quality: %s" label; needs to be short
+#: src/sidebar_pro.cpp:126
+msgid "Standard"
+msgstr "ਮਿਆਰੀ"
+
+#. TRANSLATORS: This needs to be *short*, it is shown in the sidebar
+#. after "Translation suggestions". %s will be replaced by "Standard"
+#. or "Premium". "(Quality) level" or "tier" are synonyms for it.
+#: src/sidebar_pro.cpp:132
+#, c-format
+msgid "Quality: %s"
+msgstr "ਕੁਆਲਟੀ: %s"
+
+#. TRANSLATORS: Label for the part where currently used translation engine is shown
+#: src/sidebar_pro.cpp:151
+msgid "Machine translation uses:"
+msgstr ""
+
+#: src/sidebar_pro.cpp:227
+msgid "Terminology"
+msgstr "ਸ਼ਬਦਾਵਲੀ"
+
+#: src/sidebar_pro.cpp:321
+msgid "This suggestion was contributed by another translator to the online TM."
+msgstr ""
+
+#: src/sidebar_pro.cpp:323
+msgid "This suggestion was machine-translated online."
+msgstr ""
+
+#: src/sidebar_pro.cpp:512
+#, c-format
+msgid "%d out of %d online suggestion left."
+msgid_plural "%d out of %d online suggestions left."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/sidebar_pro.cpp:517
+msgid "Remove this limitation"
+msgstr ""
+
+#: src/sidebar_pro.cpp:521
+msgid "Online suggestions are limited to only 10 in the free version. Upgrade to Pro to remove this limitation."
+msgstr ""
+
+#: src/sidebar_pro.cpp:523
+msgid "Unlock online suggestions"
+msgstr ""
+
+#: src/sidebar_pro.cpp:547
+msgid "Exceeded online TM daily limit."
+msgstr ""
+
+#: src/sidebar_pro.cpp:580
+msgid "Connect to the Internet to get additional suggestions."
+msgstr ""
+
+#. TRANSLATORS: Label indicating that translations made in the current file are contributed to the online translation memory. Related to the "Contribute my translations to the online TM" string.
+#: src/sidebar_pro.cpp:655
+msgid "Contributing"
+msgstr "ਯੋਗਦਾਨ"
+
+#: src/sidebar_pro.cpp:656
+msgid "Your translations are contributed to the online translation memory as you make them. Thanks for making the suggestions better!"
+msgstr ""
+
+#. TRANSLATORS: Label indicating that the current file
+#: src/sidebar_pro.cpp:662
+msgid "Private"
+msgstr "ਪ੍ਰਾਈਵੇਟ"
+
+#: src/sidebar_pro.cpp:663
+msgid "Translations from this file are not shared with the online translation memory."
+msgstr ""
+
+#: src/sidebar_pro.cpp:688
+msgid "Privacy settings"
+msgstr "ਪਰਦੇਦਾਰੀ ਸੈਟਿੰਗਾਂ"
+
+#: src/sidebar_pro.cpp:694
+#, c-format
+msgid "While editing the file “%s”:"
+msgstr ""
+
+#: src/sidebar_pro.cpp:756
+msgid "Not interested"
+msgstr ""
+
+#: src/sidebar_pro.cpp:982
+msgid "Pre-translation"
+msgstr "ਕੱਚਾ-ਅਨੁਵਾਦ"
+
+#: src/sidebar_pro.cpp:987
+msgid "Pre-translate all items at once and focus on making corrections, instead of translating them one by one."
+msgstr ""
+
+#: src/sidebar_pro.cpp:1101
+msgid "Stay Informed!"
+msgstr ""
+
+#: src/sidebar_pro.cpp:1102
+msgid "Subscribe"
+msgstr "ਗਾਹਕ ਬਣੋ"
+
+#: src/sidebar_pro.cpp:1106
+msgid "Sign up for Poedit newsletter and be the first to know about what’s new. I hate spam too, so expect only a few emails a year."
+msgstr ""
+
+#: src/sidebar_pro.cpp:1117
+msgid "Email address"
+msgstr "ਈਮੇਲ ਪਤਾ"
+
+#: src/sidebar_pro.cpp:1140
+msgid "You’re signed up. Please check your email for a confirmation message."
+msgstr ""
+
+#. TRANSLATORS: "Dictionaries" is the name of the application (see https://dictionaries.io), i.e. shouldn't be translated
+#: src/sidebar_pro.cpp:1210
+msgid "Dictionaries for Mac, Windows & Kindle"
+msgstr ""
+
+#: src/sidebar_pro.cpp:1222
+msgid "Did you know I also made a dictionaries app for Mac, Windows and Kindle? It supports over 80 languages and is a great companion to Poedit."
+msgstr ""
+
+#: src/sidebar_terminology.cpp:49
+msgid "Glossary Entry"
+msgstr "ਸ਼ਬਦਾਵਲੀ ਐਂਟਰੀ"
+
+#: src/sidebar_terminology.cpp:55 src/sidebar_terminology.cpp:185
+msgid "Term"
+msgstr "ਪਦ"
+
+#: src/sidebar_terminology.cpp:60
+msgid "Additional description or notes"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:66 src/sidebar_terminology.cpp:187
+msgid "Notes"
+msgstr "ਨੋਟਿਸ"
+
+#: src/sidebar_terminology.cpp:128
+msgid "CSV Glossary Import"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:138
+msgid "Source language:"
+msgstr "ਸਰੋਤ ਭਾਸ਼ਾ:"
+
+#: src/sidebar_terminology.cpp:142
+msgid "Translation language:"
+msgstr "ਅਨੁਵਾਦ ਭਾਸ਼ਾ:"
+
+#: src/sidebar_terminology.cpp:149
+msgid "Import rules:"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:153
+msgid "Skip the first row"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:158
+msgid "Column separator:"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:161
+msgid "Term column:"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:164
+msgid "Definition column:"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:167
+msgid "Notes column:"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:177 src/sidebar_terminology.cpp:261
+msgid "Preview of imported glossary data:"
+msgstr ""
+
+#. TRANSLATORS: %d is the number of entries in the preview, %s is the total number of entries in the file
+#: src/sidebar_terminology.cpp:257
+#, c-format
+msgid "Preview of imported glossary data (%d out of %s shown):"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:396 src/wx_translatable_strings.h:102
+msgid "Edit"
+msgstr "ਸੋਧ"
+
+#: src/sidebar_terminology.cpp:496
+msgid "Word or phrase"
+msgstr "ਸ਼ਬਦ ਜਾਂ ਵਾਕ"
+
+#: src/sidebar_terminology.cpp:518
+msgid "Add entries to the glossary"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:524
+msgid "Search previously made translations and glossaries to ensure consistency. Both the current file and your translation memory are consulted."
+msgstr ""
+
+#: src/sidebar_terminology.cpp:536
+msgid "Unlock terminology search"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:626
+msgid "Glossary"
+msgstr "ਸ਼ਬਦਾਵਲੀ"
+
+#: src/sidebar_terminology.cpp:632
+msgid "This File"
+msgstr "ਇਹ ਫਾਈਲ"
+
+#: src/sidebar_terminology.cpp:696
+msgid "Add Glossary Entry…"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:696
+msgid "Add glossary entry…"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:697
+msgid "Import Glossary from CSV File…"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:697
+msgid "Import glossary from CSV file…"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:720
+msgid "Select CSV glossary file to import"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:723
+msgid "CSV Files"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:749
+msgid "Importing glossary"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:756
+#, c-format
+msgid "Imported %s terms from CSV file “%s” into the glossary."
+msgstr ""
+
+#: src/statistics.cpp:275 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Items"
+msgstr "ਆਈਟਮਾਂ"
+
+#: src/statistics.cpp:276 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Words"
+msgstr "ਸ਼ਬਦ"
+
+#: src/statistics.cpp:277 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Characters"
+msgstr "ਅੱਖਰ"
+
+#: src/statistics.cpp:291 src/statistics.cpp:412
+msgid "Translated"
+msgstr "ਅਨੁਵਾਦ ਹੋਏ"
+
+#: src/statistics.cpp:296 src/statistics.cpp:335 src/statistics.cpp:413
+#: src/statistics.cpp:417
+msgctxt "column/row header"
+msgid "Needs work"
+msgstr "ਕੰਮ ਕਰਨ ਦੀ ਲੋੜ ਹੈ"
+
+#: src/statistics.cpp:301 src/statistics.cpp:414
+msgid "Translations with errors"
+msgstr "ਅਨੁਵਾਦ ਵਿੱਚ ਗਲਤੀਆਂ"
+
+#: src/statistics.cpp:328 src/statistics.cpp:416 src/statistics.cpp:428
+msgid "Strings in source language"
+msgstr "ਸਰੋਤ ਭਾਸ਼ਾ ਵਿੱਚ ਲਾਈਨਾਂ"
+
+#: src/statistics.cpp:340 src/statistics.cpp:418
+msgid "Not translated"
+msgstr "ਅਨੁਵਾਦ ਨਹੀਂ"
+
+#: src/statistics.cpp:351
+msgid "Include code and placeholders"
+msgstr "ਕੋਡ ਅਤੇ ਨਿਸ਼ਾਨਾਂ ਸਮੇਤ"
+
+#: src/statistics.cpp:352
+msgid "If checked, word and character counts will also include placeholders, HTML markup and code."
+msgstr ""
+
+#: src/statistics.cpp:362
+msgid "Characters are counted including spaces."
+msgstr ""
+
+#: src/statistics.cpp:368
+msgid "Copy to clipboard"
+msgstr "ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕਰੋ"
+
+#: src/statistics.cpp:370
+msgid "Copy to Clipboard"
+msgstr "ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕਰੋ"
+
+#: src/statistics.cpp:722
+#, c-format
+msgid "The file “%s” couldn’t be opened: %s"
+msgstr ""
+
+#: src/subprocess.cpp:219 src/subprocess.cpp:251
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "ਪ੍ਰੋਗਰਾਮ ਚਲਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ: %s"
+
+#: src/tm/tmx_io.cpp:88 src/tm/tmx_io.cpp:104
 msgid "The TMX file is malformed."
 msgstr ""
 
-msgid "No translations were found in the TMX file."
-msgstr ""
-
+#: src/tm/transmem.cpp:87
 #, c-format
 msgid "Translation memory database is corrupted: %s (%d)."
 msgstr ""
 
+#: src/tm/transmem.cpp:90
 #, c-format
 msgid "Translation memory error: %s (%d)."
 msgstr "ਅਨੁਵਾਦ ਮੈਮੋਰੀ ਗਲਤੀ: %s (%d)।"
 
+#: src/uilang.cpp:233
 msgid "(Use default language)"
 msgstr "(ਮੂਲ ਭਾਸ਼ਾ ਵਰਤੋਂ)"
 
+#: src/uilang.cpp:244
 msgid "Language selection"
 msgstr "ਭਾਸ਼ਾ ਚੋਣ"
 
+#: src/uilang.cpp:244
 msgid "Select your preferred language"
 msgstr "ਆਪਣੀ ਪਸੰਦ ਦੀ ਭਾਸ਼ਾ ਚੁਣੋ"
 
+#: src/uilang.cpp:261
 msgid "You must restart Poedit for this change to take effect."
 msgstr "ਤੁਹਾਨੂੰ ਤਬਦੀਲੀਆਂ ਲਾਗੂ ਕਰਨ ਲਈ Poedit ਨੂੰ ਮੁੜ ਚਾਲੂ ਕਰਨਾ ਪਵੇਗਾ।"
 
+#: src/utility.cpp:143 src/utility.cpp:153
 msgid "Cannot create temporary directory."
 msgstr "ਆਰਜ਼ੀ ਡਾਇਰੈਕਟਰੀ ਬਣਾਈ ਨਹੀਂ ਜਾ ਸਕਦੀ ਹੈ।"
 
+#: src/welcomescreen.cpp:141
 msgid "There are no translations. That’s unusual."
 msgstr "ਕੋਈ ਅਨੁਵਾਦ ਨਹੀਂ ਹੈ। ਇਹ ਅਸਧਾਰਨ ਹੈ।"
 
-msgid ""
-"Translatable entries aren’t added manually in the Gettext system, but are "
-"automatically extracted\n"
-"from source code. This way, they stay up to date and accurate.\n"
-"Translators typically use PO template files (POTs) prepared for them by the "
-"developer."
+#: src/welcomescreen.cpp:150
+msgid "Translatable entries aren’t added manually in the Gettext system, but are automatically extracted from source code. This way, they stay up to date and accurate. Translators typically use PO template files (POTs) prepared for them by the developer."
 msgstr ""
 
-msgid "(Learn more about GNU gettext)"
+#: src/welcomescreen.cpp:153
+msgid "Learn more about GNU gettext"
 msgstr ""
 
-msgid ""
-"The simplest way to fill this file with translations is to update it from a "
-"POT:"
+#: src/welcomescreen.cpp:157
+msgid "The simplest way to fill this file with translations is to update it from a POT:"
 msgstr ""
 
+#: src/welcomescreen.cpp:162
 msgid "Update from POT"
 msgstr "POT ਤੋਂ ਅੱਪਡੇਟ ਕਰੋ"
 
+#: src/welcomescreen.cpp:163
 msgid "Take translatable strings from an existing POT template."
 msgstr ""
 
-msgid ""
-"You can also extract translatable strings directly from the source code:"
+#: src/welcomescreen.cpp:167
+msgid "You can also extract translatable strings directly from the source code:"
 msgstr ""
 
+#: src/welcomescreen.cpp:172
 msgid "Extract from sources"
 msgstr ""
 
+#: src/welcomescreen.cpp:173
 msgid "Configure source code extraction in Properties."
 msgstr ""
 
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "%s ਵਰਜ਼ਨ"
-
+#: src/welcomescreen.cpp:272
 msgid "Create new"
 msgstr "ਨਵਾਂ ਬਣਾਓ"
 
+#: src/welcomescreen.cpp:273
 msgid "Create new translation from POT template."
 msgstr "POT ਟੈਮਪਲੇਟ ਤੋਂ ਨਵਾਂ ਅਨੁਵਾਦ ਬਣਾਓ"
 
+#: src/welcomescreen.cpp:278
 msgid "Browse files"
 msgstr "ਫਾਈਲਾਂ ਦੀ ਝਲਕ"
 
+#: src/welcomescreen.cpp:279
 msgid "Open and edit translation files."
 msgstr "ਅਨੁਵਾਦ ਫਾਈਲਾਂ ਨੂੰ ਖੋਲ੍ਹੋ ਅਤੇ ਸੋਧੋ"
 
+#: src/welcomescreen.cpp:286
+msgid "Translate WordPress theme or plugin"
+msgstr ""
+
+#: src/welcomescreen.cpp:287
+msgid "Edit WordPress translations over FTP or locally."
+msgstr ""
+
+#: src/welcomescreen.cpp:292
 msgid "Translate cloud project"
 msgstr "ਕਲਾਉਡ ਪਰੋਜੈਕਟ ਦਾ ਅਨੁਵਾਦ ਕਰੋ"
 
+#: src/welcomescreen.cpp:293
 msgid "Collaborate with other people online."
 msgstr ""
 
+#: src/welcomescreen.cpp:316
 msgid "Recent files"
 msgstr "ਸੱਜਰੀਆਂ ਫਾਈਲਾਂ"
 
+#: src/wordpress/wordpress.cpp:101 src/wordpress/wordpress.cpp:108
+#, c-format
+msgid "Failed to read file “%s”."
+msgstr ""
+
+#: src/wordpress/wordpress.cpp:165
+#, c-format
+msgid "Confused by ambiguous values of “%s” in %s."
+msgstr ""
+
+#: src/wordpress/wordpress.cpp:294 src/wordpress/wordpress.cpp:544
+#: src/wordpress/wordpress.cpp:591
+#, c-format
+msgid "Couldn’t detect POs location for “%s”."
+msgstr ""
+
+#: src/wordpress/wordpress.cpp:670
+#, c-format
+msgid "The “%s” theme isn’t localization-ready."
+msgstr ""
+
+#: src/wordpress/wordpress.cpp:687
+#, c-format
+msgid "Couldn’t detect translation domain of the “%s” theme."
+msgstr ""
+
+#: src/wordpress/wordpress.cpp:714
+#, c-format
+msgid "Couldn't detect translation domain of the \"%s\" theme."
+msgstr ""
+
+#: src/wordpress/wordpress.cpp:769
+msgid "Confused: multiple main plugin files."
+msgstr ""
+
+#: src/wordpress/wordpress.cpp:819
+#, c-format
+msgid "The “%s” plugin isn’t localization-ready."
+msgstr ""
+
+#: src/wordpress/wordpress.cpp:840 src/wordpress/wordpress.cpp:857
+#, c-format
+msgid "Couldn’t detect translation domain of the “%s” plugin."
+msgstr ""
+
+#: src/wordpress/wordpress.cpp:923
+msgid "Found neither WordPress theme nor plugin in the folder."
+msgstr ""
+
+#: src/wordpress/wordpress.cpp:940
+#, c-format
+msgid "Translations folder (%s) doesn’t exist."
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:77
+msgid "<big>Drag and drop <b>theme or plugin folder</b> here</big>\n\n"
+"or use the “Choose folder” button"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:79
+msgid "<big>Drag and Drop <b>Theme or Plugin Folder</b> Here</big>\n\n"
+"or use the “Choose Folder” button"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:101
+#, c-format
+msgid "Folder “%s”"
+msgstr "ਫੋਲਡਰ “%s”"
+
+#: src/wordpress/wordpress_gui.cpp:162
+msgid "Work With Files"
+msgstr "ਫਾਈਲਾਂ ਨਾਲ ਕੰਮ ਕਰੋ"
+
+#: src/wordpress/wordpress_gui.cpp:162
+msgid "Work with files"
+msgstr "ਫਾਈਲਾਂ ਨਾਲ ਕੰਮ ਕਰੋ"
+
+#: src/wordpress/wordpress_gui.cpp:164
+msgid "Connect to Server"
+msgstr "ਸਰਵਰ ਨਾਲ ਕਨੈਕਟ ਕਰੋ"
+
+#: src/wordpress/wordpress_gui.cpp:164
+msgid "Connect to server"
+msgstr "ਸਰਵਰ ਨਾਲ ਕਨੈਕਟ ਕਰੋ"
+
+#: src/wordpress/wordpress_gui.cpp:165
+msgid "On This Computer"
+msgstr "ਇਸ ਕੰਪਿਊਟਰ ਉੱਤੇ"
+
+#: src/wordpress/wordpress_gui.cpp:165
+msgid "On this computer"
+msgstr "ਇਸ ਕੰਪਿਊਟਰ ਉੱਤੇ"
+
+#: src/wordpress/wordpress_gui.cpp:168
+msgid "Continue"
+msgstr "ਜਾਰੀ ਰੱਖੋ"
+
+#: src/wordpress/wordpress_gui.cpp:210
+msgid "Choose Folder…"
+msgstr "ਫੋਲਡਰ ਚੁਣੋ…"
+
+#: src/wordpress/wordpress_gui.cpp:210
+msgid "Choose folder…"
+msgstr "ਫੋਲਡਰ ਚੁਣੋ…"
+
+#: src/wordpress/wordpress_gui.cpp:217
+msgid "Create a new translation"
+msgstr "ਨਵਾਂ ਅਨੁਵਾਦ ਬਣਾਓ"
+
+#: src/wordpress/wordpress_gui.cpp:220
+msgid "Choose this if you want to translate the theme or plugin into your language."
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:233
+msgid "Create a POT"
+msgstr "POT ਬਣਾਓ"
+
+#: src/wordpress/wordpress_gui.cpp:235
+msgid "This option is for theme and plugin developers. Poedit will create an empty template (POT) that translations can be based on."
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:248
+msgid "Select the folder with the WordPress theme or plugin"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:280
+msgid "Enter connection details for your WordPress server. Poedit will retrieve available themes and plugins from it and let you translate directly on the server."
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:287
+msgid "Protocol:"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "FTP (insecure)"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "FTP with SSL"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "SFTP"
+msgstr "SFTP"
+
+#: src/wordpress/wordpress_gui.cpp:293
+msgid "Choose a recent server"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:302 src/wordpress/wordpress_gui.cpp:538
+msgid "Recent Servers"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:302 src/wordpress/wordpress_gui.cpp:538
+msgid "Recent servers"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:306
+msgid "Server:"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:310
+msgid "Remote Path:"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:310
+msgid "Remote path:"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:312
+msgid "Detected automatically"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:315
+msgid "Port:"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:321
+msgid "Username:"
+msgstr "ਵਰਤੋਂਕਾਰ ਨਾਂ:"
+
+#: src/wordpress/wordpress_gui.cpp:325
+msgid "Password:"
+msgstr "ਪਾਸਵਰਡ:"
+
+#: src/wordpress/wordpress_gui.cpp:332
+msgid "Remember my credentials"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:333
+msgid "Connect"
+msgstr "ਕਨੈਕਟ ਕਰੋ"
+
+#: src/wordpress/wordpress_gui.cpp:346
+msgid "Select the plugin or theme to translate:"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:398
+msgid "Connecting to WordPress server…"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:416
+#, c-format
+msgid "Theme: %s"
+msgstr "ਥੀਮ: %s"
+
+#: src/wordpress/wordpress_gui.cpp:419
+#, c-format
+msgid "Plugin: %s"
+msgstr "ਪਲੱਗਇਨ: %s"
+
+#: src/wordpress/wordpress_gui.cpp:534
+msgid "No Recent Servers"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:534
+msgid "No recent servers"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:552
+msgid "Clear Recent Servers"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:552
+msgid "Clear recent servers"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:825
+msgid "Failed to extract WordPress information."
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:826
+msgid "WordPress error"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:835
+#, c-format
+msgid "Poedit couldn’t understand the content of the folder you selected. This may be a problem with the plugin/theme or it may be Poedit being silly. The error is:\n\n"
+" • %s\n\n"
+"Please email help@poedit.net and we’ll sort it out."
+msgstr ""
+
+#. TRANSLATORS: This is a button that sends an email to support when clicked
+#: src/wordpress/wordpress_gui.cpp:841
+msgid "Email support"
+msgstr "ਈਮੇਲ ਸਹਿਯੋਗ"
+
+#: src/wordpress/wordpress_gui.cpp:842
+msgid "View log"
+msgstr "ਲਾਗ ਵੇਖੋ"
+
+#. TRANSLATORS: This is a button that sends an email to support when clicked
+#: src/wordpress/wordpress_gui.cpp:845
+msgid "Email Support"
+msgstr "ਈਮੇਲ ਸਹਿਯੋਗ"
+
+#: src/wordpress/wordpress_gui.cpp:846
+msgid "View Log"
+msgstr "ਲਾਗ ਵੇਖੋ"
+
+#: src/wordpress/wordpress_gui.cpp:857
+msgid "WordPress Errors Log"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:858
+msgid "Please email this log to help@poedit.net. Thank you!"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:938
+msgid "Analyzing WordPress server…"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:959
+msgid "Downloading translation data…"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:984
+msgid "Unpacking translation data…"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:989
+msgid "Error unpacking downloaded WordPress data."
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:1014 src/wordpress/wordpress_gui.cpp:1029
+msgid "Analyzing WordPress code…"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:1039
+msgid "WordPress translation file is ready, but there were some non-fatal issues with the corresponding source code."
+msgstr ""
+
+#: src/wx/main_toolbar.cpp:123
 msgid "Sync"
 msgstr "ਸਿੰਕ ਕਰੋ"
 
+#: src/wx/main_toolbar.cpp:124
 msgid "Synchronize the translation with Crowdin"
 msgstr ""
 
-#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
-#. ("Poedit" here, but please use "%s")
-#, c-format
-msgid "About %s"
-msgstr "%s ਬਾਰੇ"
+#: src/wx/main_toolbar.cpp:170
+msgid "Upgrade to Poedit Pro to get additional features and support Poedit's development."
+msgstr ""
 
 #. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+#: src/wx_translatable_strings.h:49
 #, c-format
 msgid "%s Preferences"
 msgstr "%s ਮੇਰੀ ਪਸੰਦ"
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
+#: src/wx_translatable_strings.h:60
 #, c-format
 msgctxt "macOS menu item"
 msgid "About %s"
 msgstr "%s ਬਾਰੇ"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:64
 msgctxt "macOS menu item"
 msgid "Services"
 msgstr "ਸਰਵਿਸਾਂ"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#: src/wx_translatable_strings.h:66
 #, c-format
 msgctxt "macOS menu item"
 msgid "Hide %s"
 msgstr "%s ਨੂੰ ਲੁਕਾਓ"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:68
 msgctxt "macOS menu item"
 msgid "Hide Others"
 msgstr "ਹੋਰਾਂ ਨੂੰ ਲੁਕਾਓ"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:70
 msgctxt "macOS menu item"
 msgid "Show All"
 msgstr "ਸਾਰੇ ਵੇਖੋ"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#: src/wx_translatable_strings.h:72
 #, c-format
 msgctxt "macOS menu item"
 msgid "Quit %s"
 msgstr "%s ਤੋਂ ਬਾਹਰ ਜਾਓ"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:74
 msgid "Preferences…"
 msgstr "ਮੇਰੀ ਪਸੰਦ…"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:76
 msgid "Preferences..."
 msgstr "ਮੇਰੀ ਪਸੰਦ..."
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:78
 msgctxt "macOS menu item"
 msgid "Preferences..."
 msgstr "ਮੇਰੀ ਪਸੰਦ..."
 
+#: src/wx_translatable_strings.h:92
 msgid "&Apply"
 msgstr "ਲਾਗੂ ਕਰੋ(&A)"
 
+#: src/wx_translatable_strings.h:92
 msgid "Apply"
 msgstr "ਲਾਗੂ ਕਰੋ"
 
+#: src/wx_translatable_strings.h:93
 msgid "&Back"
 msgstr "ਪਿੱਛੇ(&B)"
 
+#: src/wx_translatable_strings.h:93
 msgid "Back"
 msgstr "ਪਿੱਛੇ"
 
+#: src/wx_translatable_strings.h:94
 msgid "&Cancel"
 msgstr "ਰੱਦ ਕਰੋ(&C)"
 
+#: src/wx_translatable_strings.h:95
 msgid "&Clear"
 msgstr "ਸਾਫ਼ ਕਰੋ(&C)"
 
+#: src/wx_translatable_strings.h:95
 msgid "Clear"
 msgstr "ਸਾਫ਼ ਕਰੋ"
 
+#: src/wx_translatable_strings.h:98
 msgid "Copy"
 msgstr "ਕਾਪੀ ਕਰੋ"
 
+#: src/wx_translatable_strings.h:99
 msgid "Cu&t"
 msgstr "ਕੱਟੋ(&t)"
 
+#: src/wx_translatable_strings.h:99
 msgid "Cut"
 msgstr "ਕੱਟੋ"
 
-msgid "Edit"
-msgstr "ਸੋਧ"
-
+#: src/wx_translatable_strings.h:103
 msgid "&Quit"
 msgstr "ਬਾਹਰ(&Q)"
 
+#: src/wx_translatable_strings.h:105
 msgid "Help"
 msgstr "ਮਦਦ"
 
+#: src/wx_translatable_strings.h:106
 msgid "&New"
 msgstr "ਨਵਾਂ(&N)"
 
+#: src/wx_translatable_strings.h:106
 msgid "New"
 msgstr "ਨਵਾਂ"
 
+#: src/wx_translatable_strings.h:107
 msgid "&No"
 msgstr "ਨਹੀਂ(&N)"
 
+#: src/wx_translatable_strings.h:107
 msgid "No"
 msgstr "ਨਹੀਂ"
 
+#: src/wx_translatable_strings.h:108
 msgid "&OK"
 msgstr "ਠੀਕ ਹੈ(&O)"
 
+#: src/wx_translatable_strings.h:109
 msgid "Open…"
 msgstr "ਖੋਲ੍ਹੋ…"
 
+#: src/wx_translatable_strings.h:110
 msgid "&Open..."
 msgstr "ਖੋਲ੍ਹੋ(&O)..."
 
+#: src/wx_translatable_strings.h:110
 msgid "Open..."
 msgstr "ਖੋਲ੍ਹੋ…"
 
+#: src/wx_translatable_strings.h:111
 msgid "&Paste"
 msgstr "ਚੇਪੋ(&P)"
 
+#: src/wx_translatable_strings.h:111
 msgid "Paste"
 msgstr "ਚੇਪੋ"
 
+#: src/wx_translatable_strings.h:112
 msgid "Preferences"
 msgstr "ਮੇਰੀ ਪਸੰਦ"
 
+#: src/wx_translatable_strings.h:113
 msgid "&Redo"
 msgstr "ਪਰਤਾਓ(&R)"
 
+#: src/wx_translatable_strings.h:114
 msgid "Refresh"
 msgstr "ਤਾਜ਼ਾ ਕਰੋ"
 
+#: src/wx_translatable_strings.h:116
 msgid "&Save as"
 msgstr "ਇਸ ਵਜੋਂ ਸੰਭਾਲੋ(&S)"
 
+#: src/wx_translatable_strings.h:116
 msgid "Save as"
 msgstr "ਵਜੋਂ ਸੰਭਾਲੋ"
 
+#: src/wx_translatable_strings.h:117
 msgid "Select &All"
 msgstr "ਸਭ ਚੁਣੋ(&A)"
 
+#: src/wx_translatable_strings.h:117
 msgid "Select All"
 msgstr "ਸਭ ਚੁਣੋ"
 
+#: src/wx_translatable_strings.h:118
 msgid "&Undo"
 msgstr "ਵਾਪਿਸ ਲਵੋ(&U)"
 
+#: src/wx_translatable_strings.h:119
 msgid "&Yes"
 msgstr "ਹਾਂ(&Y)"
 
+#: src/wx_translatable_strings.h:119
 msgid "Yes"
 msgstr "ਹਾਂ"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:125
 msgctxt "keyboard key"
 msgid "Alt+"
 msgstr ""
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:127
 msgctxt "keyboard key"
 msgid "Shift+"
 msgstr "Shift+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:129
 msgctxt "keyboard key"
 msgid "Enter"
 msgstr "Enter"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:131
 msgctxt "keyboard key"
 msgid "Up"
 msgstr "Up"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:133
 msgctxt "keyboard key"
 msgid "Down"
 msgstr "Down"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:135
 msgctxt "keyboard key"
 msgid "Left"
 msgstr "ਖੱਬੇ"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:137
 msgctxt "keyboard key"
 msgid "Right"
 msgstr "ਸੱਜੇ"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+#: src/wx_translatable_strings.h:140
 msgctxt "keyboard key"
 msgid "ctrl"
 msgstr "ctrl"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+#: src/wx_translatable_strings.h:142
 msgctxt "keyboard key"
 msgid "alt"
 msgstr "alt"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+#: src/wx_translatable_strings.h:144
 msgctxt "keyboard key"
 msgid "shift"
 msgstr "shift"
+
+#: src/wx_translatable_strings.h:152
+msgid "Warning: "
+msgstr ""
+

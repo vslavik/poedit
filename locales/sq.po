@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2024-10-31 12:30+0100\n"
-"PO-Revision-Date: 2024-10-01 10:16\n"
+"POT-Creation-Date: 2025-03-21 15:42+0100\n"
+"PO-Revision-Date: 2025-03-22 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -17,761 +17,1190 @@ msgstr ""
 "X-Crowdin-File: /locales/poedit.pot\n"
 "X-Crowdin-File-ID: 3\n"
 
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#: src/aboutbox.cpp:135 src/wx_translatable_strings.h:42
+#, c-format
+msgid "About %s"
+msgstr "Mbi %s-in"
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#: src/aboutbox.cpp:167 src/welcomescreen.cpp:265
+#: src/wx_translatable_strings.h:46
+#, c-format
+msgid "Version %s"
+msgstr "Versioni %s"
+
+#: src/aboutbox.cpp:168
+msgid "Based on the open source version →"
+msgstr "Bazuar në versionin me burim të hapët →"
+
+#: src/aboutbox.cpp:174
+msgid "Acknowledgements"
+msgstr "Falënderime"
+
+#: src/aboutbox.cpp:175
+msgid "License Agreement"
+msgstr "Marrëveshje Licence"
+
+#: src/aboutbox.cpp:182 src/prefsdlg.cpp:503
+msgid "Terms of Use"
+msgstr "Kushte Përdorimi"
+
+#: src/aboutbox.cpp:183
+msgid "Privacy Policy"
+msgstr "Rregulla Privatësie"
+
+#: src/aboutbox.cpp:244
+#, c-format
+msgid "Licensed to %s"
+msgstr "Licencuar për %s"
+
+#: src/aboutbox.cpp:246
+msgid "Free version (please upgrade!)"
+msgstr "Versioni i lirë (ju lutemi, përmirësojeni!)"
+
+#: src/attentionbar.cpp:83
 msgid "Hide this notification message"
 msgstr "Fshihe këtë mesazh njoftimi"
 
+#: src/attentionbar.cpp:291
 msgid "Don’t Show Again"
 msgstr "Mos e Shfaq Sërish"
 
+#: src/attentionbar.cpp:291
 msgid "Don’t show again"
 msgstr "Mos e shfaq sërish"
 
+#: src/cat_operations.cpp:123
+msgid "Both files must be of the same file format."
+msgstr "Të dyja kartelat duhet të jenë në të njëjtin format."
+
+#: src/cat_update.cpp:93
 #, c-format
 msgid "(New: %i, obsolete: %i)"
 msgstr "(Të rinj: %i, të vjetruar: %i)"
 
-msgid "Collecting source files…"
-msgstr "Po grumbullohen kartela burim…"
+#: src/cat_update.cpp:98
+msgid "Update Summary"
+msgstr "Përmbledhje Përditësimi"
 
-msgid "Extracting translatable strings…"
-msgstr "Po përftohen vargje të përkthyeshëm…"
+#. TRANSLATORS: Title of window showing summary (added/removed strings, issues) of updating translations from sources or POT file
+#: src/cat_update.cpp:98 src/resources/summary.xrc:4
+msgid "Update summary"
+msgstr "Përditëso përmbledhjen"
 
-msgid "Failed to load file with extracted translations."
-msgstr "S’u arrit të ngarkohej kartela me përkthimet e përftuara."
+#: src/cat_update.cpp:100 src/resources/summary.xrc:24
+msgid "Issues"
+msgstr "Probleme"
 
-msgid "Merging differences…"
-msgstr "Po përzihen dallimet…"
+#: src/cat_update.cpp:101
+msgid "New Strings"
+msgstr "Vargje të Rinj"
 
+#: src/cat_update.cpp:101 src/resources/summary.xrc:45
+msgid "New strings"
+msgstr "Vargje të rinj"
+
+#: src/cat_update.cpp:102
+msgid "Removed Strings"
+msgstr "Vargje të Hequr"
+
+#: src/cat_update.cpp:102
+msgid "Removed strings"
+msgstr "Vargje të hequr"
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:105 src/cloud_accounts_ui.cpp:263 src/manager.cpp:404
+#: src/recent_files.cpp:555 src/wx_translatable_strings.h:104
+msgid "File"
+msgstr "Kartelë"
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:107
+msgid "Line"
+msgstr "Rresht"
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:109
+msgid "Issue"
+msgstr "Problem"
+
+#: src/cat_update.cpp:205 src/cat_update.cpp:461
 msgid "Updating translations"
 msgstr "Përditësim kartelash përkthimi"
 
+#: src/cat_update.cpp:206
+#, c-format
+msgid "Found %d template file supported by Poedit Pro."
+msgid_plural "Found %d template files supported by Poedit Pro."
+msgstr[0] "U gjet një kartelë gjedhe %d që e mbulon Poedit Pro."
+msgstr[1] "U gjetën %d kartela gjedhe që i mbulon Poedit Pro."
+
+#. TRANSLATORS: %s is a filename here, e.g. "mainpage.twig"
+#: src/cat_update.cpp:208
+msgid "Poedit Pro can extract strings from template files, but this functionality isn’t available in the free version. Would you like to upgrade to the Pro version?"
+msgstr "Poedit Pro mund të përftojë vargje nga kartela gjedhe, por ky funksion s’gjendet në versionin falas. Do të donit ta përmirësonit me versionin Pro?"
+
+#: src/cat_update.cpp:211 src/licensing_ui.cpp:691 src/sidebar_pro.cpp:1212
+msgid "Learn More"
+msgstr "Mësoni Më Tepër"
+
+#: src/cat_update.cpp:211 src/customcontrols.cpp:326 src/licensing_ui.cpp:691
+#: src/sidebar_pro.cpp:1212
+msgid "Learn more"
+msgstr "Mësoni më tepër"
+
+#: src/cat_update.cpp:216
+msgid "Don’t ask again"
+msgstr "Mos më pyet sërish"
+
+#: src/cat_update.cpp:217
+msgid "Skip templates"
+msgstr "Anashkaloji gjedhet"
+
+#: src/cat_update.cpp:226
+msgid "Found the following template files:"
+msgstr "U gjetën kartelat vijuese gjedhe:"
+
+#: src/cat_update.cpp:245
+msgid "Don’t Ask Again"
+msgstr "Mos Më Pyet Sërish"
+
+#: src/cat_update.cpp:246
+msgid "Skip Templates"
+msgstr "Anashkaloji Gjedhet"
+
+#: src/cat_update.cpp:297
+msgid "Collecting source files…"
+msgstr "Po grumbullohen kartela burim…"
+
+#: src/cat_update.cpp:321
+#, c-format
+msgid "Extracting translatable strings from %s file…"
+msgid_plural "Extracting translatable strings from %s files…"
+msgstr[0] "Po përftohen vargje të përkthyeshëm nga %s kartelë…"
+msgstr[1] "Po përftohen vargje të përkthyeshëm nga %s kartela…"
+
+#: src/cat_update.cpp:348
+#, c-format
+msgid "Failed to extract WordPress metadata from file %s."
+msgstr "S’u arrit të përftoheshin tejtëdhëna WordPress nga kartela %s."
+
+#: src/cat_update.cpp:356 src/cat_update.cpp:492
+msgid "Failed to load file with extracted translations."
+msgstr "S’u arrit të ngarkohej kartela me përkthimet e përftuara."
+
+#: src/cat_update.cpp:380
+#, c-format
+msgid "In: %s"
+msgstr "Te: %s"
+
+#: src/cat_update.cpp:387 src/edframe.cpp:1778
+msgid "Source code not available."
+msgstr "Pa kod burim të gatshëm."
+
+#: src/cat_update.cpp:388 src/edframe.cpp:1782
+msgid "Translations couldn’t be updated from the source code, because no code was found in the location specified in the file’s Properties."
+msgstr "S’u përditësuan dot përkthimet që prej kodit burim, ngaqë s’u gjet kod në vendin e treguar te Vetitë e kartelës."
+
+#: src/cat_update.cpp:392
+msgid "Permission denied."
+msgstr "Leje e mohuar."
+
+#: src/cat_update.cpp:393
+msgid "You don’t have permission to read source code files from the location specified in the file’s Properties."
+msgstr "S’keni leje të lexoni kartela burim prej vendndodhjes së treguar te Vetitë e kartelës."
+
+#. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
+#: src/cat_update.cpp:398
+msgid "If you previously denied access to your files, you can allow it in System Settings > Privacy & Security > Files & Folders."
+msgstr "Nëse keni mohuar më parë hyrje te kartelat tuaja, mundeni ta lejoni që nga Rregullime Sistemi > Privatësi & Siguri > Kartela & Dosje."
+
+#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
+#: src/cat_update.cpp:403
+msgid "If you previously denied access to your files, you can allow it in System Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr "Nëse ju është mohuar më herët hyrje te kartelat tuaja, mund ta lejoni që nga Parapëlqime Sistemi > Siguri & Privatësi > Privatësi > Kartela & Dosje."
+
+#: src/cat_update.cpp:409
+msgid "Failed to extract strings from source code."
+msgstr "S’u arrit të përftohen vargje nga kodi burim."
+
+#: src/cat_update.cpp:443 src/edapp.cpp:1186 src/edframe.cpp:952
+#: src/edframe.cpp:2955
 #, c-format
 msgid "The file “%s” couldn’t be opened."
 msgstr "Kartela “%s” s’u hap dot."
 
-msgid "Invalid file"
-msgstr "Kartelë e pavlefshme"
+#: src/cat_update.cpp:481
+msgid "Determining differences…"
+msgstr "Po përcaktohet dallimet…"
 
+#: src/cat_update.cpp:489 src/cat_update.cpp:547
+msgid "Merging differences…"
+msgstr "Po përzihen dallimet…"
+
+#: src/cat_update.cpp:502
+msgid "Translation file is already up to date, no changes to strings were made."
+msgstr "Kartela e përkthimit është tashmë e përditësuar, s’u bënë ndryshime te vargje."
+
+#: src/cat_update.cpp:508
+#, c-format
+msgid "Translation file was updated with %s change."
+msgid_plural "Translation file was updated with %s changes."
+msgstr[0] "Kartelë përkthimi qe përditësuar me %s ndryshim."
+msgstr[1] "Kartelë përkthimi qe përditësuar me %s ndryshime."
+
+#: src/cat_update.cpp:511
+msgid "New strings to translate:"
+msgstr "Vargje të rinj për t’u përkthyer:"
+
+#: src/cat_update.cpp:512
+msgid "Removed strings (no longer used):"
+msgstr "Vargje të hequr (jo më të përdorur):"
+
+#: src/cat_update.cpp:517
+msgid "Template files skipped (Pro-only):"
+msgstr "U anashkaluan kartela gjedhe (vetëm në versionin Pro):"
+
+#: src/cat_update.cpp:605
+#, c-format
+msgid "%d issue with the source strings was detected."
+msgid_plural "%d issues with the source strings were detected."
+msgstr[0] "U pikas %d problem me vargjet burim."
+msgstr[1] "U pikasën %d probleme me vargjet burim."
+
+#: src/cat_update.cpp:632
+msgid "View Details…"
+msgstr "Shihni Hollësi…"
+
+#: src/cat_update.cpp:632
+msgid "View details…"
+msgstr "Shihni hollësi…"
+
+#: src/catalog.cpp:125
 #, c-format
 msgid "Malformed header: “%s”"
 msgstr "Krye e keqformuar: “%s”"
 
+#: src/catalog.cpp:588
 msgid "PO Translation Files"
 msgstr "Kartela Përkthimi PO"
 
+#: src/catalog.cpp:590
 msgid "POT Translation Templates"
 msgstr "Gjedhe Përkthimi POT"
 
+#: src/catalog.cpp:592
 msgid "XLIFF Translation Files"
 msgstr "Kartela XLIFF Përkthimi"
 
+#: src/catalog.cpp:594
+msgid "Xcode Localization Catalog"
+msgstr "Katalog Xcode Përkthimi"
+
+#: src/catalog.cpp:596
 msgid "JSON Translation Files"
 msgstr "Kartela JSON Përkthimi"
 
 #. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+#: src/catalog.cpp:599
 msgid "Flutter Translation Files"
 msgstr "Kartela Flutter Përkthimi"
 
+#: src/catalog.cpp:608
 msgid "All Translation Files"
 msgstr "Krejt Kartelat e Përkthimit"
 
+#: src/catalog.cpp:1152
 msgid "The file is in a format not recognized by Poedit."
 msgstr "Kartela është në një format jo të njohur nga Poedit."
 
-msgid ""
-"This JSON file isn’t a translations file and cannot be edited in Poedit."
-msgstr ""
-"Kjo kartelë JSON s’është kartelë përkthimi dhe s’mund të përpunohet me "
-"Poedit."
+#: src/catalog_json.cpp:91
+msgid "This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgstr "Kjo kartelë JSON s’është kartelë përkthimi dhe s’mund të përpunohet me Poedit."
 
+#: src/catalog_json.cpp:140
 #, c-format
 msgid "Reading file content failed with the following error: %s"
 msgstr "Leximi i lëndës së kartelës dështoi me gabimin vijues: %s"
 
+#: src/catalog_json.cpp:151 src/catalog_po.cpp:1142 src/catalog_xliff.cpp:556
 #, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
+msgid "File “%s” is read-only and cannot be saved.\n"
 "Please save it under different name."
-msgstr ""
-"Kartela “%s” është vetëm për lexim dhe s’mund të ruhet.\n"
+msgstr "Kartela “%s” është vetëm për lexim dhe s’mund të ruhet.\n"
 "Ju lutemi, ruajeni nën një emër tjetër."
 
+#: src/catalog_json.cpp:165 src/catalog_po.cpp:1178 src/catalog_po.cpp:1260
+#: src/catalog_po.cpp:1316 src/catalog_po.cpp:1373 src/catalog_po.cpp:1404
+#: src/catalog_po.cpp:1598 src/catalog_xliff.cpp:567 src/edframe.cpp:1339
+#: src/prefsdlg.cpp:757
 #, c-format
 msgid "Couldn’t save file %s."
 msgstr "S’u ruajt dot kartela %s."
 
+#: src/catalog_json.cpp:503
 msgid "Screenshots:"
 msgstr "Foto ekrani:"
 
+#: src/catalog_po.cpp:130
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
 msgstr[0] "%i rresht i kartelës “%s” s’u ngarkua saktësisht."
 msgstr[1] "%i rreshta të kartelës “%s” s’u ngarkuan saktësisht."
 
+#: src/catalog_po.cpp:145
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
-msgstr ""
-"Rreshti %d i kartelës “%s” është i dëmtuar (pa të dhëna %s të vlefshme)."
+msgstr "Rreshti %d i kartelës “%s” është i dëmtuar (pa të dhëna %s të vlefshme)."
 
+#: src/catalog_po.cpp:352
 msgid "Broken PO file: singular form msgstr used together with msgid_plural"
-msgstr ""
-"Kartelë PO e dëmtuar: vargje mesazhesh në njëjës përdorur bashkë me "
-"msgid_plural"
+msgstr "Kartelë PO e dëmtuar: vargje mesazhesh në njëjës përdorur bashkë me msgid_plural"
 
+#: src/catalog_po.cpp:404
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
-msgstr ""
-"Kartelë PO e dëmtuar: vargje mesazhesh në shumës përdorur pa msgid_plural"
+msgstr "Kartelë PO e dëmtuar: vargje mesazhesh në shumës përdorur pa msgid_plural"
 
+#: src/catalog_po.cpp:926 src/catalog_po.cpp:940 src/catalog_po.cpp:953
+#: src/catalog_po.cpp:965
 msgid "Couldn’t load the file, it is probably damaged."
 msgstr "S’u ngarkua dot kartela, ka gjasa të jetë dëmtuar."
 
-msgid ""
-"There were errors when loading the file. Some data may be missing or "
-"corrupted as the result."
-msgstr ""
-"Pati gabime gjatë ngarkimit të kartelës. Për pasojë, disa nga të dhënat mund "
-"të kenë humbur ose të jenë dëmtuar."
+#: src/catalog_po.cpp:945
+msgid "There were errors when loading the file. Some data may be missing or corrupted as the result."
+msgstr "Pati gabime gjatë ngarkimit të kartelës. Për pasojë, disa nga të dhënat mund të kenë humbur ose të jenë dëmtuar."
 
-msgid ""
-"There was a problem formatting the file nicely (but it was saved all right)."
-msgstr ""
-"Pati një problem me formatimin si duhet të kartelës (por u ruajt në rregull)."
+#: src/catalog_po.cpp:1269
+msgid "There was a problem formatting the file nicely (but it was saved all right)."
+msgstr "Pati një problem me formatimin si duhet të kartelës (por u ruajt në rregull)."
 
+#: src/catalog_po.cpp:1521
 #, c-format
-msgid ""
-"The file couldn’t be saved in “%s” charset as specified in translation "
-"settings.\n"
-"\n"
+msgid "The file couldn’t be saved in “%s” charset as specified in translation settings.\n\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
-msgstr ""
-"Kartela s’u ruajt dot nën shkronjat “%s” e treguara në rregullime "
-"përkthimi.\n"
-"\n"
+msgstr "Kartela s’u ruajt dot nën shkronjat “%s” e treguara në rregullime përkthimi.\n\n"
 "U ruajt nën UTF-8 dhe rregullimi u ndryshua për përputhje."
 
+#: src/catalog_po.cpp:1523 src/edframe.cpp:3221
 msgid "Error saving file"
 msgstr "Gabim në ruajtje kartele"
 
+#: src/catalog_po.cpp:1674
 #, c-format
 msgid "“%s” is not a valid POT file."
 msgstr "“%s” s’është kartelë POT e vlefshme."
 
+#: src/catalog_xcloc.cpp:85 src/catalog_xcloc.cpp:88
+msgid "Unexpectedly missing content in the XCLOC file."
+msgstr "Papritmas mungon lëndë te kartela XCLOC."
+
+#: src/catalog_xcloc.cpp:99
+msgid "Saving in a different location is not supported for XCLOC files."
+msgstr "Për kartela XCLOC nuk mbulohet ruajtje në një vendndodhje tjetër."
+
+#: src/catalog_xliff.cpp:473
 #, c-format
 msgid "Error while loading XLIFF file: %s"
 msgstr "Gabim teksa ngarkohej kartelë XLIFF: %s"
 
+#: src/catalog_xliff.cpp:518
 #, c-format
 msgid "unsupported version (%s)"
 msgstr "version i pambuluar (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
+#: src/catalog_xliff.cpp:679 src/catalog_xliff.cpp:866
 msgid "Broken markup in translation string."
 msgstr "Markup i dëmtuar në varg përkthimi."
 
-msgid "Add Account"
-msgstr "Shtoni Llogari"
+#: src/cloud_accounts_ui.cpp:82
+msgid "Connect Poedit with supported cloud localization platforms to seamlessly sync translations managed on them."
+msgstr "Lidheni Poedit-in me platforma përkthimi në re që mbulon, për njëkohësim të pacen përkthimesh të administruara në to."
 
-msgid "Add account"
-msgstr "Shtoni llogari"
-
-#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
-#, c-format
-msgid "Learn more about %s"
-msgstr "Mësoni më tepër rreth %s"
-
-msgid ""
-"Connect Poedit with supported cloud localization platforms to seamlessly "
-"sync translations managed on them."
-msgstr ""
-"Lidheni Poedit-in me platforma përkthimi në re që mbulon, për njëkohësim të "
-"pacen përkthimesh të administruara në to."
-
+#: src/cloud_accounts_ui.cpp:85 src/welcomescreen.cpp:295
 msgid "How does cloud sync work?"
 msgstr "Si funksionon njëkohësimi me renë?"
 
+#: src/cloud_accounts_ui.cpp:96
 msgid "Account"
 msgstr "Llogari"
 
+#: src/cloud_accounts_ui.cpp:159
 msgid "(not signed in)"
 msgstr "(pa bërë hyrjen)"
 
-msgid "File"
-msgstr "Kartelë"
-
+#: src/cloud_accounts_ui.cpp:353
 msgid "Open cloud translation"
 msgstr "Hapni përkthim në re"
 
+#: src/cloud_accounts_ui.cpp:365
 msgid "Manage accounts"
 msgstr "Administroni llogari"
 
+#: src/cloud_accounts_ui.cpp:374 src/export_html.cpp:77
 msgid "Project:"
 msgstr "Projekt:"
 
+#: src/cloud_accounts_ui.cpp:378 src/export_html.cpp:79
+#: src/resources/prefs.xrc:11 src/resources/prefs.xrc:15
+#: src/resources/properties.xrc:54 src/wordpress/wordpress_gui.cpp:228
+#: src/wordpress/wordpress_gui.cpp:354
 msgid "Language:"
 msgstr "Gjuhë:"
 
+#: src/cloud_accounts_ui.cpp:433
 msgid "Sign in to Cloud Account"
 msgstr "Hyni në Llogari Reje"
 
+#: src/cloud_accounts_ui.cpp:433
 msgid "Sign in to cloud account"
 msgstr "Hyni në llogari reje"
 
+#: src/cloud_accounts_ui.cpp:524
 msgid "No translation projects listed in your account."
 msgstr "Në llogarinë tuaj s’ka projekte përkthimi."
 
+#: src/cloud_accounts_ui.cpp:633 src/crowdin_gui.cpp:347
 msgid "Downloading latest translations…"
 msgstr "Po shkarkohen përkthimet më të reja…"
 
 #. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#: src/cloud_accounts_ui.cpp:729
 #, c-format
 msgid "Sign in to %s"
 msgstr "Bëni hyrjen në %s"
 
+#: src/cloud_sync.h:99
 msgid "Syncing"
 msgstr "Njëkohësim"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#: src/cloud_sync.h:116
 #, c-format
 msgid "Uploading translations to %s…"
 msgstr "Po ngarkohen përkthime në %s…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#: src/cloud_sync.h:168
 #, c-format
 msgid "Uploading translations to %s failed."
 msgstr "Ngarkimi i përkthimeve në %s dështoi."
 
+#: src/cloud_sync.h:169
 msgid "Syncing error"
 msgstr "Gabim njëkohësimi"
 
+#: src/commentdlg.cpp:48
 msgid "Add"
 msgstr "Shtoje"
 
+#: src/crowdin_client.cpp:144
 msgid "Unknown Crowdin error."
 msgstr "Gabim Crowdin i panjohur."
 
+#: src/crowdin_client.cpp:154
 msgid "Not authorized, please sign in again."
 msgstr "Jo i autorizuar, ju lutemi, ribëni hyrjen."
 
+#. TRANSLATORS: Crowdin has string-based and file-based project kinds (see https://support.crowdin.com/creating-project/#file-based-project)
+#: src/crowdin_client.cpp:346
+msgid "String-based Crowdin projects are not supported."
+msgstr "Nuk mbulohen projekte Crowdin me bazë vargje."
+
+#: src/crowdin_client.cpp:350
 msgid "Downloading translations is disabled in this project."
 msgstr "Shkarkimi i përkthimeve është i çaktivizuar për këtë projekt."
 
+#: src/crowdin_gui.cpp:94 src/localazy_gui.cpp:105
 msgid "Sign In"
 msgstr "Hyni"
 
+#: src/crowdin_gui.cpp:94 src/localazy_gui.cpp:105
 msgid "Sign in"
 msgstr "Hyni"
 
+#: src/crowdin_gui.cpp:96 src/localazy_gui.cpp:107
 msgid "Sign Out"
 msgstr "Dilni"
 
+#: src/crowdin_gui.cpp:96 src/localazy_gui.cpp:107
 msgid "Sign out"
 msgstr "Dilni"
 
+#: src/crowdin_gui.cpp:103
 msgid "Learn more about Crowdin"
 msgstr "Mësoni më tepër mbi Crowdin-in"
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool."
-msgstr ""
-"Crowdin-i është një platformë internetore administrimi përkthimesh dhe një "
-"mjet përkthimi në bashkëpunim."
+#: src/crowdin_gui.cpp:134
+msgid "Crowdin is an online translation management platform and collaborative translation tool. We use Crowdin ourselves to translate Poedit into many languages, and we love it."
+msgstr "Crowdin është një platformë internetore administrii përkthimesh dhe një mjet përkthimesh në bashkëpunim. Ne vetë e përdorim Crowdin-in për përkthimin e Poedit-it në mjaft gjuhë dhe e duam fort."
 
+#: src/crowdin_gui.cpp:198 src/localazy_gui.cpp:210
 msgid "Waiting for authentication…"
 msgstr "Po pritet për mirëfilltësim…"
 
+#: src/crowdin_gui.cpp:199 src/localazy_gui.cpp:211
 msgid "Updating user information…"
 msgstr "Po përditësohen të dhëna mbi përdoruesin…"
 
+#: src/crowdin_gui.cpp:306
 msgid "Sign in to Crowdin"
 msgstr "Hyni në Crowdin"
 
+#: src/crowdin_gui.cpp:326
 msgid "Syncing with Crowdin failed."
 msgstr "Njëkohësimi me Crowdin-in dështoi."
 
+#: src/crowdin_gui.cpp:327
 msgid "Crowdin error"
 msgstr "Gabim Crowdin-i"
 
+#: src/crowdin_gui.cpp:335
 msgid "Uploading translations…"
 msgstr "Po ngarkohen përkthime…"
 
+#: src/customcontrols.cpp:282 src/wx_translatable_strings.h:98
 msgid "&Copy"
 msgstr "&Kopjoje"
 
-msgid "Learn more"
-msgstr "Mësoni më tepër"
-
+#: src/edapp.cpp:510 src/resources/menus.xrc:377 src/resources/menus.xrc:494
+#: src/wx_translatable_strings.h:105
 msgid "&Help"
 msgstr "&Ndihmë"
 
+#: src/edapp.cpp:800
 msgid "MO files can’t be directly edited in Poedit."
 msgstr "Kartelat MO s’mund të përpunohen drejt e në Poedit."
 
+#: src/edapp.cpp:801
 msgid "Error opening file"
 msgstr "Gabim gjatë hapjes së kartelës"
 
-msgid ""
-"Please open and edit the corresponding PO file instead. When you save it, "
-"the MO file will be updated as well."
-msgstr ""
-"Ju lutemi, në vend të kësaj, hapni dhe përpunoni kartelën përgjegjëse PO. "
-"Kur ta ruani, do të përditësohet edhe kartela MO."
+#: src/edapp.cpp:803
+msgid "Please open and edit the corresponding PO file instead. When you save it, the MO file will be updated as well."
+msgstr "Ju lutemi, në vend të kësaj, hapni dhe përpunoni kartelën përgjegjëse PO. Kur ta ruani, do të përditësohet edhe kartela MO."
 
+#: src/edapp.cpp:844
 msgid "don’t delete temporary files (for debugging)"
 msgstr "mos fshi kartela të përkohshme (për diagnostikim)"
 
+#: src/edapp.cpp:846
 msgid "handle a poedit:// URI"
 msgstr "trajto një URI poedit://"
 
+#: src/edapp.cpp:848
 msgid "go to item at given line number"
 msgstr "shko tek objekti në rreshtin me numrin e dhënë"
 
+#: src/edapp.cpp:871
 msgid "Failed to communicate with Poedit process."
 msgstr "S’u arrit të komunikohej me procesin Poedit."
 
+#: src/edapp.cpp:993 src/edapp.cpp:998
 #, c-format
 msgid "Unhandled exception occurred: %s"
 msgstr "Ndodhi një përjashtim i patrajtuar: %s"
 
+#: src/edapp.cpp:1156
 msgid "Select translation template"
 msgstr "Përzgjidhni gjedhe përkthimi"
 
+#: src/edapp.cpp:1187 src/edframe.cpp:953 src/edframe.cpp:2687
+#: src/edframe.cpp:2956
+msgid "Invalid file"
+msgstr "Kartelë e pavlefshme"
+
+#: src/edapp.cpp:1220 src/wordpress/wordpress_gui.cpp:137
+msgid "WordPress"
+msgstr "WordPress"
+
+#: src/edapp.cpp:1271 src/edframe.cpp:2859
 msgid "Select translation file"
 msgstr "Përzgjidhni kartelë përkthimi"
 
+#: src/edapp.cpp:1373
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit është një përpunues përkthimesh i lehtë për t’u përdorur."
 
+#: src/edframe.cpp:445
 msgid "You can’t drop more than one file on Poedit window."
 msgstr "S’mund të jepni më tepër se një kartelë te dritarja Poedit."
 
+#: src/edframe.cpp:452
 #, c-format
 msgid "File “%s” is not a translation file."
 msgstr "Kartela “%s” s’është kartelë përkthimesh."
 
+#: src/edframe.cpp:459 src/recent_files.cpp:349
 #, c-format
 msgid "File “%s” doesn’t exist."
 msgstr "Kartela “%s” s’ekziston."
 
+#: src/edframe.cpp:476
 msgid "Poedit"
 msgstr "Poedit"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
+#: src/edframe.cpp:890
 #, c-format
-msgid ""
-"Spellchecking is disabled, because the dictionary for %s isn’t installed."
-msgstr ""
-"Kontrolli i drejtshkrimit është i çaktivizuar, ngaqë fjalori për %s s’është "
-"i instaluar."
+msgid "Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgstr "Kontrolli i drejtshkrimit është i çaktivizuar, ngaqë fjalori për %s s’është i instaluar."
 
+#: src/edframe.cpp:894
 msgid "Install"
 msgstr "Instaloje"
 
+#: src/edframe.cpp:986 src/edframe.cpp:1161
 #, c-format
 msgid "The file “%s” has been changed by another application."
 msgstr "Kartela “%s” është ndryshuar nga një tjetër aplikacion."
 
+#: src/edframe.cpp:987 src/edframe.cpp:991
 msgid "Reload file"
 msgstr "Ringarkoje kartelën"
 
-msgid ""
-"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
-"be lost if you do."
-msgstr ""
-"Doni të ringarkohet kartela prej disku? Nëse e bëni, përpunimet tuaja të "
-"paruajtura në Poedit do të humbin."
+#: src/edframe.cpp:990
+msgid "Do you want to reload the file from disk? Your unsaved edits in Poedit will be lost if you do."
+msgstr "Doni të ringarkohet kartela prej disku? Nëse e bëni, përpunimet tuaja të paruajtura në Poedit do të humbin."
 
+#. TRANSLATORS: Button next to a QA warning: causes the warning to be dismissed
+#: src/edframe.cpp:991 src/editing_area.cpp:325 src/editing_area.cpp:377
 msgid "Ignore"
 msgstr "Shpërfille"
 
+#: src/edframe.cpp:991
 msgid "Reload File"
 msgstr "Ringarkoje Kartelën"
 
+#: src/edframe.cpp:1095
 msgid "The file has been modified. Do you want to save changes?"
 msgstr "Kartela është ndryshuar. Doni të ruhen ndryshimet?"
 
+#: src/edframe.cpp:1096
 msgid "Save changes"
 msgstr "Ruaji ndryshimet"
 
+#: src/edframe.cpp:1099
 msgid "Your changes will be lost if you don’t save them."
 msgstr "Ndryshimet tuaja do të humbasin, nëse s’i ruani."
 
+#: src/edframe.cpp:1102 src/edframe.cpp:1162 src/sidebar_terminology.cpp:70
+#: src/wx_translatable_strings.h:115
 msgid "Save"
 msgstr "Ruaje"
 
+#: src/edframe.cpp:1104
 msgid "Do&n’t save"
 msgstr "&Mos e ruaj"
 
+#: src/edframe.cpp:1106
 msgid "Don’t Save"
 msgstr "Mos e Ruaj"
 
+#: src/edframe.cpp:1165
 msgid "The changes made by the other application will be lost if you save."
 msgstr "Ndryshimet e bëra nga aplikacioni tjetër do të humbin, nëse e ruani."
 
+#: src/edframe.cpp:1166 src/edframe.cpp:2268 src/licensing_ui.cpp:284
+#: src/prefsdlg.cpp:770 src/prefsdlg.cpp:1103 src/resources/comment.xrc:41
+#: src/resources/manager.xrc:63 src/sidebar_terminology.cpp:73
+#: src/wx_translatable_strings.h:94
 msgid "Cancel"
 msgstr "Anuloje"
 
+#: src/edframe.cpp:1166
 msgid "Save Anyway"
 msgstr "Ruaje, Sido Qoftë"
 
+#: src/edframe.cpp:1166
 msgid "Save anyway"
 msgstr "Ruaje, sido qoftë"
 
+#: src/edframe.cpp:1219
 msgid "Save as…"
 msgstr "Ruajeni si…"
 
+#: src/edframe.cpp:1268
 msgid "Compile to…"
 msgstr "Përpiloje te…"
 
+#: src/edframe.cpp:1271
 msgid "Compiled Translation Files"
 msgstr "Kartela Përkthimi të Përpiluara"
 
+#: src/edframe.cpp:1312
 msgid "Export to HTML…"
 msgstr "Eksportojeni si HTML…"
 
+#: src/edframe.cpp:1315
 msgid "HTML Files"
 msgstr "Kartela HTML"
 
+#: src/edframe.cpp:1330
+msgid "Exporting to HTML"
+msgstr "Eksportim si HTML"
+
+#: src/edframe.cpp:1364
+msgid "Export to Excel"
+msgstr "Eksportoje si Excel"
+
+#: src/edframe.cpp:1367 src/edframe.cpp:1401
+msgid "Excel Files"
+msgstr "Kartela Excel"
+
+#: src/edframe.cpp:1379
+msgid "Exporting to Excel"
+msgstr "Eksportim si Excel"
+
+#: src/edframe.cpp:1398
+msgid "Import from Excel"
+msgstr "Importoni nga Excel"
+
+#: src/edframe.cpp:1423
+msgid "Importing from Excel"
+msgstr "Importim nga Excel"
+
+#. TRANSLATORS: %s is filename of Excel file
+#: src/edframe.cpp:1440
 #, c-format
-msgid "In: %s"
-msgstr "Te: %s"
+msgid "The “%s” file does not appear to contain any translations intended for this file."
+msgstr "Kartela “%s” s’duket se përmban ndonjë përkthim të menduar për këtë kartelë."
 
-msgid "Source code not available."
-msgstr "Pa kod burim të gatshëm."
+#: src/edframe.cpp:1445
+msgid "No translations were updated from the Excel file."
+msgstr "S’u përditësuan përkthime nga kartela Excel."
 
+#. TRANSLATORS: %s is a (formatted) number here
+#: src/edframe.cpp:1452
+#, c-format
+msgid "%s string was updated from the Excel file."
+msgid_plural "%s strings were updated from the Excel file."
+msgstr[0] "Nga kartela Excel u përditësua %s varg."
+msgstr[1] "Nga kartela Excel u përditësuan %s vargje."
+
+#: src/edframe.cpp:1456
+msgid "Translations updated:"
+msgstr "U përditësuan përkthime:"
+
+#: src/edframe.cpp:1457
+msgid "Strings matched in translation file:"
+msgstr "Te kartela përkthim ka vargje me përkim:"
+
+#: src/edframe.cpp:1458
+msgid "Excel rows processed:"
+msgstr "U përpunuan rreshta Excel:"
+
+#: src/edframe.cpp:1779
 msgid "Updating failed"
 msgstr "Përditësimi dështoi"
 
-msgid ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the file’s Properties."
-msgstr ""
-"S’u përditësuan dot përkthimet që prej kodit burim, ngaqë s’u gjet kod në "
-"vendin e treguar te Vetitë e kartelës."
+#: src/edframe.cpp:1852
+msgid "Open reference file"
+msgstr "Hap kartelë referencë"
 
-msgid "Permission denied."
-msgstr "Leje e mohuar."
+#: src/edframe.cpp:1883 src/resources/menus.xrc:267
+msgid "Update from &POT File…"
+msgstr "Përditësojeni prej Kartele &POT…"
 
-msgid ""
-"You don’t have permission to read source code files from the location "
-"specified in the file’s Properties."
-msgstr ""
-"S’keni leje të lexoni kartela burim prej vendndodhjes së treguar te Vetitë e "
-"kartelës."
+#: src/edframe.cpp:1883 src/resources/menus.xrc:266
+msgid "Update from &POT file…"
+msgstr "Përditësojeni prej kartele &POT…"
 
-#. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Settings > Privacy & Security > Files & Folders."
-msgstr ""
-"Nëse keni mohuar më parë hyrje te kartelat tuaja, mundeni ta lejoni që nga "
-"Rregullime Sistemi > Privatësi & Siguri > Kartela & Dosje."
+#: src/edframe.cpp:1887
+msgid "Update from Reference File…"
+msgstr "Përditësoni nga Kartelë Referencë…"
 
-#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
-msgstr ""
-"Nëse ju është mohuar më herët hyrje te kartelat tuaja, mund ta lejoni që nga "
-"Parapëlqime Sistemi > Siguri & Privatësi > Privatësi > Kartela & Dosje."
+#: src/edframe.cpp:1887
+msgid "Update from reference file…"
+msgstr "Përditësoni nga kartelë referencë…"
 
-msgid "Translation entries in the file are probably incorrect."
-msgstr "Ka mundësi të ketë zëra të pasaktë përkthimi te kartela."
-
-msgid "Updating the file failed. Click on 'Details >>' for details."
-msgstr "Përditësimi i katalogut dështoi. Për hollësi, klikoni te 'Hollësi >>'."
-
-msgid "Open translation template"
-msgstr "Hapni gjedhe përkthimi"
-
+#: src/edframe.cpp:2020
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "U gjet %d problem te përkthimi."
 msgstr[1] "U gjetën %d probleme te përkthimi."
 
+#: src/edframe.cpp:2025 src/edframe.cpp:2071
 msgid "Validation results"
 msgstr "Përfundime vleftësimi"
 
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
-"Zërat me gabime janë shënuar me të kuqe te lista. Hollësitë e gabimit do të "
-"shfaqen pasi të keni përzgjedhur një zë të tillë."
+#: src/edframe.cpp:2028
+msgid "Entries with errors were marked in red in the list. Details of the error will be shown when you select such an entry."
+msgstr "Zërat me gabime janë shënuar me të kuqe te lista. Hollësitë e gabimit do të shfaqen pasi të keni përzgjedhur një zë të tillë."
 
+#: src/edframe.cpp:2037
 msgid "The file was saved safely."
 msgstr "Kartela u ruajt pa cen."
 
-msgid ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
-msgstr ""
-"Kartela u ruajt pa cen dhe u përpilua nën formatin MO, por sipas gjasash "
-"s’do të funksionojë si duhet."
+#: src/edframe.cpp:2040
+msgid "The file was saved safely and compiled into the MO format, but it will probably not work correctly."
+msgstr "Kartela u ruajt pa cen dhe u përpilua nën formatin MO, por sipas gjasash s’do të funksionojë si duhet."
 
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-msgstr ""
-"Kartela u ruajt pa cen, por s’përpilohet dot në formatin MO dhe të përdoret."
+#: src/edframe.cpp:2043
+msgid "The file was saved safely, but it cannot be compiled into the MO format and used."
+msgstr "Kartela u ruajt pa cen, por s’përpilohet dot në formatin MO dhe të përdoret."
 
-msgid ""
-"The file was compiled into the MO format, but it will probably not work "
-"correctly."
-msgstr ""
-"Kartela u përpilua nën formatin MO, por sipas gjasash s’do të funksionojë si "
-"duhet."
+#: src/edframe.cpp:2052
+msgid "The file was compiled into the MO format, but it will probably not work correctly."
+msgstr "Kartela u përpilua nën formatin MO, por sipas gjasash s’do të funksionojë si duhet."
 
+#: src/edframe.cpp:2056
 msgid "The file cannot be compiled into the MO format and used."
 msgstr "Kartela s’përpilohet dot në formatin MO dhe të përdoret."
 
+#: src/edframe.cpp:2070
 msgid "No problems with the translation found."
 msgstr "S’u gjetën probleme me përkthimin."
 
+#: src/edframe.cpp:2080
 #, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural ""
-"The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] ""
-"Përkthimi është gati për përdorim, por %d zë është ende i papërkthyer."
-msgstr[1] ""
-"Përkthimi është gati për përdorim, por %d zëra janë ende të papërkthyer."
+msgid_plural "The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] "Përkthimi është gati për përdorim, por %d zë është ende i papërkthyer."
+msgstr[1] "Përkthimi është gati për përdorim, por %d zëra janë ende të papërkthyer."
 
+#: src/edframe.cpp:2085
 msgid "The translation is ready for use."
 msgstr "Përkthimi është gati për përdorim."
 
+#: src/edframe.cpp:2251
+msgid "Translation Quality Warnings"
+msgstr "Sinjalizim Cilësie Përkthimi"
+
+#: src/edframe.cpp:2254
+msgid "Poedit performs automated quality checks on translations. You can configure which categories of checks are useful for you and disable unwanted ones here."
+msgstr "Poedit-i kryen kontrolle të automatizuara cilësie përkthimi. Këtu mund të formësoni cilat kategori kontrollesh janë të dobishme për ju dhe të çaktivizoni ato që s’doni."
+
+#: src/edframe.cpp:2265 src/resources/manager.xrc:55
+#: src/resources/summary.xrc:87 src/sidebar_pro.cpp:1146
+#: src/wx_translatable_strings.h:108
+msgid "OK"
+msgstr "OK"
+
+#: src/edframe.cpp:2510 src/prefsdlg.cpp:484 src/sidebar_pro.cpp:705
+msgid "Contributing translations improves the quality of online suggestions for everybody — the more people do it, the better the suggestions can be. Your translations are submitted anonymously and are available to other translators using Poedit or other CAT tools."
+msgstr "Kontributi me përkthime përmirëson cilësinë e sugjerimeve në internet për këdo - sa më shumë njerëz ta bëjnë këtë, aq më të mira mund të jenë sugjerimet. Përkthimet tuaja parashtrohen në mënyrë anonime dhe ofrohen për përkthyes të tjerë, që përdorin Poedit-in ose mjete të tjera CAT."
+
+#: src/edframe.cpp:2515
+msgid "Can Poedit contribute your translations of this file to the online translation memory?"
+msgstr "A mundet Poedit-i t’i japë te kujtesa e përkthimeve në internet përkthimet tuaja të kësaj kartele?"
+
+#. TRANSLATORS: Try to keep this as short as the original. If you can't, break it into two lines.
+#: src/edframe.cpp:2519 src/sidebar_pro.cpp:701
+msgid "Apply to all files I edit"
+msgstr "Zbatoje mbi krejt kartelat që përpunoj"
+
+#: src/edframe.cpp:2520
+msgid "Contribute"
+msgstr "Kontribuoni"
+
+#: src/edframe.cpp:2527
+msgid "Keep Private"
+msgstr "Mbaje Private"
+
+#: src/edframe.cpp:2527
+msgid "Keep private"
+msgstr "Mbaje private"
+
+#: src/edframe.cpp:2686
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr "Poedit-i ndreqi vetvetiu lëndë të pavlefshme te kartela “%s”."
 
-msgid ""
-"The file contained duplicate items, which is not allowed in PO files and "
-"would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as needing work and correct "
-"them if necessary."
-msgstr ""
-"Kartela përmbante zëra të përsëdytur, çka në kartelat PO s’lejohet dhe mund "
-"të pengojë përdorimin e kartelës. Poedit e ndreqi problemin, por do të duhej "
-"që të shqyrtonit përkthimet e cilitdo zë të shënuar si i turbullt dhe t’i "
-"ndreqni ato, në qoftë e nevojshme."
+#: src/edframe.cpp:2691
+msgid "The file contained duplicate items, which is not allowed in PO files and would prevent the file from being used. Poedit fixed the issue, but you should review translations of any items marked as needing work and correct them if necessary."
+msgstr "Kartela përmbante zëra të përsëdytur, çka në kartelat PO s’lejohet dhe mund të pengojë përdorimin e kartelës. Poedit e ndreqi problemin, por do të duhej që të shqyrtonit përkthimet e cilitdo zë të shënuar si i turbullt dhe t’i ndreqni ato, në qoftë e nevojshme."
 
+#: src/edframe.cpp:2707
 msgid "Language of the translation isn’t set."
 msgstr "S’është caktuar gjuha e përkthimit."
 
+#: src/edframe.cpp:2709
 msgid "Set Language"
 msgstr "Caktoni Gjuhën"
 
+#: src/edframe.cpp:2709
 msgid "Set language"
 msgstr "Caktoni gjuhën"
 
 #. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-msgid ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
-msgstr ""
-"S’jepen sugjerime, në rast se gjuha e përkthimi s’është caktuar saktë. Kjo "
-"mund të prekë edhe veçori të tjera, format e shumësit, për shembull."
+#: src/edframe.cpp:2712 src/edframe.cpp:2728
+msgid "Suggestions are not available if the translation language is not set correctly. Other features, such as plural forms, may be affected as well."
+msgstr "S’jepen sugjerime, në rast se gjuha e përkthimi s’është caktuar saktë. Kjo mund të prekë edhe veçori të tjera, format e shumësit, për shembull."
 
+#: src/edframe.cpp:2726 src/pretranslate.cpp:508
 msgid "Language of the translation is the same as source language."
 msgstr "Gjuha e përkthimit është e njëjtë me gjuhën burim."
 
+#: src/edframe.cpp:2729
 msgid "Fix Language"
 msgstr "Ndreqeni Gjuhën"
 
+#: src/edframe.cpp:2729
 msgid "Fix language"
 msgstr "Ndreqeni gjuhën"
 
-msgid ""
-"This file has entries with plural forms, but doesn’t have Plural-Forms "
-"header configured."
-msgstr ""
-"Kjo kartelë ka zëra me forma shumësi, por s’ka të formësuar fushën Plural-"
-"Forms."
+#: src/edframe.cpp:2746
+msgid "This file has entries with plural forms, but doesn’t have Plural-Forms header configured."
+msgstr "Kjo kartelë ka zëra me forma shumësi, por s’ka të formësuar fushën Plural-Forms."
 
-msgid ""
-"Entries in this file have different plural forms count from what the file’s "
-"Plural-Forms header says"
-msgstr ""
-"Zërat në këtë kartelë kanë forma shumësi të ndryshme nga çka tregohet te "
-"fusha Plural-Forms e katalogut"
+#: src/edframe.cpp:2750
+msgid "Entries in this file have different plural forms count from what the file’s Plural-Forms header says"
+msgstr "Zërat në këtë kartelë kanë forma shumësi të ndryshme nga çka tregohet te fusha Plural-Forms e katalogut"
 
+#: src/edframe.cpp:2759
 msgid "Required header Plural-Forms is missing."
 msgstr "I mungon krye e domosdoshme Plural-Forms."
 
+#: src/edframe.cpp:2763
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "Gabim sintakse te kryet Plural-Forms (\"%s\")."
 
+#: src/edframe.cpp:2775
 msgid "Fix the Header"
 msgstr "Ndreqni Kryet"
 
+#: src/edframe.cpp:2775
 msgid "Fix the header"
 msgstr "Ndreqni kryet"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
+#: src/edframe.cpp:2793
 #, c-format
 msgid "Plural forms expression used by the file is unusual for %s."
-msgstr ""
-"Shprehja për forma shumësi e përdorur nga kartela është e pazakontë për %s."
+msgstr "Shprehja për forma shumësi e përdorur nga kartela është e pazakontë për %s."
 
 #. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
+#: src/edframe.cpp:2798
 msgid "Review"
 msgstr "Shqyrtojeni"
 
+#. TRANSLATORS: "original" as in "used in this file originally, as it was when opened"
+#: src/edframe.cpp:2834
+msgid "String IDs (original)"
+msgstr "ID vargjesh (origjinalet)"
+
+#: src/edframe.cpp:2839 src/edframe.cpp:2942 src/edlistctrl.cpp:739
+#: src/export_html.cpp:146
+msgid "unknown language"
+msgstr "gjuhë e panjohur"
+
+#. TRANSLATORS: "original" as in "used in this file originally, as it was when opened"; "%s" is language name
+#: src/edframe.cpp:2841
+#, c-format
+msgid "%s (original)"
+msgstr "%s (origjinali)"
+
+#: src/edframe.cpp:2853
+msgid "Load from Another File…"
+msgstr "Ngarkoni nga Kartelë Tjetër…"
+
+#: src/edframe.cpp:2853
+msgid "Load from another file…"
+msgstr "Ngarkoni nga kartelë tjetër…"
+
+#: src/edframe.cpp:2897
 msgid "Would you like to use English for source text?"
 msgstr "Doni të përdoret anglishtja për tekst burim?"
 
+#: src/edframe.cpp:2899
 #, c-format
-msgid ""
-"This file uses string IDs instead of source text. Poedit can load English "
-"texts from the “%s” file for you."
-msgstr ""
-"Kjo kartelë përdoru ID vargjesh, në vend se tekst burim. Poedit-i mund të "
-"ngakojë për ju tekste anglisht nga kartela “%s”."
+msgid "This file uses string IDs instead of source text. Poedit can load English texts from the “%s” file for you."
+msgstr "Kjo kartelë përdoru ID vargjesh, në vend se tekst burim. Poedit-i mund të ngakojë për ju tekste anglisht nga kartela “%s”."
 
 #. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+#: src/edframe.cpp:2901
 msgid "Load English"
 msgstr "Ngarko anglishten"
 
+#: src/edframe.cpp:3034 src/export_html.cpp:103
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
 msgstr "Të përkthyera: %d nga %d (%d %%)"
 
+#: src/edframe.cpp:3038 src/export_html.cpp:105
 #, c-format
 msgid "Remaining: %d"
 msgstr "Të mbetura: %d"
 
+#: src/edframe.cpp:3043
 #, c-format
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "%d gabim"
 msgstr[1] "%d gabime"
 
+#: src/edframe.cpp:3048 src/export_html.cpp:117
 #, c-format
 msgid "%d entry"
 msgid_plural "%d entries"
 msgstr[0] "%d zë"
 msgstr[1] "%d zëra"
 
+#: src/edframe.cpp:3077
 msgid " (unsaved)"
 msgstr " (i paruajtur)"
 
+#: src/edframe.cpp:3118
 msgid " (modified)"
 msgstr " (i ndryshuar)"
 
+#: src/edframe.cpp:3188 src/edframe.cpp:3192
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "S’u arrit të përditësohej kujtesë përkthimesh: %s"
 
+#: src/edframe.cpp:3220
+#, c-format
+msgid "The file “%s” couldn’t be saved."
+msgstr "S’u ruajt dot kartela “%s”."
+
+#: src/edframe.cpp:3330 src/resources/menus.xrc:288
 msgid "Remove same-as-source translations"
 msgstr "Hiq përkthime njësoj-me-burimin"
 
-msgid ""
-"Do you want to remove all translations that are idential to the source text?"
+#: src/edframe.cpp:3332
+msgid "Do you want to remove all translations that are idential to the source text?"
 msgstr "Doni të hiqen krejt përkthimet që janë identike me tekstin burim?"
 
-msgid ""
-"This action will delete any translations that match the source text exactly. "
-"This cannot be undone."
-msgstr ""
-"Ky veprim do të heqë çfarëdo përkthimesh që përputhen saktësisht me tekstin "
-"burim. Ky veprim s’mund të zhbëhet."
+#: src/edframe.cpp:3333
+msgid "This action will delete any translations that match the source text exactly. This cannot be undone."
+msgstr "Ky veprim do të heqë çfarëdo përkthimesh që përputhen saktësisht me tekstin burim. Ky veprim s’mund të zhbëhet."
 
+#: src/edframe.cpp:3337 src/edframe.cpp:3364
 msgid "Keep"
 msgstr "Mbaji"
 
+#: src/edframe.cpp:3337
 msgid "Remove"
 msgstr "Hiqi"
 
+#: src/edframe.cpp:3356
 msgid "Purge deleted translations"
 msgstr "Spastroji përkthimet e fshira"
 
+#: src/edframe.cpp:3358
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr "Doni të hiqen krejt përkthimet që s’përdoren më?"
 
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"Nëse vazhdoni me spastrimin, krejt përkthimet e shënuara si të fshira do të "
-"hiqen përgjithmonë. Do t’ju duhet t’i ripërktheni, nëse shtohen sërish në të "
-"ardhmen."
+#: src/edframe.cpp:3360
+msgid "If you continue with purging, all translations marked as deleted will be permanently removed. You will have to translate them again if they are added back in the future."
+msgstr "Nëse vazhdoni me spastrimin, krejt përkthimet e shënuara si të fshira do të hiqen përgjithmonë. Do t’ju duhet t’i ripërktheni, nëse shtohen sërish në të ardhmen."
 
+#: src/edframe.cpp:3364
 msgid "Purge"
 msgstr "Spastroji"
 
+#: src/edframe.cpp:3432 src/resources/menus.xrc:113
 msgid "Copy from source text"
 msgstr "Kopjoje prej teksti burim"
 
+#: src/edframe.cpp:3434 src/resources/menus.xrc:114
 msgid "Copy from Source Text"
 msgstr "Kopjoje prej Teksti Burim"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/edframe.cpp:3436 src/edframe.cpp:3443 src/edframe.cpp:3451
+#: src/sidebar.cpp:422 src/sidebar.cpp:835 src/sidebar.cpp:861
+#: src/sidebar.cpp:863 src/wx_translatable_strings.h:123
 msgctxt "keyboard key"
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
+#: src/edframe.cpp:3439 src/resources/menus.xrc:108
 msgid "Clear translation"
 msgstr "Spastroje përkthimin"
 
+#: src/edframe.cpp:3441 src/resources/menus.xrc:109
 msgid "Clear Translation"
 msgstr "Spastroje Përkthimin"
 
+#: src/edframe.cpp:3446 src/resources/comment.xrc:4 src/sidebar.cpp:251
 msgid "Edit comment"
 msgstr "Përpunoni koment"
 
+#: src/edframe.cpp:3448 src/sidebar.cpp:254
 msgid "Edit Comment"
 msgstr "Përpunoni Komentin"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
+#: src/edframe.cpp:3459 src/fileviewer.cpp:100
 msgid "Code Occurrences"
 msgstr "Hasje Në Kod"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
+#: src/edframe.cpp:3459
 msgid "Code occurrences"
 msgstr "Hasje në kod"
 
+#: src/edframe.cpp:3683
 msgid "Hide Sidebar"
 msgstr "Fshihe Anështyllën"
 
+#: src/edframe.cpp:3685 src/resources/menus.xrc:242
 msgid "Show Sidebar"
 msgstr "Shfaqe Anështyllën"
 
+#: src/edframe.cpp:3716
 msgid "Hide Status Bar"
 msgstr "Fshihe Shtyllën e Gjendjeve"
 
+#: src/edframe.cpp:3718 src/resources/menus.xrc:248
 msgid "Show Status Bar"
 msgstr "Shfaqe Shtyllën e Gjendjeve"
 
+#: src/editing_area.cpp:326
+msgid "Dismiss and ignore the warning."
+msgstr "Hidhe tej dhe shpërfille sinjalizimin."
+
+#. TRANSLATORS: Reverse of the "Ignore" button, undoes that action
+#: src/editing_area.cpp:377
+msgid "Don’t ignore"
+msgstr "Mos e shpërfill"
+
+#: src/editing_area.cpp:411
 msgid "String length in characters: translation | source"
 msgstr "Gjatësi vargu në shenja: përkthim | burim"
 
+#: src/editing_area.cpp:414
 msgid "String length in characters"
 msgstr "Gjatësi vargu në shenja"
 
+#: src/editing_area.cpp:461 src/editing_area.cpp:787 src/edlistctrl.cpp:663
+#: src/edlistctrl.cpp:717 src/export_html.cpp:143
 msgid "Source text"
 msgstr "Teksti burim"
 
+#: src/editing_area.cpp:483 src/editing_area.cpp:853 src/editing_area.cpp:869
 msgid "Singular"
 msgstr "Njëjës"
 
+#: src/editing_area.cpp:488 src/editing_area.cpp:874
 msgid "Plural"
 msgstr "Shumës"
 
+#: src/editing_area.cpp:534 src/sidebar_terminology.cpp:57
+#: src/sidebar_terminology.cpp:186 src/statistics.cpp:284
+#: src/statistics.cpp:411
 msgid "Translation"
 msgstr "Përkthim"
 
+#: src/editing_area.cpp:543
 msgid "Pre-translated"
 msgstr "Përkthyer paraprakisht"
 
+#: src/editing_area.cpp:566
 msgid "Needs Work"
 msgstr "Lyp Punë"
 
@@ -783,688 +1212,1269 @@ msgstr "Lyp Punë"
 #. "needs review" implies that somebody else should review the string after
 #. I am done with it (i.e. consider it good), while "needs work" implies I
 #. need to return to it and finish the translation.
+#: src/editing_area.cpp:566
 msgid "Needs work"
 msgstr "Lyp punë"
 
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
+#: src/editing_area.cpp:638
+msgid "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
-msgstr ""
-"Kartelat POT janë thjesht gjedhe dhe s’përmbajnë ndonjë përkthim.\n"
+msgstr "Kartelat POT janë thjesht gjedhe dhe s’përmbajnë ndonjë përkthim.\n"
 "Që të bëni një përkthim, krijoni një kartelë të re PO të bazuar te gjedhja."
 
+#: src/editing_area.cpp:645
 msgid "Create new translation"
 msgstr "Krijoni përkthim të ri"
 
+#: src/editing_area.cpp:646
 msgid "Make a new translation from this POT file."
 msgstr "Krijoni një përkthim të ri nga kjo kartelë POT."
 
 #. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+#: src/editing_area.cpp:785 src/edlistctrl.cpp:711 src/export_html.cpp:137
 msgid "Source text ID"
 msgstr "ID teksti burim"
 
+#: src/editing_area.cpp:840
 msgid "Everything"
 msgstr "Gjithçka"
 
+#: src/editing_area.cpp:845
 #, c-format
 msgid "Form %i"
 msgstr "Forma %i"
 
+#: src/editing_area.cpp:847
 #, c-format
 msgid "Form %i (unused)"
 msgstr "Formular %i (i papërdorur)"
 
+#: src/editing_area.cpp:858
 msgid "Zero"
 msgstr "Zero"
 
+#: src/editing_area.cpp:860
 msgid "One"
 msgstr "Një"
 
+#: src/editing_area.cpp:862
 msgid "Two"
 msgstr "Dy"
 
+#: src/editing_area.cpp:876
 msgid "Other"
 msgstr "Tjetër"
 
 #. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#: src/editing_area.cpp:1060
 #, c-format
 msgid "String context: %s"
 msgstr "Kontekst vargu: %s"
 
 #. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#: src/editing_area.cpp:1067
 #, c-format
 msgid "String identifier: %s"
 msgstr "Identifikues vargu: %s"
 
+#: src/editing_area.cpp:1075
 #, c-format
 msgid "%s Format"
 msgstr "Format %s"
 
 #. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#: src/editing_area.cpp:1075
 #, c-format
 msgid "%s format"
 msgstr "Format %s"
 
+#: src/edlistctrl.cpp:668 src/edlistctrl.cpp:740 src/export_html.cpp:145
 #, c-format
 msgid "Translation — %s"
 msgstr "Përkthim — %s"
 
+#: src/edlistctrl.cpp:672
 msgid "ID"
 msgstr "ID"
 
+#: src/edlistctrl.cpp:716 src/export_html.cpp:142
 #, c-format
 msgid "Source text — %s"
 msgstr "Teksti burim — %s"
 
-msgid "unknown language"
-msgstr "gjuhë e panjohur"
-
+#: src/errors.cpp:84
 #, c-format
 msgid "Network error: %s (%d)"
 msgstr "Gabim rrjeti: %s (%d)"
 
+#: src/errors.cpp:93
 msgid "Unknown error"
 msgstr "Gabim i panjohur"
 
-#, c-format
-msgid "Failed command: %s"
-msgstr "Urdhri që dështoi: %s"
+#: src/excel_io.cpp:261 src/excel_io.cpp:298 src/excel_io.cpp:302
+msgid "Failed to create the Excel file."
+msgstr "S’u arrit të krijohej kartela Excel."
 
+#: src/excel_io.cpp:351 src/excel_io.cpp:395 src/excel_io.cpp:419
+msgid "Failed to import from Excel file."
+msgstr "S’u arrit të importohej nga kartelë Excel."
+
+#: src/excel_io.cpp:428
+msgid "Excel Import"
+msgstr "Importim nga Excel"
+
+#. TRANSLATORS: Shown above a list of columns and their meaning
+#: src/excel_io.cpp:442
+msgid "Import from Excel columns as:"
+msgstr "Importo nga shtylla Excel si:"
+
+#: src/excel_io.cpp:452
+msgid "ID:"
+msgstr "ID:"
+
+#: src/excel_io.cpp:460
+msgid "Context:"
+msgstr "Kontekst:"
+
+#: src/excel_io.cpp:467
+msgid "Source text ID:"
+msgstr "ID teksti burim:"
+
+#: src/excel_io.cpp:467
+msgid "Source text:"
+msgstr "Teksti burim:"
+
+#: src/excel_io.cpp:478
+msgid "Translation:"
+msgstr "Përkthim:"
+
+#: src/excel_io.cpp:485 src/sidebar_terminology.cpp:192
+msgid "Import"
+msgstr "Importoje"
+
+#: src/extractors/extractor.cpp:373
 msgid "Failed to merge gettext catalogs."
 msgstr "S’u arrit të përziheshin katalogë gettext."
 
+#: src/fileviewer.cpp:132
 msgid "Open in Editor"
 msgstr "Hape në Përpunues"
 
+#: src/fileviewer.cpp:132
 msgid "Open in editor"
 msgstr "Hape në përpunues"
 
-msgid ""
-"No information about this string’s occurrences in the source code is "
-"provided in the file."
-msgstr ""
-"Te kartela s’është dhënë informacion mbi hasjet e këtij vargu te kodi burim."
+#: src/fileviewer.cpp:256
+msgid "No information about this string’s occurrences in the source code is provided in the file."
+msgstr "Te kartela s’është dhënë informacion mbi hasjet e këtij vargu te kodi burim."
 
+#: src/fileviewer.cpp:256
 msgid "No usage information"
 msgstr "S’ka të dhëna përdorimi"
 
+#: src/fileviewer.cpp:262
 #, c-format
 msgid "%d code occurrence"
 msgid_plural "%d code occurrences"
 msgstr[0] "%d hasje në kod"
 msgstr[1] "%d hasje në kod\t"
 
+#: src/fileviewer.cpp:283
 msgid "Source code not found"
 msgstr "S’u gjet kod burim"
 
-msgid ""
-"Poedit cannot show source code where the string is used, because the file is "
-"either not available in the referenced location or it is a symbolic "
-"reference that doesn’t point to a real file."
-msgstr ""
-"Poedit-i s’mund të shfaqë kod burim ku është përdorur vargu, ngaqë kartela "
-"ose s’gjendet në vendin e treguar, ose është një lidhje simbolike që nuk "
-"shpie te një kartelë reale."
+#: src/fileviewer.cpp:284
+msgid "Poedit cannot show source code where the string is used, because the file is either not available in the referenced location or it is a symbolic reference that doesn’t point to a real file."
+msgstr "Poedit-i s’mund të shfaqë kod burim ku është përdorur vargu, ngaqë kartela ose s’gjendet në vendin e treguar, ose është një lidhje simbolike që nuk shpie te një kartelë reale."
 
+#: src/fileviewer.cpp:298
 msgid "File cannot be opened"
 msgstr "Kartela s’hapet dot"
 
+#: src/fileviewer.cpp:299
 #, c-format
 msgid "Poedit was unable to open the “%s” file."
 msgstr "Poedit-i s’qe në gjendje të hapë kartelën “%s”."
 
+#: src/findframe.cpp:83 src/findframe.cpp:101 src/findframe.cpp:300
+#: src/resources/menus.xrc:156
 msgid "Find"
 msgstr "Gjej"
 
+#: src/findframe.cpp:102 src/findframe.cpp:300
 msgid "Replace"
 msgstr "Zëvendësoje"
 
 #. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+#: src/findframe.cpp:118
 msgid "Options"
 msgstr "Mundësi"
 
+#: src/findframe.cpp:122
 msgid "Ignore case"
 msgstr "Shpërfille shkrimin me të madhe/me të vogël"
 
+#: src/findframe.cpp:123
 msgid "Wrap around"
 msgstr "Mbështille"
 
+#: src/findframe.cpp:124
 msgid "Whole words only"
 msgstr "Vetëm fjalë të plota"
 
+#: src/findframe.cpp:125
 msgid "Find in source texts"
 msgstr "Gjej në tekste burim"
 
+#: src/findframe.cpp:126
 msgid "Find in translations"
 msgstr "Gjej në përkthime"
 
+#: src/findframe.cpp:127
 msgid "Find in comments"
 msgstr "Gjej në komente"
 
+#: src/findframe.cpp:148 src/licensing_ui.cpp:535 src/titleless_window.cpp:82
+#: src/wx_translatable_strings.h:96
 msgid "Close"
 msgstr "Mbylle"
 
+#: src/findframe.cpp:149
 msgid "Replace &All"
 msgstr "Zëvendësoji &Krejt"
 
+#: src/findframe.cpp:149
 msgid "Replace &all"
 msgstr "Zëvendësoji &krejt"
 
+#: src/findframe.cpp:150
 msgid "&Replace"
 msgstr "&Zëvendësoje"
 
+#: src/findframe.cpp:151
 msgid "< &Previous"
 msgstr "< I &mëparshmi"
 
+#: src/findframe.cpp:152
 msgid "&Next >"
 msgstr "&Pasuesi >"
 
+#: src/findframe.cpp:235
 msgid "String to find"
 msgstr "Varg për t’u gjetur"
 
+#: src/findframe.cpp:236
 msgid "Replacement string"
 msgstr "Varg zëvendësimi"
 
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "S’përmbushet dot programi: %s"
+#: src/gexecute.cpp:131 src/gexecute.cpp:146 src/gexecute.cpp:170
+msgid "warning: "
+msgstr "kujdes: "
+
+#: src/gexecute.cpp:171
+msgid "error: "
+msgstr "gabim: "
+
+#: src/glossary.cpp:273 src/glossary.cpp:277
+msgid "Failed to read the CSV file."
+msgstr "S’u arrit të lexohej kartela CSV."
 
 #. TRANSLATORS: placeholder/hint in language controls
+#: src/languagectrl.cpp:138
 msgid "Language name or code"
 msgstr "Emër ose kode gjuhe"
 
+#: src/languagectrl.cpp:210
 msgid "Translation Language"
 msgstr "Gjuhë Përkthimi"
 
+#: src/languagectrl.cpp:217
 msgid "Language of the translation:"
 msgstr "Gjuha e përkthimit:"
 
+#: src/licensing.cpp:196 src/licensing.cpp:206
+msgid "Invalid license key"
+msgstr "Kyç licence i pavlefshëm"
+
+#: src/licensing.cpp:211
+msgid "Subscription expired"
+msgstr "Pajtimi skadoi"
+
+#: src/licensing.cpp:218
+#, c-format
+msgid "App updates expired, license is only valid for version %s"
+msgstr "Përditësimet e aplikacionit kanë skaduar, licenca është e vlefshme vetëm për versionin %s"
+
+#: src/licensing.cpp:224
+#, c-format
+msgid "License key only valid for older Poedit version (%s)"
+msgstr "Kyç licence të vlefshme vetëm për version më të vjetër Poedit (%s)"
+
+#: src/licensing.cpp:231
+msgid "Maximum allowed activations exceeded"
+msgstr "U tejkalua maksimumi i lejuar për aktivizime"
+
+#: src/licensing.cpp:236 src/licensing.cpp:263
+#, c-format
+msgid "Unknown activation error (%s)"
+msgstr "Gabim i panjohur aktivizimi (%s)"
+
+#: src/licensing_ui.cpp:92 src/licensing_ui.cpp:97 src/licensing_ui.cpp:859
+#: src/licensing_ui.cpp:872 src/licensing_ui.cpp:884
+msgid "Poedit Activation"
+msgstr "Aktivizim i Poedit-it"
+
+#: src/licensing_ui.cpp:92 src/licensing_ui.cpp:102
+#: src/marketing_services.cpp:49 src/wx/main_toolbar.cpp:155
+#: src/wx/main_toolbar.cpp:182
+msgid "Upgrade to Pro"
+msgstr "Përmirësojeni me versionin Pro"
+
+#: src/licensing_ui.cpp:248
+msgid "Please enter your license key:"
+msgstr "Ju lutemi, jepni kyçin tuaj të licencës:"
+
+#: src/licensing_ui.cpp:257
+msgid "You should find your key in the confirmation email you received after you purchased Poedit. Activation requires internet connection."
+msgstr "Kyçin tuaj duhet ta kishit te email-i i ripohimit që morët pasi bletë Poedit-in. Aktivizimi lyp lidhje internet."
+
+#: src/licensing_ui.cpp:262
+msgid "Retrieve lost license key"
+msgstr "Rimerrni kyç licence të humbur"
+
+#: src/licensing_ui.cpp:271
+msgid "Buy Online…"
+msgstr "Blijeni Në Internet…"
+
+#: src/licensing_ui.cpp:271
+msgid "Buy online…"
+msgstr "Blijeni në Internet…"
+
+#: src/licensing_ui.cpp:286 src/licensing_ui.cpp:290
+msgid "Activate"
+msgstr "Aktivizoje"
+
+#: src/licensing_ui.cpp:316
+msgid "Activating your license…"
+msgstr "Po aktivizohet licenca juaj…"
+
+#: src/licensing_ui.cpp:327
+msgid "Would you like to hear about new versions?"
+msgstr "Doni të dëgjoni mbi versione të reja?"
+
+#: src/licensing_ui.cpp:328
+msgid "We’ll send you an email when a new major version is released. No marketing, no spammy newsletters. Just very rare heads-up about new versions."
+msgstr "Do t’ju dërgojmë një email, kur të hidhet në qarkullim një version i ri i rëndësishëm. Jo marketing, jo buletine plot mesazhe të padëshiruar. Thjesht lajmërime shumë të rralla rreth versionesh të rinj."
+
+#: src/licensing_ui.cpp:331 src/licensing_ui.cpp:690
+msgid "No, thanks"
+msgstr "Jo, faleminderit"
+
+#: src/licensing_ui.cpp:331
+msgid "Notify me"
+msgstr "Njoftomëni"
+
+#: src/licensing_ui.cpp:358
+msgid "Upgrade your Pro license"
+msgstr "Përmirësoni licencën tuaj Pro"
+
+#: src/licensing_ui.cpp:377
+msgid "Renew your license"
+msgstr "Rinovoni licencën tuaj"
+
+#: src/licensing_ui.cpp:395
+msgid "Add more devices"
+msgstr "Shtoni më tepër pajisje"
+
+#: src/licensing_ui.cpp:440
+msgid "Thank you!"
+msgstr "Faleminderit!"
+
+#: src/licensing_ui.cpp:446
+msgid "Your copy is upgraded to Poedit Pro."
+msgstr "Kopja juaj u përmirësua me Poedit Pro."
+
+#: src/licensing_ui.cpp:450 src/licensing_ui.cpp:454
+msgid "Manage License"
+msgstr "Administroni Licencë"
+
+#: src/licensing_ui.cpp:454
+msgid "Manage license"
+msgstr "Administroni licencën"
+
+#. TRANSLATORS: "Renew" as a verb meaning making something that stopped working (a subscription) work again by prolonging it for another period.
+#: src/licensing_ui.cpp:479 src/licensing_ui.cpp:862 src/licensing_ui.cpp:875
+#: src/licensing_ui.cpp:1161
+msgid "Renew"
+msgstr "Rinovoje"
+
+#: src/licensing_ui.cpp:497
+msgid "Deactivate"
+msgstr "Çaktivizoje"
+
+#: src/licensing_ui.cpp:509
+msgid "Deactivating your license…"
+msgstr "Po çaktivizohet licenca juaj…"
+
+#: src/licensing_ui.cpp:567
+msgid "Upgrade to Poedit Pro to Unlock WordPress Extras"
+msgstr "Përmirësojeni me Poedit Pro Që të Zhbllokohen Veçori WordPress-i Ekstra"
+
+#: src/licensing_ui.cpp:568 src/licensing_ui.cpp:589
+msgid "Upgrade to take advantage of Pro’s extra smarts: it understands WordPress themes and plugins and sets everything up for you. You can focus on translating and don’t have to worry about the technical details. With the free version, you would have to do everything manually yourself."
+msgstr "Përmirësojeni që të përfitoni prej veçorish të mençura ekstra të versionit Pro: zbërthen tema dhe shtojca WordPress dhe bën gjithçka gati për ju. Mund të përqendroheni në përkthim dhe të mos çani kryet për hollësitë teknike. Me versionin e lirë, do t’ju duhej ta bënit gjithçka vetë, dorazi."
+
+#: src/licensing_ui.cpp:571
+msgid "Upgrade to Poedit Pro to Unlock Statistics"
+msgstr "Përmirësojeni me Poedit Pro Që të Zhbllokohen Statistikat"
+
+#: src/licensing_ui.cpp:574
+msgid "Upgrade to Poedit Pro to Unlock Online Suggestions"
+msgstr "Përmirësojeni me Poedit Pro Që të Zhbllokohen Sugjerime Nga Interneti"
+
+#: src/licensing_ui.cpp:577
+msgid "Upgrade to Poedit Pro to Unlock Templates Support"
+msgstr "Përmirësojeni me Poedit Pro që të Zhbllokohet Mbulimi i Gjedheve"
+
+#: src/licensing_ui.cpp:581
+msgid "Upgrade to Poedit Pro to Unlock Extra Features"
+msgstr "Përmirësojeni me Poedit Pro Që të Zhbllokohen Veçori Ekstra"
+
+#: src/licensing_ui.cpp:588
+msgid "WordPress extras require upgrade to Poedit Pro"
+msgstr "Ekstrat për WordPress lypin përmirësimin me versionin Poedit Pro"
+
+#: src/licensing_ui.cpp:593
+msgid "Statistics require upgrade to Poedit Pro"
+msgstr "Statistikat lypin përmirësimin me versionin Poedit Pro"
+
+#: src/licensing_ui.cpp:596
+msgid "Online TM suggestions require upgrade to Poedit Pro"
+msgstr "Sugjerimet nga KP Interneti lypin përmirësimin me versionin Poedit Pro"
+
+#: src/licensing_ui.cpp:599
+msgid "Templates support requires upgrade to Poedit Pro"
+msgstr "Mbulimi i gjedheve lyp përmirësimin me versionin Poedit Pro"
+
+#: src/licensing_ui.cpp:602
+msgid "Customizable warnings require upgrade to Poedit Pro"
+msgstr "Sinjalizimet që mund të përshtaten lypin përmirësimin me versionin Poedit Pro"
+
+#: src/licensing_ui.cpp:605
+msgid "Customizable file extensions require upgrade to Poedit Pro"
+msgstr "Zgjatime vetjake kartelash lypin përmirësimin me Poedit Pro"
+
+#: src/licensing_ui.cpp:608
+msgid "Terminology search and glossaries require upgrade to Poedit Pro"
+msgstr "Kërkimi në terminologji dhe fjalorthet lypin përmirësimin me Poedit Pro"
+
+#: src/licensing_ui.cpp:611
+msgid "Replacing source text requires upgrade to Poedit Pro"
+msgstr "Zëvendësoimi i tekstit burim lyp përmirësim me Poedit Pro"
+
+#: src/licensing_ui.cpp:614
+msgid "Merging translation files requires upgrade to Poedit Pro"
+msgstr "Përzierja e kartelave të përkthimit lyp përmirësim të programit me versionin Poedit Pro"
+
+#: src/licensing_ui.cpp:617
+msgid "Excel import and export require upgrade to Poedit Pro"
+msgstr "Importime dhe eksportime Excel lypin përmirësim me Poedit Pro"
+
+#: src/licensing_ui.cpp:649
+msgid "Purchasing the full version will unlock additional features in Poedit, including:"
+msgstr "Blerja e versionit të plotë do të zhbllokojë veçori esktra në Poedit, përfshi:"
+
+#: src/licensing_ui.cpp:663
+msgid "Suggestions from online translation memory"
+msgstr "Këshilla prej kujtesash përkthimi në Internet"
+
+#: src/licensing_ui.cpp:664
+msgid "Machine translation with DeepL, Google Translate or Microsoft Translator"
+msgstr "Përkthim nga makina, me DeepL, Google Translate ose Microsoft Translator"
+
+#: src/licensing_ui.cpp:665
+msgid "Worry-free setup for WordPress themes and plugins"
+msgstr "Rregullim pa kokëçarje përkthimi për tema dhe shtojca WordPress"
+
+#: src/licensing_ui.cpp:666
+msgid "Extract strings from Twig or Blade templates"
+msgstr "Përfto vargje nga gjedhe Twig ose Blade"
+
+#: src/licensing_ui.cpp:667
+msgid "Word count and statistics"
+msgstr "Numër fjalësh dhe statistika"
+
+#: src/licensing_ui.cpp:668
+msgid "Excel import and export"
+msgstr "Importime dhe eksportime Excel"
+
+#: src/licensing_ui.cpp:669
+msgid "Merging translation files for all file formats"
+msgstr "Po përzihen kartela përkthimi për krejt formatet e kartelave"
+
+#: src/licensing_ui.cpp:670
+msgid "Customizable QA checks and warnings"
+msgstr "Kontrolle SC dhe sinjalizime që mund të përshtaten"
+
+#: src/licensing_ui.cpp:671
+msgid "Replace source text with translations from another file"
+msgstr "Zëvendëso tekst burim me përkthime nga një kartelë tjetër"
+
+#: src/licensing_ui.cpp:672
+msgid "Terminology search and glossaries"
+msgstr "Kërkim në terminologji dhe fjalorthë"
+
+#: src/licensing_ui.cpp:673
+msgid "Personal priority support"
+msgstr "Asistencë personale me përparësi"
+
+#: src/licensing_ui.cpp:679
+msgid "Enter license key"
+msgstr "Jepni kyçin e licencës"
+
+#: src/licensing_ui.cpp:689
+msgid "Upgrade…"
+msgstr "Përmirësojeni…"
+
+#: src/licensing_ui.cpp:754 src/licensing_ui.cpp:780
+#, c-format
+msgid "Licensed to: %s"
+msgstr "Licencuar për: %s"
+
+#. TRANSLATORS: %s is replaced at runtime with e.g. "Poedit Pro" or "Poedit Pro+"
+#: src/licensing_ui.cpp:756 src/licensing_ui.cpp:785
+#, c-format
+msgid "License type: %s"
+msgstr "Lloj licence: %s"
+
+#: src/licensing_ui.cpp:780
+msgid "(personal license)"
+msgstr "(licencë personale)"
+
+#: src/licensing_ui.cpp:859
+msgid "Subscription expired."
+msgstr "Pajtimi skadoi."
+
+#: src/licensing_ui.cpp:861
+msgid "Your license was deactivated on this computer because your subscription expired."
+msgstr "Licenca juaj qe çaktivizuar në këtë kompjuter, ngaqë pajtimi juaj ka skaduar."
+
+#: src/licensing_ui.cpp:871
+#, c-format
+msgid "Your license was deactivated on this computer because it only includes app updates up to Poedit version %s."
+msgstr "Licenca juaj qe çaktivizuar në këtë kompjuter, ngaqë përfshin vetëm përditësime aplikacioni për Poedit deri në versionin %s."
+
+#: src/licensing_ui.cpp:872
+msgid "App updates expired."
+msgstr "Përditësimet e aplikacionit skaduan."
+
+#: src/licensing_ui.cpp:884
+msgid "License deactivated."
+msgstr "Licenca u çaktivizua."
+
+#: src/licensing_ui.cpp:886
+msgid "Your license was deactivated on this computer. Please email help@poedit.net if you are not sure why this happened."
+msgstr "Licenca juaj u çaktivizua në këtë kompjuter. Ju lutemi, dërgoni një email te help@poedit.net, nëse s’jeni i sigurt se përse ndodhi kështu."
+
+#. TRANSLATORS: %s is a placeholder for subscription name, e.g. Pro+ or Pro
+#: src/licensing_ui.cpp:1112
+#, c-format
+msgid "Your %s subscription expired."
+msgstr "Pajtimi juaj %s ka skaduar."
+
+#. TRANSLATORS: "Expired" as in ended e.g. after 1 year
+#: src/licensing_ui.cpp:1117
+msgid "Machine translation service expired."
+msgstr "Shërbimi i përkthimit nga makina ka skaduar."
+
+#. TRANSLATORS: "standard" here is the same word as the standalone string "Standard".
+#: src/licensing_ui.cpp:1125
+msgid "Machine translation quality is reduced to standard."
+msgstr "Cilësia e përkthimeve nga makina është reduktuar në standarde."
+
+#: src/localazy_client.cpp:385
 msgid "All strings"
 msgstr "Krejt vargjet"
 
+#: src/localazy_client.cpp:404
 msgid "Couldn’t download Localazy project details."
 msgstr "S’u shkakrkuan dot hollësi projekti Localazy."
 
+#: src/localazy_client.cpp:476 src/localazy_client.cpp:490
 msgid "There was an error when uploading translations to Localazy."
 msgstr "Pati një gabim, teksa ngarkoheshin përkthime te Localazy."
 
+#: src/localazy_gui.cpp:103
 msgid "Projects"
 msgstr "Projekte"
 
-msgid ""
-"Localazy is a highly automated localization platform allowing anyone to "
-"translate their products and content into multiple languages easily."
-msgstr ""
-"Localazy është një platformë shumë e automatizuar përkthimesh që i lejon "
-"kujtdo të përkthejë produktet dhe lëndën e vet kollaj në gjuhë të shumta."
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#: src/localazy_gui.cpp:115
+#, c-format
+msgid "Learn more about %s"
+msgstr "Mësoni më tepër rreth %s"
 
+#: src/localazy_gui.cpp:146
+msgid "Localazy is a highly automated localization platform allowing anyone to translate their products and content into multiple languages easily."
+msgstr "Localazy është një platformë shumë e automatizuar përkthimesh që i lejon kujtdo të përkthejë produktet dhe lëndën e vet kollaj në gjuhë të shumta."
+
+#: src/localazy_gui.cpp:241
 msgid "Add Project"
 msgstr "Shtoni Projekt"
 
+#: src/localazy_gui.cpp:241
 msgid "Add project"
 msgstr "Shtoni projekt"
 
+#: src/manager.cpp:117
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - Përgjegjës katalogësh"
 
+#: src/manager.cpp:162 src/prefsdlg.cpp:877
 msgid "Edit…"
 msgstr "Përpunoni…"
 
+#: src/manager.cpp:167
 msgid "Create new translations project"
 msgstr "Krijoni projekt të ri përkthimi"
 
+#: src/manager.cpp:168
 msgid "Delete the project"
 msgstr "Fshije projektin"
 
+#: src/manager.cpp:169
 msgid "Edit the project"
 msgstr "Përpunoni projektin"
 
+#: src/manager.cpp:199 src/resources/toolbar.xrc:41 src/statistics.cpp:258
+msgid "Statistics"
+msgstr "Statistika"
+
+#: src/manager.cpp:200 src/resources/toolbar.xrc:42
+msgid "Show translation statistics"
+msgstr "Shfaq statistika përkthimi"
+
+#: src/manager.cpp:202
 msgid "Update all"
 msgstr "Përditësoji krejt"
 
+#: src/manager.cpp:203
 msgid "Update all catalogs in the project"
 msgstr "Përditëso tërë katalogët në projekt"
 
+#: src/manager.cpp:405
 msgid "Total"
 msgstr "Gjithsej"
 
+#: src/manager.cpp:406
 msgid "Untrans"
 msgstr "Papërkth"
 
+#: src/manager.cpp:407
 msgctxt "column/row header"
 msgid "Needs Work"
 msgstr "Lyp Punë"
 
+#: src/manager.cpp:408
 msgid "Errors"
 msgstr "Gabime"
 
+#: src/manager.cpp:409
 msgid "Last modified"
 msgstr "Ndryshuar së fundi"
 
+#: src/manager.cpp:440 src/propertiesdlg.cpp:478
 msgid "Select directory"
 msgstr "Përzgjidhni drejtori"
 
+#: src/manager.cpp:460
 msgid "Directories:"
 msgstr "Drejtori:"
 
+#: src/manager.cpp:532
 msgid "<unnamed>"
 msgstr "<pa emër>"
 
+#: src/manager.cpp:570
 #, c-format
 msgid "Do you want to delete project “%s”?"
 msgstr "Doni të fshihet projekti “%s”?"
 
+#: src/manager.cpp:571
 msgid "Delete project"
 msgstr "Fshije projektin"
 
+#: src/manager.cpp:574
 msgid "Deleting the project will not delete any translation files."
 msgstr "Fshirja e projektit s’do të fshijë ndonjë kartelë përkthimi."
 
+#: src/manager.cpp:602
 msgid "Confirmation"
 msgstr "Ripohim"
 
+#: src/manager.cpp:602
 msgid "Update all catalogs in this project?"
 msgstr "Të përditësohen krejt katalogët në këtë projekt?"
 
+#: src/manager.cpp:603
 msgid "Performs update from source code on all files in the project."
 msgstr "Kryen përditësim që nga kodi burim mbi krejt kartelat te projekti."
 
+#: src/manager.cpp:612
+msgid "Updating project catalogs"
+msgstr "Po përditësohen katalogë projekti"
+
+#: src/menus.cpp:138
 msgid "Check for Updates…"
 msgstr "Kontrollo për Përditësime…"
 
+#: src/menus.cpp:140
 msgid "Catalogs Manager"
 msgstr "Përgjegjës Katalogësh"
 
+#: src/menus.cpp:143
+msgid "License…"
+msgstr "Licencë…"
+
+#: src/menus.cpp:155
 msgid "&Preferences…"
 msgstr "&Parapëlqime…"
 
+#: src/menus.cpp:170 src/resources/menus.xrc:95 src/resources/menus.xrc:450
+#: src/wx_translatable_strings.h:102
 msgid "&Edit"
 msgstr "&Përpunoni"
 
+#: src/menus.cpp:190 src/wx_translatable_strings.h:118
 msgid "Undo"
 msgstr "Zhbëje"
 
+#: src/menus.cpp:191 src/wx_translatable_strings.h:113
 msgid "Redo"
 msgstr "Ribëje"
 
+#: src/menus.cpp:200
 msgid "Paste and Match Style"
 msgstr "Ngjite dhe Përputhi Stilin"
 
+#: src/menus.cpp:203 src/prefsdlg.cpp:1103 src/sidebar_terminology.cpp:77
+#: src/wx_translatable_strings.h:100
 msgid "Delete"
 msgstr "Fshije"
 
+#: src/menus.cpp:212
 msgid "Spelling and Grammar"
 msgstr "Drejtshkrim dhe Gramatikë"
 
+#: src/menus.cpp:214
 msgid "Show Spelling and Grammar"
 msgstr "Shfaq Drejtshkrim dhe Gramatikë"
 
+#: src/menus.cpp:215
 msgid "Check Document Now"
 msgstr "Kontrolloje Dokumentin Tani"
 
+#: src/menus.cpp:217
 msgid "Check Spelling While Typing"
 msgstr "Kontrolloji Drejtshkrimin Teksa Shtypet"
 
+#: src/menus.cpp:218
 msgid "Check Grammar With Spelling"
 msgstr "Kontrollojini Gramatikën Me Drejtshkrimin"
 
+#: src/menus.cpp:219
 msgid "Correct Spelling Automatically"
 msgstr "Ndreqe Vetvetiu Drejtshkrimin"
 
+#: src/menus.cpp:222
 msgid "Substitutions"
 msgstr "Zëvendësime"
 
+#: src/menus.cpp:224
 msgid "Show Substitutions"
 msgstr "Shfaq Zëvendësime"
 
+#: src/menus.cpp:226
 msgid "Smart Copy/Paste"
 msgstr "Kopjim/Ngjitje e Mençur"
 
+#: src/menus.cpp:227
 msgid "Smart Quotes"
 msgstr "Thonjëza të Mençura"
 
+#: src/menus.cpp:228
 msgid "Smart Dashes"
 msgstr "Vija Ndarëse të Mençura"
 
+#: src/menus.cpp:229
 msgid "Smart Links"
 msgstr "Lidhje të Mençura"
 
+#: src/menus.cpp:230
 msgid "Text Replacement"
 msgstr "Zëvendësim Teksti"
 
+#: src/menus.cpp:233
 msgid "Transformations"
 msgstr "Shndërrime"
 
+#: src/menus.cpp:235
 msgid "Make Upper Case"
 msgstr "Kaloje në Shkronja të Mëdha"
 
+#: src/menus.cpp:236
 msgid "Make Lower Case"
 msgstr "Kaloje në Shkronja të Vogla"
 
+#: src/menus.cpp:237
 msgid "Capitalize"
 msgstr "Shkronja e parë e madhe"
 
+#: src/menus.cpp:240
 msgid "Speech"
 msgstr "E folur"
 
+#: src/menus.cpp:242
 msgid "Start Speaking"
 msgstr "Filloni të Folurën"
 
+#: src/menus.cpp:243
 msgid "Stop Speaking"
 msgstr "Ndalni të Folurën"
 
+#: src/menus.cpp:246 src/resources/menus.xrc:177 src/resources/menus.xrc:460
 msgid "&View"
 msgstr "&Parje"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:252
 msgid "Show Toolbar"
 msgstr "Shfaq Panelin"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:255
 msgid "Customize Toolbar…"
 msgstr "Përshtateni Panelin…"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:258
 msgid "Enter Full Screen"
 msgstr "Kaloni Në Gjendjen Sa Krejt Ekrani"
 
+#: src/menus.cpp:265 src/menus.cpp:296 src/resources/menus.xrc:352
+#: src/resources/menus.xrc:469
 msgid "Window"
 msgstr "Dritare"
 
+#: src/menus.cpp:266
 msgid "Minimize"
 msgstr "Minimizoje"
 
+#: src/menus.cpp:267
 msgid "Zoom"
 msgstr "Zoom"
 
+#: src/menus.cpp:269 src/welcomescreen.cpp:222 src/welcomescreen.cpp:262
 msgid "Welcome to Poedit"
 msgstr "Mirë se vini te Poedit"
 
+#: src/menus.cpp:274
 msgid "Bring All to Front"
 msgstr "Sill Gjithçka Përpara"
 
+#: src/prefsdlg.cpp:177
 msgid "Information about the translator"
 msgstr "Të dhëna rreth përkthyesit"
 
+#: src/prefsdlg.cpp:184
 msgid "Name:"
 msgstr "Emër:"
 
+#: src/prefsdlg.cpp:187
 msgid "Your Name"
 msgstr "Emri Juaj"
 
+#: src/prefsdlg.cpp:189
 msgid "Email:"
 msgstr "Email:"
 
+#: src/prefsdlg.cpp:192
 msgid "you@example.com"
 msgstr "ju@example.com"
 
-msgid ""
-"Your name and email address are only used to set the Last-Translator header "
-"of GNU gettext files."
-msgstr ""
-"Emri dhe email-i juaj përdoren vetëm për të plotësuar fushën Last-Translator "
-"të kartelave GNU gettext."
+#: src/prefsdlg.cpp:195
+msgid "Your name and email address are only used to set the Last-Translator header of GNU gettext files."
+msgstr "Emri dhe email-i juaj përdoren vetëm për të plotësuar fushën Last-Translator të kartelave GNU gettext."
 
+#: src/prefsdlg.cpp:204
 msgid "Editing"
 msgstr "Përpunim"
 
+#: src/prefsdlg.cpp:207
 msgid "Automatically compile MO file when saving"
 msgstr "Gjatë daljes, përpilo vetvetiu kartelën MO"
 
-msgid "Show summary after updating files"
-msgstr "Pas përditësimesh kartelash, shfaq përmbledhje"
-
+#: src/prefsdlg.cpp:212
 msgid "Check spelling"
 msgstr "Kontrolloji drejtshkrimin"
 
+#: src/prefsdlg.cpp:214
 msgid "Always change focus to text input field"
 msgstr "Ndryshoje përherë fokusin për te fushë futjeje teksti"
 
-msgid ""
-"Never let the list of strings take focus. If enabled, you must use Ctrl-"
-"arrows for keyboard navigation but you can also type text immediately, "
-"without having to press Tab to change focus."
-msgstr ""
-"Mos e lër kurrë listën e vargjeve të kontrollojë fokusin. Nëse është aktiv, "
-"duhet të përdorni Ctrl-shigjeta për lëvizje me tastierë, por gjithashtu mund "
-"të shtypni tekst përnjëherë, pa qenë nevoja të shtypni Tab për të ndryshuar "
-"fokusin."
+#: src/prefsdlg.cpp:216
+msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
+msgstr "Mos e lër kurrë listën e vargjeve të kontrollojë fokusin. Nëse është aktiv, duhet të përdorni Ctrl-shigjeta për lëvizje me tastierë, por gjithashtu mund të shtypni tekst përnjëherë, pa qenë nevoja të shtypni Tab për të ndryshuar fokusin."
 
+#: src/prefsdlg.cpp:224
 msgid "Appearance"
 msgstr "Dukje"
 
+#: src/prefsdlg.cpp:231
 msgid "Use custom list font:"
 msgstr "Përdor shkronja vetjake liste:"
 
+#: src/prefsdlg.cpp:234
 msgid "Use custom text fields font:"
 msgstr "Përdor shkronja vetjake për fusha tekstesh:"
 
+#: src/prefsdlg.cpp:245
 msgid "Change UI language"
 msgstr "Ndryshoni gjuhën për UI-në"
 
 #. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
+#: src/prefsdlg.cpp:255
 msgid "(requires Windows 8 or newer)"
 msgstr "(lyp Windows 8 ose më të ri)"
 
+#: src/prefsdlg.cpp:358
 msgid "General"
 msgstr "Të përgjithshme"
 
+#: src/prefsdlg.cpp:380
 msgid "Use translation memory"
 msgstr "Përdor kujtesë përkthimesh"
 
+#: src/prefsdlg.cpp:390
 msgid "Manage…"
 msgstr "Administroni…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
+#: src/prefsdlg.cpp:397
 msgid "When updating from sources"
 msgstr "Kur përditësohet që nga burimi"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
+#: src/prefsdlg.cpp:400
 msgid "fuzzy match within the file"
 msgstr "plotëso përputhje të turbullta nga kartela"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
+#: src/prefsdlg.cpp:402
 msgid "pre-translate from TM"
 msgstr "përkthe paraprakisht prej KP-je"
 
-msgid ""
-"Poedit can attempt to fill in new entries from only previous translations in "
-"the file or from your entire translation memory. Using the TM won’t be very "
-"effective if it’s near-empty, but it will get better as you add more "
-"translations to it."
-msgstr ""
-"Poedit-i mund të provojë të plotësojë zëra të rinj që nga përkthime të "
-"dikurshme vetëm prej kartelës, ose prej krejt kujtesës së përkthimit. "
-"Përdorimi i KP-së s’do të jetë kushedi çë i efektshëm, nëse kjo është "
-"thuajse e zbrazët, por do të përmirësohet, dora-dorës që shtoni përkthime në "
-"të."
+#: src/prefsdlg.cpp:418
+msgid "Poedit can attempt to fill in new entries from only previous translations in the file or from your entire translation memory. Using the TM won’t be very effective if it’s near-empty, but it will get better as you add more translations to it."
+msgstr "Poedit-i mund të provojë të plotësojë zëra të rinj që nga përkthime të dikurshme vetëm prej kartelës, ose prej krejt kujtesës së përkthimit. Përdorimi i KP-së s’do të jetë kushedi çë i efektshëm, nëse kjo është thuajse e zbrazët, por do të përmirësohet, dora-dorës që shtoni përkthime në të."
 
+#: src/prefsdlg.cpp:454
+msgid "Use suggestions from online collaborative TM"
+msgstr "Përdor sugjerimet nga KP internet bashkëpunuese"
+
+#: src/prefsdlg.cpp:469
+msgid "Poedit uses a large online translation memory that includes both contributed human translations and state-of-the-art machine translations."
+msgstr "Poedit-i përdor një kujtesë të madhe interneti përkthimesh, që përfshin si përkthime të parashtruara nga njeriu, ashtu edhe përkthime makine të automatizuara, të fjalës së fundit."
+
+#: src/prefsdlg.cpp:472 src/sidebar_pro.cpp:698
+msgid "Contribute my translations to the online TM"
+msgstr "Jepi përkthimet e mia për KP interneti"
+
+#: src/prefsdlg.cpp:473 src/sidebar_pro.cpp:699
+msgid "Keep my translations private"
+msgstr "Përkthimet e mia mbaji private"
+
+#: src/prefsdlg.cpp:474
+msgid "Ask me for each file individually"
+msgstr "Pyetmë veçmas për çdo kartelë"
+
+#: src/prefsdlg.cpp:492 src/sidebar_pro.cpp:159
+msgid "Change Settings…"
+msgstr "Ndryshoni Rregullimet…"
+
+#: src/prefsdlg.cpp:492 src/sidebar_pro.cpp:159
+msgid "Change settings…"
+msgstr "Ndryshoni rregullimet…"
+
+#: src/prefsdlg.cpp:580
 msgid "Stored translations:"
 msgstr "Përkthime të depozituara:"
 
+#: src/prefsdlg.cpp:581
 msgid "Database size on disk:"
 msgstr "Madhësi baze të dhënash në disk:"
 
+#: src/prefsdlg.cpp:596
 msgid "Import Translation Files…"
 msgstr "Importoni Kartela Përkthimi…"
 
+#: src/prefsdlg.cpp:596
 msgid "Import translation files…"
 msgstr "Importoni kartela përkthimi…"
 
+#: src/prefsdlg.cpp:598
 msgid "Import From TMX…"
 msgstr "Importoni Prej TMX…"
 
+#: src/prefsdlg.cpp:598
 msgid "Import from TMX…"
 msgstr "Importoni prej TMX…"
 
+#: src/prefsdlg.cpp:599
 msgid "Export To TMX…"
 msgstr "Eksportoni Në TMX…"
 
+#: src/prefsdlg.cpp:599
 msgid "Export to TMX…"
 msgstr "Eksportoni në TMX…"
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+#: src/prefsdlg.cpp:602 src/prefsdlg.cpp:770
 msgid "Reset"
 msgstr "Zeroje"
 
+#: src/prefsdlg.cpp:621
 msgid "Select translation files to import"
 msgstr "Përzgjidhni kartela përkthimi për importim"
 
-msgid "Translation Memory"
-msgstr "Kujtesë Përkthimesh"
-
-msgid "Importing translations…"
-msgstr "Po importohen përkthimet…"
-
-#, c-format
-msgid "Error loading translation file “%s”."
-msgstr "Gabim gjatë ngarkimit të kartelës së përkthimit “%s”."
-
-msgid "Finalizing…"
-msgstr "Po përfundohet…"
-
+#: src/prefsdlg.cpp:654
 msgid "Select TMX files to import"
 msgstr "Përzgjidhni kartela TMX për importim"
 
+#: src/prefsdlg.cpp:657 src/prefsdlg.cpp:733
 msgid "TMX Files"
 msgstr "Kartela TMX"
 
+#: src/prefsdlg.cpp:684
+msgid "Importing translations…"
+msgstr "Po importohen përkthimet…"
+
+#: src/prefsdlg.cpp:685
+msgid "Importing translation memory failed."
+msgstr "Importimi i kujtesës së përkthimeve dështoi."
+
+#: src/prefsdlg.cpp:699
 #, c-format
-msgid "Importing translation memory from “%s” failed."
-msgstr "Importimi i kujtesës së përkthimeve nga “%s” dështoi."
+msgid "Importing from “%s”…"
+msgstr "Po importoht nga “%s”…"
 
-msgid "Import error"
-msgstr "Gabim importimi"
+#. TRANSLATORS: %s is a (formatted) number here
+#: src/prefsdlg.cpp:717
+#, c-format
+msgid "%s translation was imported."
+msgid_plural "%s translations were imported."
+msgstr[0] "U importua %s përkthim."
+msgstr[1] "U importuan %s përkthime."
 
+#: src/prefsdlg.cpp:730
 msgid "Export as…"
 msgstr "Eksportojeni si…"
 
+#: src/prefsdlg.cpp:745
 msgid "Exporting translations…"
 msgstr "Po eksportohen përkthime…"
 
+#: src/prefsdlg.cpp:746
 #, c-format
 msgid "Exporting translation memory to “%s” failed."
 msgstr "Eksportimi i kujtesës së përkthimeve në “%s” dështoi."
 
-msgid "Export error"
-msgstr "Gabim eksportimi"
-
+#: src/prefsdlg.cpp:764
 msgid "Reset translation memory"
 msgstr "Të zerohet kujtesa e përkthimeve"
 
+#: src/prefsdlg.cpp:765
 msgid "Are you sure you want to reset the translation memory?"
 msgstr "Jeni i sigurt se doni të zerohet kujtesa e përkthimeve?"
 
-msgid ""
-"Resetting the translation memory will irrevocably delete all stored "
-"translations from it. You can’t undo this operation."
-msgstr ""
-"Zerimi i kujtesës së përkthimit do të shkaktojë fshirjen, pa prapakthim, të "
-"krejt përkthimeve të depozituara në të. Këtë veprim s’mund ta zhbëni."
+#: src/prefsdlg.cpp:766
+msgid "Resetting the translation memory will irrevocably delete all stored translations from it. You can’t undo this operation."
+msgstr "Zerimi i kujtesës së përkthimit do të shkaktojë fshirjen, pa prapakthim, të krejt përkthimeve të depozituara në të. Këtë veprim s’mund ta zhbëni."
 
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
+#: src/prefsdlg.cpp:808
 msgid "TM"
 msgstr "KP"
 
-msgid ""
-"Source code extractors are used to find translatable strings in the source "
-"code files and extract them so that they can be translated."
-msgstr ""
-"Përftuesit prej kodi burim përdoren për të gjetur vargje të përkthyeshme në "
-"kartela kodi burim dhe për t’i përftuar ato, që të mund të përkthehen."
+#: src/prefsdlg.cpp:810 src/sidebar_terminology.cpp:638
+msgid "Translation Memory"
+msgstr "Kujtesë Përkthimesh"
 
+#: src/prefsdlg.cpp:830
+msgid "Source code extractors are used to find translatable strings in the source code files and extract them so that they can be translated."
+msgstr "Përftuesit prej kodi burim përdoren për të gjetur vargje të përkthyeshme në kartela kodi burim dhe për t’i përftuar ato, që të mund të përkthehen."
+
+#: src/prefsdlg.cpp:843
 msgid "Custom Extractors:"
 msgstr "Përftues të Përshtatur:"
 
+#: src/prefsdlg.cpp:843
 msgid "Custom extractors:"
 msgstr "Përftues të përshtatur:"
 
+#: src/prefsdlg.cpp:929
 msgid "GNU gettext"
 msgstr "GNU gettext"
 
-msgid ""
-"Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
-"+, C#, Perl, Python, Java, JavaScript and others)."
-msgstr ""
-"Mbulon krejt gjuhët e programimit të pranuara nga mjete GNU gettext (PHP, C/"
-"C++, C#, Perl, Python, Java, JavaScript, etj)."
+#: src/prefsdlg.cpp:935
+msgid "Supports all programming languages recognized by GNU gettext tools (PHP, C/C++, C#, Perl, Python, Java, JavaScript and others)."
+msgstr "Mbulon krejt gjuhët e programimit të pranuara nga mjete GNU gettext (PHP, C/C++, C#, Perl, Python, Java, JavaScript, etj)."
 
+#. TRANSLATORS: Templates for themes etc. - e.g. Twig or Volt templates
+#: src/prefsdlg.cpp:945
+msgid "Templates"
+msgstr "Gjedhe"
+
+#: src/prefsdlg.cpp:946
+msgid "(Twig, Volt, Blade)"
+msgstr "(Twig, Volt, Blade)"
+
+#: src/prefsdlg.cpp:961
+msgid "Extracts translations from template files."
+msgstr "Përfton përkthime prej kartelash gjedhe."
+
+#: src/prefsdlg.cpp:964
+msgid "Enable"
+msgstr "Aktivizoje"
+
+#: src/prefsdlg.cpp:1096
 msgid "Delete extractor"
 msgstr "Fshije përftuesin"
 
+#: src/prefsdlg.cpp:1097
 #, c-format
 msgid "Are you sure you want to delete the “%s” extractor?"
 msgstr "Jeni i sigurt se doni të fshihet përftuesi “%s”?"
 
+#: src/prefsdlg.cpp:1135
 msgid "Extractors"
 msgstr "Përftues"
 
+#: src/prefsdlg.cpp:1193
 msgid "Accounts"
 msgstr "Llogari"
 
+#: src/prefsdlg.cpp:1213
 msgid "Automatically check for updates"
 msgstr "Kontrollo vetvetiu për përditësime"
 
+#: src/prefsdlg.cpp:1216
 msgid "Include beta versions"
 msgstr "Përfshi versione beta"
 
-msgid ""
-"Beta versions contain the latest new features and improvements, but may be a "
-"bit less stable."
-msgstr ""
-"Versionet beta përmbajnë veçoritë dhe përmirësimet më të reja, por mund të "
-"jenë më pak të qëndrueshme."
+#: src/prefsdlg.cpp:1219
+msgid "Beta versions contain the latest new features and improvements, but may be a bit less stable."
+msgstr "Versionet beta përmbajnë veçoritë dhe përmirësimet më të reja, por mund të jenë më pak të qëndrueshme."
 
+#: src/prefsdlg.cpp:1248
 msgid "Updates"
 msgstr "Përditësime"
 
-msgid ""
-"These settings affect internal formatting of PO files. Adjust them if you "
-"have specific requirements e.g. because of version control."
-msgstr ""
-"Këto rregullime prekin formatim të brendshëm të kartelave PO. Prekini nëse "
-"keni domosdoshmëri specifike, për shembull, për shkak sistemi kontrolli "
-"versionesh."
+#: src/prefsdlg.cpp:1266
+msgid "These settings affect internal formatting of PO files. Adjust them if you have specific requirements e.g. because of version control."
+msgstr "Këto rregullime prekin formatim të brendshëm të kartelave PO. Prekini nëse keni domosdoshmëri specifike, për shembull, për shkak sistemi kontrolli versionesh."
 
+#: src/prefsdlg.cpp:1270
 msgid "Line endings:"
 msgstr "Funde rreshtash:"
 
+#: src/prefsdlg.cpp:1273
 msgid "Unix (recommended)"
 msgstr "Unix (e këshillueshme)"
 
+#: src/prefsdlg.cpp:1274
 msgid "Windows"
 msgstr "Windows"
 
 #. TRANSLATORS: Followed by text control for entering number; wraps text at given width
+#: src/prefsdlg.cpp:1278
 msgid "Wrap at:"
 msgstr "Mbështille në gjatësinë:"
 
+#: src/prefsdlg.cpp:1289
 msgid "Preserve formatting of existing files"
 msgstr "Ruaje formatimin e kartelave ekzistuese"
 
+#: src/prefsdlg.cpp:1341
 msgid "Advanced"
 msgstr "Të mëtejshme"
 
+#: src/prefsdlg.cpp:1369
 msgid "Settings"
 msgstr "Rregullime"
 
+#: src/pretranslate.cpp:129
 msgid "Preparing strings…"
 msgstr "Po përgatiten vargjet…"
 
+#: src/pretranslate.cpp:239
 msgid "Pre-translating from translation memory…"
 msgstr "Po bëhet përkthim paraprak prej kujtesës së përkthimeve…"
 
+#: src/pretranslate.cpp:250 src/pretranslate.cpp:296
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
 msgstr[0] "%u varg i përkthyer paraprakisht"
 msgstr[1] "%u vargje të përkthyer paraprakisht"
 
+#: src/pretranslate.cpp:259
+msgid "Uploading strings for cloud pre-translation…"
+msgstr "Po ngarkohen vargje për përkthim paraprak në re…"
+
+#: src/pretranslate.cpp:300 src/pretranslate.cpp:357
 msgid "Pre-translating…"
 msgstr "Parapërkthim…"
 
+#: src/pretranslate.cpp:366
+#, c-format
+msgid "%d entry was pre-translated."
+msgid_plural "%d entries were pre-translated."
+msgstr[0] "U përkthye paraprakisht %d zë."
+msgstr[1] "U përkthyen paraprakisht %d zëra."
+
+#: src/pretranslate.cpp:372
+msgid "The translations were marked as needing work, because they may be inaccurate. You should review them for correctness."
+msgstr "Përkthimet janë shënuar si të turbullta, ngaqë mund të jenë të pasakta. Do të duhej t’u kontrollonit saktësinë."
+
+#: src/pretranslate.cpp:375
+msgid "Exact matches from TM"
+msgstr "Përkim të përpikta nga TM"
+
+#: src/pretranslate.cpp:376
+msgid "Approximate matches from TM"
+msgstr "Përkime të përafërt nga TM"
+
+#. TRANSLATORS: shown instead of number when user disabled this kind of pre-translation results
+#: src/pretranslate.cpp:383
+msgid "disabled"
+msgstr "çaktivizuar"
+
+#: src/pretranslate.cpp:384
+msgid "Machine translation"
+msgstr "Përkthim nga makina"
+
+#: src/pretranslate.cpp:389
+msgid "No entries could be pre-translated."
+msgstr "S’u përkthye dot paraprakisht ndonjë zë."
+
+#: src/pretranslate.cpp:390
+msgid "The TM doesn’t contain any strings similar to the content of this file. It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually."
+msgstr "KP-ja s’përmban ndonjë varg të ngjashëm me lëndën e kësaj kartele. Ka efekt vetëm për përkthime gjysmë të vetvetishme, pasi Poedit të grumbullojë mjaftueshëm lëndë prej kartelave që përktheni dorazi."
+
+#: src/pretranslate.cpp:418
 msgid "Cannot pre-translate without source text."
 msgstr "S’mund të bëhet përkthim paraprak pa tekst burim."
 
@@ -1478,1080 +2488,2107 @@ msgstr "S’mund të bëhet përkthim paraprak pa tekst burim."
 #. some users into thinking it's all that needs to be done (spoken from
 #. experience). "Pre-translate" nicely expresses that it's only the step done
 #. *before* actual translation.
+#: src/pretranslate.cpp:419 src/pretranslate.cpp:434 src/pretranslate.cpp:443
+#: src/pretranslate.cpp:489 src/pretranslate.cpp:616
+#: src/resources/toolbar.xrc:48 src/sidebar_pro.cpp:983
 msgid "Pre-translate"
 msgstr "Përkthim paraprak"
 
-msgid ""
-"Pre-translation requires that source text is available. It doesn’t work if "
-"only IDs without the actual text are used."
-msgstr ""
-"Përkthimi paraprak lyp prani të tekstit burim. S’funksionon, nëse përdoren "
-"vetëm ID, pa tekstin faktik."
+#: src/pretranslate.cpp:423
+msgid "Pre-translation requires that source text is available. It doesn’t work if only IDs without the actual text are used."
+msgstr "Përkthimi paraprak lyp prani të tekstit burim. S’funksionon, nëse përdoren vetëm ID, pa tekstin faktik."
 
+#: src/pretranslate.cpp:433
 msgid "Cannot pre-translate from unknown language."
 msgstr "S’mund të bëhet përkthim paraprak prej një gjuhe të panjohur."
 
-msgid ""
-"Pre-translation requires that source text’s language is known. Poedit "
-"couldn’t detect it in this file."
-msgstr ""
-"Përkthimi paraprak lyp që gjuha e tekstit burim të njihet. Poedit-i s’e "
-"pikasi dot në këtë kartelë."
+#: src/pretranslate.cpp:438
+msgid "Pre-translation requires that source text’s language is known. Poedit couldn’t detect it in this file."
+msgstr "Përkthimi paraprak lyp që gjuha e tekstit burim të njihet. Poedit-i s’e pikasi dot në këtë kartelë."
 
+#: src/pretranslate.cpp:448
+msgid "Use online suggestions"
+msgstr "Përdor sugjerime nga Interneti"
+
+#: src/pretranslate.cpp:449
+msgid "Try to fetch translations from the online TM as well. Notice that the translations will not be perfect and will still need to be corrected by a human translator."
+msgstr "Provo të sjellësh përkthime edhe nga KP në Internet. Kini parasysh që përkthimet s’do të jenë të përsosura dhe do të jetë prapë e nevojshme të ndreqen nga një përkthyes real."
+
+#: src/pretranslate.cpp:476
 msgid "Only fill in exact matches"
 msgstr "Plotëso vetëm përputhjet e përpikta"
 
-msgid ""
-"By default, inaccurate results are also included, but marked as needing "
-"work. Check this option to only include perfect matches."
-msgstr ""
-"Si parazgjedhje, përfshihen edhe përfundime jo të përpikta, por me shenjën "
-"se duan punë. Që të përfshihen vetëm përputhje të përpikta, i vini shenjë "
-"kësaj mundësie."
+#: src/pretranslate.cpp:479
+msgid "By default, inaccurate results are also included, but marked as needing work. Check this option to only include perfect matches."
+msgstr "Si parazgjedhje, përfshihen edhe përfundime jo të përpikta, por me shenjën se duan punë. Që të përfshihen vetëm përputhje të përpikta, i vini shenjë kësaj mundësie."
 
+#: src/pretranslate.cpp:481
+msgid "By default, inaccurate results and machine translation are also included, but marked as needing work. Check this option to only include perfect human translations."
+msgstr "Si parazgjedhje, përfshihen edhe përfundime jo të përpikta dhe përkthime nga makina, por me shenjën se duan punë. Që të përfshihen vetëm përkthime të përpikta nga njeriu, i vini shenjë kësaj mundësie."
+
+#: src/pretranslate.cpp:483
 msgid "Don’t mark exact matches as needing work"
 msgstr "Përputhjeve të përpikta mos u vër shenjë si të lypnin punë"
 
-msgid ""
-"Only enable if you trust the quality of your TM. By default, all matches "
-"from the TM are marked as needing work and should be reviewed before use."
-msgstr ""
-"Aktivizojeni vetëm nëse besoni në cilësinë e KP-së suaj. Si parazgjedhje, "
-"krejt përputhjet prej KP-së shënohen si të turbullta dhe do të duheshin "
-"marrë në shqyrtim."
+#: src/pretranslate.cpp:484
+msgid "Don’t mark machine translation as needing work"
+msgstr "Mos i vër shenjë përkthimit nga makina si një që lyp shqyrtim"
 
-msgid ""
-"Pre-translation automatically finds exact or fuzzy matches for untranslated "
-"strings in the translation memory and fills in their translations."
-msgstr ""
-"Parapërkthimi gjen në kujtesën e përkthimeve përputhje të sakta ose të "
-"përafërta për vargje përkthimesh dhe i plotëson ato në kutizën e përkthimit."
+#: src/pretranslate.cpp:486
+msgid "Only enable if you trust the quality of your TM. By default, all matches from the TM are marked as needing work and should be reviewed before use."
+msgstr "Aktivizojeni vetëm nëse besoni në cilësinë e KP-së suaj. Si parazgjedhje, krejt përputhjet prej KP-së shënohen si të turbullta dhe do të duheshin marrë në shqyrtim."
 
+#: src/pretranslate.cpp:493
+msgid "Pre-translation automatically finds exact or fuzzy matches for untranslated strings in the translation memory and fills in their translations."
+msgstr "Parapërkthimi gjen në kujtesën e përkthimeve përputhje të sakta ose të përafërta për vargje përkthimesh dhe i plotëson ato në kutizën e përkthimit."
+
+#: src/pretranslate.cpp:495
+msgid "Pre-translation automatically searches existing translations and uses machine translation to fill in initial translations for strings that are not yet translated."
+msgstr "Përkthimi paraprak kërkon automatikisht përkthime ekzistuese dhe përdor përkthimin nga makina për të plotësuar me përkthime fillestare vargjet që s’janë përkthyer ende."
+
+#: src/pretranslate.cpp:533
+msgid "Machine translation:"
+msgstr "Përkthim nga makina:"
+
+#. TRANSLATORS: "Upgrade" as in upgrading from Pro to Pro+ version; "provider" is machine translation provider. This string needs to be as short as possible.
+#: src/pretranslate.cpp:545
+msgid "Upgrade for more providers"
+msgstr "Për më tepër shërbime, përmirësojeni"
+
+#. TRANSLATORS: Part of larger line of UI: "Machine translation: [e.g. Google] with tone of voice: [formal/informal/automatic]". If "tone of voice" sounds weird, you can use "formality". See https://support.deepl.com/hc/en-us/articles/4406432463762-About-the-formal-informal-feature for explanation of what tone of voice / formality is.
+#: src/pretranslate.cpp:556
+msgid "with tone of voice:"
+msgstr "me shkallë formaliteti:"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:562
+msgid "automatic"
+msgstr "automatike"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:564
+msgid "formal"
+msgstr "formale"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:566
+msgid "informal"
+msgstr "informale"
+
+#: src/pretranslate.cpp:651 src/sidebar_pro.cpp:551
+msgid "Exceeded machine translation quota."
+msgstr "U tejkaluan kuota përkthimi nga makina."
+
+#: src/pretranslate.cpp:660
 #, c-format
-msgid "%d entry was pre-translated."
-msgid_plural "%d entries were pre-translated."
-msgstr[0] "U përkthye paraprakisht %d zë."
-msgstr[1] "U përkthyen paraprakisht %d zëra."
+msgid "Machine translation usage: %d / %d\n"
+"%s"
+msgstr "Përdorim përkthimesh nga makina: %d / %d\n"
+"%s"
 
-msgid ""
-"The translations were marked as needing work, because they may be "
-"inaccurate. You should review them for correctness."
-msgstr ""
-"Përkthimet janë shënuar si të turbullta, ngaqë mund të jenë të pasakta. Do "
-"të duhej t’u kontrollonit saktësinë."
+#: src/pretranslate.cpp:660
+msgid "Quota is rolling monthly."
+msgstr "Kuota zbatohet në muaj."
 
-msgid "No entries could be pre-translated."
-msgstr "S’u përkthye dot paraprakisht ndonjë zë."
+#: src/pretranslate.cpp:663 src/sidebar_pro.cpp:475
+msgid "Add machine translation credit"
+msgstr "Shtoni kredit përkthimi nga makina"
 
-msgid ""
-"The TM doesn’t contain any strings similar to the content of this file. It "
-"is only effective for semi-automatic translations after Poedit learns enough "
-"from files that you translated manually."
-msgstr ""
-"KP-ja s’përmban ndonjë varg të ngjashëm me lëndën e kësaj kartele. Ka efekt "
-"vetëm për përkthime gjysmë të vetvetishme, pasi Poedit të grumbullojë "
-"mjaftueshëm lëndë prej kartelave që përktheni dorazi."
+#: src/progress_ui.cpp:172 src/wx_translatable_strings.h:151
+msgid "Error: "
+msgstr "Gabim: "
 
+#: src/progress_ui.cpp:176
+#, c-format
+msgid "%d error occurred:"
+msgid_plural "%d errors occurred:"
+msgstr[0] "Ndodhi %d gabim:"
+msgstr[1] "Ndodhën %d gabime:"
+
+#: src/progress_ui.cpp:285
+msgid "An error occurred."
+msgstr "Ndodhi një gabim."
+
+#: src/progress_ui.cpp:291
+#, c-format
+msgid "%d error occurred."
+msgid_plural "%d errors occurred."
+msgstr[0] "Ndodhi %d gabim."
+msgstr[1] "Ndodhën %d gabime."
+
+#: src/progress_ui.cpp:438
 msgid "Cancelling…"
 msgstr "Po anulohet…"
 
+#. TRANSLATORS: This text is shown as a hint/advice. The %s→%s part is replaced with menu item pointer, "File→New WordPress Translation".
+#: src/propertiesdlg.cpp:92
+#, c-format
+msgid "Use %s→%s for full WordPress functionality."
+msgstr "Përdorni %s→%s për funksionim të plotë me WordPress."
+
+#: src/propertiesdlg.cpp:93 src/resources/menus.xrc:5
+#: src/resources/menus.xrc:384 src/wx_translatable_strings.h:104
+msgid "&File"
+msgstr "&Kartelë"
+
+#: src/propertiesdlg.cpp:94 src/resources/menus.xrc:17
+#: src/resources/menus.xrc:396
+msgid "New WordPress Translation…"
+msgstr "Përkthim i Ri WordPress-i…"
+
+#: src/propertiesdlg.cpp:94 src/resources/menus.xrc:16
+#: src/resources/menus.xrc:395
+msgid "New WordPress translation…"
+msgstr "Përkthim i Ri WordPress-i…"
+
+#: src/propertiesdlg.cpp:366
 msgid "Drag Folders or Files Here"
 msgstr "Tërhiqni Këtu Dosje ose Kartela"
 
+#: src/propertiesdlg.cpp:366
 msgid "Drag folders or files here"
 msgstr "Tërhiqni këtu dosje ose kartela"
 
+#: src/propertiesdlg.cpp:471
 msgid "Add Folders…"
 msgstr "Shtoni Dosje…"
 
+#: src/propertiesdlg.cpp:471
 msgid "Add folders…"
 msgstr "Shtoni dosje…"
 
+#: src/propertiesdlg.cpp:472
 msgid "Add Files…"
 msgstr "Shtoni Kartela…"
 
+#: src/propertiesdlg.cpp:472
 msgid "Add files…"
 msgstr "Shtoni kartela…"
 
+#: src/propertiesdlg.cpp:474
 msgid "Add Wildcard…"
 msgstr "Shtoni Shenja të Gjithëpushtetshme…"
 
+#: src/propertiesdlg.cpp:474
 msgid "Add wildcard…"
 msgstr "Shtoni shenja të gjithëpushtetshme…"
 
 #. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+#: src/propertiesdlg.cpp:545
 msgid "Reveal in Finder"
 msgstr "Shfaqe në Finder"
 
 #. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+#: src/propertiesdlg.cpp:548
 msgid "Show in Explorer"
 msgstr "Shfaqe në Explorer"
 
+#: src/propertiesdlg.cpp:550
 msgid "Show in Folder"
 msgstr "Shfaqe në Dosje"
 
+#: src/propertiesdlg.cpp:581
 msgid "Paths"
 msgstr "Shtigje"
 
+#: src/propertiesdlg.cpp:601
 msgid "Excluded paths"
 msgstr "Shtigje të përjashtuar"
 
+#: src/propertiesdlg.cpp:619
 msgid "Advanced extraction settings"
 msgstr "Rregullime të thelluara përftimesh"
 
+#: src/propertiesdlg.cpp:625
 msgid "Extract notes for translators from:"
 msgstr "Përfto shënime për përkthyesin nga:"
 
+#: src/propertiesdlg.cpp:627
 msgid "Comments prefixed with:"
 msgstr "Komente të paraprira me:"
 
+#: src/propertiesdlg.cpp:636
 msgid "All comments"
 msgstr "Krejt komentet"
 
+#: src/propertiesdlg.cpp:639
 msgid "Additional xgettext flags:"
 msgstr "Shenja xgettext shtesë:"
 
+#: src/propertiesdlg.cpp:779
 msgid "Additional keywords"
 msgstr "Fjalëkyçe shtesë"
 
+#: src/propertiesdlg.cpp:810
 msgid "Name of the project the translation is for"
 msgstr "Emri i projektit për të cilin bëhet përkthimi"
 
+#: src/propertiesdlg.cpp:811
 msgid "Team name and email address or URL"
 msgstr "Emër ekipi dhe adresë email ose URL"
 
+#: src/propertiesdlg.cpp:812
 msgid "e.g. nplurals=2; plural=(n > 1);"
 msgstr "p.sh. nplurals=2; plural=(n > 1);"
 
+#: src/propertiesdlg.cpp:817
+msgid "Custom file extensions are being used."
+msgstr "Po përdoren zgjatime vetjake kartelash."
+
+#: src/propertiesdlg.cpp:872
 msgid "UTF-8 (recommended)"
 msgstr "UTF-8 (e këshillueshme)"
 
+#: src/propertiesdlg.cpp:1055
 msgid "Please save the file first. This section cannot be edited until then."
-msgstr ""
-"Ju lutemi, së pari ruajeni kartelën. Kjo pjesë s’mund të përpunohet para "
-"ruajtjes."
+msgstr "Ju lutemi, së pari ruajeni kartelën. Kjo pjesë s’mund të përpunohet para ruajtjes."
 
+#: src/propertiesdlg.cpp:1177
+msgid "File Extensions"
+msgstr "Zgjatime Kartelash"
+
+#: src/propertiesdlg.cpp:1189
+msgid "Extension or Wildcard"
+msgstr "Zgjatim ose Shenjë e Gjithëpushtetshme"
+
+#: src/propertiesdlg.cpp:1191
+msgid "Extractor"
+msgstr "Përftues"
+
+#: src/propertiesdlg.cpp:1266
+msgid "(unknown)"
+msgstr "(i panjohur)"
+
+#: src/qa_checks.cpp:153
 msgid "Placeholders correctness"
 msgstr "Saktësi vendmbajtësesh"
 
+#: src/qa_checks.cpp:208
 #, c-format
 msgid "Placeholder “%s” is missing from translation."
 msgstr "Në përkthim mungon vendmbajtësja “%s”."
 
+#: src/qa_checks.cpp:220
 #, c-format
 msgid "Superfluous placeholder “%s” that isn’t in source text."
 msgstr "Vendmbajtëse e tepërt “%s” që s’gjendet në tekstin burim."
 
+#: src/qa_checks.cpp:256
 msgid "Plural form translations"
 msgstr "Përkthime formash shumësi"
 
+#: src/qa_checks.cpp:277
 msgid "Not all plural forms are translated."
 msgstr "S’janë përkthyer krejt format e shumësit."
 
+#: src/qa_checks.cpp:289
 msgid "Inconsistent upper/lower case"
 msgstr "Shkronja të mëdha/të vogla jo njësoj"
 
+#: src/qa_checks.cpp:305
 msgid "The translation should start as a sentence."
 msgstr "Përkthimi duhet të fillojë me një togfjalësh."
 
+#: src/qa_checks.cpp:313
 msgid "The translation should start with a lowercase character."
 msgstr "Përkthimi duhet të fillojë me një shkronjë të vogël."
 
+#: src/qa_checks.cpp:331
 msgid "Inconsistent whitespace"
 msgstr "Hapësira të zbrazëta jo njësoj"
 
+#: src/qa_checks.cpp:345
 msgid "The translation doesn’t start with a space."
 msgstr "Përkthimi nuk fillon me një hapësirë."
 
+#: src/qa_checks.cpp:351
 msgid "The translation starts with a space, but the source text doesn’t."
 msgstr "Përkthimi fillon me një hapësirë, por jo burimi."
 
+#: src/qa_checks.cpp:357
 msgid "The translation is missing a newline at the end."
 msgstr "Përkthimit i mungon një simbol rreshti të ri në fund."
 
+#: src/qa_checks.cpp:363
 msgid "The translation ends with a newline, but the source text doesn’t."
 msgstr "Përkthimi përfundon me një simbol rreshti të ri, por jo burimi."
 
+#: src/qa_checks.cpp:369
 msgid "The translation is missing a space at the end."
 msgstr "Përkthimit i mungon një hapësirë në fund."
 
+#: src/qa_checks.cpp:375
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "Përkthimi përfundon me një hapësirë, por jo burimi."
 
+#: src/qa_checks.cpp:390
 msgid "Punctuation checks"
 msgstr "Kontrolle pikësimi"
 
+#: src/qa_checks.cpp:455
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr "Përkthimi duhet të mbarojë me një “%s”."
 
+#: src/qa_checks.cpp:467
 #, c-format
 msgid "The translation should not end with “%s”."
 msgstr "Përkthimi s’duhet të mbarojë me një “%s”."
 
+#: src/qa_checks.cpp:488
 #, c-format
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
 msgstr "Përkthimi përfundon me “%s”, por teksti burim përfundon me “%s”."
 
+#: src/recent_files.cpp:223
 msgid "Cloud"
 msgstr "Re"
 
+#: src/recent_files.cpp:404
 msgid "Clear Menu"
 msgstr "Spastroje Menunë"
 
+#: src/recent_files.cpp:404
 msgid "Clear menu"
 msgstr "Spastroje menunë"
 
+#: src/resources/comment.xrc:10
 msgid "Comment:"
 msgstr "Koment:"
 
+#: src/resources/comment.xrc:33
 msgid "Update"
 msgstr "Përditësoje"
 
+#: src/resources/comment.xrc:48 src/wx_translatable_strings.h:100
 msgid "&Delete"
 msgstr "&Fshije"
 
+#: src/resources/comment.xrc:49
 msgid "Delete the comment"
 msgstr "Fshije komentin"
 
+#: src/resources/manager.xrc:4
 msgid "Edit project"
 msgstr "Përpunoni projekt"
 
+#: src/resources/manager.xrc:9
 msgid "Project name:"
 msgstr "Emër projekti:"
 
+#: src/resources/manager.xrc:39
 msgid "Browse"
 msgstr "Shfletoni"
 
+#: src/resources/manager.xrc:41
 msgid "Add directory to the list"
 msgstr "Shtoni drejtori te lista"
 
-msgid "OK"
-msgstr "OK"
-
-msgid "&File"
-msgstr "&Kartelë"
-
+#: src/resources/menus.xrc:8 src/resources/menus.xrc:387
 msgid "&New…"
 msgstr "E &re…"
 
+#: src/resources/menus.xrc:12 src/resources/menus.xrc:391
 msgid "New from &POT/PO file…"
 msgstr "E re prej kartele &POT/PO…"
 
+#: src/resources/menus.xrc:13 src/resources/menus.xrc:392
 msgid "New From &POT/PO File…"
 msgstr "E re prej Kartele &POT/PO…"
 
+#: src/resources/menus.xrc:21 src/resources/menus.xrc:400
+#: src/wx_translatable_strings.h:109
 msgid "&Open…"
 msgstr "&Hapni…"
 
+#: src/resources/menus.xrc:25 src/resources/menus.xrc:404
 msgid "Open Recent"
 msgstr "Hap Një Nga të Rejat"
 
+#: src/resources/menus.xrc:26 src/resources/menus.xrc:405
 msgid "Open recent"
 msgstr "Hap një nga të rejat"
 
+#: src/resources/menus.xrc:29 src/resources/menus.xrc:408
 msgid "Open cloud translation…"
 msgstr "Hapni përkthim në re…"
 
+#: src/resources/menus.xrc:30 src/resources/menus.xrc:409
 msgid "Open Cloud Translation…"
 msgstr "Hapni Përkthim Në Re…"
 
+#: src/resources/menus.xrc:34 src/resources/menus.xrc:413
 msgid "&Start window"
 msgstr "Dritare &nisjeje"
 
+#: src/resources/menus.xrc:35 src/resources/menus.xrc:414
 msgid "&Start Window"
 msgstr "Dritare &Nisjeje"
 
+#: src/resources/menus.xrc:39 src/resources/menus.xrc:419
 msgid "Catalogs &manager"
 msgstr "&Përgjegjës katalogësh"
 
+#: src/resources/menus.xrc:40 src/resources/menus.xrc:420
 msgid "Catalogs &Manager"
 msgstr "&Përgjegjës Katalogësh"
 
+#: src/resources/menus.xrc:44 src/resources/menus.xrc:424
+#: src/wx_translatable_strings.h:96
 msgid "&Close"
 msgstr "&Mbylle"
 
+#: src/resources/menus.xrc:48 src/wx_translatable_strings.h:115
 msgid "&Save"
 msgstr "&Ruaje"
 
+#: src/resources/menus.xrc:52
 msgid "Save &as…"
 msgstr "Ruajeni &si…"
 
+#: src/resources/menus.xrc:53
 msgid "Save &As…"
 msgstr "Ruajeni &Si…"
 
+#: src/resources/menus.xrc:58
 msgid "Compile to MO…"
 msgstr "Përpilojeni si MO…"
 
+#: src/resources/menus.xrc:62
 msgid "E&xport to HTML…"
 msgstr "E&ksportoje si HTML…"
 
+#: src/resources/menus.xrc:66
+msgid "Export to Excel…"
+msgstr "Eksportoni si Excel…"
+
+#: src/resources/menus.xrc:69
+msgid "Import from Excel…"
+msgstr "Importoni nga Excel…"
+
+#: src/resources/menus.xrc:73 src/resources/menus.xrc:428
 msgid "Check for updates…"
 msgstr "Kontrollo për përditësime…"
 
+#: src/resources/menus.xrc:76 src/resources/menus.xrc:431
+msgid "&License…"
+msgstr "&Licencë…"
+
+#: src/resources/menus.xrc:79 src/resources/menus.xrc:434
 msgid "Settings…"
 msgstr "Rregullime…"
 
+#: src/resources/menus.xrc:83 src/resources/menus.xrc:438
+#: src/wx_translatable_strings.h:112
 msgid "&Preferences"
 msgstr "&Parapëlqime"
 
+#: src/resources/menus.xrc:90 src/resources/menus.xrc:445
 msgid "E&xit"
 msgstr "&Dil"
 
+#: src/resources/menus.xrc:91 src/resources/menus.xrc:446
+#: src/wx_translatable_strings.h:103
 msgid "Quit"
 msgstr "Mbylle"
 
+#: src/resources/menus.xrc:118
 msgid "Copy from singular"
 msgstr "Kopjoje prej njëjësit"
 
+#: src/resources/menus.xrc:119
 msgid "Copy From Singular"
 msgstr "Kopjoje Prej Njëjësit"
 
+#: src/resources/menus.xrc:124
 msgid "Translation needs &work"
 msgstr "Përkthimi lyp &punë"
 
+#: src/resources/menus.xrc:125
 msgid "Translation Needs &Work"
 msgstr "Përkthimi Lyp &Punë"
 
+#: src/resources/menus.xrc:130
 msgid "Edit &comment"
 msgstr "Përpunoni &koment"
 
+#: src/resources/menus.xrc:131
 msgid "Edit &Comment"
 msgstr "Përpunoni &Komentin"
 
 #. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
+#: src/resources/menus.xrc:136 src/sidebar.cpp:651 src/sidebar_pro.cpp:219
 msgid "Suggestions"
 msgstr "Sugjerime"
 
+#: src/resources/menus.xrc:139 src/resources/menus.xrc:158
 msgid "&Find…"
 msgstr "&Gjeni…"
 
+#: src/resources/menus.xrc:144
 msgid "Replace…"
 msgstr "Zëvendësoni…"
 
+#: src/resources/menus.xrc:148
 msgid "Find next"
 msgstr "Gjej pasuesin"
 
+#: src/resources/menus.xrc:152
 msgid "Find previous"
 msgstr "Gjej të mëparshmin"
 
+#: src/resources/menus.xrc:162
 msgid "Find and Replace…"
 msgstr "Gjeni dhe Zëvendësoni…"
 
+#: src/resources/menus.xrc:166
 msgid "Find Next"
 msgstr "Gjej Pasuesin"
 
+#: src/resources/menus.xrc:170
 msgid "Find Previous"
 msgstr "Gjej të Mëparshmin"
 
+#: src/resources/menus.xrc:179
 msgid "Show string &ID"
 msgstr "Shfaq &ID vargu"
 
+#: src/resources/menus.xrc:180
 msgid "Show String &ID"
 msgstr "Shfaq &ID Vargu"
 
+#: src/resources/menus.xrc:184
 msgid "Show warnings"
 msgstr "Shfaq sinjalizime"
 
+#: src/resources/menus.xrc:185
 msgid "Show Warnings"
 msgstr "Shfaq Sinjalizime"
 
+#: src/resources/menus.xrc:189
+msgid "Customize warnings…"
+msgstr "Përshtatni sinjalizime…"
+
+#: src/resources/menus.xrc:190
+msgid "Customize Warnings…"
+msgstr "Përshtatni Sinjalizime…"
+
+#: src/resources/menus.xrc:194
 msgid "Sort by &file order"
 msgstr "Renditi sipas rendi &kartelash"
 
+#: src/resources/menus.xrc:195
 msgid "Sort by &File Order"
 msgstr "Renditi sipas Rendi &Kartelash"
 
+#: src/resources/menus.xrc:199
 msgid "Sort by &source"
 msgstr "Renditi sipas &burimesh"
 
+#: src/resources/menus.xrc:200
 msgid "Sort by &Source"
 msgstr "Renditi sipas &Burimesh"
 
+#: src/resources/menus.xrc:204
 msgid "Sort by &translation"
 msgstr "Renditi sipas &përkthimesh"
 
+#: src/resources/menus.xrc:205
 msgid "Sort by &Translation"
 msgstr "Renditi sipas &Përkthimesh"
 
+#: src/resources/menus.xrc:210
 msgid "&Group by context"
 msgstr "&Grupoji sipas kontekstit"
 
+#: src/resources/menus.xrc:211
 msgid "&Group By Context"
 msgstr "&Grupoji Sipas Kontekstit"
 
+#: src/resources/menus.xrc:215
 msgid "Entries with errors first"
 msgstr "Së pari zërat me gabime"
 
+#: src/resources/menus.xrc:216
 msgid "Entries with Errors First"
 msgstr "Së Pari Zërat me Gabime"
 
+#: src/resources/menus.xrc:220
 msgid "&Untranslated entries first"
 msgstr "Së pari zërat e &papërkthyer"
 
+#: src/resources/menus.xrc:221
 msgid "&Untranslated Entries First"
 msgstr "Së Pari Zërat e &Papërkthyer"
 
+#: src/resources/menus.xrc:226
+msgid "Show &suggestions tab"
+msgstr "Shfaq skedë &sugjerimesh"
+
+#: src/resources/menus.xrc:227
+msgid "Show &Suggestions Tab"
+msgstr "Shfaq Skedë Sugjerimesh"
+
+#: src/resources/menus.xrc:231
+msgid "Show &terminology tab"
+msgstr "Shfaq skedë &terminologjie"
+
+#: src/resources/menus.xrc:232
+msgid "Show &Terminology Tab"
+msgstr "Shfaq Skedë &Terminologjie"
+
+#: src/resources/menus.xrc:236
 msgid "&Show code occurrences"
 msgstr "&Shfaq hasje në kod"
 
+#: src/resources/menus.xrc:237
 msgid "&Show Code Occurrences"
 msgstr "&Shfaq Hasje Në Kod"
 
+#: src/resources/menus.xrc:241
 msgid "Show sidebar"
 msgstr "Shfaq anështyllë"
 
+#: src/resources/menus.xrc:247
 msgid "Show status bar"
 msgstr "Shfaq shtyllë gjendjesh"
 
+#: src/resources/menus.xrc:255 src/resources/menus.xrc:463
 msgid "&Translation"
 msgstr "&Përkthim"
 
+#: src/resources/menus.xrc:258 src/statistics.cpp:312 src/statistics.cpp:415
+#: src/statistics.cpp:427
+msgid "Source Text"
+msgstr "Teksti Burim"
+
+#: src/resources/menus.xrc:262
 msgid "&Update from source code"
 msgstr "&Përditësoje prej kodi burim"
 
+#: src/resources/menus.xrc:263
 msgid "&Update from Source Code"
 msgstr "&Përditësoje prej Kodi Burim"
 
-msgid "Update from &POT file…"
-msgstr "Përditësojeni prej kartele &POT…"
-
-msgid "Update from &POT File…"
-msgstr "Përditësojeni prej Kartele &POT…"
-
+#: src/resources/menus.xrc:270
 msgid "Sync with Crowdin"
 msgstr "Njëkohësoje me Crowdin-in"
 
+#: src/resources/menus.xrc:274 src/resources/menus.xrc:275
 msgid "Pre-&translate…"
 msgstr "Përkthe p&araprakisht…"
 
+#: src/resources/menus.xrc:279
 msgid "&Validate translations"
 msgstr "&Vleftësoni përkthime"
 
+#: src/resources/menus.xrc:280
 msgid "&Validate Translations"
 msgstr "&Vleftësoni Përkthime"
 
+#: src/resources/menus.xrc:284
+msgid "&Statistics"
+msgstr "&Statistika"
+
+#: src/resources/menus.xrc:289
 msgid "Remove Same-as-Source Translations"
 msgstr "Hiq Përkthime Njësoj-Me-Burimin"
 
+#: src/resources/menus.xrc:292
 msgid "&Purge deleted translations"
 msgstr "&Spastroji përkthimet e fshira"
 
+#: src/resources/menus.xrc:293
 msgid "&Purge Deleted Translations"
 msgstr "&Spastroji Përkthimet e Fshira"
 
+#: src/resources/menus.xrc:297
 msgid "&Properties…"
 msgstr "&Veti…"
 
+#: src/resources/menus.xrc:304 src/resources/menus.xrc:466
 msgid "&Go"
 msgstr "&Lëvizje"
 
+#: src/resources/menus.xrc:307
 msgid "&Done and next"
 msgstr "&U bë, tjetri"
 
+#: src/resources/menus.xrc:308
 msgid "&Done and Next"
 msgstr "&U bë, Tjetri"
 
+#: src/resources/menus.xrc:314
 msgid "Previously edited"
 msgstr "Përpunuar më parë"
 
+#: src/resources/menus.xrc:315
 msgid "Previously Edited"
 msgstr "Përpunuar Më Parë"
 
+#: src/resources/menus.xrc:320
 msgid "&Previous translation"
 msgstr "Përkthimi i &mëparshëm"
 
+#: src/resources/menus.xrc:321
 msgid "&Previous Translation"
 msgstr "Përkthimi i &Mëparshëm"
 
+#: src/resources/menus.xrc:325
 msgid "&Next translation"
 msgstr "Përkthimi &pasues"
 
+#: src/resources/menus.xrc:326
 msgid "&Next Translation"
 msgstr "Përkthimi &Pasues"
 
+#: src/resources/menus.xrc:330
 msgid "P&revious unfinished"
 msgstr "I më&parshmi i pambaruar"
 
+#: src/resources/menus.xrc:331
 msgid "P&revious Unfinished"
 msgstr "I më&parshmi i Pambaruar"
 
+#: src/resources/menus.xrc:335
 msgid "Ne&xt unfinished"
 msgstr "Pas&uesi i pambaruar"
 
+#: src/resources/menus.xrc:336
 msgid "Ne&xt Unfinished"
 msgstr "Pas&uesi i Pambaruar"
 
+#: src/resources/menus.xrc:341
 msgid "Previous plural form"
 msgstr "Forma e mëparshme e shumësit"
 
+#: src/resources/menus.xrc:342
 msgid "Previous Plural Form"
 msgstr "Forma e Mëparshme e Shumësit"
 
+#: src/resources/menus.xrc:346
 msgid "Next plural form"
 msgstr "Forma pasuese e shumësit"
 
+#: src/resources/menus.xrc:347
 msgid "Next Plural Form"
 msgstr "Forma Pasuese e Shumësit"
 
+#: src/resources/menus.xrc:356 src/resources/menus.xrc:473
 msgid "&Online help"
 msgstr "Ndihmë në &Internet"
 
+#: src/resources/menus.xrc:357 src/resources/menus.xrc:474
 msgid "&Online Help"
 msgstr "Ndihmë Në &Internet"
 
+#: src/resources/menus.xrc:363 src/resources/menus.xrc:480
 msgid "&GNU gettext manual"
 msgstr "Doracaku &GNU gettext"
 
+#: src/resources/menus.xrc:364 src/resources/menus.xrc:481
 msgid "&GNU gettext Manual"
 msgstr "Doracaku &GNU gettext"
 
+#: src/resources/menus.xrc:368 src/resources/menus.xrc:485
+msgid "Email &support…"
+msgstr "&Asistencë me email…"
+
+#: src/resources/menus.xrc:369 src/resources/menus.xrc:486
+msgid "Email &Support…"
+msgstr "&Asistencë Me Email…"
+
+#: src/resources/menus.xrc:373 src/resources/menus.xrc:490
 msgid "&About Poedit"
 msgstr "&Mbi Poedit-in"
 
+#: src/resources/menus.xrc:374 src/resources/menus.xrc:375
+#: src/resources/menus.xrc:491 src/resources/menus.xrc:492
 msgid "&About"
 msgstr "&Mbi"
 
+#: src/resources/prefs.xrc:4
 msgid "Extractor setup"
 msgstr "Rregullim i përftuesit"
 
+#: src/resources/prefs.xrc:27
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "Listë zgjatimesh, të ndarë me pikëpresje (p.sh. *.cpp;*.h):"
 
+#: src/resources/prefs.xrc:43
 msgid "Invocation:"
 msgstr "Thirrje:"
 
+#: src/resources/prefs.xrc:47
 msgid "Command to extract translations:"
 msgstr "Urdhër për përftim përkthimesh:"
 
-msgid ""
-"This is the command used to launch the extractor.\n"
+#: src/resources/prefs.xrc:61
+msgid "This is the command used to launch the extractor.\n"
 "%o expands to the name of output file, %K to list\n"
 "of keywords, %F to list of input files,\n"
 "%C to charset flag (see below)."
-msgstr ""
-"Ky është urdhri i përdorur për të nisur përtypësin.\n"
+msgstr "Ky është urdhri i përdorur për të nisur përtypësin.\n"
 "%o bëhet emri i kartelës përfundim, %K lista\n"
 "e fjalëkyçeve, %F lista e kartelave hyrëse,\n"
 "%C simboli i shkronjave (shihni më poshtë)."
 
+#: src/resources/prefs.xrc:70
 msgid "An item in keywords list:"
 msgstr "Një zë në listë fjalëkyçesh:"
 
-msgid ""
-"This will be attached to the command line once\n"
+#: src/resources/prefs.xrc:84
+msgid "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
-msgstr ""
-"Kjo do t’i bashkëngjitet rreshtit të urdhrave një herë\n"
+msgstr "Kjo do t’i bashkëngjitet rreshtit të urdhrave një herë\n"
 "për çdo fjalëkyç. %k bëhet vlera e fjalëkyçit."
 
+#: src/resources/prefs.xrc:93
 msgid "An item in input files list:"
 msgstr "Një zë në listë futje kartelash:"
 
+#: src/resources/prefs.xrc:107
 #, c-format
-msgid ""
-"This will be attached to the command line once\n"
+msgid "This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
-msgstr ""
-"Kjo do t’i bashkëngjitet rreshtit të urdhrave një herë\n"
+msgstr "Kjo do t’i bashkëngjitet rreshtit të urdhrave një herë\n"
 "për çdo kartelë hyrje. %f bëhet emri i kartelës."
 
+#: src/resources/prefs.xrc:116 src/resources/properties.xrc:124
 msgid "Source code charset:"
 msgstr "Shkronja kodi burim:"
 
+#: src/resources/prefs.xrc:130
 #, c-format
-msgid ""
-"This will be attached to the command line\n"
+msgid "This will be attached to the command line\n"
 "only if source code charset was given. %c expands to charset value."
-msgstr ""
-"Kjo do t’i bashkëngjitet rreshtit të urdhrave\n"
+msgstr "Kjo do t’i bashkëngjitet rreshtit të urdhrave\n"
 "vetëm nëse janë dhënë shkronja kodi burim. %c bëhet emri i shkronjave."
 
+#: src/resources/properties.xrc:4 src/resources/properties.xrc:153
 msgid "Translation Properties"
 msgstr "Veti Përkthimesh"
 
+#: src/resources/properties.xrc:19
 msgid "Project name and version:"
 msgstr "Emër dhe version projekti:"
 
+#: src/resources/properties.xrc:34
 msgid "Language team:"
 msgstr "Ekip gjuhe:"
 
+#: src/resources/properties.xrc:66
 msgid "Plural forms:"
 msgstr "Forma shumësi:"
 
+#: src/resources/properties.xrc:73
 msgid "Use default rules for this language"
 msgstr "Për këtë gjuhë përdor rregullat parazgjedhje"
 
+#: src/resources/properties.xrc:82
 msgid "Use custom expression"
 msgstr "Përdor shprehje vetjake"
 
+#: src/resources/properties.xrc:98
 msgid "Learn about plural forms"
 msgstr "Mësoni më tepër rreth formash shumësi"
 
+#: src/resources/properties.xrc:112
 msgid "Charset:"
 msgstr "Shkronja:"
 
+#: src/resources/properties.xrc:138
 msgid "Advanced Extraction Settings…"
 msgstr "Rregullime të Thelluara Përftimesh…"
 
+#: src/resources/properties.xrc:139
 msgid "Advanced extraction settings…"
 msgstr "Rregullime të thelluara përftimesh…"
 
+#: src/resources/properties.xrc:154
 msgid "Translation properties"
 msgstr "Veti përkthimesh"
 
+#: src/resources/properties.xrc:157
 msgid "Sources Paths"
 msgstr "Shtigje Burimesh"
 
+#: src/resources/properties.xrc:158
 msgid "Sources paths"
 msgstr "Shtigje burimesh"
 
+#: src/resources/properties.xrc:164
 msgid "Extract text from source files in the following directories:"
 msgstr "Përfto tekst prej kartelash burim nga drejtoritë vijuese:"
 
+#: src/resources/properties.xrc:173
 msgid "Base path:"
 msgstr "Shteg bazë:"
 
+#: src/resources/properties.xrc:227
+msgid "Customize File Extensions…"
+msgstr "Përshtatni Zgjatime Kartelash…"
+
+#: src/resources/properties.xrc:228
+msgid "Customize file extensions…"
+msgstr "Përshtatni zgjatime kartelash…"
+
+#: src/resources/properties.xrc:241
 msgid "Sources Keywords"
 msgstr "Fjalëkyçe Burimesh"
 
+#: src/resources/properties.xrc:242
 msgid "Sources keywords"
 msgstr "Fjalëkyçe burimesh"
 
-msgid ""
-"Use these keywords (function names) to recognize translatable strings\n"
+#: src/resources/properties.xrc:248
+msgid "Use these keywords (function names) to recognize translatable strings\n"
 "in source files:"
-msgstr ""
-"Përdorini këta fjalëkyçe (emra funksionesh) për të dalluar vargje të "
-"përkthyeshëm\n"
+msgstr "Përdorini këta fjalëkyçe (emra funksionesh) për të dalluar vargje të përkthyeshëm\n"
 "te kartelat burim:"
 
+#: src/resources/properties.xrc:264
 msgid "Also use default keywords for supported languages"
 msgstr "Veç kësaj, përdor fjalëkyçe parazgjedhje për gjuhët e mbuluara"
 
+#: src/resources/properties.xrc:271
 msgid "Learn about gettext keywords"
 msgstr "Mësoni rreth fjalëkyçesh gettext"
 
-msgid "Update summary"
-msgstr "Përditëso përmbledhjen"
-
-msgid ""
-"These strings were found in the sources but were not in the file.\n"
+#: src/resources/summary.xrc:32
+msgid "These strings were found in the sources but were not in the file.\n"
 "Poedit will add them to the file now."
-msgstr ""
-"Këto vargje u gjetën në burime, por s’qenë te kartela.\n"
+msgstr "Këto vargje u gjetën në burime, por s’qenë te kartela.\n"
 "Poedit do t’i shtojë te kartela tani."
 
-msgid "New strings"
-msgstr "Vargje të rinj"
-
-msgid ""
-"These strings are no longer in the source code.\n"
+#: src/resources/summary.xrc:53
+msgid "These strings are no longer in the source code.\n"
 "Poedit will remove them from the file now."
-msgstr ""
-"Këto vargje s’janë më te kodi burim.\n"
+msgstr "Këto vargje s’janë më te kodi burim.\n"
 "Poedit-i do t’i heqë nga kartela tani."
 
+#: src/resources/summary.xrc:66
 msgid "Obsolete strings"
 msgstr "Vargje të vjetruar"
 
+#: src/resources/summary.xrc:79
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 të rinj, 0 të vjetruar)"
 
-msgid "Open"
-msgstr ""
-
+#: src/resources/toolbar.xrc:13 src/resources/toolbar.xrc:17
 msgid "Open file"
 msgstr "Hap kartelë"
 
+#: src/resources/toolbar.xrc:22 src/resources/toolbar.xrc:26
 msgid "Save file"
 msgstr "Ruaje kartelën"
 
+#: src/resources/toolbar.xrc:34
 msgid "Validate"
 msgstr "Vleftësoje"
 
+#: src/resources/toolbar.xrc:35
 msgid "Check for errors in the translation"
 msgstr "Kontrolloni për gabime te përkthimi"
 
+#: src/resources/toolbar.xrc:49
+msgid "Pre-translate strings that don’t have a translation yet"
+msgstr "Përkthe paraprakisht vargje që s’kanë ende një përkthim"
+
+#: src/resources/toolbar.xrc:57 src/wx/main_toolbar.cpp:136
 msgid "Update from code"
 msgstr "Përditësoje prej kodi"
 
+#: src/resources/toolbar.xrc:58 src/wx/main_toolbar.cpp:136
 msgid "Update from Code"
 msgstr "Përditësoje prej Kodi"
 
+#: src/resources/toolbar.xrc:59 src/wx/main_toolbar.cpp:137
 msgid "Update from source code"
 msgstr "Përditësoje prej kodi burim"
 
+#: src/resources/toolbar.xrc:67
 msgid "Sidebar"
 msgstr "Anështyllë"
 
+#: src/resources/toolbar.xrc:68
 msgid "Show or hide the sidebar"
 msgstr "Shfaqni ose fshihni anështyllën"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
+#: src/sidebar.cpp:139
 msgid "Previous source text"
 msgstr "Teksti burim i dikurshëm"
 
-msgid ""
-"The old source text (before it changed during an update) that the now-"
-"inaccurate translation corresponds to."
-msgstr ""
-"Teksti burim i dikurshëm (përpara se të ndryshohej gjatë një përditësimi) të "
-"cilit i takon përkthimi tanimë jo i saktë."
+#: src/sidebar.cpp:142
+msgid "The old source text (before it changed during an update) that the now-inaccurate translation corresponds to."
+msgstr "Teksti burim i dikurshëm (përpara se të ndryshohej gjatë një përditësimi) të cilit i takon përkthimi tanimë jo i saktë."
 
+#: src/sidebar.cpp:168
 msgid "Notes for translators"
 msgstr "Shënime për përkthyesit"
 
+#: src/sidebar.cpp:201
 msgid "Comment"
 msgstr "Koment"
 
+#: src/sidebar.cpp:231 src/sidebar.cpp:250
 msgid "Add comment"
 msgstr "Shto koment"
 
+#: src/sidebar.cpp:233 src/sidebar.cpp:235 src/sidebar.cpp:253
 msgid "Add Comment"
 msgstr "Shtoni Koment"
 
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:436
+msgid "from your TM"
+msgstr "nga KP-ja juaj"
+
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:441
+msgid "machine translation"
+msgstr "përkthim nga makina"
+
+#. TRANSLATORS: This is followed by a logo of e.g. Microsoft Translator, forming a sentence e.g. "translated by MS Translator"
+#: src/sidebar.cpp:449
+msgid "translated by"
+msgstr "përkthyer nga"
+
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:456
+msgid "human translation"
+msgstr "përkthim nga dikush"
+
+#: src/sidebar.cpp:592
 msgid "Delete From Translation Memory"
 msgstr "Fshije Prej Kujtesës së Përkthimeve"
 
+#: src/sidebar.cpp:592
 msgid "Delete from translation memory"
 msgstr "Fshije prej kujtesës së përkthimeve"
 
+#: src/sidebar.cpp:593
+msgid "Report Bad Translation"
+msgstr "Raportoni Përkthim të Dobët"
+
+#: src/sidebar.cpp:593
+msgid "Report bad translation"
+msgstr "Raportoni përkthim të dobët"
+
+#: src/sidebar.cpp:652
 msgid "Translation suggestions"
 msgstr "Sugjerime përkthimi"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
+#: src/sidebar.cpp:695
 msgid "No matches found"
 msgstr "S’u gjetën përputhje"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (macOS, Linux).
+#: src/sidebar.cpp:698
 msgid "No Matches Found"
 msgstr "S’u Gjetën Përputhje"
 
+#: src/sidebar.cpp:734 src/sidebar_pro.cpp:325
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Ky varg u gjet në kujtesën e përkthimeve të Poedit-it."
 
-msgid ""
-"Translation suggestions require that source text is available. They don’t "
-"work if only IDs without the actual text are used."
-msgstr ""
-"Sugjerimet e përkthimeve lypin praninë e tekstit burim. S’funksionojnë, nëse "
-"përdoren vetëm ID, pa tekstin faktik."
+#: src/sidebar.cpp:984
+msgid "Translation suggestions require that source text is available. They don’t work if only IDs without the actual text are used."
+msgstr "Sugjerimet e përkthimeve lypin praninë e tekstit burim. S’funksionojnë, nëse përdoren vetëm ID, pa tekstin faktik."
 
-msgid ""
-"Translation suggestions require that source text’s language is known. Poedit "
-"couldn’t detect it in this file."
-msgstr ""
-"Sugjerime përkthimi lypin që gjuha e tekstit burim të njihet. Poedit-i s’e "
-"pikasi dot në këtë kartelë."
+#: src/sidebar.cpp:989
+msgid "Translation suggestions require that source text’s language is known. Poedit couldn’t detect it in this file."
+msgstr "Sugjerime përkthimi lypin që gjuha e tekstit burim të njihet. Poedit-i s’e pikasi dot në këtë kartelë."
 
+#. TRANSLATORS: Tooltip explaining the Quality: label
+#: src/sidebar_pro.cpp:86
+msgid "Currently enabled quality level of online suggestions"
+msgstr "Shkallë cilësie e aktivizuar tani për sugjerime online"
+
+#. TRANSLATORS: Quality level for the "Quality: %s" label; needs to be short
+#: src/sidebar_pro.cpp:121
+msgid "Premium"
+msgstr "Me pagesë"
+
+#. TRANSLATORS: Quality level for the "Quality: %s" label; needs to be short
+#: src/sidebar_pro.cpp:126
+msgid "Standard"
+msgstr "Standarde"
+
+#. TRANSLATORS: This needs to be *short*, it is shown in the sidebar
+#. after "Translation suggestions". %s will be replaced by "Standard"
+#. or "Premium". "(Quality) level" or "tier" are synonyms for it.
+#: src/sidebar_pro.cpp:132
+#, c-format
+msgid "Quality: %s"
+msgstr "Cilësi: %s"
+
+#. TRANSLATORS: Label for the part where currently used translation engine is shown
+#: src/sidebar_pro.cpp:151
+msgid "Machine translation uses:"
+msgstr "Përkthim nga makina përdor:"
+
+#: src/sidebar_pro.cpp:227
+msgid "Terminology"
+msgstr "Terminologji"
+
+#: src/sidebar_pro.cpp:321
+msgid "This suggestion was contributed by another translator to the online TM."
+msgstr "Ky sugjerim është dhënë te KP në internet nga një përkthyes tjetër."
+
+#: src/sidebar_pro.cpp:323
+msgid "This suggestion was machine-translated online."
+msgstr "Ky sugjerim është përkthim internet nga makina."
+
+#: src/sidebar_pro.cpp:512
+#, c-format
+msgid "%d out of %d online suggestion left."
+msgid_plural "%d out of %d online suggestions left."
+msgstr[0] "Edhe %d nga %d sugjerime nga Interneti."
+msgstr[1] "Edhe %d nga %d sugjerime nga Interneti."
+
+#: src/sidebar_pro.cpp:517
+msgid "Remove this limitation"
+msgstr "Hiqe këtë kufizim"
+
+#: src/sidebar_pro.cpp:521
+msgid "Online suggestions are limited to only 10 in the free version. Upgrade to Pro to remove this limitation."
+msgstr "Për versionin e lirë, sugjerimet nga interneti kufizohen në vetëm 10. Përmirësojeni me versionin Pro që të hiqet ky kufizim."
+
+#: src/sidebar_pro.cpp:523
+msgid "Unlock online suggestions"
+msgstr "Zhblloko sugjerime nga Interneti"
+
+#: src/sidebar_pro.cpp:547
+msgid "Exceeded online TM daily limit."
+msgstr "U tejkalua kufiri ditor për KP internet."
+
+#: src/sidebar_pro.cpp:580
+msgid "Connect to the Internet to get additional suggestions."
+msgstr "Bëni lidhjen në internet për të marrë sugjerime shtesë."
+
+#. TRANSLATORS: Label indicating that translations made in the current file are contributed to the online translation memory. Related to the "Contribute my translations to the online TM" string.
+#: src/sidebar_pro.cpp:655
+msgid "Contributing"
+msgstr "Dhënie ndihmese"
+
+#: src/sidebar_pro.cpp:656
+msgid "Your translations are contributed to the online translation memory as you make them. Thanks for making the suggestions better!"
+msgstr "Përkthimet tuaja jepen si ndihmesë te kujtesa internet e përkthimeve, teksa i bëni. Faleminderit për përmirësimin e sugjerimeve!"
+
+#. TRANSLATORS: Label indicating that the current file
+#: src/sidebar_pro.cpp:662
+msgid "Private"
+msgstr "Private"
+
+#: src/sidebar_pro.cpp:663
+msgid "Translations from this file are not shared with the online translation memory."
+msgstr "Përkthimet prej kësaj kartele s’jepen për kujtesën internet të përkthimeve."
+
+#: src/sidebar_pro.cpp:688
+msgid "Privacy settings"
+msgstr "Rregullime privatësie"
+
+#: src/sidebar_pro.cpp:694
+#, c-format
+msgid "While editing the file “%s”:"
+msgstr "Teksa përpunohet kartela “%s”:"
+
+#: src/sidebar_pro.cpp:756
+msgid "Not interested"
+msgstr "S’më intereson"
+
+#: src/sidebar_pro.cpp:982
+msgid "Pre-translation"
+msgstr "Përkthim paraprak"
+
+#: src/sidebar_pro.cpp:987
+msgid "Pre-translate all items at once and focus on making corrections, instead of translating them one by one."
+msgstr "Përktheni paraprakisht krejt zërat njëherësh dhe përqendrohuni në bërjen e ndreqjeve, në vend se t’i përktheni një nga një."
+
+#: src/sidebar_pro.cpp:1101
+msgid "Stay Informed!"
+msgstr "Jini Përherë Në Dijeni!"
+
+#: src/sidebar_pro.cpp:1102
+msgid "Subscribe"
+msgstr "Pajtomë"
+
+#: src/sidebar_pro.cpp:1106
+msgid "Sign up for Poedit newsletter and be the first to know about what’s new. I hate spam too, so expect only a few emails a year."
+msgstr "Pajtohuni te buletini i Poedit-it për të qenë ndër të parët që dini se ç’ka të re. Edhe unë i urrej mesazhet e padëshiruar, kështu që pritni t’ju mbërrijnë vetëm pak email-e në vit."
+
+#: src/sidebar_pro.cpp:1117
+msgid "Email address"
+msgstr "Adresë email"
+
+#: src/sidebar_pro.cpp:1140
+msgid "You’re signed up. Please check your email for a confirmation message."
+msgstr "U regjistruat. Ju lutemi, kontrolloni email-in tuaj për një mesazh ripohimi."
+
+#. TRANSLATORS: "Dictionaries" is the name of the application (see https://dictionaries.io), i.e. shouldn't be translated
+#: src/sidebar_pro.cpp:1210
+msgid "Dictionaries for Mac, Windows & Kindle"
+msgstr "Fjalorë për Mac, Windows & Kindle"
+
+#: src/sidebar_pro.cpp:1222
+msgid "Did you know I also made a dictionaries app for Mac, Windows and Kindle? It supports over 80 languages and is a great companion to Poedit."
+msgstr "E dini se kam krijuar edhe një aplikacion fjalorësh për Mac, Windows dhe Kindle? Mbulon më shumë se 80 gjuhë dhe është një shok i shkëlqyer i Poedit-it."
+
+#: src/sidebar_terminology.cpp:49
+msgid "Glossary Entry"
+msgstr "Zë Fjalorthi"
+
+#: src/sidebar_terminology.cpp:55 src/sidebar_terminology.cpp:185
+msgid "Term"
+msgstr "Term"
+
+#: src/sidebar_terminology.cpp:60
+msgid "Additional description or notes"
+msgstr "Përshkrim ose shënim shtesë"
+
+#: src/sidebar_terminology.cpp:66 src/sidebar_terminology.cpp:187
+msgid "Notes"
+msgstr "Shënime"
+
+#: src/sidebar_terminology.cpp:128
+msgid "CSV Glossary Import"
+msgstr "Importim Fjalorthi si CSV"
+
+#: src/sidebar_terminology.cpp:138
+msgid "Source language:"
+msgstr "Gjuhë burim:"
+
+#: src/sidebar_terminology.cpp:142
+msgid "Translation language:"
+msgstr "Gjuhë përkthimi:"
+
+#: src/sidebar_terminology.cpp:149
+msgid "Import rules:"
+msgstr "Rregulla importim:"
+
+#: src/sidebar_terminology.cpp:153
+msgid "Skip the first row"
+msgstr "Anashkalo rreshtin e parë"
+
+#: src/sidebar_terminology.cpp:158
+msgid "Column separator:"
+msgstr "Ndarës shtyllash:"
+
+#: src/sidebar_terminology.cpp:161
+msgid "Term column:"
+msgstr "Shtyllë termash:"
+
+#: src/sidebar_terminology.cpp:164
+msgid "Definition column:"
+msgstr "Shtyllë përkufizimesh:"
+
+#: src/sidebar_terminology.cpp:167
+msgid "Notes column:"
+msgstr "Shtyllë shënimesh:"
+
+#: src/sidebar_terminology.cpp:177 src/sidebar_terminology.cpp:261
+msgid "Preview of imported glossary data:"
+msgstr "Paraparje e të dhënave të fjalorthit të importuar:"
+
+#. TRANSLATORS: %d is the number of entries in the preview, %s is the total number of entries in the file
+#: src/sidebar_terminology.cpp:257
+#, c-format
+msgid "Preview of imported glossary data (%d out of %s shown):"
+msgstr "Paraparje e të dhënave të fjalorthit të importuara (shfaqur %d nga %s gjithsej):"
+
+#: src/sidebar_terminology.cpp:396 src/wx_translatable_strings.h:102
+msgid "Edit"
+msgstr "Përpunoni"
+
+#: src/sidebar_terminology.cpp:496
+msgid "Word or phrase"
+msgstr "Fjalë ose togfjalësh"
+
+#: src/sidebar_terminology.cpp:518
+msgid "Add entries to the glossary"
+msgstr "Shtoni zëra te fjalorthi"
+
+#: src/sidebar_terminology.cpp:524
+msgid "Search previously made translations and glossaries to ensure consistency. Both the current file and your translation memory are consulted."
+msgstr "Kërkoni në përkthime dhe fjalorthë të bërë më parë, për të garantuar njëtrajtshmëri termash. Përdoren si kartela e tanishme, ashtu edhe kujtesa juaj e përkthimit."
+
+#: src/sidebar_terminology.cpp:536
+msgid "Unlock terminology search"
+msgstr "Shkyç kërkim në terminologji"
+
+#: src/sidebar_terminology.cpp:626
+msgid "Glossary"
+msgstr "Fjalorth"
+
+#: src/sidebar_terminology.cpp:632
+msgid "This File"
+msgstr "Këtë Kartelë"
+
+#: src/sidebar_terminology.cpp:696
+msgid "Add Glossary Entry…"
+msgstr "Shtoni Zë Fjalorthi…"
+
+#: src/sidebar_terminology.cpp:696
+msgid "Add glossary entry…"
+msgstr "Shtoni zë fjalorthi…"
+
+#: src/sidebar_terminology.cpp:697
+msgid "Import Glossary from CSV File…"
+msgstr "Importoni Fjalorth prej Kartele CSV…"
+
+#: src/sidebar_terminology.cpp:697
+msgid "Import glossary from CSV file…"
+msgstr "Importoni fjalorth prej kartele CSV…"
+
+#: src/sidebar_terminology.cpp:720
+msgid "Select CSV glossary file to import"
+msgstr "Përzgjidhni për importim kartelë CSV fjalorthi"
+
+#: src/sidebar_terminology.cpp:723
+msgid "CSV Files"
+msgstr "Kartela CSV"
+
+#: src/sidebar_terminology.cpp:749
+msgid "Importing glossary"
+msgstr "Importim fjalorthi"
+
+#: src/sidebar_terminology.cpp:756
+#, c-format
+msgid "Imported %s terms from CSV file “%s” into the glossary."
+msgstr "U importuan te fjalorthi %s terma nga kartela CSV “%s”."
+
+#: src/statistics.cpp:275 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Items"
+msgstr "Zëra"
+
+#: src/statistics.cpp:276 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Words"
+msgstr "Fjalë"
+
+#: src/statistics.cpp:277 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Characters"
+msgstr "Shenja"
+
+#: src/statistics.cpp:291 src/statistics.cpp:412
+msgid "Translated"
+msgstr "Të përkthyera"
+
+#: src/statistics.cpp:296 src/statistics.cpp:335 src/statistics.cpp:413
+#: src/statistics.cpp:417
+msgctxt "column/row header"
+msgid "Needs work"
+msgstr "Lyp punë"
+
+#: src/statistics.cpp:301 src/statistics.cpp:414
+msgid "Translations with errors"
+msgstr "Përkthime me gabime"
+
+#: src/statistics.cpp:328 src/statistics.cpp:416 src/statistics.cpp:428
+msgid "Strings in source language"
+msgstr "Vargje në gjuhën burim"
+
+#: src/statistics.cpp:340 src/statistics.cpp:418
+msgid "Not translated"
+msgstr "Të papërkthyer"
+
+#: src/statistics.cpp:351
+msgid "Include code and placeholders"
+msgstr "Përfshi kod dhe vendmbajtëse"
+
+#: src/statistics.cpp:352
+msgid "If checked, word and character counts will also include placeholders, HTML markup and code."
+msgstr "Nëse i vihet shenjë, numërimi i fjalëve dhe shenjave do të përfshijë edhe vendmbajtëset, shenja HTML dhe kod."
+
+#: src/statistics.cpp:362
+msgid "Characters are counted including spaces."
+msgstr "Numri i shenjave përftohet duke përfshirë hapësirat."
+
+#: src/statistics.cpp:368
+msgid "Copy to clipboard"
+msgstr "Kopjoje në të papastër"
+
+#: src/statistics.cpp:370
+msgid "Copy to Clipboard"
+msgstr "Kopjoje Në të Papastër"
+
+#: src/statistics.cpp:722
+#, c-format
+msgid "The file “%s” couldn’t be opened: %s"
+msgstr "Kartela “%s” s’u hap dot: %s"
+
+#: src/subprocess.cpp:219 src/subprocess.cpp:251
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "S’përmbushet dot programi: %s"
+
+#: src/tm/tmx_io.cpp:88 src/tm/tmx_io.cpp:104
 msgid "The TMX file is malformed."
 msgstr "Kartela TMX është e keqformuar."
 
-msgid "No translations were found in the TMX file."
-msgstr "S’u gjetën përkthime te kartel TMX."
-
+#: src/tm/transmem.cpp:87
 #, c-format
 msgid "Translation memory database is corrupted: %s (%d)."
 msgstr "Baza e të dhënave të kujtesës së përkthimeve është dëmtuar: %s (%d)."
 
+#: src/tm/transmem.cpp:90
 #, c-format
 msgid "Translation memory error: %s (%d)."
 msgstr "Gabim kujtese përkthimesh: %s (%d)."
 
+#: src/uilang.cpp:233
 msgid "(Use default language)"
 msgstr "(Përdor gjuhë parazgjedhje)"
 
+#: src/uilang.cpp:244
 msgid "Language selection"
 msgstr "Përzgjedhje gjuhe"
 
+#: src/uilang.cpp:244
 msgid "Select your preferred language"
 msgstr "Përzgjidhni gjuhën tuaj të parapëlqyer"
 
+#: src/uilang.cpp:261
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Duhet të rinisni Poedit-in, pa të hyjnë në fuqi ndryshimet."
 
+#: src/utility.cpp:143 src/utility.cpp:153
 msgid "Cannot create temporary directory."
 msgstr "S’krijohet dot drejtori e përkohshme."
 
+#: src/welcomescreen.cpp:141
 msgid "There are no translations. That’s unusual."
 msgstr "S’ka përkthime. Kjo është e pazakontë."
 
-msgid ""
-"Translatable entries aren’t added manually in the Gettext system, but are "
-"automatically extracted\n"
-"from source code. This way, they stay up to date and accurate.\n"
-"Translators typically use PO template files (POTs) prepared for them by the "
-"developer."
-msgstr ""
-"Në sistemin Gettext, zërat e përkthyeshëm nuk shtohen dorazi, përftohen "
-"automatikisht\n"
-"që nga kodi burim. Në këtë mënyrë, ata mbeten të përditësuar dhe të saktë.\n"
-"Zakonisht përkthyesit përdorin kartela PO (POT) të përgatitura për ta nga "
-"zhvilluesi."
+#: src/welcomescreen.cpp:150
+msgid "Translatable entries aren’t added manually in the Gettext system, but are automatically extracted from source code. This way, they stay up to date and accurate. Translators typically use PO template files (POTs) prepared for them by the developer."
+msgstr "Zërat e përkthyeshëm s’shtohet dorazi te sistemit Gettext, por përftohen automatikisht nga kodi burim. Në këtë mënyrë mbesin të përditësuar dhe të përpiktë. Përkthyesit zakonisht përdorin kartela gjedhe PO (POT-e) të përgatitur për ta nga zhvilluesi."
 
-msgid "(Learn more about GNU gettext)"
-msgstr "(Mësoni më tepër mbi GNU gettext-in)"
+#: src/welcomescreen.cpp:153
+msgid "Learn more about GNU gettext"
+msgstr "Mësoni më tepër mbi GNU gettext-in"
 
-msgid ""
-"The simplest way to fill this file with translations is to update it from a "
-"POT:"
-msgstr ""
-"Rruga më e lehtë për të plotësuar këtë kartelë me vargje për përkthim është "
-"të përditësohet prej një POT-i:"
+#: src/welcomescreen.cpp:157
+msgid "The simplest way to fill this file with translations is to update it from a POT:"
+msgstr "Rruga më e lehtë për të plotësuar këtë kartelë me vargje për përkthim është të përditësohet prej një POT-i:"
 
+#: src/welcomescreen.cpp:162
 msgid "Update from POT"
 msgstr "Përditësojeni prej POT-i"
 
+#: src/welcomescreen.cpp:163
 msgid "Take translatable strings from an existing POT template."
 msgstr "Merri vargjet e përkthyeshëm prej një gjedheje POT ekzistuese."
 
-msgid ""
-"You can also extract translatable strings directly from the source code:"
+#: src/welcomescreen.cpp:167
+msgid "You can also extract translatable strings directly from the source code:"
 msgstr "Mund të përftoni vargje të përkthyeshëm edhe drejt e nga kodi burim:"
 
+#: src/welcomescreen.cpp:172
 msgid "Extract from sources"
 msgstr "Përftoji prej burimesh"
 
+#: src/welcomescreen.cpp:173
 msgid "Configure source code extraction in Properties."
 msgstr "Formësoni përftim nga kodi burim, te Vetitë."
 
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "Versioni %s"
-
+#: src/welcomescreen.cpp:272
 msgid "Create new"
 msgstr "Krijoni të ri"
 
+#: src/welcomescreen.cpp:273
 msgid "Create new translation from POT template."
 msgstr "Krijoni përkthim të ri nga një gjedhe POT."
 
+#: src/welcomescreen.cpp:278
 msgid "Browse files"
 msgstr "Shfletoni kartela"
 
+#: src/welcomescreen.cpp:279
 msgid "Open and edit translation files."
 msgstr "Hapni dhe përpunoni kartela përkthimi."
 
+#: src/welcomescreen.cpp:286
+msgid "Translate WordPress theme or plugin"
+msgstr "Përktheni temë ose shtojcë WordPress-i"
+
+#: src/welcomescreen.cpp:287
+msgid "Edit WordPress translations over FTP or locally."
+msgstr "Përpunoni përkthime WordPressi përmes FTPpje, ose lokalisht."
+
+#: src/welcomescreen.cpp:292
 msgid "Translate cloud project"
 msgstr "Përktheni projekt në re"
 
+#: src/welcomescreen.cpp:293
 msgid "Collaborate with other people online."
 msgstr "Bashkëpunoni me persona të tjerë në internet."
 
+#: src/welcomescreen.cpp:316
 msgid "Recent files"
 msgstr "Kartela së fundi"
 
+#: src/wordpress/wordpress.cpp:101 src/wordpress/wordpress.cpp:108
+#, c-format
+msgid "Failed to read file “%s”."
+msgstr "S’u arrit të lexohej kartela “%s”."
+
+#: src/wordpress/wordpress.cpp:165
+#, c-format
+msgid "Confused by ambiguous values of “%s” in %s."
+msgstr "I ngatërruar nga vlera të dykuptimta të “%s” në %s."
+
+#: src/wordpress/wordpress.cpp:294 src/wordpress/wordpress.cpp:544
+#: src/wordpress/wordpress.cpp:591
+#, c-format
+msgid "Couldn’t detect POs location for “%s”."
+msgstr "S’u zbulua dot vend PO-sh për “%s”."
+
+#: src/wordpress/wordpress.cpp:670
+#, c-format
+msgid "The “%s” theme isn’t localization-ready."
+msgstr "Tema “%s” s’është gati për përkthim."
+
+#: src/wordpress/wordpress.cpp:687
+#, c-format
+msgid "Couldn’t detect translation domain of the “%s” theme."
+msgstr "S’u zbulua dot përkatësi përkthimi e temës “%s”."
+
+#: src/wordpress/wordpress.cpp:714
+#, c-format
+msgid "Couldn't detect translation domain of the \"%s\" theme."
+msgstr "S’u zbulua dot përkatësi përkthimi e temës \"%s\"."
+
+#: src/wordpress/wordpress.cpp:769
+msgid "Confused: multiple main plugin files."
+msgstr "Lëmsh puna: shumë kartela kryesore për shtojcën."
+
+#: src/wordpress/wordpress.cpp:819
+#, c-format
+msgid "The “%s” plugin isn’t localization-ready."
+msgstr "Shtojca “%s” s’është gati për përkthim."
+
+#: src/wordpress/wordpress.cpp:840 src/wordpress/wordpress.cpp:857
+#, c-format
+msgid "Couldn’t detect translation domain of the “%s” plugin."
+msgstr "S’u zbulua dot përkatësi përkthimi e shtojcës “%s”."
+
+#: src/wordpress/wordpress.cpp:923
+msgid "Found neither WordPress theme nor plugin in the folder."
+msgstr "Te dosja s’u gjet as temë, dhe as shtojcë WordPress-i."
+
+#: src/wordpress/wordpress.cpp:940
+#, c-format
+msgid "Translations folder (%s) doesn’t exist."
+msgstr "Dosja e përkthimeve (%s) nuk ekziston."
+
+#: src/wordpress/wordpress_gui.cpp:77
+msgid "<big>Drag and drop <b>theme or plugin folder</b> here</big>\n\n"
+"or use the “Choose folder” button"
+msgstr "<big>Tërhiqeni dhe lëreni <b>dosjen e temës ose shtojcës</b> këtu</big>\n\n"
+"ose përdorni butonin “Zgjidhni dosje”"
+
+#: src/wordpress/wordpress_gui.cpp:79
+msgid "<big>Drag and Drop <b>Theme or Plugin Folder</b> Here</big>\n\n"
+"or use the “Choose Folder” button"
+msgstr "<big>Tërhiqeni dhe Lëreni <b>Dosjen e Temës ose Shtojcës</b> Këtu</big>\n\n"
+"ose përdorni butonin “Zgjidhni dosje”"
+
+#: src/wordpress/wordpress_gui.cpp:101
+#, c-format
+msgid "Folder “%s”"
+msgstr "Dosja “%s”"
+
+#: src/wordpress/wordpress_gui.cpp:162
+msgid "Work With Files"
+msgstr "Puno Me Kartela"
+
+#: src/wordpress/wordpress_gui.cpp:162
+msgid "Work with files"
+msgstr "Puno me kartela"
+
+#: src/wordpress/wordpress_gui.cpp:164
+msgid "Connect to Server"
+msgstr "Lidhu te Shërbyesi"
+
+#: src/wordpress/wordpress_gui.cpp:164
+msgid "Connect to server"
+msgstr "Lidhu te shërbyesi"
+
+#: src/wordpress/wordpress_gui.cpp:165
+msgid "On This Computer"
+msgstr "Në Këtë Kompjuter"
+
+#: src/wordpress/wordpress_gui.cpp:165
+msgid "On this computer"
+msgstr "Në këtë kompjuter"
+
+#: src/wordpress/wordpress_gui.cpp:168
+msgid "Continue"
+msgstr "Vazhdo"
+
+#: src/wordpress/wordpress_gui.cpp:210
+msgid "Choose Folder…"
+msgstr "Zgjidhni Dosje…"
+
+#: src/wordpress/wordpress_gui.cpp:210
+msgid "Choose folder…"
+msgstr "Zgjidhni dosje…"
+
+#: src/wordpress/wordpress_gui.cpp:217
+msgid "Create a new translation"
+msgstr "Krijoni një përkthim të ri"
+
+#: src/wordpress/wordpress_gui.cpp:220
+msgid "Choose this if you want to translate the theme or plugin into your language."
+msgstr "Këtë zgjidheni nëse doni të përktheni në gjuhën tuaj një temë ose një shtojcë."
+
+#: src/wordpress/wordpress_gui.cpp:233
+msgid "Create a POT"
+msgstr "Krijoni një POT"
+
+#: src/wordpress/wordpress_gui.cpp:235
+msgid "This option is for theme and plugin developers. Poedit will create an empty template (POT) that translations can be based on."
+msgstr "Kjo mundësi është për zhvillues temash dhe shtojcash. Poedit-i do të krijojë një gjedhe të zbrazët (POT) mbi të cilën mund të bazohen përkthimet."
+
+#: src/wordpress/wordpress_gui.cpp:248
+msgid "Select the folder with the WordPress theme or plugin"
+msgstr "Përzgjidhni dosjen me temën ose shtojcën WordPress"
+
+#: src/wordpress/wordpress_gui.cpp:280
+msgid "Enter connection details for your WordPress server. Poedit will retrieve available themes and plugins from it and let you translate directly on the server."
+msgstr "Jepni hollësi lidhjeje me shërbyesin tuaj WordPress. Poedit-i do të provojë të marrë temat dhe shtojcat e nevojshme prej tij dhe t’ju lërë të përktheni drejt e te shërbyesi."
+
+#: src/wordpress/wordpress_gui.cpp:287
+msgid "Protocol:"
+msgstr "Protokoll:"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "FTP (insecure)"
+msgstr "FTP (jo i sigurt)"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "FTP with SSL"
+msgstr "FTP me SSL"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "SFTP"
+msgstr "SFTP"
+
+#: src/wordpress/wordpress_gui.cpp:293
+msgid "Choose a recent server"
+msgstr "Zgjidhni një shërbyes tani së fundi"
+
+#: src/wordpress/wordpress_gui.cpp:302 src/wordpress/wordpress_gui.cpp:538
+msgid "Recent Servers"
+msgstr "Shërbyes Së Fundi"
+
+#: src/wordpress/wordpress_gui.cpp:302 src/wordpress/wordpress_gui.cpp:538
+msgid "Recent servers"
+msgstr "Shërbyes së fundi"
+
+#: src/wordpress/wordpress_gui.cpp:306
+msgid "Server:"
+msgstr "Shërbyes:"
+
+#: src/wordpress/wordpress_gui.cpp:310
+msgid "Remote Path:"
+msgstr "Shteg i Largët:"
+
+#: src/wordpress/wordpress_gui.cpp:310
+msgid "Remote path:"
+msgstr "Shteg i largët:"
+
+#: src/wordpress/wordpress_gui.cpp:312
+msgid "Detected automatically"
+msgstr "Zbuluar vetvetiu"
+
+#: src/wordpress/wordpress_gui.cpp:315
+msgid "Port:"
+msgstr "Portë:"
+
+#: src/wordpress/wordpress_gui.cpp:321
+msgid "Username:"
+msgstr "Emër përdoruesi:"
+
+#: src/wordpress/wordpress_gui.cpp:325
+msgid "Password:"
+msgstr "Fjalëkalim:"
+
+#: src/wordpress/wordpress_gui.cpp:332
+msgid "Remember my credentials"
+msgstr "Mba mend kredencialet e mia"
+
+#: src/wordpress/wordpress_gui.cpp:333
+msgid "Connect"
+msgstr "Lidhu"
+
+#: src/wordpress/wordpress_gui.cpp:346
+msgid "Select the plugin or theme to translate:"
+msgstr "Përzgjidhni shtojcën ose temën për përkthim:"
+
+#: src/wordpress/wordpress_gui.cpp:398
+msgid "Connecting to WordPress server…"
+msgstr "Po lidhet me shërbyesin WordPress…"
+
+#: src/wordpress/wordpress_gui.cpp:416
+#, c-format
+msgid "Theme: %s"
+msgstr "Temë: %s"
+
+#: src/wordpress/wordpress_gui.cpp:419
+#, c-format
+msgid "Plugin: %s"
+msgstr "Shtojcë: %s"
+
+#: src/wordpress/wordpress_gui.cpp:534
+msgid "No Recent Servers"
+msgstr "S’ka Shërbyes Së Fundi"
+
+#: src/wordpress/wordpress_gui.cpp:534
+msgid "No recent servers"
+msgstr "S’ka shërbyes së fundi"
+
+#: src/wordpress/wordpress_gui.cpp:552
+msgid "Clear Recent Servers"
+msgstr "Spastroji Shërbyesit Së Fundi"
+
+#: src/wordpress/wordpress_gui.cpp:552
+msgid "Clear recent servers"
+msgstr "Spastroji shërbyesit së fundi"
+
+#: src/wordpress/wordpress_gui.cpp:825
+msgid "Failed to extract WordPress information."
+msgstr "S’u arrit të përftoheshin të dhëna WordPress."
+
+#: src/wordpress/wordpress_gui.cpp:826
+msgid "WordPress error"
+msgstr "Gabim WordPress-i"
+
+#: src/wordpress/wordpress_gui.cpp:835
+#, c-format
+msgid "Poedit couldn’t understand the content of the folder you selected. This may be a problem with the plugin/theme or it may be Poedit being silly. The error is:\n\n"
+" • %s\n\n"
+"Please email help@poedit.net and we’ll sort it out."
+msgstr "Poedit-i s'e kuptoi dot lëndën e dosjes që përzgjodhët. Ky mund të jetë një problem me shtojcën/temën ose mundet që Poedit-i po sillet si leshko. Gabimi është:\n\n"
+" • %s\n\n"
+"Ju lutemi, dërgoni një email te help@poedit.net dhe do ta shohim."
+
+#. TRANSLATORS: This is a button that sends an email to support when clicked
+#: src/wordpress/wordpress_gui.cpp:841
+msgid "Email support"
+msgstr "Asistencë me email"
+
+#: src/wordpress/wordpress_gui.cpp:842
+msgid "View log"
+msgstr "Shihni regjistrin"
+
+#. TRANSLATORS: This is a button that sends an email to support when clicked
+#: src/wordpress/wordpress_gui.cpp:845
+msgid "Email Support"
+msgstr "Asistencë Me Email"
+
+#: src/wordpress/wordpress_gui.cpp:846
+msgid "View Log"
+msgstr "Shihni Regjistrin"
+
+#: src/wordpress/wordpress_gui.cpp:857
+msgid "WordPress Errors Log"
+msgstr "Regjistër Gabimesh WordPress-i"
+
+#: src/wordpress/wordpress_gui.cpp:858
+msgid "Please email this log to help@poedit.net. Thank you!"
+msgstr "Ju lutemi, na e dërgoni këtë regjistër me email te help@poedit.net. Faleminderit!"
+
+#: src/wordpress/wordpress_gui.cpp:938
+msgid "Analyzing WordPress server…"
+msgstr "Po analizohet shërbyes WordPress…"
+
+#: src/wordpress/wordpress_gui.cpp:959
+msgid "Downloading translation data…"
+msgstr "Po shkarkohen të dhëna përkthimi…"
+
+#: src/wordpress/wordpress_gui.cpp:984
+msgid "Unpacking translation data…"
+msgstr "Po shpaketohen të dhëna përkthimi…"
+
+#: src/wordpress/wordpress_gui.cpp:989
+msgid "Error unpacking downloaded WordPress data."
+msgstr "Gabim në shpaketim të dhënash WordPress të shkarkuara."
+
+#: src/wordpress/wordpress_gui.cpp:1014 src/wordpress/wordpress_gui.cpp:1029
+msgid "Analyzing WordPress code…"
+msgstr "Po analizohet kodi WordPress…"
+
+#: src/wordpress/wordpress_gui.cpp:1039
+msgid "WordPress translation file is ready, but there were some non-fatal issues with the corresponding source code."
+msgstr "Kartela e përkthimit WordPress është gati, por pati disa probleme jo fatale me kodin burim përkatës."
+
+#: src/wx/main_toolbar.cpp:123
 msgid "Sync"
 msgstr "Njëkohësoje"
 
+#: src/wx/main_toolbar.cpp:124
 msgid "Synchronize the translation with Crowdin"
 msgstr "Njëkohësojeni përkthimin me atë në Crowdin"
 
-#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
-#. ("Poedit" here, but please use "%s")
-#, c-format
-msgid "About %s"
-msgstr "Mbi %s-in"
+#: src/wx/main_toolbar.cpp:170
+msgid "Upgrade to Poedit Pro to get additional features and support Poedit's development."
+msgstr "Përmirësojeni me Poedit Pro që të merrni veçori shtesë dhe që të përkrahni zhvillimin e Poedit-it."
 
 #. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+#: src/wx_translatable_strings.h:49
 #, c-format
 msgid "%s Preferences"
 msgstr "Parapëlqime mbi %s"
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
+#: src/wx_translatable_strings.h:60
 #, c-format
 msgctxt "macOS menu item"
 msgid "About %s"
 msgstr "Mbi %s-in"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:64
 msgctxt "macOS menu item"
 msgid "Services"
 msgstr "Shërbime"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#: src/wx_translatable_strings.h:66
 #, c-format
 msgctxt "macOS menu item"
 msgid "Hide %s"
 msgstr "Fshihe %s"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:68
 msgctxt "macOS menu item"
 msgid "Hide Others"
 msgstr "Fshihi të Tjerët"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:70
 msgctxt "macOS menu item"
 msgid "Show All"
 msgstr "Shfaqi Krejt"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#: src/wx_translatable_strings.h:72
 #, c-format
 msgctxt "macOS menu item"
 msgid "Quit %s"
 msgstr "Mbylleni %s"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:74
 msgid "Preferences…"
 msgstr "Parapëlqime…"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:76
 msgid "Preferences..."
 msgstr "Parapëlqime…"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:78
 msgctxt "macOS menu item"
 msgid "Preferences..."
 msgstr "Parapëlqime…"
 
+#: src/wx_translatable_strings.h:92
 msgid "&Apply"
 msgstr "&Zbatoje"
 
+#: src/wx_translatable_strings.h:92
 msgid "Apply"
 msgstr "Zbatoje"
 
+#: src/wx_translatable_strings.h:93
 msgid "&Back"
 msgstr "&Mbrapsht"
 
+#: src/wx_translatable_strings.h:93
 msgid "Back"
 msgstr "Mbrapsht"
 
+#: src/wx_translatable_strings.h:94
 msgid "&Cancel"
 msgstr "&Anuloje"
 
+#: src/wx_translatable_strings.h:95
 msgid "&Clear"
 msgstr "&Spastroje"
 
+#: src/wx_translatable_strings.h:95
 msgid "Clear"
 msgstr "Spastroje"
 
+#: src/wx_translatable_strings.h:98
 msgid "Copy"
 msgstr "Kopjoje"
 
+#: src/wx_translatable_strings.h:99
 msgid "Cu&t"
 msgstr "&Prije"
 
+#: src/wx_translatable_strings.h:99
 msgid "Cut"
 msgstr "Prijeni"
 
-msgid "Edit"
-msgstr "Përpunoni"
-
+#: src/wx_translatable_strings.h:103
 msgid "&Quit"
 msgstr "&Mbylle"
 
+#: src/wx_translatable_strings.h:105
 msgid "Help"
 msgstr "Ndihmë"
 
+#: src/wx_translatable_strings.h:106
 msgid "&New"
 msgstr "E &re"
 
+#: src/wx_translatable_strings.h:106
 msgid "New"
 msgstr "E re"
 
+#: src/wx_translatable_strings.h:107
 msgid "&No"
 msgstr "&Jo"
 
+#: src/wx_translatable_strings.h:107
 msgid "No"
 msgstr "Jo"
 
+#: src/wx_translatable_strings.h:108
 msgid "&OK"
 msgstr "&OK"
 
+#: src/wx_translatable_strings.h:109
 msgid "Open…"
 msgstr "Hapni…"
 
+#: src/wx_translatable_strings.h:110
 msgid "&Open..."
 msgstr "&Hapni…"
 
+#: src/wx_translatable_strings.h:110
 msgid "Open..."
 msgstr "Hapni…"
 
+#: src/wx_translatable_strings.h:111
 msgid "&Paste"
 msgstr "&Ngjite"
 
+#: src/wx_translatable_strings.h:111
 msgid "Paste"
 msgstr "Ngjitni"
 
+#: src/wx_translatable_strings.h:112
 msgid "Preferences"
 msgstr "Parapëlqime"
 
+#: src/wx_translatable_strings.h:113
 msgid "&Redo"
 msgstr "&Ribëje"
 
+#: src/wx_translatable_strings.h:114
 msgid "Refresh"
 msgstr "Rifreskoje"
 
+#: src/wx_translatable_strings.h:116
 msgid "&Save as"
 msgstr "&Ruaje si"
 
+#: src/wx_translatable_strings.h:116
 msgid "Save as"
 msgstr "Ruaje si"
 
+#: src/wx_translatable_strings.h:117
 msgid "Select &All"
 msgstr "Përzgjidhe &Krejt"
 
+#: src/wx_translatable_strings.h:117
 msgid "Select All"
 msgstr "Përzgjidheni Krejt"
 
+#: src/wx_translatable_strings.h:118
 msgid "&Undo"
 msgstr "&Zhbëje"
 
+#: src/wx_translatable_strings.h:119
 msgid "&Yes"
 msgstr "&Po"
 
+#: src/wx_translatable_strings.h:119
 msgid "Yes"
 msgstr "Po"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:125
 msgctxt "keyboard key"
 msgid "Alt+"
 msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:127
 msgctxt "keyboard key"
 msgid "Shift+"
 msgstr "Shift+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:129
 msgctxt "keyboard key"
 msgid "Enter"
 msgstr "ENTER"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:131
 msgctxt "keyboard key"
 msgid "Up"
 msgstr "Up"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:133
 msgctxt "keyboard key"
 msgid "Down"
 msgstr "Down"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:135
 msgctxt "keyboard key"
 msgid "Left"
 msgstr "Left"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:137
 msgctxt "keyboard key"
 msgid "Right"
 msgstr "Right"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+#: src/wx_translatable_strings.h:140
 msgctxt "keyboard key"
 msgid "ctrl"
 msgstr "ctrl"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+#: src/wx_translatable_strings.h:142
 msgctxt "keyboard key"
 msgid "alt"
 msgstr "alt"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+#: src/wx_translatable_strings.h:144
 msgctxt "keyboard key"
 msgid "shift"
 msgstr "shift"
+
+#: src/wx_translatable_strings.h:152
+msgid "Warning: "
+msgstr "Kujdes: "
+

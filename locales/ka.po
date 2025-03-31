@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2024-10-31 12:30+0100\n"
-"PO-Revision-Date: 2024-10-01 10:16\n"
+"POT-Creation-Date: 2025-03-21 15:42+0100\n"
+"PO-Revision-Date: 2025-03-22 10:17\n"
 "Last-Translator: \n"
 "Language-Team: Georgian\n"
 "Language: ka_GE\n"
@@ -17,750 +17,1190 @@ msgstr ""
 "X-Crowdin-File: /locales/poedit.pot\n"
 "X-Crowdin-File-ID: 3\n"
 
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#: src/aboutbox.cpp:135 src/wx_translatable_strings.h:42
+#, c-format
+msgid "About %s"
+msgstr "%s-ის შესახებ"
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#: src/aboutbox.cpp:167 src/welcomescreen.cpp:265
+#: src/wx_translatable_strings.h:46
+#, c-format
+msgid "Version %s"
+msgstr "ვერსია %s"
+
+#: src/aboutbox.cpp:168
+msgid "Based on the open source version →"
+msgstr "დაფუძნებულია ღიაწყაროს კოდის მქონე ვერსიაზე →"
+
+#: src/aboutbox.cpp:174
+msgid "Acknowledgements"
+msgstr "სხვა გამოყენებული პროექტები"
+
+#: src/aboutbox.cpp:175
+msgid "License Agreement"
+msgstr "სალიცენზიო შეთანხმება"
+
+#: src/aboutbox.cpp:182 src/prefsdlg.cpp:503
+msgid "Terms of Use"
+msgstr "გამოყენების პირობები"
+
+#: src/aboutbox.cpp:183
+msgid "Privacy Policy"
+msgstr "კონფიდენციალურობის პოლიტიკა"
+
+#: src/aboutbox.cpp:244
+#, c-format
+msgid "Licensed to %s"
+msgstr "ლიცენზირებულია %s-სთვის"
+
+#: src/aboutbox.cpp:246
+msgid "Free version (please upgrade!)"
+msgstr "უფასო ვერსია (გთხოვთ განაახლოთ!)"
+
+#: src/attentionbar.cpp:83
 msgid "Hide this notification message"
 msgstr "დამალე ეს შეტყობინება"
 
+#: src/attentionbar.cpp:291
 msgid "Don’t Show Again"
 msgstr "აღარ მაჩვენო"
 
+#: src/attentionbar.cpp:291
 msgid "Don’t show again"
 msgstr "აღარ მაჩვენო"
 
+#: src/cat_operations.cpp:123
+msgid "Both files must be of the same file format."
+msgstr "ორივე ფაილი ერთი ფორმატით უნდა იყოს."
+
+#: src/cat_update.cpp:93
 #, c-format
 msgid "(New: %i, obsolete: %i)"
 msgstr "(ახალი: %i, მოძველებული: %i)"
 
-msgid "Collecting source files…"
-msgstr "მონაცემების საწყისი კოდიდან შეგროვება…"
+#: src/cat_update.cpp:98
+msgid "Update Summary"
+msgstr "შეჯამების განახლება"
 
-msgid "Extracting translatable strings…"
-msgstr "მიმდინარეობს სათარგმნი ფრაზების ამოღება…"
+#. TRANSLATORS: Title of window showing summary (added/removed strings, issues) of updating translations from sources or POT file
+#: src/cat_update.cpp:98 src/resources/summary.xrc:4
+msgid "Update summary"
+msgstr "შეჯამების განახლება"
 
-msgid "Failed to load file with extracted translations."
-msgstr "ვერ მოხერხდა ფაილის ჩატვირთვა ამოღებული თარგმანებით."
+#: src/cat_update.cpp:100 src/resources/summary.xrc:24
+msgid "Issues"
+msgstr "პრობლემები"
 
-msgid "Merging differences…"
-msgstr "განსხვავებების შერწყმა…"
+#: src/cat_update.cpp:101
+msgid "New Strings"
+msgstr "ახალი სტრიქონები"
 
+#: src/cat_update.cpp:101 src/resources/summary.xrc:45
+msgid "New strings"
+msgstr "ახალი შეტყობინებები"
+
+#: src/cat_update.cpp:102
+msgid "Removed Strings"
+msgstr "წაშლილი სტრიქონები"
+
+#: src/cat_update.cpp:102
+msgid "Removed strings"
+msgstr "წაშლილი სტრიქონები"
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:105 src/cloud_accounts_ui.cpp:263 src/manager.cpp:404
+#: src/recent_files.cpp:555 src/wx_translatable_strings.h:104
+msgid "File"
+msgstr "ფაილი"
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:107
+msgid "Line"
+msgstr "ხაზი"
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:109
+msgid "Issue"
+msgstr "პრობლემა"
+
+#: src/cat_update.cpp:205 src/cat_update.cpp:461
 msgid "Updating translations"
 msgstr "მიმდინარეობს თარგმანების განახლება"
 
+#: src/cat_update.cpp:206
+#, c-format
+msgid "Found %d template file supported by Poedit Pro."
+msgid_plural "Found %d template files supported by Poedit Pro."
+msgstr[0] ""
+msgstr[1] ""
+
+#. TRANSLATORS: %s is a filename here, e.g. "mainpage.twig"
+#: src/cat_update.cpp:208
+msgid "Poedit Pro can extract strings from template files, but this functionality isn’t available in the free version. Would you like to upgrade to the Pro version?"
+msgstr "Poedit Pro-ს შეუძლია შაბლონის ფაილებიდან სათარგმნი ფრაზების ამოღება, თუმცა ეს ფუნქცია უფასო ვერსიაში ხელმისაწვდომი არ არის. გსურთ Pro ვერსიაზე გადასვლა?"
+
+#: src/cat_update.cpp:211 src/licensing_ui.cpp:691 src/sidebar_pro.cpp:1212
+msgid "Learn More"
+msgstr "შეიტყვე მეტი"
+
+#: src/cat_update.cpp:211 src/customcontrols.cpp:326 src/licensing_ui.cpp:691
+#: src/sidebar_pro.cpp:1212
+msgid "Learn more"
+msgstr "დამატებითი ინფორმაცია"
+
+#: src/cat_update.cpp:216
+msgid "Don’t ask again"
+msgstr "აღარ მკითხო"
+
+#: src/cat_update.cpp:217
+msgid "Skip templates"
+msgstr "შაბლონების გამოტოვება"
+
+#: src/cat_update.cpp:226
+msgid "Found the following template files:"
+msgstr "აღმოჩენილია შემდეგი ნიმუშის ფაილები:"
+
+#: src/cat_update.cpp:245
+msgid "Don’t Ask Again"
+msgstr "აღარ მკითხო"
+
+#: src/cat_update.cpp:246
+msgid "Skip Templates"
+msgstr "შაბლონების გამოტოვება"
+
+#: src/cat_update.cpp:297
+msgid "Collecting source files…"
+msgstr "მონაცემების საწყისი კოდიდან შეგროვება…"
+
+#: src/cat_update.cpp:321
+#, c-format
+msgid "Extracting translatable strings from %s file…"
+msgid_plural "Extracting translatable strings from %s files…"
+msgstr[0] "მიმდინარეობს სათარგმნი ფრაზების ამოღება %s ფაილიდან…"
+msgstr[1] "მიმდინარეობს სათარგმნი ფრაზების ამოღება %s ფაილიდან…"
+
+#: src/cat_update.cpp:348
+#, c-format
+msgid "Failed to extract WordPress metadata from file %s."
+msgstr "%s ფაილიდან WordPress-ის მეტამონაცემების ამოღება ვერ მოხერხდა."
+
+#: src/cat_update.cpp:356 src/cat_update.cpp:492
+msgid "Failed to load file with extracted translations."
+msgstr "ვერ მოხერხდა ფაილის ჩატვირთვა ამოღებული თარგმანებით."
+
+#: src/cat_update.cpp:380
+#, c-format
+msgid "In: %s"
+msgstr "%s -ში"
+
+#: src/cat_update.cpp:387 src/edframe.cpp:1778
+msgid "Source code not available."
+msgstr "წყაროს კოდი მიუწვდომელია."
+
+#: src/cat_update.cpp:388 src/edframe.cpp:1782
+msgid "Translations couldn’t be updated from the source code, because no code was found in the location specified in the file’s Properties."
+msgstr "წყაროს კოდიდან თარგმანების განახლება ვერ მოხერხდა, რადგან ფაილის თვისებებში მითითებულ ადგილას კოდი ვერ მოიძებნა."
+
+#: src/cat_update.cpp:392
+msgid "Permission denied."
+msgstr "ნებართვა უარყოფილია."
+
+#: src/cat_update.cpp:393
+msgid "You don’t have permission to read source code files from the location specified in the file’s Properties."
+msgstr "თქვენ არ გაქვთ ნებართვა, წაიკითხოთ წყაროს კოდის ფაილები ფაილის თვისებებში მითითებული მდებარეობიდან."
+
+#. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
+#: src/cat_update.cpp:398
+msgid "If you previously denied access to your files, you can allow it in System Settings > Privacy & Security > Files & Folders."
+msgstr "თუ თქვენ შეზღუდეთ წვდომა თქვენს ფაილებზე, შეგიძლიათ წვდომის მიცემა სისტემის პარამეტრებში > კონფიდენციალურობა & უსაფრთხოება > ფაილები & საქაღალდეები."
+
+#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
+#: src/cat_update.cpp:403
+msgid "If you previously denied access to your files, you can allow it in System Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr "თუ თქვენ შეზღუდეთ წვდომა თქვენს ფაილებზე, შეგიძლიათ წვდომის მიცემა სისტემის პარამეტრებში > უსაფრთხოება & კონფიდენციალურობა > კონფიდენციალურობა > ფაილები & საქაღალდეები."
+
+#: src/cat_update.cpp:409
+msgid "Failed to extract strings from source code."
+msgstr "კოდიდან სტრიქონების ამოღება ჩავარდა."
+
+#: src/cat_update.cpp:443 src/edapp.cpp:1186 src/edframe.cpp:952
+#: src/edframe.cpp:2955
 #, c-format
 msgid "The file “%s” couldn’t be opened."
 msgstr "ფაილის \"%s\" გახსნა შეუძლებელია."
 
-msgid "Invalid file"
-msgstr "არასწორი ფაილი"
+#: src/cat_update.cpp:481
+msgid "Determining differences…"
+msgstr "სხვაობის დადება…"
 
+#: src/cat_update.cpp:489 src/cat_update.cpp:547
+msgid "Merging differences…"
+msgstr "განსხვავებების შერწყმა…"
+
+#: src/cat_update.cpp:502
+msgid "Translation file is already up to date, no changes to strings were made."
+msgstr "თარგმანის ფაილი უკვე განახლებულია. სტრიქონებში განახლება არ მომხდარა."
+
+#: src/cat_update.cpp:508
+#, c-format
+msgid "Translation file was updated with %s change."
+msgid_plural "Translation file was updated with %s changes."
+msgstr[0] "თარგმანის ფაილი აიტვირთა %s ცვლილებით."
+msgstr[1] "თარგმანის ფაილი აიტვირთა %s ცვლილებით."
+
+#: src/cat_update.cpp:511
+msgid "New strings to translate:"
+msgstr "ახალი სტრიქონები სათარგმნად:"
+
+#: src/cat_update.cpp:512
+msgid "Removed strings (no longer used):"
+msgstr "წაშლილი სტრიქონები (აღარ გამოიყენება):"
+
+#: src/cat_update.cpp:517
+msgid "Template files skipped (Pro-only):"
+msgstr "გამოტოვებული ნიმუშის ფაილები (მხოლოდ-Pro):"
+
+#: src/cat_update.cpp:605
+#, c-format
+msgid "%d issue with the source strings was detected."
+msgid_plural "%d issues with the source strings were detected."
+msgstr[0] "აღმოჩენილია %d ცვლილება წყარო სტრიქონებში."
+msgstr[1] "აღმოჩენილია %d ცვლილება წყარო სტრიქონებში."
+
+#: src/cat_update.cpp:632
+msgid "View Details…"
+msgstr "დეტალების ნახვა…"
+
+#: src/cat_update.cpp:632
+msgid "View details…"
+msgstr "დეტალების ნახვა…"
+
+#: src/catalog.cpp:125
 #, c-format
 msgid "Malformed header: “%s”"
 msgstr "არასწორი ჰედერი: \"%s\""
 
+#: src/catalog.cpp:588
 msgid "PO Translation Files"
 msgstr "PO თარგმნის ფაილები"
 
+#: src/catalog.cpp:590
 msgid "POT Translation Templates"
 msgstr "POT თარგმნის შაბლონები"
 
+#: src/catalog.cpp:592
 msgid "XLIFF Translation Files"
 msgstr "XLIFF თარგმანის ფაილები"
 
+#: src/catalog.cpp:594
+msgid "Xcode Localization Catalog"
+msgstr "Xcode-ის ლოკალიზაციის კატალოგი"
+
+#: src/catalog.cpp:596
 msgid "JSON Translation Files"
 msgstr "JSON თარგმნის ფაილები"
 
 #. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+#: src/catalog.cpp:599
 msgid "Flutter Translation Files"
 msgstr "Flutter თარგმნის ფაილები"
 
+#: src/catalog.cpp:608
 msgid "All Translation Files"
 msgstr "თარგმნის ყველა ფაილი"
 
+#: src/catalog.cpp:1152
 msgid "The file is in a format not recognized by Poedit."
 msgstr "ფაილის ფორმატი Poedit-სთვის უცნობია."
 
-msgid ""
-"This JSON file isn’t a translations file and cannot be edited in Poedit."
+#: src/catalog_json.cpp:91
+msgid "This JSON file isn’t a translations file and cannot be edited in Poedit."
 msgstr "ეს JSON ფაილი სათარგმნი ფაილი არაა და მას Poedit-ით ვერ ჩაასწორებთ."
 
+#: src/catalog_json.cpp:140
 #, c-format
 msgid "Reading file content failed with the following error: %s"
 msgstr "ფაილის შიგთავსის წაკითხვა დასრულდა შემდეგი შეცდომით: %s"
 
+#: src/catalog_json.cpp:151 src/catalog_po.cpp:1142 src/catalog_xliff.cpp:556
 #, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
+msgid "File “%s” is read-only and cannot be saved.\n"
 "Please save it under different name."
-msgstr ""
-"ფაილი “%s” არის მხოლოდ წაკითხვადი და მისი შენახვა შეუძლებელია.\n"
+msgstr "ფაილი “%s” არის მხოლოდ წაკითხვადი და მისი შენახვა შეუძლებელია.\n"
 "გთხოვთ, შეინახოთ სხვა სახელით."
 
+#: src/catalog_json.cpp:165 src/catalog_po.cpp:1178 src/catalog_po.cpp:1260
+#: src/catalog_po.cpp:1316 src/catalog_po.cpp:1373 src/catalog_po.cpp:1404
+#: src/catalog_po.cpp:1598 src/catalog_xliff.cpp:567 src/edframe.cpp:1339
+#: src/prefsdlg.cpp:757
 #, c-format
 msgid "Couldn’t save file %s."
 msgstr "%s ფაილის შენახვა ვერ მოხერხდა."
 
+#: src/catalog_json.cpp:503
 msgid "Screenshots:"
 msgstr "ეკრანის ანაბეჭდები:"
 
+#: src/catalog_po.cpp:130
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
 msgstr[0] "“%2$s” ფაილის %1$i ხაზი სწორად არ ჩაიტვირთა."
 msgstr[1] "“%2$s” ფაილის %1$i ხაზი სწორად არ ჩაიტვირთა."
 
+#: src/catalog_po.cpp:145
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "“%2$s” ფაილის %1$d ხაზი დაზიანებულია (მონაცემი %3$s არ არის ვალიდური)."
 
+#: src/catalog_po.cpp:352
 msgid "Broken PO file: singular form msgstr used together with msgid_plural"
-msgstr ""
-"დაზიანებული PO ფაილი: msgstr-ის მხოლობითი ფორმა გამოყენებულია msgid_plural-"
-"თან ერთად"
+msgstr "დაზიანებული PO ფაილი: msgstr-ის მხოლობითი ფორმა გამოყენებულია msgid_plural-თან ერთად"
 
+#: src/catalog_po.cpp:404
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
-msgstr ""
-"დაზიანებული PO ფაილი: msgstr-ის მრავლობითი ფორმა გამოყენებულია msgid_plural-"
-"ის გარეშე"
+msgstr "დაზიანებული PO ფაილი: msgstr-ის მრავლობითი ფორმა გამოყენებულია msgid_plural-ის გარეშე"
 
+#: src/catalog_po.cpp:926 src/catalog_po.cpp:940 src/catalog_po.cpp:953
+#: src/catalog_po.cpp:965
 msgid "Couldn’t load the file, it is probably damaged."
 msgstr "ფაილის ჩატვირთვა შეუძლებელია. სავარაუდოდ იგი დაზიანებულია."
 
-msgid ""
-"There were errors when loading the file. Some data may be missing or "
-"corrupted as the result."
-msgstr ""
-"ფაილის ჩატვირთვისას წარმოიშვა შეცდომები. შედეგად, ზოგიერთი მონაცემი შესაძლოა "
-"იყოს გამოკლებული ან დაზიანებული."
+#: src/catalog_po.cpp:945
+msgid "There were errors when loading the file. Some data may be missing or corrupted as the result."
+msgstr "ფაილის ჩატვირთვისას წარმოიშვა შეცდომები. შედეგად, ზოგიერთი მონაცემი შესაძლოა იყოს გამოკლებული ან დაზიანებული."
 
-msgid ""
-"There was a problem formatting the file nicely (but it was saved all right)."
-msgstr ""
-"ფაილის უკეთ ფორმატირებისას პრობლემა შეიქმნა (თუმცა ფაილი გამართულად იქნა "
-"შენახული)."
+#: src/catalog_po.cpp:1269
+msgid "There was a problem formatting the file nicely (but it was saved all right)."
+msgstr "ფაილის უკეთ ფორმატირებისას პრობლემა შეიქმნა (თუმცა ფაილი გამართულად იქნა შენახული)."
 
+#: src/catalog_po.cpp:1521
 #, c-format
-msgid ""
-"The file couldn’t be saved in “%s” charset as specified in translation "
-"settings.\n"
-"\n"
+msgid "The file couldn’t be saved in “%s” charset as specified in translation settings.\n\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
-msgstr ""
-"ფაილის შენახვა  პარამეტრებში მითითებული “%s” კოდირებით ვერ მოხერხდა.\n"
-"\n"
-"მის ნაცვლად, ფაილი შენახულია  UTF-8 კოდირებით და პარამეტრიც შესაბამისად "
-"შეიცვალა."
+msgstr "ფაილის შენახვა  პარამეტრებში მითითებული “%s” კოდირებით ვერ მოხერხდა.\n\n"
+"მის ნაცვლად, ფაილი შენახულია  UTF-8 კოდირებით და პარამეტრიც შესაბამისად შეიცვალა."
 
+#: src/catalog_po.cpp:1523 src/edframe.cpp:3221
 msgid "Error saving file"
 msgstr "შეცდომა ფაილის შენახვისას"
 
+#: src/catalog_po.cpp:1674
 #, c-format
 msgid "“%s” is not a valid POT file."
 msgstr "'%s' არ არის ვალიდური POT ფაილი."
 
+#: src/catalog_xcloc.cpp:85 src/catalog_xcloc.cpp:88
+msgid "Unexpectedly missing content in the XCLOC file."
+msgstr "მოულოდნელი ნაკლული შემცველობა XCLOC ფაილში."
+
+#: src/catalog_xcloc.cpp:99
+msgid "Saving in a different location is not supported for XCLOC files."
+msgstr "სხვა ადგილას შენახვა XCLOC ფაილებისთვის მხარდაჭერილი არაა."
+
+#: src/catalog_xliff.cpp:473
 #, c-format
 msgid "Error while loading XLIFF file: %s"
 msgstr "XLIFF ფაილის ჩატვირთვის შეცდომა: %s"
 
+#: src/catalog_xliff.cpp:518
 #, c-format
 msgid "unsupported version (%s)"
 msgstr "მხარდაუჭერელი ვერსია (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
+#: src/catalog_xliff.cpp:679 src/catalog_xliff.cpp:866
 msgid "Broken markup in translation string."
 msgstr "დაზიანებული მარკირებათარგმანის ხაზში."
 
-msgid "Add Account"
-msgstr "ანგარიშის დამატება"
+#: src/cloud_accounts_ui.cpp:82
+msgid "Connect Poedit with supported cloud localization platforms to seamlessly sync translations managed on them."
+msgstr "დააკავშირეთ Poedit ღრუბლოვან ლოკალიზაციის მხარდაჭერილ პლატფორმებთან, მათზე არსებული თარგმანების შეუფერხებლად სინქრონიზაციისთვის."
 
-msgid "Add account"
-msgstr "ანგარიშის დამატება"
-
-#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
-#, c-format
-msgid "Learn more about %s"
-msgstr "შეიტყვეთ მეტი %s-ის შესახებ"
-
-msgid ""
-"Connect Poedit with supported cloud localization platforms to seamlessly "
-"sync translations managed on them."
-msgstr ""
-"დააკავშირეთ Poedit ღრუბლოვან ლოკალიზაციის მხარდაჭერილ პლატფორმებთან, მათზე "
-"არსებული თარგმანების შეუფერხებლად სინქრონიზაციისთვის."
-
+#: src/cloud_accounts_ui.cpp:85 src/welcomescreen.cpp:295
 msgid "How does cloud sync work?"
 msgstr "როგორ მუშაობს ღრუბლოვანი სინქრონიზაცია?"
 
+#: src/cloud_accounts_ui.cpp:96
 msgid "Account"
 msgstr "ანგარიში"
 
+#: src/cloud_accounts_ui.cpp:159
 msgid "(not signed in)"
 msgstr "( არ არის ავტორიზებული)"
 
-msgid "File"
-msgstr "ფაილი"
-
+#: src/cloud_accounts_ui.cpp:353
 msgid "Open cloud translation"
 msgstr "ღრუბლოვანი თარგმანის გახსნა"
 
+#: src/cloud_accounts_ui.cpp:365
 msgid "Manage accounts"
 msgstr "ანგარიშების მართვა"
 
+#: src/cloud_accounts_ui.cpp:374 src/export_html.cpp:77
 msgid "Project:"
 msgstr "პროექტი:"
 
+#: src/cloud_accounts_ui.cpp:378 src/export_html.cpp:79
+#: src/resources/prefs.xrc:11 src/resources/prefs.xrc:15
+#: src/resources/properties.xrc:54 src/wordpress/wordpress_gui.cpp:228
+#: src/wordpress/wordpress_gui.cpp:354
 msgid "Language:"
 msgstr "ენა:"
 
+#: src/cloud_accounts_ui.cpp:433
 msgid "Sign in to Cloud Account"
 msgstr "გაიარეთ ავტორიზაცია ღრუბლოვან ანგარიშში"
 
+#: src/cloud_accounts_ui.cpp:433
 msgid "Sign in to cloud account"
 msgstr "გაიარეთ ავტორიზაცია ღრუბლოვან ანგარიშში"
 
+#: src/cloud_accounts_ui.cpp:524
 msgid "No translation projects listed in your account."
 msgstr "თქვენს ანგარიშში თარგმანის პროექტები არ არის."
 
+#: src/cloud_accounts_ui.cpp:633 src/crowdin_gui.cpp:347
 msgid "Downloading latest translations…"
 msgstr "მიმდინარეობს უახლესი თარგმანების ჩამოტვირთვა…"
 
 #. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#: src/cloud_accounts_ui.cpp:729
 #, c-format
 msgid "Sign in to %s"
 msgstr "შედით %s-ში"
 
+#: src/cloud_sync.h:99
 msgid "Syncing"
 msgstr "სინქრონიზაცია"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#: src/cloud_sync.h:116
 #, c-format
 msgid "Uploading translations to %s…"
 msgstr "მიმდინარეობს თარგმანების ატვირთვა %s-ზე…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#: src/cloud_sync.h:168
 #, c-format
 msgid "Uploading translations to %s failed."
 msgstr "%s-ზე თარგმანების ატვირთვა ვერ მოხერხდა."
 
+#: src/cloud_sync.h:169
 msgid "Syncing error"
 msgstr "სინქრონიზაციის შეცდომა"
 
+#: src/commentdlg.cpp:48
 msgid "Add"
 msgstr "დამატება"
 
+#: src/crowdin_client.cpp:144
 msgid "Unknown Crowdin error."
 msgstr "Crowdin-ის უცნობი შეცდომა."
 
+#: src/crowdin_client.cpp:154
 msgid "Not authorized, please sign in again."
 msgstr "არ ხართ ავტორიზებული. გთხოვთ, ხელახლა გაიაროთ ავტორიზაცია."
 
+#. TRANSLATORS: Crowdin has string-based and file-based project kinds (see https://support.crowdin.com/creating-project/#file-based-project)
+#: src/crowdin_client.cpp:346
+msgid "String-based Crowdin projects are not supported."
+msgstr "სტრიქონებზე დაფუძნებული Crowdin-ის პროექტები მხარდაჭერილი არაა."
+
+#: src/crowdin_client.cpp:350
 msgid "Downloading translations is disabled in this project."
 msgstr "ამ პროექტში თარგმანების ჩამოტვირთვა გამორთულია."
 
+#: src/crowdin_gui.cpp:94 src/localazy_gui.cpp:105
 msgid "Sign In"
 msgstr "შესვლა"
 
+#: src/crowdin_gui.cpp:94 src/localazy_gui.cpp:105
 msgid "Sign in"
 msgstr "შესვლა"
 
+#: src/crowdin_gui.cpp:96 src/localazy_gui.cpp:107
 msgid "Sign Out"
 msgstr "გამოსვლა"
 
+#: src/crowdin_gui.cpp:96 src/localazy_gui.cpp:107
 msgid "Sign out"
 msgstr "გამოსვლა"
 
+#: src/crowdin_gui.cpp:103
 msgid "Learn more about Crowdin"
 msgstr "შეიტყვეთ მეტი Crowdin-ის შესახებ"
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool."
+#: src/crowdin_gui.cpp:134
+msgid "Crowdin is an online translation management platform and collaborative translation tool. We use Crowdin ourselves to translate Poedit into many languages, and we love it."
 msgstr ""
-"Crowdin არის ონლაინ პლატფორმა ლოკალიზაციის მართვისა და ერთობლივი "
-"თარგმანისთვის."
 
+#: src/crowdin_gui.cpp:198 src/localazy_gui.cpp:210
 msgid "Waiting for authentication…"
 msgstr "აუთენთიფიკაციის ლოდინი…"
 
+#: src/crowdin_gui.cpp:199 src/localazy_gui.cpp:211
 msgid "Updating user information…"
 msgstr "მიმდინარეობს მომხმარებლის ინფორმაციის განახლება…"
 
+#: src/crowdin_gui.cpp:306
 msgid "Sign in to Crowdin"
 msgstr "შედით Crowdin-ში"
 
+#: src/crowdin_gui.cpp:326
 msgid "Syncing with Crowdin failed."
 msgstr "Crowdin-თან სინქრონიზაცია ვერ მოხერხდა."
 
+#: src/crowdin_gui.cpp:327
 msgid "Crowdin error"
 msgstr "Crowdin-ის შეცდომა"
 
+#: src/crowdin_gui.cpp:335
 msgid "Uploading translations…"
 msgstr "მიმდინარეობს თარგმანების ატვირთვა…"
 
+#: src/customcontrols.cpp:282 src/wx_translatable_strings.h:98
 msgid "&Copy"
 msgstr "&კოპირება"
 
-msgid "Learn more"
-msgstr "დამატებითი ინფორმაცია"
-
+#: src/edapp.cpp:510 src/resources/menus.xrc:377 src/resources/menus.xrc:494
+#: src/wx_translatable_strings.h:105
 msgid "&Help"
 msgstr "&დახმარება"
 
+#: src/edapp.cpp:800
 msgid "MO files can’t be directly edited in Poedit."
 msgstr "MO ფაილების რედაქტირება შეუძლებელია Poedit-ში."
 
+#: src/edapp.cpp:801
 msgid "Error opening file"
 msgstr "შეცდომა ფაილის გახსნისას"
 
-msgid ""
-"Please open and edit the corresponding PO file instead. When you save it, "
-"the MO file will be updated as well."
-msgstr ""
-"გთხოვთ, MO ფაილის ნაცვლად, გახსენით და დაარედაქტირეთ შესაბამისი PO ფაილი. "
-"როდესაც PO ფაილს შეინახავთ, MO ფაილიც განახლდება."
+#: src/edapp.cpp:803
+msgid "Please open and edit the corresponding PO file instead. When you save it, the MO file will be updated as well."
+msgstr "გთხოვთ, MO ფაილის ნაცვლად, გახსენით და დაარედაქტირეთ შესაბამისი PO ფაილი. როდესაც PO ფაილს შეინახავთ, MO ფაილიც განახლდება."
 
+#: src/edapp.cpp:844
 msgid "don’t delete temporary files (for debugging)"
 msgstr "არ მოხდეს დროებითი ფაილების წაშლა (გამართვისთვის)"
 
+#: src/edapp.cpp:846
 msgid "handle a poedit:// URI"
 msgstr "poedit:// URI-ების გახსნა"
 
+#: src/edapp.cpp:848
 msgid "go to item at given line number"
 msgstr "მითითებული ხაზის ნომრით ელემენტზე გადასვლა"
 
+#: src/edapp.cpp:871
 msgid "Failed to communicate with Poedit process."
 msgstr "ვერ მოხერხდა Poedit-ის პროცესთან დაკავშირება."
 
+#: src/edapp.cpp:993 src/edapp.cpp:998
 #, c-format
 msgid "Unhandled exception occurred: %s"
 msgstr "წარმოიშვა მოულოდნელი გამონაკლისი: %s"
 
+#: src/edapp.cpp:1156
 msgid "Select translation template"
 msgstr "აირჩიეთ თარგმანის შაბლონი"
 
+#: src/edapp.cpp:1187 src/edframe.cpp:953 src/edframe.cpp:2687
+#: src/edframe.cpp:2956
+msgid "Invalid file"
+msgstr "არასწორი ფაილი"
+
+#: src/edapp.cpp:1220 src/wordpress/wordpress_gui.cpp:137
+msgid "WordPress"
+msgstr "WordPress"
+
+#: src/edapp.cpp:1271 src/edframe.cpp:2859
 msgid "Select translation file"
 msgstr "აირჩიეთ თარგმანის ფაილი"
 
+#: src/edapp.cpp:1373
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit არის მარტივი გამოსაყენებელი თარგმანის რედაქტორი."
 
+#: src/edframe.cpp:445
 msgid "You can’t drop more than one file on Poedit window."
 msgstr "თქვენ არ შეგიძლიათ ერთზე მეტი ფაილის ჩაგდება Poedit-ის ფანჯარაში."
 
+#: src/edframe.cpp:452
 #, c-format
 msgid "File “%s” is not a translation file."
 msgstr "ფაილი “%s” არ არის თარგმნის ფაილი."
 
+#: src/edframe.cpp:459 src/recent_files.cpp:349
 #, c-format
 msgid "File “%s” doesn’t exist."
 msgstr "ფაილი \"%s\" არ არსებობს."
 
+#: src/edframe.cpp:476
 msgid "Poedit"
 msgstr "Poedit"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
+#: src/edframe.cpp:890
 #, c-format
-msgid ""
-"Spellchecking is disabled, because the dictionary for %s isn’t installed."
-msgstr ""
-"მართლწერის შემოწმება გამორთულია, რადგან %s-ისთვის ლექსიკონი არ არის "
-"დაყენებული."
+msgid "Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgstr "მართლწერის შემოწმება გამორთულია, რადგან %s-ისთვის ლექსიკონი არ არის დაყენებული."
 
+#: src/edframe.cpp:894
 msgid "Install"
 msgstr "დაყენება"
 
+#: src/edframe.cpp:986 src/edframe.cpp:1161
 #, c-format
 msgid "The file “%s” has been changed by another application."
 msgstr "ფაილი “%s” შეიცვალა სხვა აპლიკაციის მიერ."
 
+#: src/edframe.cpp:987 src/edframe.cpp:991
 msgid "Reload file"
 msgstr "ფაილის თავიდან ჩატვირთვა"
 
-msgid ""
-"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
-"be lost if you do."
-msgstr ""
-"გსურთ ფაილის ხელახლა ჩატვირთვა დისკიდან? თუ ხელახლა ჩატვირთავთ, Poedit-ში "
-"თქვენს მიერ განხორციელებული ცვლილებები დაიკარგება."
+#: src/edframe.cpp:990
+msgid "Do you want to reload the file from disk? Your unsaved edits in Poedit will be lost if you do."
+msgstr "გსურთ ფაილის ხელახლა ჩატვირთვა დისკიდან? თუ ხელახლა ჩატვირთავთ, Poedit-ში თქვენს მიერ განხორციელებული ცვლილებები დაიკარგება."
 
+#. TRANSLATORS: Button next to a QA warning: causes the warning to be dismissed
+#: src/edframe.cpp:991 src/editing_area.cpp:325 src/editing_area.cpp:377
 msgid "Ignore"
 msgstr "იგნორირება"
 
+#: src/edframe.cpp:991
 msgid "Reload File"
 msgstr "ფაილის ხელახლა ჩატვირთვა"
 
+#: src/edframe.cpp:1095
 msgid "The file has been modified. Do you want to save changes?"
 msgstr "ფაილი შეიცვალა. გსურთ ცვლილებების შენახვა?"
 
+#: src/edframe.cpp:1096
 msgid "Save changes"
 msgstr "ცვლილებების შენახვა"
 
+#: src/edframe.cpp:1099
 msgid "Your changes will be lost if you don’t save them."
 msgstr "თქვენი ცვლილებები დაიკარგება, თუ მათ არ შეინახავთ."
 
+#: src/edframe.cpp:1102 src/edframe.cpp:1162 src/sidebar_terminology.cpp:70
+#: src/wx_translatable_strings.h:115
 msgid "Save"
 msgstr "შენახვა"
 
+#: src/edframe.cpp:1104
 msgid "Do&n’t save"
 msgstr "&არ შეინახო"
 
+#: src/edframe.cpp:1106
 msgid "Don’t Save"
 msgstr "არ შეინახო"
 
+#: src/edframe.cpp:1165
 msgid "The changes made by the other application will be lost if you save."
-msgstr ""
-"თუ შეინახავთ, სხვა აპლიკაციის მხრიდან განხორციელებული ცვლილებები დაიკარგება."
+msgstr "თუ შეინახავთ, სხვა აპლიკაციის მხრიდან განხორციელებული ცვლილებები დაიკარგება."
 
+#: src/edframe.cpp:1166 src/edframe.cpp:2268 src/licensing_ui.cpp:284
+#: src/prefsdlg.cpp:770 src/prefsdlg.cpp:1103 src/resources/comment.xrc:41
+#: src/resources/manager.xrc:63 src/sidebar_terminology.cpp:73
+#: src/wx_translatable_strings.h:94
 msgid "Cancel"
 msgstr "გაუქმება"
 
+#: src/edframe.cpp:1166
 msgid "Save Anyway"
 msgstr "შეინახე მაინც"
 
+#: src/edframe.cpp:1166
 msgid "Save anyway"
 msgstr "შეინახე მაინც"
 
+#: src/edframe.cpp:1219
 msgid "Save as…"
 msgstr "შენახვა როგორც…"
 
+#: src/edframe.cpp:1268
 msgid "Compile to…"
 msgstr "კომპილაცია ფაილში…"
 
+#: src/edframe.cpp:1271
 msgid "Compiled Translation Files"
 msgstr "თარგმანის კომპილირებული ფაილები"
 
+#: src/edframe.cpp:1312
 msgid "Export to HTML…"
 msgstr "გატანა HTML-ში…"
 
+#: src/edframe.cpp:1315
 msgid "HTML Files"
 msgstr "HTML ფაილები"
 
+#: src/edframe.cpp:1330
+msgid "Exporting to HTML"
+msgstr "გატანა HTML-ში"
+
+#: src/edframe.cpp:1364
+msgid "Export to Excel"
+msgstr "გატანა Excel-ში"
+
+#: src/edframe.cpp:1367 src/edframe.cpp:1401
+msgid "Excel Files"
+msgstr "Excel-ის ფაილები"
+
+#: src/edframe.cpp:1379
+msgid "Exporting to Excel"
+msgstr "გატანა Excel-ში"
+
+#: src/edframe.cpp:1398
+msgid "Import from Excel"
+msgstr "შემოტანა Excel-დან"
+
+#: src/edframe.cpp:1423
+msgid "Importing from Excel"
+msgstr "შემოტანა Excel-დან"
+
+#. TRANSLATORS: %s is filename of Excel file
+#: src/edframe.cpp:1440
 #, c-format
-msgid "In: %s"
-msgstr "%s -ში"
+msgid "The “%s” file does not appear to contain any translations intended for this file."
+msgstr "როგორც ჩანს, ფაილი \"%s\" თარგმანებს არ შეიცავს."
 
-msgid "Source code not available."
-msgstr "წყაროს კოდი მიუწვდომელია."
+#: src/edframe.cpp:1445
+msgid "No translations were updated from the Excel file."
+msgstr "Excel-ის ფაილიდან თარგმანები არ განახლებულა."
 
+#. TRANSLATORS: %s is a (formatted) number here
+#: src/edframe.cpp:1452
+#, c-format
+msgid "%s string was updated from the Excel file."
+msgid_plural "%s strings were updated from the Excel file."
+msgstr[0] "განახლდა %s სტრიქონი Excel-ის ფაილიდან."
+msgstr[1] "განახლდა %s სტრიქონი Excel-ის ფაილიდან."
+
+#: src/edframe.cpp:1456
+msgid "Translations updated:"
+msgstr "განახლებული თარგმანები:"
+
+#: src/edframe.cpp:1457
+msgid "Strings matched in translation file:"
+msgstr "შესაბამისი სტრიქონები თარგმანის ფაილში:"
+
+#: src/edframe.cpp:1458
+msgid "Excel rows processed:"
+msgstr "დამუშავებული Excel-ის მწკრივი:"
+
+#: src/edframe.cpp:1779
 msgid "Updating failed"
 msgstr "განახლება ვერ მოხერხდა"
 
-msgid ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the file’s Properties."
-msgstr ""
-"წყაროს კოდიდან თარგმანების განახლება ვერ მოხერხდა, რადგან ფაილის თვისებებში "
-"მითითებულ ადგილას კოდი ვერ მოიძებნა."
+#: src/edframe.cpp:1852
+msgid "Open reference file"
+msgstr "მიმართვების ფაილის გახსნა"
 
-msgid "Permission denied."
-msgstr "ნებართვა უარყოფილია."
+#: src/edframe.cpp:1883 src/resources/menus.xrc:267
+msgid "Update from &POT File…"
+msgstr "&POT ფაილიდან განახლება…"
 
-msgid ""
-"You don’t have permission to read source code files from the location "
-"specified in the file’s Properties."
-msgstr ""
-"თქვენ არ გაქვთ ნებართვა, წაიკითხოთ წყაროს კოდის ფაილები ფაილის თვისებებში "
-"მითითებული მდებარეობიდან."
+#: src/edframe.cpp:1883 src/resources/menus.xrc:266
+msgid "Update from &POT file…"
+msgstr "&POT ფაილიდან განახლება…"
 
-#. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Settings > Privacy & Security > Files & Folders."
-msgstr ""
-"თუ თქვენ შეზღუდეთ წვდომა თქვენს ფაილებზე, შეგიძლიათ წვდომის მიცემა სისტემის "
-"პარამეტრებში > კონფიდენციალურობა & უსაფრთხოება > ფაილები & საქაღალდეები."
+#: src/edframe.cpp:1887
+msgid "Update from Reference File…"
+msgstr "განახლება მიმართვების ფაილიდან…"
 
-#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
-msgstr ""
-"თუ თქვენ შეზღუდეთ წვდომა თქვენს ფაილებზე, შეგიძლიათ წვდომის მიცემა სისტემის "
-"პარამეტრებში > უსაფრთხოება & კონფიდენციალურობა > კონფიდენციალურობა > ფაილები "
-"& საქაღალდეები."
+#: src/edframe.cpp:1887
+msgid "Update from reference file…"
+msgstr "განახლება მიმართვების ფაილიდან…"
 
-msgid "Translation entries in the file are probably incorrect."
-msgstr "სავარაუდოდ, ფაილში თარგმანის ჩანაწერები არასწორია."
-
-msgid "Updating the file failed. Click on 'Details >>' for details."
-msgstr ""
-"ფაილის განახლება ვერ მოხერხდა. დააჭირეთ ღილაკს 'დეტალები >>' დამატებითი "
-"ინფორმაციისთვის."
-
-msgid "Open translation template"
-msgstr "ღია თარგმანის შაბლონი"
-
+#: src/edframe.cpp:2020
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "თარგმანთან დაკავშირებით წარმოიშვა %d შეფერხება."
 msgstr[1] "თარგმანთან დაკავშირებით წარმოიშვა %d შეფერხება."
 
+#: src/edframe.cpp:2025 src/edframe.cpp:2071
 msgid "Validation results"
 msgstr "ვალიდაციის შედეგები"
 
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
-"ჩანაწერები, რომელიც შეიცავს შეცდომას, სიაში მონიშნულია წითლად. შეცდომის "
-"დეტალები გამოჩნდება მაშინ, როდესაც აირჩევთ შეცდომის შემცველ ჩანაწერს."
+#: src/edframe.cpp:2028
+msgid "Entries with errors were marked in red in the list. Details of the error will be shown when you select such an entry."
+msgstr "ჩანაწერები, რომელიც შეიცავს შეცდომას, სიაში მონიშნულია წითლად. შეცდომის დეტალები გამოჩნდება მაშინ, როდესაც აირჩევთ შეცდომის შემცველ ჩანაწერს."
 
+#: src/edframe.cpp:2037
 msgid "The file was saved safely."
 msgstr "ფაილი უსაფრთხოდ იქნა შენახული."
 
-msgid ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
-msgstr ""
-"ფაილი უსაფრთხოდ იქნა შენახული და დაკომპილირებული MO ფორმატში, მაგრამ ის "
-"სავარაუდოდ არ იმუშავებს სწორად."
+#: src/edframe.cpp:2040
+msgid "The file was saved safely and compiled into the MO format, but it will probably not work correctly."
+msgstr "ფაილი უსაფრთხოდ იქნა შენახული და დაკომპილირებული MO ფორმატში, მაგრამ ის სავარაუდოდ არ იმუშავებს სწორად."
 
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-msgstr ""
-"ფაილი წარმატებით იქნა შენახული, თუმცა მისი MO ფორმატში კომპილაცია და "
-"გამოყენება ვერ მოხერხდა."
+#: src/edframe.cpp:2043
+msgid "The file was saved safely, but it cannot be compiled into the MO format and used."
+msgstr "ფაილი წარმატებით იქნა შენახული, თუმცა მისი MO ფორმატში კომპილაცია და გამოყენება ვერ მოხერხდა."
 
-msgid ""
-"The file was compiled into the MO format, but it will probably not work "
-"correctly."
+#: src/edframe.cpp:2052
+msgid "The file was compiled into the MO format, but it will probably not work correctly."
 msgstr "ფაილი დაკომპილირებულია MO ფორმატში, თუმცა შესაძლოა, არ იმუშაოს სწორად."
 
+#: src/edframe.cpp:2056
 msgid "The file cannot be compiled into the MO format and used."
 msgstr "ფაილის MO ფორმატში დაკომპილირება და გამოყენება შეუძლებელია."
 
+#: src/edframe.cpp:2070
 msgid "No problems with the translation found."
 msgstr "თარგმანში შეცდომები ვერ მოიძებნა."
 
+#: src/edframe.cpp:2080
 #, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural ""
-"The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] ""
-"თარგმანი გამოსაყენებლად მზადაა, მაგრამ %d ჩანაწერი ჯერ არ არის ნათარგმნი."
-msgstr[1] ""
-"თარგმანი გამოსაყენებლად მზადაა, მაგრამ %d ჩანაწერი ჯერ არ არის ნათარგმნი."
+msgid_plural "The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] "თარგმანი გამოსაყენებლად მზადაა, მაგრამ %d ჩანაწერი ჯერ არ არის ნათარგმნი."
+msgstr[1] "თარგმანი გამოსაყენებლად მზადაა, მაგრამ %d ჩანაწერი ჯერ არ არის ნათარგმნი."
 
+#: src/edframe.cpp:2085
 msgid "The translation is ready for use."
 msgstr "თარგმანი გამოსაყენებლად მზად არის."
 
+#: src/edframe.cpp:2251
+msgid "Translation Quality Warnings"
+msgstr "თარგმანის ხარისხის გაფრთხილებები"
+
+#: src/edframe.cpp:2254
+msgid "Poedit performs automated quality checks on translations. You can configure which categories of checks are useful for you and disable unwanted ones here."
+msgstr "Poedit ახორციელებს თარგმანის ხარისხის ავტომატურ შემოწმებას. აქ თქვენ შეგიძლიათ დააკონფიგურიროთ, შემოწმების რომელი კატეგორიებია თქვენთვის სასარგებლო და გამორთოთ არასაჭირო კატეგორიები."
+
+#: src/edframe.cpp:2265 src/resources/manager.xrc:55
+#: src/resources/summary.xrc:87 src/sidebar_pro.cpp:1146
+#: src/wx_translatable_strings.h:108
+msgid "OK"
+msgstr "კარგი"
+
+#: src/edframe.cpp:2510 src/prefsdlg.cpp:484 src/sidebar_pro.cpp:705
+msgid "Contributing translations improves the quality of online suggestions for everybody — the more people do it, the better the suggestions can be. Your translations are submitted anonymously and are available to other translators using Poedit or other CAT tools."
+msgstr "თარგმანებში წვლილის შეტანა აუმჯობესებს ონლაინ შემოთავაზებების ხარისხს ყველასთვის — რაც უფრო მეტი ადამიანი შეიტანს წვლილს, მით უკეთესი იქნება შემოთავაზებები. თქვენი თარგმანები იგზავნება ანონიმურად და ხელმისაწვდომია სხვა მთარგმნელებისთვის, რომლებიც იყენებენ Poedit-ს ან თარგმანის ავტომატიზირებისთვის განკუთვნილ სხვა ინსტრუმენტს."
+
+#: src/edframe.cpp:2515
+msgid "Can Poedit contribute your translations of this file to the online translation memory?"
+msgstr "გსურთ თუ არა მისცეთ უფლება Poedit-ს, გააგზავნოს თქვენი თარგმანი ამ ფაილიდან თარგმანების Online მეხსიერებაზე?"
+
+#. TRANSLATORS: Try to keep this as short as the original. If you can't, break it into two lines.
+#: src/edframe.cpp:2519 src/sidebar_pro.cpp:701
+msgid "Apply to all files I edit"
+msgstr "ყველა რედაქტირებული ფაილისთვის"
+
+#: src/edframe.cpp:2520
+msgid "Contribute"
+msgstr "მონაწილეობის მიღება"
+
+#: src/edframe.cpp:2527
+msgid "Keep Private"
+msgstr "კონფიდენციალურობის შენარჩუნება"
+
+#: src/edframe.cpp:2527
+msgid "Keep private"
+msgstr "კონფიდენციალურობის შენარჩუნება"
+
+#: src/edframe.cpp:2686
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr "Poedit-მა ავტომატურად გაასწორა არასწორი შინაარსი “%s” ფაილში."
 
-msgid ""
-"The file contained duplicate items, which is not allowed in PO files and "
-"would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as needing work and correct "
-"them if necessary."
+#: src/edframe.cpp:2691
+msgid "The file contained duplicate items, which is not allowed in PO files and would prevent the file from being used. Poedit fixed the issue, but you should review translations of any items marked as needing work and correct them if necessary."
 msgstr ""
 
+#: src/edframe.cpp:2707
 msgid "Language of the translation isn’t set."
 msgstr "თარგმანის ენა არ არის დაყენებული."
 
+#: src/edframe.cpp:2709
 msgid "Set Language"
 msgstr "ენის არჩევა"
 
+#: src/edframe.cpp:2709
 msgid "Set language"
 msgstr "ენის არჩევა"
 
 #. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-msgid ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
+#: src/edframe.cpp:2712 src/edframe.cpp:2728
+msgid "Suggestions are not available if the translation language is not set correctly. Other features, such as plural forms, may be affected as well."
 msgstr ""
 
+#: src/edframe.cpp:2726 src/pretranslate.cpp:508
 msgid "Language of the translation is the same as source language."
 msgstr ""
 
+#: src/edframe.cpp:2729
 msgid "Fix Language"
 msgstr "ენის გასწორება"
 
+#: src/edframe.cpp:2729
 msgid "Fix language"
 msgstr "ენის გასწორება"
 
-msgid ""
-"This file has entries with plural forms, but doesn’t have Plural-Forms "
-"header configured."
+#: src/edframe.cpp:2746
+msgid "This file has entries with plural forms, but doesn’t have Plural-Forms header configured."
 msgstr ""
 
-msgid ""
-"Entries in this file have different plural forms count from what the file’s "
-"Plural-Forms header says"
+#: src/edframe.cpp:2750
+msgid "Entries in this file have different plural forms count from what the file’s Plural-Forms header says"
 msgstr ""
 
+#: src/edframe.cpp:2759
 msgid "Required header Plural-Forms is missing."
-msgstr ""
-"ფაილს აკლია აუცილებელი ჰედერი მრავლობითის ფორმებთან (Plural-Forms) "
-"დაკავშირებით."
+msgstr "ფაილს აკლია აუცილებელი ჰედერი მრავლობითის ფორმებთან (Plural-Forms) დაკავშირებით."
 
+#: src/edframe.cpp:2763
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "სინტაქსური შეცდომა Plural-Forms ჰედერის ჩანაწერში (\"%s\")."
 
+#: src/edframe.cpp:2775
 msgid "Fix the Header"
 msgstr "ჰედერის გამოსწორება"
 
+#: src/edframe.cpp:2775
 msgid "Fix the header"
 msgstr "ჰედერის გამოსწორება"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
+#: src/edframe.cpp:2793
 #, c-format
 msgid "Plural forms expression used by the file is unusual for %s."
 msgstr ""
 
 #. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
+#: src/edframe.cpp:2798
 msgid "Review"
 msgstr "გადახედვა"
 
+#. TRANSLATORS: "original" as in "used in this file originally, as it was when opened"
+#: src/edframe.cpp:2834
+msgid "String IDs (original)"
+msgstr "სტრიქონის ID-ები (საწყისი)"
+
+#: src/edframe.cpp:2839 src/edframe.cpp:2942 src/edlistctrl.cpp:739
+#: src/export_html.cpp:146
+msgid "unknown language"
+msgstr "უცნობი ენა"
+
+#. TRANSLATORS: "original" as in "used in this file originally, as it was when opened"; "%s" is language name
+#: src/edframe.cpp:2841
+#, c-format
+msgid "%s (original)"
+msgstr "%s (საწყისი)"
+
+#: src/edframe.cpp:2853
+msgid "Load from Another File…"
+msgstr "სხვა ფაილიდან ჩატვირთვა…"
+
+#: src/edframe.cpp:2853
+msgid "Load from another file…"
+msgstr "სხვა ფაილიდან ჩატვირთვა…"
+
+#: src/edframe.cpp:2897
 msgid "Would you like to use English for source text?"
 msgstr "გსურთ გამოიყენოთ ინგლისური ენა საწყისი ტექსტისთვის?"
 
+#: src/edframe.cpp:2899
 #, c-format
-msgid ""
-"This file uses string IDs instead of source text. Poedit can load English "
-"texts from the “%s” file for you."
+msgid "This file uses string IDs instead of source text. Poedit can load English texts from the “%s” file for you."
 msgstr ""
 
 #. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+#: src/edframe.cpp:2901
 msgid "Load English"
 msgstr "ინგლისურის ჩატვირთვა"
 
+#: src/edframe.cpp:3034 src/export_html.cpp:103
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
 msgstr "ნათარგმნია: %d %d-დან (%d %%)"
 
+#: src/edframe.cpp:3038 src/export_html.cpp:105
 #, c-format
 msgid "Remaining: %d"
 msgstr "დარჩენილია: %d"
 
+#: src/edframe.cpp:3043
 #, c-format
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "%d შეცდომა"
 msgstr[1] "%d შეცდომა"
 
+#: src/edframe.cpp:3048 src/export_html.cpp:117
 #, c-format
 msgid "%d entry"
 msgid_plural "%d entries"
 msgstr[0] "%d ჩანაწერი"
 msgstr[1] "%d ჩანაწერი"
 
+#: src/edframe.cpp:3077
 msgid " (unsaved)"
 msgstr " (შეუნახავი)"
 
+#: src/edframe.cpp:3118
 msgid " (modified)"
 msgstr " (შეიცვალა)"
 
+#: src/edframe.cpp:3188 src/edframe.cpp:3192
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "თარგმანის მეხსიერების განახლების შეცდომა: %s"
 
+#: src/edframe.cpp:3220
+#, c-format
+msgid "The file “%s” couldn’t be saved."
+msgstr "ფაილის \"%s\" შენახვა შეუძლებელია."
+
+#: src/edframe.cpp:3330 src/resources/menus.xrc:288
 msgid "Remove same-as-source translations"
 msgstr ""
 
-msgid ""
-"Do you want to remove all translations that are idential to the source text?"
+#: src/edframe.cpp:3332
+msgid "Do you want to remove all translations that are idential to the source text?"
 msgstr ""
 
-msgid ""
-"This action will delete any translations that match the source text exactly. "
-"This cannot be undone."
+#: src/edframe.cpp:3333
+msgid "This action will delete any translations that match the source text exactly. This cannot be undone."
 msgstr ""
 
+#: src/edframe.cpp:3337 src/edframe.cpp:3364
 msgid "Keep"
 msgstr "შენარჩუნება"
 
+#: src/edframe.cpp:3337
 msgid "Remove"
 msgstr "წაშლა"
 
+#: src/edframe.cpp:3356
 msgid "Purge deleted translations"
 msgstr "წაშლილი თარგმანებისგან გაწმენდა"
 
+#: src/edframe.cpp:3358
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr "გსურთ ყველა იმ თარგმანის წაშლა, რომლებიც აღარ გამოიყენება?"
 
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"თუ გაწმენდას გააგრძელებთ, სამუდამოდ წაიშლება ყველა ის თარგმანი, რომლებიც "
-"აღარ გამოიყენება. მომავალში მათი ხელახლა თარგმნა მოგიწევთ, თუ კატალოგს კვლავ "
-"დაემატება."
+#: src/edframe.cpp:3360
+msgid "If you continue with purging, all translations marked as deleted will be permanently removed. You will have to translate them again if they are added back in the future."
+msgstr "თუ გაწმენდას გააგრძელებთ, სამუდამოდ წაიშლება ყველა ის თარგმანი, რომლებიც აღარ გამოიყენება. მომავალში მათი ხელახლა თარგმნა მოგიწევთ, თუ კატალოგს კვლავ დაემატება."
 
+#: src/edframe.cpp:3364
 msgid "Purge"
 msgstr "გაწმენდა"
 
+#: src/edframe.cpp:3432 src/resources/menus.xrc:113
 msgid "Copy from source text"
 msgstr "საწყისი ტექსტიდან კოპირება"
 
+#: src/edframe.cpp:3434 src/resources/menus.xrc:114
 msgid "Copy from Source Text"
 msgstr "საწყისი ტექსტიდან კოპირება"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/edframe.cpp:3436 src/edframe.cpp:3443 src/edframe.cpp:3451
+#: src/sidebar.cpp:422 src/sidebar.cpp:835 src/sidebar.cpp:861
+#: src/sidebar.cpp:863 src/wx_translatable_strings.h:123
 msgctxt "keyboard key"
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
+#: src/edframe.cpp:3439 src/resources/menus.xrc:108
 msgid "Clear translation"
 msgstr "თარგმანის გაწმენდა"
 
+#: src/edframe.cpp:3441 src/resources/menus.xrc:109
 msgid "Clear Translation"
 msgstr "თარგმანის გაწმენდა"
 
+#: src/edframe.cpp:3446 src/resources/comment.xrc:4 src/sidebar.cpp:251
 msgid "Edit comment"
 msgstr "შენიშვნის დამუშავება"
 
+#: src/edframe.cpp:3448 src/sidebar.cpp:254
 msgid "Edit Comment"
 msgstr "შენიშვნის რედაქტირება"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
+#: src/edframe.cpp:3459 src/fileviewer.cpp:100
 msgid "Code Occurrences"
 msgstr "კოდი ჩანს"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
+#: src/edframe.cpp:3459
 msgid "Code occurrences"
 msgstr "კოდი ჩანს"
 
+#: src/edframe.cpp:3683
 msgid "Hide Sidebar"
 msgstr "გვერდითა ზოლის დამალვა"
 
+#: src/edframe.cpp:3685 src/resources/menus.xrc:242
 msgid "Show Sidebar"
 msgstr "გვერდითა ზოლის ჩვენება"
 
+#: src/edframe.cpp:3716
 msgid "Hide Status Bar"
 msgstr "მდგომარეობის ზოლის დამალვა"
 
+#: src/edframe.cpp:3718 src/resources/menus.xrc:248
 msgid "Show Status Bar"
 msgstr "მდგომარეობის ზოლის ჩვენება"
 
+#: src/editing_area.cpp:326
+msgid "Dismiss and ignore the warning."
+msgstr "მოცილება და ამ გაფრთხილების გამოტოვება."
+
+#. TRANSLATORS: Reverse of the "Ignore" button, undoes that action
+#: src/editing_area.cpp:377
+msgid "Don’t ignore"
+msgstr "არ გამოტოვო"
+
+#: src/editing_area.cpp:411
 msgid "String length in characters: translation | source"
 msgstr ""
 
+#: src/editing_area.cpp:414
 msgid "String length in characters"
 msgstr "სტრიქონში სიმბოლოების რაოდენობა"
 
+#: src/editing_area.cpp:461 src/editing_area.cpp:787 src/edlistctrl.cpp:663
+#: src/edlistctrl.cpp:717 src/export_html.cpp:143
 msgid "Source text"
 msgstr "წყაროს ტექსტი"
 
+#: src/editing_area.cpp:483 src/editing_area.cpp:853 src/editing_area.cpp:869
 msgid "Singular"
 msgstr "მხოლობითში"
 
+#: src/editing_area.cpp:488 src/editing_area.cpp:874
 msgid "Plural"
 msgstr "მრავლობითი"
 
+#: src/editing_area.cpp:534 src/sidebar_terminology.cpp:57
+#: src/sidebar_terminology.cpp:186 src/statistics.cpp:284
+#: src/statistics.cpp:411
 msgid "Translation"
 msgstr "თარგმანი"
 
+#: src/editing_area.cpp:543
 msgid "Pre-translated"
 msgstr "წინასწარი თარგმანი"
 
+#: src/editing_area.cpp:566
 msgid "Needs Work"
 msgstr "საჭიროებს დამუშავებას"
 
@@ -772,664 +1212,1268 @@ msgstr "საჭიროებს დამუშავებას"
 #. "needs review" implies that somebody else should review the string after
 #. I am done with it (i.e. consider it good), while "needs work" implies I
 #. need to return to it and finish the translation.
+#: src/editing_area.cpp:566
 msgid "Needs work"
 msgstr "საჭიროებს დამუშავებას"
 
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
+#: src/editing_area.cpp:638
+msgid "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
 msgstr ""
 
+#: src/editing_area.cpp:645
 msgid "Create new translation"
 msgstr "ახალი თარგმანის შექმნა"
 
+#: src/editing_area.cpp:646
 msgid "Make a new translation from this POT file."
 msgstr ""
 
 #. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+#: src/editing_area.cpp:785 src/edlistctrl.cpp:711 src/export_html.cpp:137
 msgid "Source text ID"
 msgstr "წყაროს ტექსტის ID"
 
+#: src/editing_area.cpp:840
 msgid "Everything"
 msgstr "ყველაფერი"
 
+#: src/editing_area.cpp:845
 #, c-format
 msgid "Form %i"
 msgstr "%i-დან"
 
+#: src/editing_area.cpp:847
 #, c-format
 msgid "Form %i (unused)"
 msgstr "ფორმა %i (არ გამოიყენება)"
 
+#: src/editing_area.cpp:858
 msgid "Zero"
 msgstr "ნული"
 
+#: src/editing_area.cpp:860
 msgid "One"
 msgstr "ერთი"
 
+#: src/editing_area.cpp:862
 msgid "Two"
 msgstr "ორი"
 
+#: src/editing_area.cpp:876
 msgid "Other"
 msgstr "სხვა"
 
 #. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#: src/editing_area.cpp:1060
 #, c-format
 msgid "String context: %s"
 msgstr "სტრიქონის კონტექსტი: %s"
 
 #. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#: src/editing_area.cpp:1067
 #, c-format
 msgid "String identifier: %s"
 msgstr "სტრიქონის იდენტიფიკატორი: %s"
 
+#: src/editing_area.cpp:1075
 #, c-format
 msgid "%s Format"
 msgstr "ფორმატი: %s"
 
 #. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#: src/editing_area.cpp:1075
 #, c-format
 msgid "%s format"
 msgstr "ფორმატი: %s"
 
+#: src/edlistctrl.cpp:668 src/edlistctrl.cpp:740 src/export_html.cpp:145
 #, c-format
 msgid "Translation — %s"
 msgstr "თარგმანი - %s"
 
+#: src/edlistctrl.cpp:672
 msgid "ID"
 msgstr "ID"
 
+#: src/edlistctrl.cpp:716 src/export_html.cpp:142
 #, c-format
 msgid "Source text — %s"
 msgstr "წყაროს ტექსტი - %s"
 
-msgid "unknown language"
-msgstr "უცნობი ენა"
-
+#: src/errors.cpp:84
 #, c-format
 msgid "Network error: %s (%d)"
 msgstr "ქსელის შეცდომა: %s (%d)"
 
+#: src/errors.cpp:93
 msgid "Unknown error"
 msgstr "უცნობი შეცდომა"
 
-#, c-format
-msgid "Failed command: %s"
-msgstr "ვერ შესრულებული ბრძანება: %s"
+#: src/excel_io.cpp:261 src/excel_io.cpp:298 src/excel_io.cpp:302
+msgid "Failed to create the Excel file."
+msgstr ""
 
+#: src/excel_io.cpp:351 src/excel_io.cpp:395 src/excel_io.cpp:419
+msgid "Failed to import from Excel file."
+msgstr ""
+
+#: src/excel_io.cpp:428
+msgid "Excel Import"
+msgstr "Excel-ის შემოტანა"
+
+#. TRANSLATORS: Shown above a list of columns and their meaning
+#: src/excel_io.cpp:442
+msgid "Import from Excel columns as:"
+msgstr ""
+
+#: src/excel_io.cpp:452
+msgid "ID:"
+msgstr "ID:"
+
+#: src/excel_io.cpp:460
+msgid "Context:"
+msgstr "კონტექსტი:"
+
+#: src/excel_io.cpp:467
+msgid "Source text ID:"
+msgstr "წყარო ტექსტის ID:"
+
+#: src/excel_io.cpp:467
+msgid "Source text:"
+msgstr "წყარო ტექსტი:"
+
+#: src/excel_io.cpp:478
+msgid "Translation:"
+msgstr "თარგმანი:"
+
+#: src/excel_io.cpp:485 src/sidebar_terminology.cpp:192
+msgid "Import"
+msgstr "შემოტანა"
+
+#: src/extractors/extractor.cpp:373
 msgid "Failed to merge gettext catalogs."
 msgstr "'gettext' კატალოგების შერწყმა ჩავარდა."
 
+#: src/fileviewer.cpp:132
 msgid "Open in Editor"
 msgstr "რედაქტორში გახსნა"
 
+#: src/fileviewer.cpp:132
 msgid "Open in editor"
 msgstr "რედაქტორში გახსნა"
 
-msgid ""
-"No information about this string’s occurrences in the source code is "
-"provided in the file."
+#: src/fileviewer.cpp:256
+msgid "No information about this string’s occurrences in the source code is provided in the file."
 msgstr ""
 
+#: src/fileviewer.cpp:256
 msgid "No usage information"
 msgstr "გამოყენების მონაცემები არაა"
 
+#: src/fileviewer.cpp:262
 #, c-format
 msgid "%d code occurrence"
 msgid_plural "%d code occurrences"
 msgstr[0] "კოდში ჩანს %d-ხელ"
 msgstr[1] "კოდში ჩანს %d-ჯერ"
 
+#: src/fileviewer.cpp:283
 msgid "Source code not found"
 msgstr "წყაროს კოდი ნაპოვნი არაა"
 
-msgid ""
-"Poedit cannot show source code where the string is used, because the file is "
-"either not available in the referenced location or it is a symbolic "
-"reference that doesn’t point to a real file."
+#: src/fileviewer.cpp:284
+msgid "Poedit cannot show source code where the string is used, because the file is either not available in the referenced location or it is a symbolic reference that doesn’t point to a real file."
 msgstr ""
 
+#: src/fileviewer.cpp:298
 msgid "File cannot be opened"
 msgstr "ფაილის გახსნა შეუძლებელია"
 
+#: src/fileviewer.cpp:299
 #, c-format
 msgid "Poedit was unable to open the “%s” file."
 msgstr ""
 
+#: src/findframe.cpp:83 src/findframe.cpp:101 src/findframe.cpp:300
+#: src/resources/menus.xrc:156
 msgid "Find"
 msgstr "ძებნა"
 
+#: src/findframe.cpp:102 src/findframe.cpp:300
 msgid "Replace"
 msgstr "ჩანაცვლება"
 
 #. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+#: src/findframe.cpp:118
 msgid "Options"
 msgstr "პარამეტრები"
 
+#: src/findframe.cpp:122
 msgid "Ignore case"
 msgstr "რეგისტრის გამოტოვება"
 
+#: src/findframe.cpp:123
 msgid "Wrap around"
 msgstr "სიტყვების გადატანა"
 
+#: src/findframe.cpp:124
 msgid "Whole words only"
 msgstr "მხოლოდ მთლიანი სიტყვები"
 
+#: src/findframe.cpp:125
 msgid "Find in source texts"
 msgstr "წყაროს ტექსტში ძებნა"
 
+#: src/findframe.cpp:126
 msgid "Find in translations"
 msgstr "თარგმანში ძებნა"
 
+#: src/findframe.cpp:127
 msgid "Find in comments"
 msgstr "შენიშვნებში ძიება"
 
+#: src/findframe.cpp:148 src/licensing_ui.cpp:535 src/titleless_window.cpp:82
+#: src/wx_translatable_strings.h:96
 msgid "Close"
 msgstr "დახურვა"
 
+#: src/findframe.cpp:149
 msgid "Replace &All"
 msgstr "ყველას &ჩანაცვლება"
 
+#: src/findframe.cpp:149
 msgid "Replace &all"
 msgstr "ყველას &ჩანაცვლება"
 
+#: src/findframe.cpp:150
 msgid "&Replace"
 msgstr "&ჩანაცვლება"
 
+#: src/findframe.cpp:151
 msgid "< &Previous"
 msgstr "< &წინა"
 
+#: src/findframe.cpp:152
 msgid "&Next >"
 msgstr "&შემდეგი >"
 
+#: src/findframe.cpp:235
 msgid "String to find"
 msgstr "საძიებელი ტექსტი"
 
+#: src/findframe.cpp:236
 msgid "Replacement string"
 msgstr "ჩასანაცვლებელი სტრიქონი"
 
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "%s პროგრამის გაშვება ვერ ხერხდება"
+#: src/gexecute.cpp:131 src/gexecute.cpp:146 src/gexecute.cpp:170
+msgid "warning: "
+msgstr "გაფრთხილება: "
+
+#: src/gexecute.cpp:171
+msgid "error: "
+msgstr "შეცდომა: "
+
+#: src/glossary.cpp:273 src/glossary.cpp:277
+msgid "Failed to read the CSV file."
+msgstr "CSV ფაილის წაკითხვა ჩავარდა."
 
 #. TRANSLATORS: placeholder/hint in language controls
+#: src/languagectrl.cpp:138
 msgid "Language name or code"
 msgstr "ენის სახელი ან კოდი"
 
+#: src/languagectrl.cpp:210
 msgid "Translation Language"
 msgstr "თარგმანის ენა"
 
+#: src/languagectrl.cpp:217
 msgid "Language of the translation:"
 msgstr "თარგმანის ენა:"
 
+#: src/licensing.cpp:196 src/licensing.cpp:206
+msgid "Invalid license key"
+msgstr "არასწორი ლიცენზია"
+
+#: src/licensing.cpp:211
+msgid "Subscription expired"
+msgstr "გამოწერა ამოიწურა"
+
+#: src/licensing.cpp:218
+#, c-format
+msgid "App updates expired, license is only valid for version %s"
+msgstr ""
+
+#: src/licensing.cpp:224
+#, c-format
+msgid "License key only valid for older Poedit version (%s)"
+msgstr ""
+
+#: src/licensing.cpp:231
+msgid "Maximum allowed activations exceeded"
+msgstr "აქტივაციის მაქსიმალური დასაშვები რაოდენობა გადაცილებულია"
+
+#: src/licensing.cpp:236 src/licensing.cpp:263
+#, c-format
+msgid "Unknown activation error (%s)"
+msgstr "აქტივაციის უცნობი შეცდომა (%s)"
+
+#: src/licensing_ui.cpp:92 src/licensing_ui.cpp:97 src/licensing_ui.cpp:859
+#: src/licensing_ui.cpp:872 src/licensing_ui.cpp:884
+msgid "Poedit Activation"
+msgstr "Poedit-ის აქტივაცია"
+
+#: src/licensing_ui.cpp:92 src/licensing_ui.cpp:102
+#: src/marketing_services.cpp:49 src/wx/main_toolbar.cpp:155
+#: src/wx/main_toolbar.cpp:182
+msgid "Upgrade to Pro"
+msgstr "Pro ვერსიამდე განახლება"
+
+#: src/licensing_ui.cpp:248
+msgid "Please enter your license key:"
+msgstr "შეიყვანეთ თქვენი ლიცენზიის გასაღები:"
+
+#: src/licensing_ui.cpp:257
+msgid "You should find your key in the confirmation email you received after you purchased Poedit. Activation requires internet connection."
+msgstr ""
+
+#: src/licensing_ui.cpp:262
+msgid "Retrieve lost license key"
+msgstr "დაკარგული ლიცენზიის გასაღების აღდგენა"
+
+#: src/licensing_ui.cpp:271
+msgid "Buy Online…"
+msgstr "ონლაინ შეძენა…"
+
+#: src/licensing_ui.cpp:271
+msgid "Buy online…"
+msgstr "ონლაინ შეძენა…"
+
+#: src/licensing_ui.cpp:286 src/licensing_ui.cpp:290
+msgid "Activate"
+msgstr "აქტივაცია"
+
+#: src/licensing_ui.cpp:316
+msgid "Activating your license…"
+msgstr "თქვენი ლიცენზიის აქტივაცია…"
+
+#: src/licensing_ui.cpp:327
+msgid "Would you like to hear about new versions?"
+msgstr "გსურთ შეიტყოთ ახალი ვერსიების შესახებ?"
+
+#: src/licensing_ui.cpp:328
+msgid "We’ll send you an email when a new major version is released. No marketing, no spammy newsletters. Just very rare heads-up about new versions."
+msgstr ""
+
+#: src/licensing_ui.cpp:331 src/licensing_ui.cpp:690
+msgid "No, thanks"
+msgstr "არა, მადლობა"
+
+#: src/licensing_ui.cpp:331
+msgid "Notify me"
+msgstr "შემატყობინე"
+
+#: src/licensing_ui.cpp:358
+msgid "Upgrade your Pro license"
+msgstr "Pro ლიცენზიის განახლება"
+
+#: src/licensing_ui.cpp:377
+msgid "Renew your license"
+msgstr "თქვენი ლიცენზიის განახლება"
+
+#: src/licensing_ui.cpp:395
+msgid "Add more devices"
+msgstr "მეტი მოწყობილობის დამატება"
+
+#: src/licensing_ui.cpp:440
+msgid "Thank you!"
+msgstr "მადლობა!"
+
+#: src/licensing_ui.cpp:446
+msgid "Your copy is upgraded to Poedit Pro."
+msgstr "თქვენი ასლი განახლდა Poedit Pro-ზე."
+
+#: src/licensing_ui.cpp:450 src/licensing_ui.cpp:454
+msgid "Manage License"
+msgstr "ლიცენზიის მართვა"
+
+#: src/licensing_ui.cpp:454
+msgid "Manage license"
+msgstr "ლიცენზიის მართვა"
+
+#. TRANSLATORS: "Renew" as a verb meaning making something that stopped working (a subscription) work again by prolonging it for another period.
+#: src/licensing_ui.cpp:479 src/licensing_ui.cpp:862 src/licensing_ui.cpp:875
+#: src/licensing_ui.cpp:1161
+msgid "Renew"
+msgstr "განახლება"
+
+#: src/licensing_ui.cpp:497
+msgid "Deactivate"
+msgstr "დეაქტივაცია"
+
+#: src/licensing_ui.cpp:509
+msgid "Deactivating your license…"
+msgstr "თქვენი ლიცენზიის დეაქტივაცია…"
+
+#: src/licensing_ui.cpp:567
+msgid "Upgrade to Poedit Pro to Unlock WordPress Extras"
+msgstr "Wordpress Extras-ის გამოსაჩენად განახლდით Poedit-ის Pro ვერსიამდე"
+
+#: src/licensing_ui.cpp:568 src/licensing_ui.cpp:589
+msgid "Upgrade to take advantage of Pro’s extra smarts: it understands WordPress themes and plugins and sets everything up for you. You can focus on translating and don’t have to worry about the technical details. With the free version, you would have to do everything manually yourself."
+msgstr ""
+
+#: src/licensing_ui.cpp:571
+msgid "Upgrade to Poedit Pro to Unlock Statistics"
+msgstr "სტატისტიკის გამოსაჩენად განახლდით Poedit-ის Pro ვერსიამდე"
+
+#: src/licensing_ui.cpp:574
+msgid "Upgrade to Poedit Pro to Unlock Online Suggestions"
+msgstr "ონლაინ რჩევების საჩვენებლად განახლდით Poedit-ის Pro ვერსიამდე"
+
+#: src/licensing_ui.cpp:577
+msgid "Upgrade to Poedit Pro to Unlock Templates Support"
+msgstr ""
+
+#: src/licensing_ui.cpp:581
+msgid "Upgrade to Poedit Pro to Unlock Extra Features"
+msgstr ""
+
+#: src/licensing_ui.cpp:588
+msgid "WordPress extras require upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:593
+msgid "Statistics require upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:596
+msgid "Online TM suggestions require upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:599
+msgid "Templates support requires upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:602
+msgid "Customizable warnings require upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:605
+msgid "Customizable file extensions require upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:608
+msgid "Terminology search and glossaries require upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:611
+msgid "Replacing source text requires upgrade to Poedit Pro"
+msgstr "საწყისი ტექსტის ჩანაცვლებას Poedit Pro-მდე განახლება სჭირდება"
+
+#: src/licensing_ui.cpp:614
+msgid "Merging translation files requires upgrade to Poedit Pro"
+msgstr "თარგმანის ფაილების შერწყმას Poedit Pro-მდე აწევა სჭირდება"
+
+#: src/licensing_ui.cpp:617
+msgid "Excel import and export require upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:649
+msgid "Purchasing the full version will unlock additional features in Poedit, including:"
+msgstr ""
+
+#: src/licensing_ui.cpp:663
+msgid "Suggestions from online translation memory"
+msgstr ""
+
+#: src/licensing_ui.cpp:664
+msgid "Machine translation with DeepL, Google Translate or Microsoft Translator"
+msgstr "მანქანური თარგმანი DeepL, Google Translate ან Microsoft Translator-ით"
+
+#: src/licensing_ui.cpp:665
+msgid "Worry-free setup for WordPress themes and plugins"
+msgstr ""
+
+#: src/licensing_ui.cpp:666
+msgid "Extract strings from Twig or Blade templates"
+msgstr ""
+
+#: src/licensing_ui.cpp:667
+msgid "Word count and statistics"
+msgstr "სიტყვების რაოდენობა და სტატისტიკა"
+
+#: src/licensing_ui.cpp:668
+msgid "Excel import and export"
+msgstr "Excel-ის შემოტანა და გატანა"
+
+#: src/licensing_ui.cpp:669
+msgid "Merging translation files for all file formats"
+msgstr "თარგმანის ფაილების შერწყმა ყველა ფაილის ფორმატისთვის"
+
+#: src/licensing_ui.cpp:670
+msgid "Customizable QA checks and warnings"
+msgstr "მორგებადი QA შემოწმებები და გაფრთხილებები"
+
+#: src/licensing_ui.cpp:671
+msgid "Replace source text with translations from another file"
+msgstr "საწყისი ტექსტის ჩანაცვლება თარგმანით სხვა ფაილიდან"
+
+#: src/licensing_ui.cpp:672
+msgid "Terminology search and glossaries"
+msgstr "ტერმინოლოგიის ძებნა და ლექსიკონები"
+
+#: src/licensing_ui.cpp:673
+msgid "Personal priority support"
+msgstr "არჩევანის პირადი პრიორიტეტი"
+
+#: src/licensing_ui.cpp:679
+msgid "Enter license key"
+msgstr "შეიყვანეთ ლიცენზიის გასაღები"
+
+#: src/licensing_ui.cpp:689
+msgid "Upgrade…"
+msgstr "განახლება…"
+
+#: src/licensing_ui.cpp:754 src/licensing_ui.cpp:780
+#, c-format
+msgid "Licensed to: %s"
+msgstr "ლიცენზირებულია %s-სთვის"
+
+#. TRANSLATORS: %s is replaced at runtime with e.g. "Poedit Pro" or "Poedit Pro+"
+#: src/licensing_ui.cpp:756 src/licensing_ui.cpp:785
+#, c-format
+msgid "License type: %s"
+msgstr "ლიცენზიის ტიპი: %s"
+
+#: src/licensing_ui.cpp:780
+msgid "(personal license)"
+msgstr "(პირადი ლიცენზია)"
+
+#: src/licensing_ui.cpp:859
+msgid "Subscription expired."
+msgstr "გამოწერა ამოიწურა."
+
+#: src/licensing_ui.cpp:861
+msgid "Your license was deactivated on this computer because your subscription expired."
+msgstr "თქვენი ლიცენზია ამ კომპიუტერზე დეაქტივირებულია, რადგან თქვენი გამოწერის ვადა ამოიწურა."
+
+#: src/licensing_ui.cpp:871
+#, c-format
+msgid "Your license was deactivated on this computer because it only includes app updates up to Poedit version %s."
+msgstr ""
+
+#: src/licensing_ui.cpp:872
+msgid "App updates expired."
+msgstr "აპის განახლებების ვადა ამოიწურა."
+
+#: src/licensing_ui.cpp:884
+msgid "License deactivated."
+msgstr "ლიცენზია დეაქტივირებულია."
+
+#: src/licensing_ui.cpp:886
+msgid "Your license was deactivated on this computer. Please email help@poedit.net if you are not sure why this happened."
+msgstr ""
+
+#. TRANSLATORS: %s is a placeholder for subscription name, e.g. Pro+ or Pro
+#: src/licensing_ui.cpp:1112
+#, c-format
+msgid "Your %s subscription expired."
+msgstr "თქვენი გამოწერა %s ვადაგასულია."
+
+#. TRANSLATORS: "Expired" as in ended e.g. after 1 year
+#: src/licensing_ui.cpp:1117
+msgid "Machine translation service expired."
+msgstr ""
+
+#. TRANSLATORS: "standard" here is the same word as the standalone string "Standard".
+#: src/licensing_ui.cpp:1125
+msgid "Machine translation quality is reduced to standard."
+msgstr ""
+
+#: src/localazy_client.cpp:385
 msgid "All strings"
 msgstr "ახალი სტრიქონები"
 
+#: src/localazy_client.cpp:404
 msgid "Couldn’t download Localazy project details."
 msgstr "Localazy-ის პროექტის დეტალების გადმოწერის შეცდომა."
 
+#: src/localazy_client.cpp:476 src/localazy_client.cpp:490
 msgid "There was an error when uploading translations to Localazy."
 msgstr "შეცდომა თარგმანების Localazy-ზე ატვირთვისას."
 
+#: src/localazy_gui.cpp:103
 msgid "Projects"
 msgstr "პროექტები"
 
-msgid ""
-"Localazy is a highly automated localization platform allowing anyone to "
-"translate their products and content into multiple languages easily."
-msgstr ""
-"Localazy ავტომატიზებული ლოკალიზაციის პლატფორმაა, რომელიც ყველას აძლევს "
-"საშუალებას, თავისი პროდუქტი და შემცველობა სხვადასხვა ენაზე ადვილად თარგმნოს."
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#: src/localazy_gui.cpp:115
+#, c-format
+msgid "Learn more about %s"
+msgstr "შეიტყვეთ მეტი %s-ის შესახებ"
 
+#: src/localazy_gui.cpp:146
+msgid "Localazy is a highly automated localization platform allowing anyone to translate their products and content into multiple languages easily."
+msgstr "Localazy ავტომატიზებული ლოკალიზაციის პლატფორმაა, რომელიც ყველას აძლევს საშუალებას, თავისი პროდუქტი და შემცველობა სხვადასხვა ენაზე ადვილად თარგმნოს."
+
+#: src/localazy_gui.cpp:241
 msgid "Add Project"
 msgstr "პროექტის დამატება"
 
+#: src/localazy_gui.cpp:241
 msgid "Add project"
 msgstr "პროექტის დამატება"
 
+#: src/manager.cpp:117
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - კატალოგების მენეჯერი"
 
+#: src/manager.cpp:162 src/prefsdlg.cpp:877
 msgid "Edit…"
 msgstr "ჩასწორება…"
 
+#: src/manager.cpp:167
 msgid "Create new translations project"
 msgstr "შექმენი ახალი სათარგმი პროექტი"
 
+#: src/manager.cpp:168
 msgid "Delete the project"
 msgstr "პროექტის წაშლა"
 
+#: src/manager.cpp:169
 msgid "Edit the project"
 msgstr "პროექტის დამუშავება"
 
+#: src/manager.cpp:199 src/resources/toolbar.xrc:41 src/statistics.cpp:258
+msgid "Statistics"
+msgstr "სტატისტიკა"
+
+#: src/manager.cpp:200 src/resources/toolbar.xrc:42
+msgid "Show translation statistics"
+msgstr "თარგმანის სტატისტიკის ჩვენება"
+
+#: src/manager.cpp:202
 msgid "Update all"
 msgstr "ყველას განახლება"
 
+#: src/manager.cpp:203
 msgid "Update all catalogs in the project"
 msgstr "განაახლე ყველა კატალოგი პროექტში"
 
+#: src/manager.cpp:405
 msgid "Total"
 msgstr "სულ"
 
+#: src/manager.cpp:406
 msgid "Untrans"
 msgstr "უთარგმნ"
 
+#: src/manager.cpp:407
 msgctxt "column/row header"
 msgid "Needs Work"
 msgstr "საჭიროებს დამუშავებას"
 
+#: src/manager.cpp:408
 msgid "Errors"
 msgstr "შეცდომები"
 
+#: src/manager.cpp:409
 msgid "Last modified"
 msgstr "ბოლო ცვლილება"
 
+#: src/manager.cpp:440 src/propertiesdlg.cpp:478
 msgid "Select directory"
 msgstr "უჯრის ამორჩევა"
 
+#: src/manager.cpp:460
 msgid "Directories:"
 msgstr "უჯრები:"
 
+#: src/manager.cpp:532
 msgid "<unnamed>"
 msgstr "<უსახელო>"
 
+#: src/manager.cpp:570
 #, c-format
 msgid "Do you want to delete project “%s”?"
 msgstr "გნებავთ პროექტის \"%s\" წაშლა”?"
 
+#: src/manager.cpp:571
 msgid "Delete project"
 msgstr "პროექტის წაშლა"
 
+#: src/manager.cpp:574
 msgid "Deleting the project will not delete any translation files."
 msgstr ""
 
+#: src/manager.cpp:602
 msgid "Confirmation"
 msgstr "დასტური"
 
+#: src/manager.cpp:602
 msgid "Update all catalogs in this project?"
 msgstr ""
 
+#: src/manager.cpp:603
 msgid "Performs update from source code on all files in the project."
 msgstr ""
 
+#: src/manager.cpp:612
+msgid "Updating project catalogs"
+msgstr "პროექტის კატალოგების განახლება"
+
+#: src/menus.cpp:138
 msgid "Check for Updates…"
 msgstr "განახლებების შემოწმება…"
 
+#: src/menus.cpp:140
 msgid "Catalogs Manager"
 msgstr "კატალოგების მმართველი"
 
+#: src/menus.cpp:143
+msgid "License…"
+msgstr "ლიცენზია…"
+
+#: src/menus.cpp:155
 msgid "&Preferences…"
 msgstr "&მორგება…"
 
+#: src/menus.cpp:170 src/resources/menus.xrc:95 src/resources/menus.xrc:450
+#: src/wx_translatable_strings.h:102
 msgid "&Edit"
 msgstr "&რედაქტირება"
 
+#: src/menus.cpp:190 src/wx_translatable_strings.h:118
 msgid "Undo"
 msgstr "დაბრუნება"
 
+#: src/menus.cpp:191 src/wx_translatable_strings.h:113
 msgid "Redo"
 msgstr "აღდგენა"
 
+#: src/menus.cpp:200
 msgid "Paste and Match Style"
 msgstr "კოპირებისა და ჩასმის სტილი"
 
+#: src/menus.cpp:203 src/prefsdlg.cpp:1103 src/sidebar_terminology.cpp:77
+#: src/wx_translatable_strings.h:100
 msgid "Delete"
 msgstr "წაშლა"
 
+#: src/menus.cpp:212
 msgid "Spelling and Grammar"
 msgstr "მართლწერა და გრამატიკა"
 
+#: src/menus.cpp:214
 msgid "Show Spelling and Grammar"
 msgstr "მართლწერისა და გრამატიკის ჩვენება"
 
+#: src/menus.cpp:215
 msgid "Check Document Now"
 msgstr "შეამოწმე დოკუმენტი ახლა"
 
+#: src/menus.cpp:217
 msgid "Check Spelling While Typing"
 msgstr "მართლწერის რეალურ დროში შემოწმება"
 
+#: src/menus.cpp:218
 msgid "Check Grammar With Spelling"
 msgstr "შეამოწმეთ გრამატიკა მართლწერით"
 
+#: src/menus.cpp:219
 msgid "Correct Spelling Automatically"
 msgstr "მართლწერის ავტომატური შემოწმება"
 
+#: src/menus.cpp:222
 msgid "Substitutions"
 msgstr "შენაცვლებები"
 
+#: src/menus.cpp:224
 msgid "Show Substitutions"
 msgstr "შენაცვლებების ჩვენება"
 
+#: src/menus.cpp:226
 msgid "Smart Copy/Paste"
 msgstr "ჭკვიანი კოპირება/ჩასმა"
 
+#: src/menus.cpp:227
 msgid "Smart Quotes"
 msgstr "ჭკვიანი ბრჭყალები"
 
+#: src/menus.cpp:228
 msgid "Smart Dashes"
 msgstr "ჭკვიანი ტირეები"
 
+#: src/menus.cpp:229
 msgid "Smart Links"
 msgstr "ჭკვიანი ბმულები"
 
+#: src/menus.cpp:230
 msgid "Text Replacement"
 msgstr "ტექსტის ჩანაცვლება"
 
+#: src/menus.cpp:233
 msgid "Transformations"
 msgstr "გარდაქმნები"
 
+#: src/menus.cpp:235
 msgid "Make Upper Case"
 msgstr "დიდ ასოებში გადაყვანა"
 
+#: src/menus.cpp:236
 msgid "Make Lower Case"
 msgstr "პატარა ასოებში გადაყვანა"
 
+#: src/menus.cpp:237
 msgid "Capitalize"
 msgstr "დიდი ასოთი აღნიშვნა"
 
+#: src/menus.cpp:240
 msgid "Speech"
 msgstr "საუბარი"
 
+#: src/menus.cpp:242
 msgid "Start Speaking"
 msgstr "ლაპარაკის დაწყება"
 
+#: src/menus.cpp:243
 msgid "Stop Speaking"
 msgstr "ლაპარაკის დასრულება"
 
+#: src/menus.cpp:246 src/resources/menus.xrc:177 src/resources/menus.xrc:460
 msgid "&View"
 msgstr "&ხედი"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:252
 msgid "Show Toolbar"
 msgstr "პანელის ჩვენება"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:255
 msgid "Customize Toolbar…"
 msgstr "ხელსაწყოთა ზოლის მორგება…"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:258
 msgid "Enter Full Screen"
 msgstr "სრული ეკრანი"
 
+#: src/menus.cpp:265 src/menus.cpp:296 src/resources/menus.xrc:352
+#: src/resources/menus.xrc:469
 msgid "Window"
 msgstr "ფანჯარა"
 
+#: src/menus.cpp:266
 msgid "Minimize"
 msgstr "ჩაკეცვა"
 
+#: src/menus.cpp:267
 msgid "Zoom"
 msgstr "დაახლოება"
 
+#: src/menus.cpp:269 src/welcomescreen.cpp:222 src/welcomescreen.cpp:262
 msgid "Welcome to Poedit"
 msgstr "მოგესალმებით Poedit-ში"
 
+#: src/menus.cpp:274
 msgid "Bring All to Front"
 msgstr "ყველას წინ გამოტანა"
 
+#: src/prefsdlg.cpp:177
 msgid "Information about the translator"
 msgstr "ინფორმაცია მთარგმნელის შესახებ"
 
+#: src/prefsdlg.cpp:184
 msgid "Name:"
 msgstr "სახელი:"
 
+#: src/prefsdlg.cpp:187
 msgid "Your Name"
 msgstr "თქვენი სახელი"
 
+#: src/prefsdlg.cpp:189
 msgid "Email:"
 msgstr "ელ-ფოსტა:"
 
+#: src/prefsdlg.cpp:192
 msgid "you@example.com"
 msgstr "you@example.com"
 
-msgid ""
-"Your name and email address are only used to set the Last-Translator header "
-"of GNU gettext files."
+#: src/prefsdlg.cpp:195
+msgid "Your name and email address are only used to set the Last-Translator header of GNU gettext files."
 msgstr ""
 
+#: src/prefsdlg.cpp:204
 msgid "Editing"
 msgstr "რედაქტირება"
 
+#: src/prefsdlg.cpp:207
 msgid "Automatically compile MO file when saving"
 msgstr "MO ფაილის ავტომატური კომპილაცია შენახვისას"
 
-msgid "Show summary after updating files"
-msgstr "ფაილების განახლების შემდეგ შეჯამების ჩვენება"
-
+#: src/prefsdlg.cpp:212
 msgid "Check spelling"
 msgstr "მართლწერის შემოწმება"
 
+#: src/prefsdlg.cpp:214
 msgid "Always change focus to text input field"
 msgstr "ყოველთვის გააქტიურე ტექსტის ჩასაწერი ველი"
 
-msgid ""
-"Never let the list of strings take focus. If enabled, you must use Ctrl-"
-"arrows for keyboard navigation but you can also type text immediately, "
-"without having to press Tab to change focus."
-msgstr ""
-"არასოდეს გააქტიურდეს სათარგმნი ტექსტების სარკმელი. თუ ამ ფუნქციას ჩართავთ, "
-"Ctrl+ისრების საშუალებით შეგეძლებათ ტექსტებს შორის ნავიგაცია, მაგრამ ტექსტის "
-"შეყვანა პირდაპირ იქნება შესაძლებელი, შესაბამისად ტექსტის ჩასაწერად Tab "
-"ღილაკზე ხელის დაჭერა აღარ მოგიწევთ."
+#: src/prefsdlg.cpp:216
+msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
+msgstr "არასოდეს გააქტიურდეს სათარგმნი ტექსტების სარკმელი. თუ ამ ფუნქციას ჩართავთ, Ctrl+ისრების საშუალებით შეგეძლებათ ტექსტებს შორის ნავიგაცია, მაგრამ ტექსტის შეყვანა პირდაპირ იქნება შესაძლებელი, შესაბამისად ტექსტის ჩასაწერად Tab ღილაკზე ხელის დაჭერა აღარ მოგიწევთ."
 
+#: src/prefsdlg.cpp:224
 msgid "Appearance"
 msgstr "გარეგნობა"
 
+#: src/prefsdlg.cpp:231
 msgid "Use custom list font:"
 msgstr "სიის ფონტის ხელით მითითება:"
 
+#: src/prefsdlg.cpp:234
 msgid "Use custom text fields font:"
 msgstr "ხელით მითითებული ტექსტური ველის ფონტი:"
 
+#: src/prefsdlg.cpp:245
 msgid "Change UI language"
 msgstr "ინტერფეისის ენის შეცვლა"
 
 #. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
+#: src/prefsdlg.cpp:255
 msgid "(requires Windows 8 or newer)"
 msgstr "(საჭიროებს Windows 8 ან უფრო ახალს)"
 
+#: src/prefsdlg.cpp:358
 msgid "General"
 msgstr "საერთო"
 
+#: src/prefsdlg.cpp:380
 msgid "Use translation memory"
 msgstr "თარგმანის მეხსიერების გამოყენება"
 
+#: src/prefsdlg.cpp:390
 msgid "Manage…"
 msgstr "მართვა…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
+#: src/prefsdlg.cpp:397
 msgid "When updating from sources"
 msgstr "წყაროს კოდიდან განახლებისას"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
+#: src/prefsdlg.cpp:400
 msgid "fuzzy match within the file"
 msgstr "მსგავსი დამთხვევები ამავე ფაილში"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
+#: src/prefsdlg.cpp:402
 msgid "pre-translate from TM"
 msgstr "პრე-თარგმანი TM-დან"
 
-msgid ""
-"Poedit can attempt to fill in new entries from only previous translations in "
-"the file or from your entire translation memory. Using the TM won’t be very "
-"effective if it’s near-empty, but it will get better as you add more "
-"translations to it."
+#: src/prefsdlg.cpp:418
+msgid "Poedit can attempt to fill in new entries from only previous translations in the file or from your entire translation memory. Using the TM won’t be very effective if it’s near-empty, but it will get better as you add more translations to it."
 msgstr ""
 
+#: src/prefsdlg.cpp:454
+msgid "Use suggestions from online collaborative TM"
+msgstr ""
+
+#: src/prefsdlg.cpp:469
+msgid "Poedit uses a large online translation memory that includes both contributed human translations and state-of-the-art machine translations."
+msgstr ""
+
+#: src/prefsdlg.cpp:472 src/sidebar_pro.cpp:698
+msgid "Contribute my translations to the online TM"
+msgstr ""
+
+#: src/prefsdlg.cpp:473 src/sidebar_pro.cpp:699
+msgid "Keep my translations private"
+msgstr "ჩემი თარგმანების საიდუმლოდ დატოვება"
+
+#: src/prefsdlg.cpp:474
+msgid "Ask me for each file individually"
+msgstr "თითოეული ფაილისთვის ცალ-ცალკე კითხვა"
+
+#: src/prefsdlg.cpp:492 src/sidebar_pro.cpp:159
+msgid "Change Settings…"
+msgstr "პარამეტრების შეცვლა…"
+
+#: src/prefsdlg.cpp:492 src/sidebar_pro.cpp:159
+msgid "Change settings…"
+msgstr "პარამეტრების შეცვლა…"
+
+#: src/prefsdlg.cpp:580
 msgid "Stored translations:"
 msgstr "დამახსოვრებული თარგმანები:"
 
+#: src/prefsdlg.cpp:581
 msgid "Database size on disk:"
 msgstr "ბაზის ზომა დისკზე:"
 
+#: src/prefsdlg.cpp:596
 msgid "Import Translation Files…"
 msgstr "თარგმანის ფაილების შემოტანა…"
 
+#: src/prefsdlg.cpp:596
 msgid "Import translation files…"
 msgstr "თარგმანის ფაილების შემოტანა…"
 
+#: src/prefsdlg.cpp:598
 msgid "Import From TMX…"
 msgstr "TMX-დან შემოტანა…"
 
+#: src/prefsdlg.cpp:598
 msgid "Import from TMX…"
 msgstr "TMX-დან შემოტანა…"
 
+#: src/prefsdlg.cpp:599
 msgid "Export To TMX…"
 msgstr "TMX-ში გატანა…"
 
+#: src/prefsdlg.cpp:599
 msgid "Export to TMX…"
 msgstr "TMX-ში გატანა…"
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+#: src/prefsdlg.cpp:602 src/prefsdlg.cpp:770
 msgid "Reset"
 msgstr "გადატვირთვა"
 
+#: src/prefsdlg.cpp:621
 msgid "Select translation files to import"
 msgstr "აირჩიეთ შემოსატანი სათარგმნი ფაილები"
 
-msgid "Translation Memory"
-msgstr "თარგმანის მეხსიერება"
-
-msgid "Importing translations…"
-msgstr "თარგმანების შემოტანა…"
-
-#, c-format
-msgid "Error loading translation file “%s”."
-msgstr ""
-
-msgid "Finalizing…"
-msgstr "დასრულება…"
-
+#: src/prefsdlg.cpp:654
 msgid "Select TMX files to import"
 msgstr "აირჩიეთ შემოსატანი TMX ფაილები"
 
+#: src/prefsdlg.cpp:657 src/prefsdlg.cpp:733
 msgid "TMX Files"
 msgstr "TMX ფაილები"
 
+#: src/prefsdlg.cpp:684
+msgid "Importing translations…"
+msgstr "თარგმანების შემოტანა…"
+
+#: src/prefsdlg.cpp:685
+msgid "Importing translation memory failed."
+msgstr "თარგმანის მეხსიერების შემოტანა ჩავარდა."
+
+#: src/prefsdlg.cpp:699
 #, c-format
-msgid "Importing translation memory from “%s” failed."
-msgstr ""
+msgid "Importing from “%s”…"
+msgstr "შემოტანა \"%s\"-დან…"
 
-msgid "Import error"
-msgstr "შემოტანის შეცდომა"
+#. TRANSLATORS: %s is a (formatted) number here
+#: src/prefsdlg.cpp:717
+#, c-format
+msgid "%s translation was imported."
+msgid_plural "%s translations were imported."
+msgstr[0] "შემოტანილია %s თარგმანი."
+msgstr[1] "შემოტანილია %s თარგმანი."
 
+#: src/prefsdlg.cpp:730
 msgid "Export as…"
 msgstr "გატანა როგორც…"
 
+#: src/prefsdlg.cpp:745
 msgid "Exporting translations…"
 msgstr "თარგმანების გატანა…"
 
+#: src/prefsdlg.cpp:746
 #, c-format
 msgid "Exporting translation memory to “%s” failed."
 msgstr ""
 
-msgid "Export error"
-msgstr "გატანის შეცდომა"
-
+#: src/prefsdlg.cpp:764
 msgid "Reset translation memory"
 msgstr "თარგმანის მეხსიერების ჩამოყრა"
 
+#: src/prefsdlg.cpp:765
 msgid "Are you sure you want to reset the translation memory?"
 msgstr ""
 
-msgid ""
-"Resetting the translation memory will irrevocably delete all stored "
-"translations from it. You can’t undo this operation."
+#: src/prefsdlg.cpp:766
+msgid "Resetting the translation memory will irrevocably delete all stored translations from it. You can’t undo this operation."
 msgstr ""
 
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
+#: src/prefsdlg.cpp:808
 msgid "TM"
 msgstr "TM"
 
-msgid ""
-"Source code extractors are used to find translatable strings in the source "
-"code files and extract them so that they can be translated."
+#: src/prefsdlg.cpp:810 src/sidebar_terminology.cpp:638
+msgid "Translation Memory"
+msgstr "თარგმანის მეხსიერება"
+
+#: src/prefsdlg.cpp:830
+msgid "Source code extractors are used to find translatable strings in the source code files and extract them so that they can be translated."
 msgstr ""
 
+#: src/prefsdlg.cpp:843
 msgid "Custom Extractors:"
 msgstr "მორგებული ექსტრაქტორები:"
 
+#: src/prefsdlg.cpp:843
 msgid "Custom extractors:"
 msgstr "მორგებული ექსტრაქტორები:"
 
+#: src/prefsdlg.cpp:929
 msgid "GNU gettext"
 msgstr "GNU gettext"
 
-msgid ""
-"Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
-"+, C#, Perl, Python, Java, JavaScript and others)."
+#: src/prefsdlg.cpp:935
+msgid "Supports all programming languages recognized by GNU gettext tools (PHP, C/C++, C#, Perl, Python, Java, JavaScript and others)."
 msgstr ""
 
+#. TRANSLATORS: Templates for themes etc. - e.g. Twig or Volt templates
+#: src/prefsdlg.cpp:945
+msgid "Templates"
+msgstr "შაბლონები"
+
+#: src/prefsdlg.cpp:946
+msgid "(Twig, Volt, Blade)"
+msgstr ""
+
+#: src/prefsdlg.cpp:961
+msgid "Extracts translations from template files."
+msgstr ""
+
+#: src/prefsdlg.cpp:964
+msgid "Enable"
+msgstr "ჩართვა"
+
+#: src/prefsdlg.cpp:1096
 msgid "Delete extractor"
 msgstr "ექსტრაქტორის წაშლა"
 
+#: src/prefsdlg.cpp:1097
 #, c-format
 msgid "Are you sure you want to delete the “%s” extractor?"
 msgstr ""
 
+#: src/prefsdlg.cpp:1135
 msgid "Extractors"
 msgstr "ექსტრაქტორები"
 
+#: src/prefsdlg.cpp:1193
 msgid "Accounts"
 msgstr "ანგარიშები"
 
+#: src/prefsdlg.cpp:1213
 msgid "Automatically check for updates"
 msgstr "განახლების ავტომატური შემოწმება"
 
+#: src/prefsdlg.cpp:1216
 msgid "Include beta versions"
 msgstr "ბეტა ვერსიების ჩათვლით"
 
-msgid ""
-"Beta versions contain the latest new features and improvements, but may be a "
-"bit less stable."
+#: src/prefsdlg.cpp:1219
+msgid "Beta versions contain the latest new features and improvements, but may be a bit less stable."
 msgstr ""
 
+#: src/prefsdlg.cpp:1248
 msgid "Updates"
 msgstr "განახლებები"
 
-msgid ""
-"These settings affect internal formatting of PO files. Adjust them if you "
-"have specific requirements e.g. because of version control."
+#: src/prefsdlg.cpp:1266
+msgid "These settings affect internal formatting of PO files. Adjust them if you have specific requirements e.g. because of version control."
 msgstr ""
 
+#: src/prefsdlg.cpp:1270
 msgid "Line endings:"
 msgstr "სტრიქონის დასრულების სიმბოლო:"
 
+#: src/prefsdlg.cpp:1273
 msgid "Unix (recommended)"
 msgstr "Unix (რეკომენდებულია)"
 
+#: src/prefsdlg.cpp:1274
 msgid "Windows"
 msgstr "Windows"
 
 #. TRANSLATORS: Followed by text control for entering number; wraps text at given width
+#: src/prefsdlg.cpp:1278
 msgid "Wrap at:"
 msgstr "სიტყვების გადატანისას მაქსიმალური სიგრძე:"
 
+#: src/prefsdlg.cpp:1289
 msgid "Preserve formatting of existing files"
 msgstr "არსებული ფაილების ფორმატირების შენარჩუნება"
 
+#: src/prefsdlg.cpp:1341
 msgid "Advanced"
 msgstr "დამატებითი"
 
+#: src/prefsdlg.cpp:1369
 msgid "Settings"
 msgstr "მორგება"
 
+#: src/pretranslate.cpp:129
 msgid "Preparing strings…"
 msgstr "სტრიქონების მომზადება…"
 
+#: src/pretranslate.cpp:239
 msgid "Pre-translating from translation memory…"
 msgstr "წინასწარი თარგმანი თარგმანის მეხსიერებიდან…"
 
+#: src/pretranslate.cpp:250 src/pretranslate.cpp:296
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
 msgstr[0] "პრე-ნათარგმნია %u სტრიქონი"
 msgstr[1] "პრე-ნათარგმნია %u სტრიქონი"
 
+#: src/pretranslate.cpp:259
+msgid "Uploading strings for cloud pre-translation…"
+msgstr ""
+
+#: src/pretranslate.cpp:300 src/pretranslate.cpp:357
 msgid "Pre-translating…"
 msgstr "წინასწარი თარგმანი…"
 
+#: src/pretranslate.cpp:366
+#, c-format
+msgid "%d entry was pre-translated."
+msgid_plural "%d entries were pre-translated."
+msgstr[0] "წინასწარ თარგმნილია %d ჩანაწერი."
+msgstr[1] "წინასწარ თარგმნილია %d ჩანაწერი."
+
+#: src/pretranslate.cpp:372
+msgid "The translations were marked as needing work, because they may be inaccurate. You should review them for correctness."
+msgstr ""
+
+#: src/pretranslate.cpp:375
+msgid "Exact matches from TM"
+msgstr "ზუსტი დამთხვევები თმ-დან"
+
+#: src/pretranslate.cpp:376
+msgid "Approximate matches from TM"
+msgstr "დაახლოებითი დამთხვევები თმ-დან"
+
+#. TRANSLATORS: shown instead of number when user disabled this kind of pre-translation results
+#: src/pretranslate.cpp:383
+msgid "disabled"
+msgstr "გათიშულია"
+
+#: src/pretranslate.cpp:384
+msgid "Machine translation"
+msgstr "მანქანური თარგმანი"
+
+#: src/pretranslate.cpp:389
+msgid "No entries could be pre-translated."
+msgstr "წინასწარ-თარგმნადი ჩანაწერები აღმოჩენილი არაა."
+
+#: src/pretranslate.cpp:390
+msgid "The TM doesn’t contain any strings similar to the content of this file. It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually."
+msgstr ""
+
+#: src/pretranslate.cpp:418
 msgid "Cannot pre-translate without source text."
 msgstr "საწყისი ტექსტის გარეშე წინასწარი თარგმანი შეუძლებელია."
 
@@ -1443,1045 +2487,2097 @@ msgstr "საწყისი ტექსტის გარეშე წინ
 #. some users into thinking it's all that needs to be done (spoken from
 #. experience). "Pre-translate" nicely expresses that it's only the step done
 #. *before* actual translation.
+#: src/pretranslate.cpp:419 src/pretranslate.cpp:434 src/pretranslate.cpp:443
+#: src/pretranslate.cpp:489 src/pretranslate.cpp:616
+#: src/resources/toolbar.xrc:48 src/sidebar_pro.cpp:983
 msgid "Pre-translate"
 msgstr "წინასწარი თარგმანი"
 
-msgid ""
-"Pre-translation requires that source text is available. It doesn’t work if "
-"only IDs without the actual text are used."
-msgstr ""
-"წინასწარ თარგმანს საწყისი ტექსტი სჭირდება. ის არ მუშაობს, თუ გამოყენებულია "
-"მხოლოდ ID-ები, ტექსტის გარეშე."
+#: src/pretranslate.cpp:423
+msgid "Pre-translation requires that source text is available. It doesn’t work if only IDs without the actual text are used."
+msgstr "წინასწარ თარგმანს საწყისი ტექსტი სჭირდება. ის არ მუშაობს, თუ გამოყენებულია მხოლოდ ID-ები, ტექსტის გარეშე."
 
+#: src/pretranslate.cpp:433
 msgid "Cannot pre-translate from unknown language."
 msgstr "უცნობი ენიდან თარგმნა შეუძლებელია."
 
-msgid ""
-"Pre-translation requires that source text’s language is known. Poedit "
-"couldn’t detect it in this file."
+#: src/pretranslate.cpp:438
+msgid "Pre-translation requires that source text’s language is known. Poedit couldn’t detect it in this file."
 msgstr ""
 
+#: src/pretranslate.cpp:448
+msgid "Use online suggestions"
+msgstr "ონლაინ რჩევების გამოყენება"
+
+#: src/pretranslate.cpp:449
+msgid "Try to fetch translations from the online TM as well. Notice that the translations will not be perfect and will still need to be corrected by a human translator."
+msgstr ""
+
+#: src/pretranslate.cpp:476
 msgid "Only fill in exact matches"
 msgstr "მხოლოდ ზუსტი მნიშვნელობებით შევსება"
 
-msgid ""
-"By default, inaccurate results are also included, but marked as needing "
-"work. Check this option to only include perfect matches."
-msgstr ""
-"ნაგულისხმევად ასევე არასწორ პასუხებსაც გაჩვენებთ, მაგრამ, მოინიშნებიან, "
-"როგორც ჯერ კიდევ დასამუშავებელი. ჩართეთ ეს, რათა მხოლოდ ზუსტი დამთხვევები "
-"ჩაანაცვლოთ."
+#: src/pretranslate.cpp:479
+msgid "By default, inaccurate results are also included, but marked as needing work. Check this option to only include perfect matches."
+msgstr "ნაგულისხმევად ასევე არასწორ პასუხებსაც გაჩვენებთ, მაგრამ, მოინიშნებიან, როგორც ჯერ კიდევ დასამუშავებელი. ჩართეთ ეს, რათა მხოლოდ ზუსტი დამთხვევები ჩაანაცვლოთ."
 
+#: src/pretranslate.cpp:481
+msgid "By default, inaccurate results and machine translation are also included, but marked as needing work. Check this option to only include perfect human translations."
+msgstr "ნაგულისხმევად ასევე არასწორ პასუხებს და მანქანურ თარგმანებსაც გაჩვენებთ, მაგრამ, მოინიშნებიან, როგორც ჯერ კიდევ დასამუშავებელი. ჩართეთ ეს, რათა მხოლოდ ზუსტი ადამიანის თარგმანებით ჩაანაცვლოთ."
+
+#: src/pretranslate.cpp:483
 msgid "Don’t mark exact matches as needing work"
 msgstr ""
 
-msgid ""
-"Only enable if you trust the quality of your TM. By default, all matches "
-"from the TM are marked as needing work and should be reviewed before use."
+#: src/pretranslate.cpp:484
+msgid "Don’t mark machine translation as needing work"
+msgstr "მანქანური თარგმანი არ მოინიშნება, როგორც გადასახედი"
+
+#: src/pretranslate.cpp:486
+msgid "Only enable if you trust the quality of your TM. By default, all matches from the TM are marked as needing work and should be reviewed before use."
 msgstr ""
 
-msgid ""
-"Pre-translation automatically finds exact or fuzzy matches for untranslated "
-"strings in the translation memory and fills in their translations."
+#: src/pretranslate.cpp:493
+msgid "Pre-translation automatically finds exact or fuzzy matches for untranslated strings in the translation memory and fills in their translations."
 msgstr ""
 
+#: src/pretranslate.cpp:495
+msgid "Pre-translation automatically searches existing translations and uses machine translation to fill in initial translations for strings that are not yet translated."
+msgstr ""
+
+#: src/pretranslate.cpp:533
+msgid "Machine translation:"
+msgstr "მანქანური თარგმანი:"
+
+#. TRANSLATORS: "Upgrade" as in upgrading from Pro to Pro+ version; "provider" is machine translation provider. This string needs to be as short as possible.
+#: src/pretranslate.cpp:545
+msgid "Upgrade for more providers"
+msgstr "აწიეთ ტარიფი მეტი მომწოდებლისთვის"
+
+#. TRANSLATORS: Part of larger line of UI: "Machine translation: [e.g. Google] with tone of voice: [formal/informal/automatic]". If "tone of voice" sounds weird, you can use "formality". See https://support.deepl.com/hc/en-us/articles/4406432463762-About-the-formal-informal-feature for explanation of what tone of voice / formality is.
+#: src/pretranslate.cpp:556
+msgid "with tone of voice:"
+msgstr "ტონი:"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:562
+msgid "automatic"
+msgstr "ავტომატური"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:564
+msgid "formal"
+msgstr "ოფიციალური"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:566
+msgid "informal"
+msgstr "არაოფიციალური"
+
+#: src/pretranslate.cpp:651 src/sidebar_pro.cpp:551
+msgid "Exceeded machine translation quota."
+msgstr "მანქანური თარგმანის კვოტა გადაჭარბებულია."
+
+#: src/pretranslate.cpp:660
 #, c-format
-msgid "%d entry was pre-translated."
-msgid_plural "%d entries were pre-translated."
-msgstr[0] "წინასწარ თარგმნილია %d ჩანაწერი."
-msgstr[1] "წინასწარ თარგმნილია %d ჩანაწერი."
-
-msgid ""
-"The translations were marked as needing work, because they may be "
-"inaccurate. You should review them for correctness."
+msgid "Machine translation usage: %d / %d\n"
+"%s"
 msgstr ""
 
-msgid "No entries could be pre-translated."
-msgstr "წინასწარ-თარგმნადი ჩანაწერები აღმოჩენილი არაა."
+#: src/pretranslate.cpp:660
+msgid "Quota is rolling monthly."
+msgstr "ქვოტა თვეში ერთხელ ითვლება."
 
-msgid ""
-"The TM doesn’t contain any strings similar to the content of this file. It "
-"is only effective for semi-automatic translations after Poedit learns enough "
-"from files that you translated manually."
-msgstr ""
+#: src/pretranslate.cpp:663 src/sidebar_pro.cpp:475
+msgid "Add machine translation credit"
+msgstr "მანქანური თარგმანის ავტორობის ჩამატება"
 
+#: src/progress_ui.cpp:172 src/wx_translatable_strings.h:151
+msgid "Error: "
+msgstr "შეცდომა: "
+
+#: src/progress_ui.cpp:176
+#, c-format
+msgid "%d error occurred:"
+msgid_plural "%d errors occurred:"
+msgstr[0] "აღმოჩენილია %d შეცდომა:"
+msgstr[1] "აღმოჩენილია %d შეცდომა:"
+
+#: src/progress_ui.cpp:285
+msgid "An error occurred."
+msgstr "აღმოჩენილია შეცდომა."
+
+#: src/progress_ui.cpp:291
+#, c-format
+msgid "%d error occurred."
+msgid_plural "%d errors occurred."
+msgstr[0] "აღმოჩენილია %d შეცდომა."
+msgstr[1] "აღმოჩენილია %d შეცდომა."
+
+#: src/progress_ui.cpp:438
 msgid "Cancelling…"
 msgstr "გაუქმება…"
 
+#. TRANSLATORS: This text is shown as a hint/advice. The %s→%s part is replaced with menu item pointer, "File→New WordPress Translation".
+#: src/propertiesdlg.cpp:92
+#, c-format
+msgid "Use %s→%s for full WordPress functionality."
+msgstr ""
+
+#: src/propertiesdlg.cpp:93 src/resources/menus.xrc:5
+#: src/resources/menus.xrc:384 src/wx_translatable_strings.h:104
+msgid "&File"
+msgstr "&ფაილი"
+
+#: src/propertiesdlg.cpp:94 src/resources/menus.xrc:17
+#: src/resources/menus.xrc:396
+msgid "New WordPress Translation…"
+msgstr "Wordpress-ის ახალი თარგმანი…"
+
+#: src/propertiesdlg.cpp:94 src/resources/menus.xrc:16
+#: src/resources/menus.xrc:395
+msgid "New WordPress translation…"
+msgstr "Wordpress-ის ახალი თარგმანი…"
+
+#: src/propertiesdlg.cpp:366
 msgid "Drag Folders or Files Here"
 msgstr "გადმოათრიეთ საქაღალდეები ან ფაილები"
 
+#: src/propertiesdlg.cpp:366
 msgid "Drag folders or files here"
 msgstr "გადმოათრიეთ საქაღალდეები ან ფაილები"
 
+#: src/propertiesdlg.cpp:471
 msgid "Add Folders…"
 msgstr "საქაღალდეების დამატება…"
 
+#: src/propertiesdlg.cpp:471
 msgid "Add folders…"
 msgstr "საქაღალდეების დამატება…"
 
+#: src/propertiesdlg.cpp:472
 msgid "Add Files…"
 msgstr "ფაილების დამატება…"
 
+#: src/propertiesdlg.cpp:472
 msgid "Add files…"
 msgstr "ფაილების დამატება…"
 
+#: src/propertiesdlg.cpp:474
 msgid "Add Wildcard…"
 msgstr "ვაილდ კარდის ჩამატება…"
 
+#: src/propertiesdlg.cpp:474
 msgid "Add wildcard…"
 msgstr "ვაილდ კარდის ჩამატება…"
 
 #. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+#: src/propertiesdlg.cpp:545
 msgid "Reveal in Finder"
 msgstr "საქაღალდეში ჩვენება"
 
 #. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+#: src/propertiesdlg.cpp:548
 msgid "Show in Explorer"
 msgstr "ექსპლორერში ჩვენება"
 
+#: src/propertiesdlg.cpp:550
 msgid "Show in Folder"
 msgstr "საქაღალდეში ჩვენება"
 
+#: src/propertiesdlg.cpp:581
 msgid "Paths"
 msgstr "მდებარეობები"
 
+#: src/propertiesdlg.cpp:601
 msgid "Excluded paths"
 msgstr "ამოღებული ბილიკები"
 
+#: src/propertiesdlg.cpp:619
 msgid "Advanced extraction settings"
 msgstr "გამოტანის დამატებითი პარამეტრები"
 
+#: src/propertiesdlg.cpp:625
 msgid "Extract notes for translators from:"
 msgstr ""
 
+#: src/propertiesdlg.cpp:627
 msgid "Comments prefixed with:"
 msgstr "კომენტარები იწყება პრეფიქსით:"
 
+#: src/propertiesdlg.cpp:636
 msgid "All comments"
 msgstr "ყველა კომენტარი"
 
+#: src/propertiesdlg.cpp:639
 msgid "Additional xgettext flags:"
 msgstr "Xgettext-ს დამატებითი პარამეტრები:"
 
+#: src/propertiesdlg.cpp:779
 msgid "Additional keywords"
 msgstr "დამატებითი საკვანძო სიტყვები"
 
+#: src/propertiesdlg.cpp:810
 msgid "Name of the project the translation is for"
 msgstr ""
 
+#: src/propertiesdlg.cpp:811
 msgid "Team name and email address or URL"
 msgstr "გუნდის სახელი და ელფოსტის მისამართი ან ბმული"
 
+#: src/propertiesdlg.cpp:812
 msgid "e.g. nplurals=2; plural=(n > 1);"
 msgstr "მაგ: nplurals=2; plural=(n > 1);"
 
+#: src/propertiesdlg.cpp:817
+msgid "Custom file extensions are being used."
+msgstr ""
+
+#: src/propertiesdlg.cpp:872
 msgid "UTF-8 (recommended)"
 msgstr "UTF-8 (რეკომენდებულია)"
 
+#: src/propertiesdlg.cpp:1055
 msgid "Please save the file first. This section cannot be edited until then."
 msgstr ""
 
+#: src/propertiesdlg.cpp:1177
+msgid "File Extensions"
+msgstr "ფაილის გაფართოება"
+
+#: src/propertiesdlg.cpp:1189
+msgid "Extension or Wildcard"
+msgstr "გაფართოება ან ვარსკვლავი"
+
+#: src/propertiesdlg.cpp:1191
+msgid "Extractor"
+msgstr "ექსტრაქტორი"
+
+#: src/propertiesdlg.cpp:1266
+msgid "(unknown)"
+msgstr "(უცნობი)"
+
+#: src/qa_checks.cpp:153
 msgid "Placeholders correctness"
 msgstr "ადგილმჭერების სისწორე"
 
+#: src/qa_checks.cpp:208
 #, c-format
 msgid "Placeholder “%s” is missing from translation."
 msgstr ""
 
+#: src/qa_checks.cpp:220
 #, c-format
 msgid "Superfluous placeholder “%s” that isn’t in source text."
 msgstr ""
 
+#: src/qa_checks.cpp:256
 msgid "Plural form translations"
 msgstr "მრავლობითი ფორმის თარგმანები"
 
+#: src/qa_checks.cpp:277
 msgid "Not all plural forms are translated."
 msgstr "ყველა მრავლობითი ფორმა გადართარგმნილი არაა."
 
+#: src/qa_checks.cpp:289
 msgid "Inconsistent upper/lower case"
 msgstr "არამდგრადი რეგისტრი"
 
+#: src/qa_checks.cpp:305
 msgid "The translation should start as a sentence."
 msgstr ""
 
+#: src/qa_checks.cpp:313
 msgid "The translation should start with a lowercase character."
 msgstr ""
 
+#: src/qa_checks.cpp:331
 msgid "Inconsistent whitespace"
 msgstr "შეუთანხმებელი ჰარეები"
 
+#: src/qa_checks.cpp:345
 msgid "The translation doesn’t start with a space."
 msgstr ""
 
+#: src/qa_checks.cpp:351
 msgid "The translation starts with a space, but the source text doesn’t."
 msgstr ""
 
+#: src/qa_checks.cpp:357
 msgid "The translation is missing a newline at the end."
 msgstr ""
 
+#: src/qa_checks.cpp:363
 msgid "The translation ends with a newline, but the source text doesn’t."
 msgstr ""
 
+#: src/qa_checks.cpp:369
 msgid "The translation is missing a space at the end."
 msgstr ""
 
+#: src/qa_checks.cpp:375
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr ""
 
+#: src/qa_checks.cpp:390
 msgid "Punctuation checks"
 msgstr "პუნქტუაციის შემოწმება"
 
+#: src/qa_checks.cpp:455
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr ""
 
+#: src/qa_checks.cpp:467
 #, c-format
 msgid "The translation should not end with “%s”."
 msgstr ""
 
+#: src/qa_checks.cpp:488
 #, c-format
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
 msgstr ""
 
+#: src/recent_files.cpp:223
 msgid "Cloud"
 msgstr "ღრუბელი"
 
+#: src/recent_files.cpp:404
 msgid "Clear Menu"
 msgstr "მენიუს გასუფთავება"
 
+#: src/recent_files.cpp:404
 msgid "Clear menu"
 msgstr "მენიუს გასუფთავება"
 
+#: src/resources/comment.xrc:10
 msgid "Comment:"
 msgstr "შენიშვნები:"
 
+#: src/resources/comment.xrc:33
 msgid "Update"
 msgstr "განახლება"
 
+#: src/resources/comment.xrc:48 src/wx_translatable_strings.h:100
 msgid "&Delete"
 msgstr "&წაშლა"
 
+#: src/resources/comment.xrc:49
 msgid "Delete the comment"
 msgstr "კომენტარის წაშლა"
 
+#: src/resources/manager.xrc:4
 msgid "Edit project"
 msgstr "პროექტის დამუშავება"
 
+#: src/resources/manager.xrc:9
 msgid "Project name:"
 msgstr "პროექტის სახელი:"
 
+#: src/resources/manager.xrc:39
 msgid "Browse"
 msgstr "მოძიება"
 
+#: src/resources/manager.xrc:41
 msgid "Add directory to the list"
 msgstr "უჯრის სიაში დამატება"
 
-msgid "OK"
-msgstr "კარგი"
-
-msgid "&File"
-msgstr "&ფაილი"
-
+#: src/resources/menus.xrc:8 src/resources/menus.xrc:387
 msgid "&New…"
 msgstr "&ახალი…"
 
+#: src/resources/menus.xrc:12 src/resources/menus.xrc:391
 msgid "New from &POT/PO file…"
 msgstr "ახალი &POT/PO ფაილიდან…"
 
+#: src/resources/menus.xrc:13 src/resources/menus.xrc:392
 msgid "New From &POT/PO File…"
 msgstr "ახალი &POT/PO ფაილიდან…"
 
+#: src/resources/menus.xrc:21 src/resources/menus.xrc:400
+#: src/wx_translatable_strings.h:109
 msgid "&Open…"
 msgstr "&გახსნა…"
 
+#: src/resources/menus.xrc:25 src/resources/menus.xrc:404
 msgid "Open Recent"
 msgstr "ბოლოს გახსნილი ფაილების გახსნა"
 
+#: src/resources/menus.xrc:26 src/resources/menus.xrc:405
 msgid "Open recent"
 msgstr "ბოლოს გახსნილი ფაილების გახსნა"
 
+#: src/resources/menus.xrc:29 src/resources/menus.xrc:408
 msgid "Open cloud translation…"
 msgstr "ღრუბლოვანი თარგმანის გახსნა…"
 
+#: src/resources/menus.xrc:30 src/resources/menus.xrc:409
 msgid "Open Cloud Translation…"
 msgstr "ღრუბლოვანი თარგმანის გახსნა…"
 
+#: src/resources/menus.xrc:34 src/resources/menus.xrc:413
 msgid "&Start window"
 msgstr "&საწყისი ფანჯარა"
 
+#: src/resources/menus.xrc:35 src/resources/menus.xrc:414
 msgid "&Start Window"
 msgstr "&საწყისი ფანჯარა"
 
+#: src/resources/menus.xrc:39 src/resources/menus.xrc:419
 msgid "Catalogs &manager"
 msgstr "კატალოგების &მენეჯერი"
 
+#: src/resources/menus.xrc:40 src/resources/menus.xrc:420
 msgid "Catalogs &Manager"
 msgstr "კატალოგთა &მმართველი"
 
+#: src/resources/menus.xrc:44 src/resources/menus.xrc:424
+#: src/wx_translatable_strings.h:96
 msgid "&Close"
 msgstr "&დახურვა"
 
+#: src/resources/menus.xrc:48 src/wx_translatable_strings.h:115
 msgid "&Save"
 msgstr "შ&ენახვა"
 
+#: src/resources/menus.xrc:52
 msgid "Save &as…"
 msgstr "შენახვა როგორც…"
 
+#: src/resources/menus.xrc:53
 msgid "Save &As…"
 msgstr "შენახვა როგორც…"
 
+#: src/resources/menus.xrc:58
 msgid "Compile to MO…"
 msgstr "კომპილაცია MO ფაილში…"
 
+#: src/resources/menus.xrc:62
 msgid "E&xport to HTML…"
 msgstr "&გატანა HTML-ში…"
 
+#: src/resources/menus.xrc:66
+msgid "Export to Excel…"
+msgstr "გატანა Excel-ში…"
+
+#: src/resources/menus.xrc:69
+msgid "Import from Excel…"
+msgstr "შემოტანა Excel-დან…"
+
+#: src/resources/menus.xrc:73 src/resources/menus.xrc:428
 msgid "Check for updates…"
 msgstr "განახლებების შემოწმება…"
 
+#: src/resources/menus.xrc:76 src/resources/menus.xrc:431
+msgid "&License…"
+msgstr "&ლიცენზია…"
+
+#: src/resources/menus.xrc:79 src/resources/menus.xrc:434
 msgid "Settings…"
 msgstr "მორგება…"
 
+#: src/resources/menus.xrc:83 src/resources/menus.xrc:438
+#: src/wx_translatable_strings.h:112
 msgid "&Preferences"
 msgstr "&პარამეტრები"
 
+#: src/resources/menus.xrc:90 src/resources/menus.xrc:445
 msgid "E&xit"
 msgstr "გა&სვლა"
 
+#: src/resources/menus.xrc:91 src/resources/menus.xrc:446
+#: src/wx_translatable_strings.h:103
 msgid "Quit"
 msgstr "გასვლა"
 
+#: src/resources/menus.xrc:118
 msgid "Copy from singular"
 msgstr "მხოლობითიდან დაკოპირება"
 
+#: src/resources/menus.xrc:119
 msgid "Copy From Singular"
 msgstr "მხოლობითიდან დაკოპირება"
 
+#: src/resources/menus.xrc:124
 msgid "Translation needs &work"
 msgstr "თარგმანს &დამუშავება სჭირდება"
 
+#: src/resources/menus.xrc:125
 msgid "Translation Needs &Work"
 msgstr "თარგმანს &დამუშავება სჭირდება"
 
+#: src/resources/menus.xrc:130
 msgid "Edit &comment"
 msgstr "შე&ნიშვნის დამუშავება"
 
+#: src/resources/menus.xrc:131
 msgid "Edit &Comment"
 msgstr "შენიშვნის &რედაქტირება"
 
 #. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
+#: src/resources/menus.xrc:136 src/sidebar.cpp:651 src/sidebar_pro.cpp:219
 msgid "Suggestions"
 msgstr "რჩევები"
 
+#: src/resources/menus.xrc:139 src/resources/menus.xrc:158
 msgid "&Find…"
 msgstr "&ძებნა…"
 
+#: src/resources/menus.xrc:144
 msgid "Replace…"
 msgstr "ჩანაცვლება…"
 
+#: src/resources/menus.xrc:148
 msgid "Find next"
 msgstr "მომდევნოს მოძებნა"
 
+#: src/resources/menus.xrc:152
 msgid "Find previous"
 msgstr "წინანდელის ძიება"
 
+#: src/resources/menus.xrc:162
 msgid "Find and Replace…"
 msgstr "ძებნა და შეცვლა…"
 
+#: src/resources/menus.xrc:166
 msgid "Find Next"
 msgstr "მომდევნოს მოძებნა"
 
+#: src/resources/menus.xrc:170
 msgid "Find Previous"
 msgstr "წინანდელის ძიება"
 
+#: src/resources/menus.xrc:179
 msgid "Show string &ID"
 msgstr "სტრიქონის &ID-ის ჩვენება"
 
+#: src/resources/menus.xrc:180
 msgid "Show String &ID"
 msgstr "სტრიქონის &ID-ის ჩვენება"
 
+#: src/resources/menus.xrc:184
 msgid "Show warnings"
 msgstr "გაფრთხილების ჩვენება"
 
+#: src/resources/menus.xrc:185
 msgid "Show Warnings"
 msgstr "გაფრთხილების ჩვენება"
 
+#: src/resources/menus.xrc:189
+msgid "Customize warnings…"
+msgstr "გაფრთხილებების მორგება…"
+
+#: src/resources/menus.xrc:190
+msgid "Customize Warnings…"
+msgstr "გაფრთხილებების მორგება…"
+
+#: src/resources/menus.xrc:194
 msgid "Sort by &file order"
 msgstr "&ფაილის წყობით დალაგება"
 
+#: src/resources/menus.xrc:195
 msgid "Sort by &File Order"
 msgstr "&ფაილის წყობით დალაგება"
 
+#: src/resources/menus.xrc:199
 msgid "Sort by &source"
 msgstr "&წყაროთი დალაგება"
 
+#: src/resources/menus.xrc:200
 msgid "Sort by &Source"
 msgstr "&წყაროთი დალაგება"
 
+#: src/resources/menus.xrc:204
 msgid "Sort by &translation"
 msgstr "თ&არგმანის მიხედვით დალაგება"
 
+#: src/resources/menus.xrc:205
 msgid "Sort by &Translation"
 msgstr "თ&არგმანის მიხედვით დალაგება"
 
+#: src/resources/menus.xrc:210
 msgid "&Group by context"
 msgstr "&კონტექსტის მიხედვით დაჯგუფება"
 
+#: src/resources/menus.xrc:211
 msgid "&Group By Context"
 msgstr "&კონტექსტის მიხედვით დაჯგუფება"
 
+#: src/resources/menus.xrc:215
 msgid "Entries with errors first"
 msgstr "სიაში ჯერ შეცდომების ჩვენება"
 
+#: src/resources/menus.xrc:216
 msgid "Entries with Errors First"
 msgstr "სიაში ჯერ შეცდომების ჩვენება"
 
+#: src/resources/menus.xrc:220
 msgid "&Untranslated entries first"
 msgstr "&ჯერ უთარგმნელი შენატანები"
 
+#: src/resources/menus.xrc:221
 msgid "&Untranslated Entries First"
 msgstr "&ჯერ უთარგმნელი შენატანები"
 
+#: src/resources/menus.xrc:226
+msgid "Show &suggestions tab"
+msgstr "&შემოთავაზებების ჩანართის ჩვენება"
+
+#: src/resources/menus.xrc:227
+msgid "Show &Suggestions Tab"
+msgstr "&შემოთავაზებების ჩანართის ჩვენება"
+
+#: src/resources/menus.xrc:231
+msgid "Show &terminology tab"
+msgstr "&ტერმინოლოგიის ჩანართის ჩვენება"
+
+#: src/resources/menus.xrc:232
+msgid "Show &Terminology Tab"
+msgstr "&ტერმინოლოგიის ჩანართის ჩვენება"
+
+#: src/resources/menus.xrc:236
 msgid "&Show code occurrences"
 msgstr "&კოდის აღმოჩენების ჩვენება"
 
+#: src/resources/menus.xrc:237
 msgid "&Show Code Occurrences"
 msgstr "&კოდის აღმოჩენების ჩვენება"
 
+#: src/resources/menus.xrc:241
 msgid "Show sidebar"
 msgstr "გვერდითა ზოლის ჩვენება"
 
+#: src/resources/menus.xrc:247
 msgid "Show status bar"
 msgstr "მდგომარეობის ზოლის ჩვენება"
 
+#: src/resources/menus.xrc:255 src/resources/menus.xrc:463
 msgid "&Translation"
 msgstr "&თარგმანი"
 
+#: src/resources/menus.xrc:258 src/statistics.cpp:312 src/statistics.cpp:415
+#: src/statistics.cpp:427
+msgid "Source Text"
+msgstr "წყაროს ტექსტი"
+
+#: src/resources/menus.xrc:262
 msgid "&Update from source code"
 msgstr "&საწყისი კოდიდან განახლება"
 
+#: src/resources/menus.xrc:263
 msgid "&Update from Source Code"
 msgstr "&საწყისი კოდიდან განახლება"
 
-msgid "Update from &POT file…"
-msgstr "&POT ფაილიდან განახლება…"
-
-msgid "Update from &POT File…"
-msgstr "&POT ფაილიდან განახლება…"
-
+#: src/resources/menus.xrc:270
 msgid "Sync with Crowdin"
 msgstr "Crowdin-თან სინქრონიზაცია"
 
+#: src/resources/menus.xrc:274 src/resources/menus.xrc:275
 msgid "Pre-&translate…"
 msgstr "წინასწარი &თარგმანი…"
 
+#: src/resources/menus.xrc:279
 msgid "&Validate translations"
 msgstr "თარგმანის &ვალიდაცია"
 
+#: src/resources/menus.xrc:280
 msgid "&Validate Translations"
 msgstr "თარგმანის &ვალიდაცია"
 
+#: src/resources/menus.xrc:284
+msgid "&Statistics"
+msgstr "&სტატისტიკა"
+
+#: src/resources/menus.xrc:289
 msgid "Remove Same-as-Source Translations"
 msgstr ""
 
+#: src/resources/menus.xrc:292
 msgid "&Purge deleted translations"
 msgstr "წაშლილი თარგმანების &ამოშლა"
 
+#: src/resources/menus.xrc:293
 msgid "&Purge Deleted Translations"
 msgstr "&წაშლილ თარგმანთა გაწმენდა"
 
+#: src/resources/menus.xrc:297
 msgid "&Properties…"
 msgstr "&თვისებები…"
 
+#: src/resources/menus.xrc:304 src/resources/menus.xrc:466
 msgid "&Go"
 msgstr "&გადასვლა"
 
+#: src/resources/menus.xrc:307
 msgid "&Done and next"
 msgstr "&დასრულება და შემდეგი"
 
+#: src/resources/menus.xrc:308
 msgid "&Done and Next"
 msgstr "&დასრულება და შემდეგი"
 
+#: src/resources/menus.xrc:314
 msgid "Previously edited"
 msgstr "წარსულში ჩასწორებულზე"
 
+#: src/resources/menus.xrc:315
 msgid "Previously Edited"
 msgstr "წარსულში ჩასწორებულზე"
 
+#: src/resources/menus.xrc:320
 msgid "&Previous translation"
 msgstr "&წინა თარგმანი"
 
+#: src/resources/menus.xrc:321
 msgid "&Previous Translation"
 msgstr "&წინა თარგმანი"
 
+#: src/resources/menus.xrc:325
 msgid "&Next translation"
 msgstr "&შემდეგი თარგმანი"
 
+#: src/resources/menus.xrc:326
 msgid "&Next Translation"
 msgstr "&შემდეგი თარგმანი"
 
+#: src/resources/menus.xrc:330
 msgid "P&revious unfinished"
 msgstr "წ&ინა დაუსრულებელი"
 
+#: src/resources/menus.xrc:331
 msgid "P&revious Unfinished"
 msgstr "წ&ინა დაუსრულებელი"
 
+#: src/resources/menus.xrc:335
 msgid "Ne&xt unfinished"
 msgstr "შემ&დეგი დაუსრულებელი"
 
+#: src/resources/menus.xrc:336
 msgid "Ne&xt Unfinished"
 msgstr "შემ&დეგი დაუსრულებელი"
 
+#: src/resources/menus.xrc:341
 msgid "Previous plural form"
 msgstr "წინა მრავლობითი ფორმა"
 
+#: src/resources/menus.xrc:342
 msgid "Previous Plural Form"
 msgstr "წინა მრავლობითი ფორმა"
 
+#: src/resources/menus.xrc:346
 msgid "Next plural form"
 msgstr "შემდეგი მრავლობითი ფორმა"
 
+#: src/resources/menus.xrc:347
 msgid "Next Plural Form"
 msgstr "შემდეგი მრავლობითი ფორმა"
 
+#: src/resources/menus.xrc:356 src/resources/menus.xrc:473
 msgid "&Online help"
 msgstr "&ონლაინ-სახელმძღვანელო"
 
+#: src/resources/menus.xrc:357 src/resources/menus.xrc:474
 msgid "&Online Help"
 msgstr "&ონლაინ-სახელმძღვანელო"
 
+#: src/resources/menus.xrc:363 src/resources/menus.xrc:480
 msgid "&GNU gettext manual"
 msgstr "&GNU gettext-ის დახმარების ფაილები"
 
+#: src/resources/menus.xrc:364 src/resources/menus.xrc:481
 msgid "&GNU gettext Manual"
 msgstr "&GNU gettext-ის დახმარების ფაილები"
 
+#: src/resources/menus.xrc:368 src/resources/menus.xrc:485
+msgid "Email &support…"
+msgstr "მხარდაჭერის &გუნდისთვის ელფოსტის გაგზავნა…"
+
+#: src/resources/menus.xrc:369 src/resources/menus.xrc:486
+msgid "Email &Support…"
+msgstr "მხარდაჭერის &გუნდისთვის ელფოსტის გაგზავნა…"
+
+#: src/resources/menus.xrc:373 src/resources/menus.xrc:490
 msgid "&About Poedit"
 msgstr "Poedit-ის შ&ესახებ"
 
+#: src/resources/menus.xrc:374 src/resources/menus.xrc:375
+#: src/resources/menus.xrc:491 src/resources/menus.xrc:492
 msgid "&About"
 msgstr "შ&ესახებ"
 
+#: src/resources/prefs.xrc:4
 msgid "Extractor setup"
 msgstr "ექსტრაქტორის მორგება"
 
+#: src/resources/prefs.xrc:27
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "გაფართოებების სია წერტილ-მძიმეებით გამოყოფილი (მაგ. *.cpp;*.h):"
 
+#: src/resources/prefs.xrc:43
 msgid "Invocation:"
 msgstr "ინვოკაცია:"
 
+#: src/resources/prefs.xrc:47
 msgid "Command to extract translations:"
 msgstr "ბრძანება თარგმანების გამოსაღებად:"
 
-msgid ""
-"This is the command used to launch the extractor.\n"
+#: src/resources/prefs.xrc:61
+msgid "This is the command used to launch the extractor.\n"
 "%o expands to the name of output file, %K to list\n"
 "of keywords, %F to list of input files,\n"
 "%C to charset flag (see below)."
 msgstr ""
 
+#: src/resources/prefs.xrc:70
 msgid "An item in keywords list:"
 msgstr "ელემენტი სიტყვათა სიაში:"
 
-msgid ""
-"This will be attached to the command line once\n"
+#: src/resources/prefs.xrc:84
+msgid "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
-msgstr ""
-"ეს ბრძანებათა სტრიქონს მიემაგრება ერთხელ\n"
+msgstr "ეს ბრძანებათა სტრიქონს მიემაგრება ერთხელ\n"
 "ყოველ სიტყვაზე. %k იშლება როგორც სიტყვა."
 
+#: src/resources/prefs.xrc:93
 msgid "An item in input files list:"
 msgstr "ელემენტი შესაყვანი ფაილის სიაში:"
 
+#: src/resources/prefs.xrc:107
 #, c-format
-msgid ""
-"This will be attached to the command line once\n"
+msgid "This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
-msgstr ""
-"ეს მიემაგრება ბრძანებათა სტრიქონს  ყოველ\n"
+msgstr "ეს მიემაგრება ბრძანებათა სტრიქონს  ყოველ\n"
 "შესაყვან ფაილზე. %f გაიშლება ფაილის სახელად."
 
+#: src/resources/prefs.xrc:116 src/resources/properties.xrc:124
 msgid "Source code charset:"
 msgstr "პროგრ. წყაროს კოდირება:"
 
+#: src/resources/prefs.xrc:130
 #, c-format
-msgid ""
-"This will be attached to the command line\n"
+msgid "This will be attached to the command line\n"
 "only if source code charset was given. %c expands to charset value."
-msgstr ""
-"ეს მიემაგრება ბრძანებათა სტრიქონს  მხოლოდ მაშინ\n"
-"თუ წყაროს კოდირება (charset) მითითებული იყო. %c ჩანაცვლდება კოდირების "
-"სახელით."
+msgstr "ეს მიემაგრება ბრძანებათა სტრიქონს  მხოლოდ მაშინ\n"
+"თუ წყაროს კოდირება (charset) მითითებული იყო. %c ჩანაცვლდება კოდირების სახელით."
 
+#: src/resources/properties.xrc:4 src/resources/properties.xrc:153
 msgid "Translation Properties"
 msgstr "თარგმანის თვისებები"
 
+#: src/resources/properties.xrc:19
 msgid "Project name and version:"
 msgstr "პროექტის სახელი და ვერსია:"
 
+#: src/resources/properties.xrc:34
 msgid "Language team:"
 msgstr "მთარგმნელი გუნდი:"
 
+#: src/resources/properties.xrc:66
 msgid "Plural forms:"
 msgstr "მრავლობითი ფორმები:"
 
+#: src/resources/properties.xrc:73
 msgid "Use default rules for this language"
 msgstr "ამ ენისთვის ნაგულისხმები წესების გამოყენება"
 
+#: src/resources/properties.xrc:82
 msgid "Use custom expression"
 msgstr "გამოსახულების ხელით მითითება"
 
+#: src/resources/properties.xrc:98
 msgid "Learn about plural forms"
 msgstr "დამატებითი ინფორმაცია მრავლობითის ფორმებთან დაკავშირებით"
 
+#: src/resources/properties.xrc:112
 msgid "Charset:"
 msgstr "კოდირება:"
 
+#: src/resources/properties.xrc:138
 msgid "Advanced Extraction Settings…"
 msgstr "განშლის დამატებითი პარამეტრები…"
 
+#: src/resources/properties.xrc:139
 msgid "Advanced extraction settings…"
 msgstr "განშლის დამატებითი პარამეტრები…"
 
+#: src/resources/properties.xrc:154
 msgid "Translation properties"
 msgstr "თარგმანის თვისებები"
 
+#: src/resources/properties.xrc:157
 msgid "Sources Paths"
 msgstr "წყაროს მდებარეობები"
 
+#: src/resources/properties.xrc:158
 msgid "Sources paths"
 msgstr "წყაროს მდებარეობები"
 
+#: src/resources/properties.xrc:164
 msgid "Extract text from source files in the following directories:"
 msgstr "შემდეგი ფოლდერებში წყარო-ფაილებიდან ტექსტის ამოღება:"
 
+#: src/resources/properties.xrc:173
 msgid "Base path:"
 msgstr "ძირითადი მდებარეობა:"
 
+#: src/resources/properties.xrc:227
+msgid "Customize File Extensions…"
+msgstr "ფაილის გაფართოებების მორგება…"
+
+#: src/resources/properties.xrc:228
+msgid "Customize file extensions…"
+msgstr "ფაილის გაფართოებების მორგება…"
+
+#: src/resources/properties.xrc:241
 msgid "Sources Keywords"
 msgstr "წყაროს საკვანძო სიტყვები"
 
+#: src/resources/properties.xrc:242
 msgid "Sources keywords"
 msgstr "წყაროს საკვანძო სიტყვები"
 
-msgid ""
-"Use these keywords (function names) to recognize translatable strings\n"
+#: src/resources/properties.xrc:248
+msgid "Use these keywords (function names) to recognize translatable strings\n"
 "in source files:"
-msgstr ""
-"წყაროს ფაილებში თარგმნადი სტრიქონების ამოსაცნობად ამ საკვანძო სიტყვების\n"
+msgstr "წყაროს ფაილებში თარგმნადი სტრიქონების ამოსაცნობად ამ საკვანძო სიტყვების\n"
 " (ფუნქციათა სახელების) გამოყენება:"
 
+#: src/resources/properties.xrc:264
 msgid "Also use default keywords for supported languages"
 msgstr ""
 
+#: src/resources/properties.xrc:271
 msgid "Learn about gettext keywords"
 msgstr "შეიტყვეთ მეტი gettext-ის საკვანძო სიტყვების შესახებ"
 
-msgid "Update summary"
-msgstr "შეჯამების განახლება"
-
-msgid ""
-"These strings were found in the sources but were not in the file.\n"
+#: src/resources/summary.xrc:32
+msgid "These strings were found in the sources but were not in the file.\n"
 "Poedit will add them to the file now."
 msgstr ""
 
-msgid "New strings"
-msgstr "ახალი შეტყობინებები"
-
-msgid ""
-"These strings are no longer in the source code.\n"
+#: src/resources/summary.xrc:53
+msgid "These strings are no longer in the source code.\n"
 "Poedit will remove them from the file now."
 msgstr ""
 
+#: src/resources/summary.xrc:66
 msgid "Obsolete strings"
 msgstr "მოძველებული სტრიქონები"
 
+#: src/resources/summary.xrc:79
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 ახალი, 0 მოძველებული)"
 
-msgid "Open"
-msgstr ""
-
+#: src/resources/toolbar.xrc:13 src/resources/toolbar.xrc:17
 msgid "Open file"
 msgstr "ფაილის გახსნა"
 
+#: src/resources/toolbar.xrc:22 src/resources/toolbar.xrc:26
 msgid "Save file"
 msgstr "ფაილის შენახვა"
 
+#: src/resources/toolbar.xrc:34
 msgid "Validate"
 msgstr "ვალიდაცია"
 
+#: src/resources/toolbar.xrc:35
 msgid "Check for errors in the translation"
 msgstr "თარგმანში შეცდომების შემოწმება"
 
+#: src/resources/toolbar.xrc:49
+msgid "Pre-translate strings that don’t have a translation yet"
+msgstr "წინასწარი თარგმანი სტრიქონების, რომელიც ნათარგმნი არაა"
+
+#: src/resources/toolbar.xrc:57 src/wx/main_toolbar.cpp:136
 msgid "Update from code"
 msgstr "კოდიდან განახლება"
 
+#: src/resources/toolbar.xrc:58 src/wx/main_toolbar.cpp:136
 msgid "Update from Code"
 msgstr "კოდიდან განახლება"
 
+#: src/resources/toolbar.xrc:59 src/wx/main_toolbar.cpp:137
 msgid "Update from source code"
 msgstr "საწყისი კოდიდან განახლება"
 
+#: src/resources/toolbar.xrc:67
 msgid "Sidebar"
 msgstr "გვერდითა ზოლი"
 
+#: src/resources/toolbar.xrc:68
 msgid "Show or hide the sidebar"
 msgstr "ხელსაწყოთა პანელის ხილვადობის ჩართ/გამორთ"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
+#: src/sidebar.cpp:139
 msgid "Previous source text"
 msgstr "წინა წყაროს ტექსტი"
 
-msgid ""
-"The old source text (before it changed during an update) that the now-"
-"inaccurate translation corresponds to."
+#: src/sidebar.cpp:142
+msgid "The old source text (before it changed during an update) that the now-inaccurate translation corresponds to."
 msgstr ""
 
+#: src/sidebar.cpp:168
 msgid "Notes for translators"
 msgstr "შენიშვნები მთარგმნელებისთვის"
 
+#: src/sidebar.cpp:201
 msgid "Comment"
 msgstr "კომენტარი"
 
+#: src/sidebar.cpp:231 src/sidebar.cpp:250
 msgid "Add comment"
 msgstr "კომენტარის დამატება"
 
+#: src/sidebar.cpp:233 src/sidebar.cpp:235 src/sidebar.cpp:253
 msgid "Add Comment"
 msgstr "კომენტარის დამატება"
 
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:436
+msgid "from your TM"
+msgstr "თქვენი თარგმანებიდან"
+
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:441
+msgid "machine translation"
+msgstr "მანქანური თარგმანი"
+
+#. TRANSLATORS: This is followed by a logo of e.g. Microsoft Translator, forming a sentence e.g. "translated by MS Translator"
+#: src/sidebar.cpp:449
+msgid "translated by"
+msgstr "თარგმნილია"
+
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:456
+msgid "human translation"
+msgstr "ადამიანური თარგმანი"
+
+#: src/sidebar.cpp:592
 msgid "Delete From Translation Memory"
 msgstr "თარგმანის მეხსიერებიდან წაშლა"
 
+#: src/sidebar.cpp:592
 msgid "Delete from translation memory"
 msgstr "თარგმანის მეხსიერებიდან წაშლა"
 
+#: src/sidebar.cpp:593
+msgid "Report Bad Translation"
+msgstr "ცუდი თარგმანის მითითება"
+
+#: src/sidebar.cpp:593
+msgid "Report bad translation"
+msgstr "ცუდი თარგმანის მითითება"
+
+#: src/sidebar.cpp:652
 msgid "Translation suggestions"
 msgstr "თარგმანის მინიშნებები"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
+#: src/sidebar.cpp:695
 msgid "No matches found"
 msgstr "არაფერი მოიძებნა"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (macOS, Linux).
+#: src/sidebar.cpp:698
 msgid "No Matches Found"
 msgstr "არაფერი მოიძებნა"
 
+#: src/sidebar.cpp:734 src/sidebar_pro.cpp:325
 msgid "This string was found in Poedit’s translation memory."
 msgstr ""
 
-msgid ""
-"Translation suggestions require that source text is available. They don’t "
-"work if only IDs without the actual text are used."
+#: src/sidebar.cpp:984
+msgid "Translation suggestions require that source text is available. They don’t work if only IDs without the actual text are used."
 msgstr ""
 
-msgid ""
-"Translation suggestions require that source text’s language is known. Poedit "
-"couldn’t detect it in this file."
+#: src/sidebar.cpp:989
+msgid "Translation suggestions require that source text’s language is known. Poedit couldn’t detect it in this file."
 msgstr ""
 
+#. TRANSLATORS: Tooltip explaining the Quality: label
+#: src/sidebar_pro.cpp:86
+msgid "Currently enabled quality level of online suggestions"
+msgstr ""
+
+#. TRANSLATORS: Quality level for the "Quality: %s" label; needs to be short
+#: src/sidebar_pro.cpp:121
+msgid "Premium"
+msgstr "პრემიუმი"
+
+#. TRANSLATORS: Quality level for the "Quality: %s" label; needs to be short
+#: src/sidebar_pro.cpp:126
+msgid "Standard"
+msgstr "სტანდარტული"
+
+#. TRANSLATORS: This needs to be *short*, it is shown in the sidebar
+#. after "Translation suggestions". %s will be replaced by "Standard"
+#. or "Premium". "(Quality) level" or "tier" are synonyms for it.
+#: src/sidebar_pro.cpp:132
+#, c-format
+msgid "Quality: %s"
+msgstr "ხარისხი: %s"
+
+#. TRANSLATORS: Label for the part where currently used translation engine is shown
+#: src/sidebar_pro.cpp:151
+msgid "Machine translation uses:"
+msgstr "მანქანური თარგმანი იყენებს:"
+
+#: src/sidebar_pro.cpp:227
+msgid "Terminology"
+msgstr "ტერმინოლოგია"
+
+#: src/sidebar_pro.cpp:321
+msgid "This suggestion was contributed by another translator to the online TM."
+msgstr ""
+
+#: src/sidebar_pro.cpp:323
+msgid "This suggestion was machine-translated online."
+msgstr ""
+
+#: src/sidebar_pro.cpp:512
+#, c-format
+msgid "%d out of %d online suggestion left."
+msgid_plural "%d out of %d online suggestions left."
+msgstr[0] "დარჩენილია %d/%d ონლაინ მინიშნება."
+msgstr[1] "დარჩენილია %d/%d ონლაინ მინიშნება."
+
+#: src/sidebar_pro.cpp:517
+msgid "Remove this limitation"
+msgstr "ამ ლიმიტის მოხსნა"
+
+#: src/sidebar_pro.cpp:521
+msgid "Online suggestions are limited to only 10 in the free version. Upgrade to Pro to remove this limitation."
+msgstr ""
+
+#: src/sidebar_pro.cpp:523
+msgid "Unlock online suggestions"
+msgstr "ონლაინ რჩევების განბლოკვა"
+
+#: src/sidebar_pro.cpp:547
+msgid "Exceeded online TM daily limit."
+msgstr "გადაცილებულია დღიური Tm-ის ზღვარი."
+
+#: src/sidebar_pro.cpp:580
+msgid "Connect to the Internet to get additional suggestions."
+msgstr ""
+
+#. TRANSLATORS: Label indicating that translations made in the current file are contributed to the online translation memory. Related to the "Contribute my translations to the online TM" string.
+#: src/sidebar_pro.cpp:655
+msgid "Contributing"
+msgstr "წვლილის შეტანა"
+
+#: src/sidebar_pro.cpp:656
+msgid "Your translations are contributed to the online translation memory as you make them. Thanks for making the suggestions better!"
+msgstr ""
+
+#. TRANSLATORS: Label indicating that the current file
+#: src/sidebar_pro.cpp:662
+msgid "Private"
+msgstr "პირადი"
+
+#: src/sidebar_pro.cpp:663
+msgid "Translations from this file are not shared with the online translation memory."
+msgstr ""
+
+#: src/sidebar_pro.cpp:688
+msgid "Privacy settings"
+msgstr "კონფიდენციალურობის პარამეტრები"
+
+#: src/sidebar_pro.cpp:694
+#, c-format
+msgid "While editing the file “%s”:"
+msgstr "ფაილი \"%s\" ჩასწორებისას:"
+
+#: src/sidebar_pro.cpp:756
+msgid "Not interested"
+msgstr "არ მაინტერესებს"
+
+#: src/sidebar_pro.cpp:982
+msgid "Pre-translation"
+msgstr "წინასწარი თარგმანი"
+
+#: src/sidebar_pro.cpp:987
+msgid "Pre-translate all items at once and focus on making corrections, instead of translating them one by one."
+msgstr ""
+
+#: src/sidebar_pro.cpp:1101
+msgid "Stay Informed!"
+msgstr "დარჩით ხაზზე!"
+
+#: src/sidebar_pro.cpp:1102
+msgid "Subscribe"
+msgstr "გამოწერა"
+
+#: src/sidebar_pro.cpp:1106
+msgid "Sign up for Poedit newsletter and be the first to know about what’s new. I hate spam too, so expect only a few emails a year."
+msgstr ""
+
+#: src/sidebar_pro.cpp:1117
+msgid "Email address"
+msgstr "ელექტრონული ფოსტის მისამართი"
+
+#: src/sidebar_pro.cpp:1140
+msgid "You’re signed up. Please check your email for a confirmation message."
+msgstr ""
+
+#. TRANSLATORS: "Dictionaries" is the name of the application (see https://dictionaries.io), i.e. shouldn't be translated
+#: src/sidebar_pro.cpp:1210
+msgid "Dictionaries for Mac, Windows & Kindle"
+msgstr ""
+
+#: src/sidebar_pro.cpp:1222
+msgid "Did you know I also made a dictionaries app for Mac, Windows and Kindle? It supports over 80 languages and is a great companion to Poedit."
+msgstr ""
+
+#: src/sidebar_terminology.cpp:49
+msgid "Glossary Entry"
+msgstr "ლექსიკონის ჩანაწერი"
+
+#: src/sidebar_terminology.cpp:55 src/sidebar_terminology.cpp:185
+msgid "Term"
+msgstr "ტერმინი"
+
+#: src/sidebar_terminology.cpp:60
+msgid "Additional description or notes"
+msgstr "დამატებითი აღწერა ან შენიშვნები"
+
+#: src/sidebar_terminology.cpp:66 src/sidebar_terminology.cpp:187
+msgid "Notes"
+msgstr "შენიშვნები"
+
+#: src/sidebar_terminology.cpp:128
+msgid "CSV Glossary Import"
+msgstr "CSV ლექსიკონის შემოტანა"
+
+#: src/sidebar_terminology.cpp:138
+msgid "Source language:"
+msgstr "საწყისი ენა:"
+
+#: src/sidebar_terminology.cpp:142
+msgid "Translation language:"
+msgstr "თარგმანის ენა:"
+
+#: src/sidebar_terminology.cpp:149
+msgid "Import rules:"
+msgstr "შემოტანის წესები:"
+
+#: src/sidebar_terminology.cpp:153
+msgid "Skip the first row"
+msgstr "პირველი მწკრივის გამოტოვება"
+
+#: src/sidebar_terminology.cpp:158
+msgid "Column separator:"
+msgstr "სვეტის გამყოფი:"
+
+#: src/sidebar_terminology.cpp:161
+msgid "Term column:"
+msgstr "ტერმინის სვეტი:"
+
+#: src/sidebar_terminology.cpp:164
+msgid "Definition column:"
+msgstr "აღწერის სვეტი:"
+
+#: src/sidebar_terminology.cpp:167
+msgid "Notes column:"
+msgstr "შენიშვნების სვეტი:"
+
+#: src/sidebar_terminology.cpp:177 src/sidebar_terminology.cpp:261
+msgid "Preview of imported glossary data:"
+msgstr "შემოტანილი ლექსიკონის მონაცემების გადახედვა:"
+
+#. TRANSLATORS: %d is the number of entries in the preview, %s is the total number of entries in the file
+#: src/sidebar_terminology.cpp:257
+#, c-format
+msgid "Preview of imported glossary data (%d out of %s shown):"
+msgstr "შემოტანილი ლექსიკონის მონაცემების მინიატურა (ნაჩვენებია %d ჩანაწერი %s-დან):"
+
+#: src/sidebar_terminology.cpp:396 src/wx_translatable_strings.h:102
+msgid "Edit"
+msgstr "რედაქტირება"
+
+#: src/sidebar_terminology.cpp:496
+msgid "Word or phrase"
+msgstr "სიტყვა ან ფრაზა"
+
+#: src/sidebar_terminology.cpp:518
+msgid "Add entries to the glossary"
+msgstr "ლექსიკონში ჩანაწერების დამატება"
+
+#: src/sidebar_terminology.cpp:524
+msgid "Search previously made translations and glossaries to ensure consistency. Both the current file and your translation memory are consulted."
+msgstr ""
+
+#: src/sidebar_terminology.cpp:536
+msgid "Unlock terminology search"
+msgstr "ტერმინოლოგიის ძებნის განბლოკვა"
+
+#: src/sidebar_terminology.cpp:626
+msgid "Glossary"
+msgstr "ლექსიკონი"
+
+#: src/sidebar_terminology.cpp:632
+msgid "This File"
+msgstr "ეს ფაილი"
+
+#: src/sidebar_terminology.cpp:696
+msgid "Add Glossary Entry…"
+msgstr "ლექსიკონის ჩანაწერის დამატება…"
+
+#: src/sidebar_terminology.cpp:696
+msgid "Add glossary entry…"
+msgstr "ლექსიკონის ჩანაწერის დამატება…"
+
+#: src/sidebar_terminology.cpp:697
+msgid "Import Glossary from CSV File…"
+msgstr "ლექსიკონის შემოტანა CSV ფაილიდან…"
+
+#: src/sidebar_terminology.cpp:697
+msgid "Import glossary from CSV file…"
+msgstr "ლექსიკონის შემოტანა CSV ფაილიდან…"
+
+#: src/sidebar_terminology.cpp:720
+msgid "Select CSV glossary file to import"
+msgstr "აირჩიეთ შემოსატანი ლექსიკონის CSV ფაილი"
+
+#: src/sidebar_terminology.cpp:723
+msgid "CSV Files"
+msgstr "CSV ფაილები"
+
+#: src/sidebar_terminology.cpp:749
+msgid "Importing glossary"
+msgstr "ლექსიკონის შემოტანა"
+
+#: src/sidebar_terminology.cpp:756
+#, c-format
+msgid "Imported %s terms from CSV file “%s” into the glossary."
+msgstr "ლექსიკონში შემოტანილია %s ტერმინი CSV ფაილიდან \"%s\"."
+
+#: src/statistics.cpp:275 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Items"
+msgstr "ელემენტები"
+
+#: src/statistics.cpp:276 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Words"
+msgstr "სიტყვა"
+
+#: src/statistics.cpp:277 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Characters"
+msgstr "სიმბოლოები"
+
+#: src/statistics.cpp:291 src/statistics.cpp:412
+msgid "Translated"
+msgstr "თარგმნილია"
+
+#: src/statistics.cpp:296 src/statistics.cpp:335 src/statistics.cpp:413
+#: src/statistics.cpp:417
+msgctxt "column/row header"
+msgid "Needs work"
+msgstr "საჭიროებს დამუშავებას"
+
+#: src/statistics.cpp:301 src/statistics.cpp:414
+msgid "Translations with errors"
+msgstr "თარგმანები შეცდომით"
+
+#: src/statistics.cpp:328 src/statistics.cpp:416 src/statistics.cpp:428
+msgid "Strings in source language"
+msgstr "სტრიქონები საწყის ენაზე"
+
+#: src/statistics.cpp:340 src/statistics.cpp:418
+msgid "Not translated"
+msgstr "არ არის ნათარგმნი"
+
+#: src/statistics.cpp:351
+msgid "Include code and placeholders"
+msgstr "კოდისა და ჩანაცვლების ველების ჩართვა"
+
+#: src/statistics.cpp:352
+msgid "If checked, word and character counts will also include placeholders, HTML markup and code."
+msgstr ""
+
+#: src/statistics.cpp:362
+msgid "Characters are counted including spaces."
+msgstr ""
+
+#: src/statistics.cpp:368
+msgid "Copy to clipboard"
+msgstr "ბუფერში კოპირება"
+
+#: src/statistics.cpp:370
+msgid "Copy to Clipboard"
+msgstr "ბუფერში კოპირება"
+
+#: src/statistics.cpp:722
+#, c-format
+msgid "The file “%s” couldn’t be opened: %s"
+msgstr "ფაილის \"%s\" გახსნა შეუძლებელია:%s"
+
+#: src/subprocess.cpp:219 src/subprocess.cpp:251
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "%s პროგრამის გაშვება ვერ ხერხდება"
+
+#: src/tm/tmx_io.cpp:88 src/tm/tmx_io.cpp:104
 msgid "The TMX file is malformed."
 msgstr "TMX ფაილი დაზიანებულია."
 
-msgid "No translations were found in the TMX file."
-msgstr ""
-
+#: src/tm/transmem.cpp:87
 #, c-format
 msgid "Translation memory database is corrupted: %s (%d)."
 msgstr ""
 
+#: src/tm/transmem.cpp:90
 #, c-format
 msgid "Translation memory error: %s (%d)."
 msgstr "თარგმანის მეხსიერების შეცდომა: %s (%d)."
 
+#: src/uilang.cpp:233
 msgid "(Use default language)"
 msgstr "(გამოიყენე სისტემის სტანდარტული ენა)"
 
+#: src/uilang.cpp:244
 msgid "Language selection"
 msgstr "ენის არჩევა"
 
+#: src/uilang.cpp:244
 msgid "Select your preferred language"
 msgstr "აირჩიეთ თქვენთვის სასურველი ენა"
 
+#: src/uilang.cpp:261
 msgid "You must restart Poedit for this change to take effect."
 msgstr "თქვენ უნდა გადატვირთოთ Poedit, რათა ეს ცვლილება ძალაში შევიდეს."
 
+#: src/utility.cpp:143 src/utility.cpp:153
 msgid "Cannot create temporary directory."
 msgstr "დროებითი საქაღალდის შექმნა შეუძლებელია."
 
+#: src/welcomescreen.cpp:141
 msgid "There are no translations. That’s unusual."
 msgstr ""
 
-msgid ""
-"Translatable entries aren’t added manually in the Gettext system, but are "
-"automatically extracted\n"
-"from source code. This way, they stay up to date and accurate.\n"
-"Translators typically use PO template files (POTs) prepared for them by the "
-"developer."
+#: src/welcomescreen.cpp:150
+msgid "Translatable entries aren’t added manually in the Gettext system, but are automatically extracted from source code. This way, they stay up to date and accurate. Translators typically use PO template files (POTs) prepared for them by the developer."
 msgstr ""
 
-msgid "(Learn more about GNU gettext)"
-msgstr "(შეიტყვეთ მეტი GNU gettext-ის შესახებ)"
+#: src/welcomescreen.cpp:153
+msgid "Learn more about GNU gettext"
+msgstr "შეიტყვეთ მეტი GNU gettext-ის შესახებ"
 
-msgid ""
-"The simplest way to fill this file with translations is to update it from a "
-"POT:"
+#: src/welcomescreen.cpp:157
+msgid "The simplest way to fill this file with translations is to update it from a POT:"
 msgstr ""
 
+#: src/welcomescreen.cpp:162
 msgid "Update from POT"
 msgstr "POT-ფაილიდან განახლება"
 
+#: src/welcomescreen.cpp:163
 msgid "Take translatable strings from an existing POT template."
 msgstr ""
 
-msgid ""
-"You can also extract translatable strings directly from the source code:"
+#: src/welcomescreen.cpp:167
+msgid "You can also extract translatable strings directly from the source code:"
 msgstr ""
 
+#: src/welcomescreen.cpp:172
 msgid "Extract from sources"
 msgstr "წყაროდან ამოღება"
 
+#: src/welcomescreen.cpp:173
 msgid "Configure source code extraction in Properties."
 msgstr ""
 
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "ვერსია %s"
-
+#: src/welcomescreen.cpp:272
 msgid "Create new"
 msgstr "ახლის შექმნა"
 
+#: src/welcomescreen.cpp:273
 msgid "Create new translation from POT template."
 msgstr "ახალი თარგმანის შექმნა POT შაბლონიდან."
 
+#: src/welcomescreen.cpp:278
 msgid "Browse files"
 msgstr "ფაილის არჩევა"
 
+#: src/welcomescreen.cpp:279
 msgid "Open and edit translation files."
 msgstr "თარგმანის ფაილების გახსნა და რედაქტირება."
 
+#: src/welcomescreen.cpp:286
+msgid "Translate WordPress theme or plugin"
+msgstr ""
+
+#: src/welcomescreen.cpp:287
+msgid "Edit WordPress translations over FTP or locally."
+msgstr ""
+
+#: src/welcomescreen.cpp:292
 msgid "Translate cloud project"
 msgstr "ღრუბლოვანი პროექტის თარგმნა"
 
+#: src/welcomescreen.cpp:293
 msgid "Collaborate with other people online."
 msgstr "ითანამშრომლეთ სხვა ადამიანებთან ონლაინ."
 
+#: src/welcomescreen.cpp:316
 msgid "Recent files"
 msgstr "უკანასკნელი ფაილების სია"
 
+#: src/wordpress/wordpress.cpp:101 src/wordpress/wordpress.cpp:108
+#, c-format
+msgid "Failed to read file “%s”."
+msgstr "ფაილის კითხვის შეცდომა: %s."
+
+#: src/wordpress/wordpress.cpp:165
+#, c-format
+msgid "Confused by ambiguous values of “%s” in %s."
+msgstr ""
+
+#: src/wordpress/wordpress.cpp:294 src/wordpress/wordpress.cpp:544
+#: src/wordpress/wordpress.cpp:591
+#, c-format
+msgid "Couldn’t detect POs location for “%s”."
+msgstr ""
+
+#: src/wordpress/wordpress.cpp:670
+#, c-format
+msgid "The “%s” theme isn’t localization-ready."
+msgstr ""
+
+#: src/wordpress/wordpress.cpp:687
+#, c-format
+msgid "Couldn’t detect translation domain of the “%s” theme."
+msgstr ""
+
+#: src/wordpress/wordpress.cpp:714
+#, c-format
+msgid "Couldn't detect translation domain of the \"%s\" theme."
+msgstr ""
+
+#: src/wordpress/wordpress.cpp:769
+msgid "Confused: multiple main plugin files."
+msgstr ""
+
+#: src/wordpress/wordpress.cpp:819
+#, c-format
+msgid "The “%s” plugin isn’t localization-ready."
+msgstr ""
+
+#: src/wordpress/wordpress.cpp:840 src/wordpress/wordpress.cpp:857
+#, c-format
+msgid "Couldn’t detect translation domain of the “%s” plugin."
+msgstr ""
+
+#: src/wordpress/wordpress.cpp:923
+msgid "Found neither WordPress theme nor plugin in the folder."
+msgstr ""
+
+#: src/wordpress/wordpress.cpp:940
+#, c-format
+msgid "Translations folder (%s) doesn’t exist."
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:77
+msgid "<big>Drag and drop <b>theme or plugin folder</b> here</big>\n\n"
+"or use the “Choose folder” button"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:79
+msgid "<big>Drag and Drop <b>Theme or Plugin Folder</b> Here</big>\n\n"
+"or use the “Choose Folder” button"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:101
+#, c-format
+msgid "Folder “%s”"
+msgstr "საქაღალდე “%s”"
+
+#: src/wordpress/wordpress_gui.cpp:162
+msgid "Work With Files"
+msgstr "ფაილებთან მუშაობა"
+
+#: src/wordpress/wordpress_gui.cpp:162
+msgid "Work with files"
+msgstr "ფაილებთან მუშაობა"
+
+#: src/wordpress/wordpress_gui.cpp:164
+msgid "Connect to Server"
+msgstr "სერვერთან დაკავშირება"
+
+#: src/wordpress/wordpress_gui.cpp:164
+msgid "Connect to server"
+msgstr "სერვერთან დაკავშირება"
+
+#: src/wordpress/wordpress_gui.cpp:165
+msgid "On This Computer"
+msgstr "ამ კომპიუტერზე"
+
+#: src/wordpress/wordpress_gui.cpp:165
+msgid "On this computer"
+msgstr "ამ კომპიუტერზე"
+
+#: src/wordpress/wordpress_gui.cpp:168
+msgid "Continue"
+msgstr "გაგრძელება"
+
+#: src/wordpress/wordpress_gui.cpp:210
+msgid "Choose Folder…"
+msgstr "აირჩიეთ საქაღალდე…"
+
+#: src/wordpress/wordpress_gui.cpp:210
+msgid "Choose folder…"
+msgstr "აირჩიეთ საქაღალდე…"
+
+#: src/wordpress/wordpress_gui.cpp:217
+msgid "Create a new translation"
+msgstr "ახალი თარგმანის შექმნა"
+
+#: src/wordpress/wordpress_gui.cpp:220
+msgid "Choose this if you want to translate the theme or plugin into your language."
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:233
+msgid "Create a POT"
+msgstr "POT-ის შექმნა"
+
+#: src/wordpress/wordpress_gui.cpp:235
+msgid "This option is for theme and plugin developers. Poedit will create an empty template (POT) that translations can be based on."
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:248
+msgid "Select the folder with the WordPress theme or plugin"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:280
+msgid "Enter connection details for your WordPress server. Poedit will retrieve available themes and plugins from it and let you translate directly on the server."
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:287
+msgid "Protocol:"
+msgstr "პროტოკოლი:"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "FTP (insecure)"
+msgstr "FTP (დაუცველი)"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "FTP with SSL"
+msgstr "FTP SSL-ით"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "SFTP"
+msgstr "SFTP"
+
+#: src/wordpress/wordpress_gui.cpp:293
+msgid "Choose a recent server"
+msgstr "აირჩიეთ ბოლო სერვერი"
+
+#: src/wordpress/wordpress_gui.cpp:302 src/wordpress/wordpress_gui.cpp:538
+msgid "Recent Servers"
+msgstr "ბოლო სერვერები"
+
+#: src/wordpress/wordpress_gui.cpp:302 src/wordpress/wordpress_gui.cpp:538
+msgid "Recent servers"
+msgstr "ბოლო სერვერები"
+
+#: src/wordpress/wordpress_gui.cpp:306
+msgid "Server:"
+msgstr "სერვერი:"
+
+#: src/wordpress/wordpress_gui.cpp:310
+msgid "Remote Path:"
+msgstr "დისტანციური მდებარეობა:"
+
+#: src/wordpress/wordpress_gui.cpp:310
+msgid "Remote path:"
+msgstr "დისტანციური მდებარეობა:"
+
+#: src/wordpress/wordpress_gui.cpp:312
+msgid "Detected automatically"
+msgstr "ნაპოვნია ავტომატურად"
+
+#: src/wordpress/wordpress_gui.cpp:315
+msgid "Port:"
+msgstr "პორტი:"
+
+#: src/wordpress/wordpress_gui.cpp:321
+msgid "Username:"
+msgstr "მომხმარებლის სახელი:"
+
+#: src/wordpress/wordpress_gui.cpp:325
+msgid "Password:"
+msgstr "პაროლი:"
+
+#: src/wordpress/wordpress_gui.cpp:332
+msgid "Remember my credentials"
+msgstr "მომხმარებლის მონაცემების დამახსოვრება"
+
+#: src/wordpress/wordpress_gui.cpp:333
+msgid "Connect"
+msgstr "კავშირი"
+
+#: src/wordpress/wordpress_gui.cpp:346
+msgid "Select the plugin or theme to translate:"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:398
+msgid "Connecting to WordPress server…"
+msgstr "მიმდინარეობს WordPress-ის სერვერთან დაკავშირება…"
+
+#: src/wordpress/wordpress_gui.cpp:416
+#, c-format
+msgid "Theme: %s"
+msgstr "თემა: %s"
+
+#: src/wordpress/wordpress_gui.cpp:419
+#, c-format
+msgid "Plugin: %s"
+msgstr "დამატება: %s"
+
+#: src/wordpress/wordpress_gui.cpp:534
+msgid "No Recent Servers"
+msgstr "ბოლო სერვერები არ არის"
+
+#: src/wordpress/wordpress_gui.cpp:534
+msgid "No recent servers"
+msgstr "ბოლო სერვერები არ არის"
+
+#: src/wordpress/wordpress_gui.cpp:552
+msgid "Clear Recent Servers"
+msgstr "ბოლო სერვერების სიის გაწმენდა"
+
+#: src/wordpress/wordpress_gui.cpp:552
+msgid "Clear recent servers"
+msgstr "ბოლო სერვერების სიის გაწმენდა"
+
+#: src/wordpress/wordpress_gui.cpp:825
+msgid "Failed to extract WordPress information."
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:826
+msgid "WordPress error"
+msgstr "WordPress-ის შეცდომა"
+
+#: src/wordpress/wordpress_gui.cpp:835
+#, c-format
+msgid "Poedit couldn’t understand the content of the folder you selected. This may be a problem with the plugin/theme or it may be Poedit being silly. The error is:\n\n"
+" • %s\n\n"
+"Please email help@poedit.net and we’ll sort it out."
+msgstr ""
+
+#. TRANSLATORS: This is a button that sends an email to support when clicked
+#: src/wordpress/wordpress_gui.cpp:841
+msgid "Email support"
+msgstr "მხარდაჭერის გუნდისთვის ელფოსტის გაგზავნა"
+
+#: src/wordpress/wordpress_gui.cpp:842
+msgid "View log"
+msgstr "აღრიცხვის ფაილის ნახვა"
+
+#. TRANSLATORS: This is a button that sends an email to support when clicked
+#: src/wordpress/wordpress_gui.cpp:845
+msgid "Email Support"
+msgstr "მხარდაჭერის გუნდისთვის ელფოსტის გაგზავნა"
+
+#: src/wordpress/wordpress_gui.cpp:846
+msgid "View Log"
+msgstr "აღრიცხვის ფაილის ნახვა"
+
+#: src/wordpress/wordpress_gui.cpp:857
+msgid "WordPress Errors Log"
+msgstr "WordPress-ის შეცდომების აღრიცხვის ფაილი"
+
+#: src/wordpress/wordpress_gui.cpp:858
+msgid "Please email this log to help@poedit.net. Thank you!"
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:938
+msgid "Analyzing WordPress server…"
+msgstr "მიმდინარეობს WordPress-ის სერვერის ანალიზი…"
+
+#: src/wordpress/wordpress_gui.cpp:959
+msgid "Downloading translation data…"
+msgstr "მიმდინარეობს თარგმანის მონაცემების ჩამოტვირთვა…"
+
+#: src/wordpress/wordpress_gui.cpp:984
+msgid "Unpacking translation data…"
+msgstr "თარგმნის მონაცემების განშლა…"
+
+#: src/wordpress/wordpress_gui.cpp:989
+msgid "Error unpacking downloaded WordPress data."
+msgstr ""
+
+#: src/wordpress/wordpress_gui.cpp:1014 src/wordpress/wordpress_gui.cpp:1029
+msgid "Analyzing WordPress code…"
+msgstr "მიმდინარეობს WordPress-ის კოდის ანალიზი…"
+
+#: src/wordpress/wordpress_gui.cpp:1039
+msgid "WordPress translation file is ready, but there were some non-fatal issues with the corresponding source code."
+msgstr "Wordpress-ის თარგმანის ფაილი მზადაა, მაგრამ არსებობს არაშემაჩერებელი შეცდომები შესაბამის წყარო კოდთან."
+
+#: src/wx/main_toolbar.cpp:123
 msgid "Sync"
 msgstr "სინქრონიზაცია"
 
+#: src/wx/main_toolbar.cpp:124
 msgid "Synchronize the translation with Crowdin"
 msgstr ""
 
-#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
-#. ("Poedit" here, but please use "%s")
-#, c-format
-msgid "About %s"
-msgstr "%s-ის შესახებ"
+#: src/wx/main_toolbar.cpp:170
+msgid "Upgrade to Poedit Pro to get additional features and support Poedit's development."
+msgstr ""
 
 #. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+#: src/wx_translatable_strings.h:49
 #, c-format
 msgid "%s Preferences"
 msgstr "%s-ის პარამეტრები"
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
+#: src/wx_translatable_strings.h:60
 #, c-format
 msgctxt "macOS menu item"
 msgid "About %s"
 msgstr "%s-ის შესახებ"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:64
 msgctxt "macOS menu item"
 msgid "Services"
 msgstr "სერვისები"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#: src/wx_translatable_strings.h:66
 #, c-format
 msgctxt "macOS menu item"
 msgid "Hide %s"
 msgstr "%s-ის დამალვა"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:68
 msgctxt "macOS menu item"
 msgid "Hide Others"
 msgstr "სხვების დამალვა"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:70
 msgctxt "macOS menu item"
 msgid "Show All"
 msgstr "ყველას ჩვენება"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#: src/wx_translatable_strings.h:72
 #, c-format
 msgctxt "macOS menu item"
 msgid "Quit %s"
 msgstr "%s-დან გასვლა"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:74
 msgid "Preferences…"
 msgstr "პარამეტრები…"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:76
 msgid "Preferences..."
 msgstr "პარამეტრები..."
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:78
 msgctxt "macOS menu item"
 msgid "Preferences..."
 msgstr "პარამეტრები..."
 
+#: src/wx_translatable_strings.h:92
 msgid "&Apply"
 msgstr "&დადასტურება"
 
+#: src/wx_translatable_strings.h:92
 msgid "Apply"
 msgstr "დადასტურება"
 
+#: src/wx_translatable_strings.h:93
 msgid "&Back"
 msgstr "&უკან"
 
+#: src/wx_translatable_strings.h:93
 msgid "Back"
 msgstr "უკან"
 
+#: src/wx_translatable_strings.h:94
 msgid "&Cancel"
 msgstr "&გაუქმება"
 
+#: src/wx_translatable_strings.h:95
 msgid "&Clear"
 msgstr "&გასუფთავება"
 
+#: src/wx_translatable_strings.h:95
 msgid "Clear"
 msgstr "გასუფთავება"
 
+#: src/wx_translatable_strings.h:98
 msgid "Copy"
 msgstr "კოპირება"
 
+#: src/wx_translatable_strings.h:99
 msgid "Cu&t"
 msgstr "ამ&ოჭრა"
 
+#: src/wx_translatable_strings.h:99
 msgid "Cut"
 msgstr "ამოჭრა"
 
-msgid "Edit"
-msgstr "რედაქტირება"
-
+#: src/wx_translatable_strings.h:103
 msgid "&Quit"
 msgstr "&გამოსვლა"
 
+#: src/wx_translatable_strings.h:105
 msgid "Help"
 msgstr "დახმარება"
 
+#: src/wx_translatable_strings.h:106
 msgid "&New"
 msgstr "&ახალი"
 
+#: src/wx_translatable_strings.h:106
 msgid "New"
 msgstr "ახალი"
 
+#: src/wx_translatable_strings.h:107
 msgid "&No"
 msgstr "&არა"
 
+#: src/wx_translatable_strings.h:107
 msgid "No"
 msgstr "არა"
 
+#: src/wx_translatable_strings.h:108
 msgid "&OK"
 msgstr "&დიახ"
 
+#: src/wx_translatable_strings.h:109
 msgid "Open…"
 msgstr "გახსნა…"
 
+#: src/wx_translatable_strings.h:110
 msgid "&Open..."
 msgstr "&გახსნა..."
 
+#: src/wx_translatable_strings.h:110
 msgid "Open..."
 msgstr "გახსნა..."
 
+#: src/wx_translatable_strings.h:111
 msgid "&Paste"
 msgstr "ჩ&ასმა"
 
+#: src/wx_translatable_strings.h:111
 msgid "Paste"
 msgstr "ჩასმა"
 
+#: src/wx_translatable_strings.h:112
 msgid "Preferences"
 msgstr "პარამეტრები"
 
+#: src/wx_translatable_strings.h:113
 msgid "&Redo"
 msgstr "&გამეორება"
 
+#: src/wx_translatable_strings.h:114
 msgid "Refresh"
 msgstr "განახლება"
 
+#: src/wx_translatable_strings.h:116
 msgid "&Save as"
 msgstr "შენახვა &როგორც"
 
+#: src/wx_translatable_strings.h:116
 msgid "Save as"
 msgstr "შენახვა როგორც"
 
+#: src/wx_translatable_strings.h:117
 msgid "Select &All"
 msgstr "ყველას &მონიშვნა"
 
+#: src/wx_translatable_strings.h:117
 msgid "Select All"
 msgstr "ყველას მონიშვნა"
 
+#: src/wx_translatable_strings.h:118
 msgid "&Undo"
 msgstr "&გაუქმება"
 
+#: src/wx_translatable_strings.h:119
 msgid "&Yes"
 msgstr "&დიახ"
 
+#: src/wx_translatable_strings.h:119
 msgid "Yes"
 msgstr "დიახ"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:125
 msgctxt "keyboard key"
 msgid "Alt+"
 msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:127
 msgctxt "keyboard key"
 msgid "Shift+"
 msgstr "Shift+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:129
 msgctxt "keyboard key"
 msgid "Enter"
 msgstr "Enter"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:131
 msgctxt "keyboard key"
 msgid "Up"
 msgstr "მაღლა"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:133
 msgctxt "keyboard key"
 msgid "Down"
 msgstr "ქვემოთ"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:135
 msgctxt "keyboard key"
 msgid "Left"
 msgstr "მარცხნივ"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:137
 msgctxt "keyboard key"
 msgid "Right"
 msgstr "მარჯვნივ"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+#: src/wx_translatable_strings.h:140
 msgctxt "keyboard key"
 msgid "ctrl"
 msgstr "ctrl"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+#: src/wx_translatable_strings.h:142
 msgctxt "keyboard key"
 msgid "alt"
 msgstr "alt"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+#: src/wx_translatable_strings.h:144
 msgctxt "keyboard key"
 msgid "shift"
 msgstr "shift"
+
+#: src/wx_translatable_strings.h:152
+msgid "Warning: "
+msgstr "გაფრთხილება: "
+

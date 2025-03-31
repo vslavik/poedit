@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2024-10-31 12:30+0100\n"
-"PO-Revision-Date: 2024-10-01 10:16\n"
+"POT-Creation-Date: 2025-03-21 15:42+0100\n"
+"PO-Revision-Date: 2025-03-22 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -17,762 +17,1191 @@ msgstr ""
 "X-Crowdin-File: /locales/poedit.pot\n"
 "X-Crowdin-File-ID: 3\n"
 
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#: src/aboutbox.cpp:135 src/wx_translatable_strings.h:42
+#, c-format
+msgid "About %s"
+msgstr "Quant al %s"
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#: src/aboutbox.cpp:167 src/welcomescreen.cpp:265
+#: src/wx_translatable_strings.h:46
+#, c-format
+msgid "Version %s"
+msgstr "Versió %s"
+
+#: src/aboutbox.cpp:168
+msgid "Based on the open source version →"
+msgstr "Basat en la versió de codi lliure →"
+
+#: src/aboutbox.cpp:174
+msgid "Acknowledgements"
+msgstr "Agraïments"
+
+#: src/aboutbox.cpp:175
+msgid "License Agreement"
+msgstr "Acord de llicència"
+
+#: src/aboutbox.cpp:182 src/prefsdlg.cpp:503
+msgid "Terms of Use"
+msgstr "Condicions d’ús"
+
+#: src/aboutbox.cpp:183
+msgid "Privacy Policy"
+msgstr "Política de privadesa"
+
+#: src/aboutbox.cpp:244
+#, c-format
+msgid "Licensed to %s"
+msgstr "Registrat per %s"
+
+#: src/aboutbox.cpp:246
+msgid "Free version (please upgrade!)"
+msgstr "Versió gratuïta (potencieu-la!)"
+
+#: src/attentionbar.cpp:83
 msgid "Hide this notification message"
 msgstr "Amaga aquesta notificació"
 
+#: src/attentionbar.cpp:291
 msgid "Don’t Show Again"
 msgstr "No tornis a mostrar-ho"
 
+#: src/attentionbar.cpp:291
 msgid "Don’t show again"
 msgstr "No tornis a mostrar-ho"
 
+#: src/cat_operations.cpp:123
+msgid "Both files must be of the same file format."
+msgstr ""
+
+#: src/cat_update.cpp:93
 #, c-format
 msgid "(New: %i, obsolete: %i)"
 msgstr "(Noves: %i, obsoletes: %i)"
 
-msgid "Collecting source files…"
-msgstr "S’estan recopilant els fitxers de codi font…"
+#: src/cat_update.cpp:98
+msgid "Update Summary"
+msgstr ""
 
-msgid "Extracting translatable strings…"
-msgstr "S’estan extraient les cadenes traduibles…"
+#. TRANSLATORS: Title of window showing summary (added/removed strings, issues) of updating translations from sources or POT file
+#: src/cat_update.cpp:98 src/resources/summary.xrc:4
+msgid "Update summary"
+msgstr "Resum de l’actualització"
 
-msgid "Failed to load file with extracted translations."
-msgstr "No s’ha pogut carregar el fitxer amb les traduccions extretes."
+#: src/cat_update.cpp:100 src/resources/summary.xrc:24
+msgid "Issues"
+msgstr ""
 
-msgid "Merging differences…"
-msgstr "S’estan fusionant les diferències…"
+#: src/cat_update.cpp:101
+msgid "New Strings"
+msgstr ""
 
+#: src/cat_update.cpp:101 src/resources/summary.xrc:45
+msgid "New strings"
+msgstr "Cadenes noves"
+
+#: src/cat_update.cpp:102
+msgid "Removed Strings"
+msgstr ""
+
+#: src/cat_update.cpp:102
+msgid "Removed strings"
+msgstr ""
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:105 src/cloud_accounts_ui.cpp:263 src/manager.cpp:404
+#: src/recent_files.cpp:555 src/wx_translatable_strings.h:104
+msgid "File"
+msgstr "Fitxer"
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:107
+msgid "Line"
+msgstr ""
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:109
+msgid "Issue"
+msgstr ""
+
+#: src/cat_update.cpp:205 src/cat_update.cpp:461
 msgid "Updating translations"
 msgstr "S’estan actualitzant les traduccions"
 
+#: src/cat_update.cpp:206
+#, c-format
+msgid "Found %d template file supported by Poedit Pro."
+msgid_plural "Found %d template files supported by Poedit Pro."
+msgstr[0] ""
+msgstr[1] ""
+
+#. TRANSLATORS: %s is a filename here, e.g. "mainpage.twig"
+#: src/cat_update.cpp:208
+msgid "Poedit Pro can extract strings from template files, but this functionality isn’t available in the free version. Would you like to upgrade to the Pro version?"
+msgstr "El Poedit Pro pot extreure cadenes dels fitxers de plantilles, però la versió gratuïta no disposa d’aquesta funcionalitat. Voleu potenciar a la versió Pro?"
+
+#: src/cat_update.cpp:211 src/licensing_ui.cpp:691 src/sidebar_pro.cpp:1212
+msgid "Learn More"
+msgstr "Més informació"
+
+#: src/cat_update.cpp:211 src/customcontrols.cpp:326 src/licensing_ui.cpp:691
+#: src/sidebar_pro.cpp:1212
+msgid "Learn more"
+msgstr "Més informació"
+
+#: src/cat_update.cpp:216
+msgid "Don’t ask again"
+msgstr "No m’ho demanis més"
+
+#: src/cat_update.cpp:217
+msgid "Skip templates"
+msgstr "Omet les plantilles"
+
+#: src/cat_update.cpp:226
+msgid "Found the following template files:"
+msgstr ""
+
+#: src/cat_update.cpp:245
+msgid "Don’t Ask Again"
+msgstr "No m’ho demanis més"
+
+#: src/cat_update.cpp:246
+msgid "Skip Templates"
+msgstr "Omet les plantilles"
+
+#: src/cat_update.cpp:297
+msgid "Collecting source files…"
+msgstr "S’estan recopilant els fitxers de codi font…"
+
+#: src/cat_update.cpp:321
+#, c-format
+msgid "Extracting translatable strings from %s file…"
+msgid_plural "Extracting translatable strings from %s files…"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/cat_update.cpp:348
+#, c-format
+msgid "Failed to extract WordPress metadata from file %s."
+msgstr "No s’han pogut extreure les metadades del WordPress del fitxer %s."
+
+#: src/cat_update.cpp:356 src/cat_update.cpp:492
+msgid "Failed to load file with extracted translations."
+msgstr "No s’ha pogut carregar el fitxer amb les traduccions extretes."
+
+#: src/cat_update.cpp:380
+#, c-format
+msgid "In: %s"
+msgstr "A: %s"
+
+#: src/cat_update.cpp:387 src/edframe.cpp:1778
+msgid "Source code not available."
+msgstr "El codi font no és disponible."
+
+#: src/cat_update.cpp:388 src/edframe.cpp:1782
+msgid "Translations couldn’t be updated from the source code, because no code was found in the location specified in the file’s Properties."
+msgstr "Les traduccions no es podran actualitzar des del codi font perquè no s’ha trobat codi a la ubicació especificada a les propietats del fitxer."
+
+#: src/cat_update.cpp:392
+msgid "Permission denied."
+msgstr "S’hi ha denegat el permís."
+
+#: src/cat_update.cpp:393
+msgid "You don’t have permission to read source code files from the location specified in the file’s Properties."
+msgstr "No teniu permís per a llegir els fitxers de codi font des de la ubicació especificada a les propietats del fitxer."
+
+#. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
+#: src/cat_update.cpp:398
+msgid "If you previously denied access to your files, you can allow it in System Settings > Privacy & Security > Files & Folders."
+msgstr "Si anteriorment heu denegat l'accés als vostres fitxers, podeu permetre-ho a Configuració del sistema > Privadesa i seguretat > Fitxers i carpetes."
+
+#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
+#: src/cat_update.cpp:403
+msgid "If you previously denied access to your files, you can allow it in System Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr "Si heu denegat prèviament accès als vostres fitxers, podeu permetre-ho a les Preferències del sistema ▸ Seguretat i privacitat ▸ Privacitat ▸ Carpetes i fitxers."
+
+#: src/cat_update.cpp:409
+msgid "Failed to extract strings from source code."
+msgstr ""
+
+#: src/cat_update.cpp:443 src/edapp.cpp:1186 src/edframe.cpp:952
+#: src/edframe.cpp:2955
 #, c-format
 msgid "The file “%s” couldn’t be opened."
 msgstr "No s’ha pogut obrir el fitxer «%s»."
 
-msgid "Invalid file"
-msgstr "El fitxer no és vàlid"
+#: src/cat_update.cpp:481
+msgid "Determining differences…"
+msgstr ""
 
+#: src/cat_update.cpp:489 src/cat_update.cpp:547
+msgid "Merging differences…"
+msgstr "S’estan fusionant les diferències…"
+
+#: src/cat_update.cpp:502
+msgid "Translation file is already up to date, no changes to strings were made."
+msgstr ""
+
+#: src/cat_update.cpp:508
+#, c-format
+msgid "Translation file was updated with %s change."
+msgid_plural "Translation file was updated with %s changes."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/cat_update.cpp:511
+msgid "New strings to translate:"
+msgstr ""
+
+#: src/cat_update.cpp:512
+msgid "Removed strings (no longer used):"
+msgstr ""
+
+#: src/cat_update.cpp:517
+msgid "Template files skipped (Pro-only):"
+msgstr ""
+
+#: src/cat_update.cpp:605
+#, c-format
+msgid "%d issue with the source strings was detected."
+msgid_plural "%d issues with the source strings were detected."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/cat_update.cpp:632
+msgid "View Details…"
+msgstr ""
+
+#: src/cat_update.cpp:632
+msgid "View details…"
+msgstr ""
+
+#: src/catalog.cpp:125
 #, c-format
 msgid "Malformed header: “%s”"
 msgstr "El format de la capçalera és incorrecte: «%s»"
 
+#: src/catalog.cpp:588
 msgid "PO Translation Files"
 msgstr "Fitxers de traducció PO"
 
+#: src/catalog.cpp:590
 msgid "POT Translation Templates"
 msgstr "Plantilles de traducció .POT"
 
+#: src/catalog.cpp:592
 msgid "XLIFF Translation Files"
 msgstr "Fitxers de traducció XLIFF"
 
+#: src/catalog.cpp:594
+msgid "Xcode Localization Catalog"
+msgstr ""
+
+#: src/catalog.cpp:596
 msgid "JSON Translation Files"
 msgstr "Fitxers de traducció JSON"
 
 #. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+#: src/catalog.cpp:599
 msgid "Flutter Translation Files"
 msgstr "Fitxers de traducció del Flutter"
 
+#: src/catalog.cpp:608
 msgid "All Translation Files"
 msgstr "Tots els fitxers de traducció"
 
+#: src/catalog.cpp:1152
 msgid "The file is in a format not recognized by Poedit."
 msgstr "El fitxer és en un format que el Poedit no reconeix."
 
-msgid ""
-"This JSON file isn’t a translations file and cannot be edited in Poedit."
-msgstr ""
-"Aquest fitxer JSON no és de traduccions i no es pot editar amb el Poedit."
+#: src/catalog_json.cpp:91
+msgid "This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgstr "Aquest fitxer JSON no és de traduccions i no es pot editar amb el Poedit."
 
+#: src/catalog_json.cpp:140
 #, c-format
 msgid "Reading file content failed with the following error: %s"
 msgstr "Ha fallat la lectura del fitxer amb l’error següent: %s"
 
+#: src/catalog_json.cpp:151 src/catalog_po.cpp:1142 src/catalog_xliff.cpp:556
 #, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
+msgid "File “%s” is read-only and cannot be saved.\n"
 "Please save it under different name."
-msgstr ""
-"El fitxer «%s» és només de lectura i no es pot desar.\n"
+msgstr "El fitxer «%s» és només de lectura i no es pot desar.\n"
 "Hauríeu de desar-lo amb un altre nom."
 
+#: src/catalog_json.cpp:165 src/catalog_po.cpp:1178 src/catalog_po.cpp:1260
+#: src/catalog_po.cpp:1316 src/catalog_po.cpp:1373 src/catalog_po.cpp:1404
+#: src/catalog_po.cpp:1598 src/catalog_xliff.cpp:567 src/edframe.cpp:1339
+#: src/prefsdlg.cpp:757
 #, c-format
 msgid "Couldn’t save file %s."
 msgstr "No s’ha pogut desar el fitxer %s."
 
+#: src/catalog_json.cpp:503
 msgid "Screenshots:"
 msgstr "Captures de pantalla:"
 
+#: src/catalog_po.cpp:130
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
 msgstr[0] "No s’ha carregat %i línia del fitxer «%s» correctament."
 msgstr[1] "No s’han carregat %i línies del fitxer «%s» correctament."
 
+#: src/catalog_po.cpp:145
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "La línia %d del fitxer «%s» està malmesa (dades %s no vàlids)."
 
+#: src/catalog_po.cpp:352
 msgid "Broken PO file: singular form msgstr used together with msgid_plural"
-msgstr ""
-"El fitxer PO és malmès: la forma singular del msgstr s’ha fet servir "
-"conjuntament amb msgid_plural"
+msgstr "El fitxer PO és malmès: la forma singular del msgstr s’ha fet servir conjuntament amb msgid_plural"
 
+#: src/catalog_po.cpp:404
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
-msgstr ""
-"El fitxer PO és malmès: la forma plural del msgstr s’ha fet servir sense "
-"msgid_plural"
+msgstr "El fitxer PO és malmès: la forma plural del msgstr s’ha fet servir sense msgid_plural"
 
+#: src/catalog_po.cpp:926 src/catalog_po.cpp:940 src/catalog_po.cpp:953
+#: src/catalog_po.cpp:965
 msgid "Couldn’t load the file, it is probably damaged."
 msgstr "No s’ha pogut carregar el fitxer; és probable que estigui malmès."
 
-msgid ""
-"There were errors when loading the file. Some data may be missing or "
-"corrupted as the result."
-msgstr ""
-"S’han produït errors en carregar el fitxer. És possible que manquin algunes "
-"dades o que estiguin malmeses."
+#: src/catalog_po.cpp:945
+msgid "There were errors when loading the file. Some data may be missing or corrupted as the result."
+msgstr "S’han produït errors en carregar el fitxer. És possible que manquin algunes dades o que estiguin malmeses."
 
-msgid ""
-"There was a problem formatting the file nicely (but it was saved all right)."
-msgstr ""
-"S’ha produït un problema en formatar el fitxer (però s’ha desat "
-"correctament)."
+#: src/catalog_po.cpp:1269
+msgid "There was a problem formatting the file nicely (but it was saved all right)."
+msgstr "S’ha produït un problema en formatar el fitxer (però s’ha desat correctament)."
 
+#: src/catalog_po.cpp:1521
 #, c-format
-msgid ""
-"The file couldn’t be saved in “%s” charset as specified in translation "
-"settings.\n"
-"\n"
+msgid "The file couldn’t be saved in “%s” charset as specified in translation settings.\n\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
-msgstr ""
-"No s’ha pogut desar el fitxer en el joc de caràcters «%s» com s’especifica "
-"en la configuració de traducció.\n"
-"\n"
+msgstr "No s’ha pogut desar el fitxer en el joc de caràcters «%s» com s’especifica en la configuració de traducció.\n\n"
 "Se n’ha desat en UTF-8 i el paràmetre s’ha modificat en conseqüència."
 
+#: src/catalog_po.cpp:1523 src/edframe.cpp:3221
 msgid "Error saving file"
 msgstr "S’ha produït un error en desar el fitxer"
 
+#: src/catalog_po.cpp:1674
 #, c-format
 msgid "“%s” is not a valid POT file."
 msgstr "«%s» no és un fitxer POT vàlid."
 
+#: src/catalog_xcloc.cpp:85 src/catalog_xcloc.cpp:88
+msgid "Unexpectedly missing content in the XCLOC file."
+msgstr ""
+
+#: src/catalog_xcloc.cpp:99
+msgid "Saving in a different location is not supported for XCLOC files."
+msgstr ""
+
+#: src/catalog_xliff.cpp:473
 #, c-format
 msgid "Error while loading XLIFF file: %s"
 msgstr "S’ha produït un error en carregar el fitxer XLIFF: %s"
 
+#: src/catalog_xliff.cpp:518
 #, c-format
 msgid "unsupported version (%s)"
 msgstr "no s’admet la versió (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
+#: src/catalog_xliff.cpp:679 src/catalog_xliff.cpp:866
 msgid "Broken markup in translation string."
 msgstr "Etiquetatge incorrecte en la cadena de la traducció."
 
-msgid "Add Account"
-msgstr "Afegeix un compte"
-
-msgid "Add account"
-msgstr "Afegeix un compte"
-
-#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
-#, c-format
-msgid "Learn more about %s"
-msgstr "Més informació quant al %s"
-
-msgid ""
-"Connect Poedit with supported cloud localization platforms to seamlessly "
-"sync translations managed on them."
+#: src/cloud_accounts_ui.cpp:82
+msgid "Connect Poedit with supported cloud localization platforms to seamlessly sync translations managed on them."
 msgstr ""
 
+#: src/cloud_accounts_ui.cpp:85 src/welcomescreen.cpp:295
 msgid "How does cloud sync work?"
 msgstr "Com funciona la sincronització amb el núvol?"
 
+#: src/cloud_accounts_ui.cpp:96
 msgid "Account"
 msgstr "Compte"
 
+#: src/cloud_accounts_ui.cpp:159
 msgid "(not signed in)"
 msgstr ""
 
-msgid "File"
-msgstr "Fitxer"
-
+#: src/cloud_accounts_ui.cpp:353
 msgid "Open cloud translation"
 msgstr "Obre una traducció al núvol"
 
+#: src/cloud_accounts_ui.cpp:365
 msgid "Manage accounts"
 msgstr "Gestiona els comptes"
 
+#: src/cloud_accounts_ui.cpp:374 src/export_html.cpp:77
 msgid "Project:"
 msgstr "Projecte:"
 
+#: src/cloud_accounts_ui.cpp:378 src/export_html.cpp:79
+#: src/resources/prefs.xrc:11 src/resources/prefs.xrc:15
+#: src/resources/properties.xrc:54 src/wordpress/wordpress_gui.cpp:228
+#: src/wordpress/wordpress_gui.cpp:354
 msgid "Language:"
 msgstr "Llengua:"
 
+#: src/cloud_accounts_ui.cpp:433
 msgid "Sign in to Cloud Account"
 msgstr ""
 
+#: src/cloud_accounts_ui.cpp:433
 msgid "Sign in to cloud account"
 msgstr ""
 
+#: src/cloud_accounts_ui.cpp:524
 msgid "No translation projects listed in your account."
 msgstr "No hi ha cap projecte de traducció enumerat al vostre compte."
 
+#: src/cloud_accounts_ui.cpp:633 src/crowdin_gui.cpp:347
 msgid "Downloading latest translations…"
 msgstr "S’estan baixant les traduccions més recents…"
 
 #. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#: src/cloud_accounts_ui.cpp:729
 #, c-format
 msgid "Sign in to %s"
 msgstr ""
 
+#: src/cloud_sync.h:99
 msgid "Syncing"
 msgstr "Sincronització"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#: src/cloud_sync.h:116
 #, c-format
 msgid "Uploading translations to %s…"
 msgstr ""
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#: src/cloud_sync.h:168
 #, c-format
 msgid "Uploading translations to %s failed."
 msgstr ""
 
+#: src/cloud_sync.h:169
 msgid "Syncing error"
 msgstr "S’ha produït un error de sincronització"
 
+#: src/commentdlg.cpp:48
 msgid "Add"
 msgstr "Afegeix"
 
+#: src/crowdin_client.cpp:144
 msgid "Unknown Crowdin error."
 msgstr "S’ha produït un error desconegut al Crowdin."
 
+#: src/crowdin_client.cpp:154
 msgid "Not authorized, please sign in again."
 msgstr "No s’ha autoritzat l’acció. Inicieu una sessió de nou."
 
+#. TRANSLATORS: Crowdin has string-based and file-based project kinds (see https://support.crowdin.com/creating-project/#file-based-project)
+#: src/crowdin_client.cpp:346
+msgid "String-based Crowdin projects are not supported."
+msgstr ""
+
+#: src/crowdin_client.cpp:350
 msgid "Downloading translations is disabled in this project."
 msgstr "Aquest projecte ha inhabilitat les baixades de traduccions."
 
+#: src/crowdin_gui.cpp:94 src/localazy_gui.cpp:105
 msgid "Sign In"
 msgstr "Inicia la sessió"
 
+#: src/crowdin_gui.cpp:94 src/localazy_gui.cpp:105
 msgid "Sign in"
 msgstr "Inicia la sessió"
 
+#: src/crowdin_gui.cpp:96 src/localazy_gui.cpp:107
 msgid "Sign Out"
 msgstr "Finalitza la sessió"
 
+#: src/crowdin_gui.cpp:96 src/localazy_gui.cpp:107
 msgid "Sign out"
 msgstr "Finalitza la sessió"
 
+#: src/crowdin_gui.cpp:103
 msgid "Learn more about Crowdin"
 msgstr "Més informació sobre el Crowdin"
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool."
+#: src/crowdin_gui.cpp:134
+msgid "Crowdin is an online translation management platform and collaborative translation tool. We use Crowdin ourselves to translate Poedit into many languages, and we love it."
 msgstr ""
 
+#: src/crowdin_gui.cpp:198 src/localazy_gui.cpp:210
 msgid "Waiting for authentication…"
 msgstr "S’està esperant l’autenticació…"
 
+#: src/crowdin_gui.cpp:199 src/localazy_gui.cpp:211
 msgid "Updating user information…"
 msgstr "S’està actualitzant la informació de l’usuari…"
 
+#: src/crowdin_gui.cpp:306
 msgid "Sign in to Crowdin"
 msgstr "Inicia la sessió al Crowdin"
 
+#: src/crowdin_gui.cpp:326
 msgid "Syncing with Crowdin failed."
 msgstr "La sincronització amb el Crowdin ha fallat."
 
+#: src/crowdin_gui.cpp:327
 msgid "Crowdin error"
 msgstr "Error del Crowdin"
 
+#: src/crowdin_gui.cpp:335
 msgid "Uploading translations…"
 msgstr "S’estan pujant les traduccions…"
 
+#: src/customcontrols.cpp:282 src/wx_translatable_strings.h:98
 msgid "&Copy"
 msgstr "&Copia"
 
-msgid "Learn more"
-msgstr "Més informació"
-
+#: src/edapp.cpp:510 src/resources/menus.xrc:377 src/resources/menus.xrc:494
+#: src/wx_translatable_strings.h:105
 msgid "&Help"
 msgstr "&Ajuda"
 
+#: src/edapp.cpp:800
 msgid "MO files can’t be directly edited in Poedit."
 msgstr "Els fitxers MO no es poden editar directament al Poedit."
 
+#: src/edapp.cpp:801
 msgid "Error opening file"
 msgstr "S’ha produït un error en obrir el fitxer"
 
-msgid ""
-"Please open and edit the corresponding PO file instead. When you save it, "
-"the MO file will be updated as well."
-msgstr ""
-"Obriu i editeu el fitxer .po corresponent en el seu lloc. Quan ho deseu, el "
-"fitxer .mo s’actualitzarà."
+#: src/edapp.cpp:803
+msgid "Please open and edit the corresponding PO file instead. When you save it, the MO file will be updated as well."
+msgstr "Obriu i editeu el fitxer .po corresponent en el seu lloc. Quan ho deseu, el fitxer .mo s’actualitzarà."
 
+#: src/edapp.cpp:844
 msgid "don’t delete temporary files (for debugging)"
 msgstr "no suprimeixis els fitxers temporals (per a la depuració)"
 
+#: src/edapp.cpp:846
 msgid "handle a poedit:// URI"
 msgstr "gestiona un URI poedit://"
 
+#: src/edapp.cpp:848
 msgid "go to item at given line number"
 msgstr "vés a l’element al número de línia donat"
 
+#: src/edapp.cpp:871
 msgid "Failed to communicate with Poedit process."
 msgstr "Ha fallat la comunicació amb el procès del Poedit."
 
+#: src/edapp.cpp:993 src/edapp.cpp:998
 #, c-format
 msgid "Unhandled exception occurred: %s"
 msgstr "S’ha produït una excepció no controlada: %s"
 
+#: src/edapp.cpp:1156
 msgid "Select translation template"
 msgstr "Seleccioneu la plantilla de traducció"
 
+#: src/edapp.cpp:1187 src/edframe.cpp:953 src/edframe.cpp:2687
+#: src/edframe.cpp:2956
+msgid "Invalid file"
+msgstr "El fitxer no és vàlid"
+
+#: src/edapp.cpp:1220 src/wordpress/wordpress_gui.cpp:137
+msgid "WordPress"
+msgstr "WordPress"
+
+#: src/edapp.cpp:1271 src/edframe.cpp:2859
 msgid "Select translation file"
 msgstr "Seleccioneu el fitxer de traducció"
 
+#: src/edapp.cpp:1373
 msgid "Poedit is an easy to use translation editor."
 msgstr "El Poedit és un editor de traduccions fàcil d’utilitzar."
 
+#: src/edframe.cpp:445
 msgid "You can’t drop more than one file on Poedit window."
 msgstr "No podeu deixar anar més d’un fitxer a la finestra del Poedit."
 
+#: src/edframe.cpp:452
 #, c-format
 msgid "File “%s” is not a translation file."
 msgstr "El fitxer «%s» no és de traducció."
 
+#: src/edframe.cpp:459 src/recent_files.cpp:349
 #, c-format
 msgid "File “%s” doesn’t exist."
 msgstr "El fitxer «%s» no existeix."
 
+#: src/edframe.cpp:476
 msgid "Poedit"
 msgstr "Poedit"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
+#: src/edframe.cpp:890
 #, c-format
-msgid ""
-"Spellchecking is disabled, because the dictionary for %s isn’t installed."
-msgstr ""
-"La correcció ortogràfica está inhabilitada perquè no s’ha instal·lat el "
-"diccionari de l’idioma %s."
+msgid "Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgstr "La correcció ortogràfica está inhabilitada perquè no s’ha instal·lat el diccionari de l’idioma %s."
 
+#: src/edframe.cpp:894
 msgid "Install"
 msgstr "Instal·la"
 
+#: src/edframe.cpp:986 src/edframe.cpp:1161
 #, c-format
 msgid "The file “%s” has been changed by another application."
 msgstr "S’ha modificat el fitxer «%s» amb una altra aplicació."
 
+#: src/edframe.cpp:987 src/edframe.cpp:991
 msgid "Reload file"
 msgstr "Torna a carregar el fitxer"
 
-msgid ""
-"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
-"be lost if you do."
-msgstr ""
-"Voleu tornar a carregar el fitxer des del disc? Els canvis sense desar del "
-"Poedit es perdran si ho feu."
+#: src/edframe.cpp:990
+msgid "Do you want to reload the file from disk? Your unsaved edits in Poedit will be lost if you do."
+msgstr "Voleu tornar a carregar el fitxer des del disc? Els canvis sense desar del Poedit es perdran si ho feu."
 
+#. TRANSLATORS: Button next to a QA warning: causes the warning to be dismissed
+#: src/edframe.cpp:991 src/editing_area.cpp:325 src/editing_area.cpp:377
 msgid "Ignore"
 msgstr "Ignora"
 
+#: src/edframe.cpp:991
 msgid "Reload File"
 msgstr "Torna a carregar el fitxer"
 
+#: src/edframe.cpp:1095
 msgid "The file has been modified. Do you want to save changes?"
 msgstr "S’ha modificat el fitxer. Voleu desar els canvis?"
 
+#: src/edframe.cpp:1096
 msgid "Save changes"
 msgstr "Desa els canvis"
 
+#: src/edframe.cpp:1099
 msgid "Your changes will be lost if you don’t save them."
 msgstr "Els canvis es perdran si no els deseu."
 
+#: src/edframe.cpp:1102 src/edframe.cpp:1162 src/sidebar_terminology.cpp:70
+#: src/wx_translatable_strings.h:115
 msgid "Save"
 msgstr "Desa"
 
+#: src/edframe.cpp:1104
 msgid "Do&n’t save"
 msgstr "&No ho desis"
 
+#: src/edframe.cpp:1106
 msgid "Don’t Save"
 msgstr "No ho desis"
 
+#: src/edframe.cpp:1165
 msgid "The changes made by the other application will be lost if you save."
 msgstr "Els canvis fets per l’altra aplicació es perdran si deseu."
 
+#: src/edframe.cpp:1166 src/edframe.cpp:2268 src/licensing_ui.cpp:284
+#: src/prefsdlg.cpp:770 src/prefsdlg.cpp:1103 src/resources/comment.xrc:41
+#: src/resources/manager.xrc:63 src/sidebar_terminology.cpp:73
+#: src/wx_translatable_strings.h:94
 msgid "Cancel"
 msgstr "Cancel·la"
 
+#: src/edframe.cpp:1166
 msgid "Save Anyway"
 msgstr "Desa igualment"
 
+#: src/edframe.cpp:1166
 msgid "Save anyway"
 msgstr "Desa igualment"
 
+#: src/edframe.cpp:1219
 msgid "Save as…"
 msgstr "Anomena i desa…"
 
+#: src/edframe.cpp:1268
 msgid "Compile to…"
 msgstr "Compila com a…"
 
+#: src/edframe.cpp:1271
 msgid "Compiled Translation Files"
 msgstr "Fitxers de traducció compilats"
 
+#: src/edframe.cpp:1312
 msgid "Export to HTML…"
 msgstr "Exporta com a HTML…"
 
+#: src/edframe.cpp:1315
 msgid "HTML Files"
 msgstr "Fitxers HTML"
 
+#: src/edframe.cpp:1330
+msgid "Exporting to HTML"
+msgstr ""
+
+#: src/edframe.cpp:1364
+msgid "Export to Excel"
+msgstr "Exporta a l’Excel"
+
+#: src/edframe.cpp:1367 src/edframe.cpp:1401
+msgid "Excel Files"
+msgstr "Fitxers de l’Excel"
+
+#: src/edframe.cpp:1379
+msgid "Exporting to Excel"
+msgstr ""
+
+#: src/edframe.cpp:1398
+msgid "Import from Excel"
+msgstr "Importa des de l’Excel"
+
+#: src/edframe.cpp:1423
+msgid "Importing from Excel"
+msgstr ""
+
+#. TRANSLATORS: %s is filename of Excel file
+#: src/edframe.cpp:1440
 #, c-format
-msgid "In: %s"
-msgstr "A: %s"
+msgid "The “%s” file does not appear to contain any translations intended for this file."
+msgstr ""
 
-msgid "Source code not available."
-msgstr "El codi font no és disponible."
+#: src/edframe.cpp:1445
+msgid "No translations were updated from the Excel file."
+msgstr ""
 
+#. TRANSLATORS: %s is a (formatted) number here
+#: src/edframe.cpp:1452
+#, c-format
+msgid "%s string was updated from the Excel file."
+msgid_plural "%s strings were updated from the Excel file."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/edframe.cpp:1456
+msgid "Translations updated:"
+msgstr ""
+
+#: src/edframe.cpp:1457
+msgid "Strings matched in translation file:"
+msgstr ""
+
+#: src/edframe.cpp:1458
+msgid "Excel rows processed:"
+msgstr ""
+
+#: src/edframe.cpp:1779
 msgid "Updating failed"
 msgstr "L’actualització ha fallat"
 
-msgid ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the file’s Properties."
+#: src/edframe.cpp:1852
+msgid "Open reference file"
 msgstr ""
-"Les traduccions no es podran actualitzar des del codi font perquè no s’ha "
-"trobat codi a la ubicació especificada a les propietats del fitxer."
 
-msgid "Permission denied."
-msgstr "S’hi ha denegat el permís."
+#: src/edframe.cpp:1883 src/resources/menus.xrc:267
+msgid "Update from &POT File…"
+msgstr "Actualitza des d’un fitxer &POT…"
 
-msgid ""
-"You don’t have permission to read source code files from the location "
-"specified in the file’s Properties."
+#: src/edframe.cpp:1883 src/resources/menus.xrc:266
+msgid "Update from &POT file…"
+msgstr "Actualitza des d’un fitxer &POT…"
+
+#: src/edframe.cpp:1887
+msgid "Update from Reference File…"
 msgstr ""
-"No teniu permís per a llegir els fitxers de codi font des de la ubicació "
-"especificada a les propietats del fitxer."
 
-#. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Settings > Privacy & Security > Files & Folders."
+#: src/edframe.cpp:1887
+msgid "Update from reference file…"
 msgstr ""
-"Si anteriorment heu denegat l'accés als vostres fitxers, podeu permetre-ho a "
-"Configuració del sistema > Privadesa i seguretat > Fitxers i carpetes."
 
-#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
-msgstr ""
-"Si heu denegat prèviament accès als vostres fitxers, podeu permetre-ho a les "
-"Preferències del sistema ▸ Seguretat i privacitat ▸ Privacitat ▸ Carpetes i "
-"fitxers."
-
-msgid "Translation entries in the file are probably incorrect."
-msgstr "Les entrades de traducció del fitxer probablement són incorrectes."
-
-msgid "Updating the file failed. Click on 'Details >>' for details."
-msgstr ""
-"Ha fallat l’actualització del fitxer. Feu clic a «Detalls» per a obtenir-ne "
-"més detalls."
-
-msgid "Open translation template"
-msgstr "Obre una plantilla de traducció"
-
+#: src/edframe.cpp:2020
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "S’ha trobat %d problema amb la traducció."
 msgstr[1] "S’han trobat %d problemes amb la traducció."
 
+#: src/edframe.cpp:2025 src/edframe.cpp:2071
 msgid "Validation results"
 msgstr "Resultats de la validació"
 
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
-"Les entrades amb errors s’han marcat en vermell a la llista. Els detalls de "
-"l’error es mostraran quan seleccioneu l’entrada."
+#: src/edframe.cpp:2028
+msgid "Entries with errors were marked in red in the list. Details of the error will be shown when you select such an entry."
+msgstr "Les entrades amb errors s’han marcat en vermell a la llista. Els detalls de l’error es mostraran quan seleccioneu l’entrada."
 
+#: src/edframe.cpp:2037
 msgid "The file was saved safely."
 msgstr "El fitxer s’ha desat amb seguretat."
 
-msgid ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
-msgstr ""
-"El fitxer s’ha desat amb seguretat i compilat en el format MO, però és "
-"probable que no en funcioni correctament."
+#: src/edframe.cpp:2040
+msgid "The file was saved safely and compiled into the MO format, but it will probably not work correctly."
+msgstr "El fitxer s’ha desat amb seguretat i compilat en el format MO, però és probable que no en funcioni correctament."
 
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-msgstr ""
-"El fitxer s’ha desat amb seguretat, però no es pot compilar i usar en el "
-"format MO."
+#: src/edframe.cpp:2043
+msgid "The file was saved safely, but it cannot be compiled into the MO format and used."
+msgstr "El fitxer s’ha desat amb seguretat, però no es pot compilar i usar en el format MO."
 
-msgid ""
-"The file was compiled into the MO format, but it will probably not work "
-"correctly."
-msgstr ""
-"El fitxer s’ha compilat en el format MO, però probablement no funcionarà "
-"correctament."
+#: src/edframe.cpp:2052
+msgid "The file was compiled into the MO format, but it will probably not work correctly."
+msgstr "El fitxer s’ha compilat en el format MO, però probablement no funcionarà correctament."
 
+#: src/edframe.cpp:2056
 msgid "The file cannot be compiled into the MO format and used."
 msgstr "No és possible compilar el fitxer en el format MO per a utilitzar-lo."
 
+#: src/edframe.cpp:2070
 msgid "No problems with the translation found."
 msgstr "No s’ha trobat cap problema amb la traducció."
 
+#: src/edframe.cpp:2080
 #, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural ""
-"The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] ""
-"La traducció ja és a punt per a fer-se servir, però encara no s’ha traduït "
-"%d cadena."
-msgstr[1] ""
-"La traducció ja és a punt per a fer-se servir, però encara no s’han traduït "
-"%d cadenes."
+msgid_plural "The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] "La traducció ja és a punt per a fer-se servir, però encara no s’ha traduït %d cadena."
+msgstr[1] "La traducció ja és a punt per a fer-se servir, però encara no s’han traduït %d cadenes."
 
+#: src/edframe.cpp:2085
 msgid "The translation is ready for use."
 msgstr "La traducció ja és a punt i podeu utilitzar-la."
 
+#: src/edframe.cpp:2251
+msgid "Translation Quality Warnings"
+msgstr "Alertes de qualitat de traduccions"
+
+#: src/edframe.cpp:2254
+msgid "Poedit performs automated quality checks on translations. You can configure which categories of checks are useful for you and disable unwanted ones here."
+msgstr "El Poedit realitza comprovacions de qualitat automàtiques de les traduccions. Podeu configurar quines categories de comprovacions són útils per a vós i desactivar-ne les que no vulgueu aquí."
+
+#: src/edframe.cpp:2265 src/resources/manager.xrc:55
+#: src/resources/summary.xrc:87 src/sidebar_pro.cpp:1146
+#: src/wx_translatable_strings.h:108
+msgid "OK"
+msgstr "D’acord"
+
+#: src/edframe.cpp:2510 src/prefsdlg.cpp:484 src/sidebar_pro.cpp:705
+msgid "Contributing translations improves the quality of online suggestions for everybody — the more people do it, the better the suggestions can be. Your translations are submitted anonymously and are available to other translators using Poedit or other CAT tools."
+msgstr "Contribuir traduccions millora la qualitat dels suggeriments per a tots. Les vostres traduccions s’enviaran anònimament i podran utilitzar-les altres traductors mitjançant el Poedit o altres eines de CAT."
+
+#: src/edframe.cpp:2515
+msgid "Can Poedit contribute your translations of this file to the online translation memory?"
+msgstr "Permeteu que el Poedit contribueixi les vostres traduccions d’aquest fitxer a la memòria de traducció en línia?"
+
+#. TRANSLATORS: Try to keep this as short as the original. If you can't, break it into two lines.
+#: src/edframe.cpp:2519 src/sidebar_pro.cpp:701
+msgid "Apply to all files I edit"
+msgstr "Aplica-ho per a tots\n"
+"els fitxers que editi"
+
+#: src/edframe.cpp:2520
+msgid "Contribute"
+msgstr "Contribueix-les"
+
+#: src/edframe.cpp:2527
+msgid "Keep Private"
+msgstr "Mantingues-les en privat"
+
+#: src/edframe.cpp:2527
+msgid "Keep private"
+msgstr "Mantingues-les en privat"
+
+#: src/edframe.cpp:2686
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
-msgstr ""
-"El Poedit ha corregit automàticament el contingut no vàlid al fitxer «%s»."
+msgstr "El Poedit ha corregit automàticament el contingut no vàlid al fitxer «%s»."
 
-msgid ""
-"The file contained duplicate items, which is not allowed in PO files and "
-"would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as needing work and correct "
-"them if necessary."
-msgstr ""
-"El fitxer contenia elements duplicats. Això no es permet als fitxers PO; en "
-"cas contrari el fitxer no es podria fer servir. El Poedit ha corregit el "
-"problema, però hauríeu de revisar les traduccions de qualssevol elements "
-"marcats com a difusos i corregir-les si cal."
+#: src/edframe.cpp:2691
+msgid "The file contained duplicate items, which is not allowed in PO files and would prevent the file from being used. Poedit fixed the issue, but you should review translations of any items marked as needing work and correct them if necessary."
+msgstr "El fitxer contenia elements duplicats. Això no es permet als fitxers PO; en cas contrari el fitxer no es podria fer servir. El Poedit ha corregit el problema, però hauríeu de revisar les traduccions de qualssevol elements marcats com a difusos i corregir-les si cal."
 
+#: src/edframe.cpp:2707
 msgid "Language of the translation isn’t set."
 msgstr "No s’ha establert la llengua de la traducció."
 
+#: src/edframe.cpp:2709
 msgid "Set Language"
 msgstr "Estableix la llengua"
 
+#: src/edframe.cpp:2709
 msgid "Set language"
 msgstr "Estableix la llengua"
 
 #. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-msgid ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
-msgstr ""
-"Els suggeriments no seran disponibles si no es defineix la llengua de "
-"traducció correctament. Altres funcions, com ara les formes dels plurals, "
-"també poden resultar afectades."
+#: src/edframe.cpp:2712 src/edframe.cpp:2728
+msgid "Suggestions are not available if the translation language is not set correctly. Other features, such as plural forms, may be affected as well."
+msgstr "Els suggeriments no seran disponibles si no es defineix la llengua de traducció correctament. Altres funcions, com ara les formes dels plurals, també poden resultar afectades."
 
+#: src/edframe.cpp:2726 src/pretranslate.cpp:508
 msgid "Language of the translation is the same as source language."
 msgstr "La llengua de traducció es la mateixa que la de partida."
 
+#: src/edframe.cpp:2729
 msgid "Fix Language"
 msgstr "Corregeix l’idioma"
 
+#: src/edframe.cpp:2729
 msgid "Fix language"
 msgstr "Corregeix l’idioma"
 
-msgid ""
-"This file has entries with plural forms, but doesn’t have Plural-Forms "
-"header configured."
-msgstr ""
-"Aquest fitxer té entrades amb formes plurals, però no té la capçalera Plural-"
-"Forms configurada."
+#: src/edframe.cpp:2746
+msgid "This file has entries with plural forms, but doesn’t have Plural-Forms header configured."
+msgstr "Aquest fitxer té entrades amb formes plurals, però no té la capçalera Plural-Forms configurada."
 
-msgid ""
-"Entries in this file have different plural forms count from what the file’s "
-"Plural-Forms header says"
-msgstr ""
-"Les entrades d’aquest fitxer tenen un nombre total de formes plurals "
-"diferent del que diu la capçalera Plural-Forms del fitxer"
+#: src/edframe.cpp:2750
+msgid "Entries in this file have different plural forms count from what the file’s Plural-Forms header says"
+msgstr "Les entrades d’aquest fitxer tenen un nombre total de formes plurals diferent del que diu la capçalera Plural-Forms del fitxer"
 
+#: src/edframe.cpp:2759
 msgid "Required header Plural-Forms is missing."
 msgstr "Falta la capçalera necessària «Plural-Forms»."
 
+#: src/edframe.cpp:2763
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "Hi ha un error de sintaxis a la capçalera Plural-Forms («%s»)."
 
+#: src/edframe.cpp:2775
 msgid "Fix the Header"
 msgstr "Corregeix la capçalera"
 
+#: src/edframe.cpp:2775
 msgid "Fix the header"
 msgstr "Corregeix la capçalera"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
+#: src/edframe.cpp:2793
 #, c-format
 msgid "Plural forms expression used by the file is unusual for %s."
 msgstr "L’expressió de formes plurals usada pel fitxer és inusual per al %s."
 
 #. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
+#: src/edframe.cpp:2798
 msgid "Review"
 msgstr "Repassa"
 
+#. TRANSLATORS: "original" as in "used in this file originally, as it was when opened"
+#: src/edframe.cpp:2834
+msgid "String IDs (original)"
+msgstr "Ids. de cadena (originales)"
+
+#: src/edframe.cpp:2839 src/edframe.cpp:2942 src/edlistctrl.cpp:739
+#: src/export_html.cpp:146
+msgid "unknown language"
+msgstr "idioma desconegut"
+
+#. TRANSLATORS: "original" as in "used in this file originally, as it was when opened"; "%s" is language name
+#: src/edframe.cpp:2841
+#, c-format
+msgid "%s (original)"
+msgstr "%s (original)"
+
+#: src/edframe.cpp:2853
+msgid "Load from Another File…"
+msgstr "Carrega des d’un altre fitxer…"
+
+#: src/edframe.cpp:2853
+msgid "Load from another file…"
+msgstr "Carrega des d’un altre fitxer…"
+
+#: src/edframe.cpp:2897
 msgid "Would you like to use English for source text?"
 msgstr "Voleu utilitzar anglès com a text de partida?"
 
+#: src/edframe.cpp:2899
 #, c-format
-msgid ""
-"This file uses string IDs instead of source text. Poedit can load English "
-"texts from the “%s” file for you."
-msgstr ""
-"Aquest fitxer usa identificadors de cadena en comptes de text de partida. El "
-"Poedit pot carregar textos en anglès des del fitxer «%s» per vós."
+msgid "This file uses string IDs instead of source text. Poedit can load English texts from the “%s” file for you."
+msgstr "Aquest fitxer usa identificadors de cadena en comptes de text de partida. El Poedit pot carregar textos en anglès des del fitxer «%s» per vós."
 
 #. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+#: src/edframe.cpp:2901
 msgid "Load English"
 msgstr "Carrega l’anglès"
 
+#: src/edframe.cpp:3034 src/export_html.cpp:103
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
 msgstr "Traduït: %d/%d (%d %%)"
 
+#: src/edframe.cpp:3038 src/export_html.cpp:105
 #, c-format
 msgid "Remaining: %d"
 msgstr "Resten: %d"
 
+#: src/edframe.cpp:3043
 #, c-format
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "%d error"
 msgstr[1] "%d errors"
 
+#: src/edframe.cpp:3048 src/export_html.cpp:117
 #, c-format
 msgid "%d entry"
 msgid_plural "%d entries"
 msgstr[0] "%d entrada"
 msgstr[1] "%d entrades"
 
+#: src/edframe.cpp:3077
 msgid " (unsaved)"
 msgstr " (no desat)"
 
+#: src/edframe.cpp:3118
 msgid " (modified)"
 msgstr " (modificat)"
 
+#: src/edframe.cpp:3188 src/edframe.cpp:3192
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "Ha fallat l’actualització de la memòria de traducció: %s"
 
+#: src/edframe.cpp:3220
+#, c-format
+msgid "The file “%s” couldn’t be saved."
+msgstr ""
+
+#: src/edframe.cpp:3330 src/resources/menus.xrc:288
 msgid "Remove same-as-source translations"
 msgstr ""
 
-msgid ""
-"Do you want to remove all translations that are idential to the source text?"
+#: src/edframe.cpp:3332
+msgid "Do you want to remove all translations that are idential to the source text?"
 msgstr ""
 
-msgid ""
-"This action will delete any translations that match the source text exactly. "
-"This cannot be undone."
+#: src/edframe.cpp:3333
+msgid "This action will delete any translations that match the source text exactly. This cannot be undone."
 msgstr ""
 
+#: src/edframe.cpp:3337 src/edframe.cpp:3364
 msgid "Keep"
 msgstr "Mantingues-les"
 
+#: src/edframe.cpp:3337
 msgid "Remove"
 msgstr "Elimina"
 
+#: src/edframe.cpp:3356
 msgid "Purge deleted translations"
 msgstr "Purga les traduccions suprimides"
 
+#: src/edframe.cpp:3358
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr "Voleu suprimir totes les traduccions que ja no s’utilitzen?"
 
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"Si continueu amb la purga, totes les traduccions marcades com a suprimides "
-"s’eliminaran permanentment. Si continueu amb la supressió, les haureu de "
-"traduir de nou en cas que es tornin a afegir en un futur."
+#: src/edframe.cpp:3360
+msgid "If you continue with purging, all translations marked as deleted will be permanently removed. You will have to translate them again if they are added back in the future."
+msgstr "Si continueu amb la purga, totes les traduccions marcades com a suprimides s’eliminaran permanentment. Si continueu amb la supressió, les haureu de traduir de nou en cas que es tornin a afegir en un futur."
 
+#: src/edframe.cpp:3364
 msgid "Purge"
 msgstr "Purga-les"
 
+#: src/edframe.cpp:3432 src/resources/menus.xrc:113
 msgid "Copy from source text"
 msgstr "Copia del text de partida"
 
+#: src/edframe.cpp:3434 src/resources/menus.xrc:114
 msgid "Copy from Source Text"
 msgstr "Copia del text de partida"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/edframe.cpp:3436 src/edframe.cpp:3443 src/edframe.cpp:3451
+#: src/sidebar.cpp:422 src/sidebar.cpp:835 src/sidebar.cpp:861
+#: src/sidebar.cpp:863 src/wx_translatable_strings.h:123
 msgctxt "keyboard key"
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
+#: src/edframe.cpp:3439 src/resources/menus.xrc:108
 msgid "Clear translation"
 msgstr "Neteja la traducció"
 
+#: src/edframe.cpp:3441 src/resources/menus.xrc:109
 msgid "Clear Translation"
 msgstr "Neteja la traducció"
 
+#: src/edframe.cpp:3446 src/resources/comment.xrc:4 src/sidebar.cpp:251
 msgid "Edit comment"
 msgstr "Edita el comentari"
 
+#: src/edframe.cpp:3448 src/sidebar.cpp:254
 msgid "Edit Comment"
 msgstr "Edita el comentari"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
+#: src/edframe.cpp:3459 src/fileviewer.cpp:100
 msgid "Code Occurrences"
 msgstr "Ocurrències al codi"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
+#: src/edframe.cpp:3459
 msgid "Code occurrences"
 msgstr "Ocurrències al codi"
 
+#: src/edframe.cpp:3683
 msgid "Hide Sidebar"
 msgstr "Amaga la barra lateral"
 
+#: src/edframe.cpp:3685 src/resources/menus.xrc:242
 msgid "Show Sidebar"
 msgstr "Mostra la barra lateral"
 
+#: src/edframe.cpp:3716
 msgid "Hide Status Bar"
 msgstr "Amaga la barra d’estat"
 
+#: src/edframe.cpp:3718 src/resources/menus.xrc:248
 msgid "Show Status Bar"
 msgstr "Mostra la barra d’estat"
 
+#: src/editing_area.cpp:326
+msgid "Dismiss and ignore the warning."
+msgstr "Rebutja i ignora l'advertiment."
+
+#. TRANSLATORS: Reverse of the "Ignore" button, undoes that action
+#: src/editing_area.cpp:377
+msgid "Don’t ignore"
+msgstr "No ho ignoris"
+
+#: src/editing_area.cpp:411
 msgid "String length in characters: translation | source"
 msgstr "Llargària de la cadena en caràcters: traducció | original"
 
+#: src/editing_area.cpp:414
 msgid "String length in characters"
 msgstr "Longitud de la cadena en caràcters"
 
+#: src/editing_area.cpp:461 src/editing_area.cpp:787 src/edlistctrl.cpp:663
+#: src/edlistctrl.cpp:717 src/export_html.cpp:143
 msgid "Source text"
 msgstr "Text de partida"
 
+#: src/editing_area.cpp:483 src/editing_area.cpp:853 src/editing_area.cpp:869
 msgid "Singular"
 msgstr "Singular"
 
+#: src/editing_area.cpp:488 src/editing_area.cpp:874
 msgid "Plural"
 msgstr "Plural"
 
+#: src/editing_area.cpp:534 src/sidebar_terminology.cpp:57
+#: src/sidebar_terminology.cpp:186 src/statistics.cpp:284
+#: src/statistics.cpp:411
 msgid "Translation"
 msgstr "Traducció"
 
+#: src/editing_area.cpp:543
 msgid "Pre-translated"
 msgstr "Pretraduïda"
 
+#: src/editing_area.cpp:566
 msgid "Needs Work"
 msgstr "Cal revisar"
 
@@ -784,690 +1213,1269 @@ msgstr "Cal revisar"
 #. "needs review" implies that somebody else should review the string after
 #. I am done with it (i.e. consider it good), while "needs work" implies I
 #. need to return to it and finish the translation.
+#: src/editing_area.cpp:566
 msgid "Needs work"
 msgstr "Cal revisar"
 
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
+#: src/editing_area.cpp:638
+msgid "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
-msgstr ""
-"Els fitxers POT només són plantilles i no contenen cap traducció.\n"
+msgstr "Els fitxers POT només són plantilles i no contenen cap traducció.\n"
 "Per a fer una traducció, creeu un fitxer PO nou basat en la plantilla."
 
+#: src/editing_area.cpp:645
 msgid "Create new translation"
 msgstr "Crea una traducció nova"
 
+#: src/editing_area.cpp:646
 msgid "Make a new translation from this POT file."
 msgstr "Feu una traducció nova a partir d’aquest fitxer POT."
 
 #. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+#: src/editing_area.cpp:785 src/edlistctrl.cpp:711 src/export_html.cpp:137
 msgid "Source text ID"
 msgstr "Id. del text de partida"
 
+#: src/editing_area.cpp:840
 msgid "Everything"
 msgstr "Tot"
 
+#: src/editing_area.cpp:845
 #, c-format
 msgid "Form %i"
 msgstr "Forma %i"
 
+#: src/editing_area.cpp:847
 #, c-format
 msgid "Form %i (unused)"
 msgstr "Forma %i (no utilitzada)"
 
+#: src/editing_area.cpp:858
 msgid "Zero"
 msgstr "Zero"
 
+#: src/editing_area.cpp:860
 msgid "One"
 msgstr "Un"
 
+#: src/editing_area.cpp:862
 msgid "Two"
 msgstr "Dos"
 
+#: src/editing_area.cpp:876
 msgid "Other"
 msgstr "Altres"
 
 #. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#: src/editing_area.cpp:1060
 #, c-format
 msgid "String context: %s"
 msgstr "Context de la cadena: %s"
 
 #. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#: src/editing_area.cpp:1067
 #, c-format
 msgid "String identifier: %s"
 msgstr "Identificador de la cadena: %s"
 
+#: src/editing_area.cpp:1075
 #, c-format
 msgid "%s Format"
 msgstr "Format %s"
 
 #. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#: src/editing_area.cpp:1075
 #, c-format
 msgid "%s format"
 msgstr "Format %s"
 
+#: src/edlistctrl.cpp:668 src/edlistctrl.cpp:740 src/export_html.cpp:145
 #, c-format
 msgid "Translation — %s"
 msgstr "Traducció — %s"
 
+#: src/edlistctrl.cpp:672
 msgid "ID"
 msgstr "Id."
 
+#: src/edlistctrl.cpp:716 src/export_html.cpp:142
 #, c-format
 msgid "Source text — %s"
 msgstr "Text de partida — %s"
 
-msgid "unknown language"
-msgstr "idioma desconegut"
-
+#: src/errors.cpp:84
 #, c-format
 msgid "Network error: %s (%d)"
 msgstr ""
 
+#: src/errors.cpp:93
 msgid "Unknown error"
 msgstr ""
 
-#, c-format
-msgid "Failed command: %s"
-msgstr "Ha fallat l’ordre: %s"
+#: src/excel_io.cpp:261 src/excel_io.cpp:298 src/excel_io.cpp:302
+msgid "Failed to create the Excel file."
+msgstr "No s’ha pogut crear el fitxer de l’Excel."
 
+#: src/excel_io.cpp:351 src/excel_io.cpp:395 src/excel_io.cpp:419
+msgid "Failed to import from Excel file."
+msgstr "No s’ha pogut importar des del fitxer de l’Excel."
+
+#: src/excel_io.cpp:428
+msgid "Excel Import"
+msgstr "Importació des de l’Excel"
+
+#. TRANSLATORS: Shown above a list of columns and their meaning
+#: src/excel_io.cpp:442
+msgid "Import from Excel columns as:"
+msgstr "Importa de columnes de l’Excel com a:"
+
+#: src/excel_io.cpp:452
+msgid "ID:"
+msgstr "Id.:"
+
+#: src/excel_io.cpp:460
+msgid "Context:"
+msgstr "Context:"
+
+#: src/excel_io.cpp:467
+msgid "Source text ID:"
+msgstr "Id. del text de partida:"
+
+#: src/excel_io.cpp:467
+msgid "Source text:"
+msgstr "Text de partida:"
+
+#: src/excel_io.cpp:478
+msgid "Translation:"
+msgstr "Traducció:"
+
+#: src/excel_io.cpp:485 src/sidebar_terminology.cpp:192
+msgid "Import"
+msgstr "Importa"
+
+#: src/extractors/extractor.cpp:373
 msgid "Failed to merge gettext catalogs."
 msgstr "No s’han pogut fusionar els catàlegs del gettext."
 
+#: src/fileviewer.cpp:132
 msgid "Open in Editor"
 msgstr "Obre en l’editor"
 
+#: src/fileviewer.cpp:132
 msgid "Open in editor"
 msgstr "Obre en l’editor"
 
-msgid ""
-"No information about this string’s occurrences in the source code is "
-"provided in the file."
-msgstr ""
-"Al fitxer no es proporciona cap informació de les aparicions d'aquesta "
-"cadena al codi font."
+#: src/fileviewer.cpp:256
+msgid "No information about this string’s occurrences in the source code is provided in the file."
+msgstr "Al fitxer no es proporciona cap informació de les aparicions d'aquesta cadena al codi font."
 
+#: src/fileviewer.cpp:256
 msgid "No usage information"
 msgstr "No s'ha trobat informació sobre l'ús"
 
+#: src/fileviewer.cpp:262
 #, c-format
 msgid "%d code occurrence"
 msgid_plural "%d code occurrences"
 msgstr[0] "%d ocurrència al codi"
 msgstr[1] "%d ocurrències al codi"
 
+#: src/fileviewer.cpp:283
 msgid "Source code not found"
 msgstr "No s’ha trobat el codi font"
 
-msgid ""
-"Poedit cannot show source code where the string is used, because the file is "
-"either not available in the referenced location or it is a symbolic "
-"reference that doesn’t point to a real file."
-msgstr ""
-"El Poedit no pot mostrar el codi font on es fa servir la cadena, ja sigui "
-"perquè el fitxer no està disponible al lloc referit o perquè és una "
-"referència simbòlica que no apunta a cap fitxer real."
+#: src/fileviewer.cpp:284
+msgid "Poedit cannot show source code where the string is used, because the file is either not available in the referenced location or it is a symbolic reference that doesn’t point to a real file."
+msgstr "El Poedit no pot mostrar el codi font on es fa servir la cadena, ja sigui perquè el fitxer no està disponible al lloc referit o perquè és una referència simbòlica que no apunta a cap fitxer real."
 
+#: src/fileviewer.cpp:298
 msgid "File cannot be opened"
 msgstr "No es pot obrir el fitxer"
 
+#: src/fileviewer.cpp:299
 #, c-format
 msgid "Poedit was unable to open the “%s” file."
 msgstr "El Poedit no ha pogut obrir el fitxer «%s»."
 
+#: src/findframe.cpp:83 src/findframe.cpp:101 src/findframe.cpp:300
+#: src/resources/menus.xrc:156
 msgid "Find"
 msgstr "Troba"
 
+#: src/findframe.cpp:102 src/findframe.cpp:300
 msgid "Replace"
 msgstr "Substitueix"
 
 #. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+#: src/findframe.cpp:118
 msgid "Options"
 msgstr "Opcions"
 
+#: src/findframe.cpp:122
 msgid "Ignore case"
 msgstr "Ignora majúscules/minúscules"
 
+#: src/findframe.cpp:123
 msgid "Wrap around"
 msgstr "Continua la cerca des de l’inici"
 
+#: src/findframe.cpp:124
 msgid "Whole words only"
 msgstr "Només les paraules senceres"
 
+#: src/findframe.cpp:125
 msgid "Find in source texts"
 msgstr "Troba als texts de partida"
 
+#: src/findframe.cpp:126
 msgid "Find in translations"
 msgstr "Troba a les traduccions"
 
+#: src/findframe.cpp:127
 msgid "Find in comments"
 msgstr "Cerca als comentaris"
 
+#: src/findframe.cpp:148 src/licensing_ui.cpp:535 src/titleless_window.cpp:82
+#: src/wx_translatable_strings.h:96
 msgid "Close"
 msgstr "Tanca"
 
+#: src/findframe.cpp:149
 msgid "Replace &All"
 msgstr "Reemplaça-ho &tot"
 
+#: src/findframe.cpp:149
 msgid "Replace &all"
 msgstr "Reemplaça-ho &tot"
 
+#: src/findframe.cpp:150
 msgid "&Replace"
 msgstr "&Reemplaça"
 
+#: src/findframe.cpp:151
 msgid "< &Previous"
 msgstr "< &Anterior"
 
+#: src/findframe.cpp:152
 msgid "&Next >"
 msgstr "&Següent >"
 
+#: src/findframe.cpp:235
 msgid "String to find"
 msgstr "Cadena a trobar"
 
+#: src/findframe.cpp:236
 msgid "Replacement string"
 msgstr "Cadena de substitució"
 
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "No es pot executar el programa: %s"
+#: src/gexecute.cpp:131 src/gexecute.cpp:146 src/gexecute.cpp:170
+msgid "warning: "
+msgstr ""
+
+#: src/gexecute.cpp:171
+msgid "error: "
+msgstr ""
+
+#: src/glossary.cpp:273 src/glossary.cpp:277
+msgid "Failed to read the CSV file."
+msgstr "No s’ha pogut llegir el fitxer CSV."
 
 #. TRANSLATORS: placeholder/hint in language controls
+#: src/languagectrl.cpp:138
 msgid "Language name or code"
 msgstr "Nom o codi de llengua"
 
+#: src/languagectrl.cpp:210
 msgid "Translation Language"
 msgstr "Llengua de la traducció"
 
+#: src/languagectrl.cpp:217
 msgid "Language of the translation:"
 msgstr "Llengua de la traducció:"
 
+#: src/licensing.cpp:196 src/licensing.cpp:206
+msgid "Invalid license key"
+msgstr "La clau de llicència no és vàlida"
+
+#: src/licensing.cpp:211
+msgid "Subscription expired"
+msgstr ""
+
+#: src/licensing.cpp:218
+#, c-format
+msgid "App updates expired, license is only valid for version %s"
+msgstr ""
+
+#: src/licensing.cpp:224
+#, c-format
+msgid "License key only valid for older Poedit version (%s)"
+msgstr "La clau de llicència només és vàlida per a una versió anterior del Poedit (%s)"
+
+#: src/licensing.cpp:231
+msgid "Maximum allowed activations exceeded"
+msgstr "S’ha excedit el nombre màxim d’activacions"
+
+#: src/licensing.cpp:236 src/licensing.cpp:263
+#, c-format
+msgid "Unknown activation error (%s)"
+msgstr "S’ha produït un error d’activació desconegut (%s)"
+
+#: src/licensing_ui.cpp:92 src/licensing_ui.cpp:97 src/licensing_ui.cpp:859
+#: src/licensing_ui.cpp:872 src/licensing_ui.cpp:884
+msgid "Poedit Activation"
+msgstr "Activació del Poedit"
+
+#: src/licensing_ui.cpp:92 src/licensing_ui.cpp:102
+#: src/marketing_services.cpp:49 src/wx/main_toolbar.cpp:155
+#: src/wx/main_toolbar.cpp:182
+msgid "Upgrade to Pro"
+msgstr "Potencia al Pro"
+
+#: src/licensing_ui.cpp:248
+msgid "Please enter your license key:"
+msgstr "Introduïu la vostra clau de llicència:"
+
+#: src/licensing_ui.cpp:257
+msgid "You should find your key in the confirmation email you received after you purchased Poedit. Activation requires internet connection."
+msgstr "Hauríeu de trobar la clau dins el correu electrònic de confirmació que vàreu rebre després de comprar el Poedit. L'activació requereix de connexió a internet."
+
+#: src/licensing_ui.cpp:262
+msgid "Retrieve lost license key"
+msgstr "Recuperació de clau de llicència"
+
+#: src/licensing_ui.cpp:271
+msgid "Buy Online…"
+msgstr "Compreu en línia…"
+
+#: src/licensing_ui.cpp:271
+msgid "Buy online…"
+msgstr "Compreu en línia…"
+
+#: src/licensing_ui.cpp:286 src/licensing_ui.cpp:290
+msgid "Activate"
+msgstr "Activa"
+
+#: src/licensing_ui.cpp:316
+msgid "Activating your license…"
+msgstr "S’està activant la llicència…"
+
+#: src/licensing_ui.cpp:327
+msgid "Would you like to hear about new versions?"
+msgstr "Voleu rebre notificacions sobre versions noves?"
+
+#: src/licensing_ui.cpp:328
+msgid "We’ll send you an email when a new major version is released. No marketing, no spammy newsletters. Just very rare heads-up about new versions."
+msgstr "Us enviarem un correu quan llancem una nova versió. Sense màrqueting, sense butlletins de notícies. Tan sols algun avís de tant en tant sobre noves versions."
+
+#: src/licensing_ui.cpp:331 src/licensing_ui.cpp:690
+msgid "No, thanks"
+msgstr "No, gràcies"
+
+#: src/licensing_ui.cpp:331
+msgid "Notify me"
+msgstr "Notifica’m"
+
+#: src/licensing_ui.cpp:358
+msgid "Upgrade your Pro license"
+msgstr "Milloreu la vostra llicència Pro"
+
+#: src/licensing_ui.cpp:377
+msgid "Renew your license"
+msgstr ""
+
+#: src/licensing_ui.cpp:395
+msgid "Add more devices"
+msgstr "Afegeix més dispositius"
+
+#: src/licensing_ui.cpp:440
+msgid "Thank you!"
+msgstr "Gràcies!"
+
+#: src/licensing_ui.cpp:446
+msgid "Your copy is upgraded to Poedit Pro."
+msgstr "La vostra còpia del Poedit s’ha potenciat a Pro."
+
+#: src/licensing_ui.cpp:450 src/licensing_ui.cpp:454
+msgid "Manage License"
+msgstr "Gestiona la llicència"
+
+#: src/licensing_ui.cpp:454
+msgid "Manage license"
+msgstr "Gestiona la llicència"
+
+#. TRANSLATORS: "Renew" as a verb meaning making something that stopped working (a subscription) work again by prolonging it for another period.
+#: src/licensing_ui.cpp:479 src/licensing_ui.cpp:862 src/licensing_ui.cpp:875
+#: src/licensing_ui.cpp:1161
+msgid "Renew"
+msgstr "Renova"
+
+#: src/licensing_ui.cpp:497
+msgid "Deactivate"
+msgstr "Desactiva"
+
+#: src/licensing_ui.cpp:509
+msgid "Deactivating your license…"
+msgstr "S’està desactivant la llicència…"
+
+#: src/licensing_ui.cpp:567
+msgid "Upgrade to Poedit Pro to Unlock WordPress Extras"
+msgstr "Potencieu el Poedit a Pro per a desblocar les funcions especials per al WordPress"
+
+#: src/licensing_ui.cpp:568 src/licensing_ui.cpp:589
+msgid "Upgrade to take advantage of Pro’s extra smarts: it understands WordPress themes and plugins and sets everything up for you. You can focus on translating and don’t have to worry about the technical details. With the free version, you would have to do everything manually yourself."
+msgstr "Canvieu-vos per a prendre avantatge de la versió Pro: entén els temes i connectors del WordPress i ho prepara tot per vós. Podreu centrar-vos a traduir i no haureu de preocupar-vos dels detalls tècnics. Amb la versió de franc ho hauríeu de fer tot manualment."
+
+#: src/licensing_ui.cpp:571
+msgid "Upgrade to Poedit Pro to Unlock Statistics"
+msgstr "Potencieu el Poedit a Pro per a desblocar les estadístiques"
+
+#: src/licensing_ui.cpp:574
+msgid "Upgrade to Poedit Pro to Unlock Online Suggestions"
+msgstr "Potencieu el Poedit a Pro per a desblocar els suggeriments en línia"
+
+#: src/licensing_ui.cpp:577
+msgid "Upgrade to Poedit Pro to Unlock Templates Support"
+msgstr "Potencieu el Poedit a Pro per a desblocar la compatibilitat amb les plantilles"
+
+#: src/licensing_ui.cpp:581
+msgid "Upgrade to Poedit Pro to Unlock Extra Features"
+msgstr "Potencieu el Poedit a Pro per a desblocar les funcions addicionals"
+
+#: src/licensing_ui.cpp:588
+msgid "WordPress extras require upgrade to Poedit Pro"
+msgstr "Amb el Poedit Pro podreu aprofitar les funcions addicionals per al Wordpress"
+
+#: src/licensing_ui.cpp:593
+msgid "Statistics require upgrade to Poedit Pro"
+msgstr "Amb el Poedit Pro podreu aprofitar les estadístiques"
+
+#: src/licensing_ui.cpp:596
+msgid "Online TM suggestions require upgrade to Poedit Pro"
+msgstr "Amb el Poedit Pro podreu aprofitar els suggeriments de MT en línia"
+
+#: src/licensing_ui.cpp:599
+msgid "Templates support requires upgrade to Poedit Pro"
+msgstr "Amb el Poedit Pro podreu aprofitar la compatibilitat de plantilles"
+
+#: src/licensing_ui.cpp:602
+msgid "Customizable warnings require upgrade to Poedit Pro"
+msgstr "Amb el Poedit Pro podreu aprofitar els avisos personalitzables"
+
+#: src/licensing_ui.cpp:605
+msgid "Customizable file extensions require upgrade to Poedit Pro"
+msgstr "Amb el Poedit Pro podreu aprofitar les extensions de fitxer personalitzables"
+
+#: src/licensing_ui.cpp:608
+msgid "Terminology search and glossaries require upgrade to Poedit Pro"
+msgstr "Amb el Poedit Pro podreu aprofitar la cerca de terminologia i els glossaris"
+
+#: src/licensing_ui.cpp:611
+msgid "Replacing source text requires upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:614
+msgid "Merging translation files requires upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:617
+msgid "Excel import and export require upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:649
+msgid "Purchasing the full version will unlock additional features in Poedit, including:"
+msgstr "En comprar la versió completa, es desblocaran funcionalitats addicionals, incloses:"
+
+#: src/licensing_ui.cpp:663
+msgid "Suggestions from online translation memory"
+msgstr "Suggeriments de la memòria en línia"
+
+#: src/licensing_ui.cpp:664
+msgid "Machine translation with DeepL, Google Translate or Microsoft Translator"
+msgstr "Traducció automàtica amb DeepL, Google Translate o Microsoft Translator"
+
+#: src/licensing_ui.cpp:665
+msgid "Worry-free setup for WordPress themes and plugins"
+msgstr "Configuració simple per als temes i plugin de WordPress"
+
+#: src/licensing_ui.cpp:666
+msgid "Extract strings from Twig or Blade templates"
+msgstr ""
+
+#: src/licensing_ui.cpp:667
+msgid "Word count and statistics"
+msgstr "Comptador de paraules i estadístiques"
+
+#: src/licensing_ui.cpp:668
+msgid "Excel import and export"
+msgstr "Importació i exportació de l’Excel"
+
+#: src/licensing_ui.cpp:669
+msgid "Merging translation files for all file formats"
+msgstr ""
+
+#: src/licensing_ui.cpp:670
+msgid "Customizable QA checks and warnings"
+msgstr "Controls de qualitat i advertiments personalitzables"
+
+#: src/licensing_ui.cpp:671
+msgid "Replace source text with translations from another file"
+msgstr ""
+
+#: src/licensing_ui.cpp:672
+msgid "Terminology search and glossaries"
+msgstr "Cerca terminològica i glossaris"
+
+#: src/licensing_ui.cpp:673
+msgid "Personal priority support"
+msgstr "Assistència personal prioritària"
+
+#: src/licensing_ui.cpp:679
+msgid "Enter license key"
+msgstr "Afegeix una clau de llicència"
+
+#: src/licensing_ui.cpp:689
+msgid "Upgrade…"
+msgstr "Potencia…"
+
+#: src/licensing_ui.cpp:754 src/licensing_ui.cpp:780
+#, c-format
+msgid "Licensed to: %s"
+msgstr "Llicència concedida a: %s"
+
+#. TRANSLATORS: %s is replaced at runtime with e.g. "Poedit Pro" or "Poedit Pro+"
+#: src/licensing_ui.cpp:756 src/licensing_ui.cpp:785
+#, c-format
+msgid "License type: %s"
+msgstr "Tipus de llicència: %s"
+
+#: src/licensing_ui.cpp:780
+msgid "(personal license)"
+msgstr "(llicència personal)"
+
+#: src/licensing_ui.cpp:859
+msgid "Subscription expired."
+msgstr ""
+
+#: src/licensing_ui.cpp:861
+msgid "Your license was deactivated on this computer because your subscription expired."
+msgstr ""
+
+#: src/licensing_ui.cpp:871
+#, c-format
+msgid "Your license was deactivated on this computer because it only includes app updates up to Poedit version %s."
+msgstr ""
+
+#: src/licensing_ui.cpp:872
+msgid "App updates expired."
+msgstr ""
+
+#: src/licensing_ui.cpp:884
+msgid "License deactivated."
+msgstr "S’ha desactivat la llicència."
+
+#: src/licensing_ui.cpp:886
+msgid "Your license was deactivated on this computer. Please email help@poedit.net if you are not sure why this happened."
+msgstr "La vostra llicència sʼha desactivat en aquest ordinador. Envieu un missatge a help@poedit.net (en anglès) si no enteneu per què ha passat això."
+
+#. TRANSLATORS: %s is a placeholder for subscription name, e.g. Pro+ or Pro
+#: src/licensing_ui.cpp:1112
+#, c-format
+msgid "Your %s subscription expired."
+msgstr "La vostra subscripció %s s’ha exhaurit."
+
+#. TRANSLATORS: "Expired" as in ended e.g. after 1 year
+#: src/licensing_ui.cpp:1117
+msgid "Machine translation service expired."
+msgstr "El servei de traducció automàtica ha expirat."
+
+#. TRANSLATORS: "standard" here is the same word as the standalone string "Standard".
+#: src/licensing_ui.cpp:1125
+msgid "Machine translation quality is reduced to standard."
+msgstr "La qualitat de la traducció automàtica s’ha reduïda a l’estàndard."
+
+#: src/localazy_client.cpp:385
 msgid "All strings"
 msgstr "Totes les cadenes"
 
+#: src/localazy_client.cpp:404
 msgid "Couldn’t download Localazy project details."
 msgstr "No s’han pogut baixar els detalls del projecte al Localazy."
 
+#: src/localazy_client.cpp:476 src/localazy_client.cpp:490
 msgid "There was an error when uploading translations to Localazy."
 msgstr ""
 
+#: src/localazy_gui.cpp:103
 msgid "Projects"
 msgstr "Projectes"
 
-msgid ""
-"Localazy is a highly automated localization platform allowing anyone to "
-"translate their products and content into multiple languages easily."
-msgstr ""
-"El Localazy és una plataforma de regionalització altament automatitzada que "
-"permet qualsevol persona de traduir productes i continguts a diverses "
-"llengües de manera fàcil."
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#: src/localazy_gui.cpp:115
+#, c-format
+msgid "Learn more about %s"
+msgstr "Més informació quant al %s"
 
+#: src/localazy_gui.cpp:146
+msgid "Localazy is a highly automated localization platform allowing anyone to translate their products and content into multiple languages easily."
+msgstr "El Localazy és una plataforma de regionalització altament automatitzada que permet qualsevol persona de traduir productes i continguts a diverses llengües de manera fàcil."
+
+#: src/localazy_gui.cpp:241
 msgid "Add Project"
 msgstr "Afegeix un projecte"
 
+#: src/localazy_gui.cpp:241
 msgid "Add project"
 msgstr "Afegeix un projecte"
 
+#: src/manager.cpp:117
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit. Gestor de catàlegs"
 
+#: src/manager.cpp:162 src/prefsdlg.cpp:877
 msgid "Edit…"
 msgstr "Edita…"
 
+#: src/manager.cpp:167
 msgid "Create new translations project"
 msgstr "Crea un projecte de traduccions nou"
 
+#: src/manager.cpp:168
 msgid "Delete the project"
 msgstr "Suprimeix el projecte"
 
+#: src/manager.cpp:169
 msgid "Edit the project"
 msgstr "Edita el projecte"
 
+#: src/manager.cpp:199 src/resources/toolbar.xrc:41 src/statistics.cpp:258
+msgid "Statistics"
+msgstr "Estadístiques"
+
+#: src/manager.cpp:200 src/resources/toolbar.xrc:42
+msgid "Show translation statistics"
+msgstr "Mostra les estadístiques de traducció"
+
+#: src/manager.cpp:202
 msgid "Update all"
 msgstr "Actualitza-ho tot"
 
+#: src/manager.cpp:203
 msgid "Update all catalogs in the project"
 msgstr "Actualitza tots els catàlegs del projecte"
 
+#: src/manager.cpp:405
 msgid "Total"
 msgstr "Total"
 
+#: src/manager.cpp:406
 msgid "Untrans"
 msgstr "No traduïdes"
 
+#: src/manager.cpp:407
 msgctxt "column/row header"
 msgid "Needs Work"
 msgstr "Cal revisar"
 
+#: src/manager.cpp:408
 msgid "Errors"
 msgstr "Errors"
 
+#: src/manager.cpp:409
 msgid "Last modified"
 msgstr "Darrera modificació"
 
+#: src/manager.cpp:440 src/propertiesdlg.cpp:478
 msgid "Select directory"
 msgstr "Seleccioneu la carpeta"
 
+#: src/manager.cpp:460
 msgid "Directories:"
 msgstr "Directoris:"
 
+#: src/manager.cpp:532
 msgid "<unnamed>"
 msgstr "<sense nom>"
 
+#: src/manager.cpp:570
 #, c-format
 msgid "Do you want to delete project “%s”?"
 msgstr "Voleu suprimir el projecte «%s»?"
 
+#: src/manager.cpp:571
 msgid "Delete project"
 msgstr "Suprimeix el projecte"
 
+#: src/manager.cpp:574
 msgid "Deleting the project will not delete any translation files."
 msgstr "Si suprimiu el projecte no es perdrà cap fitxer de traducció."
 
+#: src/manager.cpp:602
 msgid "Confirmation"
 msgstr "Confirmació"
 
+#: src/manager.cpp:602
 msgid "Update all catalogs in this project?"
 msgstr "Voleu actualitzar tots els catàlegs del projecte?"
 
+#: src/manager.cpp:603
 msgid "Performs update from source code on all files in the project."
-msgstr ""
-"Efectua una actualització a partir del codi font per a tots els fitxers del "
-"projecte."
+msgstr "Efectua una actualització a partir del codi font per a tots els fitxers del projecte."
 
+#: src/manager.cpp:612
+msgid "Updating project catalogs"
+msgstr ""
+
+#: src/menus.cpp:138
 msgid "Check for Updates…"
 msgstr "Comprova si hi ha actualitzacions…"
 
+#: src/menus.cpp:140
 msgid "Catalogs Manager"
 msgstr "Gestor de catàlegs"
 
+#: src/menus.cpp:143
+msgid "License…"
+msgstr "Llicència…"
+
+#: src/menus.cpp:155
 msgid "&Preferences…"
 msgstr "&Preferències…"
 
+#: src/menus.cpp:170 src/resources/menus.xrc:95 src/resources/menus.xrc:450
+#: src/wx_translatable_strings.h:102
 msgid "&Edit"
 msgstr "&Edita"
 
+#: src/menus.cpp:190 src/wx_translatable_strings.h:118
 msgid "Undo"
 msgstr "Desfés"
 
+#: src/menus.cpp:191 src/wx_translatable_strings.h:113
 msgid "Redo"
 msgstr "Refés"
 
+#: src/menus.cpp:200
 msgid "Paste and Match Style"
 msgstr "Enganxa amb el mateix estil"
 
+#: src/menus.cpp:203 src/prefsdlg.cpp:1103 src/sidebar_terminology.cpp:77
+#: src/wx_translatable_strings.h:100
 msgid "Delete"
 msgstr "Suprimeix"
 
+#: src/menus.cpp:212
 msgid "Spelling and Grammar"
 msgstr "Ortografia i gramàtica"
 
+#: src/menus.cpp:214
 msgid "Show Spelling and Grammar"
 msgstr "Mostra l’ortografia i la gramàtica"
 
+#: src/menus.cpp:215
 msgid "Check Document Now"
 msgstr "Comprova el document ara"
 
+#: src/menus.cpp:217
 msgid "Check Spelling While Typing"
 msgstr "Comprova l’ortografia mentre s’escriu"
 
+#: src/menus.cpp:218
 msgid "Check Grammar With Spelling"
 msgstr "Comprova la gramàtica amb l’ortografia"
 
+#: src/menus.cpp:219
 msgid "Correct Spelling Automatically"
 msgstr "Corregeix l’ortografia automàticament"
 
+#: src/menus.cpp:222
 msgid "Substitutions"
 msgstr "Substitucions"
 
+#: src/menus.cpp:224
 msgid "Show Substitutions"
 msgstr "Mostra les substitucions"
 
+#: src/menus.cpp:226
 msgid "Smart Copy/Paste"
 msgstr "Copia/enganxa intel·ligentment"
 
+#: src/menus.cpp:227
 msgid "Smart Quotes"
 msgstr "Cometes tipogràfiques"
 
+#: src/menus.cpp:228
 msgid "Smart Dashes"
 msgstr "Guions intel·ligents"
 
+#: src/menus.cpp:229
 msgid "Smart Links"
 msgstr "Enllaços intel·ligents"
 
+#: src/menus.cpp:230
 msgid "Text Replacement"
 msgstr "Substitució del text"
 
+#: src/menus.cpp:233
 msgid "Transformations"
 msgstr "Transformacions"
 
+#: src/menus.cpp:235
 msgid "Make Upper Case"
 msgstr "Converteix a majúscules"
 
+#: src/menus.cpp:236
 msgid "Make Lower Case"
 msgstr "Converteix a minúscules"
 
+#: src/menus.cpp:237
 msgid "Capitalize"
 msgstr "Majúscules inicials"
 
+#: src/menus.cpp:240
 msgid "Speech"
 msgstr "Veu"
 
+#: src/menus.cpp:242
 msgid "Start Speaking"
 msgstr "Inicia la veu"
 
+#: src/menus.cpp:243
 msgid "Stop Speaking"
 msgstr "Atura la veu"
 
+#: src/menus.cpp:246 src/resources/menus.xrc:177 src/resources/menus.xrc:460
 msgid "&View"
 msgstr "&Visualitza"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:252
 msgid "Show Toolbar"
 msgstr "Mostra la barra d’eines"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:255
 msgid "Customize Toolbar…"
 msgstr "Personalitza la barra d’eines…"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:258
 msgid "Enter Full Screen"
 msgstr "Pantalla sencera"
 
+#: src/menus.cpp:265 src/menus.cpp:296 src/resources/menus.xrc:352
+#: src/resources/menus.xrc:469
 msgid "Window"
 msgstr "Finestra"
 
+#: src/menus.cpp:266
 msgid "Minimize"
 msgstr "Minimitza"
 
+#: src/menus.cpp:267
 msgid "Zoom"
 msgstr "Escala"
 
+#: src/menus.cpp:269 src/welcomescreen.cpp:222 src/welcomescreen.cpp:262
 msgid "Welcome to Poedit"
 msgstr "Benvingut/uda al Poedit"
 
+#: src/menus.cpp:274
 msgid "Bring All to Front"
 msgstr "Envia tot al capdavant"
 
+#: src/prefsdlg.cpp:177
 msgid "Information about the translator"
 msgstr "Informació sobre el traductor"
 
+#: src/prefsdlg.cpp:184
 msgid "Name:"
 msgstr "Nom:"
 
+#: src/prefsdlg.cpp:187
 msgid "Your Name"
 msgstr "El vostre nom"
 
+#: src/prefsdlg.cpp:189
 msgid "Email:"
 msgstr "Adreça electrònica:"
 
+#: src/prefsdlg.cpp:192
 msgid "you@example.com"
 msgstr "vós@exemple.cat"
 
-msgid ""
-"Your name and email address are only used to set the Last-Translator header "
-"of GNU gettext files."
-msgstr ""
-"El vostre nom i adreça electrònica s’utilitzen només per a establir el valor "
-"de la capçalera «Last-Translator» als fitxers de GNU gettext."
+#: src/prefsdlg.cpp:195
+msgid "Your name and email address are only used to set the Last-Translator header of GNU gettext files."
+msgstr "El vostre nom i adreça electrònica s’utilitzen només per a establir el valor de la capçalera «Last-Translator» als fitxers de GNU gettext."
 
+#: src/prefsdlg.cpp:204
 msgid "Editing"
 msgstr "Edició"
 
+#: src/prefsdlg.cpp:207
 msgid "Automatically compile MO file when saving"
 msgstr "Compila el fitxer MO automàticament en desar"
 
-msgid "Show summary after updating files"
-msgstr "Mostra el resum després d’actualitzar els fitxers"
-
+#: src/prefsdlg.cpp:212
 msgid "Check spelling"
 msgstr "Comprova l’ortografia"
 
+#: src/prefsdlg.cpp:214
 msgid "Always change focus to text input field"
 msgstr "Canvia sempre el focus al camp d'introducció de text"
 
-msgid ""
-"Never let the list of strings take focus. If enabled, you must use Ctrl-"
-"arrows for keyboard navigation but you can also type text immediately, "
-"without having to press Tab to change focus."
-msgstr ""
-"Mai permetis que el llistat de cadenes obtingui el focus. Si està habilitat, "
-"haureu d'emprar les Ctrl+fletxes per la navegació amb el teclat, però també "
-"podreu escriure immediatament sense haver de prémer Tab per a canviar el "
-"focus."
+#: src/prefsdlg.cpp:216
+msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
+msgstr "Mai permetis que el llistat de cadenes obtingui el focus. Si està habilitat, haureu d'emprar les Ctrl+fletxes per la navegació amb el teclat, però també podreu escriure immediatament sense haver de prémer Tab per a canviar el focus."
 
+#: src/prefsdlg.cpp:224
 msgid "Appearance"
 msgstr "Aparença"
 
+#: src/prefsdlg.cpp:231
 msgid "Use custom list font:"
 msgstr "Lletra personalitzada per a les llistes:"
 
+#: src/prefsdlg.cpp:234
 msgid "Use custom text fields font:"
 msgstr "Lletra personalitzada per als camps de text:"
 
+#: src/prefsdlg.cpp:245
 msgid "Change UI language"
 msgstr "Canvia l’idioma de la interfície"
 
 #. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
+#: src/prefsdlg.cpp:255
 msgid "(requires Windows 8 or newer)"
 msgstr "(cal el Windows 8 o més recent)"
 
+#: src/prefsdlg.cpp:358
 msgid "General"
 msgstr "General"
 
+#: src/prefsdlg.cpp:380
 msgid "Use translation memory"
 msgstr "Utilitza la memòria de traducció"
 
+#: src/prefsdlg.cpp:390
 msgid "Manage…"
 msgstr "Gestiona…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
+#: src/prefsdlg.cpp:397
 msgid "When updating from sources"
 msgstr "En actualitzar des del codi font"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
+#: src/prefsdlg.cpp:400
 msgid "fuzzy match within the file"
 msgstr "inclou-hi concordances aproximades"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
+#: src/prefsdlg.cpp:402
 msgid "pre-translate from TM"
 msgstr "pretradueix des de l’MT"
 
-msgid ""
-"Poedit can attempt to fill in new entries from only previous translations in "
-"the file or from your entire translation memory. Using the TM won’t be very "
-"effective if it’s near-empty, but it will get better as you add more "
-"translations to it."
-msgstr ""
-"El Poedit pot intentar emplenar entrades noves només des de traduccions "
-"prèvies en el fitxer o des de la vostra memòria completa de traduccions. "
-"Utilitzar l’MT no serà gaire efectiu si la memòria està pràcticament buida, "
-"però millorarà a mesura que hi afegiu traduccions noves."
+#: src/prefsdlg.cpp:418
+msgid "Poedit can attempt to fill in new entries from only previous translations in the file or from your entire translation memory. Using the TM won’t be very effective if it’s near-empty, but it will get better as you add more translations to it."
+msgstr "El Poedit pot intentar emplenar entrades noves només des de traduccions prèvies en el fitxer o des de la vostra memòria completa de traduccions. Utilitzar l’MT no serà gaire efectiu si la memòria està pràcticament buida, però millorarà a mesura que hi afegiu traduccions noves."
 
+#: src/prefsdlg.cpp:454
+msgid "Use suggestions from online collaborative TM"
+msgstr "Utilitza els suggeriments de l’MT col·laborativa en línia"
+
+#: src/prefsdlg.cpp:469
+msgid "Poedit uses a large online translation memory that includes both contributed human translations and state-of-the-art machine translations."
+msgstr "El Poedit utilitza una enorme memòria de traducció en línia que inclou tant traduccions contribuïdes pels humans com les traduccions a màquina més recents."
+
+#: src/prefsdlg.cpp:472 src/sidebar_pro.cpp:698
+msgid "Contribute my translations to the online TM"
+msgstr "Contribueix les meves traduccions a l’MT en línia"
+
+#: src/prefsdlg.cpp:473 src/sidebar_pro.cpp:699
+msgid "Keep my translations private"
+msgstr "Mantingues les meves traduccions en privat"
+
+#: src/prefsdlg.cpp:474
+msgid "Ask me for each file individually"
+msgstr "Demana-m’ho per a cadascun dels fitxers"
+
+#: src/prefsdlg.cpp:492 src/sidebar_pro.cpp:159
+msgid "Change Settings…"
+msgstr "Canvia els paràmetres…"
+
+#: src/prefsdlg.cpp:492 src/sidebar_pro.cpp:159
+msgid "Change settings…"
+msgstr "Canvia els paràmetres…"
+
+#: src/prefsdlg.cpp:580
 msgid "Stored translations:"
 msgstr "Traduccions emmagatzemades:"
 
+#: src/prefsdlg.cpp:581
 msgid "Database size on disk:"
 msgstr "Mida de la base de dades al disc:"
 
+#: src/prefsdlg.cpp:596
 msgid "Import Translation Files…"
 msgstr "Importa fitxers de traducció…"
 
+#: src/prefsdlg.cpp:596
 msgid "Import translation files…"
 msgstr "Importa fitxers de traducció…"
 
+#: src/prefsdlg.cpp:598
 msgid "Import From TMX…"
 msgstr "Importa des de TMX…"
 
+#: src/prefsdlg.cpp:598
 msgid "Import from TMX…"
 msgstr "Importa des de TMX…"
 
+#: src/prefsdlg.cpp:599
 msgid "Export To TMX…"
 msgstr "Exporta com a TMX…"
 
+#: src/prefsdlg.cpp:599
 msgid "Export to TMX…"
 msgstr "Exporta com a TMX…"
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+#: src/prefsdlg.cpp:602 src/prefsdlg.cpp:770
 msgid "Reset"
 msgstr "Reinicialitza"
 
+#: src/prefsdlg.cpp:621
 msgid "Select translation files to import"
 msgstr "Seleccioneu els fitxers de traducció que s’han d’importar"
 
-msgid "Translation Memory"
-msgstr "Memòria de traducció"
-
-msgid "Importing translations…"
-msgstr "S’estan important les traduccions…"
-
-#, c-format
-msgid "Error loading translation file “%s”."
-msgstr "S’ha produït un error en carregar el fitxer de traducció «%s»."
-
-msgid "Finalizing…"
-msgstr "S’està finalitzant…"
-
+#: src/prefsdlg.cpp:654
 msgid "Select TMX files to import"
 msgstr "Seleccioneu els fitxers TMX que s’han d’importar"
 
+#: src/prefsdlg.cpp:657 src/prefsdlg.cpp:733
 msgid "TMX Files"
 msgstr "Fitxers TMX"
 
+#: src/prefsdlg.cpp:684
+msgid "Importing translations…"
+msgstr "S’estan important les traduccions…"
+
+#: src/prefsdlg.cpp:685
+msgid "Importing translation memory failed."
+msgstr ""
+
+#: src/prefsdlg.cpp:699
 #, c-format
-msgid "Importing translation memory from “%s” failed."
-msgstr "Ha fallat la importació de la memòria de traducció des de «%s»."
+msgid "Importing from “%s”…"
+msgstr ""
 
-msgid "Import error"
-msgstr "Error d’importació"
+#. TRANSLATORS: %s is a (formatted) number here
+#: src/prefsdlg.cpp:717
+#, c-format
+msgid "%s translation was imported."
+msgid_plural "%s translations were imported."
+msgstr[0] ""
+msgstr[1] ""
 
+#: src/prefsdlg.cpp:730
 msgid "Export as…"
 msgstr "Exporta com a…"
 
+#: src/prefsdlg.cpp:745
 msgid "Exporting translations…"
 msgstr "S’estan exportant les traduccions…"
 
+#: src/prefsdlg.cpp:746
 #, c-format
 msgid "Exporting translation memory to “%s” failed."
 msgstr "Ha fallat l’exportació de la memòria de traducció cap a «%s»."
 
-msgid "Export error"
-msgstr "Error d’exportació"
-
+#: src/prefsdlg.cpp:764
 msgid "Reset translation memory"
 msgstr "Esborra la memòria de traduccions"
 
+#: src/prefsdlg.cpp:765
 msgid "Are you sure you want to reset the translation memory?"
 msgstr "Esteu segur que voleu reinicialitzar la memòria de traduccions?"
 
-msgid ""
-"Resetting the translation memory will irrevocably delete all stored "
-"translations from it. You can’t undo this operation."
-msgstr ""
-"Restablir la memòria de traducció irrevocablement en suprimirà totes les "
-"traduccions emmagatzemades. No podeu desfer aquesta operació."
+#: src/prefsdlg.cpp:766
+msgid "Resetting the translation memory will irrevocably delete all stored translations from it. You can’t undo this operation."
+msgstr "Restablir la memòria de traducció irrevocablement en suprimirà totes les traduccions emmagatzemades. No podeu desfer aquesta operació."
 
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
+#: src/prefsdlg.cpp:808
 msgid "TM"
 msgstr "MT"
 
-msgid ""
-"Source code extractors are used to find translatable strings in the source "
-"code files and extract them so that they can be translated."
-msgstr ""
-"Els extractors de codi font s’utilitzen per a trobar cadenes traduïbles dins "
-"els fitxers de codi font i extreure-les de manera que es puguin traduir."
+#: src/prefsdlg.cpp:810 src/sidebar_terminology.cpp:638
+msgid "Translation Memory"
+msgstr "Memòria de traducció"
 
+#: src/prefsdlg.cpp:830
+msgid "Source code extractors are used to find translatable strings in the source code files and extract them so that they can be translated."
+msgstr "Els extractors de codi font s’utilitzen per a trobar cadenes traduïbles dins els fitxers de codi font i extreure-les de manera que es puguin traduir."
+
+#: src/prefsdlg.cpp:843
 msgid "Custom Extractors:"
 msgstr "Extractors personalitzats:"
 
+#: src/prefsdlg.cpp:843
 msgid "Custom extractors:"
 msgstr "Extractors personalitzats:"
 
+#: src/prefsdlg.cpp:929
 msgid "GNU gettext"
 msgstr "GNU gettext"
 
-msgid ""
-"Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
-"+, C#, Perl, Python, Java, JavaScript and others)."
-msgstr ""
-"Admet tots els llenguatges de programació que les eines del GNU gettext "
-"reconeixen (PHP, C/C++, C#, Perl, Python, Java, JavaScript, entre d’altres)."
+#: src/prefsdlg.cpp:935
+msgid "Supports all programming languages recognized by GNU gettext tools (PHP, C/C++, C#, Perl, Python, Java, JavaScript and others)."
+msgstr "Admet tots els llenguatges de programació que les eines del GNU gettext reconeixen (PHP, C/C++, C#, Perl, Python, Java, JavaScript, entre d’altres)."
 
+#. TRANSLATORS: Templates for themes etc. - e.g. Twig or Volt templates
+#: src/prefsdlg.cpp:945
+msgid "Templates"
+msgstr "Plantilles"
+
+#: src/prefsdlg.cpp:946
+msgid "(Twig, Volt, Blade)"
+msgstr "(Twig, Volt, Blade)"
+
+#: src/prefsdlg.cpp:961
+msgid "Extracts translations from template files."
+msgstr "Extreu traduccions a partir de fitxers de plantilla."
+
+#: src/prefsdlg.cpp:964
+msgid "Enable"
+msgstr "Habilita"
+
+#: src/prefsdlg.cpp:1096
 msgid "Delete extractor"
 msgstr "Suprimeix l’extractor"
 
+#: src/prefsdlg.cpp:1097
 #, c-format
 msgid "Are you sure you want to delete the “%s” extractor?"
 msgstr "Esteu segur que voleu suprimir l’extractor «%s»?"
 
+#: src/prefsdlg.cpp:1135
 msgid "Extractors"
 msgstr "Extractors"
 
+#: src/prefsdlg.cpp:1193
 msgid "Accounts"
 msgstr "Comptes"
 
+#: src/prefsdlg.cpp:1213
 msgid "Automatically check for updates"
 msgstr "Comprova si hi ha actualitzacions automàticament"
 
+#: src/prefsdlg.cpp:1216
 msgid "Include beta versions"
 msgstr "Inclou les versions beta"
 
-msgid ""
-"Beta versions contain the latest new features and improvements, but may be a "
-"bit less stable."
-msgstr ""
-"Les versions beta contenen les funcionalitats i millores més recents, però "
-"poden ser una mica menys estables."
+#: src/prefsdlg.cpp:1219
+msgid "Beta versions contain the latest new features and improvements, but may be a bit less stable."
+msgstr "Les versions beta contenen les funcionalitats i millores més recents, però poden ser una mica menys estables."
 
+#: src/prefsdlg.cpp:1248
 msgid "Updates"
 msgstr "Actualitzacions"
 
-msgid ""
-"These settings affect internal formatting of PO files. Adjust them if you "
-"have specific requirements e.g. because of version control."
-msgstr ""
-"Aquests ajusts afecten el format intern dels fitxers PO. Ajusteu-los si "
-"teniu requisits específics, per exemple, pel control de versions."
+#: src/prefsdlg.cpp:1266
+msgid "These settings affect internal formatting of PO files. Adjust them if you have specific requirements e.g. because of version control."
+msgstr "Aquests ajusts afecten el format intern dels fitxers PO. Ajusteu-los si teniu requisits específics, per exemple, pel control de versions."
 
+#: src/prefsdlg.cpp:1270
 msgid "Line endings:"
 msgstr "Finals de línies:"
 
+#: src/prefsdlg.cpp:1273
 msgid "Unix (recommended)"
 msgstr "Unix (recomanat)"
 
+#: src/prefsdlg.cpp:1274
 msgid "Windows"
 msgstr "Windows"
 
 #. TRANSLATORS: Followed by text control for entering number; wraps text at given width
+#: src/prefsdlg.cpp:1278
 msgid "Wrap at:"
 msgstr "Ajusta a:"
 
+#: src/prefsdlg.cpp:1289
 msgid "Preserve formatting of existing files"
 msgstr "Preserva la formatació dels fitxers existents"
 
+#: src/prefsdlg.cpp:1341
 msgid "Advanced"
 msgstr "Avançades"
 
+#: src/prefsdlg.cpp:1369
 msgid "Settings"
 msgstr "Paràmetres"
 
+#: src/pretranslate.cpp:129
 msgid "Preparing strings…"
 msgstr "S’estan preparant les cadenes…"
 
+#: src/pretranslate.cpp:239
 msgid "Pre-translating from translation memory…"
 msgstr "S’està pretraduint a partir de la memòria de traducció…"
 
+#: src/pretranslate.cpp:250 src/pretranslate.cpp:296
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
 msgstr[0] "S’ha pretraduït %u cadena"
 msgstr[1] "S’han pretraduït %u cadenes"
 
+#: src/pretranslate.cpp:259
+msgid "Uploading strings for cloud pre-translation…"
+msgstr ""
+
+#: src/pretranslate.cpp:300 src/pretranslate.cpp:357
 msgid "Pre-translating…"
 msgstr "S’està pretraduint…"
 
+#: src/pretranslate.cpp:366
+#, c-format
+msgid "%d entry was pre-translated."
+msgid_plural "%d entries were pre-translated."
+msgstr[0] "S’ha pretraduït %d entrada."
+msgstr[1] "S’han pretraduït %d entrades."
+
+#: src/pretranslate.cpp:372
+msgid "The translations were marked as needing work, because they may be inaccurate. You should review them for correctness."
+msgstr "Les traduccions s’han marcat per a revisar, ja que poden ser inexactes. Hauríeu de revisar-les per a garantir-ne la correctesa."
+
+#: src/pretranslate.cpp:375
+msgid "Exact matches from TM"
+msgstr ""
+
+#: src/pretranslate.cpp:376
+msgid "Approximate matches from TM"
+msgstr ""
+
+#. TRANSLATORS: shown instead of number when user disabled this kind of pre-translation results
+#: src/pretranslate.cpp:383
+msgid "disabled"
+msgstr ""
+
+#: src/pretranslate.cpp:384
+msgid "Machine translation"
+msgstr ""
+
+#: src/pretranslate.cpp:389
+msgid "No entries could be pre-translated."
+msgstr "No s’ha pogut pretraduir cap entrada."
+
+#: src/pretranslate.cpp:390
+msgid "The TM doesn’t contain any strings similar to the content of this file. It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually."
+msgstr "L’MT no conté cap cadena similar al contingut d’aquest fitxer. Només en serà efectiva per a traduccions semiautomàtiques quan el Poedit hagi après prou dels fitxers que traduïu manualment."
+
+#: src/pretranslate.cpp:418
 msgid "Cannot pre-translate without source text."
 msgstr "No es pot pretraduir sense text font."
 
@@ -1481,1068 +2489,2107 @@ msgstr "No es pot pretraduir sense text font."
 #. some users into thinking it's all that needs to be done (spoken from
 #. experience). "Pre-translate" nicely expresses that it's only the step done
 #. *before* actual translation.
+#: src/pretranslate.cpp:419 src/pretranslate.cpp:434 src/pretranslate.cpp:443
+#: src/pretranslate.cpp:489 src/pretranslate.cpp:616
+#: src/resources/toolbar.xrc:48 src/sidebar_pro.cpp:983
 msgid "Pre-translate"
 msgstr "Pretradueix"
 
-msgid ""
-"Pre-translation requires that source text is available. It doesn’t work if "
-"only IDs without the actual text are used."
+#: src/pretranslate.cpp:423
+msgid "Pre-translation requires that source text is available. It doesn’t work if only IDs without the actual text are used."
 msgstr ""
 
+#: src/pretranslate.cpp:433
 msgid "Cannot pre-translate from unknown language."
 msgstr ""
 
-msgid ""
-"Pre-translation requires that source text’s language is known. Poedit "
-"couldn’t detect it in this file."
+#: src/pretranslate.cpp:438
+msgid "Pre-translation requires that source text’s language is known. Poedit couldn’t detect it in this file."
 msgstr ""
 
+#: src/pretranslate.cpp:448
+msgid "Use online suggestions"
+msgstr "Usa els suggeriments en línia"
+
+#: src/pretranslate.cpp:449
+msgid "Try to fetch translations from the online TM as well. Notice that the translations will not be perfect and will still need to be corrected by a human translator."
+msgstr "Intenta obtenir traduccions de la MT en línia també. Noteu que les traduccions no seran perfectes i encara cal que un traductor humà les corruga."
+
+#: src/pretranslate.cpp:476
 msgid "Only fill in exact matches"
 msgstr "Únicament emplena les coincidències exactes"
 
-msgid ""
-"By default, inaccurate results are also included, but marked as needing "
-"work. Check this option to only include perfect matches."
+#: src/pretranslate.cpp:479
+msgid "By default, inaccurate results are also included, but marked as needing work. Check this option to only include perfect matches."
 msgstr ""
 
+#: src/pretranslate.cpp:481
+msgid "By default, inaccurate results and machine translation are also included, but marked as needing work. Check this option to only include perfect human translations."
+msgstr ""
+
+#: src/pretranslate.cpp:483
 msgid "Don’t mark exact matches as needing work"
 msgstr "No marquis les coincidències exactes com a difuses"
 
-msgid ""
-"Only enable if you trust the quality of your TM. By default, all matches "
-"from the TM are marked as needing work and should be reviewed before use."
-msgstr ""
-"Habiliteu-la només si confieu en la qualitat de l’MT. Per defecte, totes les "
-"coincidències de l’MT es marquen com a difuses i es deuen revisar."
+#: src/pretranslate.cpp:484
+msgid "Don’t mark machine translation as needing work"
+msgstr "No marquis la traducció automàtica com a pendent de revisar"
 
-msgid ""
-"Pre-translation automatically finds exact or fuzzy matches for untranslated "
-"strings in the translation memory and fills in their translations."
-msgstr ""
-"La traducció prèvia detecta automàticament coincidències exactes o "
-"aproximades de cadenes sense traduir en la memòria de traducció i n’omple "
-"les traduccions."
+#: src/pretranslate.cpp:486
+msgid "Only enable if you trust the quality of your TM. By default, all matches from the TM are marked as needing work and should be reviewed before use."
+msgstr "Habiliteu-la només si confieu en la qualitat de l’MT. Per defecte, totes les coincidències de l’MT es marquen com a difuses i es deuen revisar."
 
+#: src/pretranslate.cpp:493
+msgid "Pre-translation automatically finds exact or fuzzy matches for untranslated strings in the translation memory and fills in their translations."
+msgstr "La traducció prèvia detecta automàticament coincidències exactes o aproximades de cadenes sense traduir en la memòria de traducció i n’omple les traduccions."
+
+#: src/pretranslate.cpp:495
+msgid "Pre-translation automatically searches existing translations and uses machine translation to fill in initial translations for strings that are not yet translated."
+msgstr "La pre-traducció cerca automàticament altres traduccions existents i fa servir la traducció automàtica per a omplir traduccions inicials per a cadenes que encara no han estat traduïdes."
+
+#: src/pretranslate.cpp:533
+msgid "Machine translation:"
+msgstr "Traducció automàtica:"
+
+#. TRANSLATORS: "Upgrade" as in upgrading from Pro to Pro+ version; "provider" is machine translation provider. This string needs to be as short as possible.
+#: src/pretranslate.cpp:545
+msgid "Upgrade for more providers"
+msgstr ""
+
+#. TRANSLATORS: Part of larger line of UI: "Machine translation: [e.g. Google] with tone of voice: [formal/informal/automatic]". If "tone of voice" sounds weird, you can use "formality". See https://support.deepl.com/hc/en-us/articles/4406432463762-About-the-formal-informal-feature for explanation of what tone of voice / formality is.
+#: src/pretranslate.cpp:556
+msgid "with tone of voice:"
+msgstr "amb formalitat:"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:562
+msgid "automatic"
+msgstr "automàtica"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:564
+msgid "formal"
+msgstr "formal"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:566
+msgid "informal"
+msgstr "informal"
+
+#: src/pretranslate.cpp:651 src/sidebar_pro.cpp:551
+msgid "Exceeded machine translation quota."
+msgstr ""
+
+#: src/pretranslate.cpp:660
 #, c-format
-msgid "%d entry was pre-translated."
-msgid_plural "%d entries were pre-translated."
-msgstr[0] "S’ha pretraduït %d entrada."
-msgstr[1] "S’han pretraduït %d entrades."
+msgid "Machine translation usage: %d / %d\n"
+"%s"
+msgstr "Ús de traducció automàtica: %d / %d\n"
+"%s"
 
-msgid ""
-"The translations were marked as needing work, because they may be "
-"inaccurate. You should review them for correctness."
+#: src/pretranslate.cpp:660
+msgid "Quota is rolling monthly."
+msgstr "La quota s’estableix mensualment."
+
+#: src/pretranslate.cpp:663 src/sidebar_pro.cpp:475
+msgid "Add machine translation credit"
+msgstr "Afegeix crèdits de traducció automàtica"
+
+#: src/progress_ui.cpp:172 src/wx_translatable_strings.h:151
+msgid "Error: "
 msgstr ""
-"Les traduccions s’han marcat per a revisar, ja que poden ser inexactes. "
-"Hauríeu de revisar-les per a garantir-ne la correctesa."
 
-msgid "No entries could be pre-translated."
-msgstr "No s’ha pogut pretraduir cap entrada."
+#: src/progress_ui.cpp:176
+#, c-format
+msgid "%d error occurred:"
+msgid_plural "%d errors occurred:"
+msgstr[0] ""
+msgstr[1] ""
 
-msgid ""
-"The TM doesn’t contain any strings similar to the content of this file. It "
-"is only effective for semi-automatic translations after Poedit learns enough "
-"from files that you translated manually."
+#: src/progress_ui.cpp:285
+msgid "An error occurred."
 msgstr ""
-"L’MT no conté cap cadena similar al contingut d’aquest fitxer. Només en serà "
-"efectiva per a traduccions semiautomàtiques quan el Poedit hagi après prou "
-"dels fitxers que traduïu manualment."
 
+#: src/progress_ui.cpp:291
+#, c-format
+msgid "%d error occurred."
+msgid_plural "%d errors occurred."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/progress_ui.cpp:438
 msgid "Cancelling…"
 msgstr "S’està cancel·lant…"
 
+#. TRANSLATORS: This text is shown as a hint/advice. The %s→%s part is replaced with menu item pointer, "File→New WordPress Translation".
+#: src/propertiesdlg.cpp:92
+#, c-format
+msgid "Use %s→%s for full WordPress functionality."
+msgstr "Trieu %s ▸ %s per a una funcionalitat plena amb el Wordpress."
+
+#: src/propertiesdlg.cpp:93 src/resources/menus.xrc:5
+#: src/resources/menus.xrc:384 src/wx_translatable_strings.h:104
+msgid "&File"
+msgstr "&Fitxer"
+
+#: src/propertiesdlg.cpp:94 src/resources/menus.xrc:17
+#: src/resources/menus.xrc:396
+msgid "New WordPress Translation…"
+msgstr "Traducció del WordPress nova…"
+
+#: src/propertiesdlg.cpp:94 src/resources/menus.xrc:16
+#: src/resources/menus.xrc:395
+msgid "New WordPress translation…"
+msgstr "Traducció del WordPress nova…"
+
+#: src/propertiesdlg.cpp:366
 msgid "Drag Folders or Files Here"
 msgstr "Deixeu anar carpetes o fitxers aquí"
 
+#: src/propertiesdlg.cpp:366
 msgid "Drag folders or files here"
 msgstr "Deixeu anar carpetes o fitxers aquí"
 
+#: src/propertiesdlg.cpp:471
 msgid "Add Folders…"
 msgstr "Afegeix carpetes…"
 
+#: src/propertiesdlg.cpp:471
 msgid "Add folders…"
 msgstr "Afegeix carpetes…"
 
+#: src/propertiesdlg.cpp:472
 msgid "Add Files…"
 msgstr "Afegeix fitxers…"
 
+#: src/propertiesdlg.cpp:472
 msgid "Add files…"
 msgstr "Afegeix fitxers…"
 
+#: src/propertiesdlg.cpp:474
 msgid "Add Wildcard…"
 msgstr "Afegeix un comodí…"
 
+#: src/propertiesdlg.cpp:474
 msgid "Add wildcard…"
 msgstr "Afegeix un comodí…"
 
 #. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+#: src/propertiesdlg.cpp:545
 msgid "Reveal in Finder"
 msgstr "Mostra al Finder"
 
 #. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+#: src/propertiesdlg.cpp:548
 msgid "Show in Explorer"
 msgstr "Mostra a l’Explorador"
 
+#: src/propertiesdlg.cpp:550
 msgid "Show in Folder"
 msgstr "Mostra a la carpeta"
 
+#: src/propertiesdlg.cpp:581
 msgid "Paths"
 msgstr "Camins"
 
+#: src/propertiesdlg.cpp:601
 msgid "Excluded paths"
 msgstr "Camins exclosos"
 
+#: src/propertiesdlg.cpp:619
 msgid "Advanced extraction settings"
 msgstr "Paràmetres d’extracció avançats"
 
+#: src/propertiesdlg.cpp:625
 msgid "Extract notes for translators from:"
 msgstr "Extreu les notes per a traductors des de:"
 
+#: src/propertiesdlg.cpp:627
 msgid "Comments prefixed with:"
 msgstr "Comentaris prefixats per:"
 
+#: src/propertiesdlg.cpp:636
 msgid "All comments"
 msgstr "Tots els comentaris"
 
+#: src/propertiesdlg.cpp:639
 msgid "Additional xgettext flags:"
 msgstr "Senyaladors addicionals de l’xgettext:"
 
+#: src/propertiesdlg.cpp:779
 msgid "Additional keywords"
 msgstr "Paraules clau addicionals"
 
+#: src/propertiesdlg.cpp:810
 msgid "Name of the project the translation is for"
 msgstr "Nom del projecte pel qual és la traducció"
 
+#: src/propertiesdlg.cpp:811
 msgid "Team name and email address or URL"
 msgstr "Nom de l’equip i adreça electrònica o URL"
 
+#: src/propertiesdlg.cpp:812
 msgid "e.g. nplurals=2; plural=(n > 1);"
 msgstr "p. ex., nplurals=2; plural=(n > 1);"
 
+#: src/propertiesdlg.cpp:817
+msgid "Custom file extensions are being used."
+msgstr "S’utilitzen extensions de fitxer personalitzades."
+
+#: src/propertiesdlg.cpp:872
 msgid "UTF-8 (recommended)"
 msgstr "UTF-8 (recomanat)"
 
+#: src/propertiesdlg.cpp:1055
 msgid "Please save the file first. This section cannot be edited until then."
 msgstr "Deseu el fitxer primer. No es pot editar aquesta secció fins llavors."
 
+#: src/propertiesdlg.cpp:1177
+msgid "File Extensions"
+msgstr "Extensions de fitxer"
+
+#: src/propertiesdlg.cpp:1189
+msgid "Extension or Wildcard"
+msgstr "Extensió o comodí"
+
+#: src/propertiesdlg.cpp:1191
+msgid "Extractor"
+msgstr "Extractor"
+
+#: src/propertiesdlg.cpp:1266
+msgid "(unknown)"
+msgstr "(desconegut)"
+
+#: src/qa_checks.cpp:153
 msgid "Placeholders correctness"
 msgstr ""
 
+#: src/qa_checks.cpp:208
 #, c-format
 msgid "Placeholder “%s” is missing from translation."
 msgstr ""
 
+#: src/qa_checks.cpp:220
 #, c-format
 msgid "Superfluous placeholder “%s” that isn’t in source text."
 msgstr ""
 
+#: src/qa_checks.cpp:256
 msgid "Plural form translations"
 msgstr "Traduccions de formes plurals"
 
+#: src/qa_checks.cpp:277
 msgid "Not all plural forms are translated."
 msgstr "No s’han traduït totes les formes dels plurals."
 
+#: src/qa_checks.cpp:289
 msgid "Inconsistent upper/lower case"
 msgstr "Inconsistència de majúscules/minúscules"
 
+#: src/qa_checks.cpp:305
 msgid "The translation should start as a sentence."
 msgstr "La traducció ha de començar com una frase."
 
+#: src/qa_checks.cpp:313
 msgid "The translation should start with a lowercase character."
 msgstr "La traducció ha de començar amb un caràcter en minúscula."
 
+#: src/qa_checks.cpp:331
 msgid "Inconsistent whitespace"
 msgstr "Espai en blanc inconsistent"
 
+#: src/qa_checks.cpp:345
 msgid "The translation doesn’t start with a space."
 msgstr "La traducció no comença amb un espai."
 
+#: src/qa_checks.cpp:351
 msgid "The translation starts with a space, but the source text doesn’t."
 msgstr "La traducció comença amb un espai, però el text de partida no."
 
+#: src/qa_checks.cpp:357
 msgid "The translation is missing a newline at the end."
 msgstr "A la traducció hi falta un salt de línia al final."
 
+#: src/qa_checks.cpp:363
 msgid "The translation ends with a newline, but the source text doesn’t."
 msgstr "La traducció acaba amb un salt de línia, però el text de partida no."
 
+#: src/qa_checks.cpp:369
 msgid "The translation is missing a space at the end."
 msgstr "A la traducció hi falta un espai al final."
 
+#: src/qa_checks.cpp:375
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "La traducció acaba amb un espai, però el text de partida no."
 
+#: src/qa_checks.cpp:390
 msgid "Punctuation checks"
 msgstr "Comprovacions de puntuació"
 
+#: src/qa_checks.cpp:455
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr "La traducció ha d’acabar amb «%s»."
 
+#: src/qa_checks.cpp:467
 #, c-format
 msgid "The translation should not end with “%s”."
 msgstr "La traducció no ha d’acabar amb «%s»."
 
+#: src/qa_checks.cpp:488
 #, c-format
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
 msgstr "La traducció acaba amb «%s», però el text de partida acaba amb «%s»."
 
+#: src/recent_files.cpp:223
 msgid "Cloud"
 msgstr ""
 
+#: src/recent_files.cpp:404
 msgid "Clear Menu"
 msgstr "Neteja el menú"
 
+#: src/recent_files.cpp:404
 msgid "Clear menu"
 msgstr "Neteja el menú"
 
+#: src/resources/comment.xrc:10
 msgid "Comment:"
 msgstr "Comentari:"
 
+#: src/resources/comment.xrc:33
 msgid "Update"
 msgstr "Actualitza"
 
+#: src/resources/comment.xrc:48 src/wx_translatable_strings.h:100
 msgid "&Delete"
 msgstr "&Suprimeix"
 
+#: src/resources/comment.xrc:49
 msgid "Delete the comment"
 msgstr "Suprimeix el comentari"
 
+#: src/resources/manager.xrc:4
 msgid "Edit project"
 msgstr "Edita el projecte"
 
+#: src/resources/manager.xrc:9
 msgid "Project name:"
 msgstr "Nom del projecte:"
 
+#: src/resources/manager.xrc:39
 msgid "Browse"
 msgstr "Navega"
 
+#: src/resources/manager.xrc:41
 msgid "Add directory to the list"
 msgstr "Afegeix el directori a la llista"
 
-msgid "OK"
-msgstr "D’acord"
-
-msgid "&File"
-msgstr "&Fitxer"
-
+#: src/resources/menus.xrc:8 src/resources/menus.xrc:387
 msgid "&New…"
 msgstr "&Nova…"
 
+#: src/resources/menus.xrc:12 src/resources/menus.xrc:391
 msgid "New from &POT/PO file…"
 msgstr "Nova a partir d’un fitxer &POT/PO…"
 
+#: src/resources/menus.xrc:13 src/resources/menus.xrc:392
 msgid "New From &POT/PO File…"
 msgstr "Nova a partir d’un fitxer &POT/PO…"
 
+#: src/resources/menus.xrc:21 src/resources/menus.xrc:400
+#: src/wx_translatable_strings.h:109
 msgid "&Open…"
 msgstr "&Obre…"
 
+#: src/resources/menus.xrc:25 src/resources/menus.xrc:404
 msgid "Open Recent"
 msgstr "Obre recents"
 
+#: src/resources/menus.xrc:26 src/resources/menus.xrc:405
 msgid "Open recent"
 msgstr "Obre recents"
 
+#: src/resources/menus.xrc:29 src/resources/menus.xrc:408
 msgid "Open cloud translation…"
 msgstr "Obre una traducció al núvol…"
 
+#: src/resources/menus.xrc:30 src/resources/menus.xrc:409
 msgid "Open Cloud Translation…"
 msgstr "Obre una traducció al núvol…"
 
+#: src/resources/menus.xrc:34 src/resources/menus.xrc:413
 msgid "&Start window"
 msgstr "Finestra d’&inici"
 
+#: src/resources/menus.xrc:35 src/resources/menus.xrc:414
 msgid "&Start Window"
 msgstr "Finestra d’&inici"
 
+#: src/resources/menus.xrc:39 src/resources/menus.xrc:419
 msgid "Catalogs &manager"
 msgstr "&Gestor de catàlegs"
 
+#: src/resources/menus.xrc:40 src/resources/menus.xrc:420
 msgid "Catalogs &Manager"
 msgstr "&Gestor de catàlegs"
 
+#: src/resources/menus.xrc:44 src/resources/menus.xrc:424
+#: src/wx_translatable_strings.h:96
 msgid "&Close"
 msgstr "&Tanca"
 
+#: src/resources/menus.xrc:48 src/wx_translatable_strings.h:115
 msgid "&Save"
 msgstr "&Desa"
 
+#: src/resources/menus.xrc:52
 msgid "Save &as…"
 msgstr "&Anomena i desa…"
 
+#: src/resources/menus.xrc:53
 msgid "Save &As…"
 msgstr "&Anomena i desa…"
 
+#: src/resources/menus.xrc:58
 msgid "Compile to MO…"
 msgstr "Compila com a MO…"
 
+#: src/resources/menus.xrc:62
 msgid "E&xport to HTML…"
 msgstr ""
 
+#: src/resources/menus.xrc:66
+msgid "Export to Excel…"
+msgstr "Exporta a l’Excel…"
+
+#: src/resources/menus.xrc:69
+msgid "Import from Excel…"
+msgstr "Importa des de l’Excel…"
+
+#: src/resources/menus.xrc:73 src/resources/menus.xrc:428
 msgid "Check for updates…"
 msgstr "Comprova si hi ha actualitzacions…"
 
+#: src/resources/menus.xrc:76 src/resources/menus.xrc:431
+msgid "&License…"
+msgstr "&Llicència…"
+
+#: src/resources/menus.xrc:79 src/resources/menus.xrc:434
 msgid "Settings…"
 msgstr "Configuració…"
 
+#: src/resources/menus.xrc:83 src/resources/menus.xrc:438
+#: src/wx_translatable_strings.h:112
 msgid "&Preferences"
 msgstr "&Preferències"
 
+#: src/resources/menus.xrc:90 src/resources/menus.xrc:445
 msgid "E&xit"
 msgstr "&Surt"
 
+#: src/resources/menus.xrc:91 src/resources/menus.xrc:446
+#: src/wx_translatable_strings.h:103
 msgid "Quit"
 msgstr "Surt"
 
+#: src/resources/menus.xrc:118
 msgid "Copy from singular"
 msgstr "Copia del singular"
 
+#: src/resources/menus.xrc:119
 msgid "Copy From Singular"
 msgstr "Copia del singular"
 
+#: src/resources/menus.xrc:124
 msgid "Translation needs &work"
 msgstr "Cal &revisar la traducció"
 
+#: src/resources/menus.xrc:125
 msgid "Translation Needs &Work"
 msgstr "Cal &revisar la traducció"
 
+#: src/resources/menus.xrc:130
 msgid "Edit &comment"
 msgstr "&Edita el comentari"
 
+#: src/resources/menus.xrc:131
 msgid "Edit &Comment"
 msgstr "&Edita el comentari"
 
 #. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
+#: src/resources/menus.xrc:136 src/sidebar.cpp:651 src/sidebar_pro.cpp:219
 msgid "Suggestions"
 msgstr "Suggeriments"
 
+#: src/resources/menus.xrc:139 src/resources/menus.xrc:158
 msgid "&Find…"
 msgstr "&Cerca…"
 
+#: src/resources/menus.xrc:144
 msgid "Replace…"
 msgstr "Reemplaça…"
 
+#: src/resources/menus.xrc:148
 msgid "Find next"
 msgstr "Cerca el següent"
 
+#: src/resources/menus.xrc:152
 msgid "Find previous"
 msgstr "Cerca l’anterior"
 
+#: src/resources/menus.xrc:162
 msgid "Find and Replace…"
 msgstr "Cerca i reemplaça…"
 
+#: src/resources/menus.xrc:166
 msgid "Find Next"
 msgstr "Cerca el següent"
 
+#: src/resources/menus.xrc:170
 msgid "Find Previous"
 msgstr "Cerca l’anterior"
 
+#: src/resources/menus.xrc:179
 msgid "Show string &ID"
 msgstr "Mostra l’&identificador de la cadena"
 
+#: src/resources/menus.xrc:180
 msgid "Show String &ID"
 msgstr "Mostra l’&identificador de la cadena"
 
+#: src/resources/menus.xrc:184
 msgid "Show warnings"
 msgstr "Mostra els advertiments"
 
+#: src/resources/menus.xrc:185
 msgid "Show Warnings"
 msgstr "Mostra els advertiments"
 
+#: src/resources/menus.xrc:189
+msgid "Customize warnings…"
+msgstr "Personalitza els avisos…"
+
+#: src/resources/menus.xrc:190
+msgid "Customize Warnings…"
+msgstr "Personalitza els avisos…"
+
+#: src/resources/menus.xrc:194
 msgid "Sort by &file order"
 msgstr "&Ordena per ordre de fitxer"
 
+#: src/resources/menus.xrc:195
 msgid "Sort by &File Order"
 msgstr "Ordena per &ordre de fitxer"
 
+#: src/resources/menus.xrc:199
 msgid "Sort by &source"
 msgstr "Ordena per &font"
 
+#: src/resources/menus.xrc:200
 msgid "Sort by &Source"
 msgstr "Ordena per &font"
 
+#: src/resources/menus.xrc:204
 msgid "Sort by &translation"
 msgstr "Ordena per &traducció"
 
+#: src/resources/menus.xrc:205
 msgid "Sort by &Translation"
 msgstr "Ordena per &traducció"
 
+#: src/resources/menus.xrc:210
 msgid "&Group by context"
 msgstr "A&grupa pel context"
 
+#: src/resources/menus.xrc:211
 msgid "&Group By Context"
 msgstr "A&grupa pel context"
 
+#: src/resources/menus.xrc:215
 msgid "Entries with errors first"
 msgstr "Primer les entrades amb errors"
 
+#: src/resources/menus.xrc:216
 msgid "Entries with Errors First"
 msgstr "Primer les entrades amb errors"
 
+#: src/resources/menus.xrc:220
 msgid "&Untranslated entries first"
 msgstr "&Primer les entrades no traduïdes"
 
+#: src/resources/menus.xrc:221
 msgid "&Untranslated Entries First"
 msgstr "&Primer les entrades no traduïdes"
 
+#: src/resources/menus.xrc:226
+msgid "Show &suggestions tab"
+msgstr "Mostra la finestra de &suggeriments"
+
+#: src/resources/menus.xrc:227
+msgid "Show &Suggestions Tab"
+msgstr "Mostra la finestra de &Suggeriments"
+
+#: src/resources/menus.xrc:231
+msgid "Show &terminology tab"
+msgstr "Mostra la pestanya de &terminologia"
+
+#: src/resources/menus.xrc:232
+msgid "Show &Terminology Tab"
+msgstr "Mostra la pestanya de &terminologia"
+
+#: src/resources/menus.xrc:236
 msgid "&Show code occurrences"
 msgstr "&Mostra ocurrències del codi"
 
+#: src/resources/menus.xrc:237
 msgid "&Show Code Occurrences"
 msgstr "&Mostra ocurrències del codi"
 
+#: src/resources/menus.xrc:241
 msgid "Show sidebar"
 msgstr "Mostra la barra lateral"
 
+#: src/resources/menus.xrc:247
 msgid "Show status bar"
 msgstr "Mostra la barra d’estat"
 
+#: src/resources/menus.xrc:255 src/resources/menus.xrc:463
 msgid "&Translation"
 msgstr "&Traducció"
 
+#: src/resources/menus.xrc:258 src/statistics.cpp:312 src/statistics.cpp:415
+#: src/statistics.cpp:427
+msgid "Source Text"
+msgstr "Text de partida"
+
+#: src/resources/menus.xrc:262
 msgid "&Update from source code"
 msgstr "Actualitza des del codi &font"
 
+#: src/resources/menus.xrc:263
 msgid "&Update from Source Code"
 msgstr "Actualitza des del codi &font"
 
-msgid "Update from &POT file…"
-msgstr "Actualitza des d’un fitxer &POT…"
-
-msgid "Update from &POT File…"
-msgstr "Actualitza des d’un fitxer &POT…"
-
+#: src/resources/menus.xrc:270
 msgid "Sync with Crowdin"
 msgstr "Sincronitza amb el Crowdin"
 
+#: src/resources/menus.xrc:274 src/resources/menus.xrc:275
 msgid "Pre-&translate…"
 msgstr "Pre&tradueix…"
 
+#: src/resources/menus.xrc:279
 msgid "&Validate translations"
 msgstr "&Valida les traduccions"
 
+#: src/resources/menus.xrc:280
 msgid "&Validate Translations"
 msgstr "&Valida les traduccions"
 
+#: src/resources/menus.xrc:284
+msgid "&Statistics"
+msgstr "E&stadístiques"
+
+#: src/resources/menus.xrc:289
 msgid "Remove Same-as-Source Translations"
 msgstr ""
 
+#: src/resources/menus.xrc:292
 msgid "&Purge deleted translations"
 msgstr "&Purga les traduccions suprimides"
 
+#: src/resources/menus.xrc:293
 msgid "&Purge Deleted Translations"
 msgstr "&Purga les traduccions suprimides"
 
+#: src/resources/menus.xrc:297
 msgid "&Properties…"
 msgstr "&Propietats…"
 
+#: src/resources/menus.xrc:304 src/resources/menus.xrc:466
 msgid "&Go"
 msgstr "&Navega"
 
+#: src/resources/menus.xrc:307
 msgid "&Done and next"
 msgstr "&Fet; següent"
 
+#: src/resources/menus.xrc:308
 msgid "&Done and Next"
 msgstr "&Fet; següent"
 
+#: src/resources/menus.xrc:314
 msgid "Previously edited"
 msgstr "Editada anteriorment"
 
+#: src/resources/menus.xrc:315
 msgid "Previously Edited"
 msgstr "Editada anteriorment"
 
+#: src/resources/menus.xrc:320
 msgid "&Previous translation"
 msgstr "Traducció &anterior"
 
+#: src/resources/menus.xrc:321
 msgid "&Previous Translation"
 msgstr "Traducció &anterior"
 
+#: src/resources/menus.xrc:325
 msgid "&Next translation"
 msgstr "Traducció &següent"
 
+#: src/resources/menus.xrc:326
 msgid "&Next Translation"
 msgstr "Traducció &següent"
 
+#: src/resources/menus.xrc:330
 msgid "P&revious unfinished"
 msgstr "Ante&rior no finalitzada"
 
+#: src/resources/menus.xrc:331
 msgid "P&revious Unfinished"
 msgstr "Ante&rior no finalitzada"
 
+#: src/resources/menus.xrc:335
 msgid "Ne&xt unfinished"
 msgstr "&Següent no finalitzada"
 
+#: src/resources/menus.xrc:336
 msgid "Ne&xt Unfinished"
 msgstr "&Següent no finalitzada"
 
+#: src/resources/menus.xrc:341
 msgid "Previous plural form"
 msgstr "Forma plural anterior"
 
+#: src/resources/menus.xrc:342
 msgid "Previous Plural Form"
 msgstr "Forma plural anterior"
 
+#: src/resources/menus.xrc:346
 msgid "Next plural form"
 msgstr "Forma plural següent"
 
+#: src/resources/menus.xrc:347
 msgid "Next Plural Form"
 msgstr "Forma plural següent"
 
+#: src/resources/menus.xrc:356 src/resources/menus.xrc:473
 msgid "&Online help"
 msgstr "&Ajuda en línia"
 
+#: src/resources/menus.xrc:357 src/resources/menus.xrc:474
 msgid "&Online Help"
 msgstr "&Ajuda en línia"
 
+#: src/resources/menus.xrc:363 src/resources/menus.xrc:480
 msgid "&GNU gettext manual"
 msgstr "Manual del &GNU gettext"
 
+#: src/resources/menus.xrc:364 src/resources/menus.xrc:481
 msgid "&GNU gettext Manual"
 msgstr "Manual del &GNU gettext"
 
+#: src/resources/menus.xrc:368 src/resources/menus.xrc:485
+msgid "Email &support…"
+msgstr "A&ssistència per correu…"
+
+#: src/resources/menus.xrc:369 src/resources/menus.xrc:486
+msgid "Email &Support…"
+msgstr "A&ssistència per correu…"
+
+#: src/resources/menus.xrc:373 src/resources/menus.xrc:490
 msgid "&About Poedit"
 msgstr "&Quant al Poedit"
 
+#: src/resources/menus.xrc:374 src/resources/menus.xrc:375
+#: src/resources/menus.xrc:491 src/resources/menus.xrc:492
 msgid "&About"
 msgstr "&Quant a"
 
+#: src/resources/prefs.xrc:4
 msgid "Extractor setup"
 msgstr "Paràmetres de l’extractor"
 
+#: src/resources/prefs.xrc:27
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "Llistat d’extensions separades per punt i coma (p. ex. *.cpp,*.h):"
 
+#: src/resources/prefs.xrc:43
 msgid "Invocation:"
 msgstr "Invocació:"
 
+#: src/resources/prefs.xrc:47
 msgid "Command to extract translations:"
 msgstr "Ordre d’extracció de les traduccions:"
 
-msgid ""
-"This is the command used to launch the extractor.\n"
+#: src/resources/prefs.xrc:61
+msgid "This is the command used to launch the extractor.\n"
 "%o expands to the name of output file, %K to list\n"
 "of keywords, %F to list of input files,\n"
 "%C to charset flag (see below)."
-msgstr ""
-"Aquesta és l’ordre emprada per a iniciar l’extractor.\n"
+msgstr "Aquesta és l’ordre emprada per a iniciar l’extractor.\n"
 "%o s’expandeix al nom del fitxer de sortida, %K al llistat\n"
 "de paraules clau, %F al llistat de fitxers de sortida,\n"
 "%C al joc de caràcters (vegeu-ho més avall)."
 
+#: src/resources/prefs.xrc:70
 msgid "An item in keywords list:"
 msgstr "Un element de la llista de paraules clau:"
 
-msgid ""
-"This will be attached to the command line once\n"
+#: src/resources/prefs.xrc:84
+msgid "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
-msgstr ""
-"Això s'adjuntarà a la línia d'ordres un cop\n"
+msgstr "Això s'adjuntarà a la línia d'ordres un cop\n"
 "per cada paraula clau. %k s'expandeix a la paraula clau."
 
+#: src/resources/prefs.xrc:93
 msgid "An item in input files list:"
 msgstr "Un element de la llista dels fitxers d'entrada:"
 
+#: src/resources/prefs.xrc:107
 #, c-format
-msgid ""
-"This will be attached to the command line once\n"
+msgid "This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
-msgstr ""
-"Això s'adjuntarà a la línia d'ordres un cop\n"
+msgstr "Això s'adjuntarà a la línia d'ordres un cop\n"
 "per cada fitxer de sortida. %f s'expandeix al nom del fitxer."
 
+#: src/resources/prefs.xrc:116 src/resources/properties.xrc:124
 msgid "Source code charset:"
 msgstr "Joc de caràcters del codi font:"
 
+#: src/resources/prefs.xrc:130
 #, c-format
-msgid ""
-"This will be attached to the command line\n"
+msgid "This will be attached to the command line\n"
 "only if source code charset was given. %c expands to charset value."
-msgstr ""
-"Això s’adjuntarà a la línia d’ordres\n"
-"només si s’ha especificat el joc de caràcters d’origen. %c s’expandeix al "
-"valor del joc de caràcters."
+msgstr "Això s’adjuntarà a la línia d’ordres\n"
+"només si s’ha especificat el joc de caràcters d’origen. %c s’expandeix al valor del joc de caràcters."
 
+#: src/resources/properties.xrc:4 src/resources/properties.xrc:153
 msgid "Translation Properties"
 msgstr "Propietats de la traducció"
 
+#: src/resources/properties.xrc:19
 msgid "Project name and version:"
 msgstr "Nom i versió del projecte:"
 
+#: src/resources/properties.xrc:34
 msgid "Language team:"
 msgstr "Equip de traducció:"
 
+#: src/resources/properties.xrc:66
 msgid "Plural forms:"
 msgstr "Formes dels plurals:"
 
+#: src/resources/properties.xrc:73
 msgid "Use default rules for this language"
 msgstr "Fes servir les regles per defecte d’aquesta llengua"
 
+#: src/resources/properties.xrc:82
 msgid "Use custom expression"
 msgstr "Utilitza una expressió personalitzada"
 
+#: src/resources/properties.xrc:98
 msgid "Learn about plural forms"
 msgstr "Informació sobre les formes dels plurals"
 
+#: src/resources/properties.xrc:112
 msgid "Charset:"
 msgstr "Joc de caràcters:"
 
+#: src/resources/properties.xrc:138
 msgid "Advanced Extraction Settings…"
 msgstr "Paràmetres d’extracció avançats…"
 
+#: src/resources/properties.xrc:139
 msgid "Advanced extraction settings…"
 msgstr "Paràmetres d’extracció avançats…"
 
+#: src/resources/properties.xrc:154
 msgid "Translation properties"
 msgstr "Propietats de la traducció"
 
+#: src/resources/properties.xrc:157
 msgid "Sources Paths"
 msgstr "Camins de les fonts"
 
+#: src/resources/properties.xrc:158
 msgid "Sources paths"
 msgstr "Camins de les fonts"
 
+#: src/resources/properties.xrc:164
 msgid "Extract text from source files in the following directories:"
 msgstr "Extreu el text dels fitxers font dels següents directoris:"
 
+#: src/resources/properties.xrc:173
 msgid "Base path:"
 msgstr "Camí base:"
 
+#: src/resources/properties.xrc:227
+msgid "Customize File Extensions…"
+msgstr "Personalitza les extensions de fitxer…"
+
+#: src/resources/properties.xrc:228
+msgid "Customize file extensions…"
+msgstr "Personalitza les extensions de fitxer…"
+
+#: src/resources/properties.xrc:241
 msgid "Sources Keywords"
 msgstr "Paraules claus de les fonts"
 
+#: src/resources/properties.xrc:242
 msgid "Sources keywords"
 msgstr "Paraules clau de fonts"
 
-msgid ""
-"Use these keywords (function names) to recognize translatable strings\n"
+#: src/resources/properties.xrc:248
+msgid "Use these keywords (function names) to recognize translatable strings\n"
 "in source files:"
-msgstr ""
-"Usa aquestes paraules clau (noms de funcions) per a reconèixer les\n"
+msgstr "Usa aquestes paraules clau (noms de funcions) per a reconèixer les\n"
 "cadenes traduïbles en els fitxers de codi font:"
 
+#: src/resources/properties.xrc:264
 msgid "Also use default keywords for supported languages"
 msgstr "Utilitza també les paraules clau per defecte a les llengües admeses"
 
+#: src/resources/properties.xrc:271
 msgid "Learn about gettext keywords"
 msgstr "Més informació sobre les paraules clau del gettext"
 
-msgid "Update summary"
-msgstr "Resum de l’actualització"
-
-msgid ""
-"These strings were found in the sources but were not in the file.\n"
+#: src/resources/summary.xrc:32
+msgid "These strings were found in the sources but were not in the file.\n"
 "Poedit will add them to the file now."
-msgstr ""
-"Aquestes cadenes són al codi font però no al fitxer.\n"
+msgstr "Aquestes cadenes són al codi font però no al fitxer.\n"
 "El Poedit les afegirà al fitxer ara."
 
-msgid "New strings"
-msgstr "Cadenes noves"
-
-msgid ""
-"These strings are no longer in the source code.\n"
+#: src/resources/summary.xrc:53
+msgid "These strings are no longer in the source code.\n"
 "Poedit will remove them from the file now."
-msgstr ""
-"Aquestes cadenes ja no són al codi font.\n"
+msgstr "Aquestes cadenes ja no són al codi font.\n"
 "El Poedit les suprimirà del fitxer ara."
 
+#: src/resources/summary.xrc:66
 msgid "Obsolete strings"
 msgstr "Cadenes obsoletes"
 
+#: src/resources/summary.xrc:79
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 noves, 0 obsoletes)"
 
-msgid "Open"
-msgstr ""
-
+#: src/resources/toolbar.xrc:13 src/resources/toolbar.xrc:17
 msgid "Open file"
 msgstr "Obre el fitxer"
 
+#: src/resources/toolbar.xrc:22 src/resources/toolbar.xrc:26
 msgid "Save file"
 msgstr "Desa el fitxer"
 
+#: src/resources/toolbar.xrc:34
 msgid "Validate"
 msgstr "Valida"
 
+#: src/resources/toolbar.xrc:35
 msgid "Check for errors in the translation"
 msgstr "Comprova si hi ha errors a la traducció"
 
+#: src/resources/toolbar.xrc:49
+msgid "Pre-translate strings that don’t have a translation yet"
+msgstr "Pretradueix les cadenes que encara no tinguin traducció"
+
+#: src/resources/toolbar.xrc:57 src/wx/main_toolbar.cpp:136
 msgid "Update from code"
 msgstr "Actualitza des del codi"
 
+#: src/resources/toolbar.xrc:58 src/wx/main_toolbar.cpp:136
 msgid "Update from Code"
 msgstr "Actualitza des del codi"
 
+#: src/resources/toolbar.xrc:59 src/wx/main_toolbar.cpp:137
 msgid "Update from source code"
 msgstr "Actualitza des del codi font"
 
+#: src/resources/toolbar.xrc:67
 msgid "Sidebar"
 msgstr "Barra lateral"
 
+#: src/resources/toolbar.xrc:68
 msgid "Show or hide the sidebar"
 msgstr "Mostra o amaga la barra lateral"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
+#: src/sidebar.cpp:139
 msgid "Previous source text"
 msgstr "Text font previ"
 
-msgid ""
-"The old source text (before it changed during an update) that the now-"
-"inaccurate translation corresponds to."
-msgstr ""
-"El text de partida antic (abans que canviés durant una actualització) al "
-"qual correspon la traducció ara inexacta."
+#: src/sidebar.cpp:142
+msgid "The old source text (before it changed during an update) that the now-inaccurate translation corresponds to."
+msgstr "El text de partida antic (abans que canviés durant una actualització) al qual correspon la traducció ara inexacta."
 
+#: src/sidebar.cpp:168
 msgid "Notes for translators"
 msgstr "Notes per als traductors"
 
+#: src/sidebar.cpp:201
 msgid "Comment"
 msgstr "Comentari"
 
+#: src/sidebar.cpp:231 src/sidebar.cpp:250
 msgid "Add comment"
 msgstr "Afegeix un comentari"
 
+#: src/sidebar.cpp:233 src/sidebar.cpp:235 src/sidebar.cpp:253
 msgid "Add Comment"
 msgstr "Afegeix un comentari"
 
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:436
+msgid "from your TM"
+msgstr "de la vostra MT"
+
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:441
+msgid "machine translation"
+msgstr "traducció automàtica"
+
+#. TRANSLATORS: This is followed by a logo of e.g. Microsoft Translator, forming a sentence e.g. "translated by MS Translator"
+#: src/sidebar.cpp:449
+msgid "translated by"
+msgstr "traduïda pel"
+
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:456
+msgid "human translation"
+msgstr "traducció humana"
+
+#: src/sidebar.cpp:592
 msgid "Delete From Translation Memory"
 msgstr "Suprimeix de la memòria de traducció"
 
+#: src/sidebar.cpp:592
 msgid "Delete from translation memory"
 msgstr "Suprimeix de la memòria de traducció"
 
+#: src/sidebar.cpp:593
+msgid "Report Bad Translation"
+msgstr "Informa d’una traducció deficient"
+
+#: src/sidebar.cpp:593
+msgid "Report bad translation"
+msgstr "Informa d’una traducció deficient"
+
+#: src/sidebar.cpp:652
 msgid "Translation suggestions"
 msgstr "Suggeriments de traducció"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
+#: src/sidebar.cpp:695
 msgid "No matches found"
 msgstr "No s’han trobat coincidències"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (macOS, Linux).
+#: src/sidebar.cpp:698
 msgid "No Matches Found"
 msgstr "No s’han trobat coincidències"
 
+#: src/sidebar.cpp:734 src/sidebar_pro.cpp:325
 msgid "This string was found in Poedit’s translation memory."
 msgstr "S'ha trobat aquesta cadena en la memòria de traducció del Poedit."
 
-msgid ""
-"Translation suggestions require that source text is available. They don’t "
-"work if only IDs without the actual text are used."
+#: src/sidebar.cpp:984
+msgid "Translation suggestions require that source text is available. They don’t work if only IDs without the actual text are used."
 msgstr ""
 
-msgid ""
-"Translation suggestions require that source text’s language is known. Poedit "
-"couldn’t detect it in this file."
+#: src/sidebar.cpp:989
+msgid "Translation suggestions require that source text’s language is known. Poedit couldn’t detect it in this file."
 msgstr ""
 
+#. TRANSLATORS: Tooltip explaining the Quality: label
+#: src/sidebar_pro.cpp:86
+msgid "Currently enabled quality level of online suggestions"
+msgstr "Nivell de qualitat de suggerències en línia activat actualment"
+
+#. TRANSLATORS: Quality level for the "Quality: %s" label; needs to be short
+#: src/sidebar_pro.cpp:121
+msgid "Premium"
+msgstr "prèmium"
+
+#. TRANSLATORS: Quality level for the "Quality: %s" label; needs to be short
+#: src/sidebar_pro.cpp:126
+msgid "Standard"
+msgstr "estàndard"
+
+#. TRANSLATORS: This needs to be *short*, it is shown in the sidebar
+#. after "Translation suggestions". %s will be replaced by "Standard"
+#. or "Premium". "(Quality) level" or "tier" are synonyms for it.
+#: src/sidebar_pro.cpp:132
+#, c-format
+msgid "Quality: %s"
+msgstr "Qualitat: %s"
+
+#. TRANSLATORS: Label for the part where currently used translation engine is shown
+#: src/sidebar_pro.cpp:151
+msgid "Machine translation uses:"
+msgstr "La traducció automàtica utilitza:"
+
+#: src/sidebar_pro.cpp:227
+msgid "Terminology"
+msgstr "Terminologia"
+
+#: src/sidebar_pro.cpp:321
+msgid "This suggestion was contributed by another translator to the online TM."
+msgstr "Un altre traductor ha contribuït aquest suggeriment a l’MT en línia."
+
+#: src/sidebar_pro.cpp:323
+msgid "This suggestion was machine-translated online."
+msgstr "S'ha traduït aquest suggeriment a màquina en línia."
+
+#: src/sidebar_pro.cpp:512
+#, c-format
+msgid "%d out of %d online suggestion left."
+msgid_plural "%d out of %d online suggestions left."
+msgstr[0] "Resta %d de %d suggeriments en línia."
+msgstr[1] "Resten %d de %d suggeriments en línia."
+
+#: src/sidebar_pro.cpp:517
+msgid "Remove this limitation"
+msgstr "Elimina aquesta limitació"
+
+#: src/sidebar_pro.cpp:521
+msgid "Online suggestions are limited to only 10 in the free version. Upgrade to Pro to remove this limitation."
+msgstr "Els suggeriments en línia estan limitats a només 10 en la versió de franc. Potencieu el Poedit a Pro per a eliminar aquesta limitació."
+
+#: src/sidebar_pro.cpp:523
+msgid "Unlock online suggestions"
+msgstr "Desbloca els suggeriments en línia"
+
+#: src/sidebar_pro.cpp:547
+msgid "Exceeded online TM daily limit."
+msgstr "S’ha excedit el límit diari de l’MT en línia."
+
+#: src/sidebar_pro.cpp:580
+msgid "Connect to the Internet to get additional suggestions."
+msgstr "Connecteu-vos a Internet per a obtenir suggeriments addicionals."
+
+#. TRANSLATORS: Label indicating that translations made in the current file are contributed to the online translation memory. Related to the "Contribute my translations to the online TM" string.
+#: src/sidebar_pro.cpp:655
+msgid "Contributing"
+msgstr "Contribució"
+
+#: src/sidebar_pro.cpp:656
+msgid "Your translations are contributed to the online translation memory as you make them. Thanks for making the suggestions better!"
+msgstr "Es contribueixen les vostres traduccions a la memòria de traducció en línia mentre les feu. Gràcies per millorar els suggeriments!"
+
+#. TRANSLATORS: Label indicating that the current file
+#: src/sidebar_pro.cpp:662
+msgid "Private"
+msgstr "Privat"
+
+#: src/sidebar_pro.cpp:663
+msgid "Translations from this file are not shared with the online translation memory."
+msgstr "Les traduccions d'aquest fitxer no es comparteixen amb la memòria de traducció en línia."
+
+#: src/sidebar_pro.cpp:688
+msgid "Privacy settings"
+msgstr "Paràmetres de privadesa"
+
+#: src/sidebar_pro.cpp:694
+#, c-format
+msgid "While editing the file “%s”:"
+msgstr "En modificar el fitxer «%s»:"
+
+#: src/sidebar_pro.cpp:756
+msgid "Not interested"
+msgstr "No m’interessa"
+
+#: src/sidebar_pro.cpp:982
+msgid "Pre-translation"
+msgstr "Pretraducció"
+
+#: src/sidebar_pro.cpp:987
+msgid "Pre-translate all items at once and focus on making corrections, instead of translating them one by one."
+msgstr "Tradueix prèviament totes les cadenes alhora per centrar-vos a fer correccions en compte de traduir-les totes una per una."
+
+#: src/sidebar_pro.cpp:1101
+msgid "Stay Informed!"
+msgstr "Mantingueu-vos al dia"
+
+#: src/sidebar_pro.cpp:1102
+msgid "Subscribe"
+msgstr "Subscriu-m’hi"
+
+#: src/sidebar_pro.cpp:1106
+msgid "Sign up for Poedit newsletter and be the first to know about what’s new. I hate spam too, so expect only a few emails a year."
+msgstr "Subscriviu-vos al butlletí del Poedit i assabenteu-vos abans de les novetats. Nosaltres també detestem el correu brossa, així que podeu esperar només uns pocs missatges a l’any."
+
+#: src/sidebar_pro.cpp:1117
+msgid "Email address"
+msgstr "Adreça electrònica"
+
+#: src/sidebar_pro.cpp:1140
+msgid "You’re signed up. Please check your email for a confirmation message."
+msgstr "Us heu subscribit. Trobeu a la vostra safata de correu el missatge de confirmació."
+
+#. TRANSLATORS: "Dictionaries" is the name of the application (see https://dictionaries.io), i.e. shouldn't be translated
+#: src/sidebar_pro.cpp:1210
+msgid "Dictionaries for Mac, Windows & Kindle"
+msgstr "Dictionaries per al Mac, el Windows i el Kindle"
+
+#: src/sidebar_pro.cpp:1222
+msgid "Did you know I also made a dictionaries app for Mac, Windows and Kindle? It supports over 80 languages and is a great companion to Poedit."
+msgstr "Sabíeu que també he creat una aplicació de diccionaris per al Mac, el Windows i el Kindle? Admet més de 80 llengües i és un complement fantàstic per al Poedit."
+
+#: src/sidebar_terminology.cpp:49
+msgid "Glossary Entry"
+msgstr "Entrada del glossari"
+
+#: src/sidebar_terminology.cpp:55 src/sidebar_terminology.cpp:185
+msgid "Term"
+msgstr "Terme"
+
+#: src/sidebar_terminology.cpp:60
+msgid "Additional description or notes"
+msgstr "Descripció addicional o notes"
+
+#: src/sidebar_terminology.cpp:66 src/sidebar_terminology.cpp:187
+msgid "Notes"
+msgstr "Notes"
+
+#: src/sidebar_terminology.cpp:128
+msgid "CSV Glossary Import"
+msgstr "Importació de glossaris CSV"
+
+#: src/sidebar_terminology.cpp:138
+msgid "Source language:"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:142
+msgid "Translation language:"
+msgstr "Llengua de la traducció:"
+
+#: src/sidebar_terminology.cpp:149
+msgid "Import rules:"
+msgstr "Regles d’importació:"
+
+#: src/sidebar_terminology.cpp:153
+msgid "Skip the first row"
+msgstr "Omet la primera fila"
+
+#: src/sidebar_terminology.cpp:158
+msgid "Column separator:"
+msgstr "Separador de columnes:"
+
+#: src/sidebar_terminology.cpp:161
+msgid "Term column:"
+msgstr "Columna de termes:"
+
+#: src/sidebar_terminology.cpp:164
+msgid "Definition column:"
+msgstr "Columna de definicions:"
+
+#: src/sidebar_terminology.cpp:167
+msgid "Notes column:"
+msgstr "Columna de notes:"
+
+#: src/sidebar_terminology.cpp:177 src/sidebar_terminology.cpp:261
+msgid "Preview of imported glossary data:"
+msgstr "Previsualització de les dades de glossari importades:"
+
+#. TRANSLATORS: %d is the number of entries in the preview, %s is the total number of entries in the file
+#: src/sidebar_terminology.cpp:257
+#, c-format
+msgid "Preview of imported glossary data (%d out of %s shown):"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:396 src/wx_translatable_strings.h:102
+msgid "Edit"
+msgstr "Edita"
+
+#: src/sidebar_terminology.cpp:496
+msgid "Word or phrase"
+msgstr "Paraula o frase"
+
+#: src/sidebar_terminology.cpp:518
+msgid "Add entries to the glossary"
+msgstr "Afegeix entrades al glossari"
+
+#: src/sidebar_terminology.cpp:524
+msgid "Search previously made translations and glossaries to ensure consistency. Both the current file and your translation memory are consulted."
+msgstr "Cerca a les traduccions ja fetes i als glossaris per a garantir la coherència. Es consultaran tant el fitxer actual com les vostres memòries de traducció."
+
+#: src/sidebar_terminology.cpp:536
+msgid "Unlock terminology search"
+msgstr "Desbloca la cerca terminològica"
+
+#: src/sidebar_terminology.cpp:626
+msgid "Glossary"
+msgstr "Glossari"
+
+#: src/sidebar_terminology.cpp:632
+msgid "This File"
+msgstr "Aquest fitxer"
+
+#: src/sidebar_terminology.cpp:696
+msgid "Add Glossary Entry…"
+msgstr "Afegeix una entrada al glossari…"
+
+#: src/sidebar_terminology.cpp:696
+msgid "Add glossary entry…"
+msgstr "Afegeix una entrada al glossari…"
+
+#: src/sidebar_terminology.cpp:697
+msgid "Import Glossary from CSV File…"
+msgstr "Importa un glossari des d’un fitxer CSV…"
+
+#: src/sidebar_terminology.cpp:697
+msgid "Import glossary from CSV file…"
+msgstr "Importa un glossari des d’un fitxer CSV…"
+
+#: src/sidebar_terminology.cpp:720
+msgid "Select CSV glossary file to import"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:723
+msgid "CSV Files"
+msgstr "Fitxers CSV"
+
+#: src/sidebar_terminology.cpp:749
+msgid "Importing glossary"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:756
+#, c-format
+msgid "Imported %s terms from CSV file “%s” into the glossary."
+msgstr ""
+
+#: src/statistics.cpp:275 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Items"
+msgstr "Elements"
+
+#: src/statistics.cpp:276 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Words"
+msgstr "Paraules"
+
+#: src/statistics.cpp:277 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Characters"
+msgstr "Caràcters"
+
+#: src/statistics.cpp:291 src/statistics.cpp:412
+msgid "Translated"
+msgstr "Traduïdes"
+
+#: src/statistics.cpp:296 src/statistics.cpp:335 src/statistics.cpp:413
+#: src/statistics.cpp:417
+msgctxt "column/row header"
+msgid "Needs work"
+msgstr "Cal revisar"
+
+#: src/statistics.cpp:301 src/statistics.cpp:414
+msgid "Translations with errors"
+msgstr "Traduccions amb errors"
+
+#: src/statistics.cpp:328 src/statistics.cpp:416 src/statistics.cpp:428
+msgid "Strings in source language"
+msgstr "Cadenes en l’idioma de partida"
+
+#: src/statistics.cpp:340 src/statistics.cpp:418
+msgid "Not translated"
+msgstr "No traduïdes"
+
+#: src/statistics.cpp:351
+msgid "Include code and placeholders"
+msgstr "Inclou el codi i els marcadors de substitució"
+
+#: src/statistics.cpp:352
+msgid "If checked, word and character counts will also include placeholders, HTML markup and code."
+msgstr "Si està activat el compte de caràcters i paraules també inclourà text variable, marcatge HTML i codi."
+
+#: src/statistics.cpp:362
+msgid "Characters are counted including spaces."
+msgstr "S’inclouen els espais al recompte de caràcters."
+
+#: src/statistics.cpp:368
+msgid "Copy to clipboard"
+msgstr "Copia al porta-retalls"
+
+#: src/statistics.cpp:370
+msgid "Copy to Clipboard"
+msgstr "Copia al porta-retalls"
+
+#: src/statistics.cpp:722
+#, c-format
+msgid "The file “%s” couldn’t be opened: %s"
+msgstr "No s’ha pogut obrir el fitxer «%s»: %s"
+
+#: src/subprocess.cpp:219 src/subprocess.cpp:251
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "No es pot executar el programa: %s"
+
+#: src/tm/tmx_io.cpp:88 src/tm/tmx_io.cpp:104
 msgid "The TMX file is malformed."
 msgstr "El fitxer TMX no és formatat correctament."
 
-msgid "No translations were found in the TMX file."
-msgstr "No s’ha trobat cap traducció al fitxer TMX."
-
+#: src/tm/transmem.cpp:87
 #, c-format
 msgid "Translation memory database is corrupted: %s (%d)."
 msgstr "La base de dades de la memòria de traducció és malmesa: %s (%d)."
 
+#: src/tm/transmem.cpp:90
 #, c-format
 msgid "Translation memory error: %s (%d)."
 msgstr "Hi ha un error a la memòria de traducció: %s (%d)."
 
+#: src/uilang.cpp:233
 msgid "(Use default language)"
 msgstr "(Utilitza la llengua per defecte)"
 
+#: src/uilang.cpp:244
 msgid "Language selection"
 msgstr "Selecció de llengua"
 
+#: src/uilang.cpp:244
 msgid "Select your preferred language"
 msgstr "Trieu la vostra llengua preferida"
 
+#: src/uilang.cpp:261
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Heu de reiniciar el Poedit perquè aquest canvi tingui efecte."
 
+#: src/utility.cpp:143 src/utility.cpp:153
 msgid "Cannot create temporary directory."
 msgstr "No s’ha pogut crear el directori temporal."
 
+#: src/welcomescreen.cpp:141
 msgid "There are no translations. That’s unusual."
 msgstr "No hi ha traduccions. Això es inusual."
 
-msgid ""
-"Translatable entries aren’t added manually in the Gettext system, but are "
-"automatically extracted\n"
-"from source code. This way, they stay up to date and accurate.\n"
-"Translators typically use PO template files (POTs) prepared for them by the "
-"developer."
+#: src/welcomescreen.cpp:150
+msgid "Translatable entries aren’t added manually in the Gettext system, but are automatically extracted from source code. This way, they stay up to date and accurate. Translators typically use PO template files (POTs) prepared for them by the developer."
 msgstr ""
-"Les entrades traduïbles no s’afegeixen manualment en el sistema gettext, "
-"sinó que s’extreuen\n"
-"automàticament des del codi font. D’aquesta manera, queden actualitzades i "
-"correctes.\n"
-"Els traductors típicament usen fitxers de plantilla PO (POT) que el "
-"desenvolupador els prepara."
 
-msgid "(Learn more about GNU gettext)"
-msgstr "(Apreneu-ne més sobre el GNU gettext)"
-
-msgid ""
-"The simplest way to fill this file with translations is to update it from a "
-"POT:"
+#: src/welcomescreen.cpp:153
+msgid "Learn more about GNU gettext"
 msgstr ""
-"La manera més senzilla d’omplir aquest fitxer amb traduccions es actualitzar-"
-"lo des d’un POT:"
 
+#: src/welcomescreen.cpp:157
+msgid "The simplest way to fill this file with translations is to update it from a POT:"
+msgstr "La manera més senzilla d’omplir aquest fitxer amb traduccions es actualitzar-lo des d’un POT:"
+
+#: src/welcomescreen.cpp:162
 msgid "Update from POT"
 msgstr "Actualitza des del POT"
 
+#: src/welcomescreen.cpp:163
 msgid "Take translatable strings from an existing POT template."
 msgstr "Pren cadenes traduïbles d'una plantilla POT existent."
 
-msgid ""
-"You can also extract translatable strings directly from the source code:"
+#: src/welcomescreen.cpp:167
+msgid "You can also extract translatable strings directly from the source code:"
 msgstr "També podeu extreure cadenes traduïbles directament del codi font:"
 
+#: src/welcomescreen.cpp:172
 msgid "Extract from sources"
 msgstr "Extreu des de les fonts"
 
+#: src/welcomescreen.cpp:173
 msgid "Configure source code extraction in Properties."
 msgstr "Configureu l’extracció de codi font a Propietats."
 
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "Versió %s"
-
+#: src/welcomescreen.cpp:272
 msgid "Create new"
 msgstr "Crea’n un de nou"
 
+#: src/welcomescreen.cpp:273
 msgid "Create new translation from POT template."
 msgstr "Crea una traducció nova a partir d’una plantilla POT."
 
+#: src/welcomescreen.cpp:278
 msgid "Browse files"
 msgstr "Navega pels fitxers"
 
+#: src/welcomescreen.cpp:279
 msgid "Open and edit translation files."
 msgstr "Obriu i editeu fitxers de traducció."
 
+#: src/welcomescreen.cpp:286
+msgid "Translate WordPress theme or plugin"
+msgstr "Tradueix tema o connector de WordPress"
+
+#: src/welcomescreen.cpp:287
+msgid "Edit WordPress translations over FTP or locally."
+msgstr "Edita les traduccions de WordPress per FTP o localment."
+
+#: src/welcomescreen.cpp:292
 msgid "Translate cloud project"
 msgstr ""
 
+#: src/welcomescreen.cpp:293
 msgid "Collaborate with other people online."
 msgstr ""
 
+#: src/welcomescreen.cpp:316
 msgid "Recent files"
 msgstr "Fitxers recents"
 
+#: src/wordpress/wordpress.cpp:101 src/wordpress/wordpress.cpp:108
+#, c-format
+msgid "Failed to read file “%s”."
+msgstr "Ha fallat la lectura del fitxer «%s»."
+
+#: src/wordpress/wordpress.cpp:165
+#, c-format
+msgid "Confused by ambiguous values of “%s” in %s."
+msgstr "Confusió produïda per valors ambigus de «%s» a %s."
+
+#: src/wordpress/wordpress.cpp:294 src/wordpress/wordpress.cpp:544
+#: src/wordpress/wordpress.cpp:591
+#, c-format
+msgid "Couldn’t detect POs location for “%s”."
+msgstr "No s’ha pogut detectar la ubicació dels fitxers PO per a «%s»."
+
+#: src/wordpress/wordpress.cpp:670
+#, c-format
+msgid "The “%s” theme isn’t localization-ready."
+msgstr "El tema «%s» no està a punt per a traduir-se."
+
+#: src/wordpress/wordpress.cpp:687
+#, c-format
+msgid "Couldn’t detect translation domain of the “%s” theme."
+msgstr "No s’ha pogut detectar el domini de traducció del tema «%s»."
+
+#: src/wordpress/wordpress.cpp:714
+#, c-format
+msgid "Couldn't detect translation domain of the \"%s\" theme."
+msgstr "No s’ha pogut detectar el domini de traducció del tema «%s»."
+
+#: src/wordpress/wordpress.cpp:769
+msgid "Confused: multiple main plugin files."
+msgstr "Confós: Múltiples fitxers de connector principals."
+
+#: src/wordpress/wordpress.cpp:819
+#, c-format
+msgid "The “%s” plugin isn’t localization-ready."
+msgstr "El connector «%s» no està a punt per a traduir-se."
+
+#: src/wordpress/wordpress.cpp:840 src/wordpress/wordpress.cpp:857
+#, c-format
+msgid "Couldn’t detect translation domain of the “%s” plugin."
+msgstr "No s’ha pogut detectar el domini de traducció del connector «%s»."
+
+#: src/wordpress/wordpress.cpp:923
+msgid "Found neither WordPress theme nor plugin in the folder."
+msgstr "No s'ha trobat ni tema ni connector de WordPress en la carpeta."
+
+#: src/wordpress/wordpress.cpp:940
+#, c-format
+msgid "Translations folder (%s) doesn’t exist."
+msgstr "La carpeta de traduccions (%s) no existeix."
+
+#: src/wordpress/wordpress_gui.cpp:77
+msgid "<big>Drag and drop <b>theme or plugin folder</b> here</big>\n\n"
+"or use the “Choose folder” button"
+msgstr "<big>Arrossegueu i deixeu anar una <b>carpeta de tema o connector</b> aquí</big>\n\n"
+"o useu el botó «Tria una carpeta»"
+
+#: src/wordpress/wordpress_gui.cpp:79
+msgid "<big>Drag and Drop <b>Theme or Plugin Folder</b> Here</big>\n\n"
+"or use the “Choose Folder” button"
+msgstr "<big>Arrossegueu i deixeu anar una <b>carpeta de tema o connector</b> aquí</big>\n\n"
+"o useu el botó «Tria una carpeta»"
+
+#: src/wordpress/wordpress_gui.cpp:101
+#, c-format
+msgid "Folder “%s”"
+msgstr "Carpeta «%s»"
+
+#: src/wordpress/wordpress_gui.cpp:162
+msgid "Work With Files"
+msgstr "Treball amb fitxers"
+
+#: src/wordpress/wordpress_gui.cpp:162
+msgid "Work with files"
+msgstr "Treball amb fitxers"
+
+#: src/wordpress/wordpress_gui.cpp:164
+msgid "Connect to Server"
+msgstr "Connexió amb un servidor"
+
+#: src/wordpress/wordpress_gui.cpp:164
+msgid "Connect to server"
+msgstr "Connexió amb un servidor"
+
+#: src/wordpress/wordpress_gui.cpp:165
+msgid "On This Computer"
+msgstr "En aquest ordinador"
+
+#: src/wordpress/wordpress_gui.cpp:165
+msgid "On this computer"
+msgstr "En aquest ordinador"
+
+#: src/wordpress/wordpress_gui.cpp:168
+msgid "Continue"
+msgstr "Continua"
+
+#: src/wordpress/wordpress_gui.cpp:210
+msgid "Choose Folder…"
+msgstr "Trieu una carpeta…"
+
+#: src/wordpress/wordpress_gui.cpp:210
+msgid "Choose folder…"
+msgstr "Trieu una carpeta…"
+
+#: src/wordpress/wordpress_gui.cpp:217
+msgid "Create a new translation"
+msgstr "Crea una traducció nova"
+
+#: src/wordpress/wordpress_gui.cpp:220
+msgid "Choose this if you want to translate the theme or plugin into your language."
+msgstr "Trieu això si voleu traduir el tema o el connector a la vostra llengua."
+
+#: src/wordpress/wordpress_gui.cpp:233
+msgid "Create a POT"
+msgstr "Crea una POT"
+
+#: src/wordpress/wordpress_gui.cpp:235
+msgid "This option is for theme and plugin developers. Poedit will create an empty template (POT) that translations can be based on."
+msgstr "Aquesta opció és per als desenvolupadors de temes i connectors. El Poedit crearà una plantilla buida (POT) en la qual es poden basar les traduccions."
+
+#: src/wordpress/wordpress_gui.cpp:248
+msgid "Select the folder with the WordPress theme or plugin"
+msgstr "Seleccioneu la carpeta on és el tema o el connector del WordPress"
+
+#: src/wordpress/wordpress_gui.cpp:280
+msgid "Enter connection details for your WordPress server. Poedit will retrieve available themes and plugins from it and let you translate directly on the server."
+msgstr "Introduïu les dades de connexió del servidor Wordpress. El Poedit en recuperarà els temes i connectors disponibles i us permetrà traduir directament al servidor."
+
+#: src/wordpress/wordpress_gui.cpp:287
+msgid "Protocol:"
+msgstr "Protocol:"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "FTP (insecure)"
+msgstr "FTP (insegur)"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "FTP with SSL"
+msgstr "FTP amb SSL"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "SFTP"
+msgstr "SFTP"
+
+#: src/wordpress/wordpress_gui.cpp:293
+msgid "Choose a recent server"
+msgstr "Trieu un servidor recent"
+
+#: src/wordpress/wordpress_gui.cpp:302 src/wordpress/wordpress_gui.cpp:538
+msgid "Recent Servers"
+msgstr "Servidors recents"
+
+#: src/wordpress/wordpress_gui.cpp:302 src/wordpress/wordpress_gui.cpp:538
+msgid "Recent servers"
+msgstr "Servidors recents"
+
+#: src/wordpress/wordpress_gui.cpp:306
+msgid "Server:"
+msgstr "Servidor:"
+
+#: src/wordpress/wordpress_gui.cpp:310
+msgid "Remote Path:"
+msgstr "Camí remot:"
+
+#: src/wordpress/wordpress_gui.cpp:310
+msgid "Remote path:"
+msgstr "Camí remot:"
+
+#: src/wordpress/wordpress_gui.cpp:312
+msgid "Detected automatically"
+msgstr "Detectat automàticament"
+
+#: src/wordpress/wordpress_gui.cpp:315
+msgid "Port:"
+msgstr "Port:"
+
+#: src/wordpress/wordpress_gui.cpp:321
+msgid "Username:"
+msgstr "Nom d’usuari:"
+
+#: src/wordpress/wordpress_gui.cpp:325
+msgid "Password:"
+msgstr "Contrasenya:"
+
+#: src/wordpress/wordpress_gui.cpp:332
+msgid "Remember my credentials"
+msgstr "Recorda les meves credencials"
+
+#: src/wordpress/wordpress_gui.cpp:333
+msgid "Connect"
+msgstr "Connecta-t’hi"
+
+#: src/wordpress/wordpress_gui.cpp:346
+msgid "Select the plugin or theme to translate:"
+msgstr "Seleccioneu el connector o el tema que traduireu:"
+
+#: src/wordpress/wordpress_gui.cpp:398
+msgid "Connecting to WordPress server…"
+msgstr "S’està connectant amb el servidor de WordPress…"
+
+#: src/wordpress/wordpress_gui.cpp:416
+#, c-format
+msgid "Theme: %s"
+msgstr "Tema: %s"
+
+#: src/wordpress/wordpress_gui.cpp:419
+#, c-format
+msgid "Plugin: %s"
+msgstr "Connector: %s"
+
+#: src/wordpress/wordpress_gui.cpp:534
+msgid "No Recent Servers"
+msgstr "No hi ha cap servidor recent"
+
+#: src/wordpress/wordpress_gui.cpp:534
+msgid "No recent servers"
+msgstr "No hi ha cap servidor recent"
+
+#: src/wordpress/wordpress_gui.cpp:552
+msgid "Clear Recent Servers"
+msgstr "Neteja els servidors recents"
+
+#: src/wordpress/wordpress_gui.cpp:552
+msgid "Clear recent servers"
+msgstr "Neteja els servidors recents"
+
+#: src/wordpress/wordpress_gui.cpp:825
+msgid "Failed to extract WordPress information."
+msgstr "Ha fallat l’extracció d’informació del WordPress."
+
+#: src/wordpress/wordpress_gui.cpp:826
+msgid "WordPress error"
+msgstr "Error del WordPress"
+
+#: src/wordpress/wordpress_gui.cpp:835
+#, c-format
+msgid "Poedit couldn’t understand the content of the folder you selected. This may be a problem with the plugin/theme or it may be Poedit being silly. The error is:\n\n"
+" • %s\n\n"
+"Please email help@poedit.net and we’ll sort it out."
+msgstr "El Poedit no ha pogut entendre el contingut de la carpeta que heu seleccionat. Això pot ser un problema amb el connector/tema o pot ser ximpleria de Poedit. L’error és:\n\n"
+" • %s\n\n"
+"Escriviu a help@poedit.net (en anglès) i ho arreglarem."
+
+#. TRANSLATORS: This is a button that sends an email to support when clicked
+#: src/wordpress/wordpress_gui.cpp:841
+msgid "Email support"
+msgstr "Assistència per correu electrònic"
+
+#: src/wordpress/wordpress_gui.cpp:842
+msgid "View log"
+msgstr "Mostra el registre"
+
+#. TRANSLATORS: This is a button that sends an email to support when clicked
+#: src/wordpress/wordpress_gui.cpp:845
+msgid "Email Support"
+msgstr "Assistència per correu electrònic"
+
+#: src/wordpress/wordpress_gui.cpp:846
+msgid "View Log"
+msgstr "Mostra el registre"
+
+#: src/wordpress/wordpress_gui.cpp:857
+msgid "WordPress Errors Log"
+msgstr "Registre d’errors del WordPress"
+
+#: src/wordpress/wordpress_gui.cpp:858
+msgid "Please email this log to help@poedit.net. Thank you!"
+msgstr "Envieu aquest registre a help@poedit.net. Gràcies!"
+
+#: src/wordpress/wordpress_gui.cpp:938
+msgid "Analyzing WordPress server…"
+msgstr "S’està analitzant el servidor WordPress…"
+
+#: src/wordpress/wordpress_gui.cpp:959
+msgid "Downloading translation data…"
+msgstr "S’estan baixant les dades de la traducció…"
+
+#: src/wordpress/wordpress_gui.cpp:984
+msgid "Unpacking translation data…"
+msgstr "S’estan desempaquetant les dades de la traducció…"
+
+#: src/wordpress/wordpress_gui.cpp:989
+msgid "Error unpacking downloaded WordPress data."
+msgstr "S’ha produït un error en desempaquetar les dades baixades del WordPress."
+
+#: src/wordpress/wordpress_gui.cpp:1014 src/wordpress/wordpress_gui.cpp:1029
+msgid "Analyzing WordPress code…"
+msgstr "S’està analitzant el codi del WordPress…"
+
+#: src/wordpress/wordpress_gui.cpp:1039
+msgid "WordPress translation file is ready, but there were some non-fatal issues with the corresponding source code."
+msgstr ""
+
+#: src/wx/main_toolbar.cpp:123
 msgid "Sync"
 msgstr "Sincronitza"
 
+#: src/wx/main_toolbar.cpp:124
 msgid "Synchronize the translation with Crowdin"
 msgstr "Sincronitza la traducció amb el Crowdin"
 
-#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
-#. ("Poedit" here, but please use "%s")
-#, c-format
-msgid "About %s"
-msgstr "Quant al %s"
+#: src/wx/main_toolbar.cpp:170
+msgid "Upgrade to Poedit Pro to get additional features and support Poedit's development."
+msgstr "Potencieu el Poedit a Pro per a obtenir funcions addicionals i donar suport al desenvolupament."
 
 #. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+#: src/wx_translatable_strings.h:49
 #, c-format
 msgid "%s Preferences"
 msgstr "Preferències del %s"
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
+#: src/wx_translatable_strings.h:60
 #, c-format
 msgctxt "macOS menu item"
 msgid "About %s"
 msgstr "Quant al %s"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:64
 msgctxt "macOS menu item"
 msgid "Services"
 msgstr "Serveis"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#: src/wx_translatable_strings.h:66
 #, c-format
 msgctxt "macOS menu item"
 msgid "Hide %s"
 msgstr "Amaga el %s"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:68
 msgctxt "macOS menu item"
 msgid "Hide Others"
 msgstr "Amaga la resta"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:70
 msgctxt "macOS menu item"
 msgid "Show All"
 msgstr "Mostra-ho tot"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#: src/wx_translatable_strings.h:72
 #, c-format
 msgctxt "macOS menu item"
 msgid "Quit %s"
 msgstr "Surt del %s"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:74
 msgid "Preferences…"
 msgstr "Preferències…"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:76
 msgid "Preferences..."
 msgstr "Preferències..."
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:78
 msgctxt "macOS menu item"
 msgid "Preferences..."
 msgstr "Preferències..."
 
+#: src/wx_translatable_strings.h:92
 msgid "&Apply"
 msgstr "&Aplica"
 
+#: src/wx_translatable_strings.h:92
 msgid "Apply"
 msgstr "Aplica"
 
+#: src/wx_translatable_strings.h:93
 msgid "&Back"
 msgstr "&Enrere"
 
+#: src/wx_translatable_strings.h:93
 msgid "Back"
 msgstr "Enrere"
 
+#: src/wx_translatable_strings.h:94
 msgid "&Cancel"
 msgstr "&Cancel·la"
 
+#: src/wx_translatable_strings.h:95
 msgid "&Clear"
 msgstr "&Neteja"
 
+#: src/wx_translatable_strings.h:95
 msgid "Clear"
 msgstr "Neteja"
 
+#: src/wx_translatable_strings.h:98
 msgid "Copy"
 msgstr "Copia"
 
+#: src/wx_translatable_strings.h:99
 msgid "Cu&t"
 msgstr "Re&talla"
 
+#: src/wx_translatable_strings.h:99
 msgid "Cut"
 msgstr "Retalla"
 
-msgid "Edit"
-msgstr "Edita"
-
+#: src/wx_translatable_strings.h:103
 msgid "&Quit"
 msgstr "&Surt"
 
+#: src/wx_translatable_strings.h:105
 msgid "Help"
 msgstr "Ajuda"
 
+#: src/wx_translatable_strings.h:106
 msgid "&New"
 msgstr "&Nou"
 
+#: src/wx_translatable_strings.h:106
 msgid "New"
 msgstr "Nou"
 
+#: src/wx_translatable_strings.h:107
 msgid "&No"
 msgstr "&No"
 
+#: src/wx_translatable_strings.h:107
 msgid "No"
 msgstr "No"
 
+#: src/wx_translatable_strings.h:108
 msgid "&OK"
 msgstr "&D’acord"
 
+#: src/wx_translatable_strings.h:109
 msgid "Open…"
 msgstr "Obre…"
 
+#: src/wx_translatable_strings.h:110
 msgid "&Open..."
 msgstr "&Obre…"
 
+#: src/wx_translatable_strings.h:110
 msgid "Open..."
 msgstr "Obre…"
 
+#: src/wx_translatable_strings.h:111
 msgid "&Paste"
 msgstr "&Enganxa"
 
+#: src/wx_translatable_strings.h:111
 msgid "Paste"
 msgstr "Enganxa"
 
+#: src/wx_translatable_strings.h:112
 msgid "Preferences"
 msgstr "Preferències"
 
+#: src/wx_translatable_strings.h:113
 msgid "&Redo"
 msgstr "&Refés"
 
+#: src/wx_translatable_strings.h:114
 msgid "Refresh"
 msgstr "Actualitza"
 
+#: src/wx_translatable_strings.h:116
 msgid "&Save as"
 msgstr "Anomena i de&sa"
 
+#: src/wx_translatable_strings.h:116
 msgid "Save as"
 msgstr "Anomena i desa"
 
+#: src/wx_translatable_strings.h:117
 msgid "Select &All"
 msgstr "Selecciona-ho &tot"
 
+#: src/wx_translatable_strings.h:117
 msgid "Select All"
 msgstr "Selecciona-ho tot"
 
+#: src/wx_translatable_strings.h:118
 msgid "&Undo"
 msgstr "&Desfés"
 
+#: src/wx_translatable_strings.h:119
 msgid "&Yes"
 msgstr "&Sí"
 
+#: src/wx_translatable_strings.h:119
 msgid "Yes"
 msgstr "Sí"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:125
 msgctxt "keyboard key"
 msgid "Alt+"
 msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:127
 msgctxt "keyboard key"
 msgid "Shift+"
 msgstr "Maj+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:129
 msgctxt "keyboard key"
 msgid "Enter"
 msgstr "Retorn"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:131
 msgctxt "keyboard key"
 msgid "Up"
 msgstr "Amunt"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:133
 msgctxt "keyboard key"
 msgid "Down"
 msgstr "Avall"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:135
 msgctxt "keyboard key"
 msgid "Left"
 msgstr "Esquerra"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:137
 msgctxt "keyboard key"
 msgid "Right"
 msgstr "Dreta"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+#: src/wx_translatable_strings.h:140
 msgctxt "keyboard key"
 msgid "ctrl"
 msgstr "ctrl"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+#: src/wx_translatable_strings.h:142
 msgctxt "keyboard key"
 msgid "alt"
 msgstr "alt"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+#: src/wx_translatable_strings.h:144
 msgctxt "keyboard key"
 msgid "shift"
 msgstr "maj"
+
+#: src/wx_translatable_strings.h:152
+msgid "Warning: "
+msgstr ""
+

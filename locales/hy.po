@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2024-10-31 12:30+0100\n"
-"PO-Revision-Date: 2024-10-01 10:16\n"
+"POT-Creation-Date: 2025-03-21 15:42+0100\n"
+"PO-Revision-Date: 2025-03-22 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Armenian\n"
 "Language: hy_AM\n"
@@ -17,755 +17,1190 @@ msgstr ""
 "X-Crowdin-File: /locales/poedit.pot\n"
 "X-Crowdin-File-ID: 3\n"
 
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#: src/aboutbox.cpp:135 src/wx_translatable_strings.h:42
+#, c-format
+msgid "About %s"
+msgstr "%s-ի մասին"
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#: src/aboutbox.cpp:167 src/welcomescreen.cpp:265
+#: src/wx_translatable_strings.h:46
+#, c-format
+msgid "Version %s"
+msgstr "Վարկած՝ %s"
+
+#: src/aboutbox.cpp:168
+msgid "Based on the open source version →"
+msgstr "Բաց կոդով վարկածի հիման վրա →"
+
+#: src/aboutbox.cpp:174
+msgid "Acknowledgements"
+msgstr "Ցուցումներ"
+
+#: src/aboutbox.cpp:175
+msgid "License Agreement"
+msgstr "Արտոնագրային համաձայնություն"
+
+#: src/aboutbox.cpp:182 src/prefsdlg.cpp:503
+msgid "Terms of Use"
+msgstr "Օգտվելու Պայմանները"
+
+#: src/aboutbox.cpp:183
+msgid "Privacy Policy"
+msgstr "Գաղտնիության քաղաքականություն"
+
+#: src/aboutbox.cpp:244
+#, c-format
+msgid "Licensed to %s"
+msgstr "Արտոնված է առ՝ %s"
+
+#: src/aboutbox.cpp:246
+msgid "Free version (please upgrade!)"
+msgstr "Ազատ վարկած (խնդրում ենք արդիացնել)"
+
+#: src/attentionbar.cpp:83
 msgid "Hide this notification message"
 msgstr "Թաքցնել ծանուցումը"
 
+#: src/attentionbar.cpp:291
 msgid "Don’t Show Again"
 msgstr "Այլևս չցուցադրել"
 
+#: src/attentionbar.cpp:291
 msgid "Don’t show again"
 msgstr "Այլևս չցուցադրել"
 
+#: src/cat_operations.cpp:123
+msgid "Both files must be of the same file format."
+msgstr ""
+
+#: src/cat_update.cpp:93
 #, c-format
 msgid "(New: %i, obsolete: %i)"
 msgstr "(Նոր՝ %i, հնացած՝ %i)"
 
-msgid "Collecting source files…"
-msgstr "Հավաքում է աղբյուր նիշքերը..."
+#: src/cat_update.cpp:98
+msgid "Update Summary"
+msgstr ""
 
-msgid "Extracting translatable strings…"
-msgstr "Դուրս է բերում թարգմանվող տողերը…"
+#. TRANSLATORS: Title of window showing summary (added/removed strings, issues) of updating translations from sources or POT file
+#: src/cat_update.cpp:98 src/resources/summary.xrc:4
+msgid "Update summary"
+msgstr "Թարմացումների ամփոփում"
 
-msgid "Failed to load file with extracted translations."
-msgstr "Հնարավոր չեղավ բեռնել դուրս բերված թարգմանությունենրի նիշքը:"
+#: src/cat_update.cpp:100 src/resources/summary.xrc:24
+msgid "Issues"
+msgstr ""
 
-msgid "Merging differences…"
-msgstr "Տարբերությունները ձուլվում են…"
+#: src/cat_update.cpp:101
+msgid "New Strings"
+msgstr ""
 
+#: src/cat_update.cpp:101 src/resources/summary.xrc:45
+msgid "New strings"
+msgstr "Նոր տող"
+
+#: src/cat_update.cpp:102
+msgid "Removed Strings"
+msgstr ""
+
+#: src/cat_update.cpp:102
+msgid "Removed strings"
+msgstr ""
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:105 src/cloud_accounts_ui.cpp:263 src/manager.cpp:404
+#: src/recent_files.cpp:555 src/wx_translatable_strings.h:104
+msgid "File"
+msgstr "Նիշք"
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:107
+msgid "Line"
+msgstr ""
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:109
+msgid "Issue"
+msgstr ""
+
+#: src/cat_update.cpp:205 src/cat_update.cpp:461
 msgid "Updating translations"
 msgstr "Թարգմանությունների թարմացում"
 
+#: src/cat_update.cpp:206
+#, c-format
+msgid "Found %d template file supported by Poedit Pro."
+msgid_plural "Found %d template files supported by Poedit Pro."
+msgstr[0] ""
+msgstr[1] ""
+
+#. TRANSLATORS: %s is a filename here, e.g. "mainpage.twig"
+#: src/cat_update.cpp:208
+msgid "Poedit Pro can extract strings from template files, but this functionality isn’t available in the free version. Would you like to upgrade to the Pro version?"
+msgstr "Poedit Pro-ն կարող է դուրս բերել տողերը ձեւանմուշների նիշքերից, բայց այս գործառույթը հասանելի չէ անվճար վարկածում: Արդիացնե՞լ Pro-ի:"
+
+#: src/cat_update.cpp:211 src/licensing_ui.cpp:691 src/sidebar_pro.cpp:1212
+msgid "Learn More"
+msgstr "Մանրամասներ"
+
+#: src/cat_update.cpp:211 src/customcontrols.cpp:326 src/licensing_ui.cpp:691
+#: src/sidebar_pro.cpp:1212
+msgid "Learn more"
+msgstr "Մանրամասներ"
+
+#: src/cat_update.cpp:216
+msgid "Don’t ask again"
+msgstr "Այլևս չհարցնել"
+
+#: src/cat_update.cpp:217
+msgid "Skip templates"
+msgstr "Բաց թողնել ձեւանմուշները"
+
+#: src/cat_update.cpp:226
+msgid "Found the following template files:"
+msgstr ""
+
+#: src/cat_update.cpp:245
+msgid "Don’t Ask Again"
+msgstr "Այլևս չհարցնել"
+
+#: src/cat_update.cpp:246
+msgid "Skip Templates"
+msgstr "Բաց թողնել ձեւանմուշները"
+
+#: src/cat_update.cpp:297
+msgid "Collecting source files…"
+msgstr "Հավաքում է աղբյուր նիշքերը..."
+
+#: src/cat_update.cpp:321
+#, c-format
+msgid "Extracting translatable strings from %s file…"
+msgid_plural "Extracting translatable strings from %s files…"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/cat_update.cpp:348
+#, c-format
+msgid "Failed to extract WordPress metadata from file %s."
+msgstr "Հնարավոր չեղավ հանել WordPress-ի մետատվյալը %s նիշքից:"
+
+#: src/cat_update.cpp:356 src/cat_update.cpp:492
+msgid "Failed to load file with extracted translations."
+msgstr "Հնարավոր չեղավ բեռնել դուրս բերված թարգմանությունենրի նիշքը:"
+
+#: src/cat_update.cpp:380
+#, c-format
+msgid "In: %s"
+msgstr "%s-ում"
+
+#: src/cat_update.cpp:387 src/edframe.cpp:1778
+msgid "Source code not available."
+msgstr "Սկզբնական կոդը հասանելի չէ"
+
+#: src/cat_update.cpp:388 src/edframe.cpp:1782
+msgid "Translations couldn’t be updated from the source code, because no code was found in the location specified in the file’s Properties."
+msgstr "Թարգմանությունները չեն կարող թարմացվել սկզբնական այլագրից, քանի որ այն չի գտնվել նիշքի հատկություններում:"
+
+#: src/cat_update.cpp:392
+msgid "Permission denied."
+msgstr "Թույլտվությունը մերժված է"
+
+#: src/cat_update.cpp:393
+msgid "You don’t have permission to read source code files from the location specified in the file’s Properties."
+msgstr "Դուք թույլտվություն չուենք նիշքերի հատկություններում հատկորոշված տեղից կարդալու ելակետային այլագիրի նիշքերը:"
+
+#. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
+#: src/cat_update.cpp:398
+msgid "If you previously denied access to your files, you can allow it in System Settings > Privacy & Security > Files & Folders."
+msgstr "Եթե նախկինում մերժում եք ստացել մատչելու ձեր նիշքերը, ապա կարող եք թույլատրել այն Համակարգի կարգավորումներ » Անվտանգություն և գաղտնիություն » Նիշքեր և պանակներ-ում:"
+
+#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
+#: src/cat_update.cpp:403
+msgid "If you previously denied access to your files, you can allow it in System Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr "Եթե նախկինում մերժում եք ստացել մատչելու ձեր նիշքերը, ապա կարող եք թույլատրել այն Համակարգի նախապատվություններ > Անվտանգություն եւ Գաղտնիություն > Գաղտինիություն > Նիշք եւ պանակներ-ում:"
+
+#: src/cat_update.cpp:409
+msgid "Failed to extract strings from source code."
+msgstr ""
+
+#: src/cat_update.cpp:443 src/edapp.cpp:1186 src/edframe.cpp:952
+#: src/edframe.cpp:2955
 #, c-format
 msgid "The file “%s” couldn’t be opened."
 msgstr "“%s” ֆայլի բացումը չհաջողվեց։"
 
-msgid "Invalid file"
-msgstr "Անվավեր նիշք"
+#: src/cat_update.cpp:481
+msgid "Determining differences…"
+msgstr ""
 
+#: src/cat_update.cpp:489 src/cat_update.cpp:547
+msgid "Merging differences…"
+msgstr "Տարբերությունները ձուլվում են…"
+
+#: src/cat_update.cpp:502
+msgid "Translation file is already up to date, no changes to strings were made."
+msgstr ""
+
+#: src/cat_update.cpp:508
+#, c-format
+msgid "Translation file was updated with %s change."
+msgid_plural "Translation file was updated with %s changes."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/cat_update.cpp:511
+msgid "New strings to translate:"
+msgstr ""
+
+#: src/cat_update.cpp:512
+msgid "Removed strings (no longer used):"
+msgstr ""
+
+#: src/cat_update.cpp:517
+msgid "Template files skipped (Pro-only):"
+msgstr ""
+
+#: src/cat_update.cpp:605
+#, c-format
+msgid "%d issue with the source strings was detected."
+msgid_plural "%d issues with the source strings were detected."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/cat_update.cpp:632
+msgid "View Details…"
+msgstr ""
+
+#: src/cat_update.cpp:632
+msgid "View details…"
+msgstr ""
+
+#: src/catalog.cpp:125
 #, c-format
 msgid "Malformed header: “%s”"
 msgstr "Այլակերպված '%s' գլխագիր"
 
+#: src/catalog.cpp:588
 msgid "PO Translation Files"
 msgstr "PO թարգմանության նիշքեր"
 
+#: src/catalog.cpp:590
 msgid "POT Translation Templates"
 msgstr "POT թարգմանության նիշքեր"
 
+#: src/catalog.cpp:592
 msgid "XLIFF Translation Files"
 msgstr "XLIFF թարգմանության նիշքեր"
 
+#: src/catalog.cpp:594
+msgid "Xcode Localization Catalog"
+msgstr ""
+
+#: src/catalog.cpp:596
 msgid "JSON Translation Files"
 msgstr "JSON թարգմանության ֆայլեր"
 
 #. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+#: src/catalog.cpp:599
 msgid "Flutter Translation Files"
 msgstr "Flutter թարգմանության ֆայլեր"
 
+#: src/catalog.cpp:608
 msgid "All Translation Files"
 msgstr "Թարգմանության բոլոր նիշքերը"
 
+#: src/catalog.cpp:1152
 msgid "The file is in a format not recognized by Poedit."
 msgstr "Չհաջողվեց Poedit-ի կողմից որոշել ֆայլի ձևաչափը:"
 
-msgid ""
-"This JSON file isn’t a translations file and cannot be edited in Poedit."
-msgstr ""
-"Այս JSON ֆայլը թարգմանությունների ֆայլ չէ և հնարավոր չէ խմբագրել Poedit-ում:"
+#: src/catalog_json.cpp:91
+msgid "This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgstr "Այս JSON ֆայլը թարգմանությունների ֆայլ չէ և հնարավոր չէ խմբագրել Poedit-ում:"
 
+#: src/catalog_json.cpp:140
 #, c-format
 msgid "Reading file content failed with the following error: %s"
 msgstr "Ֆայլի բովանդակության ընթերցումը ձախողվեց հետևյալ սխալով. %s"
 
+#: src/catalog_json.cpp:151 src/catalog_po.cpp:1142 src/catalog_xliff.cpp:556
 #, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
+msgid "File “%s” is read-only and cannot be saved.\n"
 "Please save it under different name."
-msgstr ""
-"«%s» նիշքը միայն կարդալու համար է եւ հնարավոր չէ այն պահել:\n"
+msgstr "«%s» նիշքը միայն կարդալու համար է եւ հնարավոր չէ այն պահել:\n"
 "Պահեք այն այլ անունով:"
 
+#: src/catalog_json.cpp:165 src/catalog_po.cpp:1178 src/catalog_po.cpp:1260
+#: src/catalog_po.cpp:1316 src/catalog_po.cpp:1373 src/catalog_po.cpp:1404
+#: src/catalog_po.cpp:1598 src/catalog_xliff.cpp:567 src/edframe.cpp:1339
+#: src/prefsdlg.cpp:757
 #, c-format
 msgid "Couldn’t save file %s."
 msgstr "Հնարավոր չէ պահել %s նիշքը:"
 
+#: src/catalog_json.cpp:503
 msgid "Screenshots:"
 msgstr "Էկրանի հանույթ"
 
+#: src/catalog_po.cpp:130
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
 msgstr[0] "«%2$s» նիշքի %1$i տողը ճիշտ չէ բեռնվել."
 msgstr[1] "«%2$s» նիշքի %1$i տողերը ճիշտ չեն բեռնվել."
 
+#: src/catalog_po.cpp:145
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "%d տողի '%s' նիշքը վնասված է (անվավեր %s տվյալ):"
 
+#: src/catalog_po.cpp:352
 msgid "Broken PO file: singular form msgstr used together with msgid_plural"
 msgstr "Վնասված PO նիշք. եզակի msgstr ձեւը օգտագործված է msgid_plural-ի հետ"
 
+#: src/catalog_po.cpp:404
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
-msgstr ""
-"Վնասված PO նիշք. հոգնակի msgstr ձեւը օգտագործված է առանց msgid_plural-ի"
+msgstr "Վնասված PO նիշք. հոգնակի msgstr ձեւը օգտագործված է առանց msgid_plural-ի"
 
+#: src/catalog_po.cpp:926 src/catalog_po.cpp:940 src/catalog_po.cpp:953
+#: src/catalog_po.cpp:965
 msgid "Couldn’t load the file, it is probably damaged."
 msgstr "Չհաջողվեց բեռնել ֆայլը, հավանաբար այն վնասված է:"
 
-msgid ""
-"There were errors when loading the file. Some data may be missing or "
-"corrupted as the result."
-msgstr ""
-"Սխալ՝ նիշքը բեռնելիս: Որոշ տվյալները, հնարավոր է, բացակայում են կամ վնասված "
-"են:"
+#: src/catalog_po.cpp:945
+msgid "There were errors when loading the file. Some data may be missing or corrupted as the result."
+msgstr "Սխալ՝ նիշքը բեռնելիս: Որոշ տվյալները, հնարավոր է, բացակայում են կամ վնասված են:"
 
-msgid ""
-"There was a problem formatting the file nicely (but it was saved all right)."
+#: src/catalog_po.cpp:1269
+msgid "There was a problem formatting the file nicely (but it was saved all right)."
 msgstr "Նիշքը նորմալ ձեւաչափելու խնդիր (բայց այն հաջողությամբ պահվել է):"
 
+#: src/catalog_po.cpp:1521
 #, c-format
-msgid ""
-"The file couldn’t be saved in “%s” charset as specified in translation "
-"settings.\n"
-"\n"
+msgid "The file couldn’t be saved in “%s” charset as specified in translation settings.\n\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
-msgstr ""
-"Հնարավոր չէ պահպանել ֆայլը «%s» գրանշանով, որպես հատկորոշված է թարգմանության "
-"կարգավորումներում:\n"
-"\n"
-"Փոխարենը՝ այն պահպանվել է UTF-8-ով և համապատասխանաբար կարգավորումը փոփոխվել "
-"է:"
+msgstr "Հնարավոր չէ պահպանել ֆայլը «%s» գրանշանով, որպես հատկորոշված է թարգմանության կարգավորումներում:\n\n"
+"Փոխարենը՝ այն պահպանվել է UTF-8-ով և համապատասխանաբար կարգավորումը փոփոխվել է:"
 
+#: src/catalog_po.cpp:1523 src/edframe.cpp:3221
 msgid "Error saving file"
 msgstr "Նիշքը պահելու սխալ"
 
+#: src/catalog_po.cpp:1674
 #, c-format
 msgid "“%s” is not a valid POT file."
 msgstr "'%s'-ը վավեր POT նիշք չէ:"
 
+#: src/catalog_xcloc.cpp:85 src/catalog_xcloc.cpp:88
+msgid "Unexpectedly missing content in the XCLOC file."
+msgstr ""
+
+#: src/catalog_xcloc.cpp:99
+msgid "Saving in a different location is not supported for XCLOC files."
+msgstr ""
+
+#: src/catalog_xliff.cpp:473
 #, c-format
 msgid "Error while loading XLIFF file: %s"
 msgstr "XLIFF ֆայլի բեռնման ընթացքի խնդիր. %s"
 
+#: src/catalog_xliff.cpp:518
 #, c-format
 msgid "unsupported version (%s)"
 msgstr "չաջակցվող տարբերակ (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
+#: src/catalog_xliff.cpp:679 src/catalog_xliff.cpp:866
 msgid "Broken markup in translation string."
 msgstr "Կոտրված նշարկում թարգմանության տողում:"
 
-msgid "Add Account"
-msgstr "Հավելել հաշիվ"
+#: src/cloud_accounts_ui.cpp:82
+msgid "Connect Poedit with supported cloud localization platforms to seamlessly sync translations managed on them."
+msgstr "Կապակցել Poedit-ն աջակցվող ամպի տեղայնացման հարթակների հետ՝ դրանցքում կառավարվող թարգմանությունները աննկատ համաժամեցնելու համար:"
 
-msgid "Add account"
-msgstr "Հավելել հաշիվ"
-
-#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
-#, c-format
-msgid "Learn more about %s"
-msgstr "Իմանալ ավելին %s-ի մասին"
-
-msgid ""
-"Connect Poedit with supported cloud localization platforms to seamlessly "
-"sync translations managed on them."
-msgstr ""
-"Կապակցել Poedit-ն աջակցվող ամպի տեղայնացման հարթակների հետ՝ դրանցքում "
-"կառավարվող թարգմանությունները աննկատ համաժամեցնելու համար:"
-
+#: src/cloud_accounts_ui.cpp:85 src/welcomescreen.cpp:295
 msgid "How does cloud sync work?"
 msgstr "Ինչպե՞ս է աշխատում ամպի համաժամեցումը:"
 
+#: src/cloud_accounts_ui.cpp:96
 msgid "Account"
 msgstr "Հաշիվ"
 
+#: src/cloud_accounts_ui.cpp:159
 msgid "(not signed in)"
 msgstr "(մուտք գործած չէ)"
 
-msgid "File"
-msgstr "Նիշք"
-
+#: src/cloud_accounts_ui.cpp:353
 msgid "Open cloud translation"
 msgstr "Բացել ամպի թարգմանությունը"
 
+#: src/cloud_accounts_ui.cpp:365
 msgid "Manage accounts"
 msgstr "Կառավարել հաշիվները"
 
+#: src/cloud_accounts_ui.cpp:374 src/export_html.cpp:77
 msgid "Project:"
 msgstr "Նախագիծ՝"
 
+#: src/cloud_accounts_ui.cpp:378 src/export_html.cpp:79
+#: src/resources/prefs.xrc:11 src/resources/prefs.xrc:15
+#: src/resources/properties.xrc:54 src/wordpress/wordpress_gui.cpp:228
+#: src/wordpress/wordpress_gui.cpp:354
 msgid "Language:"
 msgstr "Լեզուն՝"
 
+#: src/cloud_accounts_ui.cpp:433
 msgid "Sign in to Cloud Account"
 msgstr "Մուտք գործել ամպի հաշիվ"
 
+#: src/cloud_accounts_ui.cpp:433
 msgid "Sign in to cloud account"
 msgstr "Մուտք գործել ամպի հաշիվ"
 
+#: src/cloud_accounts_ui.cpp:524
 msgid "No translation projects listed in your account."
 msgstr "Թարգմանության նախագծեր ցուցակագրված չեն ձեր հաշվում:"
 
+#: src/cloud_accounts_ui.cpp:633 src/crowdin_gui.cpp:347
 msgid "Downloading latest translations…"
 msgstr "Ներբեռնում է վերջին թարգմանությունները..."
 
 #. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#: src/cloud_accounts_ui.cpp:729
 #, c-format
 msgid "Sign in to %s"
 msgstr "Մուտք գործել %s"
 
+#: src/cloud_sync.h:99
 msgid "Syncing"
 msgstr "Համաժամեցում"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#: src/cloud_sync.h:116
 #, c-format
 msgid "Uploading translations to %s…"
 msgstr "Թարգմանությունների վերբեռնում %s..."
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#: src/cloud_sync.h:168
 #, c-format
 msgid "Uploading translations to %s failed."
 msgstr "Թարգմանությունների վերբեռնումը %s ձախողվեց:"
 
+#: src/cloud_sync.h:169
 msgid "Syncing error"
 msgstr "Համաժամեցման սխալ"
 
+#: src/commentdlg.cpp:48
 msgid "Add"
 msgstr "Ավելացնել"
 
+#: src/crowdin_client.cpp:144
 msgid "Unknown Crowdin error."
 msgstr "Crowdin-ի անհայտ սխալ "
 
+#: src/crowdin_client.cpp:154
 msgid "Not authorized, please sign in again."
 msgstr "Իսկորոշում չկա, կրկին մուտք գործեք:"
 
+#. TRANSLATORS: Crowdin has string-based and file-based project kinds (see https://support.crowdin.com/creating-project/#file-based-project)
+#: src/crowdin_client.cpp:346
+msgid "String-based Crowdin projects are not supported."
+msgstr ""
+
+#: src/crowdin_client.cpp:350
 msgid "Downloading translations is disabled in this project."
 msgstr "Թարգմանությունների ներբեռնումը անջատած է այս նախագծի համար:"
 
+#: src/crowdin_gui.cpp:94 src/localazy_gui.cpp:105
 msgid "Sign In"
 msgstr "Մուտք գործել"
 
+#: src/crowdin_gui.cpp:94 src/localazy_gui.cpp:105
 msgid "Sign in"
 msgstr "Մուտք գործել"
 
+#: src/crowdin_gui.cpp:96 src/localazy_gui.cpp:107
 msgid "Sign Out"
 msgstr "Դուրս գրվել"
 
+#: src/crowdin_gui.cpp:96 src/localazy_gui.cpp:107
 msgid "Sign out"
 msgstr "Դուրս գրվել"
 
+#: src/crowdin_gui.cpp:103
 msgid "Learn more about Crowdin"
 msgstr "Մանրամասներ Crowdin-ի մասին"
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool."
+#: src/crowdin_gui.cpp:134
+msgid "Crowdin is an online translation management platform and collaborative translation tool. We use Crowdin ourselves to translate Poedit into many languages, and we love it."
 msgstr ""
-"Crowdin-ը առցանց թարգմանությունների կառավարման հարթակ և համագործակցային "
-"թարգմանության գործիք է:"
 
+#: src/crowdin_gui.cpp:198 src/localazy_gui.cpp:210
 msgid "Waiting for authentication…"
 msgstr "Սպասում է իսկորոշման..."
 
+#: src/crowdin_gui.cpp:199 src/localazy_gui.cpp:211
 msgid "Updating user information…"
 msgstr "Թարմացնում է օգտվողի տեղեկությունը..."
 
+#: src/crowdin_gui.cpp:306
 msgid "Sign in to Crowdin"
 msgstr "Մուտք գործել Crowdin"
 
+#: src/crowdin_gui.cpp:326
 msgid "Syncing with Crowdin failed."
 msgstr "Համաժամեցումը Crowdin-ի հետ ձախողվեց:"
 
+#: src/crowdin_gui.cpp:327
 msgid "Crowdin error"
 msgstr "Crowdin-ի սխալ"
 
+#: src/crowdin_gui.cpp:335
 msgid "Uploading translations…"
 msgstr "Թարգմանությունների վերբեռնում.."
 
+#: src/customcontrols.cpp:282 src/wx_translatable_strings.h:98
 msgid "&Copy"
 msgstr "&Պատճենել"
 
-msgid "Learn more"
-msgstr "Մանրամասներ"
-
+#: src/edapp.cpp:510 src/resources/menus.xrc:377 src/resources/menus.xrc:494
+#: src/wx_translatable_strings.h:105
 msgid "&Help"
 msgstr "&Օգնություն"
 
+#: src/edapp.cpp:800
 msgid "MO files can’t be directly edited in Poedit."
 msgstr "MO նիշքերը չեն կարող ուղղակիորեն խմբագրվել Poedit-ում:"
 
+#: src/edapp.cpp:801
 msgid "Error opening file"
 msgstr "Նիշքը բացելու սխալ"
 
-msgid ""
-"Please open and edit the corresponding PO file instead. When you save it, "
-"the MO file will be updated as well."
-msgstr ""
-"Փոխարենը խնդրում ենք բացել եւխմբագրել համապատասխան PO նիշքը: Երբ պահպանեք "
-"այն՝ MO նիշքը կթարմացվի:"
+#: src/edapp.cpp:803
+msgid "Please open and edit the corresponding PO file instead. When you save it, the MO file will be updated as well."
+msgstr "Փոխարենը խնդրում ենք բացել եւխմբագրել համապատասխան PO նիշքը: Երբ պահպանեք այն՝ MO նիշքը կթարմացվի:"
 
+#: src/edapp.cpp:844
 msgid "don’t delete temporary files (for debugging)"
 msgstr "չջնջել ժամանակավոր նիշքերը (վրիպազերծելու համար)"
 
+#: src/edapp.cpp:846
 msgid "handle a poedit:// URI"
 msgstr "handle a poedit:// URI"
 
+#: src/edapp.cpp:848
 msgid "go to item at given line number"
 msgstr "անցնել միույթի՝ տողի տրված համարով"
 
+#: src/edapp.cpp:871
 msgid "Failed to communicate with Poedit process."
 msgstr "Հնարավոր չէ հաղորդակցել Poedit-ի ընթացքը:"
 
+#: src/edapp.cpp:993 src/edapp.cpp:998
 #, c-format
 msgid "Unhandled exception occurred: %s"
 msgstr "Անհայտ բացառություն. %s"
 
+#: src/edapp.cpp:1156
 msgid "Select translation template"
 msgstr "Ընտրել թարգմանության ձեւանմուշը"
 
+#: src/edapp.cpp:1187 src/edframe.cpp:953 src/edframe.cpp:2687
+#: src/edframe.cpp:2956
+msgid "Invalid file"
+msgstr "Անվավեր նիշք"
+
+#: src/edapp.cpp:1220 src/wordpress/wordpress_gui.cpp:137
+msgid "WordPress"
+msgstr "WordPress"
+
+#: src/edapp.cpp:1271 src/edframe.cpp:2859
 msgid "Select translation file"
 msgstr "Ընտրել թարգմանության նիշքը"
 
+#: src/edapp.cpp:1373
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit-ը թարգմանությունների դյուրին խմբագիր է:"
 
+#: src/edframe.cpp:445
 msgid "You can’t drop more than one file on Poedit window."
 msgstr "Չեք կարող գցել մեկ նիշքից ավելի Poedit-ի պատուհանում:"
 
+#: src/edframe.cpp:452
 #, c-format
 msgid "File “%s” is not a translation file."
 msgstr "“%s” նիշքը թարգմանության նիշք չէ:"
 
+#: src/edframe.cpp:459 src/recent_files.cpp:349
 #, c-format
 msgid "File “%s” doesn’t exist."
 msgstr "«%s» նիշքը գոյություն չունի:"
 
+#: src/edframe.cpp:476
 msgid "Poedit"
 msgstr "Poedit"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
+#: src/edframe.cpp:890
 #, c-format
-msgid ""
-"Spellchecking is disabled, because the dictionary for %s isn’t installed."
-msgstr ""
-"Ուղղագրության ստուգումը անջատված է, քանի որ բառարանը %s-ի համար տեղադրված չէ:"
+msgid "Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgstr "Ուղղագրության ստուգումը անջատված է, քանի որ բառարանը %s-ի համար տեղադրված չէ:"
 
+#: src/edframe.cpp:894
 msgid "Install"
 msgstr "Տեղադրել"
 
+#: src/edframe.cpp:986 src/edframe.cpp:1161
 #, c-format
 msgid "The file “%s” has been changed by another application."
 msgstr "«%s» նիշքը փոխվել է այլ ծրագրի կողմից:"
 
+#: src/edframe.cpp:987 src/edframe.cpp:991
 msgid "Reload file"
 msgstr "Կրկին Բեռնել Նիշքը"
 
-msgid ""
-"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
-"be lost if you do."
-msgstr ""
-"Ցանկանո՞ւմ եք կրկին բեռնել նիշքը հիշասարքից: Այդ դեպքում Poedit-ում "
-"չպահպանված խմբագրումները կկորցնեք:"
+#: src/edframe.cpp:990
+msgid "Do you want to reload the file from disk? Your unsaved edits in Poedit will be lost if you do."
+msgstr "Ցանկանո՞ւմ եք կրկին բեռնել նիշքը հիշասարքից: Այդ դեպքում Poedit-ում չպահպանված խմբագրումները կկորցնեք:"
 
+#. TRANSLATORS: Button next to a QA warning: causes the warning to be dismissed
+#: src/edframe.cpp:991 src/editing_area.cpp:325 src/editing_area.cpp:377
 msgid "Ignore"
 msgstr "Անտեսել"
 
+#: src/edframe.cpp:991
 msgid "Reload File"
 msgstr "Կրկին Բեռնել Նիշքը"
 
+#: src/edframe.cpp:1095
 msgid "The file has been modified. Do you want to save changes?"
 msgstr "Նիշքը փոփոխվել է: Պահե՞լ փոփոխությունները:"
 
+#: src/edframe.cpp:1096
 msgid "Save changes"
 msgstr "Պահել փոփոխությունները"
 
+#: src/edframe.cpp:1099
 msgid "Your changes will be lost if you don’t save them."
 msgstr "Եթե չպահպանեք փոփոխությունները, ապա կկորցնեք դրանք:"
 
+#: src/edframe.cpp:1102 src/edframe.cpp:1162 src/sidebar_terminology.cpp:70
+#: src/wx_translatable_strings.h:115
 msgid "Save"
 msgstr "Պահել"
 
+#: src/edframe.cpp:1104
 msgid "Do&n’t save"
 msgstr "Չ&պահել"
 
+#: src/edframe.cpp:1106
 msgid "Don’t Save"
 msgstr "Չպահել"
 
+#: src/edframe.cpp:1165
 msgid "The changes made by the other application will be lost if you save."
 msgstr "Պահելու դեպքում այլ ծրագրի կողմից կատարված փոփոխությունները կկորցնեք:"
 
+#: src/edframe.cpp:1166 src/edframe.cpp:2268 src/licensing_ui.cpp:284
+#: src/prefsdlg.cpp:770 src/prefsdlg.cpp:1103 src/resources/comment.xrc:41
+#: src/resources/manager.xrc:63 src/sidebar_terminology.cpp:73
+#: src/wx_translatable_strings.h:94
 msgid "Cancel"
 msgstr "Չեղարկել"
 
+#: src/edframe.cpp:1166
 msgid "Save Anyway"
 msgstr "Այդուհանդերձ, պահել"
 
+#: src/edframe.cpp:1166
 msgid "Save anyway"
 msgstr "Այդուհանդերձ, պահել"
 
+#: src/edframe.cpp:1219
 msgid "Save as…"
 msgstr "Պահել որպես…"
 
+#: src/edframe.cpp:1268
 msgid "Compile to…"
 msgstr "Կազմարկել առ՝"
 
+#: src/edframe.cpp:1271
 msgid "Compiled Translation Files"
 msgstr "Թարգմանության կազմարկված նիշքեր"
 
+#: src/edframe.cpp:1312
 msgid "Export to HTML…"
 msgstr ""
 
+#: src/edframe.cpp:1315
 msgid "HTML Files"
 msgstr "HTML նիշքեր"
 
+#: src/edframe.cpp:1330
+msgid "Exporting to HTML"
+msgstr ""
+
+#: src/edframe.cpp:1364
+msgid "Export to Excel"
+msgstr ""
+
+#: src/edframe.cpp:1367 src/edframe.cpp:1401
+msgid "Excel Files"
+msgstr ""
+
+#: src/edframe.cpp:1379
+msgid "Exporting to Excel"
+msgstr ""
+
+#: src/edframe.cpp:1398
+msgid "Import from Excel"
+msgstr ""
+
+#: src/edframe.cpp:1423
+msgid "Importing from Excel"
+msgstr ""
+
+#. TRANSLATORS: %s is filename of Excel file
+#: src/edframe.cpp:1440
 #, c-format
-msgid "In: %s"
-msgstr "%s-ում"
+msgid "The “%s” file does not appear to contain any translations intended for this file."
+msgstr ""
 
-msgid "Source code not available."
-msgstr "Սկզբնական կոդը հասանելի չէ"
+#: src/edframe.cpp:1445
+msgid "No translations were updated from the Excel file."
+msgstr ""
 
+#. TRANSLATORS: %s is a (formatted) number here
+#: src/edframe.cpp:1452
+#, c-format
+msgid "%s string was updated from the Excel file."
+msgid_plural "%s strings were updated from the Excel file."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/edframe.cpp:1456
+msgid "Translations updated:"
+msgstr ""
+
+#: src/edframe.cpp:1457
+msgid "Strings matched in translation file:"
+msgstr ""
+
+#: src/edframe.cpp:1458
+msgid "Excel rows processed:"
+msgstr ""
+
+#: src/edframe.cpp:1779
 msgid "Updating failed"
 msgstr "Թարմացումը ձախողվեց"
 
-msgid ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the file’s Properties."
+#: src/edframe.cpp:1852
+msgid "Open reference file"
 msgstr ""
-"Թարգմանությունները չեն կարող թարմացվել սկզբնական այլագրից, քանի որ այն չի "
-"գտնվել նիշքի հատկություններում:"
 
-msgid "Permission denied."
-msgstr "Թույլտվությունը մերժված է"
+#: src/edframe.cpp:1883 src/resources/menus.xrc:267
+msgid "Update from &POT File…"
+msgstr "Թարմացնել &POT նիշքից…"
 
-msgid ""
-"You don’t have permission to read source code files from the location "
-"specified in the file’s Properties."
+#: src/edframe.cpp:1883 src/resources/menus.xrc:266
+msgid "Update from &POT file…"
+msgstr "Թարմացնել &POT նիշքից…"
+
+#: src/edframe.cpp:1887
+msgid "Update from Reference File…"
 msgstr ""
-"Դուք թույլտվություն չուենք նիշքերի հատկություններում հատկորոշված տեղից "
-"կարդալու ելակետային այլագիրի նիշքերը:"
 
-#. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Settings > Privacy & Security > Files & Folders."
+#: src/edframe.cpp:1887
+msgid "Update from reference file…"
 msgstr ""
-"Եթե նախկինում մերժում եք ստացել մատչելու ձեր նիշքերը, ապա կարող եք "
-"թույլատրել այն Համակարգի կարգավորումներ » Անվտանգություն և գաղտնիություն » "
-"Նիշքեր և պանակներ-ում:"
 
-#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
-msgstr ""
-"Եթե նախկինում մերժում եք ստացել մատչելու ձեր նիշքերը, ապա կարող եք "
-"թույլատրել այն Համակարգի նախապատվություններ > Անվտանգություն եւ "
-"Գաղտնիություն > Գաղտինիություն > Նիշք եւ պանակներ-ում:"
-
-msgid "Translation entries in the file are probably incorrect."
-msgstr "Թարգմանության գրառումները նիշքում, հնարավոր է, սխալ են:"
-
-msgid "Updating the file failed. Click on 'Details >>' for details."
-msgstr ""
-"Նիշքի թարմացումը ձախողվեց: Մանրամասնելու համար սեղմեք 'Մանրամասներ »»':"
-
-msgid "Open translation template"
-msgstr "Բացել թարգմանության ձեւանմուշը"
-
+#: src/edframe.cpp:2020
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "%d խնդիր է հայտնաբերվել թարգմանությունում:"
 msgstr[1] "%d խնդիրներ են հայտնաբերվել թարգմանությունում:"
 
+#: src/edframe.cpp:2025 src/edframe.cpp:2071
 msgid "Validation results"
 msgstr "Վավերացման արդյունքներ"
 
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
-"Սխալներով գրառումները ցանկում նշված են կարմիր գույնով: Սխալի մանրամասները "
-"կցուցադրվեն, երբ ընտրեք գրառումը:"
+#: src/edframe.cpp:2028
+msgid "Entries with errors were marked in red in the list. Details of the error will be shown when you select such an entry."
+msgstr "Սխալներով գրառումները ցանկում նշված են կարմիր գույնով: Սխալի մանրամասները կցուցադրվեն, երբ ընտրեք գրառումը:"
 
+#: src/edframe.cpp:2037
 msgid "The file was saved safely."
 msgstr "Նիշքը անվտանգ պահպանվել է:"
 
-msgid ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
-msgstr ""
-"Նիշքը անվտանգ պահպանվել է եւ կազմարկվել է MO ձեւաչափի, բայց հնարավոր է "
-"նորմալ չաշխատի:"
+#: src/edframe.cpp:2040
+msgid "The file was saved safely and compiled into the MO format, but it will probably not work correctly."
+msgstr "Նիշքը անվտանգ պահպանվել է եւ կազմարկվել է MO ձեւաչափի, բայց հնարավոր է նորմալ չաշխատի:"
 
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-msgstr ""
-"Նիշքը անվտանգ պահպանվել է, բայց չի կարող կազմարկվել MO ձեւաչափի եւ "
-"օգտագործվել:"
+#: src/edframe.cpp:2043
+msgid "The file was saved safely, but it cannot be compiled into the MO format and used."
+msgstr "Նիշքը անվտանգ պահպանվել է, բայց չի կարող կազմարկվել MO ձեւաչափի եւ օգտագործվել:"
 
-msgid ""
-"The file was compiled into the MO format, but it will probably not work "
-"correctly."
+#: src/edframe.cpp:2052
+msgid "The file was compiled into the MO format, but it will probably not work correctly."
 msgstr "Նիշքը կազմարկվել է MO ձեւաչափի, բայց հնարավոր է նորմալ չաշխատի:"
 
+#: src/edframe.cpp:2056
 msgid "The file cannot be compiled into the MO format and used."
 msgstr "Նիշքը հնարավոր չէ կազմարկել MO ձեւաչափի եւ օգտագործել:"
 
+#: src/edframe.cpp:2070
 msgid "No problems with the translation found."
 msgstr "Թարգմանության հետ կապված խնդիրներ չկան:"
 
+#: src/edframe.cpp:2080
 #, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural ""
-"The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] ""
-"Թարգմանությունը պատրաստ է օգտագործելու համար, բայց %d գրառում դեռ թարգմանված "
-"չէ:"
-msgstr[1] ""
-"Թարգմանությունը պատրաստ է օգտագործելու համար, բայց %d գրառումներ դեռ "
-"թարգմանված չեն:"
+msgid_plural "The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] "Թարգմանությունը պատրաստ է օգտագործելու համար, բայց %d գրառում դեռ թարգմանված չէ:"
+msgstr[1] "Թարգմանությունը պատրաստ է օգտագործելու համար, բայց %d գրառումներ դեռ թարգմանված չեն:"
 
+#: src/edframe.cpp:2085
 msgid "The translation is ready for use."
 msgstr "Թարգմանությունը պատրաստ է:"
 
+#: src/edframe.cpp:2251
+msgid "Translation Quality Warnings"
+msgstr "Թարգմանության որակի զգուշացումներ"
+
+#: src/edframe.cpp:2254
+msgid "Poedit performs automated quality checks on translations. You can configure which categories of checks are useful for you and disable unwanted ones here."
+msgstr "Poedit-ը թարգմանություններում կատարում է որակի ինքնաշխատ ստուգումներ: Դուք կարող եք կազմաձեւել, թե ստուգելու որ անվանակարգերն են օգտակար Ձեզ համար եւ անջատել անցանկալիները:"
+
+#: src/edframe.cpp:2265 src/resources/manager.xrc:55
+#: src/resources/summary.xrc:87 src/sidebar_pro.cpp:1146
+#: src/wx_translatable_strings.h:108
+msgid "OK"
+msgstr "Լավ"
+
+#: src/edframe.cpp:2510 src/prefsdlg.cpp:484 src/sidebar_pro.cpp:705
+msgid "Contributing translations improves the quality of online suggestions for everybody — the more people do it, the better the suggestions can be. Your translations are submitted anonymously and are available to other translators using Poedit or other CAT tools."
+msgstr "Ձեր մասնակցությունը թարգմանություններին բարձրացնում է առցանց առաջարկությունների որակը բոլորի համար: Ինչքան շատ մարդ է մասնակցում, այնքան լավ առաջարկություն կարող է լինել: Ձեր թարգմանությունները ուղարկվում են անանուն եւ հասանելի են այլ թարգմանիչների համար Poedit-ի կամ այլ CAT գործիքների միջոցով:"
+
+#: src/edframe.cpp:2515
+msgid "Can Poedit contribute your translations of this file to the online translation memory?"
+msgstr "Poedit-ը կարո՞ղ է օգտագործել ձեր թարգմանությունը առցանց թարգմանությունների հիշողությունում:"
+
+#. TRANSLATORS: Try to keep this as short as the original. If you can't, break it into two lines.
+#: src/edframe.cpp:2519 src/sidebar_pro.cpp:701
+msgid "Apply to all files I edit"
+msgstr "Կիրառել բոլոր ֆայլերին | խմբագրել"
+
+#: src/edframe.cpp:2520
+msgid "Contribute"
+msgstr "Մասնակցել"
+
+#: src/edframe.cpp:2527
+msgid "Keep Private"
+msgstr "Պահել գաղտնի"
+
+#: src/edframe.cpp:2527
+msgid "Keep private"
+msgstr "Պահել գաղտնի"
+
+#: src/edframe.cpp:2686
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr "Poedit-ը ինքնաբար ուղղել է սխալ բովանդակությունը «%s» նիշքում:"
 
-msgid ""
-"The file contained duplicate items, which is not allowed in PO files and "
-"would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as needing work and correct "
-"them if necessary."
-msgstr ""
-"Նիշքը պարունակում է կրկնօրինակ միույթներ, որոնք թույլատրված չեն PO նիշքերում "
-"եւ կարող են կանխել նիշքի օգտագործումը: Poedit-ը ուղղել է այդ խնդիրը, բայց "
-"դուք պետք է ստուգեք թարգմանությունները, որոնք նշված են որպես ոչ վերջնական եւ "
-"անհրաժեշտության դեպքում ուղղեք դրանք:"
+#: src/edframe.cpp:2691
+msgid "The file contained duplicate items, which is not allowed in PO files and would prevent the file from being used. Poedit fixed the issue, but you should review translations of any items marked as needing work and correct them if necessary."
+msgstr "Նիշքը պարունակում է կրկնօրինակ միույթներ, որոնք թույլատրված չեն PO նիշքերում եւ կարող են կանխել նիշքի օգտագործումը: Poedit-ը ուղղել է այդ խնդիրը, բայց դուք պետք է ստուգեք թարգմանությունները, որոնք նշված են որպես ոչ վերջնական եւ անհրաժեշտության դեպքում ուղղեք դրանք:"
 
+#: src/edframe.cpp:2707
 msgid "Language of the translation isn’t set."
 msgstr "Թարգմանության լեզուն նշված չէ:"
 
+#: src/edframe.cpp:2709
 msgid "Set Language"
 msgstr "Նշել լեզուն"
 
+#: src/edframe.cpp:2709
 msgid "Set language"
 msgstr "Նշել լեզուն"
 
 #. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-msgid ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
-msgstr ""
-"Առաջարկությունները հասանելի չեն, եթե թարգմանվող լեզուն նորմալ նշված չէ: Այլ "
-"յուրահատկություններ, ինչպես օրինակ՝ հոգնակի ձեւերը, կարող են ազդվել:"
+#: src/edframe.cpp:2712 src/edframe.cpp:2728
+msgid "Suggestions are not available if the translation language is not set correctly. Other features, such as plural forms, may be affected as well."
+msgstr "Առաջարկությունները հասանելի չեն, եթե թարգմանվող լեզուն նորմալ նշված չէ: Այլ յուրահատկություններ, ինչպես օրինակ՝ հոգնակի ձեւերը, կարող են ազդվել:"
 
+#: src/edframe.cpp:2726 src/pretranslate.cpp:508
 msgid "Language of the translation is the same as source language."
 msgstr "Թարգմանության լեզուն նույնն է, ինչ սկզբնականը:"
 
+#: src/edframe.cpp:2729
 msgid "Fix Language"
 msgstr "Ուղղել լեզուն"
 
+#: src/edframe.cpp:2729
 msgid "Fix language"
 msgstr "Ուղղել լեզուն"
 
-msgid ""
-"This file has entries with plural forms, but doesn’t have Plural-Forms "
-"header configured."
-msgstr ""
-"Այս նիշքը հոգնակի թվով գրառումներ ունի, բայց կազմաձեւված չէ հոգնակի ձեւի "
-"էջագլուխը:"
+#: src/edframe.cpp:2746
+msgid "This file has entries with plural forms, but doesn’t have Plural-Forms header configured."
+msgstr "Այս նիշքը հոգնակի թվով գրառումներ ունի, բայց կազմաձեւված չէ հոգնակի ձեւի էջագլուխը:"
 
-msgid ""
-"Entries in this file have different plural forms count from what the file’s "
-"Plural-Forms header says"
-msgstr ""
-"Այս նիշքում գրառումները ունեն այլ ձեւ, քան ասված է նիշքի հոգնակի ձեւերի "
-"էջագլխում"
+#: src/edframe.cpp:2750
+msgid "Entries in this file have different plural forms count from what the file’s Plural-Forms header says"
+msgstr "Այս նիշքում գրառումները ունեն այլ ձեւ, քան ասված է նիշքի հոգնակի ձեւերի էջագլխում"
 
+#: src/edframe.cpp:2759
 msgid "Required header Plural-Forms is missing."
 msgstr "Պահանջվող հոգնակի ձեւի գլխագիրը բացակայում է"
 
+#: src/edframe.cpp:2763
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "Շարահյուսական սխալ հոգնակի ձեւերի գլխագրում (\"%s\"):"
 
+#: src/edframe.cpp:2775
 msgid "Fix the Header"
 msgstr "Ուղղել գլխագիրը"
 
+#: src/edframe.cpp:2775
 msgid "Fix the header"
 msgstr "Ուղղել գլխագիրը"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
+#: src/edframe.cpp:2793
 #, c-format
 msgid "Plural forms expression used by the file is unusual for %s."
 msgstr "Օգտագործված հոգնակի ձեւերի արտահայտությունները անսովոր են %s-ի համար:"
 
 #. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
+#: src/edframe.cpp:2798
 msgid "Review"
 msgstr "Վերանայել"
 
+#. TRANSLATORS: "original" as in "used in this file originally, as it was when opened"
+#: src/edframe.cpp:2834
+msgid "String IDs (original)"
+msgstr "Տողի ID-ներ (սկզբնական)"
+
+#: src/edframe.cpp:2839 src/edframe.cpp:2942 src/edlistctrl.cpp:739
+#: src/export_html.cpp:146
+msgid "unknown language"
+msgstr "անհայտ լեզու"
+
+#. TRANSLATORS: "original" as in "used in this file originally, as it was when opened"; "%s" is language name
+#: src/edframe.cpp:2841
+#, c-format
+msgid "%s (original)"
+msgstr "%s (սկզբնական)"
+
+#: src/edframe.cpp:2853
+msgid "Load from Another File…"
+msgstr "Բեռնել այլ ֆայլից…"
+
+#: src/edframe.cpp:2853
+msgid "Load from another file…"
+msgstr "Բեռնել այլ ֆայլից…"
+
+#: src/edframe.cpp:2897
 msgid "Would you like to use English for source text?"
 msgstr "Կցանկանա՞ք օգտագործել անգլերենը սկզբնաղբյուր տեքստի համար:"
 
+#: src/edframe.cpp:2899
 #, c-format
-msgid ""
-"This file uses string IDs instead of source text. Poedit can load English "
-"texts from the “%s” file for you."
-msgstr ""
-"Այս ֆայլը սկզբնական գրվածքի փոխարեն օգտագործում է տողի ID-ներ: Poedit-ը "
-"կարող է բեռնել անգլերեն գրվածքները “%s” ֆայլից:"
+msgid "This file uses string IDs instead of source text. Poedit can load English texts from the “%s” file for you."
+msgstr "Այս ֆայլը սկզբնական գրվածքի փոխարեն օգտագործում է տողի ID-ներ: Poedit-ը կարող է բեռնել անգլերեն գրվածքները “%s” ֆայլից:"
 
 #. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+#: src/edframe.cpp:2901
 msgid "Load English"
 msgstr "Բեռնել անգլերեն"
 
+#: src/edframe.cpp:3034 src/export_html.cpp:103
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
 msgstr "Թարգմանված է՝ %d-ը %d-ից (%d %%)"
 
+#: src/edframe.cpp:3038 src/export_html.cpp:105
 #, c-format
 msgid "Remaining: %d"
 msgstr "Մնում է՝ %d"
 
+#: src/edframe.cpp:3043
 #, c-format
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "%d սխալ"
 msgstr[1] "%d սխալ"
 
+#: src/edframe.cpp:3048 src/export_html.cpp:117
 #, c-format
 msgid "%d entry"
 msgid_plural "%d entries"
 msgstr[0] "%d գրառում"
 msgstr[1] "%d գրառում"
 
+#: src/edframe.cpp:3077
 msgid " (unsaved)"
 msgstr "(չպահված)"
 
+#: src/edframe.cpp:3118
 msgid " (modified)"
 msgstr "(փոփոխված)"
 
+#: src/edframe.cpp:3188 src/edframe.cpp:3192
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "Հնարավոր չեղավ թարմացնել թարգմանության հիշողությունը. %s"
 
+#: src/edframe.cpp:3220
+#, c-format
+msgid "The file “%s” couldn’t be saved."
+msgstr ""
+
+#: src/edframe.cpp:3330 src/resources/menus.xrc:288
 msgid "Remove same-as-source translations"
 msgstr ""
 
-msgid ""
-"Do you want to remove all translations that are idential to the source text?"
+#: src/edframe.cpp:3332
+msgid "Do you want to remove all translations that are idential to the source text?"
 msgstr ""
 
-msgid ""
-"This action will delete any translations that match the source text exactly. "
-"This cannot be undone."
+#: src/edframe.cpp:3333
+msgid "This action will delete any translations that match the source text exactly. This cannot be undone."
 msgstr ""
 
+#: src/edframe.cpp:3337 src/edframe.cpp:3364
 msgid "Keep"
 msgstr "Պահել"
 
+#: src/edframe.cpp:3337
 msgid "Remove"
 msgstr ""
 
+#: src/edframe.cpp:3356
 msgid "Purge deleted translations"
 msgstr "Մաքրել ջնջված թարգմանությունները"
 
+#: src/edframe.cpp:3358
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr "Հեռացնե՞լ բոլոր թարգմանությունները, որոնք այլեւս չեն օգտագործվում:"
 
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"Եթե շարունակեք մաքրել, ապա նշված բոլոր թարգմանությունները կջնջվեն անվերադարձ:"
+#: src/edframe.cpp:3360
+msgid "If you continue with purging, all translations marked as deleted will be permanently removed. You will have to translate them again if they are added back in the future."
+msgstr "Եթե շարունակեք մաքրել, ապա նշված բոլոր թարգմանությունները կջնջվեն անվերադարձ:"
 
+#: src/edframe.cpp:3364
 msgid "Purge"
 msgstr "Մաքրել"
 
+#: src/edframe.cpp:3432 src/resources/menus.xrc:113
 msgid "Copy from source text"
 msgstr "Պատճենել սկզբնական գրվածքից"
 
+#: src/edframe.cpp:3434 src/resources/menus.xrc:114
 msgid "Copy from Source Text"
 msgstr "Պատճենել սկզբնական գրվածքից"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/edframe.cpp:3436 src/edframe.cpp:3443 src/edframe.cpp:3451
+#: src/sidebar.cpp:422 src/sidebar.cpp:835 src/sidebar.cpp:861
+#: src/sidebar.cpp:863 src/wx_translatable_strings.h:123
 msgctxt "keyboard key"
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
+#: src/edframe.cpp:3439 src/resources/menus.xrc:108
 msgid "Clear translation"
 msgstr "Մաքրել թարգմանությունը"
 
+#: src/edframe.cpp:3441 src/resources/menus.xrc:109
 msgid "Clear Translation"
 msgstr "Մաքրել թարգմանությունը"
 
+#: src/edframe.cpp:3446 src/resources/comment.xrc:4 src/sidebar.cpp:251
 msgid "Edit comment"
 msgstr "Խմբագրել մեկնաբանությունը"
 
+#: src/edframe.cpp:3448 src/sidebar.cpp:254
 msgid "Edit Comment"
 msgstr "Խմբագրել մեկնաբանությունը"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
+#: src/edframe.cpp:3459 src/fileviewer.cpp:100
 msgid "Code Occurrences"
 msgstr "Այլագրի դեպքեր"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
+#: src/edframe.cpp:3459
 msgid "Code occurrences"
 msgstr "Այլագրի դեպքեր"
 
+#: src/edframe.cpp:3683
 msgid "Hide Sidebar"
 msgstr "Թաքցնել կողագոտին"
 
+#: src/edframe.cpp:3685 src/resources/menus.xrc:242
 msgid "Show Sidebar"
 msgstr "Ցուցադրել կողագոտին"
 
+#: src/edframe.cpp:3716
 msgid "Hide Status Bar"
 msgstr "Թաքցնել Վիճակի գոտին"
 
+#: src/edframe.cpp:3718 src/resources/menus.xrc:248
 msgid "Show Status Bar"
 msgstr "Ցուցադրել Վիճակի գոտին"
 
+#: src/editing_area.cpp:326
+msgid "Dismiss and ignore the warning."
+msgstr "Բաց թողնել եւ անտեսել զգուշացումը:"
+
+#. TRANSLATORS: Reverse of the "Ignore" button, undoes that action
+#: src/editing_area.cpp:377
+msgid "Don’t ignore"
+msgstr ""
+
+#: src/editing_area.cpp:411
 msgid "String length in characters: translation | source"
 msgstr "Տողի երկարությունը նիշերով. թարգմանություն | աղբյուր"
 
+#: src/editing_area.cpp:414
 msgid "String length in characters"
 msgstr "Տողի երկարությունը նիշերով"
 
+#: src/editing_area.cpp:461 src/editing_area.cpp:787 src/edlistctrl.cpp:663
+#: src/edlistctrl.cpp:717 src/export_html.cpp:143
 msgid "Source text"
 msgstr "Սկզբնական գրվածք"
 
+#: src/editing_area.cpp:483 src/editing_area.cpp:853 src/editing_area.cpp:869
 msgid "Singular"
 msgstr "Եզակի"
 
+#: src/editing_area.cpp:488 src/editing_area.cpp:874
 msgid "Plural"
 msgstr "Հոգնակի"
 
+#: src/editing_area.cpp:534 src/sidebar_terminology.cpp:57
+#: src/sidebar_terminology.cpp:186 src/statistics.cpp:284
+#: src/statistics.cpp:411
 msgid "Translation"
 msgstr "Թարգմանություն"
 
+#: src/editing_area.cpp:543
 msgid "Pre-translated"
 msgstr "Նախաթարգմանված"
 
+#: src/editing_area.cpp:566
 msgid "Needs Work"
 msgstr "Վերջնական չէ"
 
@@ -777,688 +1212,1269 @@ msgstr "Վերջնական չէ"
 #. "needs review" implies that somebody else should review the string after
 #. I am done with it (i.e. consider it good), while "needs work" implies I
 #. need to return to it and finish the translation.
+#: src/editing_area.cpp:566
 msgid "Needs work"
 msgstr "Վերջնական չէ"
 
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
+#: src/editing_area.cpp:638
+msgid "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
-msgstr ""
-"POT նիշքերը միայն նմուշներ են եւ չեն պարունակում որեւէ թարգմանություն:\n"
+msgstr "POT նիշքերը միայն նմուշներ են եւ չեն պարունակում որեւէ թարգմանություն:\n"
 "Թարգմանություն ստեղծելու համար ստեղծեք նոր PO նիշք:"
 
+#: src/editing_area.cpp:645
 msgid "Create new translation"
 msgstr "Ստեղծել նոր թարգմանություն"
 
+#: src/editing_area.cpp:646
 msgid "Make a new translation from this POT file."
 msgstr "Նոր թարգմանություն այս POT նիշքից:"
 
 #. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+#: src/editing_area.cpp:785 src/edlistctrl.cpp:711 src/export_html.cpp:137
 msgid "Source text ID"
 msgstr "Աղբյուրի տեքստի ID"
 
+#: src/editing_area.cpp:840
 msgid "Everything"
 msgstr "Ամենը"
 
+#: src/editing_area.cpp:845
 #, c-format
 msgid "Form %i"
 msgstr "%i-ից"
 
+#: src/editing_area.cpp:847
 #, c-format
 msgid "Form %i (unused)"
 msgstr "Ձեւ %i (չօգտագործված)"
 
+#: src/editing_area.cpp:858
 msgid "Zero"
 msgstr "Զրո"
 
+#: src/editing_area.cpp:860
 msgid "One"
 msgstr "Մեկ"
 
+#: src/editing_area.cpp:862
 msgid "Two"
 msgstr "Երկու"
 
+#: src/editing_area.cpp:876
 msgid "Other"
 msgstr "Այլ"
 
 #. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#: src/editing_area.cpp:1060
 #, c-format
 msgid "String context: %s"
 msgstr "Լարի համատեքստ՝ %s"
 
 #. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#: src/editing_area.cpp:1067
 #, c-format
 msgid "String identifier: %s"
 msgstr "Լարի նույնացուցիչ՝ %s"
 
+#: src/editing_area.cpp:1075
 #, c-format
 msgid "%s Format"
 msgstr "%s ձեւաչափ"
 
 #. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#: src/editing_area.cpp:1075
 #, c-format
 msgid "%s format"
 msgstr "%s ձեւաչափ"
 
+#: src/edlistctrl.cpp:668 src/edlistctrl.cpp:740 src/export_html.cpp:145
 #, c-format
 msgid "Translation — %s"
 msgstr "Թարգմանություն՝ — %s"
 
+#: src/edlistctrl.cpp:672
 msgid "ID"
 msgstr "ID"
 
+#: src/edlistctrl.cpp:716 src/export_html.cpp:142
 #, c-format
 msgid "Source text — %s"
 msgstr "Սկզբնական գրվածք՝— %s"
 
-msgid "unknown language"
-msgstr "անհայտ լեզու"
-
+#: src/errors.cpp:84
 #, c-format
 msgid "Network error: %s (%d)"
 msgstr ""
 
+#: src/errors.cpp:93
 msgid "Unknown error"
 msgstr ""
 
-#, c-format
-msgid "Failed command: %s"
-msgstr "Ձախողված հրաման. %s"
+#: src/excel_io.cpp:261 src/excel_io.cpp:298 src/excel_io.cpp:302
+msgid "Failed to create the Excel file."
+msgstr ""
 
+#: src/excel_io.cpp:351 src/excel_io.cpp:395 src/excel_io.cpp:419
+msgid "Failed to import from Excel file."
+msgstr ""
+
+#: src/excel_io.cpp:428
+msgid "Excel Import"
+msgstr ""
+
+#. TRANSLATORS: Shown above a list of columns and their meaning
+#: src/excel_io.cpp:442
+msgid "Import from Excel columns as:"
+msgstr ""
+
+#: src/excel_io.cpp:452
+msgid "ID:"
+msgstr ""
+
+#: src/excel_io.cpp:460
+msgid "Context:"
+msgstr ""
+
+#: src/excel_io.cpp:467
+msgid "Source text ID:"
+msgstr ""
+
+#: src/excel_io.cpp:467
+msgid "Source text:"
+msgstr ""
+
+#: src/excel_io.cpp:478
+msgid "Translation:"
+msgstr ""
+
+#: src/excel_io.cpp:485 src/sidebar_terminology.cpp:192
+msgid "Import"
+msgstr "Ներմուծել"
+
+#: src/extractors/extractor.cpp:373
 msgid "Failed to merge gettext catalogs."
 msgstr "Հնարավոր չեղավ ձուլել gettext գրացուցակները:"
 
+#: src/fileviewer.cpp:132
 msgid "Open in Editor"
 msgstr "Բացել Խմբագրիչով"
 
+#: src/fileviewer.cpp:132
 msgid "Open in editor"
 msgstr "Բացել Խմբագրիչով"
 
-msgid ""
-"No information about this string’s occurrences in the source code is "
-"provided in the file."
-msgstr ""
-"Չկա տեղեկություն այս տողերի դեպքերի համար նիշքում տրամադրված սկզբնական "
-"կոդում:"
+#: src/fileviewer.cpp:256
+msgid "No information about this string’s occurrences in the source code is provided in the file."
+msgstr "Չկա տեղեկություն այս տողերի դեպքերի համար նիշքում տրամադրված սկզբնական կոդում:"
 
+#: src/fileviewer.cpp:256
 msgid "No usage information"
 msgstr "Չկա օգտագործման տեղեկություն"
 
+#: src/fileviewer.cpp:262
 #, c-format
 msgid "%d code occurrence"
 msgid_plural "%d code occurrences"
 msgstr[0] "%d կոդի դեպք"
 msgstr[1] "%d կոդի դեպքեր"
 
+#: src/fileviewer.cpp:283
 msgid "Source code not found"
 msgstr "Մեկնարկային կոդը չի գտնվել"
 
-msgid ""
-"Poedit cannot show source code where the string is used, because the file is "
-"either not available in the referenced location or it is a symbolic "
-"reference that doesn’t point to a real file."
-msgstr ""
-"Poedit-ը չի կարող ցուցադրել սկզբնական կոդը, որտեղ օգտագործված է տողը, քանի "
-"որ նիշքը կամ մատչելի չէ հղվող տեղում, կամ այն նշանային հղում է, որը չի "
-"մատնանշում իրական նիշքի:"
+#: src/fileviewer.cpp:284
+msgid "Poedit cannot show source code where the string is used, because the file is either not available in the referenced location or it is a symbolic reference that doesn’t point to a real file."
+msgstr "Poedit-ը չի կարող ցուցադրել սկզբնական կոդը, որտեղ օգտագործված է տողը, քանի որ նիշքը կամ մատչելի չէ հղվող տեղում, կամ այն նշանային հղում է, որը չի մատնանշում իրական նիշքի:"
 
+#: src/fileviewer.cpp:298
 msgid "File cannot be opened"
 msgstr "Նիշքը հնարավոր չէ բացել"
 
+#: src/fileviewer.cpp:299
 #, c-format
 msgid "Poedit was unable to open the “%s” file."
 msgstr "Poedit-ը չկարողացավ բացել “%s” նիշքը:"
 
+#: src/findframe.cpp:83 src/findframe.cpp:101 src/findframe.cpp:300
+#: src/resources/menus.xrc:156
 msgid "Find"
 msgstr "Գտնել"
 
+#: src/findframe.cpp:102 src/findframe.cpp:300
 msgid "Replace"
 msgstr "Փոխարինել"
 
 #. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+#: src/findframe.cpp:118
 msgid "Options"
 msgstr "Ընտրանքներ"
 
+#: src/findframe.cpp:122
 msgid "Ignore case"
 msgstr "Անտեսել գրանցատեղին"
 
+#: src/findframe.cpp:123
 msgid "Wrap around"
 msgstr "Ծալել շուրջը"
 
+#: src/findframe.cpp:124
 msgid "Whole words only"
 msgstr "Միայն ամբողջ բառը"
 
+#: src/findframe.cpp:125
 msgid "Find in source texts"
 msgstr "Գտնել սկզբնական գրվածքում"
 
+#: src/findframe.cpp:126
 msgid "Find in translations"
 msgstr "Գտնել թարգմանություններում"
 
+#: src/findframe.cpp:127
 msgid "Find in comments"
 msgstr "Գտնել մեկնաբանություններում"
 
+#: src/findframe.cpp:148 src/licensing_ui.cpp:535 src/titleless_window.cpp:82
+#: src/wx_translatable_strings.h:96
 msgid "Close"
 msgstr "Փակել"
 
+#: src/findframe.cpp:149
 msgid "Replace &All"
 msgstr "Փոխարինել &բոլորը"
 
+#: src/findframe.cpp:149
 msgid "Replace &all"
 msgstr "Փոխարինել &բոլորը"
 
+#: src/findframe.cpp:150
 msgid "&Replace"
 msgstr "&Փոխարինել"
 
+#: src/findframe.cpp:151
 msgid "< &Previous"
 msgstr "« &Նախորդ"
 
+#: src/findframe.cpp:152
 msgid "&Next >"
 msgstr "&Հաջորդ »"
 
+#: src/findframe.cpp:235
 msgid "String to find"
 msgstr "Ինչ փնտրել"
 
+#: src/findframe.cpp:236
 msgid "Replacement string"
 msgstr "Ինչով փոխարինել"
 
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "Հնարավոր չէ կատարել %s ծրագիրը"
+#: src/gexecute.cpp:131 src/gexecute.cpp:146 src/gexecute.cpp:170
+msgid "warning: "
+msgstr ""
+
+#: src/gexecute.cpp:171
+msgid "error: "
+msgstr ""
+
+#: src/glossary.cpp:273 src/glossary.cpp:277
+msgid "Failed to read the CSV file."
+msgstr "Անհնար է կարդալ CSV ֆայլը:"
 
 #. TRANSLATORS: placeholder/hint in language controls
+#: src/languagectrl.cpp:138
 msgid "Language name or code"
 msgstr "Լեզվի անունը կամ կոդը"
 
+#: src/languagectrl.cpp:210
 msgid "Translation Language"
 msgstr "Թարգմանության լեզուն"
 
+#: src/languagectrl.cpp:217
 msgid "Language of the translation:"
 msgstr "Թարգմանության լեզուն՝"
 
+#: src/licensing.cpp:196 src/licensing.cpp:206
+msgid "Invalid license key"
+msgstr "Արտոնագրի բանալին սխալ է"
+
+#: src/licensing.cpp:211
+msgid "Subscription expired"
+msgstr "Բաժանորդագրությունն ավարտվել է"
+
+#: src/licensing.cpp:218
+#, c-format
+msgid "App updates expired, license is only valid for version %s"
+msgstr ""
+
+#: src/licensing.cpp:224
+#, c-format
+msgid "License key only valid for older Poedit version (%s)"
+msgstr "Արտոնագրի բանալին վավեր է միայն Poedit-ի հին վարկածների համար (%s)"
+
+#: src/licensing.cpp:231
+msgid "Maximum allowed activations exceeded"
+msgstr "Գրանցումների առավելագույն քանակը գերազանցված է"
+
+#: src/licensing.cpp:236 src/licensing.cpp:263
+#, c-format
+msgid "Unknown activation error (%s)"
+msgstr "Ակտիվացման անհայտ սխալ (%s)"
+
+#: src/licensing_ui.cpp:92 src/licensing_ui.cpp:97 src/licensing_ui.cpp:859
+#: src/licensing_ui.cpp:872 src/licensing_ui.cpp:884
+msgid "Poedit Activation"
+msgstr "Poedit-ի գրանցում"
+
+#: src/licensing_ui.cpp:92 src/licensing_ui.cpp:102
+#: src/marketing_services.cpp:49 src/wx/main_toolbar.cpp:155
+#: src/wx/main_toolbar.cpp:182
+msgid "Upgrade to Pro"
+msgstr "Արդիացնել Pro-ի"
+
+#: src/licensing_ui.cpp:248
+msgid "Please enter your license key:"
+msgstr "Մուտքագրեք արտոնագրի բանալին՝"
+
+#: src/licensing_ui.cpp:257
+msgid "You should find your key in the confirmation email you received after you purchased Poedit. Activation requires internet connection."
+msgstr "Այն կարող եք գտնել Ձեզ ուղարկված այն էլ. նամակում, որը ստացել եք Poedit-ը գնելուց հետո: Ակտիվացման ժամանակ անհրաժեշտ է համացանցային կապակցում:"
+
+#: src/licensing_ui.cpp:262
+msgid "Retrieve lost license key"
+msgstr "Ստանալ արտոնագրի կորսված բանալին"
+
+#: src/licensing_ui.cpp:271
+msgid "Buy Online…"
+msgstr "Գնել առցանց..."
+
+#: src/licensing_ui.cpp:271
+msgid "Buy online…"
+msgstr "Գնել առցանց..."
+
+#: src/licensing_ui.cpp:286 src/licensing_ui.cpp:290
+msgid "Activate"
+msgstr "Ակտիվացնել"
+
+#: src/licensing_ui.cpp:316
+msgid "Activating your license…"
+msgstr "Արտոնագիրը ակտիվացվում է..."
+
+#: src/licensing_ui.cpp:327
+msgid "Would you like to hear about new versions?"
+msgstr "Ցանկանո՞ւմ եք տեղեկանալ նոր վարկածների մասին:"
+
+#: src/licensing_ui.cpp:328
+msgid "We’ll send you an email when a new major version is released. No marketing, no spammy newsletters. Just very rare heads-up about new versions."
+msgstr "Նոր թողարկումների դեպքում մենք Ձեզ կտեղեկացնենք էլ. նամակով: Ոչ մի գովազդ կամ անհանգստացնող տեղեկագիր: Կծանուցվեք միայն նոր վարկածների մասին:"
+
+#: src/licensing_ui.cpp:331 src/licensing_ui.cpp:690
+msgid "No, thanks"
+msgstr "Ոչ"
+
+#: src/licensing_ui.cpp:331
+msgid "Notify me"
+msgstr "Ծանուցել ինձ"
+
+#: src/licensing_ui.cpp:358
+msgid "Upgrade your Pro license"
+msgstr "Արդիացրեք ձեր Pro արտոնագիրը"
+
+#: src/licensing_ui.cpp:377
+msgid "Renew your license"
+msgstr ""
+
+#: src/licensing_ui.cpp:395
+msgid "Add more devices"
+msgstr "Հավելել այլ սարքեր"
+
+#: src/licensing_ui.cpp:440
+msgid "Thank you!"
+msgstr "Շնորհակալություն։"
+
+#: src/licensing_ui.cpp:446
+msgid "Your copy is upgraded to Poedit Pro."
+msgstr "Ձեր օրինակը արդիացվել է Poedit Pro-ի:"
+
+#: src/licensing_ui.cpp:450 src/licensing_ui.cpp:454
+msgid "Manage License"
+msgstr "Կառավարել արտոնագիրը"
+
+#: src/licensing_ui.cpp:454
+msgid "Manage license"
+msgstr "Կառավարել արտոնագիրը"
+
+#. TRANSLATORS: "Renew" as a verb meaning making something that stopped working (a subscription) work again by prolonging it for another period.
+#: src/licensing_ui.cpp:479 src/licensing_ui.cpp:862 src/licensing_ui.cpp:875
+#: src/licensing_ui.cpp:1161
+msgid "Renew"
+msgstr "Նորացնել"
+
+#: src/licensing_ui.cpp:497
+msgid "Deactivate"
+msgstr "Ապաակտիվացնել"
+
+#: src/licensing_ui.cpp:509
+msgid "Deactivating your license…"
+msgstr "Ձեր արտոնագրի ապաակտիվացում..."
+
+#: src/licensing_ui.cpp:567
+msgid "Upgrade to Poedit Pro to Unlock WordPress Extras"
+msgstr "Արդիացրեք Poedit Pro-ի՝ WordPress Extras-ը ապակողպելու համար"
+
+#: src/licensing_ui.cpp:568 src/licensing_ui.cpp:589
+msgid "Upgrade to take advantage of Pro’s extra smarts: it understands WordPress themes and plugins and sets everything up for you. You can focus on translating and don’t have to worry about the technical details. With the free version, you would have to do everything manually yourself."
+msgstr "Արդիացրեք՝ Pro-ի առավելությունները ունենալու համար. այն հասկանում է WordPress-ի ոճերը եւ աղադրիչները եւ կայում է ամենը Ձեզ համար: Դուք կարող եք կենտրոնանալ թարգմանելու վրա եւ չանհանգստանալ տեխնիկական մանրամասների համար: Անվճար վարկածով դուք ինքներդ պետք է անեք այդ ամենը:"
+
+#: src/licensing_ui.cpp:571
+msgid "Upgrade to Poedit Pro to Unlock Statistics"
+msgstr "Արդիացրեք Poedit Pro-ի՝ Վիճակագրությունը ապակողպելու համար"
+
+#: src/licensing_ui.cpp:574
+msgid "Upgrade to Poedit Pro to Unlock Online Suggestions"
+msgstr "Արդիացրեք Poedit Pro-ի՝ Առցանց առաջարկությունները ապակողպելու համար"
+
+#: src/licensing_ui.cpp:577
+msgid "Upgrade to Poedit Pro to Unlock Templates Support"
+msgstr "Արդիացրեք Poedit Pro-ի՝ ձեւանմուշների աջակցումը ապակողպելու համար"
+
+#: src/licensing_ui.cpp:581
+msgid "Upgrade to Poedit Pro to Unlock Extra Features"
+msgstr "Արդիացրեք Poedit Pro-ի՝ լրացուցիչ յուրահատկությունները ապակողպելու համար"
+
+#: src/licensing_ui.cpp:588
+msgid "WordPress extras require upgrade to Poedit Pro"
+msgstr "WordPress Extras-ի համար արդիացրեք Poedit Pro-ի"
+
+#: src/licensing_ui.cpp:593
+msgid "Statistics require upgrade to Poedit Pro"
+msgstr "Վիճակագրության համար արդիացրեք Poedit Pro-ի"
+
+#: src/licensing_ui.cpp:596
+msgid "Online TM suggestions require upgrade to Poedit Pro"
+msgstr "Առցանց TM առաջարկությունների համար արդիացրեք Poedit Pro-ի"
+
+#: src/licensing_ui.cpp:599
+msgid "Templates support requires upgrade to Poedit Pro"
+msgstr "Ձեւանմուշների աջակցման համար արդիացրեք Poedit Pro-ի"
+
+#: src/licensing_ui.cpp:602
+msgid "Customizable warnings require upgrade to Poedit Pro"
+msgstr "Կազմաձեւելի զգուշացումները պահանջում են արդիացնել Poedit Pro-ի:"
+
+#: src/licensing_ui.cpp:605
+msgid "Customizable file extensions require upgrade to Poedit Pro"
+msgstr "Հարմարվող նիշքերի ընդլայնումները պահանջում են արդիականացում Poedit Pro-ի"
+
+#: src/licensing_ui.cpp:608
+msgid "Terminology search and glossaries require upgrade to Poedit Pro"
+msgstr "Եզրաբանության որոնումը եւ բառարանները պահանջում են արդիականացնել Poedit Pro-ի"
+
+#: src/licensing_ui.cpp:611
+msgid "Replacing source text requires upgrade to Poedit Pro"
+msgstr "Սկզբնական գրվածքի փոխարինումը պահանջում է արդիացում Poedit Pro-ի"
+
+#: src/licensing_ui.cpp:614
+msgid "Merging translation files requires upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:617
+msgid "Excel import and export require upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:649
+msgid "Purchasing the full version will unlock additional features in Poedit, including:"
+msgstr "Ամբողջական վարկածը գնելու դեպքում դուք կստանաք Poedit-ի բոլոր յուրահատկությունները, ներառյալ՝"
+
+#: src/licensing_ui.cpp:663
+msgid "Suggestions from online translation memory"
+msgstr "Առաջարկություններ առցանց թարգմանությունների հիշողությունից"
+
+#: src/licensing_ui.cpp:664
+msgid "Machine translation with DeepL, Google Translate or Microsoft Translator"
+msgstr "Մեքենայական թարգմանություն DeepL-ի, Google Translate-ի կամ Microsoft Translator-ի միջոցով"
+
+#: src/licensing_ui.cpp:665
+msgid "Worry-free setup for WordPress themes and plugins"
+msgstr "Տեղակայեք WordPress-ի ոճերը եւ բաղադրիչները առանց ջանքեր թափելու"
+
+#: src/licensing_ui.cpp:666
+msgid "Extract strings from Twig or Blade templates"
+msgstr ""
+
+#: src/licensing_ui.cpp:667
+msgid "Word count and statistics"
+msgstr "Բառերի քանակը եւ վիճակագրությունը"
+
+#: src/licensing_ui.cpp:668
+msgid "Excel import and export"
+msgstr ""
+
+#: src/licensing_ui.cpp:669
+msgid "Merging translation files for all file formats"
+msgstr ""
+
+#: src/licensing_ui.cpp:670
+msgid "Customizable QA checks and warnings"
+msgstr "Կազմաձեւելի QA ստուգումներ եւ զգուշացումներ"
+
+#: src/licensing_ui.cpp:671
+msgid "Replace source text with translations from another file"
+msgstr "Փոխարինել աղբյուր գրվածքը թարգմանությունով այլ ֆայլից"
+
+#: src/licensing_ui.cpp:672
+msgid "Terminology search and glossaries"
+msgstr "Եզրաբանության որոնում եւ բառարաններ"
+
+#: src/licensing_ui.cpp:673
+msgid "Personal priority support"
+msgstr "Անձնական առաջնահերթ աջակցում"
+
+#: src/licensing_ui.cpp:679
+msgid "Enter license key"
+msgstr "Մուտքագրել արտոնության բանալին"
+
+#: src/licensing_ui.cpp:689
+msgid "Upgrade…"
+msgstr "Արդիացնել..."
+
+#: src/licensing_ui.cpp:754 src/licensing_ui.cpp:780
+#, c-format
+msgid "Licensed to: %s"
+msgstr "Արտոնված է առ՝ %s"
+
+#. TRANSLATORS: %s is replaced at runtime with e.g. "Poedit Pro" or "Poedit Pro+"
+#: src/licensing_ui.cpp:756 src/licensing_ui.cpp:785
+#, c-format
+msgid "License type: %s"
+msgstr "Արտոնագրի տեսակը՝ %s"
+
+#: src/licensing_ui.cpp:780
+msgid "(personal license)"
+msgstr "(անձնական լիցենզիա)"
+
+#: src/licensing_ui.cpp:859
+msgid "Subscription expired."
+msgstr "Բաժանոթրդագրությունն ավարտվել է:"
+
+#: src/licensing_ui.cpp:861
+msgid "Your license was deactivated on this computer because your subscription expired."
+msgstr "Ձեր արտոնագիրը ապաակտիվացվել է այս համակարգչում, քանի որ բաժանորդագրությունն ավարտվել է:"
+
+#: src/licensing_ui.cpp:871
+#, c-format
+msgid "Your license was deactivated on this computer because it only includes app updates up to Poedit version %s."
+msgstr ""
+
+#: src/licensing_ui.cpp:872
+msgid "App updates expired."
+msgstr ""
+
+#: src/licensing_ui.cpp:884
+msgid "License deactivated."
+msgstr "Արտոնագիրը ապաակտիվացված է:"
+
+#: src/licensing_ui.cpp:886
+msgid "Your license was deactivated on this computer. Please email help@poedit.net if you are not sure why this happened."
+msgstr "Ձեր արտոնագիրը ապաակտիվացված է այս համակարգչում: Գրեք մեզ help@poedit.net հասցեով, եթե ցանկանում եք պարզաբանումներ ստանալ:"
+
+#. TRANSLATORS: %s is a placeholder for subscription name, e.g. Pro+ or Pro
+#: src/licensing_ui.cpp:1112
+#, c-format
+msgid "Your %s subscription expired."
+msgstr "Անդրոիդի %s բաժանորդագրությունը ավարտվել է:"
+
+#. TRANSLATORS: "Expired" as in ended e.g. after 1 year
+#: src/licensing_ui.cpp:1117
+msgid "Machine translation service expired."
+msgstr "Մեքենայական թարգմանության ծառայությունը սպառվել է:"
+
+#. TRANSLATORS: "standard" here is the same word as the standalone string "Standard".
+#: src/licensing_ui.cpp:1125
+msgid "Machine translation quality is reduced to standard."
+msgstr "Մեքենայական թարգմանության որակը իջեցվել է ստանդարտի:"
+
+#: src/localazy_client.cpp:385
 msgid "All strings"
 msgstr "Բոլոր տողերը"
 
+#: src/localazy_client.cpp:404
 msgid "Couldn’t download Localazy project details."
 msgstr "Անհնար է ներբեռնել Localazy նախագծի մանրամասները:"
 
+#: src/localazy_client.cpp:476 src/localazy_client.cpp:490
 msgid "There was an error when uploading translations to Localazy."
 msgstr "Սխալ՝ թարգմանությունները Localazy ներբեռնելիս:"
 
+#: src/localazy_gui.cpp:103
 msgid "Projects"
 msgstr "Նախագծեր"
 
-msgid ""
-"Localazy is a highly automated localization platform allowing anyone to "
-"translate their products and content into multiple languages easily."
-msgstr ""
-"Localazy-ը վերին աստիճան ինքնաշխատ տեղայնացման հարթակ է, որը ցանկացած անձի "
-"հնարավորություն է տալիս հեշտությամբ թարգմանել իր արտադրանքը և "
-"բովանդակությունը տարբեր լեզուներով:"
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#: src/localazy_gui.cpp:115
+#, c-format
+msgid "Learn more about %s"
+msgstr "Իմանալ ավելին %s-ի մասին"
 
+#: src/localazy_gui.cpp:146
+msgid "Localazy is a highly automated localization platform allowing anyone to translate their products and content into multiple languages easily."
+msgstr "Localazy-ը վերին աստիճան ինքնաշխատ տեղայնացման հարթակ է, որը ցանկացած անձի հնարավորություն է տալիս հեշտությամբ թարգմանել իր արտադրանքը և բովանդակությունը տարբեր լեզուներով:"
+
+#: src/localazy_gui.cpp:241
 msgid "Add Project"
 msgstr "Հավելել նախագիծ"
 
+#: src/localazy_gui.cpp:241
 msgid "Add project"
 msgstr "Հավելել նախագիծ"
 
+#: src/manager.cpp:117
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit-ի Գրացուցակների կառավար"
 
+#: src/manager.cpp:162 src/prefsdlg.cpp:877
 msgid "Edit…"
 msgstr "Խմբագրել…"
 
+#: src/manager.cpp:167
 msgid "Create new translations project"
 msgstr "Ստեղծել թարգմանության նոր նախագիծ"
 
+#: src/manager.cpp:168
 msgid "Delete the project"
 msgstr "Ջնջել նախագիծը"
 
+#: src/manager.cpp:169
 msgid "Edit the project"
 msgstr "Խմբագրել նախագիծը"
 
+#: src/manager.cpp:199 src/resources/toolbar.xrc:41 src/statistics.cpp:258
+msgid "Statistics"
+msgstr "Վիճակագրություն"
+
+#: src/manager.cpp:200 src/resources/toolbar.xrc:42
+msgid "Show translation statistics"
+msgstr "Ցուցադրել թարգմանության վիճակագրությունը"
+
+#: src/manager.cpp:202
 msgid "Update all"
 msgstr "Թարմացնել բոլորը"
 
+#: src/manager.cpp:203
 msgid "Update all catalogs in the project"
 msgstr "Թարմացնել բոլոր գրացուցակները նախագծում"
 
+#: src/manager.cpp:405
 msgid "Total"
 msgstr "Ընդամենը"
 
+#: src/manager.cpp:406
 msgid "Untrans"
 msgstr "Չթարգմանված"
 
+#: src/manager.cpp:407
 msgctxt "column/row header"
 msgid "Needs Work"
 msgstr "Վերջնական չէ"
 
+#: src/manager.cpp:408
 msgid "Errors"
 msgstr "Սխալներ"
 
+#: src/manager.cpp:409
 msgid "Last modified"
 msgstr "Վերջին փոփոխումը"
 
+#: src/manager.cpp:440 src/propertiesdlg.cpp:478
 msgid "Select directory"
 msgstr "Ընտրել գրացուցակը"
 
+#: src/manager.cpp:460
 msgid "Directories:"
 msgstr "Գրացուցակներ."
 
+#: src/manager.cpp:532
 msgid "<unnamed>"
 msgstr "<անանուն>"
 
+#: src/manager.cpp:570
 #, c-format
 msgid "Do you want to delete project “%s”?"
 msgstr "Ցանկանո՞ւմ եք ջնջել “%s” նախագիծը:"
 
+#: src/manager.cpp:571
 msgid "Delete project"
 msgstr "Ջնջել նախագիծը"
 
+#: src/manager.cpp:574
 msgid "Deleting the project will not delete any translation files."
 msgstr "Ծրագիրը ջնջելով՝ թարգմանության որեւէ նիշքեր չեն ջնջվի։"
 
+#: src/manager.cpp:602
 msgid "Confirmation"
 msgstr "Հաստատում"
 
+#: src/manager.cpp:602
 msgid "Update all catalogs in this project?"
 msgstr "Արդիականացնե՞լ բոլոր գրացուցակները այս նախագծում։"
 
+#: src/manager.cpp:603
 msgid "Performs update from source code on all files in the project."
 msgstr "Ծրագրի բոլոր նիշքերի վրա կատարում է արդիացում աղբյուրի այլագրից:"
 
+#: src/manager.cpp:612
+msgid "Updating project catalogs"
+msgstr ""
+
+#: src/menus.cpp:138
 msgid "Check for Updates…"
 msgstr "Ստուգել թարմացումները…"
 
+#: src/menus.cpp:140
 msgid "Catalogs Manager"
 msgstr "Գրացուցակների կառավար"
 
+#: src/menus.cpp:143
+msgid "License…"
+msgstr "Արտոնագիր…"
+
+#: src/menus.cpp:155
 msgid "&Preferences…"
 msgstr "&Նախապատվություններ…"
 
+#: src/menus.cpp:170 src/resources/menus.xrc:95 src/resources/menus.xrc:450
+#: src/wx_translatable_strings.h:102
 msgid "&Edit"
 msgstr "&Խմբագրել"
 
+#: src/menus.cpp:190 src/wx_translatable_strings.h:118
 msgid "Undo"
 msgstr "Հետարկել"
 
+#: src/menus.cpp:191 src/wx_translatable_strings.h:113
 msgid "Redo"
 msgstr "Վերարկել"
 
+#: src/menus.cpp:200
 msgid "Paste and Match Style"
 msgstr "Տեղադրել եւ ըստ ոճի"
 
+#: src/menus.cpp:203 src/prefsdlg.cpp:1103 src/sidebar_terminology.cpp:77
+#: src/wx_translatable_strings.h:100
 msgid "Delete"
 msgstr "Ջնջել"
 
+#: src/menus.cpp:212
 msgid "Spelling and Grammar"
 msgstr "Ուղղագրություն եւ քերականություն"
 
+#: src/menus.cpp:214
 msgid "Show Spelling and Grammar"
 msgstr "Ցուցադրել ուղղագրությունը եւ քերականությունը"
 
+#: src/menus.cpp:215
 msgid "Check Document Now"
 msgstr "Ստուգել փաստաթուղթը"
 
+#: src/menus.cpp:217
 msgid "Check Spelling While Typing"
 msgstr "Ստուգել ուղղագրոթյունը մուտքագրելիս"
 
+#: src/menus.cpp:218
 msgid "Check Grammar With Spelling"
 msgstr "Ստուգել քերականությունը մուտքագրելիս"
 
+#: src/menus.cpp:219
 msgid "Correct Spelling Automatically"
 msgstr "Ինքնաբար ուղղել"
 
+#: src/menus.cpp:222
 msgid "Substitutions"
 msgstr "Փոխարինումներ"
 
+#: src/menus.cpp:224
 msgid "Show Substitutions"
 msgstr "Ցուցադրել փոխարինումները"
 
+#: src/menus.cpp:226
 msgid "Smart Copy/Paste"
 msgstr "Խելացի պատճենում/տեղադրում"
 
+#: src/menus.cpp:227
 msgid "Smart Quotes"
 msgstr "Խելացի ծելաաչակերտներ"
 
+#: src/menus.cpp:228
 msgid "Smart Dashes"
 msgstr "Խելացի գծեր"
 
+#: src/menus.cpp:229
 msgid "Smart Links"
 msgstr "Խելացի հղումներ"
 
+#: src/menus.cpp:230
 msgid "Text Replacement"
 msgstr "Գրվածքի փոխարինում"
 
+#: src/menus.cpp:233
 msgid "Transformations"
 msgstr "Փոխակերպում"
 
+#: src/menus.cpp:235
 msgid "Make Upper Case"
 msgstr "Դարձնել մեծատառ"
 
+#: src/menus.cpp:236
 msgid "Make Lower Case"
 msgstr "Դարձնել փոքրատառ"
 
+#: src/menus.cpp:237
 msgid "Capitalize"
 msgstr "Գլխատառացել"
 
+#: src/menus.cpp:240
 msgid "Speech"
 msgstr "Խոսք"
 
+#: src/menus.cpp:242
 msgid "Start Speaking"
 msgstr "Սկսել արտասանել"
 
+#: src/menus.cpp:243
 msgid "Stop Speaking"
 msgstr "Ընդհատել արտասանումը"
 
+#: src/menus.cpp:246 src/resources/menus.xrc:177 src/resources/menus.xrc:460
 msgid "&View"
 msgstr "&Տեսք"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:252
 msgid "Show Toolbar"
 msgstr "Ցուցադրել Գործիքագոտին"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:255
 msgid "Customize Toolbar…"
 msgstr "Կարգավորել գործիքագոտին..."
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:258
 msgid "Enter Full Screen"
 msgstr "Լրաէկրան"
 
+#: src/menus.cpp:265 src/menus.cpp:296 src/resources/menus.xrc:352
+#: src/resources/menus.xrc:469
 msgid "Window"
 msgstr "Պատուհան"
 
+#: src/menus.cpp:266
 msgid "Minimize"
 msgstr "Նվազեցնել"
 
+#: src/menus.cpp:267
 msgid "Zoom"
 msgstr "Չափորոշել"
 
+#: src/menus.cpp:269 src/welcomescreen.cpp:222 src/welcomescreen.cpp:262
 msgid "Welcome to Poedit"
 msgstr "Բարի գալուստ Poedit"
 
+#: src/menus.cpp:274
 msgid "Bring All to Front"
 msgstr "Պահել բոլորը առջեւում"
 
+#: src/prefsdlg.cpp:177
 msgid "Information about the translator"
 msgstr "Տեղեկություններ թարգմանողի մասին"
 
+#: src/prefsdlg.cpp:184
 msgid "Name:"
 msgstr "Անուն՝"
 
+#: src/prefsdlg.cpp:187
 msgid "Your Name"
 msgstr "Ձեր անունը"
 
+#: src/prefsdlg.cpp:189
 msgid "Email:"
 msgstr "Էլ. փոստ՝"
 
+#: src/prefsdlg.cpp:192
 msgid "you@example.com"
 msgstr "դուք@օրինակ.հայ"
 
-msgid ""
-"Your name and email address are only used to set the Last-Translator header "
-"of GNU gettext files."
-msgstr ""
-"Ձեր անունը եւ էլ. փոստը օգտագործվելու են միայն GNU gettext նիշքերի "
-"գլխագրերում՝ ցուցադրելու վերջին թարգմանողին:"
+#: src/prefsdlg.cpp:195
+msgid "Your name and email address are only used to set the Last-Translator header of GNU gettext files."
+msgstr "Ձեր անունը եւ էլ. փոստը օգտագործվելու են միայն GNU gettext նիշքերի գլխագրերում՝ ցուցադրելու վերջին թարգմանողին:"
 
+#: src/prefsdlg.cpp:204
 msgid "Editing"
 msgstr "Խմբագրում"
 
+#: src/prefsdlg.cpp:207
 msgid "Automatically compile MO file when saving"
 msgstr "Պահելիս ինքնաբար կազմարկել MO նիշք"
 
-msgid "Show summary after updating files"
-msgstr "Ֆայլերը թարմացնելուց հետո ցուցադրել ամփոփումը"
-
+#: src/prefsdlg.cpp:212
 msgid "Check spelling"
 msgstr "Ստուգել ուղղագրությունը"
 
+#: src/prefsdlg.cpp:214
 msgid "Always change focus to text input field"
 msgstr "Դաշտը միշտ ակտիվ դարձնել՝ գրվածք մուտքագրելու համար"
 
-msgid ""
-"Never let the list of strings take focus. If enabled, you must use Ctrl-"
-"arrows for keyboard navigation but you can also type text immediately, "
-"without having to press Tab to change focus."
-msgstr ""
-"Երբեք ակտիվ չի դարձնի տողերով ցանկերը: Եթե միացված է, ապա պետք է օգտագործեք "
-"ստեղնաշարի Ctrl+սլաքները, կարող եք նաեւ մուտքագրել անմիջապես՝ առանց Tab-ի "
-"միջոցով առաջնահերթությունը փոխելու:"
+#: src/prefsdlg.cpp:216
+msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
+msgstr "Երբեք ակտիվ չի դարձնի տողերով ցանկերը: Եթե միացված է, ապա պետք է օգտագործեք ստեղնաշարի Ctrl+սլաքները, կարող եք նաեւ մուտքագրել անմիջապես՝ առանց Tab-ի միջոցով առաջնահերթությունը փոխելու:"
 
+#: src/prefsdlg.cpp:224
 msgid "Appearance"
 msgstr "Տեսք"
 
+#: src/prefsdlg.cpp:231
 msgid "Use custom list font:"
 msgstr "Ցանկի տառատեսակը."
 
+#: src/prefsdlg.cpp:234
 msgid "Use custom text fields font:"
 msgstr "Գրվածքի տառատեսակը."
 
+#: src/prefsdlg.cpp:245
 msgid "Change UI language"
 msgstr "Փոխել OՄ-ի  լեզուն (Օգտվողի Միջերես)"
 
 #. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
+#: src/prefsdlg.cpp:255
 msgid "(requires Windows 8 or newer)"
 msgstr "(պահանջում է Windows 8 կամ ավելի նորը)"
 
+#: src/prefsdlg.cpp:358
 msgid "General"
 msgstr "Գլխավոր"
 
+#: src/prefsdlg.cpp:380
 msgid "Use translation memory"
 msgstr "Օգտ. թարգմանության հիշողությունը"
 
+#: src/prefsdlg.cpp:390
 msgid "Manage…"
 msgstr "Կառավարել…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
+#: src/prefsdlg.cpp:397
 msgid "When updating from sources"
 msgstr "Սկզբնականից արդիացնելիս"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
+#: src/prefsdlg.cpp:400
 msgid "fuzzy match within the file"
 msgstr "ոչ վերջնականի համընկնում նիշքում"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
+#: src/prefsdlg.cpp:402
 msgid "pre-translate from TM"
 msgstr "նախաթարգմանել TM-ից"
 
-msgid ""
-"Poedit can attempt to fill in new entries from only previous translations in "
-"the file or from your entire translation memory. Using the TM won’t be very "
-"effective if it’s near-empty, but it will get better as you add more "
-"translations to it."
-msgstr ""
-"Poedit-ը կարող է փորձել լրացնել նոր գրառումները միայն նախորդ "
-"թարգմանություններից այս նիշքում կամ թարգմանության ձեր հիշողությունից: TM-ի "
-"օգտագործումը արդյունավետ չի լինի, եթե այն գրեթե դատարկ է, բայց կլավարկվի "
-"թարգմանություններ ավելացնելու ընթացքում:"
+#: src/prefsdlg.cpp:418
+msgid "Poedit can attempt to fill in new entries from only previous translations in the file or from your entire translation memory. Using the TM won’t be very effective if it’s near-empty, but it will get better as you add more translations to it."
+msgstr "Poedit-ը կարող է փորձել լրացնել նոր գրառումները միայն նախորդ թարգմանություններից այս նիշքում կամ թարգմանության ձեր հիշողությունից: TM-ի օգտագործումը արդյունավետ չի լինի, եթե այն գրեթե դատարկ է, բայց կլավարկվի թարգմանություններ ավելացնելու ընթացքում:"
 
+#: src/prefsdlg.cpp:454
+msgid "Use suggestions from online collaborative TM"
+msgstr "Օգտ. առաջարկություններ՝ առցանց համատեղելի ԹՀ-ից"
+
+#: src/prefsdlg.cpp:469
+msgid "Poedit uses a large online translation memory that includes both contributed human translations and state-of-the-art machine translations."
+msgstr "Poedit-ը օգտագործում է առցանց թարգմանության մեծ ծավալի հիշողություն, որը ներառում է եւ՛ մարդկանց կողմից տրամադրված թարգմանություններ եւ՛ մեքենայական թարգմանություններ:"
+
+#: src/prefsdlg.cpp:472 src/sidebar_pro.cpp:698
+msgid "Contribute my translations to the online TM"
+msgstr "Մասնակցել առցանց թարգմանությունների լրացման գործին"
+
+#: src/prefsdlg.cpp:473 src/sidebar_pro.cpp:699
+msgid "Keep my translations private"
+msgstr "Պահել իմ թարգմանությունները գաղտնի"
+
+#: src/prefsdlg.cpp:474
+msgid "Ask me for each file individually"
+msgstr "Հարցնել յուրաքանչյուր նիշքի համար"
+
+#: src/prefsdlg.cpp:492 src/sidebar_pro.cpp:159
+msgid "Change Settings…"
+msgstr "Փոխել կարգավորումները..."
+
+#: src/prefsdlg.cpp:492 src/sidebar_pro.cpp:159
+msgid "Change settings…"
+msgstr "Փոխել կարգավորումները..."
+
+#: src/prefsdlg.cpp:580
 msgid "Stored translations:"
 msgstr "Պահված թարգմանություններ՝"
 
+#: src/prefsdlg.cpp:581
 msgid "Database size on disk:"
 msgstr "Շտեմարանի չափը՝"
 
+#: src/prefsdlg.cpp:596
 msgid "Import Translation Files…"
 msgstr "Ներմուծել թարգմանության ֆայլերը…"
 
+#: src/prefsdlg.cpp:596
 msgid "Import translation files…"
 msgstr "Ներմուծել թարգմանության ֆայլերը…"
 
+#: src/prefsdlg.cpp:598
 msgid "Import From TMX…"
 msgstr "Ներմուծել TMX-ից…"
 
+#: src/prefsdlg.cpp:598
 msgid "Import from TMX…"
 msgstr "Ներմուծել TMX-ից…"
 
+#: src/prefsdlg.cpp:599
 msgid "Export To TMX…"
 msgstr "Արտահանել TMX…"
 
+#: src/prefsdlg.cpp:599
 msgid "Export to TMX…"
 msgstr "Արտահանել TMX…"
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+#: src/prefsdlg.cpp:602 src/prefsdlg.cpp:770
 msgid "Reset"
 msgstr "Վերակայել"
 
+#: src/prefsdlg.cpp:621
 msgid "Select translation files to import"
 msgstr "Ընտրեք ներմուծվող նիշքերը"
 
-msgid "Translation Memory"
-msgstr "Թարգմանության հիշողություն (ԹՀ)"
-
-msgid "Importing translations…"
-msgstr "Թարգմանությունների ներմուծում…"
-
-#, c-format
-msgid "Error loading translation file “%s”."
-msgstr "Սխալ՝ “%s” նիշքը բեռնելիս:"
-
-msgid "Finalizing…"
-msgstr "Ամփոփում…"
-
+#: src/prefsdlg.cpp:654
 msgid "Select TMX files to import"
 msgstr "Ընտրեք TMX ֆայլերը՝ ներմուծելու համար"
 
+#: src/prefsdlg.cpp:657 src/prefsdlg.cpp:733
 msgid "TMX Files"
 msgstr "TMX նիշքեր"
 
+#: src/prefsdlg.cpp:684
+msgid "Importing translations…"
+msgstr "Թարգմանությունների ներմուծում…"
+
+#: src/prefsdlg.cpp:685
+msgid "Importing translation memory failed."
+msgstr ""
+
+#: src/prefsdlg.cpp:699
 #, c-format
-msgid "Importing translation memory from “%s” failed."
-msgstr "Թարգմանության հիշողության ներմուծումը «%s»-ից ձախողվեց:"
+msgid "Importing from “%s”…"
+msgstr ""
 
-msgid "Import error"
-msgstr "Ներմուծելու սխալ"
+#. TRANSLATORS: %s is a (formatted) number here
+#: src/prefsdlg.cpp:717
+#, c-format
+msgid "%s translation was imported."
+msgid_plural "%s translations were imported."
+msgstr[0] ""
+msgstr[1] ""
 
+#: src/prefsdlg.cpp:730
 msgid "Export as…"
 msgstr "Արտահանել որպես…"
 
+#: src/prefsdlg.cpp:745
 msgid "Exporting translations…"
 msgstr "Թարգմանությունների արտահանում…"
 
+#: src/prefsdlg.cpp:746
 #, c-format
 msgid "Exporting translation memory to “%s” failed."
 msgstr "Թարգմանության հիշողության արտահանումը “%s” ձախողվեց:"
 
-msgid "Export error"
-msgstr "Արտահանելու սխալ"
-
+#: src/prefsdlg.cpp:764
 msgid "Reset translation memory"
 msgstr "Վերակայել թարգմանության հիշողությունը"
 
+#: src/prefsdlg.cpp:765
 msgid "Are you sure you want to reset the translation memory?"
 msgstr "Վերակայե՞լ թարգմանության հիշողությունը"
 
-msgid ""
-"Resetting the translation memory will irrevocably delete all stored "
-"translations from it. You can’t undo this operation."
-msgstr ""
-"Թարգմանության հիշողության վերակայումը անվերադարձ կջնջի բոլոր "
-"թարգմանությունները:"
+#: src/prefsdlg.cpp:766
+msgid "Resetting the translation memory will irrevocably delete all stored translations from it. You can’t undo this operation."
+msgstr "Թարգմանության հիշողության վերակայումը անվերադարձ կջնջի բոլոր թարգմանությունները:"
 
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
+#: src/prefsdlg.cpp:808
 msgid "TM"
 msgstr "ԹՀ"
 
-msgid ""
-"Source code extractors are used to find translatable strings in the source "
-"code files and extract them so that they can be translated."
-msgstr ""
-"Սկզբնական կոդի արտահանիչները օգտագործվում են գտնելու թարգմանվող տողեր "
-"սկզբնական կոդի նիշքերում եւ դուրս բերելու դրանք, որպեսզի հնարավոր լինի "
-"թարգմանել:"
+#: src/prefsdlg.cpp:810 src/sidebar_terminology.cpp:638
+msgid "Translation Memory"
+msgstr "Թարգմանության հիշողություն (ԹՀ)"
 
+#: src/prefsdlg.cpp:830
+msgid "Source code extractors are used to find translatable strings in the source code files and extract them so that they can be translated."
+msgstr "Սկզբնական կոդի արտահանիչները օգտագործվում են գտնելու թարգմանվող տողեր սկզբնական կոդի նիշքերում եւ դուրս բերելու դրանք, որպեսզի հնարավոր լինի թարգմանել:"
+
+#: src/prefsdlg.cpp:843
 msgid "Custom Extractors:"
 msgstr "Ընտրովի դուրս բերում."
 
+#: src/prefsdlg.cpp:843
 msgid "Custom extractors:"
 msgstr "Ընտրովի դուրս բերում."
 
+#: src/prefsdlg.cpp:929
 msgid "GNU gettext"
 msgstr "GNU gettext"
 
-msgid ""
-"Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
-"+, C#, Perl, Python, Java, JavaScript and others)."
-msgstr ""
-"Աջակցում է ծրագրավորման բոլոր լեզուները՝ ճանաչված GNU gettext գործիքների "
-"կողմից (PHP, C/C++, C#, Perl, Python, Java, JavaScript եւ այլն):"
+#: src/prefsdlg.cpp:935
+msgid "Supports all programming languages recognized by GNU gettext tools (PHP, C/C++, C#, Perl, Python, Java, JavaScript and others)."
+msgstr "Աջակցում է ծրագրավորման բոլոր լեզուները՝ ճանաչված GNU gettext գործիքների կողմից (PHP, C/C++, C#, Perl, Python, Java, JavaScript եւ այլն):"
 
+#. TRANSLATORS: Templates for themes etc. - e.g. Twig or Volt templates
+#: src/prefsdlg.cpp:945
+msgid "Templates"
+msgstr "Ձեւանմուշներ"
+
+#: src/prefsdlg.cpp:946
+msgid "(Twig, Volt, Blade)"
+msgstr ""
+
+#: src/prefsdlg.cpp:961
+msgid "Extracts translations from template files."
+msgstr "Դուրս բերել թարգմանությունները ձեւանմուշից:"
+
+#: src/prefsdlg.cpp:964
+msgid "Enable"
+msgstr "Միացնել"
+
+#: src/prefsdlg.cpp:1096
 msgid "Delete extractor"
 msgstr "Ջնջել արտահանիչը"
 
+#: src/prefsdlg.cpp:1097
 #, c-format
 msgid "Are you sure you want to delete the “%s” extractor?"
 msgstr "Ջնջե՞լ “%s” արտահանիչը:"
 
+#: src/prefsdlg.cpp:1135
 msgid "Extractors"
 msgstr "Արտահանիչներ"
 
+#: src/prefsdlg.cpp:1193
 msgid "Accounts"
 msgstr "Հաշիվներ"
 
+#: src/prefsdlg.cpp:1213
 msgid "Automatically check for updates"
 msgstr "Ինքնաբար ստուգել թարմացումները"
 
+#: src/prefsdlg.cpp:1216
 msgid "Include beta versions"
 msgstr "Ներառյալ բետա վարկածը"
 
-msgid ""
-"Beta versions contain the latest new features and improvements, but may be a "
-"bit less stable."
-msgstr ""
-"Բետա վարկածը պարունակում է ամենավերջին յուրահատկությունները եւ "
-"լավարկումները, բայց կարող է կայուն չաշխատել:"
+#: src/prefsdlg.cpp:1219
+msgid "Beta versions contain the latest new features and improvements, but may be a bit less stable."
+msgstr "Բետա վարկածը պարունակում է ամենավերջին յուրահատկությունները եւ լավարկումները, բայց կարող է կայուն չաշխատել:"
 
+#: src/prefsdlg.cpp:1248
 msgid "Updates"
 msgstr "Թարմացումներ"
 
-msgid ""
-"These settings affect internal formatting of PO files. Adjust them if you "
-"have specific requirements e.g. because of version control."
-msgstr ""
-"Այս կարգավորումները վերաբերում են PO ֆայլերի ներքին ձևաչափմանը: Հարմարեցրեք "
-"դրանք, եթե ունեք որոշակի պահանջներ, ինչպես օրինակ՝ տարբերակի կառավարում:"
+#: src/prefsdlg.cpp:1266
+msgid "These settings affect internal formatting of PO files. Adjust them if you have specific requirements e.g. because of version control."
+msgstr "Այս կարգավորումները վերաբերում են PO ֆայլերի ներքին ձևաչափմանը: Հարմարեցրեք դրանք, եթե ունեք որոշակի պահանջներ, ինչպես օրինակ՝ տարբերակի կառավարում:"
 
+#: src/prefsdlg.cpp:1270
 msgid "Line endings:"
 msgstr "Տողի ավարտ."
 
+#: src/prefsdlg.cpp:1273
 msgid "Unix (recommended)"
 msgstr "Unix (խորհուրդ է տրվում)"
 
+#: src/prefsdlg.cpp:1274
 msgid "Windows"
 msgstr "Windows"
 
 #. TRANSLATORS: Followed by text control for entering number; wraps text at given width
+#: src/prefsdlg.cpp:1278
 msgid "Wrap at:"
 msgstr "Տողադարձը՝"
 
+#: src/prefsdlg.cpp:1289
 msgid "Preserve formatting of existing files"
 msgstr "Պահել առկա նիշքերի ձեւաչափումը"
 
+#: src/prefsdlg.cpp:1341
 msgid "Advanced"
 msgstr "Ընդլայնված"
 
+#: src/prefsdlg.cpp:1369
 msgid "Settings"
 msgstr ""
 
+#: src/pretranslate.cpp:129
 msgid "Preparing strings…"
 msgstr "Տողերի նախապատրաստում…"
 
+#: src/pretranslate.cpp:239
 msgid "Pre-translating from translation memory…"
 msgstr "Նախաթարգմանություն թարգմանության հիշողությունից…"
 
+#: src/pretranslate.cpp:250 src/pretranslate.cpp:296
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
 msgstr[0] "Նախաթարգմանված %u տող"
 msgstr[1] "Նախաթարգմանված %u տողեր"
 
+#: src/pretranslate.cpp:259
+msgid "Uploading strings for cloud pre-translation…"
+msgstr ""
+
+#: src/pretranslate.cpp:300 src/pretranslate.cpp:357
 msgid "Pre-translating…"
 msgstr "Նախաթարգմանություն..."
 
+#: src/pretranslate.cpp:366
+#, c-format
+msgid "%d entry was pre-translated."
+msgid_plural "%d entries were pre-translated."
+msgstr[0] "%d գրառումը նախաթարգմանվել է:"
+msgstr[1] "%d գրառումները նախաթարգմանվել են:"
+
+#: src/pretranslate.cpp:372
+msgid "The translations were marked as needing work, because they may be inaccurate. You should review them for correctness."
+msgstr "Թարգմանությունները նշվել են որպես ոչ վերջնական, քանի որ դրանք, հնարավոր է, ճիշտ չեն: Դուք պետք է ստուգեք դրանք:"
+
+#: src/pretranslate.cpp:375
+msgid "Exact matches from TM"
+msgstr ""
+
+#: src/pretranslate.cpp:376
+msgid "Approximate matches from TM"
+msgstr ""
+
+#. TRANSLATORS: shown instead of number when user disabled this kind of pre-translation results
+#: src/pretranslate.cpp:383
+msgid "disabled"
+msgstr ""
+
+#: src/pretranslate.cpp:384
+msgid "Machine translation"
+msgstr ""
+
+#: src/pretranslate.cpp:389
+msgid "No entries could be pre-translated."
+msgstr "Նախաթարգմանելու համար գրառումներ չկան"
+
+#: src/pretranslate.cpp:390
+msgid "The TM doesn’t contain any strings similar to the content of this file. It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually."
+msgstr "ԹՀ-ը չի պարունակում այս բովանդակությանը համապատասխանող որեւէ տող: Սա օգտակար է ինքնաբար թարգմանելու համար, եթե միայն Poedit-ը սովորում է մեծ քանակությամբ թարգմանություններ, որոնք դուք ձեռքով եք կատարել:"
+
+#: src/pretranslate.cpp:418
 msgid "Cannot pre-translate without source text."
 msgstr "Առանց սկզբնական գրվածքի անհնար է նախաթարգմանել:"
 
@@ -1472,1080 +2488,2107 @@ msgstr "Առանց սկզբնական գրվածքի անհնար է նախաթ�
 #. some users into thinking it's all that needs to be done (spoken from
 #. experience). "Pre-translate" nicely expresses that it's only the step done
 #. *before* actual translation.
+#: src/pretranslate.cpp:419 src/pretranslate.cpp:434 src/pretranslate.cpp:443
+#: src/pretranslate.cpp:489 src/pretranslate.cpp:616
+#: src/resources/toolbar.xrc:48 src/sidebar_pro.cpp:983
 msgid "Pre-translate"
 msgstr "Նախաթարգմանել"
 
-msgid ""
-"Pre-translation requires that source text is available. It doesn’t work if "
-"only IDs without the actual text are used."
-msgstr ""
-"Նախաթարգմանությունը պահանջում է, որ մատչելի լինի սկզբնական գրվածքը: Այն չի "
-"աշխատի, եթե իրական գրվածքի փոխարեն օգտագործվեն միայն ID-ներ:"
+#: src/pretranslate.cpp:423
+msgid "Pre-translation requires that source text is available. It doesn’t work if only IDs without the actual text are used."
+msgstr "Նախաթարգմանությունը պահանջում է, որ մատչելի լինի սկզբնական գրվածքը: Այն չի աշխատի, եթե իրական գրվածքի փոխարեն օգտագործվեն միայն ID-ներ:"
 
+#: src/pretranslate.cpp:433
 msgid "Cannot pre-translate from unknown language."
 msgstr "Հնարավոր չէ նախաթարգմանել անհայտ լեզվից:"
 
-msgid ""
-"Pre-translation requires that source text’s language is known. Poedit "
-"couldn’t detect it in this file."
-msgstr ""
-"Նախաթարգմանությունը պահանջում է, որ սկզբնական գրվածքի լեզուն հայտնի լինի: "
-"Poedit-ը չի կարողանում հայտնաբերել այն տվյալ ֆայլում:"
+#: src/pretranslate.cpp:438
+msgid "Pre-translation requires that source text’s language is known. Poedit couldn’t detect it in this file."
+msgstr "Նախաթարգմանությունը պահանջում է, որ սկզբնական գրվածքի լեզուն հայտնի լինի: Poedit-ը չի կարողանում հայտնաբերել այն տվյալ ֆայլում:"
 
+#: src/pretranslate.cpp:448
+msgid "Use online suggestions"
+msgstr "Օգտ. առցանց առաջարկություններ"
+
+#: src/pretranslate.cpp:449
+msgid "Try to fetch translations from the online TM as well. Notice that the translations will not be perfect and will still need to be corrected by a human translator."
+msgstr "Փորձեք ստանալ թարգմանությունները առցանց ԹՀ-ից: Հիշեք, որ դրանք կարող են  լավ որակի չլինել եւ շտկումների կարիք լինի:"
+
+#: src/pretranslate.cpp:476
 msgid "Only fill in exact matches"
 msgstr "Լցնել միայն ճիշտ համընկնումներով"
 
-msgid ""
-"By default, inaccurate results are also included, but marked as needing "
-"work. Check this option to only include perfect matches."
-msgstr ""
-"Սկզբնադիր ոչ ճիշտ արդյունքները նույնպես ներառված են, բայց նշված որպես ոչ "
-"վերջնական: Ընտրեք այս ընտրանքը՝ միայն ճիշտ համընկնումները ներառելու հանար:"
+#: src/pretranslate.cpp:479
+msgid "By default, inaccurate results are also included, but marked as needing work. Check this option to only include perfect matches."
+msgstr "Սկզբնադիր ոչ ճիշտ արդյունքները նույնպես ներառված են, բայց նշված որպես ոչ վերջնական: Ընտրեք այս ընտրանքը՝ միայն ճիշտ համընկնումները ներառելու հանար:"
 
+#: src/pretranslate.cpp:481
+msgid "By default, inaccurate results and machine translation are also included, but marked as needing work. Check this option to only include perfect human translations."
+msgstr "Սկզբնադիր ոչ ճիշտ արդյունքները և մեքենայական թարգմանությունները նույնպես ներառված են, բայց նշված որպես ոչ վերջնական: Ընտրեք այս ընտրանքը՝ միայն ճիշտ համընկնումները ներառելու հանար:"
+
+#: src/pretranslate.cpp:483
 msgid "Don’t mark exact matches as needing work"
 msgstr "Չնշել ճիշտ համընկնումները որպես ոչ վերջնական"
 
-msgid ""
-"Only enable if you trust the quality of your TM. By default, all matches "
-"from the TM are marked as needing work and should be reviewed before use."
-msgstr ""
-"Միացրեք, եթե միայն վստահում եք ձեր TM-ի որակին: Ըստ լռելյայնի, TM-ից բոլոր "
-"համընկնումները կնշվեն որպես ոչ վերջնական աշխատանք եւ պետք է ստուգվեն:"
+#: src/pretranslate.cpp:484
+msgid "Don’t mark machine translation as needing work"
+msgstr "Չնշել մեքենայական թարգմանությունը որպես աշխատանքի կարիք"
 
-msgid ""
-"Pre-translation automatically finds exact or fuzzy matches for untranslated "
-"strings in the translation memory and fills in their translations."
-msgstr ""
-"Նախաթարգմանությունը ինքնաբար գտնում է ճիշտ կամ ոչ վերջնական համընկնումները "
-"չթարգմանված տողերի համար թարգմանության հիշողությունում եւ լցնում է դրանց "
-"թարգմանություններում:"
+#: src/pretranslate.cpp:486
+msgid "Only enable if you trust the quality of your TM. By default, all matches from the TM are marked as needing work and should be reviewed before use."
+msgstr "Միացրեք, եթե միայն վստահում եք ձեր TM-ի որակին: Ըստ լռելյայնի, TM-ից բոլոր համընկնումները կնշվեն որպես ոչ վերջնական աշխատանք եւ պետք է ստուգվեն:"
 
+#: src/pretranslate.cpp:493
+msgid "Pre-translation automatically finds exact or fuzzy matches for untranslated strings in the translation memory and fills in their translations."
+msgstr "Նախաթարգմանությունը ինքնաբար գտնում է ճիշտ կամ ոչ վերջնական համընկնումները չթարգմանված տողերի համար թարգմանության հիշողությունում եւ լցնում է դրանց թարգմանություններում:"
+
+#: src/pretranslate.cpp:495
+msgid "Pre-translation automatically searches existing translations and uses machine translation to fill in initial translations for strings that are not yet translated."
+msgstr "Նախնական թարգմանությունը ավտոմատ կերպով որոնում է գոյություն ունեցող թարգմանությունները և օգտագործում մեքենայական թարգմանությունը՝ լրացնելու սկզբնական թարգմանությունները դեռ չթարգմանված տողերի համար:"
+
+#: src/pretranslate.cpp:533
+msgid "Machine translation:"
+msgstr "Մեքենայական թարգմանություն."
+
+#. TRANSLATORS: "Upgrade" as in upgrading from Pro to Pro+ version; "provider" is machine translation provider. This string needs to be as short as possible.
+#: src/pretranslate.cpp:545
+msgid "Upgrade for more providers"
+msgstr "Արդիացրեք ավելի շատ մատակարարների համար"
+
+#. TRANSLATORS: Part of larger line of UI: "Machine translation: [e.g. Google] with tone of voice: [formal/informal/automatic]". If "tone of voice" sounds weird, you can use "formality". See https://support.deepl.com/hc/en-us/articles/4406432463762-About-the-formal-informal-feature for explanation of what tone of voice / formality is.
+#: src/pretranslate.cpp:556
+msgid "with tone of voice:"
+msgstr "Ոճով."
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:562
+msgid "automatic"
+msgstr "ավտոմատ կերպով"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:564
+msgid "formal"
+msgstr "պաշտոնական"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:566
+msgid "informal"
+msgstr "ոչ պաշտոնական"
+
+#: src/pretranslate.cpp:651 src/sidebar_pro.cpp:551
+msgid "Exceeded machine translation quota."
+msgstr "Գերազանցվել է մեքենայական թարգմանության չափը:"
+
+#: src/pretranslate.cpp:660
 #, c-format
-msgid "%d entry was pre-translated."
-msgid_plural "%d entries were pre-translated."
-msgstr[0] "%d գրառումը նախաթարգմանվել է:"
-msgstr[1] "%d գրառումները նախաթարգմանվել են:"
+msgid "Machine translation usage: %d / %d\n"
+"%s"
+msgstr "Մեքենայական թարգմանության օգտագործում. %d / %d\n"
+"%s"
 
-msgid ""
-"The translations were marked as needing work, because they may be "
-"inaccurate. You should review them for correctness."
+#: src/pretranslate.cpp:660
+msgid "Quota is rolling monthly."
+msgstr "Չափը հաշվվում է ամսական:"
+
+#: src/pretranslate.cpp:663 src/sidebar_pro.cpp:475
+msgid "Add machine translation credit"
+msgstr "Ավելացնել մեքենայական թարգմանության վարկ"
+
+#: src/progress_ui.cpp:172 src/wx_translatable_strings.h:151
+msgid "Error: "
 msgstr ""
-"Թարգմանությունները նշվել են որպես ոչ վերջնական, քանի որ դրանք, հնարավոր է, "
-"ճիշտ չեն: Դուք պետք է ստուգեք դրանք:"
 
-msgid "No entries could be pre-translated."
-msgstr "Նախաթարգմանելու համար գրառումներ չկան"
+#: src/progress_ui.cpp:176
+#, c-format
+msgid "%d error occurred:"
+msgid_plural "%d errors occurred:"
+msgstr[0] ""
+msgstr[1] ""
 
-msgid ""
-"The TM doesn’t contain any strings similar to the content of this file. It "
-"is only effective for semi-automatic translations after Poedit learns enough "
-"from files that you translated manually."
+#: src/progress_ui.cpp:285
+msgid "An error occurred."
 msgstr ""
-"ԹՀ-ը չի պարունակում այս բովանդակությանը համապատասխանող որեւէ տող: Սա օգտակար "
-"է ինքնաբար թարգմանելու համար, եթե միայն Poedit-ը սովորում է մեծ քանակությամբ "
-"թարգմանություններ, որոնք դուք ձեռքով եք կատարել:"
 
+#: src/progress_ui.cpp:291
+#, c-format
+msgid "%d error occurred."
+msgid_plural "%d errors occurred."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/progress_ui.cpp:438
 msgid "Cancelling…"
 msgstr "Չեղարկում…"
 
+#. TRANSLATORS: This text is shown as a hint/advice. The %s→%s part is replaced with menu item pointer, "File→New WordPress Translation".
+#: src/propertiesdlg.cpp:92
+#, c-format
+msgid "Use %s→%s for full WordPress functionality."
+msgstr "Օգտ. %s→%s՝ WordPress-ի բոլոր գործառությունները:"
+
+#: src/propertiesdlg.cpp:93 src/resources/menus.xrc:5
+#: src/resources/menus.xrc:384 src/wx_translatable_strings.h:104
+msgid "&File"
+msgstr "&Նիշք"
+
+#: src/propertiesdlg.cpp:94 src/resources/menus.xrc:17
+#: src/resources/menus.xrc:396
+msgid "New WordPress Translation…"
+msgstr "WordPress-ի նոր թարգմանութուն…"
+
+#: src/propertiesdlg.cpp:94 src/resources/menus.xrc:16
+#: src/resources/menus.xrc:395
+msgid "New WordPress translation…"
+msgstr "WordPress-ի նոր թարգմանություն…"
+
+#: src/propertiesdlg.cpp:366
 msgid "Drag Folders or Files Here"
 msgstr "Գցել պանակները կամ նիշքերը այստեղ"
 
+#: src/propertiesdlg.cpp:366
 msgid "Drag folders or files here"
 msgstr "Գցել պանակները կամ նիշքերը այստեղ"
 
+#: src/propertiesdlg.cpp:471
 msgid "Add Folders…"
 msgstr "Հավելել թղթապանակներ…"
 
+#: src/propertiesdlg.cpp:471
 msgid "Add folders…"
 msgstr "Հավելել թղթապանակներ…"
 
+#: src/propertiesdlg.cpp:472
 msgid "Add Files…"
 msgstr "Հավելել նիշքեր…"
 
+#: src/propertiesdlg.cpp:472
 msgid "Add files…"
 msgstr "Հավելել նիշքեր…"
 
+#: src/propertiesdlg.cpp:474
 msgid "Add Wildcard…"
 msgstr "Հավելել դերանշան…"
 
+#: src/propertiesdlg.cpp:474
 msgid "Add wildcard…"
 msgstr "Հավելել դերանշան…"
 
 #. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+#: src/propertiesdlg.cpp:545
 msgid "Reveal in Finder"
 msgstr "Բացահայտել Որոնիչում"
 
 #. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+#: src/propertiesdlg.cpp:548
 msgid "Show in Explorer"
 msgstr "Ցուցադրել Նիշքախույզում"
 
+#: src/propertiesdlg.cpp:550
 msgid "Show in Folder"
 msgstr "Ցուցադրել պանակում"
 
+#: src/propertiesdlg.cpp:581
 msgid "Paths"
 msgstr "Ուղիներ"
 
+#: src/propertiesdlg.cpp:601
 msgid "Excluded paths"
 msgstr "Բացառված ուղիներ"
 
+#: src/propertiesdlg.cpp:619
 msgid "Advanced extraction settings"
 msgstr "Դուրս բերելու ընդլայնված կարգավորումներ"
 
+#: src/propertiesdlg.cpp:625
 msgid "Extract notes for translators from:"
 msgstr "Դուրս բերել նշումները թարգմանիչների համար հետեւյալից՝"
 
+#: src/propertiesdlg.cpp:627
 msgid "Comments prefixed with:"
 msgstr "Մեկնաբանություններ նախանծանցով՝"
 
+#: src/propertiesdlg.cpp:636
 msgid "All comments"
 msgstr "Բոլոր մեկնաբանությունները"
 
+#: src/propertiesdlg.cpp:639
 msgid "Additional xgettext flags:"
 msgstr "Լրացուցիչ xgettext դրոշակներ."
 
+#: src/propertiesdlg.cpp:779
 msgid "Additional keywords"
 msgstr "Լրացուցիչ հիմնաբառեր"
 
+#: src/propertiesdlg.cpp:810
 msgid "Name of the project the translation is for"
 msgstr "Թարգմանության նախագծի անունը"
 
+#: src/propertiesdlg.cpp:811
 msgid "Team name and email address or URL"
 msgstr "Թիմի անունը եւ էլ. փոստը կամ URL-ն"
 
+#: src/propertiesdlg.cpp:812
 msgid "e.g. nplurals=2; plural=(n > 1);"
 msgstr "օրինակ՝ nplurals=2; plural=(n > 1);"
 
+#: src/propertiesdlg.cpp:817
+msgid "Custom file extensions are being used."
+msgstr "Անհատական նիշքերի ընդլայնումները օգտագործվում են:"
+
+#: src/propertiesdlg.cpp:872
 msgid "UTF-8 (recommended)"
 msgstr "UTF-8 (խորհուրդ է տրվում)"
 
+#: src/propertiesdlg.cpp:1055
 msgid "Please save the file first. This section cannot be edited until then."
 msgstr "Խնդրում ենք նախ պահել նիշքը:"
 
+#: src/propertiesdlg.cpp:1177
+msgid "File Extensions"
+msgstr "Ֆայլի ընդլայնումներ"
+
+#: src/propertiesdlg.cpp:1189
+msgid "Extension or Wildcard"
+msgstr "Ընդլայնում կամ Wildcard"
+
+#: src/propertiesdlg.cpp:1191
+msgid "Extractor"
+msgstr "Արդյունահանող"
+
+#: src/propertiesdlg.cpp:1266
+msgid "(unknown)"
+msgstr "(անհայտ)"
+
+#: src/qa_checks.cpp:153
 msgid "Placeholders correctness"
 msgstr "Տեղապահների ճիշտ օգտագործումը"
 
+#: src/qa_checks.cpp:208
 #, c-format
 msgid "Placeholder “%s” is missing from translation."
 msgstr "Թարգմանության մեջ բացակայում է “%s” տեղապահը:"
 
+#: src/qa_checks.cpp:220
 #, c-format
 msgid "Superfluous placeholder “%s” that isn’t in source text."
 msgstr "Լրացուցիչ “%s” տեղապահ, որը չկա բնօրինակ տեքստում:"
 
+#: src/qa_checks.cpp:256
 msgid "Plural form translations"
 msgstr "Հոգնակի թվով թարգմանություններ"
 
+#: src/qa_checks.cpp:277
 msgid "Not all plural forms are translated."
 msgstr "Ոչ բոլոր հոգնակի ձեւերն են թարգմանված:"
 
+#: src/qa_checks.cpp:289
 msgid "Inconsistent upper/lower case"
 msgstr "Անհամապատասխան մեծա/փոքրատառ"
 
+#: src/qa_checks.cpp:305
 msgid "The translation should start as a sentence."
 msgstr "Թարգմանությունը պետք է սկսի որպես նախադասություն:"
 
+#: src/qa_checks.cpp:313
 msgid "The translation should start with a lowercase character."
 msgstr "Նախադասությունը պետք է սկսվի փոքրատառ գրանշանով:"
 
+#: src/qa_checks.cpp:331
 msgid "Inconsistent whitespace"
 msgstr "Անհամապատասխան սպիտակ տարածք"
 
+#: src/qa_checks.cpp:345
 msgid "The translation doesn’t start with a space."
 msgstr "Թարգմանությունը չի սկսվում բացատով:"
 
+#: src/qa_checks.cpp:351
 msgid "The translation starts with a space, but the source text doesn’t."
 msgstr "Թարգմանությունը սկսվում է բացատով, բայց սկզբնական գրվածքը՝ ոչ:"
 
+#: src/qa_checks.cpp:357
 msgid "The translation is missing a newline at the end."
 msgstr "Թարգմանությունում բաց է թողնված նոր տողը վերջում:"
 
+#: src/qa_checks.cpp:363
 msgid "The translation ends with a newline, but the source text doesn’t."
 msgstr "Թարգմանությունը վերջանում է նոր տողով, բայց սկզբնական գրվածքը՝ ոչ:"
 
+#: src/qa_checks.cpp:369
 msgid "The translation is missing a space at the end."
 msgstr "Թարգմանության վերջում բացակայում է բացատը:"
 
+#: src/qa_checks.cpp:375
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "Թարգմանությունը վերջանում է բացատով, բայց սկզբնական գրվածքը՝ ոչ:"
 
+#: src/qa_checks.cpp:390
 msgid "Punctuation checks"
 msgstr "Կետադրության ստուգում"
 
+#: src/qa_checks.cpp:455
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr "Թարգմանությունը պետք է ավարտվի «%s»-ով:"
 
+#: src/qa_checks.cpp:467
 #, c-format
 msgid "The translation should not end with “%s”."
 msgstr "Թարգմանությունը չպետք է ավարտվի «%s»-ով:"
 
+#: src/qa_checks.cpp:488
 #, c-format
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
-msgstr ""
-"Թարգմանությունը վերջանում է “%s”-ով, բայց սկզբնական գրվածքը վերջանում է “%s”-"
-"ով:"
+msgstr "Թարգմանությունը վերջանում է “%s”-ով, բայց սկզբնական գրվածքը վերջանում է “%s”-ով:"
 
+#: src/recent_files.cpp:223
 msgid "Cloud"
 msgstr ""
 
+#: src/recent_files.cpp:404
 msgid "Clear Menu"
 msgstr "Մաքրել ցանկը"
 
+#: src/recent_files.cpp:404
 msgid "Clear menu"
 msgstr "Մաքրել ցանկը"
 
+#: src/resources/comment.xrc:10
 msgid "Comment:"
 msgstr "Մեկնաբանություն."
 
+#: src/resources/comment.xrc:33
 msgid "Update"
 msgstr "Թարմացնել"
 
+#: src/resources/comment.xrc:48 src/wx_translatable_strings.h:100
 msgid "&Delete"
 msgstr "&Ջնջել"
 
+#: src/resources/comment.xrc:49
 msgid "Delete the comment"
 msgstr "Ջնջել մեկնաբանությունը"
 
+#: src/resources/manager.xrc:4
 msgid "Edit project"
 msgstr "Խմբագրել նախագիծը"
 
+#: src/resources/manager.xrc:9
 msgid "Project name:"
 msgstr "Նախագծի անունը."
 
+#: src/resources/manager.xrc:39
 msgid "Browse"
 msgstr "Ընտրել"
 
+#: src/resources/manager.xrc:41
 msgid "Add directory to the list"
 msgstr "Գրացուցակը հավելել ցանկում"
 
-msgid "OK"
-msgstr "Լավ"
-
-msgid "&File"
-msgstr "&Նիշք"
-
+#: src/resources/menus.xrc:8 src/resources/menus.xrc:387
 msgid "&New…"
 msgstr "&Նոր…"
 
+#: src/resources/menus.xrc:12 src/resources/menus.xrc:391
 msgid "New from &POT/PO file…"
 msgstr "Նոր &POT/PO նիշքից…"
 
+#: src/resources/menus.xrc:13 src/resources/menus.xrc:392
 msgid "New From &POT/PO File…"
 msgstr "Նոր &POT/PO նիշքից…"
 
+#: src/resources/menus.xrc:21 src/resources/menus.xrc:400
+#: src/wx_translatable_strings.h:109
 msgid "&Open…"
 msgstr "&Բացել…"
 
+#: src/resources/menus.xrc:25 src/resources/menus.xrc:404
 msgid "Open Recent"
 msgstr "Բացել վերջինը"
 
+#: src/resources/menus.xrc:26 src/resources/menus.xrc:405
 msgid "Open recent"
 msgstr "Բացել վերջինը"
 
+#: src/resources/menus.xrc:29 src/resources/menus.xrc:408
 msgid "Open cloud translation…"
 msgstr "Բացել ամպի թարգմանություն..."
 
+#: src/resources/menus.xrc:30 src/resources/menus.xrc:409
 msgid "Open Cloud Translation…"
 msgstr "Բացել ամպի թարգմանություն..."
 
+#: src/resources/menus.xrc:34 src/resources/menus.xrc:413
 msgid "&Start window"
 msgstr "&Մեկնարկային պատուհան"
 
+#: src/resources/menus.xrc:35 src/resources/menus.xrc:414
 msgid "&Start Window"
 msgstr "&Մեկնարկային պատուհան"
 
+#: src/resources/menus.xrc:39 src/resources/menus.xrc:419
 msgid "Catalogs &manager"
 msgstr "Գրացուցակների &կառավար"
 
+#: src/resources/menus.xrc:40 src/resources/menus.xrc:420
 msgid "Catalogs &Manager"
 msgstr "Գրացուցակների &կառավար"
 
+#: src/resources/menus.xrc:44 src/resources/menus.xrc:424
+#: src/wx_translatable_strings.h:96
 msgid "&Close"
 msgstr "&Փակել"
 
+#: src/resources/menus.xrc:48 src/wx_translatable_strings.h:115
 msgid "&Save"
 msgstr "&Պահել"
 
+#: src/resources/menus.xrc:52
 msgid "Save &as…"
 msgstr "Պահել &որպես…"
 
+#: src/resources/menus.xrc:53
 msgid "Save &As…"
 msgstr "Պահել &որպես…"
 
+#: src/resources/menus.xrc:58
 msgid "Compile to MO…"
 msgstr "Կազմարկել MO-ի…"
 
+#: src/resources/menus.xrc:62
 msgid "E&xport to HTML…"
 msgstr ""
 
+#: src/resources/menus.xrc:66
+msgid "Export to Excel…"
+msgstr ""
+
+#: src/resources/menus.xrc:69
+msgid "Import from Excel…"
+msgstr ""
+
+#: src/resources/menus.xrc:73 src/resources/menus.xrc:428
 msgid "Check for updates…"
 msgstr "Ստուգել թարմացումները…"
 
+#: src/resources/menus.xrc:76 src/resources/menus.xrc:431
+msgid "&License…"
+msgstr "&Արտոնագիր…"
+
+#: src/resources/menus.xrc:79 src/resources/menus.xrc:434
 msgid "Settings…"
 msgstr "Կայանքներ…"
 
+#: src/resources/menus.xrc:83 src/resources/menus.xrc:438
+#: src/wx_translatable_strings.h:112
 msgid "&Preferences"
 msgstr "&Նախապատվություններ"
 
+#: src/resources/menus.xrc:90 src/resources/menus.xrc:445
 msgid "E&xit"
 msgstr "Փ&ակել"
 
+#: src/resources/menus.xrc:91 src/resources/menus.xrc:446
+#: src/wx_translatable_strings.h:103
 msgid "Quit"
 msgstr "Փակել"
 
+#: src/resources/menus.xrc:118
 msgid "Copy from singular"
 msgstr "Պատճենել հոգնակիից"
 
+#: src/resources/menus.xrc:119
 msgid "Copy From Singular"
 msgstr "Պատճենել եզակիից"
 
+#: src/resources/menus.xrc:124
 msgid "Translation needs &work"
 msgstr "Թարգմանությունը վերջնական &չէ"
 
+#: src/resources/menus.xrc:125
 msgid "Translation Needs &Work"
 msgstr "Թարգմանությունը վերջնական &չէ"
 
+#: src/resources/menus.xrc:130
 msgid "Edit &comment"
 msgstr "Խմբագրել &մեկնաբանությունը"
 
+#: src/resources/menus.xrc:131
 msgid "Edit &Comment"
 msgstr "Խմբագրել &մեկնաբանությունը"
 
 #. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
+#: src/resources/menus.xrc:136 src/sidebar.cpp:651 src/sidebar_pro.cpp:219
 msgid "Suggestions"
 msgstr "Առաջարկություններ"
 
+#: src/resources/menus.xrc:139 src/resources/menus.xrc:158
 msgid "&Find…"
 msgstr "&Գտնել…"
 
+#: src/resources/menus.xrc:144
 msgid "Replace…"
 msgstr "Փոխարինել…"
 
+#: src/resources/menus.xrc:148
 msgid "Find next"
 msgstr "Գտնել հաջորդը"
 
+#: src/resources/menus.xrc:152
 msgid "Find previous"
 msgstr "Գտնել նախորդը"
 
+#: src/resources/menus.xrc:162
 msgid "Find and Replace…"
 msgstr "Գտնել եւ փոխարինել…"
 
+#: src/resources/menus.xrc:166
 msgid "Find Next"
 msgstr "Գտնել հաջորդը"
 
+#: src/resources/menus.xrc:170
 msgid "Find Previous"
 msgstr "Գտնել նախորդը"
 
+#: src/resources/menus.xrc:179
 msgid "Show string &ID"
 msgstr "Ցուցադրել տողի &ID-ին"
 
+#: src/resources/menus.xrc:180
 msgid "Show String &ID"
 msgstr "Ցուցադրել տողի &ID-ին"
 
+#: src/resources/menus.xrc:184
 msgid "Show warnings"
 msgstr "Ցուցադրել զգուշացումները"
 
+#: src/resources/menus.xrc:185
 msgid "Show Warnings"
 msgstr "Ցուցադրել զգուշացումները"
 
+#: src/resources/menus.xrc:189
+msgid "Customize warnings…"
+msgstr "Անհատականացնել զգուշացումներ…"
+
+#: src/resources/menus.xrc:190
+msgid "Customize Warnings…"
+msgstr "Անհատականացնել Զգուշացումներ…"
+
+#: src/resources/menus.xrc:194
 msgid "Sort by &file order"
 msgstr "Խմբավորել ըստ &նիշքի կարգի"
 
+#: src/resources/menus.xrc:195
 msgid "Sort by &File Order"
 msgstr "Խմբավորել ըստ &նիշքի կարգի"
 
+#: src/resources/menus.xrc:199
 msgid "Sort by &source"
 msgstr "Խմբավորել ըստ &սկզբնականի"
 
+#: src/resources/menus.xrc:200
 msgid "Sort by &Source"
 msgstr "Խմբավորել ըստ &սկզբնականի"
 
+#: src/resources/menus.xrc:204
 msgid "Sort by &translation"
 msgstr "Խմբավորել ըստ &թարգմանության"
 
+#: src/resources/menus.xrc:205
 msgid "Sort by &Translation"
 msgstr "Խմբավորել ըստ &թարգմանության"
 
+#: src/resources/menus.xrc:210
 msgid "&Group by context"
 msgstr "&Խմբավորել ըստ համագրվածքի"
 
+#: src/resources/menus.xrc:211
 msgid "&Group By Context"
 msgstr "&Խմբավորել ըստ համագրվածքի"
 
+#: src/resources/menus.xrc:215
 msgid "Entries with errors first"
 msgstr "Նախ սխալներով գրառումները"
 
+#: src/resources/menus.xrc:216
 msgid "Entries with Errors First"
 msgstr "Նախ սխալներով գրառումները"
 
+#: src/resources/menus.xrc:220
 msgid "&Untranslated entries first"
 msgstr "&Նախ չթարգմանվածները"
 
+#: src/resources/menus.xrc:221
 msgid "&Untranslated Entries First"
 msgstr "&Նախ չթարգմանվածները"
 
+#: src/resources/menus.xrc:226
+msgid "Show &suggestions tab"
+msgstr "Ցույց տալ &առաջարկների ներդիրը"
+
+#: src/resources/menus.xrc:227
+msgid "Show &Suggestions Tab"
+msgstr "Ցուցադրել &Առաջարկների ներդիրը"
+
+#: src/resources/menus.xrc:231
+msgid "Show &terminology tab"
+msgstr "Ցույցադրել &եզրաբանական ներդիրը"
+
+#: src/resources/menus.xrc:232
+msgid "Show &Terminology Tab"
+msgstr "Ցույցադրել &Եզրաբանական ներդիրը"
+
+#: src/resources/menus.xrc:236
 msgid "&Show code occurrences"
 msgstr "&Ցուցադրել կոդի դեպքերը"
 
+#: src/resources/menus.xrc:237
 msgid "&Show Code Occurrences"
 msgstr "&Ցուցադրել կոդի դեպքերը"
 
+#: src/resources/menus.xrc:241
 msgid "Show sidebar"
 msgstr "Ցուցադրել կողագոտին"
 
+#: src/resources/menus.xrc:247
 msgid "Show status bar"
 msgstr "Ցուցադրել վիճակի գոտին"
 
+#: src/resources/menus.xrc:255 src/resources/menus.xrc:463
 msgid "&Translation"
 msgstr "&Թարգմանություն"
 
+#: src/resources/menus.xrc:258 src/statistics.cpp:312 src/statistics.cpp:415
+#: src/statistics.cpp:427
+msgid "Source Text"
+msgstr "Սկզբնական գրվածքը"
+
+#: src/resources/menus.xrc:262
 msgid "&Update from source code"
 msgstr "&Արդիացնել սկզբնականից"
 
+#: src/resources/menus.xrc:263
 msgid "&Update from Source Code"
 msgstr "&Արդիացնել սկզբնականից"
 
-msgid "Update from &POT file…"
-msgstr "Թարմացնել &POT նիշքից…"
-
-msgid "Update from &POT File…"
-msgstr "Թարմացնել &POT նիշքից…"
-
+#: src/resources/menus.xrc:270
 msgid "Sync with Crowdin"
 msgstr "Հմժմ Crowdin-ի հետ"
 
+#: src/resources/menus.xrc:274 src/resources/menus.xrc:275
 msgid "Pre-&translate…"
 msgstr "Նախա&թարգմանություն…"
 
+#: src/resources/menus.xrc:279
 msgid "&Validate translations"
 msgstr "&Վավերացնել թարգմանությունները"
 
+#: src/resources/menus.xrc:280
 msgid "&Validate Translations"
 msgstr "&Վավերացնել թարգմանությունները"
 
+#: src/resources/menus.xrc:284
+msgid "&Statistics"
+msgstr "&Վիճակագրություն"
+
+#: src/resources/menus.xrc:289
 msgid "Remove Same-as-Source Translations"
 msgstr ""
 
+#: src/resources/menus.xrc:292
 msgid "&Purge deleted translations"
 msgstr "&Մաքրել ջնջված թարգմանությունները"
 
+#: src/resources/menus.xrc:293
 msgid "&Purge Deleted Translations"
 msgstr "&Մաքրել ջնջված թարգմանությունները"
 
+#: src/resources/menus.xrc:297
 msgid "&Properties…"
 msgstr "&Հատկություններ…"
 
+#: src/resources/menus.xrc:304 src/resources/menus.xrc:466
 msgid "&Go"
 msgstr "&Անցնել"
 
+#: src/resources/menus.xrc:307
 msgid "&Done and next"
 msgstr "&Պատրաստ է եւ հաջորդը"
 
+#: src/resources/menus.xrc:308
 msgid "&Done and Next"
 msgstr "&Պատրաստ է եւ հաջորդը"
 
+#: src/resources/menus.xrc:314
 msgid "Previously edited"
 msgstr "Նախկինում խմբագրված"
 
+#: src/resources/menus.xrc:315
 msgid "Previously Edited"
 msgstr "Նախկինում Խմբագրված"
 
+#: src/resources/menus.xrc:320
 msgid "&Previous translation"
 msgstr "&Նախորդ թարգմանությունը"
 
+#: src/resources/menus.xrc:321
 msgid "&Previous Translation"
 msgstr "&Նախորդ թարգմանությունը"
 
+#: src/resources/menus.xrc:325
 msgid "&Next translation"
 msgstr "&Հաջորդ թարգմանությունը"
 
+#: src/resources/menus.xrc:326
 msgid "&Next Translation"
 msgstr "&Հաջորդ թարգմանությունը"
 
+#: src/resources/menus.xrc:330
 msgid "P&revious unfinished"
 msgstr "Ն&ախորդ անավարտը"
 
+#: src/resources/menus.xrc:331
 msgid "P&revious Unfinished"
 msgstr "Ն&ախորդ անավարտը"
 
+#: src/resources/menus.xrc:335
 msgid "Ne&xt unfinished"
 msgstr "Հաջ&որդ անավարտը"
 
+#: src/resources/menus.xrc:336
 msgid "Ne&xt Unfinished"
 msgstr "Հաջ&որդ անավարտը"
 
+#: src/resources/menus.xrc:341
 msgid "Previous plural form"
 msgstr "Նախորդ հոգնակին"
 
+#: src/resources/menus.xrc:342
 msgid "Previous Plural Form"
 msgstr "Նախորդ հոգնակին"
 
+#: src/resources/menus.xrc:346
 msgid "Next plural form"
 msgstr "Հաջորդ հոգնակին"
 
+#: src/resources/menus.xrc:347
 msgid "Next Plural Form"
 msgstr "Հաջորդ հոգնակին"
 
+#: src/resources/menus.xrc:356 src/resources/menus.xrc:473
 msgid "&Online help"
 msgstr "&Առցանց օգնություն"
 
+#: src/resources/menus.xrc:357 src/resources/menus.xrc:474
 msgid "&Online Help"
 msgstr "&Առցանց օգնություն"
 
+#: src/resources/menus.xrc:363 src/resources/menus.xrc:480
 msgid "&GNU gettext manual"
 msgstr "&GNU gettext-ի ձեռնարկ"
 
+#: src/resources/menus.xrc:364 src/resources/menus.xrc:481
 msgid "&GNU gettext Manual"
 msgstr "&GNU gettext-ի ձեռնարկ"
 
+#: src/resources/menus.xrc:368 src/resources/menus.xrc:485
+msgid "Email &support…"
+msgstr "Էլ. փոստ եւ &աջակցում…"
+
+#: src/resources/menus.xrc:369 src/resources/menus.xrc:486
+msgid "Email &Support…"
+msgstr "Էլ. փոստ եւ &աջակցում…"
+
+#: src/resources/menus.xrc:373 src/resources/menus.xrc:490
 msgid "&About Poedit"
 msgstr "Poedit-ի &մասին"
 
+#: src/resources/menus.xrc:374 src/resources/menus.xrc:375
+#: src/resources/menus.xrc:491 src/resources/menus.xrc:492
 msgid "&About"
 msgstr "&Ծրագրի մասին"
 
+#: src/resources/prefs.xrc:4
 msgid "Extractor setup"
 msgstr "Արտահանիչի կարգավորում"
 
+#: src/resources/prefs.xrc:27
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "Ընդլայնումների ցուցակը՝ առանձնացված կետ-ստորակետով (օր.՝ *.cpp;*.h)."
 
+#: src/resources/prefs.xrc:43
 msgid "Invocation:"
 msgstr "Կանչ."
 
+#: src/resources/prefs.xrc:47
 msgid "Command to extract translations:"
 msgstr "Թարգմանությունները դուրս հանելու հրաման."
 
-msgid ""
-"This is the command used to launch the extractor.\n"
+#: src/resources/prefs.xrc:61
+msgid "This is the command used to launch the extractor.\n"
 "%o expands to the name of output file, %K to list\n"
 "of keywords, %F to list of input files,\n"
 "%C to charset flag (see below)."
-msgstr ""
-"Այս հրամանը օգտագործվում է բացելու համար արտահանիչը:\n"
+msgstr "Այս հրամանը օգտագործվում է բացելու համար արտահանիչը:\n"
 "%o-ը կավելացվի արտածվող նիշքի անվանը, %K-ը՝\n"
 "հիմնաբառի ցանկին, %F-ը՝ ներածվող նիշքերի ցանկին,\n"
 "%C-ը՝ կոդավորման դրոշակին (տես ստորեւ):"
 
+#: src/resources/prefs.xrc:70
 msgid "An item in keywords list:"
 msgstr "Միավոր՝ հիմնաբառերի ցանկում."
 
-msgid ""
-"This will be attached to the command line once\n"
+#: src/resources/prefs.xrc:84
+msgid "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
-msgstr ""
-"Սա կկցվի հրամանի տողին մեկ անգամ՝\n"
+msgstr "Սա կկցվի հրամանի տողին մեկ անգամ՝\n"
 "յուրաքանչյուր ստեղնաշարի համար: %k-ը կավելացվի ստեղնաշարին:"
 
+#: src/resources/prefs.xrc:93
 msgid "An item in input files list:"
 msgstr "Միավորը ներածված նիշքերի ցանկում է."
 
+#: src/resources/prefs.xrc:107
 #, c-format
-msgid ""
-"This will be attached to the command line once\n"
+msgid "This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
-msgstr ""
-"Սա կկցվի հրամանի տողին մեկ անգամ՝\n"
+msgstr "Սա կկցվի հրամանի տողին մեկ անգամ՝\n"
 "յուրաքանչյուր ստեղնաշարի համար: %f-ը կավելացվի նիշքի անվանը:"
 
+#: src/resources/prefs.xrc:116 src/resources/properties.xrc:124
 msgid "Source code charset:"
 msgstr "Սկզբնական կոդի գրանշանը՝"
 
+#: src/resources/prefs.xrc:130
 #, c-format
-msgid ""
-"This will be attached to the command line\n"
+msgid "This will be attached to the command line\n"
 "only if source code charset was given. %c expands to charset value."
-msgstr ""
-"Սա կկցվի հրամանի տողին,\n"
+msgstr "Սա կկցվի հրամանի տողին,\n"
 "եթե միայն սկզբնական կոդավորում է տրված: %c-ը կավելացվի կոդավորման արժեքին:"
 
+#: src/resources/properties.xrc:4 src/resources/properties.xrc:153
 msgid "Translation Properties"
 msgstr "Թարգմանության հատկությունները"
 
+#: src/resources/properties.xrc:19
 msgid "Project name and version:"
 msgstr "Նախագծի անունը եւ տարբեակը."
 
+#: src/resources/properties.xrc:34
 msgid "Language team:"
 msgstr "Լեզվի թիմը."
 
+#: src/resources/properties.xrc:66
 msgid "Plural forms:"
 msgstr "Հոգնակի ձեւեր."
 
+#: src/resources/properties.xrc:73
 msgid "Use default rules for this language"
 msgstr "Օգտ. այս լեզվի ծրագրային կանոնները"
 
+#: src/resources/properties.xrc:82
 msgid "Use custom expression"
 msgstr "Օգտ. հարմարեցված արտահայտություն"
 
+#: src/resources/properties.xrc:98
 msgid "Learn about plural forms"
 msgstr "Մանրամասներ հոգնակի ձեւերի մասին"
 
+#: src/resources/properties.xrc:112
 msgid "Charset:"
 msgstr "Այլագիրավորում."
 
+#: src/resources/properties.xrc:138
 msgid "Advanced Extraction Settings…"
 msgstr "Դուրս բերելու ընդլայնված կարգավորումներ…"
 
+#: src/resources/properties.xrc:139
 msgid "Advanced extraction settings…"
 msgstr "Դուրս բերելու ընդլայնված կարգավորումներ…"
 
+#: src/resources/properties.xrc:154
 msgid "Translation properties"
 msgstr "Թարգմանության հատկություններ"
 
+#: src/resources/properties.xrc:157
 msgid "Sources Paths"
 msgstr "Սկզբնականների ուղիները"
 
+#: src/resources/properties.xrc:158
 msgid "Sources paths"
 msgstr "Սկզբնական ուղիներ"
 
+#: src/resources/properties.xrc:164
 msgid "Extract text from source files in the following directories:"
 msgstr "Հանել գրվածքը սկզբնական նիշքից հետեւյալ տեղում՝"
 
+#: src/resources/properties.xrc:173
 msgid "Base path:"
 msgstr "Հիմնական ուղին."
 
+#: src/resources/properties.xrc:227
+msgid "Customize File Extensions…"
+msgstr "Անհատականացնել Նիշքի Ընդլայնումները"
+
+#: src/resources/properties.xrc:228
+msgid "Customize file extensions…"
+msgstr "Անհատականացնել նիշքի ընդլայնումները"
+
+#: src/resources/properties.xrc:241
 msgid "Sources Keywords"
 msgstr "Սկզբնականների հիմնաբառերը"
 
+#: src/resources/properties.xrc:242
 msgid "Sources keywords"
 msgstr "Սկզբնականի հիմնաբառեր"
 
-msgid ""
-"Use these keywords (function names) to recognize translatable strings\n"
+#: src/resources/properties.xrc:248
+msgid "Use these keywords (function names) to recognize translatable strings\n"
 "in source files:"
-msgstr ""
-"Օգտ. այս հիմնաբառերը (գործառույթի անունները)՝ ճանաչելու համար թարգմանվող "
-"տողերը\n"
+msgstr "Օգտ. այս հիմնաբառերը (գործառույթի անունները)՝ ճանաչելու համար թարգմանվող տողերը\n"
 "սկզբնական նիշքում."
 
+#: src/resources/properties.xrc:264
 msgid "Also use default keywords for supported languages"
 msgstr "Նաեւ օգտագործեք լռելյայն հիմնաբառեր՝ աջակցվող լեզուների համար"
 
+#: src/resources/properties.xrc:271
 msgid "Learn about gettext keywords"
 msgstr "Մանրամասներ gettext հիմնաբառի մասին"
 
-msgid "Update summary"
-msgstr "Թարմացումների ամփոփում"
-
-msgid ""
-"These strings were found in the sources but were not in the file.\n"
+#: src/resources/summary.xrc:32
+msgid "These strings were found in the sources but were not in the file.\n"
 "Poedit will add them to the file now."
-msgstr ""
-"Այս տողերը գտնվել են աղբյուրներում, բայց ոչ նիշքում:\n"
+msgstr "Այս տողերը գտնվել են աղբյուրներում, բայց ոչ նիշքում:\n"
 "nPoedit-ը այժմ դրանք կավելացնի նիշքում:"
 
-msgid "New strings"
-msgstr "Նոր տող"
-
-msgid ""
-"These strings are no longer in the source code.\n"
+#: src/resources/summary.xrc:53
+msgid "These strings are no longer in the source code.\n"
 "Poedit will remove them from the file now."
-msgstr ""
-"Այս տողերը այլեւս սկզբնական կոդում չեն:\n"
+msgstr "Այս տողերը այլեւս սկզբնական կոդում չեն:\n"
 "Poedit-ը այժմ դրանք կհեռացնի նիշքից:"
 
+#: src/resources/summary.xrc:66
 msgid "Obsolete strings"
 msgstr "Հնացած տողեր"
 
+#: src/resources/summary.xrc:79
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 նոր, 0 հնացած)"
 
-msgid "Open"
-msgstr ""
-
+#: src/resources/toolbar.xrc:13 src/resources/toolbar.xrc:17
 msgid "Open file"
 msgstr "Բացել նիշքը"
 
+#: src/resources/toolbar.xrc:22 src/resources/toolbar.xrc:26
 msgid "Save file"
 msgstr "Պահել նիշքը"
 
+#: src/resources/toolbar.xrc:34
 msgid "Validate"
 msgstr "Վավերացնել"
 
+#: src/resources/toolbar.xrc:35
 msgid "Check for errors in the translation"
 msgstr "Ստուգել թարգմանության սխալները"
 
+#: src/resources/toolbar.xrc:49
+msgid "Pre-translate strings that don’t have a translation yet"
+msgstr "Նախաթարգմանեք այն տողերը, որոնք դեռ թարգմանված չեն"
+
+#: src/resources/toolbar.xrc:57 src/wx/main_toolbar.cpp:136
 msgid "Update from code"
 msgstr "Արդիացնել այլագրից"
 
+#: src/resources/toolbar.xrc:58 src/wx/main_toolbar.cpp:136
 msgid "Update from Code"
 msgstr "Արդիացնել կոդից"
 
+#: src/resources/toolbar.xrc:59 src/wx/main_toolbar.cpp:137
 msgid "Update from source code"
 msgstr "Արդիացնել սկզբնական կոդից"
 
+#: src/resources/toolbar.xrc:67
 msgid "Sidebar"
 msgstr "Կողագոտի"
 
+#: src/resources/toolbar.xrc:68
 msgid "Show or hide the sidebar"
 msgstr "Ցուցադրել կամ թաքցնել կողագոտին"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
+#: src/sidebar.cpp:139
 msgid "Previous source text"
 msgstr "Նախորդ սկզբնական գրվածքը"
 
-msgid ""
-"The old source text (before it changed during an update) that the now-"
-"inaccurate translation corresponds to."
-msgstr ""
-"Հին սկզբնական գրվածքը (մինչեւ արդիացման ընթացքում դրա փոխվելը), որը այժմ ոչ "
-"ճիշտ է:"
+#: src/sidebar.cpp:142
+msgid "The old source text (before it changed during an update) that the now-inaccurate translation corresponds to."
+msgstr "Հին սկզբնական գրվածքը (մինչեւ արդիացման ընթացքում դրա փոխվելը), որը այժմ ոչ ճիշտ է:"
 
+#: src/sidebar.cpp:168
 msgid "Notes for translators"
 msgstr "Նշում թարգմանողների համար"
 
+#: src/sidebar.cpp:201
 msgid "Comment"
 msgstr "Մեկնաբանություն"
 
+#: src/sidebar.cpp:231 src/sidebar.cpp:250
 msgid "Add comment"
 msgstr "Հավելել մեկնաբանություն"
 
+#: src/sidebar.cpp:233 src/sidebar.cpp:235 src/sidebar.cpp:253
 msgid "Add Comment"
 msgstr "Հավելել մեկնաբանություն"
 
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:436
+msgid "from your TM"
+msgstr "Ձեր TM-ից"
+
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:441
+msgid "machine translation"
+msgstr "մեքենայական թարգմանություն"
+
+#. TRANSLATORS: This is followed by a logo of e.g. Microsoft Translator, forming a sentence e.g. "translated by MS Translator"
+#: src/sidebar.cpp:449
+msgid "translated by"
+msgstr "թարգմանված է"
+
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:456
+msgid "human translation"
+msgstr "մարդկային թարգմանություն"
+
+#: src/sidebar.cpp:592
 msgid "Delete From Translation Memory"
 msgstr "Ջնջել Թարգմանության հիշողությունից"
 
+#: src/sidebar.cpp:592
 msgid "Delete from translation memory"
 msgstr "Ջնջել Թարգմանության հիշողությունից"
 
+#: src/sidebar.cpp:593
+msgid "Report Bad Translation"
+msgstr "Հաղորդել վատ թարգմանության մասին"
+
+#: src/sidebar.cpp:593
+msgid "Report bad translation"
+msgstr "Հաղորդել վատ թարգմանության մասին"
+
+#: src/sidebar.cpp:652
 msgid "Translation suggestions"
 msgstr "Թարգմանության առաջարկություններ"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
+#: src/sidebar.cpp:695
 msgid "No matches found"
 msgstr "Չկան համապատասխանություններ"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (macOS, Linux).
+#: src/sidebar.cpp:698
 msgid "No Matches Found"
 msgstr "Չկան համապատասխանություններ"
 
+#: src/sidebar.cpp:734 src/sidebar_pro.cpp:325
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Այս տողը գտնվել է Poedit-ի թարգմանության հիշողությունում:"
 
-msgid ""
-"Translation suggestions require that source text is available. They don’t "
-"work if only IDs without the actual text are used."
-msgstr ""
-"Նախաթարգմանությունը պահանջում է, որ մատչելի լինի սկզբնական գրվածքը: Այն չի "
-"աշխատի, եթե իրական գրվածքի փոխարեն օգտագործվեն միայն ID-ներ:"
+#: src/sidebar.cpp:984
+msgid "Translation suggestions require that source text is available. They don’t work if only IDs without the actual text are used."
+msgstr "Նախաթարգմանությունը պահանջում է, որ մատչելի լինի սկզբնական գրվածքը: Այն չի աշխատի, եթե իրական գրվածքի փոխարեն օգտագործվեն միայն ID-ներ:"
 
-msgid ""
-"Translation suggestions require that source text’s language is known. Poedit "
-"couldn’t detect it in this file."
-msgstr ""
-"Թարգմանության առաջարկները պահանջում են, որ սկզբնական գրվածքի լեզուն հայտնի "
-"լինի: Poedit-ը չի կարողանում հայտնաբերել այն տվյալ ֆայլում:"
+#: src/sidebar.cpp:989
+msgid "Translation suggestions require that source text’s language is known. Poedit couldn’t detect it in this file."
+msgstr "Թարգմանության առաջարկները պահանջում են, որ սկզբնական գրվածքի լեզուն հայտնի լինի: Poedit-ը չի կարողանում հայտնաբերել այն տվյալ ֆայլում:"
 
+#. TRANSLATORS: Tooltip explaining the Quality: label
+#: src/sidebar_pro.cpp:86
+msgid "Currently enabled quality level of online suggestions"
+msgstr "Այժմ գործող որակի մակարդակը առցանց առաջարկների համար"
+
+#. TRANSLATORS: Quality level for the "Quality: %s" label; needs to be short
+#: src/sidebar_pro.cpp:121
+msgid "Premium"
+msgstr "Պրեմիում"
+
+#. TRANSLATORS: Quality level for the "Quality: %s" label; needs to be short
+#: src/sidebar_pro.cpp:126
+msgid "Standard"
+msgstr "Սովորական"
+
+#. TRANSLATORS: This needs to be *short*, it is shown in the sidebar
+#. after "Translation suggestions". %s will be replaced by "Standard"
+#. or "Premium". "(Quality) level" or "tier" are synonyms for it.
+#: src/sidebar_pro.cpp:132
+#, c-format
+msgid "Quality: %s"
+msgstr "Որակը՝ %s"
+
+#. TRANSLATORS: Label for the part where currently used translation engine is shown
+#: src/sidebar_pro.cpp:151
+msgid "Machine translation uses:"
+msgstr "Մեքենայական թարգմանությունը օգտագործում է."
+
+#: src/sidebar_pro.cpp:227
+msgid "Terminology"
+msgstr "Եզրաբանություն"
+
+#: src/sidebar_pro.cpp:321
+msgid "This suggestion was contributed by another translator to the online TM."
+msgstr "Այս առաջարկությունը այլ թարգմանիչի կողմից է՝ առցանց ԹՀ-ում:"
+
+#: src/sidebar_pro.cpp:323
+msgid "This suggestion was machine-translated online."
+msgstr "Այս առաջարկությունը մեքենայական թարգմանություն է:"
+
+#: src/sidebar_pro.cpp:512
+#, c-format
+msgid "%d out of %d online suggestion left."
+msgid_plural "%d out of %d online suggestions left."
+msgstr[0] "%d առցանց առաջարկություն է մնացել %d-ից:"
+msgstr[1] "%d-ից %d առցանց առաջարկություններ են մնացել:"
+
+#: src/sidebar_pro.cpp:517
+msgid "Remove this limitation"
+msgstr "Հեռացնել այս սահմանափակումը"
+
+#: src/sidebar_pro.cpp:521
+msgid "Online suggestions are limited to only 10 in the free version. Upgrade to Pro to remove this limitation."
+msgstr "Ծրագրի անվճար վարկածում առցանց առաջարկությունները սահմանափակված են ընդամենը 10-ով: Արդիացրեք Pro-ի՝ այդ սահմանափակումը հանելու համար:"
+
+#: src/sidebar_pro.cpp:523
+msgid "Unlock online suggestions"
+msgstr "Ապակողպել առցանց առաջարկությունները"
+
+#: src/sidebar_pro.cpp:547
+msgid "Exceeded online TM daily limit."
+msgstr "Գերազանցվել է ԹՀ-ի օրական քանակը:"
+
+#: src/sidebar_pro.cpp:580
+msgid "Connect to the Internet to get additional suggestions."
+msgstr "Միացեք համացանցին՝ ստանալու համար լրացուցիչ առաջարկություններ:"
+
+#. TRANSLATORS: Label indicating that translations made in the current file are contributed to the online translation memory. Related to the "Contribute my translations to the online TM" string.
+#: src/sidebar_pro.cpp:655
+msgid "Contributing"
+msgstr "Մասնակցություն"
+
+#: src/sidebar_pro.cpp:656
+msgid "Your translations are contributed to the online translation memory as you make them. Thanks for making the suggestions better!"
+msgstr "Ձեր թարգմանությունները համալրել են թարգմանությունների առցանց հիշողությունը: Շնորհակալություն:"
+
+#. TRANSLATORS: Label indicating that the current file
+#: src/sidebar_pro.cpp:662
+msgid "Private"
+msgstr "Անձնական"
+
+#: src/sidebar_pro.cpp:663
+msgid "Translations from this file are not shared with the online translation memory."
+msgstr "Այս նիշքի թարգմանույթւոնները չեն համաօգտագործվի ԹՀ-ում:"
+
+#: src/sidebar_pro.cpp:688
+msgid "Privacy settings"
+msgstr "Գաղտնիության կարգավորումներ"
+
+#: src/sidebar_pro.cpp:694
+#, c-format
+msgid "While editing the file “%s”:"
+msgstr "“%s” նիշքը խմբագրելիս."
+
+#: src/sidebar_pro.cpp:756
+msgid "Not interested"
+msgstr "Հետաքրքրված չեմ"
+
+#: src/sidebar_pro.cpp:982
+msgid "Pre-translation"
+msgstr "Նախաթարգմանություն"
+
+#: src/sidebar_pro.cpp:987
+msgid "Pre-translate all items at once and focus on making corrections, instead of translating them one by one."
+msgstr "Նախաթարգմանեք բոլոր միույթները միանգամից եւ կենտրոնացեք ուղղումներ կատարելու վրա՝ մեկ առ մեկ թարգմանելու փոխարեն:"
+
+#: src/sidebar_pro.cpp:1101
+msgid "Stay Informed!"
+msgstr "Տեղեկացված եղե՛ք:"
+
+#: src/sidebar_pro.cpp:1102
+msgid "Subscribe"
+msgstr "Բաժանորդագրվել"
+
+#: src/sidebar_pro.cpp:1106
+msgid "Sign up for Poedit newsletter and be the first to know about what’s new. I hate spam too, so expect only a few emails a year."
+msgstr "Բաժանորդագրվեք Poedit-ի տեղեկագրին եւ առաջինը տեղեկացեք մեր նորություններին: Մենք եւս չենք սիրում լցոնը, հետեւաբար տարվա ընթացքում կստանաք միայն մի քանի նամակ:"
+
+#: src/sidebar_pro.cpp:1117
+msgid "Email address"
+msgstr "Էլ. հասցեներ"
+
+#: src/sidebar_pro.cpp:1140
+msgid "You’re signed up. Please check your email for a confirmation message."
+msgstr "Դուք գրանցված եք: Ստուգեք ձեր էլ. փոստը՝ գրանցումը հաստատելու համար:"
+
+#. TRANSLATORS: "Dictionaries" is the name of the application (see https://dictionaries.io), i.e. shouldn't be translated
+#: src/sidebar_pro.cpp:1210
+msgid "Dictionaries for Mac, Windows & Kindle"
+msgstr "Բառարաններ Mac-ի, Windows-ի եւ Kindle-ի համար"
+
+#: src/sidebar_pro.cpp:1222
+msgid "Did you know I also made a dictionaries app for Mac, Windows and Kindle? It supports over 80 languages and is a great companion to Poedit."
+msgstr "Գիտե՞ք որ ես ստեղծել եմ բառարաններ Mac-ի, Windows-ի եւ Kindle-ի համար: Դրանք աջակցում են ավելի քան 80 լեզուներ եւ մեծապես համատեղելի են Poedit-ի հետ:"
+
+#: src/sidebar_terminology.cpp:49
+msgid "Glossary Entry"
+msgstr "Բառարանի Մուտքագրում"
+
+#: src/sidebar_terminology.cpp:55 src/sidebar_terminology.cpp:185
+msgid "Term"
+msgstr "Պայման"
+
+#: src/sidebar_terminology.cpp:60
+msgid "Additional description or notes"
+msgstr "Լրացուցիչ նկարագրություն կամ նշումներ"
+
+#: src/sidebar_terminology.cpp:66 src/sidebar_terminology.cpp:187
+msgid "Notes"
+msgstr "Նշումներ"
+
+#: src/sidebar_terminology.cpp:128
+msgid "CSV Glossary Import"
+msgstr "CSV բառարանի ներմուծում"
+
+#: src/sidebar_terminology.cpp:138
+msgid "Source language:"
+msgstr "Սկզբնական լեզուն"
+
+#: src/sidebar_terminology.cpp:142
+msgid "Translation language:"
+msgstr "Թարգմանության լեզուն"
+
+#: src/sidebar_terminology.cpp:149
+msgid "Import rules:"
+msgstr "Ներմուծել կանոններ՝"
+
+#: src/sidebar_terminology.cpp:153
+msgid "Skip the first row"
+msgstr "Բաց թողնել առաջին տողը"
+
+#: src/sidebar_terminology.cpp:158
+msgid "Column separator:"
+msgstr "Սյունակի բաժանիչ"
+
+#: src/sidebar_terminology.cpp:161
+msgid "Term column:"
+msgstr "Տերմինի սյունակ՝"
+
+#: src/sidebar_terminology.cpp:164
+msgid "Definition column:"
+msgstr "Սահմանման սյունակ՝"
+
+#: src/sidebar_terminology.cpp:167
+msgid "Notes column:"
+msgstr "Նումների սյունակ՝"
+
+#: src/sidebar_terminology.cpp:177 src/sidebar_terminology.cpp:261
+msgid "Preview of imported glossary data:"
+msgstr "Ներմուծված բառարանի տվյալների նախատեսք."
+
+#. TRANSLATORS: %d is the number of entries in the preview, %s is the total number of entries in the file
+#: src/sidebar_terminology.cpp:257
+#, c-format
+msgid "Preview of imported glossary data (%d out of %s shown):"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:396 src/wx_translatable_strings.h:102
+msgid "Edit"
+msgstr "Խմբագրել"
+
+#: src/sidebar_terminology.cpp:496
+msgid "Word or phrase"
+msgstr "Բառ կամ արտահայտություն"
+
+#: src/sidebar_terminology.cpp:518
+msgid "Add entries to the glossary"
+msgstr "Հավելել գրառումները բառարանում"
+
+#: src/sidebar_terminology.cpp:524
+msgid "Search previously made translations and glossaries to ensure consistency. Both the current file and your translation memory are consulted."
+msgstr "Հետեւեք նախկինում կատարված թարգմանություններին եւ բառարանների հետեւողականության համար: Ինչպես ընթացիկ նիշքը, այնպես էլ Ձեր թարգմանության հիշողությունը խորհրդակցվում է:"
+
+#: src/sidebar_terminology.cpp:536
+msgid "Unlock terminology search"
+msgstr "Բանալ եզրաբանության որոնիչ"
+
+#: src/sidebar_terminology.cpp:626
+msgid "Glossary"
+msgstr "Բառարան"
+
+#: src/sidebar_terminology.cpp:632
+msgid "This File"
+msgstr "Այս նիշքը"
+
+#: src/sidebar_terminology.cpp:696
+msgid "Add Glossary Entry…"
+msgstr "Հավելել բառարանի գրառում..."
+
+#: src/sidebar_terminology.cpp:696
+msgid "Add glossary entry…"
+msgstr "Հավելել բառարանի գրառում..."
+
+#: src/sidebar_terminology.cpp:697
+msgid "Import Glossary from CSV File…"
+msgstr "Ներմուծել բառարան CSV ֆայլից..."
+
+#: src/sidebar_terminology.cpp:697
+msgid "Import glossary from CSV file…"
+msgstr "Ներմուծել բառարան CSV ֆայլից..."
+
+#: src/sidebar_terminology.cpp:720
+msgid "Select CSV glossary file to import"
+msgstr "Ներմուծելու համար ընտրեք CSV բառարանի ֆայլ"
+
+#: src/sidebar_terminology.cpp:723
+msgid "CSV Files"
+msgstr "CSV ֆայլեր"
+
+#: src/sidebar_terminology.cpp:749
+msgid "Importing glossary"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:756
+#, c-format
+msgid "Imported %s terms from CSV file “%s” into the glossary."
+msgstr ""
+
+#: src/statistics.cpp:275 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Items"
+msgstr "Միավորներ"
+
+#: src/statistics.cpp:276 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Words"
+msgstr "Բառեր"
+
+#: src/statistics.cpp:277 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Characters"
+msgstr "Գրանշաններ"
+
+#: src/statistics.cpp:291 src/statistics.cpp:412
+msgid "Translated"
+msgstr "Թարգմանված է"
+
+#: src/statistics.cpp:296 src/statistics.cpp:335 src/statistics.cpp:413
+#: src/statistics.cpp:417
+msgctxt "column/row header"
+msgid "Needs work"
+msgstr "Վերջնական չէ"
+
+#: src/statistics.cpp:301 src/statistics.cpp:414
+msgid "Translations with errors"
+msgstr "Թարգմանություններ սխալներով"
+
+#: src/statistics.cpp:328 src/statistics.cpp:416 src/statistics.cpp:428
+msgid "Strings in source language"
+msgstr "Տողեր աղբյուրի լեզվում"
+
+#: src/statistics.cpp:340 src/statistics.cpp:418
+msgid "Not translated"
+msgstr "Թարգմանված չէ"
+
+#: src/statistics.cpp:351
+msgid "Include code and placeholders"
+msgstr "Ներառել կոդը եւ տեղապահները"
+
+#: src/statistics.cpp:352
+msgid "If checked, word and character counts will also include placeholders, HTML markup and code."
+msgstr "Եթե նշված է, ապա բառը եւ գրանիշերի քանակը կներառի նաեւ տեղապահները, HTML նշարկումը եւ կոդը:"
+
+#: src/statistics.cpp:362
+msgid "Characters are counted including spaces."
+msgstr "Գրանշանների քանակը՝ ներառյալ բացատները:"
+
+#: src/statistics.cpp:368
+msgid "Copy to clipboard"
+msgstr "Պատճենել"
+
+#: src/statistics.cpp:370
+msgid "Copy to Clipboard"
+msgstr "Պատճենել"
+
+#: src/statistics.cpp:722
+#, c-format
+msgid "The file “%s” couldn’t be opened: %s"
+msgstr "“%s” ֆայլը չի կարող բացվել. %s"
+
+#: src/subprocess.cpp:219 src/subprocess.cpp:251
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "Հնարավոր չէ կատարել %s ծրագիրը"
+
+#: src/tm/tmx_io.cpp:88 src/tm/tmx_io.cpp:104
 msgid "The TMX file is malformed."
 msgstr "TMX նիշքը այլակերպված է"
 
-msgid "No translations were found in the TMX file."
-msgstr "Թարգմանություններ չկան TMX նիշքում:"
-
+#: src/tm/transmem.cpp:87
 #, c-format
 msgid "Translation memory database is corrupted: %s (%d)."
 msgstr "Թարգմանության հիշողության շտեմարանը վնասված է՝ %s (%d):"
 
+#: src/tm/transmem.cpp:90
 #, c-format
 msgid "Translation memory error: %s (%d)."
 msgstr "Թարգմանության հիշողության սխալ. %s (%d):"
 
+#: src/uilang.cpp:233
 msgid "(Use default language)"
 msgstr "(Օգտ. լռելյայն լեզուն)"
 
+#: src/uilang.cpp:244
 msgid "Language selection"
 msgstr "Լեզվի ընտրություն"
 
+#: src/uilang.cpp:244
 msgid "Select your preferred language"
 msgstr "Ընտրեք Ձեր նախընտրած լեզուն"
 
+#: src/uilang.cpp:261
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Կիրառֆելու համար պետք է վերագործարկեք Poedit-ը"
 
+#: src/utility.cpp:143 src/utility.cpp:153
 msgid "Cannot create temporary directory."
 msgstr "Հնարավոր չեղավ ստեղծել ժամանակավոր գրացուցակ:"
 
+#: src/welcomescreen.cpp:141
 msgid "There are no translations. That’s unusual."
 msgstr "Թարգմանություններ չկան: Դա նորմալ չէ:"
 
-msgid ""
-"Translatable entries aren’t added manually in the Gettext system, but are "
-"automatically extracted\n"
-"from source code. This way, they stay up to date and accurate.\n"
-"Translators typically use PO template files (POTs) prepared for them by the "
-"developer."
+#: src/welcomescreen.cpp:150
+msgid "Translatable entries aren’t added manually in the Gettext system, but are automatically extracted from source code. This way, they stay up to date and accurate. Translators typically use PO template files (POTs) prepared for them by the developer."
 msgstr ""
-"Թարգմանելի գրառումները ձեռքով չեն ավելացվել Gettext համակարգում, բայց "
-"ինքնաբար դուրս են բերվել\n"
-"աղբյուր այլագրից: Այս ճանապարհով դրանք մնում են արդիացված եւ ճիշտ:\n"
-"Թարգմանիչները սովորաբար օգտագործում են PO ձեւանմուշի նիշքեր ((POT-եր), որոնք "
-"նրանց համար նախապատրաստվել են մշակողների կողմից:"
 
-msgid "(Learn more about GNU gettext)"
-msgstr "(Մանրամասներ GNU gettext-ի մասին)"
-
-msgid ""
-"The simplest way to fill this file with translations is to update it from a "
-"POT:"
+#: src/welcomescreen.cpp:153
+msgid "Learn more about GNU gettext"
 msgstr ""
-"Թարգմանություններով այս նիշքը լրացնելու ամենապարզ ձեւը այն POT նիշքից "
-"թարմացնելն է."
 
+#: src/welcomescreen.cpp:157
+msgid "The simplest way to fill this file with translations is to update it from a POT:"
+msgstr "Թարգմանություններով այս նիշքը լրացնելու ամենապարզ ձեւը այն POT նիշքից թարմացնելն է."
+
+#: src/welcomescreen.cpp:162
 msgid "Update from POT"
 msgstr "Թարմացնել POT-ից"
 
+#: src/welcomescreen.cpp:163
 msgid "Take translatable strings from an existing POT template."
 msgstr "Վերցնել թարգմանվող տողերը առկա POT նմուշից:"
 
-msgid ""
-"You can also extract translatable strings directly from the source code:"
-msgstr ""
-"Կարող եք նաեւ հանել թարգմանվող տողերը անմիջականորեն սկզբնական այլագրից."
+#: src/welcomescreen.cpp:167
+msgid "You can also extract translatable strings directly from the source code:"
+msgstr "Կարող եք նաեւ հանել թարգմանվող տողերը անմիջականորեն սկզբնական այլագրից."
 
+#: src/welcomescreen.cpp:172
 msgid "Extract from sources"
 msgstr "Հանել սկզբնական այլագրից"
 
+#: src/welcomescreen.cpp:173
 msgid "Configure source code extraction in Properties."
 msgstr "Կազմաձեւել սկզբնական կոդի դուրս բերումը Հատկություններում:"
 
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "Վարկած՝ %s"
-
+#: src/welcomescreen.cpp:272
 msgid "Create new"
 msgstr "Ստեղծել նորը"
 
+#: src/welcomescreen.cpp:273
 msgid "Create new translation from POT template."
 msgstr "Ստեղծել նոր թարգմանություն POT ձեւանմուշից:"
 
+#: src/welcomescreen.cpp:278
 msgid "Browse files"
 msgstr "Դիտել նիշքերը"
 
+#: src/welcomescreen.cpp:279
 msgid "Open and edit translation files."
 msgstr "Բացել եւ խմբագրել թարգմանության նիշքերը:"
 
+#: src/welcomescreen.cpp:286
+msgid "Translate WordPress theme or plugin"
+msgstr "Թարգմանել WordPress ոճ կամ բաղադրիչ"
+
+#: src/welcomescreen.cpp:287
+msgid "Edit WordPress translations over FTP or locally."
+msgstr "Խմբագրել WordPress թարգմանությունները FTP-ով կամ տեղում:"
+
+#: src/welcomescreen.cpp:292
 msgid "Translate cloud project"
 msgstr "Թարգմանել ամպի նախագիծ"
 
+#: src/welcomescreen.cpp:293
 msgid "Collaborate with other people online."
 msgstr "Համագործակցել այլ մարդկանց հետ առցանց:"
 
+#: src/welcomescreen.cpp:316
 msgid "Recent files"
 msgstr "Վերջին նիշքերը"
 
+#: src/wordpress/wordpress.cpp:101 src/wordpress/wordpress.cpp:108
+#, c-format
+msgid "Failed to read file “%s”."
+msgstr "Հնարավոր չէ կարդալ '%s' նիշքը:"
+
+#: src/wordpress/wordpress.cpp:165
+#, c-format
+msgid "Confused by ambiguous values of “%s” in %s."
+msgstr "Շփոթում է \"%s\" ոչ միանշանակ արժեքներով %s-ում:"
+
+#: src/wordpress/wordpress.cpp:294 src/wordpress/wordpress.cpp:544
+#: src/wordpress/wordpress.cpp:591
+#, c-format
+msgid "Couldn’t detect POs location for “%s”."
+msgstr "Հնարավոր չէ որոշել PO-ի տեղադրությունը \"%s\"-ի համար:"
+
+#: src/wordpress/wordpress.cpp:670
+#, c-format
+msgid "The “%s” theme isn’t localization-ready."
+msgstr "\"%s\" ոճը պատրաստ չէ թարգմանելու համար:"
+
+#: src/wordpress/wordpress.cpp:687
+#, c-format
+msgid "Couldn’t detect translation domain of the “%s” theme."
+msgstr "Հնարավոր չէ հայտնաբերել թարգմանության տիրույթը \"%s\" ոճի համար:"
+
+#: src/wordpress/wordpress.cpp:714
+#, c-format
+msgid "Couldn't detect translation domain of the \"%s\" theme."
+msgstr "Հնարավոր չէ հայտնաբերել թարգմանության տիրույթը \"%s\" ոճի համար:"
+
+#: src/wordpress/wordpress.cpp:769
+msgid "Confused: multiple main plugin files."
+msgstr "Խառնված. մի քանի հիմն. բաղադրիչի նիշքեր:"
+
+#: src/wordpress/wordpress.cpp:819
+#, c-format
+msgid "The “%s” plugin isn’t localization-ready."
+msgstr "\"%s\" ոճը պատրաստ չէ թարգմանելու համար:"
+
+#: src/wordpress/wordpress.cpp:840 src/wordpress/wordpress.cpp:857
+#, c-format
+msgid "Couldn’t detect translation domain of the “%s” plugin."
+msgstr "Հնարավոր չէ հայտնաբերել թարգմանության տիրույթը \"%s\" ոճի համար:"
+
+#: src/wordpress/wordpress.cpp:923
+msgid "Found neither WordPress theme nor plugin in the folder."
+msgstr "Պանակում գտնվել է WordPress-ի ոճ կամ բաղադրիչ:"
+
+#: src/wordpress/wordpress.cpp:940
+#, c-format
+msgid "Translations folder (%s) doesn’t exist."
+msgstr "Թարգմանության թղթապանակը (%s) գոյություն չունի:"
+
+#: src/wordpress/wordpress_gui.cpp:77
+msgid "<big>Drag and drop <b>theme or plugin folder</b> here</big>\n\n"
+"or use the “Choose folder” button"
+msgstr "<big>Վերցրեք եւ գցեք <b>ոճը կամ բաղադրիչի թղթապանակը</b> այստեղ</big>\n\n"
+"կամ օգտագործեք “Ընտրել թղթապանակ” կոճակը"
+
+#: src/wordpress/wordpress_gui.cpp:79
+msgid "<big>Drag and Drop <b>Theme or Plugin Folder</b> Here</big>\n\n"
+"or use the “Choose Folder” button"
+msgstr "<big>Վերցրեք եւ գցեք <b>ոճը կամ բաղադրիչի թղթապանակը</b> այստեղ</big>\n\n"
+"կամ օգտագործեք “Ընտրել թղթապանակ” կոճակը"
+
+#: src/wordpress/wordpress_gui.cpp:101
+#, c-format
+msgid "Folder “%s”"
+msgstr "“%s” թղթապանակ"
+
+#: src/wordpress/wordpress_gui.cpp:162
+msgid "Work With Files"
+msgstr "Աշխատանք նիշքերի հետ"
+
+#: src/wordpress/wordpress_gui.cpp:162
+msgid "Work with files"
+msgstr "Աշխատանք նիշքերի հետ"
+
+#: src/wordpress/wordpress_gui.cpp:164
+msgid "Connect to Server"
+msgstr "Կապակցվել սպասարկիչին"
+
+#: src/wordpress/wordpress_gui.cpp:164
+msgid "Connect to server"
+msgstr "Կապակցվել սպասարկիչին"
+
+#: src/wordpress/wordpress_gui.cpp:165
+msgid "On This Computer"
+msgstr "Այս համակարգչում"
+
+#: src/wordpress/wordpress_gui.cpp:165
+msgid "On this computer"
+msgstr "Այս համակարգչում"
+
+#: src/wordpress/wordpress_gui.cpp:168
+msgid "Continue"
+msgstr "Շարունակել"
+
+#: src/wordpress/wordpress_gui.cpp:210
+msgid "Choose Folder…"
+msgstr "Ընտրել պանակ…"
+
+#: src/wordpress/wordpress_gui.cpp:210
+msgid "Choose folder…"
+msgstr "Ընտրել պանակ…"
+
+#: src/wordpress/wordpress_gui.cpp:217
+msgid "Create a new translation"
+msgstr "Ստեղծել նոր թարգմանություն"
+
+#: src/wordpress/wordpress_gui.cpp:220
+msgid "Choose this if you want to translate the theme or plugin into your language."
+msgstr "Ընտրեք սա, եթե ցանկանում եք թարգմանել ոճը կամ բաղադրիչը Ձեր լեզվով:"
+
+#: src/wordpress/wordpress_gui.cpp:233
+msgid "Create a POT"
+msgstr "Ստեղծել POT"
+
+#: src/wordpress/wordpress_gui.cpp:235
+msgid "This option is for theme and plugin developers. Poedit will create an empty template (POT) that translations can be based on."
+msgstr "Այս ընտրանքը ոճ եւ բաղադրիչ ստեղծողների համար է: Poedit-ը կստեղծի դատարկ նմուշ (POT)՝ թարգմանության համար:"
+
+#: src/wordpress/wordpress_gui.cpp:248
+msgid "Select the folder with the WordPress theme or plugin"
+msgstr "Ընտրեք WordPress-ի ոճը կամ բաղադրիչի թղթապանակը"
+
+#: src/wordpress/wordpress_gui.cpp:280
+msgid "Enter connection details for your WordPress server. Poedit will retrieve available themes and plugins from it and let you translate directly on the server."
+msgstr "Մուտքագրեք կապակցման մանրամասները ձեր WordPress սպասարկիչի համար: Poedit-ը կստանա մատչելի ոճերը եւ բաղադրիչները ու հնարավորություն կտա Ձեզ թարգմանել անմիջապես սպասարկիչից:"
+
+#: src/wordpress/wordpress_gui.cpp:287
+msgid "Protocol:"
+msgstr "Հաղորդակարգը`"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "FTP (insecure)"
+msgstr "FTP (ոչ անվտանգ)"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "FTP with SSL"
+msgstr "FTP՝ SSL-ով"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "SFTP"
+msgstr "SFTP"
+
+#: src/wordpress/wordpress_gui.cpp:293
+msgid "Choose a recent server"
+msgstr "Ընտրել վերջին սպասարկիչը"
+
+#: src/wordpress/wordpress_gui.cpp:302 src/wordpress/wordpress_gui.cpp:538
+msgid "Recent Servers"
+msgstr "Վերջին սպասարկիչները"
+
+#: src/wordpress/wordpress_gui.cpp:302 src/wordpress/wordpress_gui.cpp:538
+msgid "Recent servers"
+msgstr "Վերջին սպասարկիչները"
+
+#: src/wordpress/wordpress_gui.cpp:306
+msgid "Server:"
+msgstr "Սպասարկիչը`"
+
+#: src/wordpress/wordpress_gui.cpp:310
+msgid "Remote Path:"
+msgstr "Հեռադիր ուղի`"
+
+#: src/wordpress/wordpress_gui.cpp:310
+msgid "Remote path:"
+msgstr "Հեռադիր ուղի`"
+
+#: src/wordpress/wordpress_gui.cpp:312
+msgid "Detected automatically"
+msgstr "Ինքնաբար հայտնաբերված"
+
+#: src/wordpress/wordpress_gui.cpp:315
+msgid "Port:"
+msgstr "Պորտը՝"
+
+#: src/wordpress/wordpress_gui.cpp:321
+msgid "Username:"
+msgstr "Օգտվողի անունը`"
+
+#: src/wordpress/wordpress_gui.cpp:325
+msgid "Password:"
+msgstr "Գաղտնաբառը`"
+
+#: src/wordpress/wordpress_gui.cpp:332
+msgid "Remember my credentials"
+msgstr "Հիշել իմ տվյալները"
+
+#: src/wordpress/wordpress_gui.cpp:333
+msgid "Connect"
+msgstr "Կապակցել"
+
+#: src/wordpress/wordpress_gui.cpp:346
+msgid "Select the plugin or theme to translate:"
+msgstr "Ընտրեք բաղադրիչ կամ ոճը՝ թարգմանելու համար."
+
+#: src/wordpress/wordpress_gui.cpp:398
+msgid "Connecting to WordPress server…"
+msgstr "Կապակցում WordPress-ի սպասարկիչին..."
+
+#: src/wordpress/wordpress_gui.cpp:416
+#, c-format
+msgid "Theme: %s"
+msgstr "Ոճը. %s"
+
+#: src/wordpress/wordpress_gui.cpp:419
+#, c-format
+msgid "Plugin: %s"
+msgstr "Խրվակ՝ %s"
+
+#: src/wordpress/wordpress_gui.cpp:534
+msgid "No Recent Servers"
+msgstr "Վերջին Սպասարկիչներ Չկան"
+
+#: src/wordpress/wordpress_gui.cpp:534
+msgid "No recent servers"
+msgstr "Վերջին սպասարկիչներ չկան"
+
+#: src/wordpress/wordpress_gui.cpp:552
+msgid "Clear Recent Servers"
+msgstr "Մաքրել վերջին սպասարկիչները"
+
+#: src/wordpress/wordpress_gui.cpp:552
+msgid "Clear recent servers"
+msgstr "Մաքրել վերջին սպասարկիչները"
+
+#: src/wordpress/wordpress_gui.cpp:825
+msgid "Failed to extract WordPress information."
+msgstr "Հնարավոր չէ հանել WordPress-ի տեղեկությունը:"
+
+#: src/wordpress/wordpress_gui.cpp:826
+msgid "WordPress error"
+msgstr "WordPress-ի սխալ"
+
+#: src/wordpress/wordpress_gui.cpp:835
+#, c-format
+msgid "Poedit couldn’t understand the content of the folder you selected. This may be a problem with the plugin/theme or it may be Poedit being silly. The error is:\n\n"
+" • %s\n\n"
+"Please email help@poedit.net and we’ll sort it out."
+msgstr "Poedit-ը չկարողացավ հասկանալ նշված թղթապանակի բովանդակությունը: Դա կարող է լինել խնդիր՝ կապված բաղադրիչի/ոճի հետ կամ Poedit-ի պատճառով: Սխալը՝ \n\n"
+" • %s\n\n"
+"Գրեք մեզ help@poedit.net հասցեով:"
+
+#. TRANSLATORS: This is a button that sends an email to support when clicked
+#: src/wordpress/wordpress_gui.cpp:841
+msgid "Email support"
+msgstr "Էլ. փոստով աջակցում"
+
+#: src/wordpress/wordpress_gui.cpp:842
+msgid "View log"
+msgstr "Դիտել մատյանը"
+
+#. TRANSLATORS: This is a button that sends an email to support when clicked
+#: src/wordpress/wordpress_gui.cpp:845
+msgid "Email Support"
+msgstr "Էլ. փոստով աջակցում"
+
+#: src/wordpress/wordpress_gui.cpp:846
+msgid "View Log"
+msgstr "Դիտել մատյանը"
+
+#: src/wordpress/wordpress_gui.cpp:857
+msgid "WordPress Errors Log"
+msgstr "WordPress- սխալների մատյան"
+
+#: src/wordpress/wordpress_gui.cpp:858
+msgid "Please email this log to help@poedit.net. Thank you!"
+msgstr "Խնդրում ենք ուղարկել այս մատյանը help@poedit.net հասցեով: Շնորհակալություն:"
+
+#: src/wordpress/wordpress_gui.cpp:938
+msgid "Analyzing WordPress server…"
+msgstr "WordPress-ի սերվերի ստուգում…"
+
+#: src/wordpress/wordpress_gui.cpp:959
+msgid "Downloading translation data…"
+msgstr "Թարգմանության տվյալննների բեռնում…"
+
+#: src/wordpress/wordpress_gui.cpp:984
+msgid "Unpacking translation data…"
+msgstr "Թարգմանության տվյալների ապափաթեթավորում…"
+
+#: src/wordpress/wordpress_gui.cpp:989
+msgid "Error unpacking downloaded WordPress data."
+msgstr "Սխալ՝ ներբեռնված WordPress-ի տվյալները ապափաթեթավորելիս:"
+
+#: src/wordpress/wordpress_gui.cpp:1014 src/wordpress/wordpress_gui.cpp:1029
+msgid "Analyzing WordPress code…"
+msgstr "Վերլուծում է WordPress-ի կոդը…"
+
+#: src/wordpress/wordpress_gui.cpp:1039
+msgid "WordPress translation file is ready, but there were some non-fatal issues with the corresponding source code."
+msgstr ""
+
+#: src/wx/main_toolbar.cpp:123
 msgid "Sync"
 msgstr "Հմժմ"
 
+#: src/wx/main_toolbar.cpp:124
 msgid "Synchronize the translation with Crowdin"
 msgstr "Համաժամեցնել թարգմանությունը Crowdin-ին"
 
-#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
-#. ("Poedit" here, but please use "%s")
-#, c-format
-msgid "About %s"
-msgstr "%s-ի մասին"
+#: src/wx/main_toolbar.cpp:170
+msgid "Upgrade to Poedit Pro to get additional features and support Poedit's development."
+msgstr "Արդիացրեք Poedit-ը Pro-ի՝ աջակցելու համար Poedit-ի զարգացմանը եւ ստանալու համար լրացուցիչ յուրահատկություններ:"
 
 #. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+#: src/wx_translatable_strings.h:49
 #, c-format
 msgid "%s Preferences"
 msgstr "%s-ի նախապատվություններ"
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
+#: src/wx_translatable_strings.h:60
 #, c-format
 msgctxt "macOS menu item"
 msgid "About %s"
 msgstr "%s-ի մասին"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:64
 msgctxt "macOS menu item"
 msgid "Services"
 msgstr "Ծառայություններ"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#: src/wx_translatable_strings.h:66
 #, c-format
 msgctxt "macOS menu item"
 msgid "Hide %s"
 msgstr "Թաքցնել %s-ը"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:68
 msgctxt "macOS menu item"
 msgid "Hide Others"
 msgstr "Թաքցնել ուրիշները"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:70
 msgctxt "macOS menu item"
 msgid "Show All"
 msgstr "Ցուցադրել բոլորը"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#: src/wx_translatable_strings.h:72
 #, c-format
 msgctxt "macOS menu item"
 msgid "Quit %s"
 msgstr "Փակել %s-ը"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:74
 msgid "Preferences…"
 msgstr "Նախապատվություններ…"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:76
 msgid "Preferences..."
 msgstr "Նախապատվություններ..."
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:78
 msgctxt "macOS menu item"
 msgid "Preferences..."
 msgstr "Նախապատվություններ..."
 
+#: src/wx_translatable_strings.h:92
 msgid "&Apply"
 msgstr "&Գործադրել"
 
+#: src/wx_translatable_strings.h:92
 msgid "Apply"
 msgstr "Գործադրել"
 
+#: src/wx_translatable_strings.h:93
 msgid "&Back"
 msgstr "&Հետ"
 
+#: src/wx_translatable_strings.h:93
 msgid "Back"
 msgstr "Հետ"
 
+#: src/wx_translatable_strings.h:94
 msgid "&Cancel"
 msgstr "&Չեղարկել"
 
+#: src/wx_translatable_strings.h:95
 msgid "&Clear"
 msgstr "&Մաքրել"
 
+#: src/wx_translatable_strings.h:95
 msgid "Clear"
 msgstr "Մաքրել"
 
+#: src/wx_translatable_strings.h:98
 msgid "Copy"
 msgstr "Պատճենել"
 
+#: src/wx_translatable_strings.h:99
 msgid "Cu&t"
 msgstr "Կտրե&լ"
 
+#: src/wx_translatable_strings.h:99
 msgid "Cut"
 msgstr "Կտրել"
 
-msgid "Edit"
-msgstr "Խմբագրել"
-
+#: src/wx_translatable_strings.h:103
 msgid "&Quit"
 msgstr "&Փակել"
 
+#: src/wx_translatable_strings.h:105
 msgid "Help"
 msgstr "Օգնություն"
 
+#: src/wx_translatable_strings.h:106
 msgid "&New"
 msgstr "&Նոր"
 
+#: src/wx_translatable_strings.h:106
 msgid "New"
 msgstr "Նոր"
 
+#: src/wx_translatable_strings.h:107
 msgid "&No"
 msgstr "&Ոչ"
 
+#: src/wx_translatable_strings.h:107
 msgid "No"
 msgstr "Ոչ"
 
+#: src/wx_translatable_strings.h:108
 msgid "&OK"
 msgstr "&Լավ"
 
+#: src/wx_translatable_strings.h:109
 msgid "Open…"
 msgstr "Բացել…"
 
+#: src/wx_translatable_strings.h:110
 msgid "&Open..."
 msgstr "&Բացել..."
 
+#: src/wx_translatable_strings.h:110
 msgid "Open..."
 msgstr "Բացել..."
 
+#: src/wx_translatable_strings.h:111
 msgid "&Paste"
 msgstr "&Տեղադրել"
 
+#: src/wx_translatable_strings.h:111
 msgid "Paste"
 msgstr "Տեղադրել"
 
+#: src/wx_translatable_strings.h:112
 msgid "Preferences"
 msgstr "Նախապատվություններ"
 
+#: src/wx_translatable_strings.h:113
 msgid "&Redo"
 msgstr "&Կրկնակել"
 
+#: src/wx_translatable_strings.h:114
 msgid "Refresh"
 msgstr "Թարմացնել"
 
+#: src/wx_translatable_strings.h:116
 msgid "&Save as"
 msgstr "&Պահել որպես"
 
+#: src/wx_translatable_strings.h:116
 msgid "Save as"
 msgstr "Պահել որպես"
 
+#: src/wx_translatable_strings.h:117
 msgid "Select &All"
 msgstr "Նշել &բոլորը"
 
+#: src/wx_translatable_strings.h:117
 msgid "Select All"
 msgstr "Նշել բոլորը"
 
+#: src/wx_translatable_strings.h:118
 msgid "&Undo"
 msgstr "&Հետարկել"
 
+#: src/wx_translatable_strings.h:119
 msgid "&Yes"
 msgstr "&Այո"
 
+#: src/wx_translatable_strings.h:119
 msgid "Yes"
 msgstr "Այո"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:125
 msgctxt "keyboard key"
 msgid "Alt+"
 msgstr ""
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:127
 msgctxt "keyboard key"
 msgid "Shift+"
 msgstr "Shift+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:129
 msgctxt "keyboard key"
 msgid "Enter"
 msgstr "Enter"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:131
 msgctxt "keyboard key"
 msgid "Up"
 msgstr "Up"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:133
 msgctxt "keyboard key"
 msgid "Down"
 msgstr "Down"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:135
 msgctxt "keyboard key"
 msgid "Left"
 msgstr "Ձախ"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:137
 msgctxt "keyboard key"
 msgid "Right"
 msgstr "Աջ"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+#: src/wx_translatable_strings.h:140
 msgctxt "keyboard key"
 msgid "ctrl"
 msgstr "ctrl"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+#: src/wx_translatable_strings.h:142
 msgctxt "keyboard key"
 msgid "alt"
 msgstr "alt"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+#: src/wx_translatable_strings.h:144
 msgctxt "keyboard key"
 msgid "shift"
 msgstr "shift"
+
+#: src/wx_translatable_strings.h:152
+msgid "Warning: "
+msgstr ""
+

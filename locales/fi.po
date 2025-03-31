@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2024-10-31 12:30+0100\n"
-"PO-Revision-Date: 2024-10-01 10:16\n"
+"POT-Creation-Date: 2025-03-21 15:42+0100\n"
+"PO-Revision-Date: 2025-03-22 10:17\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -17,760 +17,1190 @@ msgstr ""
 "X-Crowdin-File: /locales/poedit.pot\n"
 "X-Crowdin-File-ID: 3\n"
 
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#: src/aboutbox.cpp:135 src/wx_translatable_strings.h:42
+#, c-format
+msgid "About %s"
+msgstr "Tietoja %s-ohjelmasta"
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#: src/aboutbox.cpp:167 src/welcomescreen.cpp:265
+#: src/wx_translatable_strings.h:46
+#, c-format
+msgid "Version %s"
+msgstr "Versio %s"
+
+#: src/aboutbox.cpp:168
+msgid "Based on the open source version →"
+msgstr "Perustuu avoimen lähdekoodin versioon →"
+
+#: src/aboutbox.cpp:174
+msgid "Acknowledgements"
+msgstr "Kiitokset"
+
+#: src/aboutbox.cpp:175
+msgid "License Agreement"
+msgstr "Lisenssisopimus"
+
+#: src/aboutbox.cpp:182 src/prefsdlg.cpp:503
+msgid "Terms of Use"
+msgstr "Käyttöehdot"
+
+#: src/aboutbox.cpp:183
+msgid "Privacy Policy"
+msgstr "Tietosuojakäytäntö"
+
+#: src/aboutbox.cpp:244
+#, c-format
+msgid "Licensed to %s"
+msgstr "Lisenssin haltija: %s"
+
+#: src/aboutbox.cpp:246
+msgid "Free version (please upgrade!)"
+msgstr "Ilmaisversio (päivitä lisenssi!)"
+
+#: src/attentionbar.cpp:83
 msgid "Hide this notification message"
 msgstr "Piilota tämä ilmoitus"
 
+#: src/attentionbar.cpp:291
 msgid "Don’t Show Again"
 msgstr "Älä näytä enää"
 
+#: src/attentionbar.cpp:291
 msgid "Don’t show again"
 msgstr "Älä näytä enää"
 
+#: src/cat_operations.cpp:123
+msgid "Both files must be of the same file format."
+msgstr ""
+
+#: src/cat_update.cpp:93
 #, c-format
 msgid "(New: %i, obsolete: %i)"
 msgstr "(Uusia: %i, vanhentuneita: %i)"
 
-msgid "Collecting source files…"
-msgstr "Kerätään lähdetiedostoja…"
+#: src/cat_update.cpp:98
+msgid "Update Summary"
+msgstr ""
 
-msgid "Extracting translatable strings…"
-msgstr "Poimitaan käännettävät tekstit…"
+#. TRANSLATORS: Title of window showing summary (added/removed strings, issues) of updating translations from sources or POT file
+#: src/cat_update.cpp:98 src/resources/summary.xrc:4
+msgid "Update summary"
+msgstr "Päivityksen yhteenveto"
 
-msgid "Failed to load file with extracted translations."
-msgstr "Poimitut käännökset sisältävän tiedoston lataaminen epäonnistui."
+#: src/cat_update.cpp:100 src/resources/summary.xrc:24
+msgid "Issues"
+msgstr ""
 
-msgid "Merging differences…"
-msgstr "Yhdistetään eroavaisuuksia…"
+#: src/cat_update.cpp:101
+msgid "New Strings"
+msgstr ""
 
+#: src/cat_update.cpp:101 src/resources/summary.xrc:45
+msgid "New strings"
+msgstr "Uudet tekstit"
+
+#: src/cat_update.cpp:102
+msgid "Removed Strings"
+msgstr ""
+
+#: src/cat_update.cpp:102
+msgid "Removed strings"
+msgstr ""
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:105 src/cloud_accounts_ui.cpp:263 src/manager.cpp:404
+#: src/recent_files.cpp:555 src/wx_translatable_strings.h:104
+msgid "File"
+msgstr "Tiedosto"
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:107
+msgid "Line"
+msgstr ""
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:109
+msgid "Issue"
+msgstr ""
+
+#: src/cat_update.cpp:205 src/cat_update.cpp:461
 msgid "Updating translations"
 msgstr "Päivitetään käännöksiä"
 
+#: src/cat_update.cpp:206
+#, c-format
+msgid "Found %d template file supported by Poedit Pro."
+msgid_plural "Found %d template files supported by Poedit Pro."
+msgstr[0] "Löytyi %d Poedit Pron tukema mallitiedosto."
+msgstr[1] "Löytyi %d Poedit Pron tukemaa mallitiedostoa."
+
+#. TRANSLATORS: %s is a filename here, e.g. "mainpage.twig"
+#: src/cat_update.cpp:208
+msgid "Poedit Pro can extract strings from template files, but this functionality isn’t available in the free version. Would you like to upgrade to the Pro version?"
+msgstr "Poedit Pro pystyy poimimaan tekstejä mallipohjatiedostoista, mutta tämä toiminto ei ole käytettävissä ilmaisversiossa. Haluatko päivittää Pro-versioon?"
+
+#: src/cat_update.cpp:211 src/licensing_ui.cpp:691 src/sidebar_pro.cpp:1212
+msgid "Learn More"
+msgstr "Lue lisää"
+
+#: src/cat_update.cpp:211 src/customcontrols.cpp:326 src/licensing_ui.cpp:691
+#: src/sidebar_pro.cpp:1212
+msgid "Learn more"
+msgstr "Lue lisää"
+
+#: src/cat_update.cpp:216
+msgid "Don’t ask again"
+msgstr "Älä kysy enää"
+
+#: src/cat_update.cpp:217
+msgid "Skip templates"
+msgstr "Ohita mallit"
+
+#: src/cat_update.cpp:226
+msgid "Found the following template files:"
+msgstr "Seuraavat mallitiedostot löydetiin:"
+
+#: src/cat_update.cpp:245
+msgid "Don’t Ask Again"
+msgstr "Älä kysy enää"
+
+#: src/cat_update.cpp:246
+msgid "Skip Templates"
+msgstr "Ohita mallit"
+
+#: src/cat_update.cpp:297
+msgid "Collecting source files…"
+msgstr "Kerätään lähdetiedostoja…"
+
+#: src/cat_update.cpp:321
+#, c-format
+msgid "Extracting translatable strings from %s file…"
+msgid_plural "Extracting translatable strings from %s files…"
+msgstr[0] "Poimitaan käännettäviä merkkijonoja %s tiedostosta…"
+msgstr[1] "Poimitaan käännettäviä merkkijonoja %s tiedostosta…"
+
+#: src/cat_update.cpp:348
+#, c-format
+msgid "Failed to extract WordPress metadata from file %s."
+msgstr "WordPress-metadatan poimiminen tiedostosta %s epäonnistui."
+
+#: src/cat_update.cpp:356 src/cat_update.cpp:492
+msgid "Failed to load file with extracted translations."
+msgstr "Poimitut käännökset sisältävän tiedoston lataaminen epäonnistui."
+
+#: src/cat_update.cpp:380
+#, c-format
+msgid "In: %s"
+msgstr "Tiedosto: %s"
+
+#: src/cat_update.cpp:387 src/edframe.cpp:1778
+msgid "Source code not available."
+msgstr "Lähdekoodi ei ole käytettävissä."
+
+#: src/cat_update.cpp:388 src/edframe.cpp:1782
+msgid "Translations couldn’t be updated from the source code, because no code was found in the location specified in the file’s Properties."
+msgstr "Käännösten päivittäminen lähdekoodista ei onnistunut, koska tiedoston ominaisuuksissa annetusta sijainnista ei löytynyt koodia."
+
+#: src/cat_update.cpp:392
+msgid "Permission denied."
+msgstr "Lupa evätty."
+
+#: src/cat_update.cpp:393
+msgid "You don’t have permission to read source code files from the location specified in the file’s Properties."
+msgstr "Sinulla ei ole tarvittavia oikeuksia lukea lähdekooditiedostoja tiedoston asetuksissa määritellystä sijainnista."
+
+#. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
+#: src/cat_update.cpp:398
+msgid "If you previously denied access to your files, you can allow it in System Settings > Privacy & Security > Files & Folders."
+msgstr "Mikäli olet aiemmin estänyt tiedostoidesi käyttöoikeuden, voit myöntää sen Järjestelmäasetusten kohdasta Suojaus ja yksityisyys > Yksityisyys > Tiedostot ja kansiot."
+
+#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
+#: src/cat_update.cpp:403
+msgid "If you previously denied access to your files, you can allow it in System Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr "Mikäli olet aikaisemmin estänyt pääsyn tiedostoihisi, voit sallia sen kohdasta Järjestelmäasetukset > Suojaus ja yksityisyys > Yksityisyys > Tiedostot ja kansiot."
+
+#: src/cat_update.cpp:409
+msgid "Failed to extract strings from source code."
+msgstr ""
+
+#: src/cat_update.cpp:443 src/edapp.cpp:1186 src/edframe.cpp:952
+#: src/edframe.cpp:2955
 #, c-format
 msgid "The file “%s” couldn’t be opened."
 msgstr "Tiedostoa \"%s\" ei voitu avata."
 
-msgid "Invalid file"
-msgstr "Virheellinen tiedosto"
+#: src/cat_update.cpp:481
+msgid "Determining differences…"
+msgstr ""
 
+#: src/cat_update.cpp:489 src/cat_update.cpp:547
+msgid "Merging differences…"
+msgstr "Yhdistetään eroavaisuuksia…"
+
+#: src/cat_update.cpp:502
+msgid "Translation file is already up to date, no changes to strings were made."
+msgstr ""
+
+#: src/cat_update.cpp:508
+#, c-format
+msgid "Translation file was updated with %s change."
+msgid_plural "Translation file was updated with %s changes."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/cat_update.cpp:511
+msgid "New strings to translate:"
+msgstr ""
+
+#: src/cat_update.cpp:512
+msgid "Removed strings (no longer used):"
+msgstr ""
+
+#: src/cat_update.cpp:517
+msgid "Template files skipped (Pro-only):"
+msgstr ""
+
+#: src/cat_update.cpp:605
+#, c-format
+msgid "%d issue with the source strings was detected."
+msgid_plural "%d issues with the source strings were detected."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/cat_update.cpp:632
+msgid "View Details…"
+msgstr ""
+
+#: src/cat_update.cpp:632
+msgid "View details…"
+msgstr ""
+
+#: src/catalog.cpp:125
 #, c-format
 msgid "Malformed header: “%s”"
 msgstr "Vääränmuotoinen otsake: ”%s”"
 
+#: src/catalog.cpp:588
 msgid "PO Translation Files"
 msgstr "PO-käännöstiedostot"
 
+#: src/catalog.cpp:590
 msgid "POT Translation Templates"
 msgstr "POT-käännöspohjat"
 
+#: src/catalog.cpp:592
 msgid "XLIFF Translation Files"
 msgstr "XLIFF-käännöstiedostot"
 
+#: src/catalog.cpp:594
+msgid "Xcode Localization Catalog"
+msgstr ""
+
+#: src/catalog.cpp:596
 msgid "JSON Translation Files"
 msgstr "JSON-käännöstiedostot"
 
 #. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+#: src/catalog.cpp:599
 msgid "Flutter Translation Files"
 msgstr "Flutter-käännöstiedostot"
 
+#: src/catalog.cpp:608
 msgid "All Translation Files"
 msgstr "Kaikki käännöstiedostot"
 
+#: src/catalog.cpp:1152
 msgid "The file is in a format not recognized by Poedit."
 msgstr "Tiedosto on muodossa, jota Poedit ei tunnista."
 
-msgid ""
-"This JSON file isn’t a translations file and cannot be edited in Poedit."
-msgstr ""
-"Tämä JSON-tiedosto ei ole käännöstiedosto eikä sitä voida muokata Poeditillä."
+#: src/catalog_json.cpp:91
+msgid "This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgstr "Tämä JSON-tiedosto ei ole käännöstiedosto eikä sitä voida muokata Poeditillä."
 
+#: src/catalog_json.cpp:140
 #, c-format
 msgid "Reading file content failed with the following error: %s"
 msgstr "Tiedoston sisällön luku epäonnistui: %s"
 
+#: src/catalog_json.cpp:151 src/catalog_po.cpp:1142 src/catalog_xliff.cpp:556
 #, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
+msgid "File “%s” is read-only and cannot be saved.\n"
 "Please save it under different name."
-msgstr ""
-"Tiedostoa ”%s” voidaan vain lukea, mutta ei tallentaa.\n"
+msgstr "Tiedostoa ”%s” voidaan vain lukea, mutta ei tallentaa.\n"
 "Tallenna se toisella nimellä."
 
+#: src/catalog_json.cpp:165 src/catalog_po.cpp:1178 src/catalog_po.cpp:1260
+#: src/catalog_po.cpp:1316 src/catalog_po.cpp:1373 src/catalog_po.cpp:1404
+#: src/catalog_po.cpp:1598 src/catalog_xliff.cpp:567 src/edframe.cpp:1339
+#: src/prefsdlg.cpp:757
 #, c-format
 msgid "Couldn’t save file %s."
 msgstr "Tiedostoa %s ei voitu tallentaa."
 
+#: src/catalog_json.cpp:503
 msgid "Screenshots:"
 msgstr "Kuvankaappaukset:"
 
+#: src/catalog_po.cpp:130
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
 msgstr[0] "%i rivi tiedostosta ”%s” ei latautunut oikein."
 msgstr[1] "%i riviä tiedostosta ”%s” ei latautunut oikein."
 
+#: src/catalog_po.cpp:145
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "Rivi %d tiedostossa ”%s” on vioittunut (%s-data ei ole kelvollista)."
 
+#: src/catalog_po.cpp:352
 msgid "Broken PO file: singular form msgstr used together with msgid_plural"
-msgstr ""
-"Rikkinäinen PO-tiedosto: yksikkomuotoista msgstr:ää käytetty yhdessä "
-"msgid_plural:in kanssa"
+msgstr "Rikkinäinen PO-tiedosto: yksikkomuotoista msgstr:ää käytetty yhdessä msgid_plural:in kanssa"
 
+#: src/catalog_po.cpp:404
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
-msgstr ""
-"Rikkinäinen PO-tiedosto: monikkomuotoista msgstr:ää käytetty ilman "
-"msgid_plural:ia"
+msgstr "Rikkinäinen PO-tiedosto: monikkomuotoista msgstr:ää käytetty ilman msgid_plural:ia"
 
+#: src/catalog_po.cpp:926 src/catalog_po.cpp:940 src/catalog_po.cpp:953
+#: src/catalog_po.cpp:965
 msgid "Couldn’t load the file, it is probably damaged."
 msgstr "Tiedostoa ei voitu ladata. Se on todennäköisesti vioittunut."
 
-msgid ""
-"There were errors when loading the file. Some data may be missing or "
-"corrupted as the result."
-msgstr ""
-"Tiedostoa ladattaessa kohdattiin virheitä. Osa tiedosta saattaa sen "
-"seurauksena puuttua tai olla vioittunutta."
+#: src/catalog_po.cpp:945
+msgid "There were errors when loading the file. Some data may be missing or corrupted as the result."
+msgstr "Tiedostoa ladattaessa kohdattiin virheitä. Osa tiedosta saattaa sen seurauksena puuttua tai olla vioittunutta."
 
-msgid ""
-"There was a problem formatting the file nicely (but it was saved all right)."
+#: src/catalog_po.cpp:1269
+msgid "There was a problem formatting the file nicely (but it was saved all right)."
 msgstr "Tiedoston muotoilemisessa oli ongelma (mutta sen tallennus onnistui)."
 
+#: src/catalog_po.cpp:1521
 #, c-format
-msgid ""
-"The file couldn’t be saved in “%s” charset as specified in translation "
-"settings.\n"
-"\n"
+msgid "The file couldn’t be saved in “%s” charset as specified in translation settings.\n\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
-msgstr ""
-"Tiedostoa ei voitu tallentaa katalogin ominaisuuksissa on määriteltyssä ”%s”-"
-"merkistössä.\n"
-"\n"
-"Se tallennettiin sen sijaan UTF-8-muodossa ja asetusta muutettiin "
-"vastaavasti."
+msgstr "Tiedostoa ei voitu tallentaa katalogin ominaisuuksissa on määriteltyssä ”%s”-merkistössä.\n\n"
+"Se tallennettiin sen sijaan UTF-8-muodossa ja asetusta muutettiin vastaavasti."
 
+#: src/catalog_po.cpp:1523 src/edframe.cpp:3221
 msgid "Error saving file"
 msgstr "Virhe tallennettaessa tiedostoa"
 
+#: src/catalog_po.cpp:1674
 #, c-format
 msgid "“%s” is not a valid POT file."
 msgstr "”%s” ei ole kelvollinen POT-tiedosto."
 
+#: src/catalog_xcloc.cpp:85 src/catalog_xcloc.cpp:88
+msgid "Unexpectedly missing content in the XCLOC file."
+msgstr ""
+
+#: src/catalog_xcloc.cpp:99
+msgid "Saving in a different location is not supported for XCLOC files."
+msgstr ""
+
+#: src/catalog_xliff.cpp:473
 #, c-format
 msgid "Error while loading XLIFF file: %s"
 msgstr "Virhe ladattaessa XLIF-tiedostoa: %s."
 
+#: src/catalog_xliff.cpp:518
 #, c-format
 msgid "unsupported version (%s)"
 msgstr "ei-tuettu versio (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
+#: src/catalog_xliff.cpp:679 src/catalog_xliff.cpp:866
 msgid "Broken markup in translation string."
 msgstr "Käännöstekstissä on merkkausvirhe."
 
-msgid "Add Account"
-msgstr "Lisää tili"
+#: src/cloud_accounts_ui.cpp:82
+msgid "Connect Poedit with supported cloud localization platforms to seamlessly sync translations managed on them."
+msgstr "Yhdistä Poedit tuettuihin pilvilokalisointialustoihin käännösten saumatonta synkronointia ja hallintaa varten."
 
-msgid "Add account"
-msgstr "Lisää tili"
-
-#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
-#, c-format
-msgid "Learn more about %s"
-msgstr "Lisätietoja palvelusta %s"
-
-msgid ""
-"Connect Poedit with supported cloud localization platforms to seamlessly "
-"sync translations managed on them."
-msgstr ""
-"Yhdistä Poedit tuettuihin pilvilokalisointialustoihin käännösten saumatonta "
-"synkronointia ja hallintaa varten."
-
+#: src/cloud_accounts_ui.cpp:85 src/welcomescreen.cpp:295
 msgid "How does cloud sync work?"
 msgstr "Miten pilvisynkronointi toimii?"
 
+#: src/cloud_accounts_ui.cpp:96
 msgid "Account"
 msgstr "Tili"
 
+#: src/cloud_accounts_ui.cpp:159
 msgid "(not signed in)"
 msgstr "(ei kirjautunut)"
 
-msgid "File"
-msgstr "Tiedosto"
-
+#: src/cloud_accounts_ui.cpp:353
 msgid "Open cloud translation"
 msgstr "Avaa pilvikäännös"
 
+#: src/cloud_accounts_ui.cpp:365
 msgid "Manage accounts"
 msgstr "Hallitse tilejä"
 
+#: src/cloud_accounts_ui.cpp:374 src/export_html.cpp:77
 msgid "Project:"
 msgstr "Projekti:"
 
+#: src/cloud_accounts_ui.cpp:378 src/export_html.cpp:79
+#: src/resources/prefs.xrc:11 src/resources/prefs.xrc:15
+#: src/resources/properties.xrc:54 src/wordpress/wordpress_gui.cpp:228
+#: src/wordpress/wordpress_gui.cpp:354
 msgid "Language:"
 msgstr "Kieli:"
 
+#: src/cloud_accounts_ui.cpp:433
 msgid "Sign in to Cloud Account"
 msgstr "Kirjaudu pilvitilille"
 
+#: src/cloud_accounts_ui.cpp:433
 msgid "Sign in to cloud account"
 msgstr "Kirjaudu pilvitilille"
 
+#: src/cloud_accounts_ui.cpp:524
 msgid "No translation projects listed in your account."
 msgstr "Tililläsi ei ole käännösprojekteja."
 
+#: src/cloud_accounts_ui.cpp:633 src/crowdin_gui.cpp:347
 msgid "Downloading latest translations…"
 msgstr "Ladataan uusimmat käännökset…"
 
 #. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#: src/cloud_accounts_ui.cpp:729
 #, c-format
 msgid "Sign in to %s"
 msgstr "Kirjaudu palveluun %s"
 
+#: src/cloud_sync.h:99
 msgid "Syncing"
 msgstr "Synkronoidaan"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#: src/cloud_sync.h:116
 #, c-format
 msgid "Uploading translations to %s…"
 msgstr "Tallennetaan käännöksiä palveluun %s…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#: src/cloud_sync.h:168
 #, c-format
 msgid "Uploading translations to %s failed."
 msgstr "Käännösten tallennus palveluun %s epäonnistui."
 
+#: src/cloud_sync.h:169
 msgid "Syncing error"
 msgstr "Synkronointivirhe"
 
+#: src/commentdlg.cpp:48
 msgid "Add"
 msgstr "Lisää"
 
+#: src/crowdin_client.cpp:144
 msgid "Unknown Crowdin error."
 msgstr "Tuntematon Crowdin-virhe."
 
+#: src/crowdin_client.cpp:154
 msgid "Not authorized, please sign in again."
 msgstr "Ei valtuutusta; kirjaudu uudelleen."
 
+#. TRANSLATORS: Crowdin has string-based and file-based project kinds (see https://support.crowdin.com/creating-project/#file-based-project)
+#: src/crowdin_client.cpp:346
+msgid "String-based Crowdin projects are not supported."
+msgstr "String-tyyppisiä Crowdin-projekteja ei tueta."
+
+#: src/crowdin_client.cpp:350
 msgid "Downloading translations is disabled in this project."
 msgstr "Käännösten lataus on poistettu käytöstä tässä projektissa."
 
+#: src/crowdin_gui.cpp:94 src/localazy_gui.cpp:105
 msgid "Sign In"
 msgstr "Kirjaudu"
 
+#: src/crowdin_gui.cpp:94 src/localazy_gui.cpp:105
 msgid "Sign in"
 msgstr "Kirjaudu"
 
+#: src/crowdin_gui.cpp:96 src/localazy_gui.cpp:107
 msgid "Sign Out"
 msgstr "Kirjaudu ulos"
 
+#: src/crowdin_gui.cpp:96 src/localazy_gui.cpp:107
 msgid "Sign out"
 msgstr "Kirjaudu ulos"
 
+#: src/crowdin_gui.cpp:103
 msgid "Learn more about Crowdin"
 msgstr "Lisätietoja Crowdinista"
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool."
-msgstr ""
-"Crowdin on verkkopohjainen lokalisointialusta ja yhteisöllinen "
-"käännöstyökalu."
+#: src/crowdin_gui.cpp:134
+msgid "Crowdin is an online translation management platform and collaborative translation tool. We use Crowdin ourselves to translate Poedit into many languages, and we love it."
+msgstr "Crowdin on online käännösten hallinta-alusta ja yhteistyössä toimiva käännöstyökalu. Hyödynnämme itse Crowdiniä Poeditin käännöksessä useille kielille, ja rakastamme sitä."
 
+#: src/crowdin_gui.cpp:198 src/localazy_gui.cpp:210
 msgid "Waiting for authentication…"
 msgstr "Odotetaan todennusta…"
 
+#: src/crowdin_gui.cpp:199 src/localazy_gui.cpp:211
 msgid "Updating user information…"
 msgstr "Päivitetään käyttäjätietoja…"
 
+#: src/crowdin_gui.cpp:306
 msgid "Sign in to Crowdin"
 msgstr "Kirjaudu Crowdiniin"
 
+#: src/crowdin_gui.cpp:326
 msgid "Syncing with Crowdin failed."
 msgstr "Synkronointi Crowdiniin epäonnistui."
 
+#: src/crowdin_gui.cpp:327
 msgid "Crowdin error"
 msgstr "Crowdin-virhe"
 
+#: src/crowdin_gui.cpp:335
 msgid "Uploading translations…"
 msgstr "Lähetetään käännöksiä…"
 
+#: src/customcontrols.cpp:282 src/wx_translatable_strings.h:98
 msgid "&Copy"
 msgstr "&Kopioi"
 
-msgid "Learn more"
-msgstr "Lue lisää"
-
+#: src/edapp.cpp:510 src/resources/menus.xrc:377 src/resources/menus.xrc:494
+#: src/wx_translatable_strings.h:105
 msgid "&Help"
 msgstr "&Ohje"
 
+#: src/edapp.cpp:800
 msgid "MO files can’t be directly edited in Poedit."
 msgstr "MO-tiedostoja ei voi suoraan muokata Poeditillä."
 
+#: src/edapp.cpp:801
 msgid "Error opening file"
 msgstr "Virhe tiedoston avaamisessa"
 
-msgid ""
-"Please open and edit the corresponding PO file instead. When you save it, "
-"the MO file will be updated as well."
-msgstr ""
-"Avaa ja muokkaa sen sijaan vastaavaa PO-tiedostoa. Kun se tallennetaan, MO-"
-"tiedosto päivittyy samalla."
+#: src/edapp.cpp:803
+msgid "Please open and edit the corresponding PO file instead. When you save it, the MO file will be updated as well."
+msgstr "Avaa ja muokkaa sen sijaan vastaavaa PO-tiedostoa. Kun se tallennetaan, MO-tiedosto päivittyy samalla."
 
+#: src/edapp.cpp:844
 msgid "don’t delete temporary files (for debugging)"
 msgstr "älä poista tilapäistiedostoja (vianjäljitystä varten)"
 
+#: src/edapp.cpp:846
 msgid "handle a poedit:// URI"
 msgstr "käsittele poedit://-osoite"
 
+#: src/edapp.cpp:848
 msgid "go to item at given line number"
 msgstr "siirry annetulla rivillä olevaan kohtaan"
 
+#: src/edapp.cpp:871
 msgid "Failed to communicate with Poedit process."
 msgstr "Kommunikointi Poedit-prosessin kanssa epäonnistui."
 
+#: src/edapp.cpp:993 src/edapp.cpp:998
 #, c-format
 msgid "Unhandled exception occurred: %s"
 msgstr "Tapahtui käsittelemätön poikkeus: %s"
 
+#: src/edapp.cpp:1156
 msgid "Select translation template"
 msgstr "Valitse käännösmalli"
 
+#: src/edapp.cpp:1187 src/edframe.cpp:953 src/edframe.cpp:2687
+#: src/edframe.cpp:2956
+msgid "Invalid file"
+msgstr "Virheellinen tiedosto"
+
+#: src/edapp.cpp:1220 src/wordpress/wordpress_gui.cpp:137
+msgid "WordPress"
+msgstr "WordPress"
+
+#: src/edapp.cpp:1271 src/edframe.cpp:2859
 msgid "Select translation file"
 msgstr "Valitse käännöstiedosto"
 
+#: src/edapp.cpp:1373
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit on helppokäyttöinen käännöseditori."
 
+#: src/edframe.cpp:445
 msgid "You can’t drop more than one file on Poedit window."
 msgstr "Poedit-ikkunaan voi pudottaa vain yhden tiedoston."
 
+#: src/edframe.cpp:452
 #, c-format
 msgid "File “%s” is not a translation file."
 msgstr "Tiedosto ”%s” ei ole käännöstiedosto."
 
+#: src/edframe.cpp:459 src/recent_files.cpp:349
 #, c-format
 msgid "File “%s” doesn’t exist."
 msgstr "Tiedostoa ”%s” ei ole olemassa."
 
+#: src/edframe.cpp:476
 msgid "Poedit"
 msgstr "Poedit"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
+#: src/edframe.cpp:890
 #, c-format
-msgid ""
-"Spellchecking is disabled, because the dictionary for %s isn’t installed."
-msgstr ""
-"Oikeinkirjoituksen tarkistus on poissa käytöstä, koska kielelle %s ei ole "
-"asennettu sanakirjaa."
+msgid "Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgstr "Oikeinkirjoituksen tarkistus on poissa käytöstä, koska kielelle %s ei ole asennettu sanakirjaa."
 
+#: src/edframe.cpp:894
 msgid "Install"
 msgstr "Asenna"
 
+#: src/edframe.cpp:986 src/edframe.cpp:1161
 #, c-format
 msgid "The file “%s” has been changed by another application."
 msgstr "Toinen sovellus on muuttanut tiedostoa “%s”."
 
+#: src/edframe.cpp:987 src/edframe.cpp:991
 msgid "Reload file"
 msgstr "Lataa tiedosto uudelleen"
 
-msgid ""
-"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
-"be lost if you do."
-msgstr ""
-"Haluatko ladata tiedoston uudelleen levyltä? Poeditin tallentamattomat "
-"muokkaukset menetetään, jos teet niin."
+#: src/edframe.cpp:990
+msgid "Do you want to reload the file from disk? Your unsaved edits in Poedit will be lost if you do."
+msgstr "Haluatko ladata tiedoston uudelleen levyltä? Poeditin tallentamattomat muokkaukset menetetään, jos teet niin."
 
+#. TRANSLATORS: Button next to a QA warning: causes the warning to be dismissed
+#: src/edframe.cpp:991 src/editing_area.cpp:325 src/editing_area.cpp:377
 msgid "Ignore"
 msgstr "Ohita"
 
+#: src/edframe.cpp:991
 msgid "Reload File"
 msgstr "Lataa tiedosto uudelleen"
 
+#: src/edframe.cpp:1095
 msgid "The file has been modified. Do you want to save changes?"
 msgstr "Tiedostoa on muokattu. Haluatko tallentaa muutokset?"
 
+#: src/edframe.cpp:1096
 msgid "Save changes"
 msgstr "Tallenna muutokset"
 
+#: src/edframe.cpp:1099
 msgid "Your changes will be lost if you don’t save them."
 msgstr "Muutokset menetetään, ellet tallenna niitä."
 
+#: src/edframe.cpp:1102 src/edframe.cpp:1162 src/sidebar_terminology.cpp:70
+#: src/wx_translatable_strings.h:115
 msgid "Save"
 msgstr "Tallenna"
 
+#: src/edframe.cpp:1104
 msgid "Do&n’t save"
 msgstr "&Älä tallenna"
 
+#: src/edframe.cpp:1106
 msgid "Don’t Save"
 msgstr "Älä tallenna"
 
+#: src/edframe.cpp:1165
 msgid "The changes made by the other application will be lost if you save."
 msgstr "Toisen sovelluksen tekemät muutokset menetetään, jos tallennat."
 
+#: src/edframe.cpp:1166 src/edframe.cpp:2268 src/licensing_ui.cpp:284
+#: src/prefsdlg.cpp:770 src/prefsdlg.cpp:1103 src/resources/comment.xrc:41
+#: src/resources/manager.xrc:63 src/sidebar_terminology.cpp:73
+#: src/wx_translatable_strings.h:94
 msgid "Cancel"
 msgstr "Peruuta"
 
+#: src/edframe.cpp:1166
 msgid "Save Anyway"
 msgstr "Tallenna silti"
 
+#: src/edframe.cpp:1166
 msgid "Save anyway"
 msgstr "Tallenna silti"
 
+#: src/edframe.cpp:1219
 msgid "Save as…"
 msgstr "Tallenna nimellä…"
 
+#: src/edframe.cpp:1268
 msgid "Compile to…"
 msgstr "Muunna…"
 
+#: src/edframe.cpp:1271
 msgid "Compiled Translation Files"
 msgstr "Muunnetut käännöstiedostot"
 
+#: src/edframe.cpp:1312
 msgid "Export to HTML…"
 msgstr "Vie HTML-tiedostoon…"
 
+#: src/edframe.cpp:1315
 msgid "HTML Files"
 msgstr "HTML-tiedostot"
 
+#: src/edframe.cpp:1330
+msgid "Exporting to HTML"
+msgstr "Vienti HTML-tiedostoon"
+
+#: src/edframe.cpp:1364
+msgid "Export to Excel"
+msgstr "Vie Excel-tiedostoon"
+
+#: src/edframe.cpp:1367 src/edframe.cpp:1401
+msgid "Excel Files"
+msgstr "Excel-tiedostot"
+
+#: src/edframe.cpp:1379
+msgid "Exporting to Excel"
+msgstr "Vienti Excel-tiedostoon"
+
+#: src/edframe.cpp:1398
+msgid "Import from Excel"
+msgstr "Tuo Excel-tiedostosta"
+
+#: src/edframe.cpp:1423
+msgid "Importing from Excel"
+msgstr "Tuonti Excel-tiedostosta"
+
+#. TRANSLATORS: %s is filename of Excel file
+#: src/edframe.cpp:1440
 #, c-format
-msgid "In: %s"
-msgstr "Tiedosto: %s"
+msgid "The “%s” file does not appear to contain any translations intended for this file."
+msgstr "Tiedosto \"%s\" ei vaikuta sisältävän tälle tiedostolle tarkoitettuja käännöksiä."
 
-msgid "Source code not available."
-msgstr "Lähdekoodi ei ole käytettävissä."
+#: src/edframe.cpp:1445
+msgid "No translations were updated from the Excel file."
+msgstr "Käännöksiä ei päivitetty Excel-tiedostosta."
 
+#. TRANSLATORS: %s is a (formatted) number here
+#: src/edframe.cpp:1452
+#, c-format
+msgid "%s string was updated from the Excel file."
+msgid_plural "%s strings were updated from the Excel file."
+msgstr[0] "%s merkkijono päivitettiin Excel-tiedostosta."
+msgstr[1] "%s merkkijonoa päivitettiin Excel-tiedostosta."
+
+#: src/edframe.cpp:1456
+msgid "Translations updated:"
+msgstr "Päivitetyt käännökset:"
+
+#: src/edframe.cpp:1457
+msgid "Strings matched in translation file:"
+msgstr "Käännöstiedostoon kohdistetut merkkijonot:"
+
+#: src/edframe.cpp:1458
+msgid "Excel rows processed:"
+msgstr "Käsitellyt Excel-rivit:"
+
+#: src/edframe.cpp:1779
 msgid "Updating failed"
 msgstr "Päivitys epäonnistui"
 
-msgid ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the file’s Properties."
+#: src/edframe.cpp:1852
+msgid "Open reference file"
 msgstr ""
-"Käännösten päivittäminen lähdekoodista ei onnistunut, koska tiedoston "
-"ominaisuuksissa annetusta sijainnista ei löytynyt koodia."
 
-msgid "Permission denied."
-msgstr "Lupa evätty."
+#: src/edframe.cpp:1883 src/resources/menus.xrc:267
+msgid "Update from &POT File…"
+msgstr "Päivitä &POT-tiedostosta…"
 
-msgid ""
-"You don’t have permission to read source code files from the location "
-"specified in the file’s Properties."
+#: src/edframe.cpp:1883 src/resources/menus.xrc:266
+msgid "Update from &POT file…"
+msgstr "Päivitä &POT-tiedostosta…"
+
+#: src/edframe.cpp:1887
+msgid "Update from Reference File…"
 msgstr ""
-"Sinulla ei ole tarvittavia oikeuksia lukea lähdekooditiedostoja tiedoston "
-"asetuksissa määritellystä sijainnista."
 
-#. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Settings > Privacy & Security > Files & Folders."
+#: src/edframe.cpp:1887
+msgid "Update from reference file…"
 msgstr ""
-"Mikäli olet aiemmin estänyt tiedostoidesi käyttöoikeuden, voit myöntää sen "
-"Järjestelmäasetusten kohdasta Suojaus ja yksityisyys > Yksityisyys > "
-"Tiedostot ja kansiot."
 
-#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
-msgstr ""
-"Mikäli olet aikaisemmin estänyt pääsyn tiedostoihisi, voit sallia sen "
-"kohdasta Järjestelmäasetukset > Suojaus ja yksityisyys > Yksityisyys > "
-"Tiedostot ja kansiot."
-
-msgid "Translation entries in the file are probably incorrect."
-msgstr "Tiedoston käännösviestit ovat luultavasti virheellisiä."
-
-msgid "Updating the file failed. Click on 'Details >>' for details."
-msgstr ""
-"Tiedoston päivitys epäonnistui. Valitse ”Lisää >>” saadaksesi lisätietoja."
-
-msgid "Open translation template"
-msgstr "Avaa käännöspohja"
-
+#: src/edframe.cpp:2020
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "Käännöksestä löytyi %d ongelma."
 msgstr[1] "Käännöksestä löytyi %d ongelmaa."
 
+#: src/edframe.cpp:2025 src/edframe.cpp:2071
 msgid "Validation results"
 msgstr "Validoinnin tulokset"
 
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
-"Virheelliset viestit on merkitty listassa punaisella värillä. Tällaisen "
-"viestin valitsemalla näytetään tarkemmat tiedot virheestä."
+#: src/edframe.cpp:2028
+msgid "Entries with errors were marked in red in the list. Details of the error will be shown when you select such an entry."
+msgstr "Virheelliset viestit on merkitty listassa punaisella värillä. Tällaisen viestin valitsemalla näytetään tarkemmat tiedot virheestä."
 
+#: src/edframe.cpp:2037
 msgid "The file was saved safely."
 msgstr "Tiedosto tallennettiin turvallisesti."
 
-msgid ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
-msgstr ""
-"Tiedosto tallennettiin turvallisesti ja muunnettiin MO-muotoon, mutta se ei "
-"todennäköisesti toimi oikein."
+#: src/edframe.cpp:2040
+msgid "The file was saved safely and compiled into the MO format, but it will probably not work correctly."
+msgstr "Tiedosto tallennettiin turvallisesti ja muunnettiin MO-muotoon, mutta se ei todennäköisesti toimi oikein."
 
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-msgstr ""
-"Tiedosto tallennettiin turvallisesti, mutta sitä ei voida muuntaa MO-muotoon "
-"eikä käyttää."
+#: src/edframe.cpp:2043
+msgid "The file was saved safely, but it cannot be compiled into the MO format and used."
+msgstr "Tiedosto tallennettiin turvallisesti, mutta sitä ei voida muuntaa MO-muotoon eikä käyttää."
 
-msgid ""
-"The file was compiled into the MO format, but it will probably not work "
-"correctly."
-msgstr ""
-"Tiedosto muunnettiin MO-muotoon, mutta se ei todennäköisesti toimi oikein."
+#: src/edframe.cpp:2052
+msgid "The file was compiled into the MO format, but it will probably not work correctly."
+msgstr "Tiedosto muunnettiin MO-muotoon, mutta se ei todennäköisesti toimi oikein."
 
+#: src/edframe.cpp:2056
 msgid "The file cannot be compiled into the MO format and used."
 msgstr "Tiedostoa ei voi muuntaa MO-muotoon eikä sitä voi käyttää."
 
+#: src/edframe.cpp:2070
 msgid "No problems with the translation found."
 msgstr "Käännöksestä ei löytynyt ongelmia."
 
+#: src/edframe.cpp:2080
 #, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural ""
-"The translation is ready for use, but %d entries are not translated yet."
+msgid_plural "The translation is ready for use, but %d entries are not translated yet."
 msgstr[0] "Käännös on käyttövalmis, mutta %d viesti on vielä kääntämättä."
 msgstr[1] "Käännös on käyttövalmis, mutta %d viestiä on vielä kääntämättä."
 
+#: src/edframe.cpp:2085
 msgid "The translation is ready for use."
 msgstr "Käännös on käyttövalmis."
 
+#: src/edframe.cpp:2251
+msgid "Translation Quality Warnings"
+msgstr "Varoitukset käännöksen laadusta"
+
+#: src/edframe.cpp:2254
+msgid "Poedit performs automated quality checks on translations. You can configure which categories of checks are useful for you and disable unwanted ones here."
+msgstr "Poedit tarkastaa käännösten laatua automaattisesti. Voit määritellä, mitkä tarkastustyypit ovat hyödyllisiä ja poistaa käytöstä ne tyypit, joita ei haluta suoritettavan."
+
+#: src/edframe.cpp:2265 src/resources/manager.xrc:55
+#: src/resources/summary.xrc:87 src/sidebar_pro.cpp:1146
+#: src/wx_translatable_strings.h:108
+msgid "OK"
+msgstr "OK"
+
+#: src/edframe.cpp:2510 src/prefsdlg.cpp:484 src/sidebar_pro.cpp:705
+msgid "Contributing translations improves the quality of online suggestions for everybody — the more people do it, the better the suggestions can be. Your translations are submitted anonymously and are available to other translators using Poedit or other CAT tools."
+msgstr "Käännösten lähettäminen voi parantaa verkosta saatavien ehdotusten laatua kaikilla – mitä useampi osaava ihminen lähettää käännöksensä, sitä parempia ehdotukset voivat olla. Käännöksesi lähetetään anonyymisti ja ne ovat toisten Poeditiä tai muita CAT-työkaluja käyttävien kääntäjien saatavilla."
+
+#: src/edframe.cpp:2515
+msgid "Can Poedit contribute your translations of this file to the online translation memory?"
+msgstr "Saako Poedit lähettää tähän tiedostoon tekemäsi käännökset verkossa olevaan käännösmuistiin?"
+
+#. TRANSLATORS: Try to keep this as short as the original. If you can't, break it into two lines.
+#: src/edframe.cpp:2519 src/sidebar_pro.cpp:701
+msgid "Apply to all files I edit"
+msgstr "Sovella kaikkiin tiedostoihin, joita muokkaan"
+
+#: src/edframe.cpp:2520
+msgid "Contribute"
+msgstr "Lähetä"
+
+#: src/edframe.cpp:2527
+msgid "Keep Private"
+msgstr "Pidä yksityisinä"
+
+#: src/edframe.cpp:2527
+msgid "Keep private"
+msgstr "Pidä yksityisinä"
+
+#: src/edframe.cpp:2686
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr "Poedit korjasi automaattisesti tiedoston ”%s” virheellisen sisällön."
 
-msgid ""
-"The file contained duplicate items, which is not allowed in PO files and "
-"would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as needing work and correct "
-"them if necessary."
-msgstr ""
-"Tiedosto sisälsi kahdenkertaisia kohtia, mikä on kiellettyä PO-tiedostoissa "
-"ja estäisi tiedoston käytön. Poedit korjasi ongelman, mutta käännöksestä on "
-"syytä käydä läpi kaikki keskeneräisiksi merkityt viestit ja tarvittaessa "
-"korjata ne."
+#: src/edframe.cpp:2691
+msgid "The file contained duplicate items, which is not allowed in PO files and would prevent the file from being used. Poedit fixed the issue, but you should review translations of any items marked as needing work and correct them if necessary."
+msgstr "Tiedosto sisälsi kahdenkertaisia kohtia, mikä on kiellettyä PO-tiedostoissa ja estäisi tiedoston käytön. Poedit korjasi ongelman, mutta käännöksestä on syytä käydä läpi kaikki keskeneräisiksi merkityt viestit ja tarvittaessa korjata ne."
 
+#: src/edframe.cpp:2707
 msgid "Language of the translation isn’t set."
 msgstr "Käännöksen kieltä ei ole asetettu."
 
+#: src/edframe.cpp:2709
 msgid "Set Language"
 msgstr "Aseta kieli"
 
+#: src/edframe.cpp:2709
 msgid "Set language"
 msgstr "Aseta kieli"
 
 #. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-msgid ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
-msgstr ""
-"Ehdotukset eivät ole käytettävissä, jos käännöksen kieltä ei ole asetettu "
-"oikein. Muut ominaisuudet, kuten monikkomuodot, voivat myös toimia väärin."
+#: src/edframe.cpp:2712 src/edframe.cpp:2728
+msgid "Suggestions are not available if the translation language is not set correctly. Other features, such as plural forms, may be affected as well."
+msgstr "Ehdotukset eivät ole käytettävissä, jos käännöksen kieltä ei ole asetettu oikein. Muut ominaisuudet, kuten monikkomuodot, voivat myös toimia väärin."
 
+#: src/edframe.cpp:2726 src/pretranslate.cpp:508
 msgid "Language of the translation is the same as source language."
 msgstr "Käännöksen kieli on sama kuin lähdekieli."
 
+#: src/edframe.cpp:2729
 msgid "Fix Language"
 msgstr "Korjaa kieli"
 
+#: src/edframe.cpp:2729
 msgid "Fix language"
 msgstr "Korjaa kieli"
 
-msgid ""
-"This file has entries with plural forms, but doesn’t have Plural-Forms "
-"header configured."
-msgstr ""
-"Tässä tiedostossa on monikkomuotoisia viestejä, vaikka Plural-Forms -otsake "
-"on asettamatta."
+#: src/edframe.cpp:2746
+msgid "This file has entries with plural forms, but doesn’t have Plural-Forms header configured."
+msgstr "Tässä tiedostossa on monikkomuotoisia viestejä, vaikka Plural-Forms -otsake on asettamatta."
 
-msgid ""
-"Entries in this file have different plural forms count from what the file’s "
-"Plural-Forms header says"
-msgstr ""
-"Tämän tiedoston viesteillä on eri määrä monikkomuotoja kuin sen Plural-Forms-"
-"otsake kertoo"
+#: src/edframe.cpp:2750
+msgid "Entries in this file have different plural forms count from what the file’s Plural-Forms header says"
+msgstr "Tämän tiedoston viesteillä on eri määrä monikkomuotoja kuin sen Plural-Forms-otsake kertoo"
 
+#: src/edframe.cpp:2759
 msgid "Required header Plural-Forms is missing."
 msgstr "Pakollinen otsake Plural-Forms puuttuu."
 
+#: src/edframe.cpp:2763
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "Kielioppivirhe Plural-Forms -otsakkeessa (”%s”)."
 
+#: src/edframe.cpp:2775
 msgid "Fix the Header"
 msgstr "Korjaa otsake"
 
+#: src/edframe.cpp:2775
 msgid "Fix the header"
 msgstr "Korjaa otsake"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
+#: src/edframe.cpp:2793
 #, c-format
 msgid "Plural forms expression used by the file is unusual for %s."
 msgstr "Tiedostossa käytetty monikkomuotolauseke on epätavallinen kielelle %s."
 
 #. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
+#: src/edframe.cpp:2798
 msgid "Review"
 msgstr "Katselmointi"
 
+#. TRANSLATORS: "original" as in "used in this file originally, as it was when opened"
+#: src/edframe.cpp:2834
+msgid "String IDs (original)"
+msgstr "Merkkijonojen tunnisteet (alkuperäiset)"
+
+#: src/edframe.cpp:2839 src/edframe.cpp:2942 src/edlistctrl.cpp:739
+#: src/export_html.cpp:146
+msgid "unknown language"
+msgstr "tuntematon kieli"
+
+#. TRANSLATORS: "original" as in "used in this file originally, as it was when opened"; "%s" is language name
+#: src/edframe.cpp:2841
+#, c-format
+msgid "%s (original)"
+msgstr "%s (alkuperäinen)"
+
+#: src/edframe.cpp:2853
+msgid "Load from Another File…"
+msgstr "Lataa toisesta tiedostosta…"
+
+#: src/edframe.cpp:2853
+msgid "Load from another file…"
+msgstr "Lataa toisesta tiedostosta…"
+
+#: src/edframe.cpp:2897
 msgid "Would you like to use English for source text?"
 msgstr "Haluatko käyttää englanninkielistä lähdetekstiä?"
 
+#: src/edframe.cpp:2899
 #, c-format
-msgid ""
-"This file uses string IDs instead of source text. Poedit can load English "
-"texts from the “%s” file for you."
-msgstr ""
-"Tämä tiedosto käyttää lähdetekstin sijaan merkkijonojen tunnisteita. Poedit "
-"voi puolestasi ladata englanninkieliset tekstit \"%s\" tiedostosta."
+msgid "This file uses string IDs instead of source text. Poedit can load English texts from the “%s” file for you."
+msgstr "Tämä tiedosto käyttää lähdetekstin sijaan merkkijonojen tunnisteita. Poedit voi puolestasi ladata englanninkieliset tekstit \"%s\" tiedostosta."
 
 #. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+#: src/edframe.cpp:2901
 msgid "Load English"
 msgstr "Lataa englanti"
 
+#: src/edframe.cpp:3034 src/export_html.cpp:103
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
 msgstr "Käännetty: %d/%d (%d %%)"
 
+#: src/edframe.cpp:3038 src/export_html.cpp:105
 #, c-format
 msgid "Remaining: %d"
 msgstr "Jäljellä: %d"
 
+#: src/edframe.cpp:3043
 #, c-format
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "%d virhe"
 msgstr[1] "%d virhettä"
 
+#: src/edframe.cpp:3048 src/export_html.cpp:117
 #, c-format
 msgid "%d entry"
 msgid_plural "%d entries"
 msgstr[0] "%d viesti"
 msgstr[1] "%d viestiä"
 
+#: src/edframe.cpp:3077
 msgid " (unsaved)"
 msgstr " (tallentamaton)"
 
+#: src/edframe.cpp:3118
 msgid " (modified)"
 msgstr " (muokattu)"
 
+#: src/edframe.cpp:3188 src/edframe.cpp:3192
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "Käännösmuistin päivitys epäonnistui: %s"
 
+#: src/edframe.cpp:3220
+#, c-format
+msgid "The file “%s” couldn’t be saved."
+msgstr ""
+
+#: src/edframe.cpp:3330 src/resources/menus.xrc:288
 msgid "Remove same-as-source translations"
 msgstr "Poista lähteestä kopioidut käännökset"
 
-msgid ""
-"Do you want to remove all translations that are idential to the source text?"
+#: src/edframe.cpp:3332
+msgid "Do you want to remove all translations that are idential to the source text?"
 msgstr "Haluatko todella poistaa kaikki lähdetekstiä vastaavat käännökset?"
 
-msgid ""
-"This action will delete any translations that match the source text exactly. "
-"This cannot be undone."
-msgstr ""
-"Tämä poistaa kaikki käännökset, jotka ovat tarkkoja lähdetekstin kopioita. "
-"Toimintoa ei ole mahdollista kumota."
+#: src/edframe.cpp:3333
+msgid "This action will delete any translations that match the source text exactly. This cannot be undone."
+msgstr "Tämä poistaa kaikki käännökset, jotka ovat tarkkoja lähdetekstin kopioita. Toimintoa ei ole mahdollista kumota."
 
+#: src/edframe.cpp:3337 src/edframe.cpp:3364
 msgid "Keep"
 msgstr "Pidä"
 
+#: src/edframe.cpp:3337
 msgid "Remove"
 msgstr "Poista"
 
+#: src/edframe.cpp:3356
 msgid "Purge deleted translations"
 msgstr "Puhdista poistetut käännökset"
 
+#: src/edframe.cpp:3358
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr "Haluatko todella poistaa kaikki käännökset, joita ei enää käytetä?"
 
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"Jos teet puhdistuksen, kaikki poistetuiksi merkityt käännökset hävitetään "
-"lopullisesti. Jos samat alkutekstit tulevaisuudessa palaavat käyttöön, ne "
-"täytyy kääntää uudelleen."
+#: src/edframe.cpp:3360
+msgid "If you continue with purging, all translations marked as deleted will be permanently removed. You will have to translate them again if they are added back in the future."
+msgstr "Jos teet puhdistuksen, kaikki poistetuiksi merkityt käännökset hävitetään lopullisesti. Jos samat alkutekstit tulevaisuudessa palaavat käyttöön, ne täytyy kääntää uudelleen."
 
+#: src/edframe.cpp:3364
 msgid "Purge"
 msgstr "Puhdista"
 
+#: src/edframe.cpp:3432 src/resources/menus.xrc:113
 msgid "Copy from source text"
 msgstr "Kopioi lähdetekstistä"
 
+#: src/edframe.cpp:3434 src/resources/menus.xrc:114
 msgid "Copy from Source Text"
 msgstr "Kopioi lähdetekstistä"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/edframe.cpp:3436 src/edframe.cpp:3443 src/edframe.cpp:3451
+#: src/sidebar.cpp:422 src/sidebar.cpp:835 src/sidebar.cpp:861
+#: src/sidebar.cpp:863 src/wx_translatable_strings.h:123
 msgctxt "keyboard key"
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
+#: src/edframe.cpp:3439 src/resources/menus.xrc:108
 msgid "Clear translation"
 msgstr "Tyhjennä käännös"
 
+#: src/edframe.cpp:3441 src/resources/menus.xrc:109
 msgid "Clear Translation"
 msgstr "Tyhjennä käännös"
 
+#: src/edframe.cpp:3446 src/resources/comment.xrc:4 src/sidebar.cpp:251
 msgid "Edit comment"
 msgstr "Muokkaa kommenttia"
 
+#: src/edframe.cpp:3448 src/sidebar.cpp:254
 msgid "Edit Comment"
 msgstr "Muokkaa kommenttia"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
+#: src/edframe.cpp:3459 src/fileviewer.cpp:100
 msgid "Code Occurrences"
 msgstr "Esiintymät koodissa"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
+#: src/edframe.cpp:3459
 msgid "Code occurrences"
 msgstr "Esiintymät koodissa"
 
+#: src/edframe.cpp:3683
 msgid "Hide Sidebar"
 msgstr "Piilota sivupalkki"
 
+#: src/edframe.cpp:3685 src/resources/menus.xrc:242
 msgid "Show Sidebar"
 msgstr "Näytä sivupalkki"
 
+#: src/edframe.cpp:3716
 msgid "Hide Status Bar"
 msgstr "Piilota tilarivi"
 
+#: src/edframe.cpp:3718 src/resources/menus.xrc:248
 msgid "Show Status Bar"
 msgstr "Näytä tilarivi"
 
+#: src/editing_area.cpp:326
+msgid "Dismiss and ignore the warning."
+msgstr "Kuittaa ja ohita varoitus."
+
+#. TRANSLATORS: Reverse of the "Ignore" button, undoes that action
+#: src/editing_area.cpp:377
+msgid "Don’t ignore"
+msgstr "Älä ohita"
+
+#: src/editing_area.cpp:411
 msgid "String length in characters: translation | source"
 msgstr "Tekstin pituus merkkeinä: käännös | lähde"
 
+#: src/editing_area.cpp:414
 msgid "String length in characters"
 msgstr "Tekstin pituus merkkeinä"
 
+#: src/editing_area.cpp:461 src/editing_area.cpp:787 src/edlistctrl.cpp:663
+#: src/edlistctrl.cpp:717 src/export_html.cpp:143
 msgid "Source text"
 msgstr "Lähdeteksti"
 
+#: src/editing_area.cpp:483 src/editing_area.cpp:853 src/editing_area.cpp:869
 msgid "Singular"
 msgstr "Yksikkö"
 
+#: src/editing_area.cpp:488 src/editing_area.cpp:874
 msgid "Plural"
 msgstr "Monikko"
 
+#: src/editing_area.cpp:534 src/sidebar_terminology.cpp:57
+#: src/sidebar_terminology.cpp:186 src/statistics.cpp:284
+#: src/statistics.cpp:411
 msgid "Translation"
 msgstr "Käännös"
 
+#: src/editing_area.cpp:543
 msgid "Pre-translated"
 msgstr "Esikäännetty"
 
+#: src/editing_area.cpp:566
 msgid "Needs Work"
 msgstr "Keskeneräinen"
 
@@ -782,686 +1212,1269 @@ msgstr "Keskeneräinen"
 #. "needs review" implies that somebody else should review the string after
 #. I am done with it (i.e. consider it good), while "needs work" implies I
 #. need to return to it and finish the translation.
+#: src/editing_area.cpp:566
 msgid "Needs work"
 msgstr "Keskeneräinen"
 
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
+#: src/editing_area.cpp:638
+msgid "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
-msgstr ""
-"POT-tiedostot ovat pelkkiä käännöspohjia, eivätkä itse sisällä käännöksiä.\n"
+msgstr "POT-tiedostot ovat pelkkiä käännöspohjia, eivätkä itse sisällä käännöksiä.\n"
 "Tee käännös luomalla uusi PO-tiedosto käännöspohjan perusteella."
 
+#: src/editing_area.cpp:645
 msgid "Create new translation"
 msgstr "Luo uusi käännös"
 
+#: src/editing_area.cpp:646
 msgid "Make a new translation from this POT file."
 msgstr "Luo uusi käännös tästä POT-tiedostosta."
 
 #. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+#: src/editing_area.cpp:785 src/edlistctrl.cpp:711 src/export_html.cpp:137
 msgid "Source text ID"
 msgstr "Lähdetekstin ID"
 
+#: src/editing_area.cpp:840
 msgid "Everything"
 msgstr "Kaikki"
 
+#: src/editing_area.cpp:845
 #, c-format
 msgid "Form %i"
 msgstr "Muoto %i"
 
+#: src/editing_area.cpp:847
 #, c-format
 msgid "Form %i (unused)"
 msgstr "Muoto %i (käyttämätön)"
 
+#: src/editing_area.cpp:858
 msgid "Zero"
 msgstr "Nolla"
 
+#: src/editing_area.cpp:860
 msgid "One"
 msgstr "Yksi"
 
+#: src/editing_area.cpp:862
 msgid "Two"
 msgstr "Kaksi"
 
+#: src/editing_area.cpp:876
 msgid "Other"
 msgstr "Muut"
 
 #. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#: src/editing_area.cpp:1060
 #, c-format
 msgid "String context: %s"
 msgstr "Merkkijonon konteksti: %s"
 
 #. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#: src/editing_area.cpp:1067
 #, c-format
 msgid "String identifier: %s"
 msgstr "Merkkijonon tunniste: %s"
 
+#: src/editing_area.cpp:1075
 #, c-format
 msgid "%s Format"
 msgstr "%s-muotoilu"
 
 #. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#: src/editing_area.cpp:1075
 #, c-format
 msgid "%s format"
 msgstr "%s-muotoilu"
 
+#: src/edlistctrl.cpp:668 src/edlistctrl.cpp:740 src/export_html.cpp:145
 #, c-format
 msgid "Translation — %s"
 msgstr "Käännös — %s"
 
+#: src/edlistctrl.cpp:672
 msgid "ID"
 msgstr "ID"
 
+#: src/edlistctrl.cpp:716 src/export_html.cpp:142
 #, c-format
 msgid "Source text — %s"
 msgstr "Lähdeteksti — %s"
 
-msgid "unknown language"
-msgstr "tuntematon kieli"
-
+#: src/errors.cpp:84
 #, c-format
 msgid "Network error: %s (%d)"
 msgstr "Verkkovirhe: %s (%d)"
 
+#: src/errors.cpp:93
 msgid "Unknown error"
 msgstr "Tuntematon virhe"
 
-#, c-format
-msgid "Failed command: %s"
-msgstr "Epäonnistunut komento: %s"
+#: src/excel_io.cpp:261 src/excel_io.cpp:298 src/excel_io.cpp:302
+msgid "Failed to create the Excel file."
+msgstr "Excel-tiedoston luonti epäonnistui."
 
+#: src/excel_io.cpp:351 src/excel_io.cpp:395 src/excel_io.cpp:419
+msgid "Failed to import from Excel file."
+msgstr "Excel-tiedoston tuonti epäonnistui."
+
+#: src/excel_io.cpp:428
+msgid "Excel Import"
+msgstr "Excel-tuonti"
+
+#. TRANSLATORS: Shown above a list of columns and their meaning
+#: src/excel_io.cpp:442
+msgid "Import from Excel columns as:"
+msgstr "Tuo Excel-sarakkeet seuraavasti:"
+
+#: src/excel_io.cpp:452
+msgid "ID:"
+msgstr "ID:"
+
+#: src/excel_io.cpp:460
+msgid "Context:"
+msgstr "Konteksti:"
+
+#: src/excel_io.cpp:467
+msgid "Source text ID:"
+msgstr "Lähdetekstin ID:"
+
+#: src/excel_io.cpp:467
+msgid "Source text:"
+msgstr "Lähdeteksti:"
+
+#: src/excel_io.cpp:478
+msgid "Translation:"
+msgstr "Käännös:"
+
+#: src/excel_io.cpp:485 src/sidebar_terminology.cpp:192
+msgid "Import"
+msgstr "Tuo"
+
+#: src/extractors/extractor.cpp:373
 msgid "Failed to merge gettext catalogs."
 msgstr "Gettext-katalogien yhdistäminen epäonnistui."
 
+#: src/fileviewer.cpp:132
 msgid "Open in Editor"
 msgstr "Avaa editorissa"
 
+#: src/fileviewer.cpp:132
 msgid "Open in editor"
 msgstr "Avaa editorissa"
 
-msgid ""
-"No information about this string’s occurrences in the source code is "
-"provided in the file."
+#: src/fileviewer.cpp:256
+msgid "No information about this string’s occurrences in the source code is provided in the file."
 msgstr "Tiedosto ei sisällä tietoa tämän tekstin esiintymistä lähdekoodissa."
 
+#: src/fileviewer.cpp:256
 msgid "No usage information"
 msgstr "Ei käyttötietoja"
 
+#: src/fileviewer.cpp:262
 #, c-format
 msgid "%d code occurrence"
 msgid_plural "%d code occurrences"
 msgstr[0] "%d esiintymä koodissa"
 msgstr[1] "%d esiintymää koodissa"
 
+#: src/fileviewer.cpp:283
 msgid "Source code not found"
 msgstr "Lähdekoodia ei löydy"
 
-msgid ""
-"Poedit cannot show source code where the string is used, because the file is "
-"either not available in the referenced location or it is a symbolic "
-"reference that doesn’t point to a real file."
-msgstr ""
-"Poedit ei voi näyttää lähdekoodia, jossa tekstiä käytetään, koska tiedosto "
-"ei joko ole saatavilla viitatussa paikassa tai se on symbolinen viittaus, "
-"joka ei osoita todelliseen tiedostoon."
+#: src/fileviewer.cpp:284
+msgid "Poedit cannot show source code where the string is used, because the file is either not available in the referenced location or it is a symbolic reference that doesn’t point to a real file."
+msgstr "Poedit ei voi näyttää lähdekoodia, jossa tekstiä käytetään, koska tiedosto ei joko ole saatavilla viitatussa paikassa tai se on symbolinen viittaus, joka ei osoita todelliseen tiedostoon."
 
+#: src/fileviewer.cpp:298
 msgid "File cannot be opened"
 msgstr "Tiedostoa ei voi avata"
 
+#: src/fileviewer.cpp:299
 #, c-format
 msgid "Poedit was unable to open the “%s” file."
 msgstr "Poedit ei onnistunut avaamaan tiedostoa ”%s”."
 
+#: src/findframe.cpp:83 src/findframe.cpp:101 src/findframe.cpp:300
+#: src/resources/menus.xrc:156
 msgid "Find"
 msgstr "Etsi"
 
+#: src/findframe.cpp:102 src/findframe.cpp:300
 msgid "Replace"
 msgstr "Korvaa"
 
 #. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+#: src/findframe.cpp:118
 msgid "Options"
 msgstr "Valinnat"
 
+#: src/findframe.cpp:122
 msgid "Ignore case"
 msgstr "Älä huomioi kirjainkokoa"
 
+#: src/findframe.cpp:123
 msgid "Wrap around"
 msgstr "Jatka alusta"
 
+#: src/findframe.cpp:124
 msgid "Whole words only"
 msgstr "Vain kokonaiset sanat"
 
+#: src/findframe.cpp:125
 msgid "Find in source texts"
 msgstr "Etsi lähdeteksteistä"
 
+#: src/findframe.cpp:126
 msgid "Find in translations"
 msgstr "Etsi käännöksistä"
 
+#: src/findframe.cpp:127
 msgid "Find in comments"
 msgstr "Hae kommenteista"
 
+#: src/findframe.cpp:148 src/licensing_ui.cpp:535 src/titleless_window.cpp:82
+#: src/wx_translatable_strings.h:96
 msgid "Close"
 msgstr "Sulje"
 
+#: src/findframe.cpp:149
 msgid "Replace &All"
 msgstr "Korvaa k&aikki"
 
+#: src/findframe.cpp:149
 msgid "Replace &all"
 msgstr "Korvaa k&aikki"
 
+#: src/findframe.cpp:150
 msgid "&Replace"
 msgstr "&Korvaa"
 
+#: src/findframe.cpp:151
 msgid "< &Previous"
 msgstr "< &Edellinen"
 
+#: src/findframe.cpp:152
 msgid "&Next >"
 msgstr "&Seuraava >"
 
+#: src/findframe.cpp:235
 msgid "String to find"
 msgstr "Etsittävä teksti"
 
+#: src/findframe.cpp:236
 msgid "Replacement string"
 msgstr "Korvaava teksti"
 
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "Ei voida suorittaa ohjelmaa: %s"
+#: src/gexecute.cpp:131 src/gexecute.cpp:146 src/gexecute.cpp:170
+msgid "warning: "
+msgstr "varoitus: "
+
+#: src/gexecute.cpp:171
+msgid "error: "
+msgstr "virhe: "
+
+#: src/glossary.cpp:273 src/glossary.cpp:277
+msgid "Failed to read the CSV file."
+msgstr "CSV-tiedoston luku epäonnistui."
 
 #. TRANSLATORS: placeholder/hint in language controls
+#: src/languagectrl.cpp:138
 msgid "Language name or code"
 msgstr "Kielen nimi tai koodi"
 
+#: src/languagectrl.cpp:210
 msgid "Translation Language"
 msgstr "Käännöksen kieli"
 
+#: src/languagectrl.cpp:217
 msgid "Language of the translation:"
 msgstr "Käännöksen kieli:"
 
+#: src/licensing.cpp:196 src/licensing.cpp:206
+msgid "Invalid license key"
+msgstr "Virheellinen lisenssiavain"
+
+#: src/licensing.cpp:211
+msgid "Subscription expired"
+msgstr "Tilaus on päättynyt"
+
+#: src/licensing.cpp:218
+#, c-format
+msgid "App updates expired, license is only valid for version %s"
+msgstr "Sovelluspäivitykset ovat umpeutuneet. Lisenssi koskee vain versiota %s."
+
+#: src/licensing.cpp:224
+#, c-format
+msgid "License key only valid for older Poedit version (%s)"
+msgstr "Lisenssiavain kelpaa vain vanhemmalle Poeditin versiolle (%s)"
+
+#: src/licensing.cpp:231
+msgid "Maximum allowed activations exceeded"
+msgstr "Aktivointien enimmäismäärä on ylitetty"
+
+#: src/licensing.cpp:236 src/licensing.cpp:263
+#, c-format
+msgid "Unknown activation error (%s)"
+msgstr "Tuntematon aktivointivirhe (%s)"
+
+#: src/licensing_ui.cpp:92 src/licensing_ui.cpp:97 src/licensing_ui.cpp:859
+#: src/licensing_ui.cpp:872 src/licensing_ui.cpp:884
+msgid "Poedit Activation"
+msgstr "Poeditin aktivointi"
+
+#: src/licensing_ui.cpp:92 src/licensing_ui.cpp:102
+#: src/marketing_services.cpp:49 src/wx/main_toolbar.cpp:155
+#: src/wx/main_toolbar.cpp:182
+msgid "Upgrade to Pro"
+msgstr "Päivitä Pro-versioon"
+
+#: src/licensing_ui.cpp:248
+msgid "Please enter your license key:"
+msgstr "Syötä lisenssiavain:"
+
+#: src/licensing_ui.cpp:257
+msgid "You should find your key in the confirmation email you received after you purchased Poedit. Activation requires internet connection."
+msgstr "Löytänet avaimen vahvistussähköpostista, jonka sait Poeditin oston jälkeen. Aktivointi vaatii Internet-yhteyden."
+
+#: src/licensing_ui.cpp:262
+msgid "Retrieve lost license key"
+msgstr "Palauta kadotettu lisenssiavain"
+
+#: src/licensing_ui.cpp:271
+msgid "Buy Online…"
+msgstr "Osta verkossa…"
+
+#: src/licensing_ui.cpp:271
+msgid "Buy online…"
+msgstr "Osta verkossa…"
+
+#: src/licensing_ui.cpp:286 src/licensing_ui.cpp:290
+msgid "Activate"
+msgstr "Aktivoi"
+
+#: src/licensing_ui.cpp:316
+msgid "Activating your license…"
+msgstr "Aktivoidaan lisenssiä…"
+
+#: src/licensing_ui.cpp:327
+msgid "Would you like to hear about new versions?"
+msgstr "Haluatko saada ilmoituksen uusista versioista?"
+
+#: src/licensing_ui.cpp:328
+msgid "We’ll send you an email when a new major version is released. No marketing, no spammy newsletters. Just very rare heads-up about new versions."
+msgstr "Lähetämme sinulle sähköpostia, kun uusi merkittävä versio on julkaistu. Ei markkinointia eikä ärsyttäviä uutiskirjeitä. Vain hyvin harvinaisia ilmoituksia uusista versioista."
+
+#: src/licensing_ui.cpp:331 src/licensing_ui.cpp:690
+msgid "No, thanks"
+msgstr "Ei kiitos"
+
+#: src/licensing_ui.cpp:331
+msgid "Notify me"
+msgstr "Ilmoita minulle"
+
+#: src/licensing_ui.cpp:358
+msgid "Upgrade your Pro license"
+msgstr "Päivitä Pro-lisenssisi"
+
+#: src/licensing_ui.cpp:377
+msgid "Renew your license"
+msgstr "Uudista lisenssisi"
+
+#: src/licensing_ui.cpp:395
+msgid "Add more devices"
+msgstr "Lisää laitteita"
+
+#: src/licensing_ui.cpp:440
+msgid "Thank you!"
+msgstr "Kiitos!"
+
+#: src/licensing_ui.cpp:446
+msgid "Your copy is upgraded to Poedit Pro."
+msgstr "Sovellus on päivitetty Poedit Proksi."
+
+#: src/licensing_ui.cpp:450 src/licensing_ui.cpp:454
+msgid "Manage License"
+msgstr "Lisenssin hallinta"
+
+#: src/licensing_ui.cpp:454
+msgid "Manage license"
+msgstr "Lisenssin hallinta"
+
+#. TRANSLATORS: "Renew" as a verb meaning making something that stopped working (a subscription) work again by prolonging it for another period.
+#: src/licensing_ui.cpp:479 src/licensing_ui.cpp:862 src/licensing_ui.cpp:875
+#: src/licensing_ui.cpp:1161
+msgid "Renew"
+msgstr "Uudista"
+
+#: src/licensing_ui.cpp:497
+msgid "Deactivate"
+msgstr "Deaktivoi"
+
+#: src/licensing_ui.cpp:509
+msgid "Deactivating your license…"
+msgstr "Deaktivoidaan lisenssiä…"
+
+#: src/licensing_ui.cpp:567
+msgid "Upgrade to Poedit Pro to Unlock WordPress Extras"
+msgstr "Päivitä Poeditin Pro-versioon WordPress-lisäominaisuuksien avaamiseksi"
+
+#: src/licensing_ui.cpp:568 src/licensing_ui.cpp:589
+msgid "Upgrade to take advantage of Pro’s extra smarts: it understands WordPress themes and plugins and sets everything up for you. You can focus on translating and don’t have to worry about the technical details. With the free version, you would have to do everything manually yourself."
+msgstr "Päivitä Pro-versioon hyödyntääksesi fiksut lisäominaisuudet: Pro ymmärtää WordPress-teemat ja -liitännäiset, ja valmistelee kaiken puolestasi. Voit keskittyä kääntämiseen miettimättä teknisiä yksityiskohtia. Ilmaisversiolla kaikki tämä on tehtävä käsin."
+
+#: src/licensing_ui.cpp:571
+msgid "Upgrade to Poedit Pro to Unlock Statistics"
+msgstr "Päivitä Poeditin Pro-versioon tilastojen avaamiseksi"
+
+#: src/licensing_ui.cpp:574
+msgid "Upgrade to Poedit Pro to Unlock Online Suggestions"
+msgstr "Päivitä Poeditin Pro-versioon verkosta saatavien ehdotusten avaamiseksi"
+
+#: src/licensing_ui.cpp:577
+msgid "Upgrade to Poedit Pro to Unlock Templates Support"
+msgstr "Päivitä Poeditin Pro-versioon mallituen avaamiseksi"
+
+#: src/licensing_ui.cpp:581
+msgid "Upgrade to Poedit Pro to Unlock Extra Features"
+msgstr "Päivitä Poeditin Pro-versioon lisäominaisuuksien avaamiseksi"
+
+#: src/licensing_ui.cpp:588
+msgid "WordPress extras require upgrade to Poedit Pro"
+msgstr "WordPress-lisäominaisuudet vaativat päivityksen Poeditin Pro-versioon"
+
+#: src/licensing_ui.cpp:593
+msgid "Statistics require upgrade to Poedit Pro"
+msgstr "Tilastot vaativat päivityksen Poeditin Pro-versioon"
+
+#: src/licensing_ui.cpp:596
+msgid "Online TM suggestions require upgrade to Poedit Pro"
+msgstr "Verkossa olevien käännösehdotusten käyttäminen päivityksen Poeditin Pro-versioon"
+
+#: src/licensing_ui.cpp:599
+msgid "Templates support requires upgrade to Poedit Pro"
+msgstr "Mallien tuki vaatii päivityksen Poeditin Pro-versioon"
+
+#: src/licensing_ui.cpp:602
+msgid "Customizable warnings require upgrade to Poedit Pro"
+msgstr "Mukautettavat varoitukset vaativat päivityksen Poeditin Pro-versioon"
+
+#: src/licensing_ui.cpp:605
+msgid "Customizable file extensions require upgrade to Poedit Pro"
+msgstr "Mukautettavat tiedostopäätteet vaativat päivityksen Poeditin Pro-versioon"
+
+#: src/licensing_ui.cpp:608
+msgid "Terminology search and glossaries require upgrade to Poedit Pro"
+msgstr "Termistöhaku ja sanastot vaativat päivityksen Poeditin Pro-versioon"
+
+#: src/licensing_ui.cpp:611
+msgid "Replacing source text requires upgrade to Poedit Pro"
+msgstr "Lähdetekstin korvaus vaatii Poeditin Pro-version"
+
+#: src/licensing_ui.cpp:614
+msgid "Merging translation files requires upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:617
+msgid "Excel import and export require upgrade to Poedit Pro"
+msgstr "Excel-tuonti ja -vienti vaativat päivityksen Poeditin Pro-versioon"
+
+#: src/licensing_ui.cpp:649
+msgid "Purchasing the full version will unlock additional features in Poedit, including:"
+msgstr "Kokoversion ostaminen avaa pääsyn Poeditin lisäominaisuuksiin, muun muassa:"
+
+#: src/licensing_ui.cpp:663
+msgid "Suggestions from online translation memory"
+msgstr "Ehdotuksia verkossa olevasta käännösmuistista"
+
+#: src/licensing_ui.cpp:664
+msgid "Machine translation with DeepL, Google Translate or Microsoft Translator"
+msgstr "Konekäännös DeepL, Google Kääntäjä tai Microsoft-kääntäjä"
+
+#: src/licensing_ui.cpp:665
+msgid "Worry-free setup for WordPress themes and plugins"
+msgstr "WordPress-teemojen ja liitännäisten huoleton asennus"
+
+#: src/licensing_ui.cpp:666
+msgid "Extract strings from Twig or Blade templates"
+msgstr "Poimi merkkijonot Twig- tai Blade-malleista"
+
+#: src/licensing_ui.cpp:667
+msgid "Word count and statistics"
+msgstr "Sanamäärä ja tilastot"
+
+#: src/licensing_ui.cpp:668
+msgid "Excel import and export"
+msgstr "Excel-vienti ja -tuonti"
+
+#: src/licensing_ui.cpp:669
+msgid "Merging translation files for all file formats"
+msgstr ""
+
+#: src/licensing_ui.cpp:670
+msgid "Customizable QA checks and warnings"
+msgstr "Mukautettavat laadunvarmistustarkastukset ja varoitukset"
+
+#: src/licensing_ui.cpp:671
+msgid "Replace source text with translations from another file"
+msgstr "Korvaa lähdeteksti erillisen tiedoston sisältämillä käännöksillä"
+
+#: src/licensing_ui.cpp:672
+msgid "Terminology search and glossaries"
+msgstr "Termistöhaku ja sanastot"
+
+#: src/licensing_ui.cpp:673
+msgid "Personal priority support"
+msgstr "Nopea henkilökohtainen tuotetuki"
+
+#: src/licensing_ui.cpp:679
+msgid "Enter license key"
+msgstr "Syötä lisenssiavain"
+
+#: src/licensing_ui.cpp:689
+msgid "Upgrade…"
+msgstr "Päivitä…"
+
+#: src/licensing_ui.cpp:754 src/licensing_ui.cpp:780
+#, c-format
+msgid "Licensed to: %s"
+msgstr "Lisenssin haltija: %s"
+
+#. TRANSLATORS: %s is replaced at runtime with e.g. "Poedit Pro" or "Poedit Pro+"
+#: src/licensing_ui.cpp:756 src/licensing_ui.cpp:785
+#, c-format
+msgid "License type: %s"
+msgstr "Lisenssityyppi: %s"
+
+#: src/licensing_ui.cpp:780
+msgid "(personal license)"
+msgstr "(henkilökohtainen lisenssi)"
+
+#: src/licensing_ui.cpp:859
+msgid "Subscription expired."
+msgstr "Tilaus on päättynyt."
+
+#: src/licensing_ui.cpp:861
+msgid "Your license was deactivated on this computer because your subscription expired."
+msgstr "Lisenssisi aktivointi on poistettu tältä tietokoneelta, koska tilauksesi on päättynyt."
+
+#: src/licensing_ui.cpp:871
+#, c-format
+msgid "Your license was deactivated on this computer because it only includes app updates up to Poedit version %s."
+msgstr "Lisenssisi aktivointi poistettiin tältä tietokoneelta, koska se sisältää sovelluspäivitykset vain Poeditin versioon %s asti."
+
+#: src/licensing_ui.cpp:872
+msgid "App updates expired."
+msgstr "Sovelluspäivitykset ovat umpeutuneet."
+
+#: src/licensing_ui.cpp:884
+msgid "License deactivated."
+msgstr "Lisenssi deaktivoitu."
+
+#: src/licensing_ui.cpp:886
+msgid "Your license was deactivated on this computer. Please email help@poedit.net if you are not sure why this happened."
+msgstr "Lisenssi on deaktivoitu tällä tietokoneella. Lähetä sähköpostia osoitteeseen help@poedit.net, jos et tiedä, miksi tämä tapahtui."
+
+#. TRANSLATORS: %s is a placeholder for subscription name, e.g. Pro+ or Pro
+#: src/licensing_ui.cpp:1112
+#, c-format
+msgid "Your %s subscription expired."
+msgstr "%s-tilauksesi on päättynyt."
+
+#. TRANSLATORS: "Expired" as in ended e.g. after 1 year
+#: src/licensing_ui.cpp:1117
+msgid "Machine translation service expired."
+msgstr "Konekäännöspalvelu on erääntynyt."
+
+#. TRANSLATORS: "standard" here is the same word as the standalone string "Standard".
+#: src/licensing_ui.cpp:1125
+msgid "Machine translation quality is reduced to standard."
+msgstr "Konekäännösten laatu laskettu normaaliin."
+
+#: src/localazy_client.cpp:385
 msgid "All strings"
 msgstr "Kaikki merkkijonot"
 
+#: src/localazy_client.cpp:404
 msgid "Couldn’t download Localazy project details."
 msgstr "Localazy-projektin tietoja ei voitu ladata."
 
+#: src/localazy_client.cpp:476 src/localazy_client.cpp:490
 msgid "There was an error when uploading translations to Localazy."
 msgstr "Virhe tallennettaessa käännöksiä Localazyyn."
 
+#: src/localazy_gui.cpp:103
 msgid "Projects"
 msgstr "Projektit"
 
-msgid ""
-"Localazy is a highly automated localization platform allowing anyone to "
-"translate their products and content into multiple languages easily."
-msgstr ""
-"Localazy on erittäin automatisoitu lokalisointialusta, jonka avulla kuka "
-"tahansa voi kääntää tuotteensa ja sisällönsä useille kielille helposti."
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#: src/localazy_gui.cpp:115
+#, c-format
+msgid "Learn more about %s"
+msgstr "Lisätietoja palvelusta %s"
 
+#: src/localazy_gui.cpp:146
+msgid "Localazy is a highly automated localization platform allowing anyone to translate their products and content into multiple languages easily."
+msgstr "Localazy on erittäin automatisoitu lokalisointialusta, jonka avulla kuka tahansa voi kääntää tuotteensa ja sisällönsä useille kielille helposti."
+
+#: src/localazy_gui.cpp:241
 msgid "Add Project"
 msgstr "Lisää projekti"
 
+#: src/localazy_gui.cpp:241
 msgid "Add project"
 msgstr "Lisää projekti"
 
+#: src/manager.cpp:117
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - Katalogien hallinta"
 
+#: src/manager.cpp:162 src/prefsdlg.cpp:877
 msgid "Edit…"
 msgstr "Muokkaa…"
 
+#: src/manager.cpp:167
 msgid "Create new translations project"
 msgstr "Luo uusi käännösprojekti"
 
+#: src/manager.cpp:168
 msgid "Delete the project"
 msgstr "Poista projekti"
 
+#: src/manager.cpp:169
 msgid "Edit the project"
 msgstr "Muokkaa projektia"
 
+#: src/manager.cpp:199 src/resources/toolbar.xrc:41 src/statistics.cpp:258
+msgid "Statistics"
+msgstr "Tilastot"
+
+#: src/manager.cpp:200 src/resources/toolbar.xrc:42
+msgid "Show translation statistics"
+msgstr "Näytä käännöstilastot"
+
+#: src/manager.cpp:202
 msgid "Update all"
 msgstr "Päivitä kaikki"
 
+#: src/manager.cpp:203
 msgid "Update all catalogs in the project"
 msgstr "Päivitä projektin kaikki katalogit"
 
+#: src/manager.cpp:405
 msgid "Total"
 msgstr "Yhteensä"
 
+#: src/manager.cpp:406
 msgid "Untrans"
 msgstr "Ei käänn"
 
+#: src/manager.cpp:407
 msgctxt "column/row header"
 msgid "Needs Work"
 msgstr "Keskeneräisiä"
 
+#: src/manager.cpp:408
 msgid "Errors"
 msgstr "Virheet"
 
+#: src/manager.cpp:409
 msgid "Last modified"
 msgstr "Muokattu viimeksi"
 
+#: src/manager.cpp:440 src/propertiesdlg.cpp:478
 msgid "Select directory"
 msgstr "Valitse kansio"
 
+#: src/manager.cpp:460
 msgid "Directories:"
 msgstr "Kansiot:"
 
+#: src/manager.cpp:532
 msgid "<unnamed>"
 msgstr "<nimetön>"
 
+#: src/manager.cpp:570
 #, c-format
 msgid "Do you want to delete project “%s”?"
 msgstr "Haluatko poistaa ”%s”-projektin?"
 
+#: src/manager.cpp:571
 msgid "Delete project"
 msgstr "Poista projekti"
 
+#: src/manager.cpp:574
 msgid "Deleting the project will not delete any translation files."
 msgstr "Projektin poistaminen ei poista käännöstiedostoja."
 
+#: src/manager.cpp:602
 msgid "Confirmation"
 msgstr "Vahvistus"
 
+#: src/manager.cpp:602
 msgid "Update all catalogs in this project?"
 msgstr "Päivitetäänkö projektin kaikki katalogit?"
 
+#: src/manager.cpp:603
 msgid "Performs update from source code on all files in the project."
 msgstr "Suorittaa päivityksen lähdekoodista kaikille projektin tiedostoille."
 
+#: src/manager.cpp:612
+msgid "Updating project catalogs"
+msgstr "Päivitetään projektiluetteloita"
+
+#: src/menus.cpp:138
 msgid "Check for Updates…"
 msgstr "Etsi päivityksiä…"
 
+#: src/menus.cpp:140
 msgid "Catalogs Manager"
 msgstr "Katalogien hallinta"
 
+#: src/menus.cpp:143
+msgid "License…"
+msgstr "Lisenssi…"
+
+#: src/menus.cpp:155
 msgid "&Preferences…"
 msgstr "&Asetukset…"
 
+#: src/menus.cpp:170 src/resources/menus.xrc:95 src/resources/menus.xrc:450
+#: src/wx_translatable_strings.h:102
 msgid "&Edit"
 msgstr "&Muokkaa"
 
+#: src/menus.cpp:190 src/wx_translatable_strings.h:118
 msgid "Undo"
 msgstr "Kumoa"
 
+#: src/menus.cpp:191 src/wx_translatable_strings.h:113
 msgid "Redo"
 msgstr "Tee uudelleen"
 
+#: src/menus.cpp:200
 msgid "Paste and Match Style"
 msgstr "Liitä ja sovita tyyliin"
 
+#: src/menus.cpp:203 src/prefsdlg.cpp:1103 src/sidebar_terminology.cpp:77
+#: src/wx_translatable_strings.h:100
 msgid "Delete"
 msgstr "Poista"
 
+#: src/menus.cpp:212
 msgid "Spelling and Grammar"
 msgstr "Oikeinkirjoitus ja kielioppi"
 
+#: src/menus.cpp:214
 msgid "Show Spelling and Grammar"
 msgstr "Näytä oikeinkirjoitus ja kielioppi"
 
+#: src/menus.cpp:215
 msgid "Check Document Now"
 msgstr "Tarkista dokumentti nyt"
 
+#: src/menus.cpp:217
 msgid "Check Spelling While Typing"
 msgstr "Tarkista oikeinkirjoitus näppäilyn aikana"
 
+#: src/menus.cpp:218
 msgid "Check Grammar With Spelling"
 msgstr "Tarkista kielioppi oikeinkirjoituksen ohella"
 
+#: src/menus.cpp:219
 msgid "Correct Spelling Automatically"
 msgstr "Korjaa oikeinkirjoitus automaattisesti"
 
+#: src/menus.cpp:222
 msgid "Substitutions"
 msgstr "Korvaukset"
 
+#: src/menus.cpp:224
 msgid "Show Substitutions"
 msgstr "Näytä korvaukset"
 
+#: src/menus.cpp:226
 msgid "Smart Copy/Paste"
 msgstr "Älykäs kopiointi/liittäminen"
 
+#: src/menus.cpp:227
 msgid "Smart Quotes"
 msgstr "Älykkäät lainausmerkit"
 
+#: src/menus.cpp:228
 msgid "Smart Dashes"
 msgstr "Älykkäät yhdysmerkit"
 
+#: src/menus.cpp:229
 msgid "Smart Links"
 msgstr "Älykkäät linkit"
 
+#: src/menus.cpp:230
 msgid "Text Replacement"
 msgstr "Tekstin korvaus"
 
+#: src/menus.cpp:233
 msgid "Transformations"
 msgstr "Muunnokset"
 
+#: src/menus.cpp:235
 msgid "Make Upper Case"
 msgstr "Muuta suuraakkosiksi"
 
+#: src/menus.cpp:236
 msgid "Make Lower Case"
 msgstr "Muuta pienaakkosiksi"
 
+#: src/menus.cpp:237
 msgid "Capitalize"
 msgstr "Isot alkukirjaimet"
 
+#: src/menus.cpp:240
 msgid "Speech"
 msgstr "Puhe"
 
+#: src/menus.cpp:242
 msgid "Start Speaking"
 msgstr "Aloita puhuminen"
 
+#: src/menus.cpp:243
 msgid "Stop Speaking"
 msgstr "Lopeta puhuminen"
 
+#: src/menus.cpp:246 src/resources/menus.xrc:177 src/resources/menus.xrc:460
 msgid "&View"
 msgstr "&Näytä"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:252
 msgid "Show Toolbar"
 msgstr "Näytä työkalurivi"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:255
 msgid "Customize Toolbar…"
 msgstr "Mukauta työkaluriviä…"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:258
 msgid "Enter Full Screen"
 msgstr "Siirry koko näytön tilaan"
 
+#: src/menus.cpp:265 src/menus.cpp:296 src/resources/menus.xrc:352
+#: src/resources/menus.xrc:469
 msgid "Window"
 msgstr "Ikkuna"
 
+#: src/menus.cpp:266
 msgid "Minimize"
 msgstr "Pienennä"
 
+#: src/menus.cpp:267
 msgid "Zoom"
 msgstr "Zoomaa"
 
+#: src/menus.cpp:269 src/welcomescreen.cpp:222 src/welcomescreen.cpp:262
 msgid "Welcome to Poedit"
 msgstr "Tervetuloa Poeditiin"
 
+#: src/menus.cpp:274
 msgid "Bring All to Front"
 msgstr "Tuo kaikki eteen"
 
+#: src/prefsdlg.cpp:177
 msgid "Information about the translator"
 msgstr "Tietoja kääntäjästä"
 
+#: src/prefsdlg.cpp:184
 msgid "Name:"
 msgstr "Nimi:"
 
+#: src/prefsdlg.cpp:187
 msgid "Your Name"
 msgstr "Nimesi"
 
+#: src/prefsdlg.cpp:189
 msgid "Email:"
 msgstr "Sähköposti:"
 
+#: src/prefsdlg.cpp:192
 msgid "you@example.com"
 msgstr "osoitteesi@example.com"
 
-msgid ""
-"Your name and email address are only used to set the Last-Translator header "
-"of GNU gettext files."
-msgstr ""
-"Nimeäsi ja sähköpostiosoitettasi käytetään ainoastaan GNU-gettext-"
-"tiedostojen Last-Translator-otsakkeessa."
+#: src/prefsdlg.cpp:195
+msgid "Your name and email address are only used to set the Last-Translator header of GNU gettext files."
+msgstr "Nimeäsi ja sähköpostiosoitettasi käytetään ainoastaan GNU-gettext-tiedostojen Last-Translator-otsakkeessa."
 
+#: src/prefsdlg.cpp:204
 msgid "Editing"
 msgstr "Muokkaus"
 
+#: src/prefsdlg.cpp:207
 msgid "Automatically compile MO file when saving"
 msgstr "Muunna automaattisesti MO-tiedostoksi tallennettaessa"
 
-msgid "Show summary after updating files"
-msgstr "Näytä yhteenveto tiedostojen päivityksen jälkeen"
-
+#: src/prefsdlg.cpp:212
 msgid "Check spelling"
 msgstr "Tarkista oikeinkirjoitus"
 
+#: src/prefsdlg.cpp:214
 msgid "Always change focus to text input field"
 msgstr "Kohdista aina tekstinsyöttökenttään"
 
-msgid ""
-"Never let the list of strings take focus. If enabled, you must use Ctrl-"
-"arrows for keyboard navigation but you can also type text immediately, "
-"without having to press Tab to change focus."
-msgstr ""
-"Älä koskaan kohdista tekstilistaan. Jos tämä on käytössä, siirtymiseen "
-"täytyy käyttää Ctrl-nuolia näppäimistöä käytettäessä, mutta toisaalta "
-"tekstiä voi kirjoittaa välittömästi ilman tarvetta painaa sarkainta "
-"kohdistuksen vaihtamiseksi."
+#: src/prefsdlg.cpp:216
+msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
+msgstr "Älä koskaan kohdista tekstilistaan. Jos tämä on käytössä, siirtymiseen täytyy käyttää Ctrl-nuolia näppäimistöä käytettäessä, mutta toisaalta tekstiä voi kirjoittaa välittömästi ilman tarvetta painaa sarkainta kohdistuksen vaihtamiseksi."
 
+#: src/prefsdlg.cpp:224
 msgid "Appearance"
 msgstr "Ulkoasu"
 
+#: src/prefsdlg.cpp:231
 msgid "Use custom list font:"
 msgstr "Listan fontti:"
 
+#: src/prefsdlg.cpp:234
 msgid "Use custom text fields font:"
 msgstr "Tekstikenttien fontti:"
 
+#: src/prefsdlg.cpp:245
 msgid "Change UI language"
 msgstr "Vaihda käyttöliittymän kieli"
 
 #. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
+#: src/prefsdlg.cpp:255
 msgid "(requires Windows 8 or newer)"
 msgstr "(vaatii Windows 8:n tai uudemman)"
 
+#: src/prefsdlg.cpp:358
 msgid "General"
 msgstr "Yleiset"
 
+#: src/prefsdlg.cpp:380
 msgid "Use translation memory"
 msgstr "Käytä käännösmuistia"
 
+#: src/prefsdlg.cpp:390
 msgid "Manage…"
 msgstr "Hallitse…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
+#: src/prefsdlg.cpp:397
 msgid "When updating from sources"
 msgstr "Päivitettäessä lähteistä"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
+#: src/prefsdlg.cpp:400
 msgid "fuzzy match within the file"
 msgstr "käytä sumeaa täsmäystä tiedoston sisäisesti"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
+#: src/prefsdlg.cpp:402
 msgid "pre-translate from TM"
 msgstr "esikäännä käännösmuistista"
 
-msgid ""
-"Poedit can attempt to fill in new entries from only previous translations in "
-"the file or from your entire translation memory. Using the TM won’t be very "
-"effective if it’s near-empty, but it will get better as you add more "
-"translations to it."
-msgstr ""
-"Poedit voi yrittää täyttää uudet viestit vain tiedoston aiempien käännösten "
-"pohjalta tai koko käännösmuistista. Lähes tyhjän käännösmuistin käyttö ei "
-"ole kovinkaan hyödyllistä, mutta uusien käännösten lisäämisen myötä toiminta "
-"paranee."
+#: src/prefsdlg.cpp:418
+msgid "Poedit can attempt to fill in new entries from only previous translations in the file or from your entire translation memory. Using the TM won’t be very effective if it’s near-empty, but it will get better as you add more translations to it."
+msgstr "Poedit voi yrittää täyttää uudet viestit vain tiedoston aiempien käännösten pohjalta tai koko käännösmuistista. Lähes tyhjän käännösmuistin käyttö ei ole kovinkaan hyödyllistä, mutta uusien käännösten lisäämisen myötä toiminta paranee."
 
+#: src/prefsdlg.cpp:454
+msgid "Use suggestions from online collaborative TM"
+msgstr "Käytä verkossa olevan yhteisesti kootun käännösmuistin ehdotuksia"
+
+#: src/prefsdlg.cpp:469
+msgid "Poedit uses a large online translation memory that includes both contributed human translations and state-of-the-art machine translations."
+msgstr "Poedit käyttää laajaa verkossa olevaa käännösmuistia, joka sisältää sekä ihmisten lisäämiä käännöksiä että korkealaatuisia konekäännöksiä."
+
+#: src/prefsdlg.cpp:472 src/sidebar_pro.cpp:698
+msgid "Contribute my translations to the online TM"
+msgstr "Lähetä käännökseni verkossa olevaan käännösmuistiin"
+
+#: src/prefsdlg.cpp:473 src/sidebar_pro.cpp:699
+msgid "Keep my translations private"
+msgstr "Pidä käännökseni yksityisinä"
+
+#: src/prefsdlg.cpp:474
+msgid "Ask me for each file individually"
+msgstr "Kysy kunkin tiedoston kohdalla erikseen"
+
+#: src/prefsdlg.cpp:492 src/sidebar_pro.cpp:159
+msgid "Change Settings…"
+msgstr "Muuta asetuksia…"
+
+#: src/prefsdlg.cpp:492 src/sidebar_pro.cpp:159
+msgid "Change settings…"
+msgstr "Muuta asetuksia…"
+
+#: src/prefsdlg.cpp:580
 msgid "Stored translations:"
 msgstr "Tallennetut käännökset:"
 
+#: src/prefsdlg.cpp:581
 msgid "Database size on disk:"
 msgstr "Tietokannan koko levyllä:"
 
+#: src/prefsdlg.cpp:596
 msgid "Import Translation Files…"
 msgstr "Tuo käännöstiedostoja…"
 
+#: src/prefsdlg.cpp:596
 msgid "Import translation files…"
 msgstr "Tuo käännöstiedostoja…"
 
+#: src/prefsdlg.cpp:598
 msgid "Import From TMX…"
 msgstr "Tuo TMX-tiedostosta…"
 
+#: src/prefsdlg.cpp:598
 msgid "Import from TMX…"
 msgstr "Tuo TMX-tiedostosta…"
 
+#: src/prefsdlg.cpp:599
 msgid "Export To TMX…"
 msgstr "Vie TMX-tiedostoon…"
 
+#: src/prefsdlg.cpp:599
 msgid "Export to TMX…"
 msgstr "Vie TMX-tiedostoon…"
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+#: src/prefsdlg.cpp:602 src/prefsdlg.cpp:770
 msgid "Reset"
 msgstr "Tyhjennä"
 
+#: src/prefsdlg.cpp:621
 msgid "Select translation files to import"
 msgstr "Valitse tuotavat käännöstiedostot"
 
-msgid "Translation Memory"
-msgstr "Käännösmuisti"
-
-msgid "Importing translations…"
-msgstr "Tuodaan käännöksiä…"
-
-#, c-format
-msgid "Error loading translation file “%s”."
-msgstr "Virhe ladattaessa käännöstiedostoa “%s”."
-
-msgid "Finalizing…"
-msgstr "Viimeistellään…"
-
+#: src/prefsdlg.cpp:654
 msgid "Select TMX files to import"
 msgstr "Valitse tuotavat TMX-tiedostot"
 
+#: src/prefsdlg.cpp:657 src/prefsdlg.cpp:733
 msgid "TMX Files"
 msgstr "TMX-tiedostot"
 
+#: src/prefsdlg.cpp:684
+msgid "Importing translations…"
+msgstr "Tuodaan käännöksiä…"
+
+#: src/prefsdlg.cpp:685
+msgid "Importing translation memory failed."
+msgstr "Käännösmuistin tuonti epäonnistui."
+
+#: src/prefsdlg.cpp:699
 #, c-format
-msgid "Importing translation memory from “%s” failed."
-msgstr "Käännösmuistin tuonti polusta ”%s” epäonnistui."
+msgid "Importing from “%s”…"
+msgstr "Tuodaan lähteestä \"%s\"…"
 
-msgid "Import error"
-msgstr "Tuontivirhe"
+#. TRANSLATORS: %s is a (formatted) number here
+#: src/prefsdlg.cpp:717
+#, c-format
+msgid "%s translation was imported."
+msgid_plural "%s translations were imported."
+msgstr[0] "%s käännös tuotiin."
+msgstr[1] "%s käännöstä tuotiin."
 
+#: src/prefsdlg.cpp:730
 msgid "Export as…"
 msgstr "Vie nimellä…"
 
+#: src/prefsdlg.cpp:745
 msgid "Exporting translations…"
 msgstr "Viedään käännöksiä…"
 
+#: src/prefsdlg.cpp:746
 #, c-format
 msgid "Exporting translation memory to “%s” failed."
 msgstr "Käännösmuistin vienti polkuun ”%s” epäonnistui."
 
-msgid "Export error"
-msgstr "Vientivirhe"
-
+#: src/prefsdlg.cpp:764
 msgid "Reset translation memory"
 msgstr "Tyhjennä käännösmuisti"
 
+#: src/prefsdlg.cpp:765
 msgid "Are you sure you want to reset the translation memory?"
 msgstr "Haluatko varmasti tyhjentää käännösmuistin?"
 
-msgid ""
-"Resetting the translation memory will irrevocably delete all stored "
-"translations from it. You can’t undo this operation."
-msgstr ""
-"Käännösmuistin tyhjentäminen tuhoaa kaikki sen sisältämät käännökset "
-"peruuttamattomasti. Tätä toimenpidettä ei voi perua."
+#: src/prefsdlg.cpp:766
+msgid "Resetting the translation memory will irrevocably delete all stored translations from it. You can’t undo this operation."
+msgstr "Käännösmuistin tyhjentäminen tuhoaa kaikki sen sisältämät käännökset peruuttamattomasti. Tätä toimenpidettä ei voi perua."
 
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
+#: src/prefsdlg.cpp:808
 msgid "TM"
 msgstr "Muisti"
 
-msgid ""
-"Source code extractors are used to find translatable strings in the source "
-"code files and extract them so that they can be translated."
-msgstr ""
-"Lähdekoodipoimimia käytetään käännettävien tekstien etsimiseen "
-"lähdekooditiedostoista sekä näiden tekstien poimimiseen käännöksen tekemistä "
-"varten."
+#: src/prefsdlg.cpp:810 src/sidebar_terminology.cpp:638
+msgid "Translation Memory"
+msgstr "Käännösmuisti"
 
+#: src/prefsdlg.cpp:830
+msgid "Source code extractors are used to find translatable strings in the source code files and extract them so that they can be translated."
+msgstr "Lähdekoodipoimimia käytetään käännettävien tekstien etsimiseen lähdekooditiedostoista sekä näiden tekstien poimimiseen käännöksen tekemistä varten."
+
+#: src/prefsdlg.cpp:843
 msgid "Custom Extractors:"
 msgstr "Mukautetut poimimet:"
 
+#: src/prefsdlg.cpp:843
 msgid "Custom extractors:"
 msgstr "Mukautetut poimimet:"
 
+#: src/prefsdlg.cpp:929
 msgid "GNU gettext"
 msgstr "GNU gettext"
 
-msgid ""
-"Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
-"+, C#, Perl, Python, Java, JavaScript and others)."
-msgstr ""
-"Tukee kaikkia GNU gettextin tunnistamia ohjelmointikieliä (PHP, C/C++, C#, "
-"Perl, Python, Java, JavaScript ja muita)."
+#: src/prefsdlg.cpp:935
+msgid "Supports all programming languages recognized by GNU gettext tools (PHP, C/C++, C#, Perl, Python, Java, JavaScript and others)."
+msgstr "Tukee kaikkia GNU gettextin tunnistamia ohjelmointikieliä (PHP, C/C++, C#, Perl, Python, Java, JavaScript ja muita)."
 
+#. TRANSLATORS: Templates for themes etc. - e.g. Twig or Volt templates
+#: src/prefsdlg.cpp:945
+msgid "Templates"
+msgstr "Mallit"
+
+#: src/prefsdlg.cpp:946
+msgid "(Twig, Volt, Blade)"
+msgstr "(Twig, Volt, Blade)"
+
+#: src/prefsdlg.cpp:961
+msgid "Extracts translations from template files."
+msgstr "Poimii käännöksiä käännöspohjatiedostoista."
+
+#: src/prefsdlg.cpp:964
+msgid "Enable"
+msgstr "Ota käyttöön"
+
+#: src/prefsdlg.cpp:1096
 msgid "Delete extractor"
 msgstr "Poista poimin"
 
+#: src/prefsdlg.cpp:1097
 #, c-format
 msgid "Are you sure you want to delete the “%s” extractor?"
 msgstr "Haluatko varmasti poistaa “%s“-poimimen?"
 
+#: src/prefsdlg.cpp:1135
 msgid "Extractors"
 msgstr "Poimimet"
 
+#: src/prefsdlg.cpp:1193
 msgid "Accounts"
 msgstr "Tilit"
 
+#: src/prefsdlg.cpp:1213
 msgid "Automatically check for updates"
 msgstr "Tarkista päivitykset automaattisesti"
 
+#: src/prefsdlg.cpp:1216
 msgid "Include beta versions"
 msgstr "Tarkista myös beta-versiot"
 
-msgid ""
-"Beta versions contain the latest new features and improvements, but may be a "
-"bit less stable."
-msgstr ""
-"Beta-versiot sisältävät uusimmat ominaisuudet ja parannukset, mutta "
-"saattavat olla hieman epävakaampia."
+#: src/prefsdlg.cpp:1219
+msgid "Beta versions contain the latest new features and improvements, but may be a bit less stable."
+msgstr "Beta-versiot sisältävät uusimmat ominaisuudet ja parannukset, mutta saattavat olla hieman epävakaampia."
 
+#: src/prefsdlg.cpp:1248
 msgid "Updates"
 msgstr "Päivitykset"
 
-msgid ""
-"These settings affect internal formatting of PO files. Adjust them if you "
-"have specific requirements e.g. because of version control."
-msgstr ""
-"Nämä asetukset vaikuttavat PO-tiedostojen sisäiseen muotoiluun. Niitä voi "
-"tarvittaessa muuttaa esim. versionhallinnasta johtuvien vaatimusten vuoksi."
+#: src/prefsdlg.cpp:1266
+msgid "These settings affect internal formatting of PO files. Adjust them if you have specific requirements e.g. because of version control."
+msgstr "Nämä asetukset vaikuttavat PO-tiedostojen sisäiseen muotoiluun. Niitä voi tarvittaessa muuttaa esim. versionhallinnasta johtuvien vaatimusten vuoksi."
 
+#: src/prefsdlg.cpp:1270
 msgid "Line endings:"
 msgstr "Rivinvaihdot:"
 
+#: src/prefsdlg.cpp:1273
 msgid "Unix (recommended)"
 msgstr "Unix (suositeltu)"
 
+#: src/prefsdlg.cpp:1274
 msgid "Windows"
 msgstr "Windows"
 
 #. TRANSLATORS: Followed by text control for entering number; wraps text at given width
+#: src/prefsdlg.cpp:1278
 msgid "Wrap at:"
 msgstr "Rivitys:"
 
+#: src/prefsdlg.cpp:1289
 msgid "Preserve formatting of existing files"
 msgstr "Säilytä olemassa olevien tiedostojen muotoilu"
 
+#: src/prefsdlg.cpp:1341
 msgid "Advanced"
 msgstr "Lisäasetukset"
 
+#: src/prefsdlg.cpp:1369
 msgid "Settings"
 msgstr "Asetukset"
 
+#: src/pretranslate.cpp:129
 msgid "Preparing strings…"
 msgstr "Valmistellaan tekstejä…"
 
+#: src/pretranslate.cpp:239
 msgid "Pre-translating from translation memory…"
 msgstr "Esikäännetään käännösmuistista…"
 
+#: src/pretranslate.cpp:250 src/pretranslate.cpp:296
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
 msgstr[0] "Esikäännettiin %u teksti"
 msgstr[1] "Esikäännettiin %u tekstiä"
 
+#: src/pretranslate.cpp:259
+msgid "Uploading strings for cloud pre-translation…"
+msgstr "Lähetetään merkkijonoja esikäännettäväksi pilveen…"
+
+#: src/pretranslate.cpp:300 src/pretranslate.cpp:357
 msgid "Pre-translating…"
 msgstr "Esikäännetään…"
 
+#: src/pretranslate.cpp:366
+#, c-format
+msgid "%d entry was pre-translated."
+msgid_plural "%d entries were pre-translated."
+msgstr[0] "%d kohta esikäännettiin."
+msgstr[1] "%d kohtaa esikäännettiin."
+
+#: src/pretranslate.cpp:372
+msgid "The translations were marked as needing work, because they may be inaccurate. You should review them for correctness."
+msgstr "Käännökset merkittiin keskeneräisiksi, sillä ne voivat olla virheellisiä. Ne on syytä käydä läpi oikeellisuuden varmistamiseksi."
+
+#: src/pretranslate.cpp:375
+msgid "Exact matches from TM"
+msgstr ""
+
+#: src/pretranslate.cpp:376
+msgid "Approximate matches from TM"
+msgstr ""
+
+#. TRANSLATORS: shown instead of number when user disabled this kind of pre-translation results
+#: src/pretranslate.cpp:383
+msgid "disabled"
+msgstr ""
+
+#: src/pretranslate.cpp:384
+msgid "Machine translation"
+msgstr ""
+
+#: src/pretranslate.cpp:389
+msgid "No entries could be pre-translated."
+msgstr "Yhtään kohtaan ei voitu esikääntää."
+
+#: src/pretranslate.cpp:390
+msgid "The TM doesn’t contain any strings similar to the content of this file. It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually."
+msgstr "Käännösmuisti ei sisällä yhtään tämän tiedoston sisältöä muistuttavaa tekstiä. Käännösmuisti toimii tehokkaasti puoliautomaattiseen kääntämiseen vasta kun Poedit on oppinut tarpeeksi manuaalisesti käännetyistä tiedostoista."
+
+#: src/pretranslate.cpp:418
 msgid "Cannot pre-translate without source text."
 msgstr "Esikääntäminen ei ole mahdollista ilman lähdetekstiä."
 
@@ -1475,1079 +2488,2107 @@ msgstr "Esikääntäminen ei ole mahdollista ilman lähdetekstiä."
 #. some users into thinking it's all that needs to be done (spoken from
 #. experience). "Pre-translate" nicely expresses that it's only the step done
 #. *before* actual translation.
+#: src/pretranslate.cpp:419 src/pretranslate.cpp:434 src/pretranslate.cpp:443
+#: src/pretranslate.cpp:489 src/pretranslate.cpp:616
+#: src/resources/toolbar.xrc:48 src/sidebar_pro.cpp:983
 msgid "Pre-translate"
 msgstr "Esikäännä"
 
-msgid ""
-"Pre-translation requires that source text is available. It doesn’t work if "
-"only IDs without the actual text are used."
-msgstr ""
-"Esikäännös edellyttää, että varsinainen lähdeteksti on käytettävissä. Se ei "
-"toimi, jos käytetään vain tunnisteita ilman varsinaista tekstiä."
+#: src/pretranslate.cpp:423
+msgid "Pre-translation requires that source text is available. It doesn’t work if only IDs without the actual text are used."
+msgstr "Esikäännös edellyttää, että varsinainen lähdeteksti on käytettävissä. Se ei toimi, jos käytetään vain tunnisteita ilman varsinaista tekstiä."
 
+#: src/pretranslate.cpp:433
 msgid "Cannot pre-translate from unknown language."
 msgstr "Ei voida esikääntää tuntemattomalta kieleltä."
 
-msgid ""
-"Pre-translation requires that source text’s language is known. Poedit "
-"couldn’t detect it in this file."
-msgstr ""
-"Esikääntäminen edellyttää, että lähdetekstin kieli on tiedossa. Poedit ei "
-"tunnistanut sitä tästä tiedostosta."
+#: src/pretranslate.cpp:438
+msgid "Pre-translation requires that source text’s language is known. Poedit couldn’t detect it in this file."
+msgstr "Esikääntäminen edellyttää, että lähdetekstin kieli on tiedossa. Poedit ei tunnistanut sitä tästä tiedostosta."
 
+#: src/pretranslate.cpp:448
+msgid "Use online suggestions"
+msgstr "Käytä verkosta saatavia ehdotuksia"
+
+#: src/pretranslate.cpp:449
+msgid "Try to fetch translations from the online TM as well. Notice that the translations will not be perfect and will still need to be corrected by a human translator."
+msgstr "Yritä noutaa käännöksiä myös verkossa olevasta käännösmuistista. Huomaa, että nämä käännökset eivät ole valmiita ja vaativat ihmiskääntäjän korjausta."
+
+#: src/pretranslate.cpp:476
 msgid "Only fill in exact matches"
 msgstr "Täytä vain tarkat täsmäävyydet"
 
-msgid ""
-"By default, inaccurate results are also included, but marked as needing "
-"work. Check this option to only include perfect matches."
-msgstr ""
-"Oletusarvoisesti myös epätarkat tulokset sisällytetään, mutta merkitään "
-"keskeneräisiksi. Valitse tämä, jos haluat sisällyttää vain täydelliset "
-"vastineet."
+#: src/pretranslate.cpp:479
+msgid "By default, inaccurate results are also included, but marked as needing work. Check this option to only include perfect matches."
+msgstr "Oletusarvoisesti myös epätarkat tulokset sisällytetään, mutta merkitään keskeneräisiksi. Valitse tämä, jos haluat sisällyttää vain täydelliset vastineet."
 
+#: src/pretranslate.cpp:481
+msgid "By default, inaccurate results and machine translation are also included, but marked as needing work. Check this option to only include perfect human translations."
+msgstr "Oletusarvoisesti myös epätarkat tulokset ja konekäännökset sisällytetään, mutta merkitään keskeneräisiksi. Valitse tämä, jos haluat sisällyttää vain täydelliset ihmisten tekemät käännökset."
+
+#: src/pretranslate.cpp:483
 msgid "Don’t mark exact matches as needing work"
 msgstr "Älä merkitse tarkkoja vastineita keskeneräisiksi"
 
-msgid ""
-"Only enable if you trust the quality of your TM. By default, all matches "
-"from the TM are marked as needing work and should be reviewed before use."
-msgstr ""
-"Ota käyttöön vain, jos luotat käännösmuistin laatuun. Muussa tapauksessa "
-"kaikki täsmäävyydet merkitään vajaiksi ja ne on syytä tarkistaa ennen "
-"käyttöä."
+#: src/pretranslate.cpp:484
+msgid "Don’t mark machine translation as needing work"
+msgstr "Älä merkitse konekäännöksiä keskeneräisiksi"
 
-msgid ""
-"Pre-translation automatically finds exact or fuzzy matches for untranslated "
-"strings in the translation memory and fills in their translations."
-msgstr ""
-"Esikääntäminen etsii kääntämättömille teksteille tarkasti tai osittain "
-"täsmäävät käännökset käännösmuistista automaattisesti."
+#: src/pretranslate.cpp:486
+msgid "Only enable if you trust the quality of your TM. By default, all matches from the TM are marked as needing work and should be reviewed before use."
+msgstr "Ota käyttöön vain, jos luotat käännösmuistin laatuun. Muussa tapauksessa kaikki täsmäävyydet merkitään vajaiksi ja ne on syytä tarkistaa ennen käyttöä."
 
+#: src/pretranslate.cpp:493
+msgid "Pre-translation automatically finds exact or fuzzy matches for untranslated strings in the translation memory and fills in their translations."
+msgstr "Esikääntäminen etsii kääntämättömille teksteille tarkasti tai osittain täsmäävät käännökset käännösmuistista automaattisesti."
+
+#: src/pretranslate.cpp:495
+msgid "Pre-translation automatically searches existing translations and uses machine translation to fill in initial translations for strings that are not yet translated."
+msgstr "Esikääntäminen etsii aiempia käännöksiä automaattisesti ja käyttää konekäännöksiä kääntämättömien tekstien täyttöön."
+
+#: src/pretranslate.cpp:533
+msgid "Machine translation:"
+msgstr "Konekäännös:"
+
+#. TRANSLATORS: "Upgrade" as in upgrading from Pro to Pro+ version; "provider" is machine translation provider. This string needs to be as short as possible.
+#: src/pretranslate.cpp:545
+msgid "Upgrade for more providers"
+msgstr "Päivitä useammille palveluntarjoajille"
+
+#. TRANSLATORS: Part of larger line of UI: "Machine translation: [e.g. Google] with tone of voice: [formal/informal/automatic]". If "tone of voice" sounds weird, you can use "formality". See https://support.deepl.com/hc/en-us/articles/4406432463762-About-the-formal-informal-feature for explanation of what tone of voice / formality is.
+#: src/pretranslate.cpp:556
+msgid "with tone of voice:"
+msgstr "äänensävyllä:"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:562
+msgid "automatic"
+msgstr "automaattinen"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:564
+msgid "formal"
+msgstr "muodollinen"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:566
+msgid "informal"
+msgstr "vapaamuotoinen"
+
+#: src/pretranslate.cpp:651 src/sidebar_pro.cpp:551
+msgid "Exceeded machine translation quota."
+msgstr "Konekäännösten kiintiö on ylitetty."
+
+#: src/pretranslate.cpp:660
 #, c-format
-msgid "%d entry was pre-translated."
-msgid_plural "%d entries were pre-translated."
-msgstr[0] "%d kohta esikäännettiin."
-msgstr[1] "%d kohtaa esikäännettiin."
+msgid "Machine translation usage: %d / %d\n"
+"%s"
+msgstr "Konekäännösten käyttö: %d / %d\n"
+"%s"
 
-msgid ""
-"The translations were marked as needing work, because they may be "
-"inaccurate. You should review them for correctness."
-msgstr ""
-"Käännökset merkittiin keskeneräisiksi, sillä ne voivat olla virheellisiä. Ne "
-"on syytä käydä läpi oikeellisuuden varmistamiseksi."
+#: src/pretranslate.cpp:660
+msgid "Quota is rolling monthly."
+msgstr "Kiintiö lasketaan viimeisen 30 päivän ajalta."
 
-msgid "No entries could be pre-translated."
-msgstr "Yhtään kohtaan ei voitu esikääntää."
+#: src/pretranslate.cpp:663 src/sidebar_pro.cpp:475
+msgid "Add machine translation credit"
+msgstr "Lisää konekäännöksille saldoa"
 
-msgid ""
-"The TM doesn’t contain any strings similar to the content of this file. It "
-"is only effective for semi-automatic translations after Poedit learns enough "
-"from files that you translated manually."
-msgstr ""
-"Käännösmuisti ei sisällä yhtään tämän tiedoston sisältöä muistuttavaa "
-"tekstiä. Käännösmuisti toimii tehokkaasti puoliautomaattiseen kääntämiseen "
-"vasta kun Poedit on oppinut tarpeeksi manuaalisesti käännetyistä "
-"tiedostoista."
+#: src/progress_ui.cpp:172 src/wx_translatable_strings.h:151
+msgid "Error: "
+msgstr "Virhe: "
 
+#: src/progress_ui.cpp:176
+#, c-format
+msgid "%d error occurred:"
+msgid_plural "%d errors occurred:"
+msgstr[0] "%d virhe tapahtui:"
+msgstr[1] "%d virhettä tapahtui:"
+
+#: src/progress_ui.cpp:285
+msgid "An error occurred."
+msgstr "Tapahtui virhe."
+
+#: src/progress_ui.cpp:291
+#, c-format
+msgid "%d error occurred."
+msgid_plural "%d errors occurred."
+msgstr[0] "%d virhe tapahtui."
+msgstr[1] "%d virhettä tapahtui."
+
+#: src/progress_ui.cpp:438
 msgid "Cancelling…"
 msgstr "Peruutetaan…"
 
+#. TRANSLATORS: This text is shown as a hint/advice. The %s→%s part is replaced with menu item pointer, "File→New WordPress Translation".
+#: src/propertiesdlg.cpp:92
+#, c-format
+msgid "Use %s→%s for full WordPress functionality."
+msgstr "Käytä kaikkia WordPress-toimintoja valitsemalla %s→ %s."
+
+#: src/propertiesdlg.cpp:93 src/resources/menus.xrc:5
+#: src/resources/menus.xrc:384 src/wx_translatable_strings.h:104
+msgid "&File"
+msgstr "&Tiedosto"
+
+#: src/propertiesdlg.cpp:94 src/resources/menus.xrc:17
+#: src/resources/menus.xrc:396
+msgid "New WordPress Translation…"
+msgstr "Uusi WordPress-käännös…"
+
+#: src/propertiesdlg.cpp:94 src/resources/menus.xrc:16
+#: src/resources/menus.xrc:395
+msgid "New WordPress translation…"
+msgstr "Uusi WordPress-käännös…"
+
+#: src/propertiesdlg.cpp:366
 msgid "Drag Folders or Files Here"
 msgstr "Vedä kansioita tai tiedostoja tähän"
 
+#: src/propertiesdlg.cpp:366
 msgid "Drag folders or files here"
 msgstr "Vedä kansioita tai tiedostoja tähän"
 
+#: src/propertiesdlg.cpp:471
 msgid "Add Folders…"
 msgstr "Lisää kansioita…"
 
+#: src/propertiesdlg.cpp:471
 msgid "Add folders…"
 msgstr "Lisää kansioita…"
 
+#: src/propertiesdlg.cpp:472
 msgid "Add Files…"
 msgstr "Lisää tiedostoja…"
 
+#: src/propertiesdlg.cpp:472
 msgid "Add files…"
 msgstr "Lisää tiedostoja…"
 
+#: src/propertiesdlg.cpp:474
 msgid "Add Wildcard…"
 msgstr "Lisää korvausmerkki…"
 
+#: src/propertiesdlg.cpp:474
 msgid "Add wildcard…"
 msgstr "Lisää korvausmerkki…"
 
 #. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+#: src/propertiesdlg.cpp:545
 msgid "Reveal in Finder"
 msgstr "Näytä Finderissa"
 
 #. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+#: src/propertiesdlg.cpp:548
 msgid "Show in Explorer"
 msgstr "Avaa resurssienhallinnassa"
 
+#: src/propertiesdlg.cpp:550
 msgid "Show in Folder"
 msgstr "Näytä kansiossa"
 
+#: src/propertiesdlg.cpp:581
 msgid "Paths"
 msgstr "Polut"
 
+#: src/propertiesdlg.cpp:601
 msgid "Excluded paths"
 msgstr "Ohitettavat polut"
 
+#: src/propertiesdlg.cpp:619
 msgid "Advanced extraction settings"
 msgstr "Poiminnan lisäasetukset"
 
+#: src/propertiesdlg.cpp:625
 msgid "Extract notes for translators from:"
 msgstr "Poimi huomautukset kääntäjille lähteestä:"
 
+#: src/propertiesdlg.cpp:627
 msgid "Comments prefixed with:"
 msgstr "Kommentit, joiden alussa on:"
 
+#: src/propertiesdlg.cpp:636
 msgid "All comments"
 msgstr "Kaikki kommentit"
 
+#: src/propertiesdlg.cpp:639
 msgid "Additional xgettext flags:"
 msgstr "Lisävalitsimet xgettextille:"
 
+#: src/propertiesdlg.cpp:779
 msgid "Additional keywords"
 msgstr "Lisäavainsanat"
 
+#: src/propertiesdlg.cpp:810
 msgid "Name of the project the translation is for"
 msgstr "Projektin nimi, jolle tämä käännös on tarkoitettu"
 
+#: src/propertiesdlg.cpp:811
 msgid "Team name and email address or URL"
 msgstr "Tiimin nimi ja sähköpostiosoite tai URL"
 
+#: src/propertiesdlg.cpp:812
 msgid "e.g. nplurals=2; plural=(n > 1);"
 msgstr "esim. nplurals=2; plural=(n > 1);"
 
+#: src/propertiesdlg.cpp:817
+msgid "Custom file extensions are being used."
+msgstr "Mukautettuja tiedostopäätteitä on käytössä."
+
+#: src/propertiesdlg.cpp:872
 msgid "UTF-8 (recommended)"
 msgstr "UTF-8 (suositeltu)"
 
+#: src/propertiesdlg.cpp:1055
 msgid "Please save the file first. This section cannot be edited until then."
 msgstr "Tallenna tiedosto ensin. Tätä osaa ei voi muokata sitä ennen."
 
+#: src/propertiesdlg.cpp:1177
+msgid "File Extensions"
+msgstr "Tiedostopäätteet"
+
+#: src/propertiesdlg.cpp:1189
+msgid "Extension or Wildcard"
+msgstr "Tiedostopääte tai jokerimerkki"
+
+#: src/propertiesdlg.cpp:1191
+msgid "Extractor"
+msgstr "Poimin"
+
+#: src/propertiesdlg.cpp:1266
+msgid "(unknown)"
+msgstr "(tuntematon)"
+
+#: src/qa_checks.cpp:153
 msgid "Placeholders correctness"
 msgstr "Muuttujien oikeellisuus"
 
+#: src/qa_checks.cpp:208
 #, c-format
 msgid "Placeholder “%s” is missing from translation."
 msgstr "Käännöksestä puuttuu muuttuja \"%s\"."
 
+#: src/qa_checks.cpp:220
 #, c-format
 msgid "Superfluous placeholder “%s” that isn’t in source text."
 msgstr "Tarpeeton muuttuja \"%s\", joka ei sisälly lähdetekstiin."
 
+#: src/qa_checks.cpp:256
 msgid "Plural form translations"
 msgstr "Monikkomuotojen käännökset"
 
+#: src/qa_checks.cpp:277
 msgid "Not all plural forms are translated."
 msgstr "Kaikkia monikkomuotoja ei ole käännetty."
 
+#: src/qa_checks.cpp:289
 msgid "Inconsistent upper/lower case"
 msgstr "Epäjohdonmukaiset isot/pienet kirjaimet"
 
+#: src/qa_checks.cpp:305
 msgid "The translation should start as a sentence."
 msgstr "Käännöksen tulisi alkaa virkkeellä."
 
+#: src/qa_checks.cpp:313
 msgid "The translation should start with a lowercase character."
 msgstr "Käännöksen tulisi alkaa pienellä kirjaimella."
 
+#: src/qa_checks.cpp:331
 msgid "Inconsistent whitespace"
 msgstr "Epäjohdonmukaisia tyhjemerkkejä"
 
+#: src/qa_checks.cpp:345
 msgid "The translation doesn’t start with a space."
 msgstr "Käännös ei ala välilyönnillä."
 
+#: src/qa_checks.cpp:351
 msgid "The translation starts with a space, but the source text doesn’t."
 msgstr "Käännös alkaa välilyönnillä toisin kuin lähdeteksti."
 
+#: src/qa_checks.cpp:357
 msgid "The translation is missing a newline at the end."
 msgstr "Käännöksen lopusta puuttuu rivinvaihto."
 
+#: src/qa_checks.cpp:363
 msgid "The translation ends with a newline, but the source text doesn’t."
 msgstr "Käännös päättyy rivinvaihtoon toisin kuin lähdeteksti."
 
+#: src/qa_checks.cpp:369
 msgid "The translation is missing a space at the end."
 msgstr "Käännöksen lopusta puuttuu välilyönti."
 
+#: src/qa_checks.cpp:375
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "Käännös päättyy välilyöntiin toisin kuin lähdeteksti."
 
+#: src/qa_checks.cpp:390
 msgid "Punctuation checks"
 msgstr "Välimerkkitarkastukset"
 
+#: src/qa_checks.cpp:455
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr "Käännöksen lopussa tulisi olla ”%s”."
 
+#: src/qa_checks.cpp:467
 #, c-format
 msgid "The translation should not end with “%s”."
 msgstr "Käännöksen lopussa ei tulisi olla ”%s”."
 
+#: src/qa_checks.cpp:488
 #, c-format
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
 msgstr "Käännöksen lopussa on ”%s\", mutta lähdetekstin lopussa ”%s”."
 
+#: src/recent_files.cpp:223
 msgid "Cloud"
 msgstr "Pilvi"
 
+#: src/recent_files.cpp:404
 msgid "Clear Menu"
 msgstr "Tyhjennä valikko"
 
+#: src/recent_files.cpp:404
 msgid "Clear menu"
 msgstr "Tyhjennä valikko"
 
+#: src/resources/comment.xrc:10
 msgid "Comment:"
 msgstr "Kommentti:"
 
+#: src/resources/comment.xrc:33
 msgid "Update"
 msgstr "Päivitä"
 
+#: src/resources/comment.xrc:48 src/wx_translatable_strings.h:100
 msgid "&Delete"
 msgstr "&Poista"
 
+#: src/resources/comment.xrc:49
 msgid "Delete the comment"
 msgstr "Poista kommentti"
 
+#: src/resources/manager.xrc:4
 msgid "Edit project"
 msgstr "Muokkaa projektia"
 
+#: src/resources/manager.xrc:9
 msgid "Project name:"
 msgstr "Projektin nimi:"
 
+#: src/resources/manager.xrc:39
 msgid "Browse"
 msgstr "Selaa"
 
+#: src/resources/manager.xrc:41
 msgid "Add directory to the list"
 msgstr "Lisää kansio listaan"
 
-msgid "OK"
-msgstr "OK"
-
-msgid "&File"
-msgstr "&Tiedosto"
-
+#: src/resources/menus.xrc:8 src/resources/menus.xrc:387
 msgid "&New…"
 msgstr "&Uusi…"
 
+#: src/resources/menus.xrc:12 src/resources/menus.xrc:391
 msgid "New from &POT/PO file…"
 msgstr "Uusi &POT/PO-tiedostosta…"
 
+#: src/resources/menus.xrc:13 src/resources/menus.xrc:392
 msgid "New From &POT/PO File…"
 msgstr "Uusi &POT/PO-tiedostosta…"
 
+#: src/resources/menus.xrc:21 src/resources/menus.xrc:400
+#: src/wx_translatable_strings.h:109
 msgid "&Open…"
 msgstr "&Avaa…"
 
+#: src/resources/menus.xrc:25 src/resources/menus.xrc:404
 msgid "Open Recent"
 msgstr "Avaa äskettäinen"
 
+#: src/resources/menus.xrc:26 src/resources/menus.xrc:405
 msgid "Open recent"
 msgstr "Avaa äskettäinen"
 
+#: src/resources/menus.xrc:29 src/resources/menus.xrc:408
 msgid "Open cloud translation…"
 msgstr "Avaa pilvikäännös…"
 
+#: src/resources/menus.xrc:30 src/resources/menus.xrc:409
 msgid "Open Cloud Translation…"
 msgstr "Avaa pilvikäännös…"
 
+#: src/resources/menus.xrc:34 src/resources/menus.xrc:413
 msgid "&Start window"
 msgstr "Aloitusikkuna"
 
+#: src/resources/menus.xrc:35 src/resources/menus.xrc:414
 msgid "&Start Window"
 msgstr "Aloitusikkuna"
 
+#: src/resources/menus.xrc:39 src/resources/menus.xrc:419
 msgid "Catalogs &manager"
 msgstr "Katalo&gien hallinta"
 
+#: src/resources/menus.xrc:40 src/resources/menus.xrc:420
 msgid "Catalogs &Manager"
 msgstr "Katalo&gien hallinta"
 
+#: src/resources/menus.xrc:44 src/resources/menus.xrc:424
+#: src/wx_translatable_strings.h:96
 msgid "&Close"
 msgstr "&Sulje"
 
+#: src/resources/menus.xrc:48 src/wx_translatable_strings.h:115
 msgid "&Save"
 msgstr "Ta&llenna"
 
+#: src/resources/menus.xrc:52
 msgid "Save &as…"
 msgstr "Tallenna &nimellä…"
 
+#: src/resources/menus.xrc:53
 msgid "Save &As…"
 msgstr "Tallenna &nimellä…"
 
+#: src/resources/menus.xrc:58
 msgid "Compile to MO…"
 msgstr "Muunna MO-muotoon…"
 
+#: src/resources/menus.xrc:62
 msgid "E&xport to HTML…"
 msgstr "V&ie HTML-tiedostoon…"
 
+#: src/resources/menus.xrc:66
+msgid "Export to Excel…"
+msgstr "Vie Excel-tiedostoon…"
+
+#: src/resources/menus.xrc:69
+msgid "Import from Excel…"
+msgstr "Tuo Excel-tiedostosta…"
+
+#: src/resources/menus.xrc:73 src/resources/menus.xrc:428
 msgid "Check for updates…"
 msgstr "Etsi päivityksiä…"
 
+#: src/resources/menus.xrc:76 src/resources/menus.xrc:431
+msgid "&License…"
+msgstr "&Lisenssi…"
+
+#: src/resources/menus.xrc:79 src/resources/menus.xrc:434
 msgid "Settings…"
 msgstr "Asetukset…"
 
+#: src/resources/menus.xrc:83 src/resources/menus.xrc:438
+#: src/wx_translatable_strings.h:112
 msgid "&Preferences"
 msgstr "A&setukset"
 
+#: src/resources/menus.xrc:90 src/resources/menus.xrc:445
 msgid "E&xit"
 msgstr "&Lopeta"
 
+#: src/resources/menus.xrc:91 src/resources/menus.xrc:446
+#: src/wx_translatable_strings.h:103
 msgid "Quit"
 msgstr "Lopeta"
 
+#: src/resources/menus.xrc:118
 msgid "Copy from singular"
 msgstr "Kopioi yksiköstä"
 
+#: src/resources/menus.xrc:119
 msgid "Copy From Singular"
 msgstr "Kopioi yksiköstä"
 
+#: src/resources/menus.xrc:124
 msgid "Translation needs &work"
 msgstr "Käännös on &keskeneräinen"
 
+#: src/resources/menus.xrc:125
 msgid "Translation Needs &Work"
 msgstr "Käännös on &keskeneräinen"
 
+#: src/resources/menus.xrc:130
 msgid "Edit &comment"
 msgstr "Muokkaa &kommenttia"
 
+#: src/resources/menus.xrc:131
 msgid "Edit &Comment"
 msgstr "Muokkaa &kommenttia"
 
 #. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
+#: src/resources/menus.xrc:136 src/sidebar.cpp:651 src/sidebar_pro.cpp:219
 msgid "Suggestions"
 msgstr "Ehdotukset"
 
+#: src/resources/menus.xrc:139 src/resources/menus.xrc:158
 msgid "&Find…"
 msgstr "&Etsi…"
 
+#: src/resources/menus.xrc:144
 msgid "Replace…"
 msgstr "&Korvaa…"
 
+#: src/resources/menus.xrc:148
 msgid "Find next"
 msgstr "Etsi seuraava"
 
+#: src/resources/menus.xrc:152
 msgid "Find previous"
 msgstr "Etsi edellinen"
 
+#: src/resources/menus.xrc:162
 msgid "Find and Replace…"
 msgstr "Etsi ja korvaa…"
 
+#: src/resources/menus.xrc:166
 msgid "Find Next"
 msgstr "Etsi seuraava"
 
+#: src/resources/menus.xrc:170
 msgid "Find Previous"
 msgstr "Etsi edellinen"
 
+#: src/resources/menus.xrc:179
 msgid "Show string &ID"
 msgstr "Näytä tekstin &tunniste"
 
+#: src/resources/menus.xrc:180
 msgid "Show String &ID"
 msgstr "Näytä tekstin &tunniste"
 
+#: src/resources/menus.xrc:184
 msgid "Show warnings"
 msgstr "Näytä varoitukset"
 
+#: src/resources/menus.xrc:185
 msgid "Show Warnings"
 msgstr "Näytä varoitukset"
 
+#: src/resources/menus.xrc:189
+msgid "Customize warnings…"
+msgstr "Mukauta varoituksia…"
+
+#: src/resources/menus.xrc:190
+msgid "Customize Warnings…"
+msgstr "Mukauta varoituksia…"
+
+#: src/resources/menus.xrc:194
 msgid "Sort by &file order"
 msgstr "Järjestä &tiedostojärjestyksen mukaan"
 
+#: src/resources/menus.xrc:195
 msgid "Sort by &File Order"
 msgstr "Järjestä &tiedostojen järjestyksen mukaan"
 
+#: src/resources/menus.xrc:199
 msgid "Sort by &source"
 msgstr "Järjestä läht&een mukaan"
 
+#: src/resources/menus.xrc:200
 msgid "Sort by &Source"
 msgstr "Järjestä läht&een mukaan"
 
+#: src/resources/menus.xrc:204
 msgid "Sort by &translation"
 msgstr "Järjestä &käännöksen mukaan"
 
+#: src/resources/menus.xrc:205
 msgid "Sort by &Translation"
 msgstr "Järjestä &käännöksen mukaan"
 
+#: src/resources/menus.xrc:210
 msgid "&Group by context"
 msgstr "&Ryhmittele konteksteittain"
 
+#: src/resources/menus.xrc:211
 msgid "&Group By Context"
 msgstr "&Ryhmittele konteksteittain"
 
+#: src/resources/menus.xrc:215
 msgid "Entries with errors first"
 msgstr "Virheitä sisältävät ensin"
 
+#: src/resources/menus.xrc:216
 msgid "Entries with Errors First"
 msgstr "Virheitä sisältävät ensin"
 
+#: src/resources/menus.xrc:220
 msgid "&Untranslated entries first"
 msgstr "Kääntämättö&mät ensin"
 
+#: src/resources/menus.xrc:221
 msgid "&Untranslated Entries First"
 msgstr "Kääntämättö&mät ensin"
 
+#: src/resources/menus.xrc:226
+msgid "Show &suggestions tab"
+msgstr "Näytä &ehdotusvälilehti"
+
+#: src/resources/menus.xrc:227
+msgid "Show &Suggestions Tab"
+msgstr "Näytä &ehdotusvälilehti"
+
+#: src/resources/menus.xrc:231
+msgid "Show &terminology tab"
+msgstr "Näytä &termistövälilehti"
+
+#: src/resources/menus.xrc:232
+msgid "Show &Terminology Tab"
+msgstr "Näytä &termistövälilehti"
+
+#: src/resources/menus.xrc:236
 msgid "&Show code occurrences"
 msgstr "&Näytä esiintymät koodissa"
 
+#: src/resources/menus.xrc:237
 msgid "&Show Code Occurrences"
 msgstr "&Näytä esiintymät koodissa"
 
+#: src/resources/menus.xrc:241
 msgid "Show sidebar"
 msgstr "Näytä sivupalkki"
 
+#: src/resources/menus.xrc:247
 msgid "Show status bar"
 msgstr "Näytä tilarivi"
 
+#: src/resources/menus.xrc:255 src/resources/menus.xrc:463
 msgid "&Translation"
 msgstr "&Käännös"
 
+#: src/resources/menus.xrc:258 src/statistics.cpp:312 src/statistics.cpp:415
+#: src/statistics.cpp:427
+msgid "Source Text"
+msgstr "Lähdeteksti"
+
+#: src/resources/menus.xrc:262
 msgid "&Update from source code"
 msgstr "&Päivitä lähdekoodista"
 
+#: src/resources/menus.xrc:263
 msgid "&Update from Source Code"
 msgstr "&Päivitä lähdekoodista"
 
-msgid "Update from &POT file…"
-msgstr "Päivitä &POT-tiedostosta…"
-
-msgid "Update from &POT File…"
-msgstr "Päivitä &POT-tiedostosta…"
-
+#: src/resources/menus.xrc:270
 msgid "Sync with Crowdin"
 msgstr "Synkronoi Crowdiniin"
 
+#: src/resources/menus.xrc:274 src/resources/menus.xrc:275
 msgid "Pre-&translate…"
 msgstr "Esi&käännä…"
 
+#: src/resources/menus.xrc:279
 msgid "&Validate translations"
 msgstr "&Validoi käännökset"
 
+#: src/resources/menus.xrc:280
 msgid "&Validate Translations"
 msgstr "&Validoi käännökset"
 
+#: src/resources/menus.xrc:284
+msgid "&Statistics"
+msgstr "&Tilastot"
+
+#: src/resources/menus.xrc:289
 msgid "Remove Same-as-Source Translations"
 msgstr "Poista lähteestä kopioidut käännökset"
 
+#: src/resources/menus.xrc:292
 msgid "&Purge deleted translations"
 msgstr "P&uhdista poistetut käännökset"
 
+#: src/resources/menus.xrc:293
 msgid "&Purge Deleted Translations"
 msgstr "P&uhdista poistetut käännökset"
 
+#: src/resources/menus.xrc:297
 msgid "&Properties…"
 msgstr "Om&inaisuudet…"
 
+#: src/resources/menus.xrc:304 src/resources/menus.xrc:466
 msgid "&Go"
 msgstr "&Siirry"
 
+#: src/resources/menus.xrc:307
 msgid "&Done and next"
 msgstr "&Valmis ja seuraava"
 
+#: src/resources/menus.xrc:308
 msgid "&Done and Next"
 msgstr "&Valmis ja seuraava"
 
+#: src/resources/menus.xrc:314
 msgid "Previously edited"
 msgstr "Aiemmin muokattu"
 
+#: src/resources/menus.xrc:315
 msgid "Previously Edited"
 msgstr "Aiemmin muokattu"
 
+#: src/resources/menus.xrc:320
 msgid "&Previous translation"
 msgstr "&Edellinen käännös"
 
+#: src/resources/menus.xrc:321
 msgid "&Previous Translation"
 msgstr "&Edellinen käännös"
 
+#: src/resources/menus.xrc:325
 msgid "&Next translation"
 msgstr "&Seuraava käännös"
 
+#: src/resources/menus.xrc:326
 msgid "&Next Translation"
 msgstr "&Seuraava käännös"
 
+#: src/resources/menus.xrc:330
 msgid "P&revious unfinished"
 msgstr "E&dellinen keskeneräinen"
 
+#: src/resources/menus.xrc:331
 msgid "P&revious Unfinished"
 msgstr "E&dellinen keskeneräinen"
 
+#: src/resources/menus.xrc:335
 msgid "Ne&xt unfinished"
 msgstr "Se&uraava keskeneräinen"
 
+#: src/resources/menus.xrc:336
 msgid "Ne&xt Unfinished"
 msgstr "Se&uraava keskeneräinen"
 
+#: src/resources/menus.xrc:341
 msgid "Previous plural form"
 msgstr "Edellinen monikkomuoto"
 
+#: src/resources/menus.xrc:342
 msgid "Previous Plural Form"
 msgstr "Edellinen monikkomuoto"
 
+#: src/resources/menus.xrc:346
 msgid "Next plural form"
 msgstr "Seuraava monikkomuoto"
 
+#: src/resources/menus.xrc:347
 msgid "Next Plural Form"
 msgstr "Seuraava monikkomuoto"
 
+#: src/resources/menus.xrc:356 src/resources/menus.xrc:473
 msgid "&Online help"
 msgstr "&Ohje verkossa"
 
+#: src/resources/menus.xrc:357 src/resources/menus.xrc:474
 msgid "&Online Help"
 msgstr "&Ohje verkossa"
 
+#: src/resources/menus.xrc:363 src/resources/menus.xrc:480
 msgid "&GNU gettext manual"
 msgstr "&GNU gettextin manuaali"
 
+#: src/resources/menus.xrc:364 src/resources/menus.xrc:481
 msgid "&GNU gettext Manual"
 msgstr "&GNU gettextin manuaali"
 
+#: src/resources/menus.xrc:368 src/resources/menus.xrc:485
+msgid "Email &support…"
+msgstr "Hanki tukea &sähköpostitse…"
+
+#: src/resources/menus.xrc:369 src/resources/menus.xrc:486
+msgid "Email &Support…"
+msgstr "Hanki tukea &sähköpostitse…"
+
+#: src/resources/menus.xrc:373 src/resources/menus.xrc:490
 msgid "&About Poedit"
 msgstr "&Tietoja Poeditistä"
 
+#: src/resources/menus.xrc:374 src/resources/menus.xrc:375
+#: src/resources/menus.xrc:491 src/resources/menus.xrc:492
 msgid "&About"
 msgstr "&Tietoja"
 
+#: src/resources/prefs.xrc:4
 msgid "Extractor setup"
 msgstr "Poimimen asetukset"
 
+#: src/resources/prefs.xrc:27
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "Lista tiedostopäätteistä eroteltuna puolipisteillä (esim. *.cpp;*.h):"
 
+#: src/resources/prefs.xrc:43
 msgid "Invocation:"
 msgstr "Suoritus:"
 
+#: src/resources/prefs.xrc:47
 msgid "Command to extract translations:"
 msgstr "Komento käännettävien tekstien poimimiseen:"
 
-msgid ""
-"This is the command used to launch the extractor.\n"
+#: src/resources/prefs.xrc:61
+msgid "This is the command used to launch the extractor.\n"
 "%o expands to the name of output file, %K to list\n"
 "of keywords, %F to list of input files,\n"
 "%C to charset flag (see below)."
-msgstr ""
-"Tätä komentoa käytetään poimimen suorittamiseen.\n"
+msgstr "Tätä komentoa käytetään poimimen suorittamiseen.\n"
 "%o laajennetaan tulostiedoston nimeksi, %K avainsana-\n"
 "listaksi, %F syötetiedostojen listaksi,\n"
 "%C merkistölipuksi (ks. alempaa)."
 
+#: src/resources/prefs.xrc:70
 msgid "An item in keywords list:"
 msgstr "Kohde avainsanalistassa:"
 
-msgid ""
-"This will be attached to the command line once\n"
+#: src/resources/prefs.xrc:84
+msgid "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
-msgstr ""
-"Tämä liitetään komentojen listaan kerran\n"
+msgstr "Tämä liitetään komentojen listaan kerran\n"
 "kuhunkin avainsanaan. %f laajennetaan avainsanaksi."
 
+#: src/resources/prefs.xrc:93
 msgid "An item in input files list:"
 msgstr "Kohde syöttötiedostojen listassa:"
 
+#: src/resources/prefs.xrc:107
 #, c-format
-msgid ""
-"This will be attached to the command line once\n"
+msgid "This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
-msgstr ""
-"Tämä liitetään komentoriville kerran\n"
+msgstr "Tämä liitetään komentoriville kerran\n"
 "kuhunkin syötetiedostoon. %f laajennetaan tiedostonimeksi."
 
+#: src/resources/prefs.xrc:116 src/resources/properties.xrc:124
 msgid "Source code charset:"
 msgstr "Lähdekoodin merkistö:"
 
+#: src/resources/prefs.xrc:130
 #, c-format
-msgid ""
-"This will be attached to the command line\n"
+msgid "This will be attached to the command line\n"
 "only if source code charset was given. %c expands to charset value."
-msgstr ""
-"Tämä liitetään komentoriville vain,\n"
+msgstr "Tämä liitetään komentoriville vain,\n"
 "jos kohteen koodimerkistö on annettu. %c laajennetaan merkistöarvoksi."
 
+#: src/resources/properties.xrc:4 src/resources/properties.xrc:153
 msgid "Translation Properties"
 msgstr "Käännöksen ominaisuudet"
 
+#: src/resources/properties.xrc:19
 msgid "Project name and version:"
 msgstr "Projektin nimi ja versio:"
 
+#: src/resources/properties.xrc:34
 msgid "Language team:"
 msgstr "Käännöstiimi:"
 
+#: src/resources/properties.xrc:66
 msgid "Plural forms:"
 msgstr "Monikkomuodot:"
 
+#: src/resources/properties.xrc:73
 msgid "Use default rules for this language"
 msgstr "Käytä tämän kielen oletussääntöjä"
 
+#: src/resources/properties.xrc:82
 msgid "Use custom expression"
 msgstr "Käytä omaa lauseketta"
 
+#: src/resources/properties.xrc:98
 msgid "Learn about plural forms"
 msgstr "Lisätietoja monikkomuodoista"
 
+#: src/resources/properties.xrc:112
 msgid "Charset:"
 msgstr "Merkistö:"
 
+#: src/resources/properties.xrc:138
 msgid "Advanced Extraction Settings…"
 msgstr "Poiminnan lisäasetukset…"
 
+#: src/resources/properties.xrc:139
 msgid "Advanced extraction settings…"
 msgstr "Poiminnan lisäasetukset…"
 
+#: src/resources/properties.xrc:154
 msgid "Translation properties"
 msgstr "Käännöksen ominaisuudet"
 
+#: src/resources/properties.xrc:157
 msgid "Sources Paths"
 msgstr "Lähteiden polut"
 
+#: src/resources/properties.xrc:158
 msgid "Sources paths"
 msgstr "Lähteiden polut"
 
+#: src/resources/properties.xrc:164
 msgid "Extract text from source files in the following directories:"
 msgstr "Pura tekstit lähdekoodeista, jotka ovat seuraavissa kansioissa:"
 
+#: src/resources/properties.xrc:173
 msgid "Base path:"
 msgstr "Kantapolku:"
 
+#: src/resources/properties.xrc:227
+msgid "Customize File Extensions…"
+msgstr "Mukauta tiedostopäätteitä…"
+
+#: src/resources/properties.xrc:228
+msgid "Customize file extensions…"
+msgstr "Mukauta tiedostopäätteitä…"
+
+#: src/resources/properties.xrc:241
 msgid "Sources Keywords"
 msgstr "Lähteiden avainsanat"
 
+#: src/resources/properties.xrc:242
 msgid "Sources keywords"
 msgstr "Lähteiden avainsanat"
 
-msgid ""
-"Use these keywords (function names) to recognize translatable strings\n"
+#: src/resources/properties.xrc:248
+msgid "Use these keywords (function names) to recognize translatable strings\n"
 "in source files:"
-msgstr ""
-"Käytä näitä avainsanoja (funktion nimiä) tunnistettaessa lähdetiedostoista\n"
+msgstr "Käytä näitä avainsanoja (funktion nimiä) tunnistettaessa lähdetiedostoista\n"
 "käännettäviä tekstejä:"
 
+#: src/resources/properties.xrc:264
 msgid "Also use default keywords for supported languages"
 msgstr "Käytä myös oletusavainsanoja tuetuille kielille"
 
+#: src/resources/properties.xrc:271
 msgid "Learn about gettext keywords"
 msgstr "Lisätietoja Gettextin avainsanoista"
 
-msgid "Update summary"
-msgstr "Päivityksen yhteenveto"
-
-msgid ""
-"These strings were found in the sources but were not in the file.\n"
+#: src/resources/summary.xrc:32
+msgid "These strings were found in the sources but were not in the file.\n"
 "Poedit will add them to the file now."
-msgstr ""
-"Nämä tekstit löytyivät lähdekoodista, mutta eivät tiedostosta.\n"
+msgstr "Nämä tekstit löytyivät lähdekoodista, mutta eivät tiedostosta.\n"
 "Poedit lisää ne nyt tiedostoon."
 
-msgid "New strings"
-msgstr "Uudet tekstit"
-
-msgid ""
-"These strings are no longer in the source code.\n"
+#: src/resources/summary.xrc:53
+msgid "These strings are no longer in the source code.\n"
 "Poedit will remove them from the file now."
-msgstr ""
-"Näitä tekstejä ei ole enää lähdekoodissa.\n"
+msgstr "Näitä tekstejä ei ole enää lähdekoodissa.\n"
 "Poedit poistaa ne nyt tiedostosta."
 
+#: src/resources/summary.xrc:66
 msgid "Obsolete strings"
 msgstr "Vanhentuneet tekstit"
 
+#: src/resources/summary.xrc:79
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 uutta, 0 vanhentunutta)"
 
-msgid "Open"
-msgstr ""
-
+#: src/resources/toolbar.xrc:13 src/resources/toolbar.xrc:17
 msgid "Open file"
 msgstr "Avaa tiedosto"
 
+#: src/resources/toolbar.xrc:22 src/resources/toolbar.xrc:26
 msgid "Save file"
 msgstr "Tallenna tiedosto"
 
+#: src/resources/toolbar.xrc:34
 msgid "Validate"
 msgstr "Validoi"
 
+#: src/resources/toolbar.xrc:35
 msgid "Check for errors in the translation"
 msgstr "Tarkasta käännöksen virheet"
 
+#: src/resources/toolbar.xrc:49
+msgid "Pre-translate strings that don’t have a translation yet"
+msgstr "Esikäännä tekstit, joilla ei vielä ole käännöstä"
+
+#: src/resources/toolbar.xrc:57 src/wx/main_toolbar.cpp:136
 msgid "Update from code"
 msgstr "Päivitä lähdekoodista"
 
+#: src/resources/toolbar.xrc:58 src/wx/main_toolbar.cpp:136
 msgid "Update from Code"
 msgstr "Päivitä lähdekoodista"
 
+#: src/resources/toolbar.xrc:59 src/wx/main_toolbar.cpp:137
 msgid "Update from source code"
 msgstr "Päivitä lähdekoodista"
 
+#: src/resources/toolbar.xrc:67
 msgid "Sidebar"
 msgstr "Sivupalkki"
 
+#: src/resources/toolbar.xrc:68
 msgid "Show or hide the sidebar"
 msgstr "Näytä tai piilota sivupalkki"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
+#: src/sidebar.cpp:139
 msgid "Previous source text"
 msgstr "Aiempi lähdeteksti"
 
-msgid ""
-"The old source text (before it changed during an update) that the now-"
-"inaccurate translation corresponds to."
-msgstr ""
-"Tähän keskeneräiseksi muuttuneeseen käännökseen liittyvä vanha lähdeteksti "
-"(ennen sen muuttumista päivityksen aikana)."
+#: src/sidebar.cpp:142
+msgid "The old source text (before it changed during an update) that the now-inaccurate translation corresponds to."
+msgstr "Tähän keskeneräiseksi muuttuneeseen käännökseen liittyvä vanha lähdeteksti (ennen sen muuttumista päivityksen aikana)."
 
+#: src/sidebar.cpp:168
 msgid "Notes for translators"
 msgstr "Huomautukset kääntäjille"
 
+#: src/sidebar.cpp:201
 msgid "Comment"
 msgstr "Kommentti"
 
+#: src/sidebar.cpp:231 src/sidebar.cpp:250
 msgid "Add comment"
 msgstr "Lisää kommentti"
 
+#: src/sidebar.cpp:233 src/sidebar.cpp:235 src/sidebar.cpp:253
 msgid "Add Comment"
 msgstr "Lisää kommentti"
 
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:436
+msgid "from your TM"
+msgstr "omasta käännösmuististasi"
+
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:441
+msgid "machine translation"
+msgstr "konekäännös"
+
+#. TRANSLATORS: This is followed by a logo of e.g. Microsoft Translator, forming a sentence e.g. "translated by MS Translator"
+#: src/sidebar.cpp:449
+msgid "translated by"
+msgstr "kääntänyt"
+
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:456
+msgid "human translation"
+msgstr "ihmisen kääntämä"
+
+#: src/sidebar.cpp:592
 msgid "Delete From Translation Memory"
 msgstr "Poista käännösmuistista"
 
+#: src/sidebar.cpp:592
 msgid "Delete from translation memory"
 msgstr "Poista käännösmuistista"
 
+#: src/sidebar.cpp:593
+msgid "Report Bad Translation"
+msgstr "Ilmoita huonosta käännöksestä"
+
+#: src/sidebar.cpp:593
+msgid "Report bad translation"
+msgstr "Ilmoita huonosta käännöksestä"
+
+#: src/sidebar.cpp:652
 msgid "Translation suggestions"
 msgstr "Käännösehdotukset"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
+#: src/sidebar.cpp:695
 msgid "No matches found"
 msgstr "Vastaavuuksia ei löydy"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (macOS, Linux).
+#: src/sidebar.cpp:698
 msgid "No Matches Found"
 msgstr "Vastaavuuksia ei löydy"
 
+#: src/sidebar.cpp:734 src/sidebar_pro.cpp:325
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Tämä teksti löytyi Poeditin käännösmuistista."
 
-msgid ""
-"Translation suggestions require that source text is available. They don’t "
-"work if only IDs without the actual text are used."
-msgstr ""
-"Käännösehdotukset edellyttävät, että varsinainen lähdeteksti on "
-"käytettävissä. Se ei toimi, jos käytetään vain tunnisteita ilman varsinaista "
-"tekstiä."
+#: src/sidebar.cpp:984
+msgid "Translation suggestions require that source text is available. They don’t work if only IDs without the actual text are used."
+msgstr "Käännösehdotukset edellyttävät, että varsinainen lähdeteksti on käytettävissä. Se ei toimi, jos käytetään vain tunnisteita ilman varsinaista tekstiä."
 
-msgid ""
-"Translation suggestions require that source text’s language is known. Poedit "
-"couldn’t detect it in this file."
-msgstr ""
-"Esikääntäminen edellyttää, että lähdetekstin kieli on tiedossa. Poedit ei "
-"tunnistanut sitä tästä tiedostosta."
+#: src/sidebar.cpp:989
+msgid "Translation suggestions require that source text’s language is known. Poedit couldn’t detect it in this file."
+msgstr "Esikääntäminen edellyttää, että lähdetekstin kieli on tiedossa. Poedit ei tunnistanut sitä tästä tiedostosta."
 
+#. TRANSLATORS: Tooltip explaining the Quality: label
+#: src/sidebar_pro.cpp:86
+msgid "Currently enabled quality level of online suggestions"
+msgstr "Verkosta saatavien käännösehdotusten vallitseva laatutaso"
+
+#. TRANSLATORS: Quality level for the "Quality: %s" label; needs to be short
+#: src/sidebar_pro.cpp:121
+msgid "Premium"
+msgstr "Korkea"
+
+#. TRANSLATORS: Quality level for the "Quality: %s" label; needs to be short
+#: src/sidebar_pro.cpp:126
+msgid "Standard"
+msgstr "Normaali"
+
+#. TRANSLATORS: This needs to be *short*, it is shown in the sidebar
+#. after "Translation suggestions". %s will be replaced by "Standard"
+#. or "Premium". "(Quality) level" or "tier" are synonyms for it.
+#: src/sidebar_pro.cpp:132
+#, c-format
+msgid "Quality: %s"
+msgstr "Laatu: %s"
+
+#. TRANSLATORS: Label for the part where currently used translation engine is shown
+#: src/sidebar_pro.cpp:151
+msgid "Machine translation uses:"
+msgstr "Konekäännöksellä käytössä:"
+
+#: src/sidebar_pro.cpp:227
+msgid "Terminology"
+msgstr "Termistö"
+
+#: src/sidebar_pro.cpp:321
+msgid "This suggestion was contributed by another translator to the online TM."
+msgstr "Toinen kääntäjä lisäsi tämän ehdotuksen verkossa olevaan käännösmuistiin."
+
+#: src/sidebar_pro.cpp:323
+msgid "This suggestion was machine-translated online."
+msgstr "Tämä ehdotus on käännetty koneellisesti verkossa."
+
+#: src/sidebar_pro.cpp:512
+#, c-format
+msgid "%d out of %d online suggestion left."
+msgid_plural "%d out of %d online suggestions left."
+msgstr[0] "%d / %d verkosta saatava ehdotus jäljellä."
+msgstr[1] "%d / %d verkosta saatavaa ehdotusta jäljellä."
+
+#: src/sidebar_pro.cpp:517
+msgid "Remove this limitation"
+msgstr "Poista tämä rajoitus"
+
+#: src/sidebar_pro.cpp:521
+msgid "Online suggestions are limited to only 10 in the free version. Upgrade to Pro to remove this limitation."
+msgstr "Verkosta saatavat ehdotukset on rajatty kymmeneen ilmaisversiossa. Päivitä Poeditin Pro-versioon tämän rajoituksen poistamiseksi."
+
+#: src/sidebar_pro.cpp:523
+msgid "Unlock online suggestions"
+msgstr "Mahdollista verkosta saatavat ehdotukset"
+
+#: src/sidebar_pro.cpp:547
+msgid "Exceeded online TM daily limit."
+msgstr "Verkossa olevan käännösmuistin päivittäinen kiintiö ylitetty."
+
+#: src/sidebar_pro.cpp:580
+msgid "Connect to the Internet to get additional suggestions."
+msgstr "Yhdistä Internetiin lisäehdotusten saamiseksi."
+
+#. TRANSLATORS: Label indicating that translations made in the current file are contributed to the online translation memory. Related to the "Contribute my translations to the online TM" string.
+#: src/sidebar_pro.cpp:655
+msgid "Contributing"
+msgstr "Lähetys käytössä"
+
+#: src/sidebar_pro.cpp:656
+msgid "Your translations are contributed to the online translation memory as you make them. Thanks for making the suggestions better!"
+msgstr "Käännökset lähetetään verkossa olevaan käännösmuistiin sitä mukaa kuin käännät. Kiitos ehdotusten määrän kasvattamisesta!"
+
+#. TRANSLATORS: Label indicating that the current file
+#: src/sidebar_pro.cpp:662
+msgid "Private"
+msgstr "Yksityinen"
+
+#: src/sidebar_pro.cpp:663
+msgid "Translations from this file are not shared with the online translation memory."
+msgstr "Tämän tiedoston käännöksiä ei lähetetä verkossa olevaan käännösmuistiin."
+
+#: src/sidebar_pro.cpp:688
+msgid "Privacy settings"
+msgstr "Yksityisyysasetukset"
+
+#: src/sidebar_pro.cpp:694
+#, c-format
+msgid "While editing the file “%s”:"
+msgstr "Tiedoston ”%s” muokkauksen aikana:"
+
+#: src/sidebar_pro.cpp:756
+msgid "Not interested"
+msgstr "Ei kiinnosta"
+
+#: src/sidebar_pro.cpp:982
+msgid "Pre-translation"
+msgstr "Esikääntäminen"
+
+#: src/sidebar_pro.cpp:987
+msgid "Pre-translate all items at once and focus on making corrections, instead of translating them one by one."
+msgstr "Esikäännä kaikki kohdat kerralla, ja keskity kohta kohdalta kääntämisen sijaan korjaamiseen."
+
+#: src/sidebar_pro.cpp:1101
+msgid "Stay Informed!"
+msgstr "Pysy ajan tasalla!"
+
+#: src/sidebar_pro.cpp:1102
+msgid "Subscribe"
+msgstr "Tilaa"
+
+#: src/sidebar_pro.cpp:1106
+msgid "Sign up for Poedit newsletter and be the first to know about what’s new. I hate spam too, so expect only a few emails a year."
+msgstr "Liity Poeditin uutiskirjeen tilaajaksi saadaksesi ensimmäisenä tietoa uutuuksista. Minäkin vihaan roskapostia, ja siksipä odotettavissa on vain muutama sähköposti vuodessa."
+
+#: src/sidebar_pro.cpp:1117
+msgid "Email address"
+msgstr "Sähköpostiosoite"
+
+#: src/sidebar_pro.cpp:1140
+msgid "You’re signed up. Please check your email for a confirmation message."
+msgstr "Olet nyt liittynyt. Vahvistusviesti on sähköpostissasi."
+
+#. TRANSLATORS: "Dictionaries" is the name of the application (see https://dictionaries.io), i.e. shouldn't be translated
+#: src/sidebar_pro.cpp:1210
+msgid "Dictionaries for Mac, Windows & Kindle"
+msgstr "Sanakirjoja Macille, Windowsille ja Kindlelle"
+
+#: src/sidebar_pro.cpp:1222
+msgid "Did you know I also made a dictionaries app for Mac, Windows and Kindle? It supports over 80 languages and is a great companion to Poedit."
+msgstr "Tiesitkö, että olen myös kehittänyt sanakirjasovelluksen Macille, Windowsille ja Kindlelle? Se tukee yli 80 kieltä ja on loistava kumppani Poeditille."
+
+#: src/sidebar_terminology.cpp:49
+msgid "Glossary Entry"
+msgstr "Sanastomerkintä"
+
+#: src/sidebar_terminology.cpp:55 src/sidebar_terminology.cpp:185
+msgid "Term"
+msgstr "Termi"
+
+#: src/sidebar_terminology.cpp:60
+msgid "Additional description or notes"
+msgstr "Tarkempi kuvaus tai muita huomioita"
+
+#: src/sidebar_terminology.cpp:66 src/sidebar_terminology.cpp:187
+msgid "Notes"
+msgstr "Muistiinpanot"
+
+#: src/sidebar_terminology.cpp:128
+msgid "CSV Glossary Import"
+msgstr "CSV-sanaston tuonti"
+
+#: src/sidebar_terminology.cpp:138
+msgid "Source language:"
+msgstr "Lähdekieli:"
+
+#: src/sidebar_terminology.cpp:142
+msgid "Translation language:"
+msgstr "Kohdekieli:"
+
+#: src/sidebar_terminology.cpp:149
+msgid "Import rules:"
+msgstr "Tuontisäännöt:"
+
+#: src/sidebar_terminology.cpp:153
+msgid "Skip the first row"
+msgstr "Ohita ensimmäinen rivi"
+
+#: src/sidebar_terminology.cpp:158
+msgid "Column separator:"
+msgstr "Sarake-erotin:"
+
+#: src/sidebar_terminology.cpp:161
+msgid "Term column:"
+msgstr "Termisarake:"
+
+#: src/sidebar_terminology.cpp:164
+msgid "Definition column:"
+msgstr "Määritesarake:"
+
+#: src/sidebar_terminology.cpp:167
+msgid "Notes column:"
+msgstr "Kommenttisarake:"
+
+#: src/sidebar_terminology.cpp:177 src/sidebar_terminology.cpp:261
+msgid "Preview of imported glossary data:"
+msgstr "Tuotavien sanastotietojen esikatselu:"
+
+#. TRANSLATORS: %d is the number of entries in the preview, %s is the total number of entries in the file
+#: src/sidebar_terminology.cpp:257
+#, c-format
+msgid "Preview of imported glossary data (%d out of %s shown):"
+msgstr "Esikatsele tuotuja sanastotietoja (%d/%s näytetään):"
+
+#: src/sidebar_terminology.cpp:396 src/wx_translatable_strings.h:102
+msgid "Edit"
+msgstr "Muokkaa"
+
+#: src/sidebar_terminology.cpp:496
+msgid "Word or phrase"
+msgstr "Sana tai lause"
+
+#: src/sidebar_terminology.cpp:518
+msgid "Add entries to the glossary"
+msgstr "Lisää sanastoon kohteita"
+
+#: src/sidebar_terminology.cpp:524
+msgid "Search previously made translations and glossaries to ensure consistency. Both the current file and your translation memory are consulted."
+msgstr "Etsi aikaisemmista käännöksistä ja sanastoista yhdenmukaisuuden varmistamiseksi. Tuloksia haetaan sekä nykyisestä tiedostosta että omasta käännösmuististasi."
+
+#: src/sidebar_terminology.cpp:536
+msgid "Unlock terminology search"
+msgstr "Vapauta termistöhaku"
+
+#: src/sidebar_terminology.cpp:626
+msgid "Glossary"
+msgstr "Sanasto"
+
+#: src/sidebar_terminology.cpp:632
+msgid "This File"
+msgstr "Tämä tiedosto"
+
+#: src/sidebar_terminology.cpp:696
+msgid "Add Glossary Entry…"
+msgstr "Lisää sanastokohde…"
+
+#: src/sidebar_terminology.cpp:696
+msgid "Add glossary entry…"
+msgstr "Lisää sanastokohde…"
+
+#: src/sidebar_terminology.cpp:697
+msgid "Import Glossary from CSV File…"
+msgstr "Tuo sanasto CSV-tiedostosta…"
+
+#: src/sidebar_terminology.cpp:697
+msgid "Import glossary from CSV file…"
+msgstr "Tuo sanasto CSV-tiedostosta…"
+
+#: src/sidebar_terminology.cpp:720
+msgid "Select CSV glossary file to import"
+msgstr "Valitse tuotava CSV-sanastotiedosto"
+
+#: src/sidebar_terminology.cpp:723
+msgid "CSV Files"
+msgstr "CSV-tiedostot"
+
+#: src/sidebar_terminology.cpp:749
+msgid "Importing glossary"
+msgstr "Sanaston tuonti"
+
+#: src/sidebar_terminology.cpp:756
+#, c-format
+msgid "Imported %s terms from CSV file “%s” into the glossary."
+msgstr "Sanastoon tuotiin CSV-tiedostosta \"%s\" tuotiin %s termiä."
+
+#: src/statistics.cpp:275 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Items"
+msgstr "Kohdat"
+
+#: src/statistics.cpp:276 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Words"
+msgstr "Sanat"
+
+#: src/statistics.cpp:277 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Characters"
+msgstr "Merkit"
+
+#: src/statistics.cpp:291 src/statistics.cpp:412
+msgid "Translated"
+msgstr "Käännetty"
+
+#: src/statistics.cpp:296 src/statistics.cpp:335 src/statistics.cpp:413
+#: src/statistics.cpp:417
+msgctxt "column/row header"
+msgid "Needs work"
+msgstr "Keskeneräisiä"
+
+#: src/statistics.cpp:301 src/statistics.cpp:414
+msgid "Translations with errors"
+msgstr "Virheelliset käännökset"
+
+#: src/statistics.cpp:328 src/statistics.cpp:416 src/statistics.cpp:428
+msgid "Strings in source language"
+msgstr "Tekstejä lähdekielessä"
+
+#: src/statistics.cpp:340 src/statistics.cpp:418
+msgid "Not translated"
+msgstr "Kääntämättä"
+
+#: src/statistics.cpp:351
+msgid "Include code and placeholders"
+msgstr "Sisällytä koodit ja muuttujat"
+
+#: src/statistics.cpp:352
+msgid "If checked, word and character counts will also include placeholders, HTML markup and code."
+msgstr "Jos valittu, sisällytetään sana- ja merkkimääriin myös muuttujat, HTML-merkinnät ja koodit."
+
+#: src/statistics.cpp:362
+msgid "Characters are counted including spaces."
+msgstr "Välilyönnit lasketaan merkeiksi."
+
+#: src/statistics.cpp:368
+msgid "Copy to clipboard"
+msgstr "Kopioi leikepöydälle"
+
+#: src/statistics.cpp:370
+msgid "Copy to Clipboard"
+msgstr "Kopioi leikepöydälle"
+
+#: src/statistics.cpp:722
+#, c-format
+msgid "The file “%s” couldn’t be opened: %s"
+msgstr "Tiedostoa \"%s\" ei voitu avata: %s"
+
+#: src/subprocess.cpp:219 src/subprocess.cpp:251
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "Ei voida suorittaa ohjelmaa: %s"
+
+#: src/tm/tmx_io.cpp:88 src/tm/tmx_io.cpp:104
 msgid "The TMX file is malformed."
 msgstr "TMX-tiedosto on viallinen."
 
-msgid "No translations were found in the TMX file."
-msgstr "TMX-tiedostosta ei löytynyt käännöksiä."
-
+#: src/tm/transmem.cpp:87
 #, c-format
 msgid "Translation memory database is corrupted: %s (%d)."
 msgstr "Käännösmuistin tietokanta on turmeltunut: %s (%d)."
 
+#: src/tm/transmem.cpp:90
 #, c-format
 msgid "Translation memory error: %s (%d)."
 msgstr "Käännösmuistin virhe: %s (%d)."
 
+#: src/uilang.cpp:233
 msgid "(Use default language)"
 msgstr "(Käytä oletuskieltä)"
 
+#: src/uilang.cpp:244
 msgid "Language selection"
 msgstr "Kielen valinta"
 
+#: src/uilang.cpp:244
 msgid "Select your preferred language"
 msgstr "Valitse ensisijainen kieli"
 
+#: src/uilang.cpp:261
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Poedit täytyy käynnistää uudestaan muutoksien käyttöön ottamiseksi."
 
+#: src/utility.cpp:143 src/utility.cpp:153
 msgid "Cannot create temporary directory."
 msgstr "Tilapäiskansiota ei voida luoda."
 
+#: src/welcomescreen.cpp:141
 msgid "There are no translations. That’s unusual."
 msgstr "Käännöksiä ei ole. Sepä erikoista."
 
-msgid ""
-"Translatable entries aren’t added manually in the Gettext system, but are "
-"automatically extracted\n"
-"from source code. This way, they stay up to date and accurate.\n"
-"Translators typically use PO template files (POTs) prepared for them by the "
-"developer."
-msgstr ""
-"Käännettäviä viestejä ei Gettext-järjestelmässä lisätä manuaalisesti, vaan "
-"ne poimitaan automaattisesti\n"
-"lähdekoodista. Näin ne pysyvät ajan tasalla ja tarkkoina.\n"
-"Kääntäjät käyttävät yleensä kehittäjän heitä varten luomia PO-"
-"mallipohjatiedostoja (POT)."
+#: src/welcomescreen.cpp:150
+msgid "Translatable entries aren’t added manually in the Gettext system, but are automatically extracted from source code. This way, they stay up to date and accurate. Translators typically use PO template files (POTs) prepared for them by the developer."
+msgstr "Käännettäviä viestejä ei Gettext-järjestelmässä lisätä manuaalisesti, vaan ne poimitaan lähdekoodista automaattisesti. Näin ne pysyvät ajan tasalla ja tarkkoina. Kääntäjät käyttävät yleensä kehittäjän heitä varten luomia PO-mallitiedostoja (POT)."
 
-msgid "(Learn more about GNU gettext)"
-msgstr "(Lisätietoja GNU gettextistä)"
+#: src/welcomescreen.cpp:153
+msgid "Learn more about GNU gettext"
+msgstr "Lisätietoja GNU gettextistä"
 
-msgid ""
-"The simplest way to fill this file with translations is to update it from a "
-"POT:"
-msgstr ""
-"Yksinkertaisin tapa täyttää tämä tiedosto käännöksillä on päivittää se POT-"
-"tiedostosta:"
+#: src/welcomescreen.cpp:157
+msgid "The simplest way to fill this file with translations is to update it from a POT:"
+msgstr "Yksinkertaisin tapa täyttää tämä tiedosto käännöksillä on päivittää se POT-tiedostosta:"
 
+#: src/welcomescreen.cpp:162
 msgid "Update from POT"
 msgstr "Päivitä POT-tiedostosta"
 
+#: src/welcomescreen.cpp:163
 msgid "Take translatable strings from an existing POT template."
 msgstr "Poimi käännettävät tekstit olemassa olevasta POT-käännöspohjasta."
 
-msgid ""
-"You can also extract translatable strings directly from the source code:"
+#: src/welcomescreen.cpp:167
+msgid "You can also extract translatable strings directly from the source code:"
 msgstr "Voit myös poimia käännettävät tekstit suoraan lähdekoodista:"
 
+#: src/welcomescreen.cpp:172
 msgid "Extract from sources"
 msgstr "Poimi lähdekoodista"
 
+#: src/welcomescreen.cpp:173
 msgid "Configure source code extraction in Properties."
 msgstr "Konfiguroi lähdekoodista poimiminen asetuksissa."
 
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "Versio %s"
-
+#: src/welcomescreen.cpp:272
 msgid "Create new"
 msgstr "Luo uusi"
 
+#: src/welcomescreen.cpp:273
 msgid "Create new translation from POT template."
 msgstr "Luo uusi käännös POT-pohjasta."
 
+#: src/welcomescreen.cpp:278
 msgid "Browse files"
 msgstr "Selaa tiedostoja"
 
+#: src/welcomescreen.cpp:279
 msgid "Open and edit translation files."
 msgstr "Avaa ja muokkaa käännöstiedostoja."
 
+#: src/welcomescreen.cpp:286
+msgid "Translate WordPress theme or plugin"
+msgstr "Käännä WordPress-teema tai -liitännäinen"
+
+#: src/welcomescreen.cpp:287
+msgid "Edit WordPress translations over FTP or locally."
+msgstr "Muokkaa WordPress-käännöksiä FTP:n kautta tai paikallisesti."
+
+#: src/welcomescreen.cpp:292
 msgid "Translate cloud project"
 msgstr "Käännä pilviprojekti"
 
+#: src/welcomescreen.cpp:293
 msgid "Collaborate with other people online."
 msgstr "Työskentele verkossa muiden kanssa."
 
+#: src/welcomescreen.cpp:316
 msgid "Recent files"
 msgstr "Äskettäiset tiedostot"
 
+#: src/wordpress/wordpress.cpp:101 src/wordpress/wordpress.cpp:108
+#, c-format
+msgid "Failed to read file “%s”."
+msgstr "Tiedoston ”%s” lukeminen epäonnistui."
+
+#: src/wordpress/wordpress.cpp:165
+#, c-format
+msgid "Confused by ambiguous values of “%s” in %s."
+msgstr "Hämmennystä aiheuttavat moniselitteiset ”%s”-arvot tiedostossa %s."
+
+#: src/wordpress/wordpress.cpp:294 src/wordpress/wordpress.cpp:544
+#: src/wordpress/wordpress.cpp:591
+#, c-format
+msgid "Couldn’t detect POs location for “%s”."
+msgstr "”%s”-komponentin PO-tiedostojen sijaintia ei voitu selvittää."
+
+#: src/wordpress/wordpress.cpp:670
+#, c-format
+msgid "The “%s” theme isn’t localization-ready."
+msgstr "Teemalla ”%s” ei ole lokalisointivalmiutta."
+
+#: src/wordpress/wordpress.cpp:687
+#, c-format
+msgid "Couldn’t detect translation domain of the “%s” theme."
+msgstr "”%s”-teeman käännösaluetta ei voitu selvittää."
+
+#: src/wordpress/wordpress.cpp:714
+#, c-format
+msgid "Couldn't detect translation domain of the \"%s\" theme."
+msgstr "”%s”-teeman käännösaluetta ei voitu selvittää."
+
+#: src/wordpress/wordpress.cpp:769
+msgid "Confused: multiple main plugin files."
+msgstr "Hämmentävää: useita pääliitännäistiedostoja."
+
+#: src/wordpress/wordpress.cpp:819
+#, c-format
+msgid "The “%s” plugin isn’t localization-ready."
+msgstr "Liitännäisellä ”%s” ei ole lokalisointivalmiutta."
+
+#: src/wordpress/wordpress.cpp:840 src/wordpress/wordpress.cpp:857
+#, c-format
+msgid "Couldn’t detect translation domain of the “%s” plugin."
+msgstr "”%s”-liitännäisen käännösaluetta ei voitu selvittää."
+
+#: src/wordpress/wordpress.cpp:923
+msgid "Found neither WordPress theme nor plugin in the folder."
+msgstr "Kansiosta ei löytynyt WordPress-teemaa eikä -liitännäistä."
+
+#: src/wordpress/wordpress.cpp:940
+#, c-format
+msgid "Translations folder (%s) doesn’t exist."
+msgstr "Käännöskansiota (%s) ei ole olemassa."
+
+#: src/wordpress/wordpress_gui.cpp:77
+msgid "<big>Drag and drop <b>theme or plugin folder</b> here</big>\n\n"
+"or use the “Choose folder” button"
+msgstr "<big>Vedä ja pudota <b>teema- tai liitännäiskansio</b> tähän</big>\n\n"
+"tai käytä ”Valitse kansio” -painiketta"
+
+#: src/wordpress/wordpress_gui.cpp:79
+msgid "<big>Drag and Drop <b>Theme or Plugin Folder</b> Here</big>\n\n"
+"or use the “Choose Folder” button"
+msgstr "<big>Vedä ja pudota <b>teema- tai liitännäiskansio</b> tähän</big>\n\n"
+"tai käytä ”Valitse kansio” -painiketta"
+
+#: src/wordpress/wordpress_gui.cpp:101
+#, c-format
+msgid "Folder “%s”"
+msgstr "Kansio ”%s”"
+
+#: src/wordpress/wordpress_gui.cpp:162
+msgid "Work With Files"
+msgstr "Tiedostojen käsittely"
+
+#: src/wordpress/wordpress_gui.cpp:162
+msgid "Work with files"
+msgstr "Tiedostojen käsittely"
+
+#: src/wordpress/wordpress_gui.cpp:164
+msgid "Connect to Server"
+msgstr "Yhdistä palvelimeen"
+
+#: src/wordpress/wordpress_gui.cpp:164
+msgid "Connect to server"
+msgstr "Yhdistä palvelimeen"
+
+#: src/wordpress/wordpress_gui.cpp:165
+msgid "On This Computer"
+msgstr "Tällä tietokoneella"
+
+#: src/wordpress/wordpress_gui.cpp:165
+msgid "On this computer"
+msgstr "Tällä tietokoneella"
+
+#: src/wordpress/wordpress_gui.cpp:168
+msgid "Continue"
+msgstr "Jatka"
+
+#: src/wordpress/wordpress_gui.cpp:210
+msgid "Choose Folder…"
+msgstr "Valitse kansio…"
+
+#: src/wordpress/wordpress_gui.cpp:210
+msgid "Choose folder…"
+msgstr "Valitse kansio…"
+
+#: src/wordpress/wordpress_gui.cpp:217
+msgid "Create a new translation"
+msgstr "Luo uusi käännös"
+
+#: src/wordpress/wordpress_gui.cpp:220
+msgid "Choose this if you want to translate the theme or plugin into your language."
+msgstr "Valitse tämä, kun haluat kääntää teeman tai liitännäisen kielellesi."
+
+#: src/wordpress/wordpress_gui.cpp:233
+msgid "Create a POT"
+msgstr "Luo POT"
+
+#: src/wordpress/wordpress_gui.cpp:235
+msgid "This option is for theme and plugin developers. Poedit will create an empty template (POT) that translations can be based on."
+msgstr "Tämä valinta on tarkoitettu teemojen ja liitännäisten kehittäjille. POedit luo tyhjän käännöspohjan (POT), jonka perusteella käännöksiä voi tehdä."
+
+#: src/wordpress/wordpress_gui.cpp:248
+msgid "Select the folder with the WordPress theme or plugin"
+msgstr "Valitse kansio, joka sisältää WordPress-teeman tai -liitännäisen"
+
+#: src/wordpress/wordpress_gui.cpp:280
+msgid "Enter connection details for your WordPress server. Poedit will retrieve available themes and plugins from it and let you translate directly on the server."
+msgstr "Syötä WordPress-palvelimen tiedot. Poedit noutaa palvelimelta saatavilla olevat teemat ja liitännäiset ja mahdollistaa kääntämisen suoraan palvelimelle."
+
+#: src/wordpress/wordpress_gui.cpp:287
+msgid "Protocol:"
+msgstr "Protokolla:"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "FTP (insecure)"
+msgstr "FTP (turvaton)"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "FTP with SSL"
+msgstr "FTP ja SSL"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "SFTP"
+msgstr "SFTP"
+
+#: src/wordpress/wordpress_gui.cpp:293
+msgid "Choose a recent server"
+msgstr "Valitse äskettäinen palvelin"
+
+#: src/wordpress/wordpress_gui.cpp:302 src/wordpress/wordpress_gui.cpp:538
+msgid "Recent Servers"
+msgstr "Äskettäiset palvelimet"
+
+#: src/wordpress/wordpress_gui.cpp:302 src/wordpress/wordpress_gui.cpp:538
+msgid "Recent servers"
+msgstr "Äskettäiset palvelimet"
+
+#: src/wordpress/wordpress_gui.cpp:306
+msgid "Server:"
+msgstr "Palvelin:"
+
+#: src/wordpress/wordpress_gui.cpp:310
+msgid "Remote Path:"
+msgstr "Etäpolku:"
+
+#: src/wordpress/wordpress_gui.cpp:310
+msgid "Remote path:"
+msgstr "Etäpolku:"
+
+#: src/wordpress/wordpress_gui.cpp:312
+msgid "Detected automatically"
+msgstr "Automaattisesti tunnistettu"
+
+#: src/wordpress/wordpress_gui.cpp:315
+msgid "Port:"
+msgstr "Portti:"
+
+#: src/wordpress/wordpress_gui.cpp:321
+msgid "Username:"
+msgstr "Käyttäjätunnus:"
+
+#: src/wordpress/wordpress_gui.cpp:325
+msgid "Password:"
+msgstr "Salasana:"
+
+#: src/wordpress/wordpress_gui.cpp:332
+msgid "Remember my credentials"
+msgstr "Muista kirjautumistietoni"
+
+#: src/wordpress/wordpress_gui.cpp:333
+msgid "Connect"
+msgstr "Yhdistä"
+
+#: src/wordpress/wordpress_gui.cpp:346
+msgid "Select the plugin or theme to translate:"
+msgstr "Valitse käännettävä liitännäinen tai teema:"
+
+#: src/wordpress/wordpress_gui.cpp:398
+msgid "Connecting to WordPress server…"
+msgstr "Yhdistetään WordPress-palvelimeen…"
+
+#: src/wordpress/wordpress_gui.cpp:416
+#, c-format
+msgid "Theme: %s"
+msgstr "Teema: %s"
+
+#: src/wordpress/wordpress_gui.cpp:419
+#, c-format
+msgid "Plugin: %s"
+msgstr "Liitännäinen: %s"
+
+#: src/wordpress/wordpress_gui.cpp:534
+msgid "No Recent Servers"
+msgstr "Ei äskettäisiä palvelimia"
+
+#: src/wordpress/wordpress_gui.cpp:534
+msgid "No recent servers"
+msgstr "Ei äskettäisiä palvelimia"
+
+#: src/wordpress/wordpress_gui.cpp:552
+msgid "Clear Recent Servers"
+msgstr "Tyhjennä äskettäiset palvelimet"
+
+#: src/wordpress/wordpress_gui.cpp:552
+msgid "Clear recent servers"
+msgstr "Tyhjennä äskettäiset palvelimet"
+
+#: src/wordpress/wordpress_gui.cpp:825
+msgid "Failed to extract WordPress information."
+msgstr "WordPress-tietojen poimiminen epäonnistui."
+
+#: src/wordpress/wordpress_gui.cpp:826
+msgid "WordPress error"
+msgstr "WordPress-virhe"
+
+#: src/wordpress/wordpress_gui.cpp:835
+#, c-format
+msgid "Poedit couldn’t understand the content of the folder you selected. This may be a problem with the plugin/theme or it may be Poedit being silly. The error is:\n\n"
+" • %s\n\n"
+"Please email help@poedit.net and we’ll sort it out."
+msgstr "Poedit ei ymmärtänyt valitsemasi kansion sisältöä. Tämä voi johtua ongelmasta liitännäisessä/teemassa, tai siitä, että Poedit ei vain osaa. Virhe on:\n\n"
+" • %s\n\n"
+"Lähetä sähköpostia osoitteeseen help@poedit.net, niin voimme ratkaista ongelman."
+
+#. TRANSLATORS: This is a button that sends an email to support when clicked
+#: src/wordpress/wordpress_gui.cpp:841
+msgid "Email support"
+msgstr "Pyydä tukea sähköpostilla"
+
+#: src/wordpress/wordpress_gui.cpp:842
+msgid "View log"
+msgstr "Näytä loki"
+
+#. TRANSLATORS: This is a button that sends an email to support when clicked
+#: src/wordpress/wordpress_gui.cpp:845
+msgid "Email Support"
+msgstr "Pyydä tukea sähköpostilla"
+
+#: src/wordpress/wordpress_gui.cpp:846
+msgid "View Log"
+msgstr "Näytä loki"
+
+#: src/wordpress/wordpress_gui.cpp:857
+msgid "WordPress Errors Log"
+msgstr "WordPress-virheloki"
+
+#: src/wordpress/wordpress_gui.cpp:858
+msgid "Please email this log to help@poedit.net. Thank you!"
+msgstr "Lähetä tämä loki sähköpostitse osoitteeseen help@poedit.net. Kiitos!"
+
+#: src/wordpress/wordpress_gui.cpp:938
+msgid "Analyzing WordPress server…"
+msgstr "Analysoidaan WordPress-palvelinta…"
+
+#: src/wordpress/wordpress_gui.cpp:959
+msgid "Downloading translation data…"
+msgstr "Ladataan käännöstietoja…"
+
+#: src/wordpress/wordpress_gui.cpp:984
+msgid "Unpacking translation data…"
+msgstr "Puretaan käännöstietoja…"
+
+#: src/wordpress/wordpress_gui.cpp:989
+msgid "Error unpacking downloaded WordPress data."
+msgstr "Virhe ladatun WordPress-datan purkamisessa."
+
+#: src/wordpress/wordpress_gui.cpp:1014 src/wordpress/wordpress_gui.cpp:1029
+msgid "Analyzing WordPress code…"
+msgstr "Analysoidaan WordPress-koodia…"
+
+#: src/wordpress/wordpress_gui.cpp:1039
+msgid "WordPress translation file is ready, but there were some non-fatal issues with the corresponding source code."
+msgstr ""
+
+#: src/wx/main_toolbar.cpp:123
 msgid "Sync"
 msgstr "Synkronoi"
 
+#: src/wx/main_toolbar.cpp:124
 msgid "Synchronize the translation with Crowdin"
 msgstr "Synkronoi Crowdin-käännökseen"
 
-#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
-#. ("Poedit" here, but please use "%s")
-#, c-format
-msgid "About %s"
-msgstr "Tietoja %s-ohjelmasta"
+#: src/wx/main_toolbar.cpp:170
+msgid "Upgrade to Poedit Pro to get additional features and support Poedit's development."
+msgstr "Päivitä Poedit Prohon lisäominaisuuksien saamiseksi ja Poeditin kehityksen tukemiseksi."
 
 #. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+#: src/wx_translatable_strings.h:49
 #, c-format
 msgid "%s Preferences"
 msgstr "%sin asetukset"
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
+#: src/wx_translatable_strings.h:60
 #, c-format
 msgctxt "macOS menu item"
 msgid "About %s"
 msgstr "Tietoja %s-ohjelmasta"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:64
 msgctxt "macOS menu item"
 msgid "Services"
 msgstr "Palvelut"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#: src/wx_translatable_strings.h:66
 #, c-format
 msgctxt "macOS menu item"
 msgid "Hide %s"
 msgstr "Kätke %s"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:68
 msgctxt "macOS menu item"
 msgid "Hide Others"
 msgstr "Kätke muut"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:70
 msgctxt "macOS menu item"
 msgid "Show All"
 msgstr "Näytä kaikki"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#: src/wx_translatable_strings.h:72
 #, c-format
 msgctxt "macOS menu item"
 msgid "Quit %s"
 msgstr "Lopeta %s"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:74
 msgid "Preferences…"
 msgstr "Asetukset…"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:76
 msgid "Preferences..."
 msgstr "Asetukset..."
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:78
 msgctxt "macOS menu item"
 msgid "Preferences..."
 msgstr "Asetukset..."
 
+#: src/wx_translatable_strings.h:92
 msgid "&Apply"
 msgstr "&Käytä"
 
+#: src/wx_translatable_strings.h:92
 msgid "Apply"
 msgstr "Käytä"
 
+#: src/wx_translatable_strings.h:93
 msgid "&Back"
 msgstr "&Takaisin"
 
+#: src/wx_translatable_strings.h:93
 msgid "Back"
 msgstr "Takaisin"
 
+#: src/wx_translatable_strings.h:94
 msgid "&Cancel"
 msgstr "&Peruuta"
 
+#: src/wx_translatable_strings.h:95
 msgid "&Clear"
 msgstr "&Tyhjennä"
 
+#: src/wx_translatable_strings.h:95
 msgid "Clear"
 msgstr "Tyhjennä"
 
+#: src/wx_translatable_strings.h:98
 msgid "Copy"
 msgstr "Kopioi"
 
+#: src/wx_translatable_strings.h:99
 msgid "Cu&t"
 msgstr "&Leikkaa"
 
+#: src/wx_translatable_strings.h:99
 msgid "Cut"
 msgstr "Leikkaa"
 
-msgid "Edit"
-msgstr "Muokkaa"
-
+#: src/wx_translatable_strings.h:103
 msgid "&Quit"
 msgstr "&Lopeta"
 
+#: src/wx_translatable_strings.h:105
 msgid "Help"
 msgstr "Ohje"
 
+#: src/wx_translatable_strings.h:106
 msgid "&New"
 msgstr "&Uusi"
 
+#: src/wx_translatable_strings.h:106
 msgid "New"
 msgstr "Uusi"
 
+#: src/wx_translatable_strings.h:107
 msgid "&No"
 msgstr "&Ei"
 
+#: src/wx_translatable_strings.h:107
 msgid "No"
 msgstr "Ei"
 
+#: src/wx_translatable_strings.h:108
 msgid "&OK"
 msgstr "&Ok"
 
+#: src/wx_translatable_strings.h:109
 msgid "Open…"
 msgstr "Avaa…"
 
+#: src/wx_translatable_strings.h:110
 msgid "&Open..."
 msgstr "&Avaa..."
 
+#: src/wx_translatable_strings.h:110
 msgid "Open..."
 msgstr "Avaa..."
 
+#: src/wx_translatable_strings.h:111
 msgid "&Paste"
 msgstr "L&iitä"
 
+#: src/wx_translatable_strings.h:111
 msgid "Paste"
 msgstr "Sijoita"
 
+#: src/wx_translatable_strings.h:112
 msgid "Preferences"
 msgstr "Asetukset"
 
+#: src/wx_translatable_strings.h:113
 msgid "&Redo"
 msgstr "&Tee uudelleen"
 
+#: src/wx_translatable_strings.h:114
 msgid "Refresh"
 msgstr "Virkistä"
 
+#: src/wx_translatable_strings.h:116
 msgid "&Save as"
 msgstr "T&allenna nimellä"
 
+#: src/wx_translatable_strings.h:116
 msgid "Save as"
 msgstr "Tallenna nimellä"
 
+#: src/wx_translatable_strings.h:117
 msgid "Select &All"
 msgstr "Valitse k&aikki"
 
+#: src/wx_translatable_strings.h:117
 msgid "Select All"
 msgstr "Valitse kaikki"
 
+#: src/wx_translatable_strings.h:118
 msgid "&Undo"
 msgstr "K&umoa"
 
+#: src/wx_translatable_strings.h:119
 msgid "&Yes"
 msgstr "K&yllä"
 
+#: src/wx_translatable_strings.h:119
 msgid "Yes"
 msgstr "Kyllä"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:125
 msgctxt "keyboard key"
 msgid "Alt+"
 msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:127
 msgctxt "keyboard key"
 msgid "Shift+"
 msgstr "Vaihto+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:129
 msgctxt "keyboard key"
 msgid "Enter"
 msgstr "Enter"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:131
 msgctxt "keyboard key"
 msgid "Up"
 msgstr "Ylänuoli"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:133
 msgctxt "keyboard key"
 msgid "Down"
 msgstr "Alanuoli"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:135
 msgctxt "keyboard key"
 msgid "Left"
 msgstr "Vasen"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:137
 msgctxt "keyboard key"
 msgid "Right"
 msgstr "Oikea"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+#: src/wx_translatable_strings.h:140
 msgctxt "keyboard key"
 msgid "ctrl"
 msgstr "ctrl"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+#: src/wx_translatable_strings.h:142
 msgctxt "keyboard key"
 msgid "alt"
 msgstr "alt"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+#: src/wx_translatable_strings.h:144
 msgctxt "keyboard key"
 msgid "shift"
 msgstr "vaihto"
+
+#: src/wx_translatable_strings.h:152
+msgid "Warning: "
+msgstr "Varoitus: "
+

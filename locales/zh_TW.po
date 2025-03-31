@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2024-10-31 12:30+0100\n"
-"PO-Revision-Date: 2024-10-07 10:16\n"
+"POT-Creation-Date: 2025-03-21 15:42+0100\n"
+"PO-Revision-Date: 2025-03-29 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -17,712 +17,1180 @@ msgstr ""
 "X-Crowdin-File: /locales/poedit.pot\n"
 "X-Crowdin-File-ID: 3\n"
 
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#: src/aboutbox.cpp:135 src/wx_translatable_strings.h:42
+#, c-format
+msgid "About %s"
+msgstr "關於 %s"
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#: src/aboutbox.cpp:167 src/welcomescreen.cpp:265
+#: src/wx_translatable_strings.h:46
+#, c-format
+msgid "Version %s"
+msgstr "版本 %s"
+
+#: src/aboutbox.cpp:168
+msgid "Based on the open source version →"
+msgstr "基於開放原始碼的版本 →"
+
+#: src/aboutbox.cpp:174
+msgid "Acknowledgements"
+msgstr "致謝"
+
+#: src/aboutbox.cpp:175
+msgid "License Agreement"
+msgstr "授權同意書"
+
+#: src/aboutbox.cpp:182 src/prefsdlg.cpp:503
+msgid "Terms of Use"
+msgstr "使用條款"
+
+#: src/aboutbox.cpp:183
+msgid "Privacy Policy"
+msgstr "隱私權政策"
+
+#: src/aboutbox.cpp:244
+#, c-format
+msgid "Licensed to %s"
+msgstr "已授權給 %s"
+
+#: src/aboutbox.cpp:246
+msgid "Free version (please upgrade!)"
+msgstr "免費版本 (建議升級)"
+
+#: src/attentionbar.cpp:83
 msgid "Hide this notification message"
 msgstr "隱藏這項通知訊息"
 
+#: src/attentionbar.cpp:291
 msgid "Don’t Show Again"
 msgstr "不要再顯示"
 
+#: src/attentionbar.cpp:291
 msgid "Don’t show again"
-msgstr "不要再顯示"
+msgstr "不再顯示"
 
+#: src/cat_operations.cpp:123
+msgid "Both files must be of the same file format."
+msgstr "兩個檔案的格式應當一致。"
+
+#: src/cat_update.cpp:93
 #, c-format
 msgid "(New: %i, obsolete: %i)"
 msgstr "(新增：%i，棄用：%i)"
 
-msgid "Collecting source files…"
-msgstr "正在收集來源檔..."
+#: src/cat_update.cpp:98
+msgid "Update Summary"
+msgstr "更新摘要"
 
-msgid "Extracting translatable strings…"
-msgstr "正在擷取可翻譯字串…"
+#. TRANSLATORS: Title of window showing summary (added/removed strings, issues) of updating translations from sources or POT file
+#: src/cat_update.cpp:98 src/resources/summary.xrc:4
+msgid "Update summary"
+msgstr "更新摘要"
 
-msgid "Failed to load file with extracted translations."
-msgstr "無法載入包含擷取翻譯的檔案。"
+#: src/cat_update.cpp:100 src/resources/summary.xrc:24
+msgid "Issues"
+msgstr "問題"
 
-msgid "Merging differences…"
-msgstr "正在合併差異…"
+#: src/cat_update.cpp:101
+msgid "New Strings"
+msgstr "新字串"
 
+#: src/cat_update.cpp:101 src/resources/summary.xrc:45
+msgid "New strings"
+msgstr "新字串"
+
+#: src/cat_update.cpp:102
+msgid "Removed Strings"
+msgstr "移除的字串"
+
+#: src/cat_update.cpp:102
+msgid "Removed strings"
+msgstr "移除的字串"
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:105 src/cloud_accounts_ui.cpp:263 src/manager.cpp:404
+#: src/recent_files.cpp:555 src/wx_translatable_strings.h:104
+msgid "File"
+msgstr "檔案"
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:107
+msgid "Line"
+msgstr "橫列"
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:109
+msgid "Issue"
+msgstr "問題"
+
+#: src/cat_update.cpp:205 src/cat_update.cpp:461
 msgid "Updating translations"
 msgstr "正在更新翻譯"
 
+#: src/cat_update.cpp:206
+#, c-format
+msgid "Found %d template file supported by Poedit Pro."
+msgid_plural "Found %d template files supported by Poedit Pro."
+msgstr[0] "找到 %d 個 Poedit Pro 支援的範本檔案。"
+
+#. TRANSLATORS: %s is a filename here, e.g. "mainpage.twig"
+#: src/cat_update.cpp:208
+msgid "Poedit Pro can extract strings from template files, but this functionality isn’t available in the free version. Would you like to upgrade to the Pro version?"
+msgstr "Poedit Pro 可以從模板檔中將字串抽出，但這個功能在免費版本中並不提供。您是否希望升級至 Pro 版呢？"
+
+#: src/cat_update.cpp:211 src/licensing_ui.cpp:691 src/sidebar_pro.cpp:1212
+msgid "Learn More"
+msgstr "深入瞭解"
+
+#: src/cat_update.cpp:211 src/customcontrols.cpp:326 src/licensing_ui.cpp:691
+#: src/sidebar_pro.cpp:1212
+msgid "Learn more"
+msgstr "深入瞭解"
+
+#: src/cat_update.cpp:216
+msgid "Don’t ask again"
+msgstr "不要再問"
+
+#: src/cat_update.cpp:217
+msgid "Skip templates"
+msgstr "略過範本"
+
+#: src/cat_update.cpp:226
+msgid "Found the following template files:"
+msgstr "找到這些模板檔案："
+
+#: src/cat_update.cpp:245
+msgid "Don’t Ask Again"
+msgstr "不要再問"
+
+#: src/cat_update.cpp:246
+msgid "Skip Templates"
+msgstr "略過模板"
+
+#: src/cat_update.cpp:297
+msgid "Collecting source files…"
+msgstr "正在收集來源檔..."
+
+#: src/cat_update.cpp:321
+#, c-format
+msgid "Extracting translatable strings from %s file…"
+msgid_plural "Extracting translatable strings from %s files…"
+msgstr[0] "正在從 %s 個檔案中擷取可翻譯字串……"
+
+#: src/cat_update.cpp:348
+#, c-format
+msgid "Failed to extract WordPress metadata from file %s."
+msgstr "無法從 %s 檔案中抽取 WordPress 的中介資料。"
+
+#: src/cat_update.cpp:356 src/cat_update.cpp:492
+msgid "Failed to load file with extracted translations."
+msgstr "無法載入包含擷取翻譯的檔案。"
+
+#: src/cat_update.cpp:380
+#, c-format
+msgid "In: %s"
+msgstr "在：%s"
+
+#: src/cat_update.cpp:387 src/edframe.cpp:1778
+msgid "Source code not available."
+msgstr "原始程式碼無法使用。"
+
+#: src/cat_update.cpp:388 src/edframe.cpp:1782
+msgid "Translations couldn’t be updated from the source code, because no code was found in the location specified in the file’s Properties."
+msgstr "由於在檔案「屬性」指定的路徑中找不到程式碼，翻譯無法從原始碼更新。"
+
+#: src/cat_update.cpp:392
+msgid "Permission denied."
+msgstr "權限不足。"
+
+#: src/cat_update.cpp:393
+msgid "You don’t have permission to read source code files from the location specified in the file’s Properties."
+msgstr "您無權讀取檔案「屬性」指定之路徑中的原始碼檔案。"
+
+#. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
+#: src/cat_update.cpp:398
+msgid "If you previously denied access to your files, you can allow it in System Settings > Privacy & Security > Files & Folders."
+msgstr "若您先前拒絕檔案存取，可依循「系統設定」 >「 隱私權與安全性」 > 「隱私權」 > 「檔案與檔案夾」變更放行。"
+
+#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
+#: src/cat_update.cpp:403
+msgid "If you previously denied access to your files, you can allow it in System Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr "若您先前拒絕檔案存取，可以到系統偏好設定 > 安全性與隱私權 > 隱私權 > 檔案與資料夾放行。"
+
+#: src/cat_update.cpp:409
+msgid "Failed to extract strings from source code."
+msgstr "無法從原始程式碼中擷取字串。"
+
+#: src/cat_update.cpp:443 src/edapp.cpp:1186 src/edframe.cpp:952
+#: src/edframe.cpp:2955
 #, c-format
 msgid "The file “%s” couldn’t be opened."
 msgstr "無法開啟檔案「%s」。"
 
-msgid "Invalid file"
-msgstr "檔案無效"
+#: src/cat_update.cpp:481
+msgid "Determining differences…"
+msgstr "正在比對差異……"
 
+#: src/cat_update.cpp:489 src/cat_update.cpp:547
+msgid "Merging differences…"
+msgstr "正在合併差異…"
+
+#: src/cat_update.cpp:502
+msgid "Translation file is already up to date, no changes to strings were made."
+msgstr "翻譯檔案已經是最新狀態，因此未對字串進行更動。"
+
+#: src/cat_update.cpp:508
+#, c-format
+msgid "Translation file was updated with %s change."
+msgid_plural "Translation file was updated with %s changes."
+msgstr[0] "翻譯檔已經更新，共進行 %s 項更動。"
+
+#: src/cat_update.cpp:511
+msgid "New strings to translate:"
+msgstr "要翻譯的新字串："
+
+#: src/cat_update.cpp:512
+msgid "Removed strings (no longer used):"
+msgstr "已經移除的字串（不再使用）："
+
+#: src/cat_update.cpp:517
+msgid "Template files skipped (Pro-only):"
+msgstr "略過的模板檔案（只限 Pro 版本）："
+
+#: src/cat_update.cpp:605
+#, c-format
+msgid "%d issue with the source strings was detected."
+msgid_plural "%d issues with the source strings were detected."
+msgstr[0] "偵測到來源字串有 %d 個問題。"
+
+#: src/cat_update.cpp:632
+msgid "View Details…"
+msgstr "檢視詳細資訊…"
+
+#: src/cat_update.cpp:632
+msgid "View details…"
+msgstr "檢視詳細資訊…"
+
+#: src/catalog.cpp:125
 #, c-format
 msgid "Malformed header: “%s”"
 msgstr "格式錯誤的檔案標頭：%s"
 
+#: src/catalog.cpp:588
 msgid "PO Translation Files"
 msgstr "PO 翻譯檔"
 
+#: src/catalog.cpp:590
 msgid "POT Translation Templates"
 msgstr "POT 譯文模本"
 
+#: src/catalog.cpp:592
 msgid "XLIFF Translation Files"
 msgstr "XLIFF 翻譯檔"
 
+#: src/catalog.cpp:594
+msgid "Xcode Localization Catalog"
+msgstr "Xcode 在地化編目檔"
+
+#: src/catalog.cpp:596
 msgid "JSON Translation Files"
 msgstr "JSON 翻譯檔"
 
 #. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+#: src/catalog.cpp:599
 msgid "Flutter Translation Files"
 msgstr "Flutter 翻譯檔"
 
+#: src/catalog.cpp:608
 msgid "All Translation Files"
 msgstr "全部譯文檔案"
 
+#: src/catalog.cpp:1152
 msgid "The file is in a format not recognized by Poedit."
 msgstr "Poedit 不認識這個檔案格式。"
 
-msgid ""
-"This JSON file isn’t a translations file and cannot be edited in Poedit."
+#: src/catalog_json.cpp:91
+msgid "This JSON file isn’t a translations file and cannot be edited in Poedit."
 msgstr "本 JSON 檔案不是翻譯檔案，故無法在 Poedit 編輯。"
 
+#: src/catalog_json.cpp:140
 #, c-format
 msgid "Reading file content failed with the following error: %s"
 msgstr "讀取檔案內容時發生錯誤，錯誤為：%s"
 
+#: src/catalog_json.cpp:151 src/catalog_po.cpp:1142 src/catalog_xliff.cpp:556
 #, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
+msgid "File “%s” is read-only and cannot be saved.\n"
 "Please save it under different name."
-msgstr ""
-"檔案 %s 因設定為唯讀而無法儲存。\n"
+msgstr "檔案 %s 因設定為唯讀而無法儲存。\n"
 "請以不同檔名儲存檔案。"
 
+#: src/catalog_json.cpp:165 src/catalog_po.cpp:1178 src/catalog_po.cpp:1260
+#: src/catalog_po.cpp:1316 src/catalog_po.cpp:1373 src/catalog_po.cpp:1404
+#: src/catalog_po.cpp:1598 src/catalog_xliff.cpp:567 src/edframe.cpp:1339
+#: src/prefsdlg.cpp:757
 #, c-format
 msgid "Couldn’t save file %s."
 msgstr "無法儲存檔案 %s。"
 
+#: src/catalog_json.cpp:503
 msgid "Screenshots:"
 msgstr "螢幕截圖："
 
+#: src/catalog_po.cpp:130
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
 msgstr[0] "總計 %i 列  (檔案為 %s) 沒有正確載入。"
 
+#: src/catalog_po.cpp:145
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "第 %d 列 (檔案為 %s) 已毀損 (無效的 %s 資料)。"
 
+#: src/catalog_po.cpp:352
 msgid "Broken PO file: singular form msgstr used together with msgid_plural"
 msgstr "損毀的 PO 檔：單數形式的 msgstr 跟 msgid_plural 一同使用"
 
+#: src/catalog_po.cpp:404
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr "損毀的 PO 檔：沒有 msgid_plural，卻使用複數形式的 msgstr"
 
+#: src/catalog_po.cpp:926 src/catalog_po.cpp:940 src/catalog_po.cpp:953
+#: src/catalog_po.cpp:965
 msgid "Couldn’t load the file, it is probably damaged."
 msgstr "無法載入檔案，檔案可能損壞。"
 
-msgid ""
-"There were errors when loading the file. Some data may be missing or "
-"corrupted as the result."
+#: src/catalog_po.cpp:945
+msgid "There were errors when loading the file. Some data may be missing or corrupted as the result."
 msgstr "載入檔案時發生錯誤，因此可能導致部分資料遺失或是損毀。"
 
-msgid ""
-"There was a problem formatting the file nicely (but it was saved all right)."
+#: src/catalog_po.cpp:1269
+msgid "There was a problem formatting the file nicely (but it was saved all right)."
 msgstr "試圖讓檔案的排版格式變得整齊時遭遇問題 (但仍舊順利儲存)。"
 
+#: src/catalog_po.cpp:1521
 #, c-format
-msgid ""
-"The file couldn’t be saved in “%s” charset as specified in translation "
-"settings.\n"
-"\n"
+msgid "The file couldn’t be saved in “%s” charset as specified in translation settings.\n\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
-msgstr ""
-"檔案不能存成翻譯設定所指定的「%s」字元集。\n"
-"\n"
+msgstr "檔案不能存成翻譯設定所指定的「%s」字元集。\n\n"
 "已改存成 UTF-8，亦已修改對應設定。"
 
+#: src/catalog_po.cpp:1523 src/edframe.cpp:3221
 msgid "Error saving file"
 msgstr "儲存檔案時發生錯誤"
 
+#: src/catalog_po.cpp:1674
 #, c-format
 msgid "“%s” is not a valid POT file."
 msgstr "「%s」是無效的 POT 檔。"
 
+#: src/catalog_xcloc.cpp:85 src/catalog_xcloc.cpp:88
+msgid "Unexpectedly missing content in the XCLOC file."
+msgstr "XCLOC 檔案中有非預期的遺失內容。"
+
+#: src/catalog_xcloc.cpp:99
+msgid "Saving in a different location is not supported for XCLOC files."
+msgstr "不支援將 XCLOC 檔案存在不同位置。"
+
+#: src/catalog_xliff.cpp:473
 #, c-format
 msgid "Error while loading XLIFF file: %s"
 msgstr "載入 XLIFF 檔案時發生錯誤：%s"
 
+#: src/catalog_xliff.cpp:518
 #, c-format
 msgid "unsupported version (%s)"
 msgstr "不支援的版本 (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
+#: src/catalog_xliff.cpp:679 src/catalog_xliff.cpp:866
 msgid "Broken markup in translation string."
 msgstr "翻譯字串中有損壞的標記。"
 
-msgid "Add Account"
-msgstr "新增帳戶"
-
-msgid "Add account"
-msgstr "新增帳戶"
-
-#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
-#, c-format
-msgid "Learn more about %s"
-msgstr "深入瞭解 %s"
-
-msgid ""
-"Connect Poedit with supported cloud localization platforms to seamlessly "
-"sync translations managed on them."
+#: src/cloud_accounts_ui.cpp:82
+msgid "Connect Poedit with supported cloud localization platforms to seamlessly sync translations managed on them."
 msgstr "將 Poedit 和支援的雲端在地化平台連線，無縫同步代管平台上的翻譯。"
 
+#: src/cloud_accounts_ui.cpp:85 src/welcomescreen.cpp:295
 msgid "How does cloud sync work?"
 msgstr "雲端同步如何運作？"
 
+#: src/cloud_accounts_ui.cpp:96
 msgid "Account"
 msgstr "帳戶"
 
+#: src/cloud_accounts_ui.cpp:159
 msgid "(not signed in)"
 msgstr "(尚未登入)"
 
-msgid "File"
-msgstr "檔案"
-
+#: src/cloud_accounts_ui.cpp:353
 msgid "Open cloud translation"
 msgstr "開啟雲端翻譯"
 
+#: src/cloud_accounts_ui.cpp:365
 msgid "Manage accounts"
 msgstr "管理帳戶"
 
+#: src/cloud_accounts_ui.cpp:374 src/export_html.cpp:77
 msgid "Project:"
 msgstr "專案："
 
+#: src/cloud_accounts_ui.cpp:378 src/export_html.cpp:79
+#: src/resources/prefs.xrc:11 src/resources/prefs.xrc:15
+#: src/resources/properties.xrc:54 src/wordpress/wordpress_gui.cpp:228
+#: src/wordpress/wordpress_gui.cpp:354
 msgid "Language:"
 msgstr "語言："
 
+#: src/cloud_accounts_ui.cpp:433
 msgid "Sign in to Cloud Account"
 msgstr "登入至雲端帳戶"
 
+#: src/cloud_accounts_ui.cpp:433
 msgid "Sign in to cloud account"
 msgstr "登入至雲端帳戶"
 
+#: src/cloud_accounts_ui.cpp:524
 msgid "No translation projects listed in your account."
 msgstr "您的帳戶中尚無翻譯專案。"
 
+#: src/cloud_accounts_ui.cpp:633 src/crowdin_gui.cpp:347
 msgid "Downloading latest translations…"
 msgstr "正在下載最新的翻譯⋯"
 
 #. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#: src/cloud_accounts_ui.cpp:729
 #, c-format
 msgid "Sign in to %s"
 msgstr "登入至 %s"
 
+#: src/cloud_sync.h:99
 msgid "Syncing"
 msgstr "同步中"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#: src/cloud_sync.h:116
 #, c-format
 msgid "Uploading translations to %s…"
 msgstr "正在上傳翻譯至 %s……"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#: src/cloud_sync.h:168
 #, c-format
 msgid "Uploading translations to %s failed."
 msgstr "無法上傳翻譯至 %s。"
 
+#: src/cloud_sync.h:169
 msgid "Syncing error"
 msgstr "同步發生錯誤"
 
+#: src/commentdlg.cpp:48
 msgid "Add"
 msgstr "加入"
 
+#: src/crowdin_client.cpp:144
 msgid "Unknown Crowdin error."
 msgstr "未知的 Crowdin 錯誤。"
 
+#: src/crowdin_client.cpp:154
 msgid "Not authorized, please sign in again."
 msgstr "尚未獲得授權，請重新登入。"
 
+#. TRANSLATORS: Crowdin has string-based and file-based project kinds (see https://support.crowdin.com/creating-project/#file-based-project)
+#: src/crowdin_client.cpp:346
+msgid "String-based Crowdin projects are not supported."
+msgstr "不支援字串基底的 Crowdin 專案。"
+
+#: src/crowdin_client.cpp:350
 msgid "Downloading translations is disabled in this project."
 msgstr "此專案已停用翻譯下載。"
 
+#: src/crowdin_gui.cpp:94 src/localazy_gui.cpp:105
 msgid "Sign In"
 msgstr "登入"
 
+#: src/crowdin_gui.cpp:94 src/localazy_gui.cpp:105
 msgid "Sign in"
 msgstr "登入"
 
+#: src/crowdin_gui.cpp:96 src/localazy_gui.cpp:107
 msgid "Sign Out"
 msgstr "登出"
 
+#: src/crowdin_gui.cpp:96 src/localazy_gui.cpp:107
 msgid "Sign out"
 msgstr "登出"
 
+#: src/crowdin_gui.cpp:103
 msgid "Learn more about Crowdin"
 msgstr "深入瞭解 Crowdin"
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool."
-msgstr "Crowdin 是線上在地化管理平臺暨翻譯協作工具。"
+#: src/crowdin_gui.cpp:134
+msgid "Crowdin is an online translation management platform and collaborative translation tool. We use Crowdin ourselves to translate Poedit into many languages, and we love it."
+msgstr "Crowdin 是一個線上翻譯管理平台和協作翻譯工具。我們自己也使用 Crowdin 將 Poedit 翻譯成多種語言，也很喜歡它。"
 
+#: src/crowdin_gui.cpp:198 src/localazy_gui.cpp:210
 msgid "Waiting for authentication…"
 msgstr "正在等候身分核對⋯"
 
+#: src/crowdin_gui.cpp:199 src/localazy_gui.cpp:211
 msgid "Updating user information…"
 msgstr "正在更新使用者資訊⋯"
 
+#: src/crowdin_gui.cpp:306
 msgid "Sign in to Crowdin"
 msgstr "登入 Crowdin"
 
+#: src/crowdin_gui.cpp:326
 msgid "Syncing with Crowdin failed."
 msgstr "與 Crowdin 同步失敗。"
 
+#: src/crowdin_gui.cpp:327
 msgid "Crowdin error"
 msgstr "Crowdin 錯誤"
 
+#: src/crowdin_gui.cpp:335
 msgid "Uploading translations…"
 msgstr "正在上傳翻譯⋯"
 
+#: src/customcontrols.cpp:282 src/wx_translatable_strings.h:98
 msgid "&Copy"
 msgstr "複製(&C)"
 
-msgid "Learn more"
-msgstr "深入瞭解"
-
+#: src/edapp.cpp:510 src/resources/menus.xrc:377 src/resources/menus.xrc:494
+#: src/wx_translatable_strings.h:105
 msgid "&Help"
 msgstr "說明(&H)"
 
+#: src/edapp.cpp:800
 msgid "MO files can’t be directly edited in Poedit."
 msgstr "無法在 Poedit 中直接編輯 MO 檔。"
 
+#: src/edapp.cpp:801
 msgid "Error opening file"
 msgstr "開啟檔案發生錯誤"
 
-msgid ""
-"Please open and edit the corresponding PO file instead. When you save it, "
-"the MO file will be updated as well."
+#: src/edapp.cpp:803
+msgid "Please open and edit the corresponding PO file instead. When you save it, the MO file will be updated as well."
 msgstr "請改開啟並編輯對應的 PO 檔。當您儲存時，MO 檔會同時更新。"
 
+#: src/edapp.cpp:844
 msgid "don’t delete temporary files (for debugging)"
 msgstr "不要刪除暫存檔 (用於偵錯)"
 
+#: src/edapp.cpp:846
 msgid "handle a poedit:// URI"
 msgstr "處理 poedit:// URI"
 
+#: src/edapp.cpp:848
 msgid "go to item at given line number"
 msgstr "前往指定列號的項目"
 
+#: src/edapp.cpp:871
 msgid "Failed to communicate with Poedit process."
 msgstr "無法與 Poedit 程序溝通。"
 
+#: src/edapp.cpp:993 src/edapp.cpp:998
 #, c-format
 msgid "Unhandled exception occurred: %s"
 msgstr "遭遇未處理的例外：%s"
 
+#: src/edapp.cpp:1156
 msgid "Select translation template"
 msgstr "選擇翻譯模板"
 
+#: src/edapp.cpp:1187 src/edframe.cpp:953 src/edframe.cpp:2687
+#: src/edframe.cpp:2956
+msgid "Invalid file"
+msgstr "檔案無效"
+
+#: src/edapp.cpp:1220 src/wordpress/wordpress_gui.cpp:137
+msgid "WordPress"
+msgstr "WordPress"
+
+#: src/edapp.cpp:1271 src/edframe.cpp:2859
 msgid "Select translation file"
 msgstr "選擇翻譯檔案"
 
+#: src/edapp.cpp:1373
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit 是個易用的翻譯編輯器。"
 
+#: src/edframe.cpp:445
 msgid "You can’t drop more than one file on Poedit window."
 msgstr "請不要拖放超過一個檔案至 Poedit 視窗中。"
 
+#: src/edframe.cpp:452
 #, c-format
 msgid "File “%s” is not a translation file."
 msgstr "「%s」檔案不是翻譯檔。"
 
+#: src/edframe.cpp:459 src/recent_files.cpp:349
 #, c-format
 msgid "File “%s” doesn’t exist."
 msgstr "檔案 %s 不存在。"
 
+#: src/edframe.cpp:476
 msgid "Poedit"
 msgstr "Poedit"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
+#: src/edframe.cpp:890
 #, c-format
-msgid ""
-"Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgid "Spellchecking is disabled, because the dictionary for %s isn’t installed."
 msgstr "由於尚未安裝 %s 字典，因此拼字檢查已停用。"
 
+#: src/edframe.cpp:894
 msgid "Install"
 msgstr "安裝"
 
+#: src/edframe.cpp:986 src/edframe.cpp:1161
 #, c-format
 msgid "The file “%s” has been changed by another application."
 msgstr "「%s」檔案已被其他應用程式修改。"
 
+#: src/edframe.cpp:987 src/edframe.cpp:991
 msgid "Reload file"
 msgstr "重新載入檔案"
 
-msgid ""
-"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
-"be lost if you do."
+#: src/edframe.cpp:990
+msgid "Do you want to reload the file from disk? Your unsaved edits in Poedit will be lost if you do."
 msgstr "是否從硬碟重新載入檔案？這麼做會導致您在 Poedit 的未儲存編輯消失不見。"
 
+#. TRANSLATORS: Button next to a QA warning: causes the warning to be dismissed
+#: src/edframe.cpp:991 src/editing_area.cpp:325 src/editing_area.cpp:377
 msgid "Ignore"
 msgstr "忽略"
 
+#: src/edframe.cpp:991
 msgid "Reload File"
 msgstr "重新載入檔案"
 
+#: src/edframe.cpp:1095
 msgid "The file has been modified. Do you want to save changes?"
 msgstr "檔案已經修改。是否儲存變更？"
 
+#: src/edframe.cpp:1096
 msgid "Save changes"
 msgstr "儲存變更"
 
+#: src/edframe.cpp:1099
 msgid "Your changes will be lost if you don’t save them."
 msgstr "如果不儲存，便會失去剛剛進行的變更。"
 
+#: src/edframe.cpp:1102 src/edframe.cpp:1162 src/sidebar_terminology.cpp:70
+#: src/wx_translatable_strings.h:115
 msgid "Save"
 msgstr "儲存"
 
+#: src/edframe.cpp:1104
 msgid "Do&n’t save"
 msgstr "不要儲存(&N)"
 
+#: src/edframe.cpp:1106
 msgid "Don’t Save"
 msgstr "不要儲存"
 
+#: src/edframe.cpp:1165
 msgid "The changes made by the other application will be lost if you save."
 msgstr "如果儲存，其他應用程式所做的變更就會消失不見。"
 
+#: src/edframe.cpp:1166 src/edframe.cpp:2268 src/licensing_ui.cpp:284
+#: src/prefsdlg.cpp:770 src/prefsdlg.cpp:1103 src/resources/comment.xrc:41
+#: src/resources/manager.xrc:63 src/sidebar_terminology.cpp:73
+#: src/wx_translatable_strings.h:94
 msgid "Cancel"
 msgstr "取消"
 
+#: src/edframe.cpp:1166
 msgid "Save Anyway"
 msgstr "仍要儲存"
 
+#: src/edframe.cpp:1166
 msgid "Save anyway"
 msgstr "仍要儲存"
 
+#: src/edframe.cpp:1219
 msgid "Save as…"
 msgstr "另存新檔…"
 
+#: src/edframe.cpp:1268
 msgid "Compile to…"
 msgstr "編譯成…"
 
+#: src/edframe.cpp:1271
 msgid "Compiled Translation Files"
 msgstr "已編譯的譯文檔案"
 
+#: src/edframe.cpp:1312
 msgid "Export to HTML…"
 msgstr "匯出為 HTML…"
 
+#: src/edframe.cpp:1315
 msgid "HTML Files"
 msgstr "HTML 檔案"
 
+#: src/edframe.cpp:1330
+msgid "Exporting to HTML"
+msgstr "正在匯出為 HTML"
+
+#: src/edframe.cpp:1364
+msgid "Export to Excel"
+msgstr "從 Excel 匯出"
+
+#: src/edframe.cpp:1367 src/edframe.cpp:1401
+msgid "Excel Files"
+msgstr "Excel 檔案"
+
+#: src/edframe.cpp:1379
+msgid "Exporting to Excel"
+msgstr "正在匯出為 Excel"
+
+#: src/edframe.cpp:1398
+msgid "Import from Excel"
+msgstr "從 Excel 匯入"
+
+#: src/edframe.cpp:1423
+msgid "Importing from Excel"
+msgstr "正在從 Excel 匯入"
+
+#. TRANSLATORS: %s is filename of Excel file
+#: src/edframe.cpp:1440
 #, c-format
-msgid "In: %s"
-msgstr "在：%s"
+msgid "The “%s” file does not appear to contain any translations intended for this file."
+msgstr "「%s」檔案似乎不包含任何預期用於此檔案的譯文內容。"
 
-msgid "Source code not available."
-msgstr "原始程式碼無法使用。"
+#: src/edframe.cpp:1445
+msgid "No translations were updated from the Excel file."
+msgstr "沒有從 Excel 檔案更新任何譯文。"
 
+#. TRANSLATORS: %s is a (formatted) number here
+#: src/edframe.cpp:1452
+#, c-format
+msgid "%s string was updated from the Excel file."
+msgid_plural "%s strings were updated from the Excel file."
+msgstr[0] "已從 Excel 檔案中更新了 %s 個字串。"
+
+#: src/edframe.cpp:1456
+msgid "Translations updated:"
+msgstr "已更新譯文數："
+
+#: src/edframe.cpp:1457
+msgid "Strings matched in translation file:"
+msgstr "翻譯檔案中符合的字串："
+
+#: src/edframe.cpp:1458
+msgid "Excel rows processed:"
+msgstr "處理的 Excel 列數："
+
+#: src/edframe.cpp:1779
 msgid "Updating failed"
 msgstr "更新失敗"
 
-msgid ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the file’s Properties."
-msgstr "由於在檔案「屬性」指定的路徑中找不到程式碼，翻譯無法從原始碼更新。"
+#: src/edframe.cpp:1852
+msgid "Open reference file"
+msgstr "開啟參照檔案"
 
-msgid "Permission denied."
-msgstr "權限不足。"
+#: src/edframe.cpp:1883 src/resources/menus.xrc:267
+msgid "Update from &POT File…"
+msgstr "從 POT 檔案進行更新(&P)…"
 
-msgid ""
-"You don’t have permission to read source code files from the location "
-"specified in the file’s Properties."
-msgstr "您無權讀取檔案「屬性」指定之路徑中的原始碼檔案。"
+#: src/edframe.cpp:1883 src/resources/menus.xrc:266
+msgid "Update from &POT file…"
+msgstr "從 POT 檔案進行更新(&P)…"
 
-#. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Settings > Privacy & Security > Files & Folders."
-msgstr ""
-"若您先前拒絕檔案存取，可依循「系統設定」 >「 隱私權與安全性」 > 「隱私權」 > "
-"「檔案與檔案夾」變更放行。"
+#: src/edframe.cpp:1887
+msgid "Update from Reference File…"
+msgstr "從參照檔案中更新…"
 
-#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
-msgstr ""
-"若您先前拒絕檔案存取，可以到系統偏好設定 > 安全性與隱私權 > 隱私權 > 檔案與資"
-"料夾放行。"
+#: src/edframe.cpp:1887
+msgid "Update from reference file…"
+msgstr "從參照檔案中更新…"
 
-msgid "Translation entries in the file are probably incorrect."
-msgstr "檔案中的翻譯條目可能有誤。"
-
-msgid "Updating the file failed. Click on 'Details >>' for details."
-msgstr "更新檔案失敗。點選「詳細資料 >>」取得深入資訊。"
-
-msgid "Open translation template"
-msgstr "開啟翻譯模板"
-
+#: src/edframe.cpp:2020
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "譯文中發現 %d 個問題。"
 
+#: src/edframe.cpp:2025 src/edframe.cpp:2071
 msgid "Validation results"
 msgstr "驗證結果"
 
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
+#: src/edframe.cpp:2028
+msgid "Entries with errors were marked in red in the list. Details of the error will be shown when you select such an entry."
 msgstr "出錯的項目在清單中以紅色標記。您可以點選該項目以顯示詳細的錯誤資訊。"
 
+#: src/edframe.cpp:2037
 msgid "The file was saved safely."
 msgstr "檔案已順利儲存。"
 
-msgid ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
+#: src/edframe.cpp:2040
+msgid "The file was saved safely and compiled into the MO format, but it will probably not work correctly."
 msgstr "檔案已順利儲存，且成功編譯為 MO 格式的檔案，但有可能無法正確運作。"
 
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
+#: src/edframe.cpp:2043
+msgid "The file was saved safely, but it cannot be compiled into the MO format and used."
 msgstr "檔案已順利儲存，但無法編譯成 MO 格式的檔案，所以無法使用。"
 
-msgid ""
-"The file was compiled into the MO format, but it will probably not work "
-"correctly."
+#: src/edframe.cpp:2052
+msgid "The file was compiled into the MO format, but it will probably not work correctly."
 msgstr "已編譯成 MO 格式的檔案，但有可能無法正確運作。"
 
+#: src/edframe.cpp:2056
 msgid "The file cannot be compiled into the MO format and used."
 msgstr "無法編譯成 MO 格式的檔案，所以無法使用。"
 
+#: src/edframe.cpp:2070
 msgid "No problems with the translation found."
 msgstr "找不到譯文的問題。"
 
+#: src/edframe.cpp:2080
 #, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural ""
-"The translation is ready for use, but %d entries are not translated yet."
+msgid_plural "The translation is ready for use, but %d entries are not translated yet."
 msgstr[0] "譯文已準備就緒，但仍有 %d 個項目尚未翻譯。"
 
+#: src/edframe.cpp:2085
 msgid "The translation is ready for use."
 msgstr "譯文已準備就緒。"
 
+#: src/edframe.cpp:2251
+msgid "Translation Quality Warnings"
+msgstr "翻譯品質警告"
+
+#: src/edframe.cpp:2254
+msgid "Poedit performs automated quality checks on translations. You can configure which categories of checks are useful for you and disable unwanted ones here."
+msgstr "Poedit 會自動對翻譯進行品質檢查。您可以在這設定合適的檢查分類，也可以停用不要的檢查。"
+
+#: src/edframe.cpp:2265 src/resources/manager.xrc:55
+#: src/resources/summary.xrc:87 src/sidebar_pro.cpp:1146
+#: src/wx_translatable_strings.h:108
+msgid "OK"
+msgstr "確定"
+
+#: src/edframe.cpp:2510 src/prefsdlg.cpp:484 src/sidebar_pro.cpp:705
+msgid "Contributing translations improves the quality of online suggestions for everybody — the more people do it, the better the suggestions can be. Your translations are submitted anonymously and are available to other translators using Poedit or other CAT tools."
+msgstr "貢獻翻譯可以為大眾改善線上建議的翻譯品質 — 越多人參與，得到的翻譯建議就會越好。您的翻譯會以匿名方式提交，其他使用 Poedit 或其他 CAT 工具的翻譯者都能採用這些翻譯。"
+
+#: src/edframe.cpp:2515
+msgid "Can Poedit contribute your translations of this file to the online translation memory?"
+msgstr "Poedit 是否可將這個檔案中的譯文傳送至線上譯文記憶庫？"
+
+#. TRANSLATORS: Try to keep this as short as the original. If you can't, break it into two lines.
+#: src/edframe.cpp:2519 src/sidebar_pro.cpp:701
+msgid "Apply to all files I edit"
+msgstr "套用到全部個人編輯的檔案"
+
+#: src/edframe.cpp:2520
+msgid "Contribute"
+msgstr "貢獻譯文"
+
+#: src/edframe.cpp:2527
+msgid "Keep Private"
+msgstr "保留個人使用"
+
+#: src/edframe.cpp:2527
+msgid "Keep private"
+msgstr "保留個人使用"
+
+#: src/edframe.cpp:2686
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr "Poedit 已自動修正 %s 檔案中無效的內容。"
 
-msgid ""
-"The file contained duplicate items, which is not allowed in PO files and "
-"would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as needing work and correct "
-"them if necessary."
-msgstr ""
-"檔案包含重複項目，然而 PO 檔並不允許重複，進而使檔案無法使用。Poedit 已修正這"
-"個問題，但您應該校閱任何標記為需要處理的項目，如有需要也請校正其內容。"
+#: src/edframe.cpp:2691
+msgid "The file contained duplicate items, which is not allowed in PO files and would prevent the file from being used. Poedit fixed the issue, but you should review translations of any items marked as needing work and correct them if necessary."
+msgstr "檔案包含重複項目，然而 PO 檔並不允許重複，進而使檔案無法使用。Poedit 已修正這個問題，但您應該校閱任何標記為需要處理的項目，如有需要也請校正其內容。"
 
+#: src/edframe.cpp:2707
 msgid "Language of the translation isn’t set."
 msgstr "尚未設定目標語言。"
 
+#: src/edframe.cpp:2709
 msgid "Set Language"
 msgstr "設定語言"
 
+#: src/edframe.cpp:2709
 msgid "Set language"
 msgstr "設定語言"
 
 #. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-msgid ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
-msgstr ""
-"如果沒有正確設定目標語言，便無法使用建議譯文；其他功能如複數型設定，也可能受"
-"到影響。"
+#: src/edframe.cpp:2712 src/edframe.cpp:2728
+msgid "Suggestions are not available if the translation language is not set correctly. Other features, such as plural forms, may be affected as well."
+msgstr "如果沒有正確設定目標語言，便無法使用建議譯文；其他功能如複數型設定，也可能受到影響。"
 
+#: src/edframe.cpp:2726 src/pretranslate.cpp:508
 msgid "Language of the translation is the same as source language."
 msgstr "目標語言與來源語言相同。"
 
+#: src/edframe.cpp:2729
 msgid "Fix Language"
 msgstr "修正語言"
 
+#: src/edframe.cpp:2729
 msgid "Fix language"
 msgstr "修正語言"
 
-msgid ""
-"This file has entries with plural forms, but doesn’t have Plural-Forms "
-"header configured."
+#: src/edframe.cpp:2746
+msgid "This file has entries with plural forms, but doesn’t have Plural-Forms header configured."
 msgstr "這個檔案有複數型條目，卻未設定 Plural-Forms 標頭。"
 
-msgid ""
-"Entries in this file have different plural forms count from what the file’s "
-"Plural-Forms header says"
+#: src/edframe.cpp:2750
+msgid "Entries in this file have different plural forms count from what the file’s Plural-Forms header says"
 msgstr "這個檔案中條目的複數形式數目，與檔案中 Plural-Forms 標頭的記錄不符"
 
+#: src/edframe.cpp:2759
 msgid "Required header Plural-Forms is missing."
 msgstr "遺失必要的 Plural-Forms 標頭。"
 
+#: src/edframe.cpp:2763
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "Plural-Forms 標頭中有語法錯誤 (%s)。"
 
+#: src/edframe.cpp:2775
 msgid "Fix the Header"
 msgstr "修正標頭"
 
+#: src/edframe.cpp:2775
 msgid "Fix the header"
 msgstr "修正標頭"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
+#: src/edframe.cpp:2793
 #, c-format
 msgid "Plural forms expression used by the file is unusual for %s."
 msgstr "檔案所採用的複數形式表述式，對%s來說不常見。"
 
 #. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
+#: src/edframe.cpp:2798
 msgid "Review"
 msgstr "校閱"
 
+#. TRANSLATORS: "original" as in "used in this file originally, as it was when opened"
+#: src/edframe.cpp:2834
+msgid "String IDs (original)"
+msgstr "字串 ID (原始)"
+
+#: src/edframe.cpp:2839 src/edframe.cpp:2942 src/edlistctrl.cpp:739
+#: src/export_html.cpp:146
+msgid "unknown language"
+msgstr "未知的語言"
+
+#. TRANSLATORS: "original" as in "used in this file originally, as it was when opened"; "%s" is language name
+#: src/edframe.cpp:2841
+#, c-format
+msgid "%s (original)"
+msgstr "%s (原始)"
+
+#: src/edframe.cpp:2853
+msgid "Load from Another File…"
+msgstr "從其他檔案載入…"
+
+#: src/edframe.cpp:2853
+msgid "Load from another file…"
+msgstr "從其他檔案載入…"
+
+#: src/edframe.cpp:2897
 msgid "Would you like to use English for source text?"
 msgstr "您要使用英文作為來源文字嗎？"
 
+#: src/edframe.cpp:2899
 #, c-format
-msgid ""
-"This file uses string IDs instead of source text. Poedit can load English "
-"texts from the “%s” file for you."
-msgstr ""
-"此檔案使用字串 ID 而非來源文字。Poedit 可以為您從「%s」檔案載入英文文字。"
+msgid "This file uses string IDs instead of source text. Poedit can load English texts from the “%s” file for you."
+msgstr "此檔案使用字串 ID 而非來源文字。Poedit 可以為您從「%s」檔案載入英文文字。"
 
 #. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+#: src/edframe.cpp:2901
 msgid "Load English"
 msgstr "載入英文"
 
+#: src/edframe.cpp:3034 src/export_html.cpp:103
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
 msgstr "已翻譯 %d 筆，總計 %d 筆 (完成度為 %d%%)"
 
+#: src/edframe.cpp:3038 src/export_html.cpp:105
 #, c-format
 msgid "Remaining: %d"
 msgstr "尚餘 %d 筆原文未翻譯"
 
+#: src/edframe.cpp:3043
 #, c-format
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "%d 項錯誤"
 
+#: src/edframe.cpp:3048 src/export_html.cpp:117
 #, c-format
 msgid "%d entry"
 msgid_plural "%d entries"
 msgstr[0] "%d 個項目"
 
+#: src/edframe.cpp:3077
 msgid " (unsaved)"
 msgstr " (未儲存)"
 
+#: src/edframe.cpp:3118
 msgid " (modified)"
 msgstr " (已修改)"
 
+#: src/edframe.cpp:3188 src/edframe.cpp:3192
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "無法更新譯文記憶庫：%s"
 
+#: src/edframe.cpp:3220
+#, c-format
+msgid "The file “%s” couldn’t be saved."
+msgstr "無法儲存「%s」檔案。"
+
+#: src/edframe.cpp:3330 src/resources/menus.xrc:288
 msgid "Remove same-as-source translations"
 msgstr "移除和來源文字相同的翻譯"
 
-msgid ""
-"Do you want to remove all translations that are idential to the source text?"
+#: src/edframe.cpp:3332
+msgid "Do you want to remove all translations that are idential to the source text?"
 msgstr "請問您是否想要移除所有和來源文字相同的譯文？"
 
-msgid ""
-"This action will delete any translations that match the source text exactly. "
-"This cannot be undone."
+#: src/edframe.cpp:3333
+msgid "This action will delete any translations that match the source text exactly. This cannot be undone."
 msgstr "這個動作會刪除所有和來源文字完全相同的譯文，不能取消。"
 
+#: src/edframe.cpp:3337 src/edframe.cpp:3364
 msgid "Keep"
 msgstr "保留"
 
+#: src/edframe.cpp:3337
 msgid "Remove"
 msgstr "移除"
 
+#: src/edframe.cpp:3356
 msgid "Purge deleted translations"
 msgstr "清除已刪除的譯文"
 
+#: src/edframe.cpp:3358
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr "確定要移除全部不再使用的譯文？"
 
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"如果繼續清除，全部標示為已刪除的譯文便會永久移除。如果未來這些訊息再次加入，"
-"就必須再重新翻譯一次。"
+#: src/edframe.cpp:3360
+msgid "If you continue with purging, all translations marked as deleted will be permanently removed. You will have to translate them again if they are added back in the future."
+msgstr "如果繼續清除，全部標示為已刪除的譯文便會永久移除。如果未來這些訊息再次加入，就必須再重新翻譯一次。"
 
+#: src/edframe.cpp:3364
 msgid "Purge"
 msgstr "清除"
 
+#: src/edframe.cpp:3432 src/resources/menus.xrc:113
 msgid "Copy from source text"
 msgstr "從原文複製"
 
+#: src/edframe.cpp:3434 src/resources/menus.xrc:114
 msgid "Copy from Source Text"
 msgstr "從原文複製"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/edframe.cpp:3436 src/edframe.cpp:3443 src/edframe.cpp:3451
+#: src/sidebar.cpp:422 src/sidebar.cpp:835 src/sidebar.cpp:861
+#: src/sidebar.cpp:863 src/wx_translatable_strings.h:123
 msgctxt "keyboard key"
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
+#: src/edframe.cpp:3439 src/resources/menus.xrc:108
 msgid "Clear translation"
 msgstr "清除譯文"
 
+#: src/edframe.cpp:3441 src/resources/menus.xrc:109
 msgid "Clear Translation"
 msgstr "清除譯文"
 
+#: src/edframe.cpp:3446 src/resources/comment.xrc:4 src/sidebar.cpp:251
 msgid "Edit comment"
 msgstr "編輯註解"
 
+#: src/edframe.cpp:3448 src/sidebar.cpp:254
 msgid "Edit Comment"
 msgstr "編輯註解"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
+#: src/edframe.cpp:3459 src/fileviewer.cpp:100
 msgid "Code Occurrences"
 msgstr "程式碼出現處"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
+#: src/edframe.cpp:3459
 msgid "Code occurrences"
 msgstr "程式碼出現處"
 
+#: src/edframe.cpp:3683
 msgid "Hide Sidebar"
 msgstr "隱藏側邊欄"
 
+#: src/edframe.cpp:3685 src/resources/menus.xrc:242
 msgid "Show Sidebar"
 msgstr "顯示側邊欄"
 
+#: src/edframe.cpp:3716
 msgid "Hide Status Bar"
 msgstr "隱藏狀態列"
 
+#: src/edframe.cpp:3718 src/resources/menus.xrc:248
 msgid "Show Status Bar"
 msgstr "顯示狀態列"
 
+#: src/editing_area.cpp:326
+msgid "Dismiss and ignore the warning."
+msgstr "關閉並忽略警告。"
+
+#. TRANSLATORS: Reverse of the "Ignore" button, undoes that action
+#: src/editing_area.cpp:377
+msgid "Don’t ignore"
+msgstr "不要忽略"
+
+#: src/editing_area.cpp:411
 msgid "String length in characters: translation | source"
 msgstr "以字元數表示的字串長度：翻譯字串 | 來源字串"
 
+#: src/editing_area.cpp:414
 msgid "String length in characters"
 msgstr "以字元數表示的字串長度"
 
+#: src/editing_area.cpp:461 src/editing_area.cpp:787 src/edlistctrl.cpp:663
+#: src/edlistctrl.cpp:717 src/export_html.cpp:143
 msgid "Source text"
 msgstr "原文"
 
+#: src/editing_area.cpp:483 src/editing_area.cpp:853 src/editing_area.cpp:869
 msgid "Singular"
 msgstr "單數"
 
+#: src/editing_area.cpp:488 src/editing_area.cpp:874
 msgid "Plural"
 msgstr "複數"
 
+#: src/editing_area.cpp:534 src/sidebar_terminology.cpp:57
+#: src/sidebar_terminology.cpp:186 src/statistics.cpp:284
+#: src/statistics.cpp:411
 msgid "Translation"
 msgstr "譯文"
 
+#: src/editing_area.cpp:543
 msgid "Pre-translated"
 msgstr "前置翻譯"
 
+#: src/editing_area.cpp:566
 msgid "Needs Work"
 msgstr "待校閱"
 
@@ -734,673 +1202,1266 @@ msgstr "待校閱"
 #. "needs review" implies that somebody else should review the string after
 #. I am done with it (i.e. consider it good), while "needs work" implies I
 #. need to return to it and finish the translation.
+#: src/editing_area.cpp:566
 msgid "Needs work"
 msgstr "待校閱"
 
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
+#: src/editing_area.cpp:638
+msgid "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
-msgstr ""
-"POT 檔案僅是譯文範本，檔案內不包含任何譯文。\n"
+msgstr "POT 檔案僅是譯文範本，檔案內不包含任何譯文。\n"
 "若要進行翻譯，請以這個範本建立新的 PO 譯文檔案。"
 
+#: src/editing_area.cpp:645
 msgid "Create new translation"
 msgstr "建立新譯文"
 
+#: src/editing_area.cpp:646
 msgid "Make a new translation from this POT file."
 msgstr "從這個 POT 檔案建立新翻譯。"
 
 #. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+#: src/editing_area.cpp:785 src/edlistctrl.cpp:711 src/export_html.cpp:137
 msgid "Source text ID"
 msgstr "來源文字 ID"
 
+#: src/editing_area.cpp:840
 msgid "Everything"
 msgstr "單複數合併譯文"
 
+#: src/editing_area.cpp:845
 #, c-format
 msgid "Form %i"
 msgstr "形式 %i"
 
+#: src/editing_area.cpp:847
 #, c-format
 msgid "Form %i (unused)"
 msgstr "形式 %i (未使用)"
 
+#: src/editing_area.cpp:858
 msgid "Zero"
 msgstr "零"
 
+#: src/editing_area.cpp:860
 msgid "One"
 msgstr "單數"
 
+#: src/editing_area.cpp:862
 msgid "Two"
 msgstr "複數"
 
+#: src/editing_area.cpp:876
 msgid "Other"
 msgstr "其他"
 
 #. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#: src/editing_area.cpp:1060
 #, c-format
 msgid "String context: %s"
 msgstr "字串上下文：%s"
 
 #. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#: src/editing_area.cpp:1067
 #, c-format
 msgid "String identifier: %s"
 msgstr "字串識別碼：%s"
 
+#: src/editing_area.cpp:1075
 #, c-format
 msgid "%s Format"
 msgstr "%s 格式"
 
 #. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#: src/editing_area.cpp:1075
 #, c-format
 msgid "%s format"
 msgstr "%s 格式"
 
+#: src/edlistctrl.cpp:668 src/edlistctrl.cpp:740 src/export_html.cpp:145
 #, c-format
 msgid "Translation — %s"
 msgstr "譯文 — %s"
 
+#: src/edlistctrl.cpp:672
 msgid "ID"
 msgstr "ID"
 
+#: src/edlistctrl.cpp:716 src/export_html.cpp:142
 #, c-format
 msgid "Source text — %s"
 msgstr "原文 — %s"
 
-msgid "unknown language"
-msgstr "未知的語言"
-
+#: src/errors.cpp:84
 #, c-format
 msgid "Network error: %s (%d)"
 msgstr "網路錯誤：%s (%d)"
 
+#: src/errors.cpp:93
 msgid "Unknown error"
 msgstr "未知錯誤"
 
-#, c-format
-msgid "Failed command: %s"
-msgstr "指令執行失敗：%s"
+#: src/excel_io.cpp:261 src/excel_io.cpp:298 src/excel_io.cpp:302
+msgid "Failed to create the Excel file."
+msgstr "無法建立 Excel 檔案。"
 
+#: src/excel_io.cpp:351 src/excel_io.cpp:395 src/excel_io.cpp:419
+msgid "Failed to import from Excel file."
+msgstr "無法從 Excel 檔案匯入。"
+
+#: src/excel_io.cpp:428
+msgid "Excel Import"
+msgstr "匯入 Excel"
+
+#. TRANSLATORS: Shown above a list of columns and their meaning
+#: src/excel_io.cpp:442
+msgid "Import from Excel columns as:"
+msgstr "Excel 欄位匯入映射："
+
+#: src/excel_io.cpp:452
+msgid "ID:"
+msgstr "ID:"
+
+#: src/excel_io.cpp:460
+msgid "Context:"
+msgstr "情境:"
+
+#: src/excel_io.cpp:467
+msgid "Source text ID:"
+msgstr "來源文字 ID:"
+
+#: src/excel_io.cpp:467
+msgid "Source text:"
+msgstr "來源文字:"
+
+#: src/excel_io.cpp:478
+msgid "Translation:"
+msgstr "譯文:"
+
+#: src/excel_io.cpp:485 src/sidebar_terminology.cpp:192
+msgid "Import"
+msgstr "匯入"
+
+#: src/extractors/extractor.cpp:373
 msgid "Failed to merge gettext catalogs."
 msgstr "無法合併 gettext 編目檔。"
 
+#: src/fileviewer.cpp:132
 msgid "Open in Editor"
 msgstr "在編輯器中開啟"
 
+#: src/fileviewer.cpp:132
 msgid "Open in editor"
 msgstr "在編輯器中開啟"
 
-msgid ""
-"No information about this string’s occurrences in the source code is "
-"provided in the file."
+#: src/fileviewer.cpp:256
+msgid "No information about this string’s occurrences in the source code is provided in the file."
 msgstr "檔案中沒有這個字串在原始碼中的出現處資料。"
 
+#: src/fileviewer.cpp:256
 msgid "No usage information"
 msgstr "沒有用量資訊"
 
+#: src/fileviewer.cpp:262
 #, c-format
 msgid "%d code occurrence"
 msgid_plural "%d code occurrences"
 msgstr[0] "%d 個程式碼出現處"
 
+#: src/fileviewer.cpp:283
 msgid "Source code not found"
 msgstr "找不到原始碼"
 
-msgid ""
-"Poedit cannot show source code where the string is used, because the file is "
-"either not available in the referenced location or it is a symbolic "
-"reference that doesn’t point to a real file."
-msgstr ""
-"Poedit 無法顯示使用這個字串的原始碼，因為檔案無法從參考位置取得，或是一個未指"
-"向真實檔案的符號參考。"
+#: src/fileviewer.cpp:284
+msgid "Poedit cannot show source code where the string is used, because the file is either not available in the referenced location or it is a symbolic reference that doesn’t point to a real file."
+msgstr "Poedit 無法顯示使用這個字串的原始碼，因為檔案無法從參考位置取得，或是一個未指向真實檔案的符號參考。"
 
+#: src/fileviewer.cpp:298
 msgid "File cannot be opened"
 msgstr "無法開啟檔案"
 
+#: src/fileviewer.cpp:299
 #, c-format
 msgid "Poedit was unable to open the “%s” file."
 msgstr "Poedit 無法開啟「%s」檔案。"
 
+#: src/findframe.cpp:83 src/findframe.cpp:101 src/findframe.cpp:300
+#: src/resources/menus.xrc:156
 msgid "Find"
 msgstr "尋找"
 
+#: src/findframe.cpp:102 src/findframe.cpp:300
 msgid "Replace"
 msgstr "取代"
 
 #. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+#: src/findframe.cpp:118
 msgid "Options"
 msgstr "選項"
 
+#: src/findframe.cpp:122
 msgid "Ignore case"
 msgstr "忽略字母大小寫"
 
+#: src/findframe.cpp:123
 msgid "Wrap around"
 msgstr "循環尋找"
 
+#: src/findframe.cpp:124
 msgid "Whole words only"
 msgstr "全字拼寫須相符"
 
+#: src/findframe.cpp:125
 msgid "Find in source texts"
 msgstr "在原文中尋找"
 
+#: src/findframe.cpp:126
 msgid "Find in translations"
 msgstr "在譯文中尋找"
 
+#: src/findframe.cpp:127
 msgid "Find in comments"
 msgstr "在註解中尋找"
 
+#: src/findframe.cpp:148 src/licensing_ui.cpp:535 src/titleless_window.cpp:82
+#: src/wx_translatable_strings.h:96
 msgid "Close"
 msgstr "關閉"
 
+#: src/findframe.cpp:149
 msgid "Replace &All"
 msgstr "全部取代(&A)"
 
+#: src/findframe.cpp:149
 msgid "Replace &all"
 msgstr "全部取代(&A)"
 
+#: src/findframe.cpp:150
 msgid "&Replace"
 msgstr "取代(&R)"
 
+#: src/findframe.cpp:151
 msgid "< &Previous"
 msgstr "< 前一筆(&P)"
 
+#: src/findframe.cpp:152
 msgid "&Next >"
 msgstr "下一筆(&N) >"
 
+#: src/findframe.cpp:235
 msgid "String to find"
 msgstr "尋找字串"
 
+#: src/findframe.cpp:236
 msgid "Replacement string"
 msgstr "取代字串"
 
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "無法執行程式：%s"
+#: src/gexecute.cpp:131 src/gexecute.cpp:146 src/gexecute.cpp:170
+msgid "warning: "
+msgstr "警告："
+
+#: src/gexecute.cpp:171
+msgid "error: "
+msgstr "錯誤："
+
+#: src/glossary.cpp:273 src/glossary.cpp:277
+msgid "Failed to read the CSV file."
+msgstr "無法讀取 CSV 檔案。"
 
 #. TRANSLATORS: placeholder/hint in language controls
+#: src/languagectrl.cpp:138
 msgid "Language name or code"
 msgstr "語言名稱或代碼"
 
+#: src/languagectrl.cpp:210
 msgid "Translation Language"
 msgstr "譯文語言"
 
+#: src/languagectrl.cpp:217
 msgid "Language of the translation:"
 msgstr "譯文語言："
 
+#: src/licensing.cpp:196 src/licensing.cpp:206
+msgid "Invalid license key"
+msgstr "無效的授權金鑰"
+
+#: src/licensing.cpp:211
+msgid "Subscription expired"
+msgstr "訂閱已過期"
+
+#: src/licensing.cpp:218
+#, c-format
+msgid "App updates expired, license is only valid for version %s"
+msgstr "App 更新過期。授權有效期只到 %s 版本"
+
+#: src/licensing.cpp:224
+#, c-format
+msgid "License key only valid for older Poedit version (%s)"
+msgstr "該授權金鑰僅適用於舊版的 Poedit (%s)"
+
+#: src/licensing.cpp:231
+msgid "Maximum allowed activations exceeded"
+msgstr "已超出可用的最高啟用數量"
+
+#: src/licensing.cpp:236 src/licensing.cpp:263
+#, c-format
+msgid "Unknown activation error (%s)"
+msgstr "不明的啟用錯誤(%s)"
+
+#: src/licensing_ui.cpp:92 src/licensing_ui.cpp:97 src/licensing_ui.cpp:859
+#: src/licensing_ui.cpp:872 src/licensing_ui.cpp:884
+msgid "Poedit Activation"
+msgstr "Poedit 啟用狀態"
+
+#: src/licensing_ui.cpp:92 src/licensing_ui.cpp:102
+#: src/marketing_services.cpp:49 src/wx/main_toolbar.cpp:155
+#: src/wx/main_toolbar.cpp:182
+msgid "Upgrade to Pro"
+msgstr "升級至 Pro"
+
+#: src/licensing_ui.cpp:248
+msgid "Please enter your license key:"
+msgstr "請在此輸入您的授權金鑰："
+
+#: src/licensing_ui.cpp:257
+msgid "You should find your key in the confirmation email you received after you purchased Poedit. Activation requires internet connection."
+msgstr "您應可以在購買 Poedit 後收到的確認信件中找到您的金鑰。需要網路連線才能啟用。"
+
+#: src/licensing_ui.cpp:262
+msgid "Retrieve lost license key"
+msgstr "取回遺失的授權金鑰"
+
+#: src/licensing_ui.cpp:271
+msgid "Buy Online…"
+msgstr "線上購買…"
+
+#: src/licensing_ui.cpp:271
+msgid "Buy online…"
+msgstr "線上購買…"
+
+#: src/licensing_ui.cpp:286 src/licensing_ui.cpp:290
+msgid "Activate"
+msgstr "啟用"
+
+#: src/licensing_ui.cpp:316
+msgid "Activating your license…"
+msgstr "正在啟用您的使用授權…"
+
+#: src/licensing_ui.cpp:327
+msgid "Would you like to hear about new versions?"
+msgstr "您會想要接收新版本的通知嗎？"
+
+#: src/licensing_ui.cpp:328
+msgid "We’ll send you an email when a new major version is released. No marketing, no spammy newsletters. Just very rare heads-up about new versions."
+msgstr "我們會在新的主要版本釋出時寄一封電子郵件給您。沒有促銷，沒有像是垃圾郵件的電子報，就只是非常少見的新版本釋出通知。"
+
+#: src/licensing_ui.cpp:331 src/licensing_ui.cpp:690
+msgid "No, thanks"
+msgstr "謝謝，不用了"
+
+#: src/licensing_ui.cpp:331
+msgid "Notify me"
+msgstr "通知我"
+
+#: src/licensing_ui.cpp:358
+msgid "Upgrade your Pro license"
+msgstr "升級您的 Pro 授權"
+
+#: src/licensing_ui.cpp:377
+msgid "Renew your license"
+msgstr "續訂授權"
+
+#: src/licensing_ui.cpp:395
+msgid "Add more devices"
+msgstr "新增更多裝置"
+
+#: src/licensing_ui.cpp:440
+msgid "Thank you!"
+msgstr "感謝！"
+
+#: src/licensing_ui.cpp:446
+msgid "Your copy is upgraded to Poedit Pro."
+msgstr "您的使用授權已升級至 Poedit Pro。"
+
+#: src/licensing_ui.cpp:450 src/licensing_ui.cpp:454
+msgid "Manage License"
+msgstr "管理授權"
+
+#: src/licensing_ui.cpp:454
+msgid "Manage license"
+msgstr "管理授權"
+
+#. TRANSLATORS: "Renew" as a verb meaning making something that stopped working (a subscription) work again by prolonging it for another period.
+#: src/licensing_ui.cpp:479 src/licensing_ui.cpp:862 src/licensing_ui.cpp:875
+#: src/licensing_ui.cpp:1161
+msgid "Renew"
+msgstr "續訂"
+
+#: src/licensing_ui.cpp:497
+msgid "Deactivate"
+msgstr "停用"
+
+#: src/licensing_ui.cpp:509
+msgid "Deactivating your license…"
+msgstr "正在停用您的使用授權…"
+
+#: src/licensing_ui.cpp:567
+msgid "Upgrade to Poedit Pro to Unlock WordPress Extras"
+msgstr "升級至 Poedit Pro 便能解鎖 WordPress 相關的額外功能"
+
+#: src/licensing_ui.cpp:568 src/licensing_ui.cpp:589
+msgid "Upgrade to take advantage of Pro’s extra smarts: it understands WordPress themes and plugins and sets everything up for you. You can focus on translating and don’t have to worry about the technical details. With the free version, you would have to do everything manually yourself."
+msgstr "升級至 Pro 可以享受額外的智慧功能：它對 WordPress 佈景主題和外掛瞭若指掌，因此能為使用者處理相關問題，讓使用者可以專注於本地化，無須煩惱技術細節。至於免費版本，使用者需要手動設定所有技術細節。"
+
+#: src/licensing_ui.cpp:571
+msgid "Upgrade to Poedit Pro to Unlock Statistics"
+msgstr "升級至 Poedit Pro 以解鎖「統計資料」功能"
+
+#: src/licensing_ui.cpp:574
+msgid "Upgrade to Poedit Pro to Unlock Online Suggestions"
+msgstr "升級至 Poedit Pro 以解鎖線上譯文建議功能"
+
+#: src/licensing_ui.cpp:577
+msgid "Upgrade to Poedit Pro to Unlock Templates Support"
+msgstr "升級至 Poedit Pro 以解鎖範本支援功能"
+
+#: src/licensing_ui.cpp:581
+msgid "Upgrade to Poedit Pro to Unlock Extra Features"
+msgstr "升級至 Poedit Pro 以解鎖額外功能"
+
+#: src/licensing_ui.cpp:588
+msgid "WordPress extras require upgrade to Poedit Pro"
+msgstr "WordPress 額外功能必須升級至 Poedit Pro 才能使用"
+
+#: src/licensing_ui.cpp:593
+msgid "Statistics require upgrade to Poedit Pro"
+msgstr "「統計資料」功能必須升級至 Poedit Pro 才能使用"
+
+#: src/licensing_ui.cpp:596
+msgid "Online TM suggestions require upgrade to Poedit Pro"
+msgstr "線上譯文記憶的譯文建議功能必須升級至 Poedit Pro 才能使用"
+
+#: src/licensing_ui.cpp:599
+msgid "Templates support requires upgrade to Poedit Pro"
+msgstr "範本支援必須升級至 Poedit Pro 才能使用"
+
+#: src/licensing_ui.cpp:602
+msgid "Customizable warnings require upgrade to Poedit Pro"
+msgstr "「自訂警告」需要升級到 Poedit Pro"
+
+#: src/licensing_ui.cpp:605
+msgid "Customizable file extensions require upgrade to Poedit Pro"
+msgstr "需要升級到 Poedit Pro 才能使用「自訂檔案副檔名」"
+
+#: src/licensing_ui.cpp:608
+msgid "Terminology search and glossaries require upgrade to Poedit Pro"
+msgstr "需要升級到 Poedit Pro 才能使用術語搜尋與術語表"
+
+#: src/licensing_ui.cpp:611
+msgid "Replacing source text requires upgrade to Poedit Pro"
+msgstr "取代來源文字需要升級至 Poedit Pro"
+
+#: src/licensing_ui.cpp:614
+msgid "Merging translation files requires upgrade to Poedit Pro"
+msgstr "需要升級到 Poedit Pro 才能合併翻譯檔案"
+
+#: src/licensing_ui.cpp:617
+msgid "Excel import and export require upgrade to Poedit Pro"
+msgstr "Excel 匯入和匯出需要升級到 Poedit Pro"
+
+#: src/licensing_ui.cpp:649
+msgid "Purchasing the full version will unlock additional features in Poedit, including:"
+msgstr "購買完整版可解鎖 Poedit 的其他功能，包含："
+
+#: src/licensing_ui.cpp:663
+msgid "Suggestions from online translation memory"
+msgstr "來自線上譯文記憶庫的建議譯文"
+
+#: src/licensing_ui.cpp:664
+msgid "Machine translation with DeepL, Google Translate or Microsoft Translator"
+msgstr "使用 DeepL、Google 翻譯或 Microsoft Translator 進行機器翻譯"
+
+#: src/licensing_ui.cpp:665
+msgid "Worry-free setup for WordPress themes and plugins"
+msgstr "無須進行 WordPress 佈景主題及外掛設定"
+
+#: src/licensing_ui.cpp:666
+msgid "Extract strings from Twig or Blade templates"
+msgstr "從 Twig 或 Blade 範本擷取字串"
+
+#: src/licensing_ui.cpp:667
+msgid "Word count and statistics"
+msgstr "字數統計及統計資料"
+
+#: src/licensing_ui.cpp:668
+msgid "Excel import and export"
+msgstr "Excel 匯入和匯出"
+
+#: src/licensing_ui.cpp:669
+msgid "Merging translation files for all file formats"
+msgstr "合併所有檔案格式的翻譯檔案"
+
+#: src/licensing_ui.cpp:670
+msgid "Customizable QA checks and warnings"
+msgstr "可自訂的 QA 檢查與警告"
+
+#: src/licensing_ui.cpp:671
+msgid "Replace source text with translations from another file"
+msgstr "以其他檔案的譯文取代來源文字"
+
+#: src/licensing_ui.cpp:672
+msgid "Terminology search and glossaries"
+msgstr "術語搜尋與術語表"
+
+#: src/licensing_ui.cpp:673
+msgid "Personal priority support"
+msgstr "個人優先技術支援"
+
+#: src/licensing_ui.cpp:679
+msgid "Enter license key"
+msgstr "請輸入授權金鑰"
+
+#: src/licensing_ui.cpp:689
+msgid "Upgrade…"
+msgstr "升級…"
+
+#: src/licensing_ui.cpp:754 src/licensing_ui.cpp:780
+#, c-format
+msgid "Licensed to: %s"
+msgstr "已授權給使用者：%s"
+
+#. TRANSLATORS: %s is replaced at runtime with e.g. "Poedit Pro" or "Poedit Pro+"
+#: src/licensing_ui.cpp:756 src/licensing_ui.cpp:785
+#, c-format
+msgid "License type: %s"
+msgstr "授權類型：%s"
+
+#: src/licensing_ui.cpp:780
+msgid "(personal license)"
+msgstr "(個人授權)"
+
+#: src/licensing_ui.cpp:859
+msgid "Subscription expired."
+msgstr "訂閱已過期。"
+
+#: src/licensing_ui.cpp:861
+msgid "Your license was deactivated on this computer because your subscription expired."
+msgstr "授權已經過期，故在這台電腦停用您的授權。"
+
+#: src/licensing_ui.cpp:871
+#, c-format
+msgid "Your license was deactivated on this computer because it only includes app updates up to Poedit version %s."
+msgstr "您在這台電腦的使用授權已被停用，因為這份授權只涵蓋 Poedit 最高到 %s 版本的更新。"
+
+#: src/licensing_ui.cpp:872
+msgid "App updates expired."
+msgstr "App 更新到期。"
+
+#: src/licensing_ui.cpp:884
+msgid "License deactivated."
+msgstr "使用授權已停用。"
+
+#: src/licensing_ui.cpp:886
+msgid "Your license was deactivated on this computer. Please email help@poedit.net if you are not sure why this happened."
+msgstr "您在此電腦上的授權已被停用。\n"
+"如果您還不確定發生什麼事，請寫電子郵件向 help@poedit.net 聯絡。"
+
+#. TRANSLATORS: %s is a placeholder for subscription name, e.g. Pro+ or Pro
+#: src/licensing_ui.cpp:1112
+#, c-format
+msgid "Your %s subscription expired."
+msgstr "您的 %s 訂閱已過期。"
+
+#. TRANSLATORS: "Expired" as in ended e.g. after 1 year
+#: src/licensing_ui.cpp:1117
+msgid "Machine translation service expired."
+msgstr "機器翻譯服務已到期。"
+
+#. TRANSLATORS: "standard" here is the same word as the standalone string "Standard".
+#: src/licensing_ui.cpp:1125
+msgid "Machine translation quality is reduced to standard."
+msgstr "機器翻譯品質將降級為標準版。"
+
+#: src/localazy_client.cpp:385
 msgid "All strings"
 msgstr "所有字串"
 
+#: src/localazy_client.cpp:404
 msgid "Couldn’t download Localazy project details."
 msgstr "無法下載 Localazy 專案詳細資訊。"
 
+#: src/localazy_client.cpp:476 src/localazy_client.cpp:490
 msgid "There was an error when uploading translations to Localazy."
 msgstr "上傳翻譯至 Localazy 時發生錯誤。"
 
+#: src/localazy_gui.cpp:103
 msgid "Projects"
 msgstr "專案"
 
-msgid ""
-"Localazy is a highly automated localization platform allowing anyone to "
-"translate their products and content into multiple languages easily."
-msgstr ""
-"Localazy 是一個高度自動化的在地化平台，可讓任何人輕鬆將產品和內容翻譯成多種語"
-"言。"
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#: src/localazy_gui.cpp:115
+#, c-format
+msgid "Learn more about %s"
+msgstr "深入瞭解 %s"
 
+#: src/localazy_gui.cpp:146
+msgid "Localazy is a highly automated localization platform allowing anyone to translate their products and content into multiple languages easily."
+msgstr "Localazy 是一個高度自動化的在地化平台，可讓任何人輕鬆將產品和內容翻譯成多種語言。"
+
+#: src/localazy_gui.cpp:241
 msgid "Add Project"
 msgstr "新增專案"
 
+#: src/localazy_gui.cpp:241
 msgid "Add project"
 msgstr "新增專案"
 
+#: src/manager.cpp:117
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - 編目檔管理員"
 
+#: src/manager.cpp:162 src/prefsdlg.cpp:877
 msgid "Edit…"
 msgstr "編輯…"
 
+#: src/manager.cpp:167
 msgid "Create new translations project"
 msgstr "建立譯文專案"
 
+#: src/manager.cpp:168
 msgid "Delete the project"
 msgstr "刪除專案"
 
+#: src/manager.cpp:169
 msgid "Edit the project"
 msgstr "編輯專案"
 
+#: src/manager.cpp:199 src/resources/toolbar.xrc:41 src/statistics.cpp:258
+msgid "Statistics"
+msgstr "統計資料"
+
+#: src/manager.cpp:200 src/resources/toolbar.xrc:42
+msgid "Show translation statistics"
+msgstr "顯示譯文統計資料"
+
+#: src/manager.cpp:202
 msgid "Update all"
 msgstr "更新全部"
 
+#: src/manager.cpp:203
 msgid "Update all catalogs in the project"
 msgstr "更新專案中的所有編目檔"
 
+#: src/manager.cpp:405
 msgid "Total"
 msgstr "總計"
 
+#: src/manager.cpp:406
 msgid "Untrans"
 msgstr "未譯"
 
+#: src/manager.cpp:407
 msgctxt "column/row header"
 msgid "Needs Work"
 msgstr "待校閱"
 
+#: src/manager.cpp:408
 msgid "Errors"
 msgstr "錯誤"
 
+#: src/manager.cpp:409
 msgid "Last modified"
 msgstr "上次修改時間"
 
+#: src/manager.cpp:440 src/propertiesdlg.cpp:478
 msgid "Select directory"
 msgstr "選取目錄"
 
+#: src/manager.cpp:460
 msgid "Directories:"
 msgstr "目錄："
 
+#: src/manager.cpp:532
 msgid "<unnamed>"
 msgstr "<未命名>"
 
+#: src/manager.cpp:570
 #, c-format
 msgid "Do you want to delete project “%s”?"
 msgstr "是否刪除「%s」專案？"
 
+#: src/manager.cpp:571
 msgid "Delete project"
 msgstr "刪除專案"
 
+#: src/manager.cpp:574
 msgid "Deleting the project will not delete any translation files."
 msgstr "「刪除專案」不會刪除其他翻譯檔案。"
 
+#: src/manager.cpp:602
 msgid "Confirmation"
 msgstr "確認"
 
+#: src/manager.cpp:602
 msgid "Update all catalogs in this project?"
 msgstr "是否更新專案中的所有編目檔？"
 
+#: src/manager.cpp:603
 msgid "Performs update from source code on all files in the project."
 msgstr "自來源碼進行所有專案中的檔案的字串更新"
 
+#: src/manager.cpp:612
+msgid "Updating project catalogs"
+msgstr "正在更新專案編目檔"
+
+#: src/menus.cpp:138
 msgid "Check for Updates…"
 msgstr "檢查更新…"
 
+#: src/menus.cpp:140
 msgid "Catalogs Manager"
 msgstr "編目檔管理員"
 
+#: src/menus.cpp:143
+msgid "License…"
+msgstr "授權…"
+
+#: src/menus.cpp:155
 msgid "&Preferences…"
 msgstr "偏好設定(&P)…"
 
+#: src/menus.cpp:170 src/resources/menus.xrc:95 src/resources/menus.xrc:450
+#: src/wx_translatable_strings.h:102
 msgid "&Edit"
 msgstr "編輯(&E)"
 
+#: src/menus.cpp:190 src/wx_translatable_strings.h:118
 msgid "Undo"
 msgstr "取消動作"
 
+#: src/menus.cpp:191 src/wx_translatable_strings.h:113
 msgid "Redo"
 msgstr "再次動作"
 
+#: src/menus.cpp:200
 msgid "Paste and Match Style"
 msgstr "貼上並比對樣式"
 
+#: src/menus.cpp:203 src/prefsdlg.cpp:1103 src/sidebar_terminology.cpp:77
+#: src/wx_translatable_strings.h:100
 msgid "Delete"
 msgstr "刪除"
 
+#: src/menus.cpp:212
 msgid "Spelling and Grammar"
 msgstr "拼字與文法"
 
+#: src/menus.cpp:214
 msgid "Show Spelling and Grammar"
 msgstr "顯示拼字與文法"
 
+#: src/menus.cpp:215
 msgid "Check Document Now"
 msgstr "立刻檢查文件"
 
+#: src/menus.cpp:217
 msgid "Check Spelling While Typing"
 msgstr "打字同時檢查拼字"
 
+#: src/menus.cpp:218
 msgid "Check Grammar With Spelling"
 msgstr "檢查文法與拼字"
 
+#: src/menus.cpp:219
 msgid "Correct Spelling Automatically"
 msgstr "自動校正拼字"
 
+#: src/menus.cpp:222
 msgid "Substitutions"
 msgstr "替換項目"
 
+#: src/menus.cpp:224
 msgid "Show Substitutions"
 msgstr "顯示替換項目"
 
+#: src/menus.cpp:226
 msgid "Smart Copy/Paste"
 msgstr "智慧複製/貼上"
 
+#: src/menus.cpp:227
 msgid "Smart Quotes"
 msgstr "智慧引號"
 
+#: src/menus.cpp:228
 msgid "Smart Dashes"
 msgstr "智慧破折號"
 
+#: src/menus.cpp:229
 msgid "Smart Links"
 msgstr "智慧連結"
 
+#: src/menus.cpp:230
 msgid "Text Replacement"
 msgstr "文字取代"
 
+#: src/menus.cpp:233
 msgid "Transformations"
 msgstr "轉換"
 
+#: src/menus.cpp:235
 msgid "Make Upper Case"
 msgstr "轉為大寫"
 
+#: src/menus.cpp:236
 msgid "Make Lower Case"
 msgstr "轉為小寫"
 
+#: src/menus.cpp:237
 msgid "Capitalize"
 msgstr "轉為大寫"
 
+#: src/menus.cpp:240
 msgid "Speech"
 msgstr "朗讀"
 
+#: src/menus.cpp:242
 msgid "Start Speaking"
 msgstr "開始朗讀"
 
+#: src/menus.cpp:243
 msgid "Stop Speaking"
 msgstr "停止朗讀"
 
+#: src/menus.cpp:246 src/resources/menus.xrc:177 src/resources/menus.xrc:460
 msgid "&View"
 msgstr "檢視(&V)"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:252
 msgid "Show Toolbar"
 msgstr "顯示工具列"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:255
 msgid "Customize Toolbar…"
 msgstr "自訂工具列…"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:258
 msgid "Enter Full Screen"
 msgstr "進入全螢幕"
 
+#: src/menus.cpp:265 src/menus.cpp:296 src/resources/menus.xrc:352
+#: src/resources/menus.xrc:469
 msgid "Window"
 msgstr "視窗"
 
+#: src/menus.cpp:266
 msgid "Minimize"
 msgstr "最小化"
 
+#: src/menus.cpp:267
 msgid "Zoom"
 msgstr "縮放"
 
+#: src/menus.cpp:269 src/welcomescreen.cpp:222 src/welcomescreen.cpp:262
 msgid "Welcome to Poedit"
 msgstr "歡迎使用 Poedit"
 
+#: src/menus.cpp:274
 msgid "Bring All to Front"
 msgstr "全部帶到最前方"
 
+#: src/prefsdlg.cpp:177
 msgid "Information about the translator"
 msgstr "譯者資訊"
 
+#: src/prefsdlg.cpp:184
 msgid "Name:"
 msgstr "姓名："
 
+#: src/prefsdlg.cpp:187
 msgid "Your Name"
 msgstr "您的姓名"
 
+#: src/prefsdlg.cpp:189
 msgid "Email:"
 msgstr "電子郵件地址："
 
+#: src/prefsdlg.cpp:192
 msgid "you@example.com"
 msgstr "you@example.com"
 
-msgid ""
-"Your name and email address are only used to set the Last-Translator header "
-"of GNU gettext files."
-msgstr ""
-"您的姓名與電子郵件位址僅用於設定 GNU gettext 檔案的 Last-Translator 標頭。"
+#: src/prefsdlg.cpp:195
+msgid "Your name and email address are only used to set the Last-Translator header of GNU gettext files."
+msgstr "您的姓名與電子郵件位址僅用於設定 GNU gettext 檔案的 Last-Translator 標頭。"
 
+#: src/prefsdlg.cpp:204
 msgid "Editing"
 msgstr "編輯"
 
+#: src/prefsdlg.cpp:207
 msgid "Automatically compile MO file when saving"
 msgstr "儲存時自動編譯 MO 檔案"
 
-msgid "Show summary after updating files"
-msgstr "更新檔案後顯示摘要"
-
+#: src/prefsdlg.cpp:212
 msgid "Check spelling"
 msgstr "拼字檢查"
 
+#: src/prefsdlg.cpp:214
 msgid "Always change focus to text input field"
 msgstr "永遠將焦點放在文字輸入欄位中"
 
-msgid ""
-"Never let the list of strings take focus. If enabled, you must use Ctrl-"
-"arrows for keyboard navigation but you can also type text immediately, "
-"without having to press Tab to change focus."
-msgstr ""
-"永遠不要讓字串清單取得焦點。如果您啟用這個選項，就得並用 Ctrl 鍵與方向鍵才能"
-"以鍵盤導覽，不過同時您能立即輸入文字，而不必先按 Tab 鍵變更輸入焦點。"
+#: src/prefsdlg.cpp:216
+msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
+msgstr "永遠不要讓字串清單取得焦點。如果您啟用這個選項，就得並用 Ctrl 鍵與方向鍵才能以鍵盤導覽，不過同時您能立即輸入文字，而不必先按 Tab 鍵變更輸入焦點。"
 
+#: src/prefsdlg.cpp:224
 msgid "Appearance"
 msgstr "外觀"
 
+#: src/prefsdlg.cpp:231
 msgid "Use custom list font:"
 msgstr "使用自訂清單字型："
 
+#: src/prefsdlg.cpp:234
 msgid "Use custom text fields font:"
 msgstr "使用自訂文字欄位字型："
 
+#: src/prefsdlg.cpp:245
 msgid "Change UI language"
 msgstr "變更使用者介面語言"
 
 #. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
+#: src/prefsdlg.cpp:255
 msgid "(requires Windows 8 or newer)"
 msgstr "(需要 Windows 8 或更新版本)"
 
+#: src/prefsdlg.cpp:358
 msgid "General"
 msgstr "一般"
 
+#: src/prefsdlg.cpp:380
 msgid "Use translation memory"
 msgstr "使用譯文記憶庫"
 
+#: src/prefsdlg.cpp:390
 msgid "Manage…"
 msgstr "管理…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
+#: src/prefsdlg.cpp:397
 msgid "When updating from sources"
 msgstr "從原始程式碼進行更新時"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
+#: src/prefsdlg.cpp:400
 msgid "fuzzy match within the file"
 msgstr "在檔案內部進行模糊比對"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
+#: src/prefsdlg.cpp:402
 msgid "pre-translate from TM"
 msgstr "使用譯文記憶進行前置翻譯"
 
-msgid ""
-"Poedit can attempt to fill in new entries from only previous translations in "
-"the file or from your entire translation memory. Using the TM won’t be very "
-"effective if it’s near-empty, but it will get better as you add more "
-"translations to it."
-msgstr ""
-"Poedit 會嘗試將舊版檔案中的譯文或譯文記憶中的譯文代入新項目中。如果譯文記憶中"
-"累積的譯文量很少，這項功能的效果就不會很好，但是會隨著譯文量的增加逐漸改善效"
-"果。"
+#: src/prefsdlg.cpp:418
+msgid "Poedit can attempt to fill in new entries from only previous translations in the file or from your entire translation memory. Using the TM won’t be very effective if it’s near-empty, but it will get better as you add more translations to it."
+msgstr "Poedit 會嘗試將舊版檔案中的譯文或譯文記憶中的譯文代入新項目中。如果譯文記憶中累積的譯文量很少，這項功能的效果就不會很好，但是會隨著譯文量的增加逐漸改善效果。"
 
+#: src/prefsdlg.cpp:454
+msgid "Use suggestions from online collaborative TM"
+msgstr "使用線上協作的譯文記憶給予譯文建議"
+
+#: src/prefsdlg.cpp:469
+msgid "Poedit uses a large online translation memory that includes both contributed human translations and state-of-the-art machine translations."
+msgstr "Poedit 使用大型線上譯文記憶庫，這個線上譯文記憶庫包含人工譯文與先進的機器翻譯譯文。"
+
+#: src/prefsdlg.cpp:472 src/sidebar_pro.cpp:698
+msgid "Contribute my translations to the online TM"
+msgstr "貢獻我的譯文供線上譯文記憶使用"
+
+#: src/prefsdlg.cpp:473 src/sidebar_pro.cpp:699
+msgid "Keep my translations private"
+msgstr "我的譯文僅供自己使用"
+
+#: src/prefsdlg.cpp:474
+msgid "Ask me for each file individually"
+msgstr "不同檔案個別詢問"
+
+#: src/prefsdlg.cpp:492 src/sidebar_pro.cpp:159
+msgid "Change Settings…"
+msgstr "變更設定…"
+
+#: src/prefsdlg.cpp:492 src/sidebar_pro.cpp:159
+msgid "Change settings…"
+msgstr "變更設定…"
+
+#: src/prefsdlg.cpp:580
 msgid "Stored translations:"
 msgstr "已儲存的譯文:"
 
+#: src/prefsdlg.cpp:581
 msgid "Database size on disk:"
 msgstr "譯文記憶庫使用的儲存空間:"
 
+#: src/prefsdlg.cpp:596
 msgid "Import Translation Files…"
 msgstr "匯入譯文檔案…"
 
+#: src/prefsdlg.cpp:596
 msgid "Import translation files…"
 msgstr "匯入譯文檔案…"
 
+#: src/prefsdlg.cpp:598
 msgid "Import From TMX…"
 msgstr "從 TMX 檔案匯入…"
 
+#: src/prefsdlg.cpp:598
 msgid "Import from TMX…"
 msgstr "從 TMX 檔案匯入…"
 
+#: src/prefsdlg.cpp:599
 msgid "Export To TMX…"
 msgstr "匯出成 TMX 檔案…"
 
+#: src/prefsdlg.cpp:599
 msgid "Export to TMX…"
 msgstr "匯出成 TMX 檔案…"
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+#: src/prefsdlg.cpp:602 src/prefsdlg.cpp:770
 msgid "Reset"
 msgstr "重設"
 
+#: src/prefsdlg.cpp:621
 msgid "Select translation files to import"
 msgstr "選取要匯入的譯文檔案"
 
-msgid "Translation Memory"
-msgstr "譯文記憶庫"
-
-msgid "Importing translations…"
-msgstr "正在匯入譯文…"
-
-#, c-format
-msgid "Error loading translation file “%s”."
-msgstr "載入「%s」翻譯檔時發生錯誤。"
-
-msgid "Finalizing…"
-msgstr "正在完成…"
-
+#: src/prefsdlg.cpp:654
 msgid "Select TMX files to import"
 msgstr "選取要匯入的 TMX 檔案"
 
+#: src/prefsdlg.cpp:657 src/prefsdlg.cpp:733
 msgid "TMX Files"
 msgstr "TMX 檔案"
 
+#: src/prefsdlg.cpp:684
+msgid "Importing translations…"
+msgstr "正在匯入譯文…"
+
+#: src/prefsdlg.cpp:685
+msgid "Importing translation memory failed."
+msgstr "無法匯入譯文記憶庫。"
+
+#: src/prefsdlg.cpp:699
 #, c-format
-msgid "Importing translation memory from “%s” failed."
-msgstr "無法從 %s 匯入譯文記憶庫。"
+msgid "Importing from “%s”…"
+msgstr "正在從「%s」匯入……"
 
-msgid "Import error"
-msgstr "匯入時發生錯誤"
+#. TRANSLATORS: %s is a (formatted) number here
+#: src/prefsdlg.cpp:717
+#, c-format
+msgid "%s translation was imported."
+msgid_plural "%s translations were imported."
+msgstr[0] "已經匯入 %s 條譯文。"
 
+#: src/prefsdlg.cpp:730
 msgid "Export as…"
 msgstr "匯出成…"
 
+#: src/prefsdlg.cpp:745
 msgid "Exporting translations…"
 msgstr "正在匯出譯文…"
 
+#: src/prefsdlg.cpp:746
 #, c-format
 msgid "Exporting translation memory to “%s” failed."
 msgstr "無法將譯文記憶庫匯出至 %s。"
 
-msgid "Export error"
-msgstr "匯出時發生錯誤"
-
+#: src/prefsdlg.cpp:764
 msgid "Reset translation memory"
 msgstr "重設譯文記憶庫"
 
+#: src/prefsdlg.cpp:765
 msgid "Are you sure you want to reset the translation memory?"
 msgstr "確定要重設譯文記憶庫？"
 
-msgid ""
-"Resetting the translation memory will irrevocably delete all stored "
-"translations from it. You can’t undo this operation."
+#: src/prefsdlg.cpp:766
+msgid "Resetting the translation memory will irrevocably delete all stored translations from it. You can’t undo this operation."
 msgstr "重設譯文記憶庫將永久刪除全部已儲存的譯文。這項操作無法復原。"
 
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
+#: src/prefsdlg.cpp:808
 msgid "TM"
 msgstr "譯文記憶"
 
-msgid ""
-"Source code extractors are used to find translatable strings in the source "
-"code files and extract them so that they can be translated."
-msgstr ""
-"原始程式碼擷取器用於尋找原始程式碼中的可翻譯字串，並將之擷取出來進行本地化。"
+#: src/prefsdlg.cpp:810 src/sidebar_terminology.cpp:638
+msgid "Translation Memory"
+msgstr "譯文記憶庫"
 
+#: src/prefsdlg.cpp:830
+msgid "Source code extractors are used to find translatable strings in the source code files and extract them so that they can be translated."
+msgstr "原始程式碼擷取器用於尋找原始程式碼中的可翻譯字串，並將之擷取出來進行本地化。"
+
+#: src/prefsdlg.cpp:843
 msgid "Custom Extractors:"
 msgstr "自訂擷取器："
 
+#: src/prefsdlg.cpp:843
 msgid "Custom extractors:"
 msgstr "自訂擷取器："
 
+#: src/prefsdlg.cpp:929
 msgid "GNU gettext"
 msgstr "GNU gettext"
 
-msgid ""
-"Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
-"+, C#, Perl, Python, Java, JavaScript and others)."
-msgstr ""
-"支援全部 GNU gettext 工具能辨識的程式語言，包含 PHP、C/C++、C#、Perl、"
-"Python、Java、JavaScript 等程式語言。"
+#: src/prefsdlg.cpp:935
+msgid "Supports all programming languages recognized by GNU gettext tools (PHP, C/C++, C#, Perl, Python, Java, JavaScript and others)."
+msgstr "支援全部 GNU gettext 工具能辨識的程式語言，包含 PHP、C/C++、C#、Perl、Python、Java、JavaScript 等程式語言。"
 
+#. TRANSLATORS: Templates for themes etc. - e.g. Twig or Volt templates
+#: src/prefsdlg.cpp:945
+msgid "Templates"
+msgstr "範本"
+
+#: src/prefsdlg.cpp:946
+msgid "(Twig, Volt, Blade)"
+msgstr "（Twig、Volt、Blade）"
+
+#: src/prefsdlg.cpp:961
+msgid "Extracts translations from template files."
+msgstr "從模板檔案抽出翻譯。"
+
+#: src/prefsdlg.cpp:964
+msgid "Enable"
+msgstr "啟用"
+
+#: src/prefsdlg.cpp:1096
 msgid "Delete extractor"
 msgstr "刪除擷取器"
 
+#: src/prefsdlg.cpp:1097
 #, c-format
 msgid "Are you sure you want to delete the “%s” extractor?"
 msgstr "確定要刪除「%s」擷取器？"
 
+#: src/prefsdlg.cpp:1135
 msgid "Extractors"
 msgstr "擷取器"
 
+#: src/prefsdlg.cpp:1193
 msgid "Accounts"
 msgstr "帳號"
 
+#: src/prefsdlg.cpp:1213
 msgid "Automatically check for updates"
 msgstr "自動檢查更新"
 
+#: src/prefsdlg.cpp:1216
 msgid "Include beta versions"
 msgstr "包含 Beta 版"
 
-msgid ""
-"Beta versions contain the latest new features and improvements, but may be a "
-"bit less stable."
+#: src/prefsdlg.cpp:1219
+msgid "Beta versions contain the latest new features and improvements, but may be a bit less stable."
 msgstr "Beta 版本包含最新功能和改進，但可能有點不穩定。"
 
+#: src/prefsdlg.cpp:1248
 msgid "Updates"
 msgstr "更新"
 
-msgid ""
-"These settings affect internal formatting of PO files. Adjust them if you "
-"have specific requirements e.g. because of version control."
-msgstr ""
-"這些設定會影響 PO 檔案的內部格式化處理方式。如果有特定需求才需要調整它們，例"
-"如需要進行版本控制。"
+#: src/prefsdlg.cpp:1266
+msgid "These settings affect internal formatting of PO files. Adjust them if you have specific requirements e.g. because of version control."
+msgstr "這些設定會影響 PO 檔案的內部格式化處理方式。如果有特定需求才需要調整它們，例如需要進行版本控制。"
 
+#: src/prefsdlg.cpp:1270
 msgid "Line endings:"
 msgstr "行尾結束符號:"
 
+#: src/prefsdlg.cpp:1273
 msgid "Unix (recommended)"
 msgstr "Unix (建議採用)"
 
+#: src/prefsdlg.cpp:1274
 msgid "Windows"
 msgstr "Windows"
 
 #. TRANSLATORS: Followed by text control for entering number; wraps text at given width
+#: src/prefsdlg.cpp:1278
 msgid "Wrap at:"
 msgstr "換行位置："
 
+#: src/prefsdlg.cpp:1289
 msgid "Preserve formatting of existing files"
 msgstr "保留現有檔案的格式化處理方式"
 
+#: src/prefsdlg.cpp:1341
 msgid "Advanced"
 msgstr "進階"
 
+#: src/prefsdlg.cpp:1369
 msgid "Settings"
 msgstr "設定"
 
+#: src/pretranslate.cpp:129
 msgid "Preparing strings…"
 msgstr "準備字串中..."
 
+#: src/pretranslate.cpp:239
 msgid "Pre-translating from translation memory…"
 msgstr "從翻譯記憶體前置翻譯中..."
 
+#: src/pretranslate.cpp:250 src/pretranslate.cpp:296
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
 msgstr[0] "已前置翻譯 %u 筆字串"
 
+#: src/pretranslate.cpp:259
+msgid "Uploading strings for cloud pre-translation…"
+msgstr "正在上傳字串供雲端預翻譯⋯⋯"
+
+#: src/pretranslate.cpp:300 src/pretranslate.cpp:357
 msgid "Pre-translating…"
 msgstr "正在進行前置翻譯…"
 
+#: src/pretranslate.cpp:366
+#, c-format
+msgid "%d entry was pre-translated."
+msgid_plural "%d entries were pre-translated."
+msgstr[0] "%d 筆原文已完成前置翻譯。"
+
+#: src/pretranslate.cpp:372
+msgid "The translations were marked as needing work, because they may be inaccurate. You should review them for correctness."
+msgstr "這些譯文已標示為「待校閱」，可能翻譯尚未明確。你應該校閱它們是否正確。"
+
+#: src/pretranslate.cpp:375
+msgid "Exact matches from TM"
+msgstr "來自譯文記憶的完全符合項目"
+
+#: src/pretranslate.cpp:376
+msgid "Approximate matches from TM"
+msgstr "來自譯文記憶的大致符合項目"
+
+#. TRANSLATORS: shown instead of number when user disabled this kind of pre-translation results
+#: src/pretranslate.cpp:383
+msgid "disabled"
+msgstr "已停用"
+
+#: src/pretranslate.cpp:384
+msgid "Machine translation"
+msgstr "機器翻譯"
+
+#: src/pretranslate.cpp:389
+msgid "No entries could be pre-translated."
+msgstr "沒有任何原文可以完成前置翻譯。"
+
+#: src/pretranslate.cpp:390
+msgid "The TM doesn’t contain any strings similar to the content of this file. It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually."
+msgstr "譯文記憶並未包含任何與這個檔案內容類似的字串。這項功能在 Poedit 儲存使用者夠多的手動翻譯結果後，對半自動翻譯才會產生效果。"
+
+#: src/pretranslate.cpp:418
 msgid "Cannot pre-translate without source text."
 msgstr "無法在沒有來源文字時進行預先翻譯。"
 
@@ -1414,1060 +2475,2103 @@ msgstr "無法在沒有來源文字時進行預先翻譯。"
 #. some users into thinking it's all that needs to be done (spoken from
 #. experience). "Pre-translate" nicely expresses that it's only the step done
 #. *before* actual translation.
+#: src/pretranslate.cpp:419 src/pretranslate.cpp:434 src/pretranslate.cpp:443
+#: src/pretranslate.cpp:489 src/pretranslate.cpp:616
+#: src/resources/toolbar.xrc:48 src/sidebar_pro.cpp:983
 msgid "Pre-translate"
 msgstr "前置翻譯"
 
-msgid ""
-"Pre-translation requires that source text is available. It doesn’t work if "
-"only IDs without the actual text are used."
-msgstr ""
-"預先翻譯需要可供使用的來源文字。如果僅使用沒有實際文字的 ID，預先翻譯將無法運"
-"作。"
+#: src/pretranslate.cpp:423
+msgid "Pre-translation requires that source text is available. It doesn’t work if only IDs without the actual text are used."
+msgstr "預先翻譯需要可供使用的來源文字。如果僅使用沒有實際文字的 ID，預先翻譯將無法運作。"
 
+#: src/pretranslate.cpp:433
 msgid "Cannot pre-translate from unknown language."
 msgstr "無法前置未知語言的翻譯。"
 
-msgid ""
-"Pre-translation requires that source text’s language is known. Poedit "
-"couldn’t detect it in this file."
-msgstr ""
-"需要先知道來源文字的語言，才能進行前置翻譯。Poedit 無法從這個檔案偵測語言。"
+#: src/pretranslate.cpp:438
+msgid "Pre-translation requires that source text’s language is known. Poedit couldn’t detect it in this file."
+msgstr "需要先知道來源文字的語言，才能進行前置翻譯。Poedit 無法從這個檔案偵測語言。"
 
+#: src/pretranslate.cpp:448
+msgid "Use online suggestions"
+msgstr "使用線上建議譯文"
+
+#: src/pretranslate.cpp:449
+msgid "Try to fetch translations from the online TM as well. Notice that the translations will not be perfect and will still need to be corrected by a human translator."
+msgstr "嘗試從線上的翻譯記憶中擷取翻譯。請注意，所取得的翻譯建議不一定完美，仍然需要翻譯者人工校對。"
+
+#: src/pretranslate.cpp:476
 msgid "Only fill in exact matches"
 msgstr "僅代入完全相符的譯文"
 
-msgid ""
-"By default, inaccurate results are also included, but marked as needing "
-"work. Check this option to only include perfect matches."
-msgstr ""
-"預設情況下，不精確的項目也會包含在內，但會將之標記為需要處理。勾選此選項以僅"
-"只納入完美符合的項目。"
+#: src/pretranslate.cpp:479
+msgid "By default, inaccurate results are also included, but marked as needing work. Check this option to only include perfect matches."
+msgstr "預設情況下，不精確的項目也會包含在內，但會將之標記為需要處理。勾選此選項以僅只納入完美符合的項目。"
 
+#: src/pretranslate.cpp:481
+msgid "By default, inaccurate results and machine translation are also included, but marked as needing work. Check this option to only include perfect human translations."
+msgstr "預設情況下，不精確的項目和機器翻譯也會包含在內，但會將之標記為需要處理。勾選此選項以僅只納入完美符合且由真人翻譯的翻譯。"
+
+#: src/pretranslate.cpp:483
 msgid "Don’t mark exact matches as needing work"
 msgstr "不要將完全相符的譯文標示為「待校閱」"
 
-msgid ""
-"Only enable if you trust the quality of your TM. By default, all matches "
-"from the TM are marked as needing work and should be reviewed before use."
-msgstr ""
-"只有在信任譯文記憶的品質時才啟用這項設定。依照預設，與譯文記憶比對後，完全相"
-"符的項目代入的譯文都會標記為「待校閱」，並請在採用前先行校閱。"
+#: src/pretranslate.cpp:484
+msgid "Don’t mark machine translation as needing work"
+msgstr "不要將機器翻譯標為待校閱"
 
-msgid ""
-"Pre-translation automatically finds exact or fuzzy matches for untranslated "
-"strings in the translation memory and fills in their translations."
-msgstr ""
-"前置翻譯會從譯文記憶庫中自動尋找完全相同或相似的譯文代入未翻譯的項目中。"
+#: src/pretranslate.cpp:486
+msgid "Only enable if you trust the quality of your TM. By default, all matches from the TM are marked as needing work and should be reviewed before use."
+msgstr "只有在信任譯文記憶的品質時才啟用這項設定。依照預設，與譯文記憶比對後，完全相符的項目代入的譯文都會標記為「待校閱」，並請在採用前先行校閱。"
 
+#: src/pretranslate.cpp:493
+msgid "Pre-translation automatically finds exact or fuzzy matches for untranslated strings in the translation memory and fills in their translations."
+msgstr "前置翻譯會從譯文記憶庫中自動尋找完全相同或相似的譯文代入未翻譯的項目中。"
+
+#: src/pretranslate.cpp:495
+msgid "Pre-translation automatically searches existing translations and uses machine translation to fill in initial translations for strings that are not yet translated."
+msgstr "「前置翻譯」會自動搜尋現有的翻譯，並使用機器翻譯，為尚未翻譯的字串填充起始翻譯。"
+
+#: src/pretranslate.cpp:533
+msgid "Machine translation:"
+msgstr "機器翻譯:"
+
+#. TRANSLATORS: "Upgrade" as in upgrading from Pro to Pro+ version; "provider" is machine translation provider. This string needs to be as short as possible.
+#: src/pretranslate.cpp:545
+msgid "Upgrade for more providers"
+msgstr "升級以取得更多提供者"
+
+#. TRANSLATORS: Part of larger line of UI: "Machine translation: [e.g. Google] with tone of voice: [formal/informal/automatic]". If "tone of voice" sounds weird, you can use "formality". See https://support.deepl.com/hc/en-us/articles/4406432463762-About-the-formal-informal-feature for explanation of what tone of voice / formality is.
+#: src/pretranslate.cpp:556
+msgid "with tone of voice:"
+msgstr "語氣:"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:562
+msgid "automatic"
+msgstr "自動"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:564
+msgid "formal"
+msgstr "正式"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:566
+msgid "informal"
+msgstr "非正式"
+
+#: src/pretranslate.cpp:651 src/sidebar_pro.cpp:551
+msgid "Exceeded machine translation quota."
+msgstr "已超過機器翻譯配額。"
+
+#: src/pretranslate.cpp:660
 #, c-format
-msgid "%d entry was pre-translated."
-msgid_plural "%d entries were pre-translated."
-msgstr[0] "%d 筆原文已完成前置翻譯。"
+msgid "Machine translation usage: %d / %d\n"
+"%s"
+msgstr "機器翻譯使用量：%d / %d\n"
+"%s"
 
-msgid ""
-"The translations were marked as needing work, because they may be "
-"inaccurate. You should review them for correctness."
-msgstr "這些譯文已標示為「待校閱」，可能翻譯尚未明確。你應該校閱它們是否正確。"
+#: src/pretranslate.cpp:660
+msgid "Quota is rolling monthly."
+msgstr "配額每個月都會更新。"
 
-msgid "No entries could be pre-translated."
-msgstr "沒有任何原文可以完成前置翻譯。"
+#: src/pretranslate.cpp:663 src/sidebar_pro.cpp:475
+msgid "Add machine translation credit"
+msgstr "儲值機器翻譯點數"
 
-msgid ""
-"The TM doesn’t contain any strings similar to the content of this file. It "
-"is only effective for semi-automatic translations after Poedit learns enough "
-"from files that you translated manually."
-msgstr ""
-"譯文記憶並未包含任何與這個檔案內容類似的字串。這項功能在 Poedit 儲存使用者夠"
-"多的手動翻譯結果後，對半自動翻譯才會產生效果。"
+#: src/progress_ui.cpp:172 src/wx_translatable_strings.h:151
+msgid "Error: "
+msgstr "錯誤："
 
+#: src/progress_ui.cpp:176
+#, c-format
+msgid "%d error occurred:"
+msgid_plural "%d errors occurred:"
+msgstr[0] "發生 %d 個錯誤："
+
+#: src/progress_ui.cpp:285
+msgid "An error occurred."
+msgstr "發生錯誤。"
+
+#: src/progress_ui.cpp:291
+#, c-format
+msgid "%d error occurred."
+msgid_plural "%d errors occurred."
+msgstr[0] "發生 %d 個錯誤。"
+
+#: src/progress_ui.cpp:438
 msgid "Cancelling…"
 msgstr "取消中..."
 
+#. TRANSLATORS: This text is shown as a hint/advice. The %s→%s part is replaced with menu item pointer, "File→New WordPress Translation".
+#: src/propertiesdlg.cpp:92
+#, c-format
+msgid "Use %s→%s for full WordPress functionality."
+msgstr "請使用「%s→%s」以取得 WordPress 的完整功能。"
+
+#: src/propertiesdlg.cpp:93 src/resources/menus.xrc:5
+#: src/resources/menus.xrc:384 src/wx_translatable_strings.h:104
+msgid "&File"
+msgstr "檔案(&F)"
+
+#: src/propertiesdlg.cpp:94 src/resources/menus.xrc:17
+#: src/resources/menus.xrc:396
+msgid "New WordPress Translation…"
+msgstr "新增 WordPress 譯文…"
+
+#: src/propertiesdlg.cpp:94 src/resources/menus.xrc:16
+#: src/resources/menus.xrc:395
+msgid "New WordPress translation…"
+msgstr "新增 WordPress 譯文…"
+
+#: src/propertiesdlg.cpp:366
 msgid "Drag Folders or Files Here"
 msgstr "拖曳資料夾或檔案至此"
 
+#: src/propertiesdlg.cpp:366
 msgid "Drag folders or files here"
 msgstr "拖曳資料夾或檔案至此"
 
+#: src/propertiesdlg.cpp:471
 msgid "Add Folders…"
 msgstr "加入資料夾…"
 
+#: src/propertiesdlg.cpp:471
 msgid "Add folders…"
 msgstr "加入資料夾…"
 
+#: src/propertiesdlg.cpp:472
 msgid "Add Files…"
 msgstr "加入檔案…"
 
+#: src/propertiesdlg.cpp:472
 msgid "Add files…"
 msgstr "加入檔案…"
 
+#: src/propertiesdlg.cpp:474
 msgid "Add Wildcard…"
 msgstr "加入萬用字元…"
 
+#: src/propertiesdlg.cpp:474
 msgid "Add wildcard…"
 msgstr "加入萬用字元…"
 
 #. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+#: src/propertiesdlg.cpp:545
 msgid "Reveal in Finder"
 msgstr "在 Finder 顯示"
 
 #. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+#: src/propertiesdlg.cpp:548
 msgid "Show in Explorer"
 msgstr "在檔案總管顯示"
 
+#: src/propertiesdlg.cpp:550
 msgid "Show in Folder"
 msgstr "在資料夾顯示"
 
+#: src/propertiesdlg.cpp:581
 msgid "Paths"
 msgstr "路徑"
 
+#: src/propertiesdlg.cpp:601
 msgid "Excluded paths"
 msgstr "排除的路徑"
 
+#: src/propertiesdlg.cpp:619
 msgid "Advanced extraction settings"
 msgstr "進階擷取設定"
 
+#: src/propertiesdlg.cpp:625
 msgid "Extract notes for translators from:"
 msgstr "「譯者注意事項」擷取來源："
 
+#: src/propertiesdlg.cpp:627
 msgid "Comments prefixed with:"
 msgstr "註解前置詞："
 
+#: src/propertiesdlg.cpp:636
 msgid "All comments"
 msgstr "全部註解"
 
+#: src/propertiesdlg.cpp:639
 msgid "Additional xgettext flags:"
 msgstr "額外的 xgettext 旗標："
 
+#: src/propertiesdlg.cpp:779
 msgid "Additional keywords"
 msgstr "額外的關鍵字"
 
+#: src/propertiesdlg.cpp:810
 msgid "Name of the project the translation is for"
 msgstr "本地化專案名稱"
 
+#: src/propertiesdlg.cpp:811
 msgid "Team name and email address or URL"
 msgstr "團隊名稱和電子郵件位址或網址"
 
+#: src/propertiesdlg.cpp:812
 msgid "e.g. nplurals=2; plural=(n > 1);"
 msgstr "例如 nplurals=2; plural=(n > 1);"
 
+#: src/propertiesdlg.cpp:817
+msgid "Custom file extensions are being used."
+msgstr "正在使用自訂檔案副檔名。"
+
+#: src/propertiesdlg.cpp:872
 msgid "UTF-8 (recommended)"
 msgstr "UTF-8 (建議採用)"
 
+#: src/propertiesdlg.cpp:1055
 msgid "Please save the file first. This section cannot be edited until then."
 msgstr "請先儲存檔案。儲存完畢後，這個區段才能進行編輯。"
 
+#: src/propertiesdlg.cpp:1177
+msgid "File Extensions"
+msgstr "檔案副檔名"
+
+#: src/propertiesdlg.cpp:1189
+msgid "Extension or Wildcard"
+msgstr "副檔名或萬用字元"
+
+#: src/propertiesdlg.cpp:1191
+msgid "Extractor"
+msgstr "擷取式"
+
+#: src/propertiesdlg.cpp:1266
+msgid "(unknown)"
+msgstr "（未知）"
+
+#: src/qa_checks.cpp:153
 msgid "Placeholders correctness"
 msgstr "預留位置準確性"
 
+#: src/qa_checks.cpp:208
 #, c-format
 msgid "Placeholder “%s” is missing from translation."
 msgstr "預留位置 “%s” 並未出現在翻譯中。"
 
+#: src/qa_checks.cpp:220
 #, c-format
 msgid "Superfluous placeholder “%s” that isn’t in source text."
 msgstr "多餘的預留位置 “%s” 並未出現在原始本文。"
 
+#: src/qa_checks.cpp:256
 msgid "Plural form translations"
 msgstr "複數形式翻譯"
 
+#: src/qa_checks.cpp:277
 msgid "Not all plural forms are translated."
 msgstr "複數型內容並未全部翻譯。"
 
+#: src/qa_checks.cpp:289
 msgid "Inconsistent upper/lower case"
 msgstr "大小寫不一致"
 
+#: src/qa_checks.cpp:305
 msgid "The translation should start as a sentence."
 msgstr "譯文應該以句子開始。"
 
+#: src/qa_checks.cpp:313
 msgid "The translation should start with a lowercase character."
 msgstr "譯文應該以小寫字元開始。"
 
+#: src/qa_checks.cpp:331
 msgid "Inconsistent whitespace"
 msgstr "空白數不一致"
 
+#: src/qa_checks.cpp:345
 msgid "The translation doesn’t start with a space."
 msgstr "譯文應該以空白字元開始。"
 
+#: src/qa_checks.cpp:351
 msgid "The translation starts with a space, but the source text doesn’t."
 msgstr "譯文以空白字元開始，但原文並未以空白字元開始。"
 
+#: src/qa_checks.cpp:357
 msgid "The translation is missing a newline at the end."
 msgstr "譯文結束位置遺漏新行字元。"
 
+#: src/qa_checks.cpp:363
 msgid "The translation ends with a newline, but the source text doesn’t."
 msgstr "譯文以新行字元結尾，但原文並未以新行字元結尾。"
 
+#: src/qa_checks.cpp:369
 msgid "The translation is missing a space at the end."
 msgstr "譯文結束位置遺漏空白字元。"
 
+#: src/qa_checks.cpp:375
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "譯文以空白字元結尾，但原文並未以空白字元結尾。"
 
+#: src/qa_checks.cpp:390
 msgid "Punctuation checks"
 msgstr "標點檢查"
 
+#: src/qa_checks.cpp:455
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr "譯文應該以「%s」結束。"
 
+#: src/qa_checks.cpp:467
 #, c-format
 msgid "The translation should not end with “%s”."
 msgstr "譯文不應該以「%s」結束。"
 
+#: src/qa_checks.cpp:488
 #, c-format
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
 msgstr "譯文以「%s」結尾，但原文是以「%s」結尾。"
 
+#: src/recent_files.cpp:223
 msgid "Cloud"
 msgstr "雲端"
 
+#: src/recent_files.cpp:404
 msgid "Clear Menu"
 msgstr "清除選單"
 
+#: src/recent_files.cpp:404
 msgid "Clear menu"
 msgstr "清除選單"
 
+#: src/resources/comment.xrc:10
 msgid "Comment:"
 msgstr "註解："
 
+#: src/resources/comment.xrc:33
 msgid "Update"
 msgstr "更新"
 
+#: src/resources/comment.xrc:48 src/wx_translatable_strings.h:100
 msgid "&Delete"
 msgstr "刪除(&D)"
 
+#: src/resources/comment.xrc:49
 msgid "Delete the comment"
 msgstr "刪除註解"
 
+#: src/resources/manager.xrc:4
 msgid "Edit project"
 msgstr "編輯專案"
 
+#: src/resources/manager.xrc:9
 msgid "Project name:"
 msgstr "專案名稱："
 
+#: src/resources/manager.xrc:39
 msgid "Browse"
 msgstr "瀏覽"
 
+#: src/resources/manager.xrc:41
 msgid "Add directory to the list"
 msgstr "將目錄加入清單"
 
-msgid "OK"
-msgstr "確定"
-
-msgid "&File"
-msgstr "檔案(&F)"
-
+#: src/resources/menus.xrc:8 src/resources/menus.xrc:387
 msgid "&New…"
 msgstr "新增(&N)…"
 
+#: src/resources/menus.xrc:12 src/resources/menus.xrc:391
 msgid "New from &POT/PO file…"
 msgstr "從 &POT/PO 檔案新增…"
 
+#: src/resources/menus.xrc:13 src/resources/menus.xrc:392
 msgid "New From &POT/PO File…"
 msgstr "從 &POT/PO 檔案新增…"
 
+#: src/resources/menus.xrc:21 src/resources/menus.xrc:400
+#: src/wx_translatable_strings.h:109
 msgid "&Open…"
 msgstr "開啟(&O)…"
 
+#: src/resources/menus.xrc:25 src/resources/menus.xrc:404
 msgid "Open Recent"
 msgstr "開啟最近使用的檔案"
 
+#: src/resources/menus.xrc:26 src/resources/menus.xrc:405
 msgid "Open recent"
 msgstr "開啟最近"
 
+#: src/resources/menus.xrc:29 src/resources/menus.xrc:408
 msgid "Open cloud translation…"
 msgstr "開啟雲端翻譯…"
 
+#: src/resources/menus.xrc:30 src/resources/menus.xrc:409
 msgid "Open Cloud Translation…"
 msgstr "開啟雲端翻譯…"
 
+#: src/resources/menus.xrc:34 src/resources/menus.xrc:413
 msgid "&Start window"
 msgstr "啟動視窗(&S)"
 
+#: src/resources/menus.xrc:35 src/resources/menus.xrc:414
 msgid "&Start Window"
 msgstr "啟動視窗(&S)"
 
+#: src/resources/menus.xrc:39 src/resources/menus.xrc:419
 msgid "Catalogs &manager"
 msgstr "編目檔管理員(&M)"
 
+#: src/resources/menus.xrc:40 src/resources/menus.xrc:420
 msgid "Catalogs &Manager"
 msgstr "編目檔管理員(&M)"
 
+#: src/resources/menus.xrc:44 src/resources/menus.xrc:424
+#: src/wx_translatable_strings.h:96
 msgid "&Close"
 msgstr "關閉(&C)"
 
+#: src/resources/menus.xrc:48 src/wx_translatable_strings.h:115
 msgid "&Save"
 msgstr "儲存(&S)"
 
+#: src/resources/menus.xrc:52
 msgid "Save &as…"
 msgstr "另存新檔(&A)…"
 
+#: src/resources/menus.xrc:53
 msgid "Save &As…"
 msgstr "另存新檔(&A)…"
 
+#: src/resources/menus.xrc:58
 msgid "Compile to MO…"
 msgstr "編譯成 MO 檔案…"
 
+#: src/resources/menus.xrc:62
 msgid "E&xport to HTML…"
 msgstr "匯出為 HTML(&X)…"
 
+#: src/resources/menus.xrc:66
+msgid "Export to Excel…"
+msgstr "從 Excel 匯出…"
+
+#: src/resources/menus.xrc:69
+msgid "Import from Excel…"
+msgstr "從 Excel 匯入…"
+
+#: src/resources/menus.xrc:73 src/resources/menus.xrc:428
 msgid "Check for updates…"
 msgstr "檢查更新…"
 
+#: src/resources/menus.xrc:76 src/resources/menus.xrc:431
+msgid "&License…"
+msgstr "使用授權(&L)…"
+
+#: src/resources/menus.xrc:79 src/resources/menus.xrc:434
 msgid "Settings…"
 msgstr "系統設定"
 
+#: src/resources/menus.xrc:83 src/resources/menus.xrc:438
+#: src/wx_translatable_strings.h:112
 msgid "&Preferences"
 msgstr "偏好設定(&P)"
 
+#: src/resources/menus.xrc:90 src/resources/menus.xrc:445
 msgid "E&xit"
 msgstr "結束(&X)"
 
+#: src/resources/menus.xrc:91 src/resources/menus.xrc:446
+#: src/wx_translatable_strings.h:103
 msgid "Quit"
 msgstr "退出"
 
+#: src/resources/menus.xrc:118
 msgid "Copy from singular"
 msgstr "從單數型內容複製"
 
+#: src/resources/menus.xrc:119
 msgid "Copy From Singular"
 msgstr "從單數型內容複製"
 
+#: src/resources/menus.xrc:124
 msgid "Translation needs &work"
 msgstr "譯文待校閱(&W)"
 
+#: src/resources/menus.xrc:125
 msgid "Translation Needs &Work"
 msgstr "譯文待校閱(&W)"
 
+#: src/resources/menus.xrc:130
 msgid "Edit &comment"
 msgstr "編輯註解(&C)"
 
+#: src/resources/menus.xrc:131
 msgid "Edit &Comment"
 msgstr "編輯註解(&C)"
 
 #. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
+#: src/resources/menus.xrc:136 src/sidebar.cpp:651 src/sidebar_pro.cpp:219
 msgid "Suggestions"
 msgstr "譯文建議"
 
+#: src/resources/menus.xrc:139 src/resources/menus.xrc:158
 msgid "&Find…"
 msgstr "尋找(&F)…"
 
+#: src/resources/menus.xrc:144
 msgid "Replace…"
 msgstr "取代…"
 
+#: src/resources/menus.xrc:148
 msgid "Find next"
 msgstr "尋找下一筆"
 
+#: src/resources/menus.xrc:152
 msgid "Find previous"
 msgstr "尋找上一筆"
 
+#: src/resources/menus.xrc:162
 msgid "Find and Replace…"
 msgstr "尋找及取代…"
 
+#: src/resources/menus.xrc:166
 msgid "Find Next"
 msgstr "尋找下一筆"
 
+#: src/resources/menus.xrc:170
 msgid "Find Previous"
 msgstr "尋找上一筆"
 
+#: src/resources/menus.xrc:179
 msgid "Show string &ID"
 msgstr "顯示字串 ID(&I)"
 
+#: src/resources/menus.xrc:180
 msgid "Show String &ID"
 msgstr "顯示字串 ID(&I)"
 
+#: src/resources/menus.xrc:184
 msgid "Show warnings"
 msgstr "顯示警告訊息"
 
+#: src/resources/menus.xrc:185
 msgid "Show Warnings"
 msgstr "顯示警告訊息"
 
+#: src/resources/menus.xrc:189
+msgid "Customize warnings…"
+msgstr "自訂警告..."
+
+#: src/resources/menus.xrc:190
+msgid "Customize Warnings…"
+msgstr "自訂警告⋯"
+
+#: src/resources/menus.xrc:194
 msgid "Sort by &file order"
 msgstr "依據檔案順序排序(&F)"
 
+#: src/resources/menus.xrc:195
 msgid "Sort by &File Order"
 msgstr "依據檔案順序排序(&F)"
 
+#: src/resources/menus.xrc:199
 msgid "Sort by &source"
 msgstr "依據原文排序(&S)"
 
+#: src/resources/menus.xrc:200
 msgid "Sort by &Source"
 msgstr "依據原文排序(&S)"
 
+#: src/resources/menus.xrc:204
 msgid "Sort by &translation"
 msgstr "依據譯文排序(&T)"
 
+#: src/resources/menus.xrc:205
 msgid "Sort by &Translation"
 msgstr "依據譯文排序(&T)"
 
+#: src/resources/menus.xrc:210
 msgid "&Group by context"
 msgstr "依據上下文分組(&G)"
 
+#: src/resources/menus.xrc:211
 msgid "&Group By Context"
 msgstr "依據上下文分組(&G)"
 
+#: src/resources/menus.xrc:215
 msgid "Entries with errors first"
 msgstr "包含錯誤的項目優先"
 
+#: src/resources/menus.xrc:216
 msgid "Entries with Errors First"
 msgstr "包含錯誤的項目優先"
 
+#: src/resources/menus.xrc:220
 msgid "&Untranslated entries first"
 msgstr "未翻譯項目優先(&U)"
 
+#: src/resources/menus.xrc:221
 msgid "&Untranslated Entries First"
 msgstr "未翻譯項目優先(&U)"
 
+#: src/resources/menus.xrc:226
+msgid "Show &suggestions tab"
+msgstr "顯示建議分頁(&S)"
+
+#: src/resources/menus.xrc:227
+msgid "Show &Suggestions Tab"
+msgstr "顯示建議分頁(&S)"
+
+#: src/resources/menus.xrc:231
+msgid "Show &terminology tab"
+msgstr "顯示術語學分頁(&T)"
+
+#: src/resources/menus.xrc:232
+msgid "Show &Terminology Tab"
+msgstr "顯示術語學分頁(&T)"
+
+#: src/resources/menus.xrc:236
 msgid "&Show code occurrences"
 msgstr "顯示程式碼出現處(&S)"
 
+#: src/resources/menus.xrc:237
 msgid "&Show Code Occurrences"
 msgstr "顯示程式碼出現處(&S)"
 
+#: src/resources/menus.xrc:241
 msgid "Show sidebar"
 msgstr "顯示側邊欄"
 
+#: src/resources/menus.xrc:247
 msgid "Show status bar"
 msgstr "顯示狀態列"
 
+#: src/resources/menus.xrc:255 src/resources/menus.xrc:463
 msgid "&Translation"
 msgstr "翻譯(&T)"
 
+#: src/resources/menus.xrc:258 src/statistics.cpp:312 src/statistics.cpp:415
+#: src/statistics.cpp:427
+msgid "Source Text"
+msgstr "原文"
+
+#: src/resources/menus.xrc:262
 msgid "&Update from source code"
 msgstr "從原始程式碼進行更新(&U)"
 
+#: src/resources/menus.xrc:263
 msgid "&Update from Source Code"
 msgstr "從原始程式碼進行更新(&U)"
 
-msgid "Update from &POT file…"
-msgstr "從 POT 檔案進行更新(&P)…"
-
-msgid "Update from &POT File…"
-msgstr "從 POT 檔案進行更新(&P)…"
-
+#: src/resources/menus.xrc:270
 msgid "Sync with Crowdin"
 msgstr "與 Crowdin 進行同步"
 
+#: src/resources/menus.xrc:274 src/resources/menus.xrc:275
 msgid "Pre-&translate…"
 msgstr "前置翻譯(&T)…"
 
+#: src/resources/menus.xrc:279
 msgid "&Validate translations"
 msgstr "驗證譯文(&V)"
 
+#: src/resources/menus.xrc:280
 msgid "&Validate Translations"
 msgstr "驗證譯文(&V)"
 
+#: src/resources/menus.xrc:284
+msgid "&Statistics"
+msgstr "統計資料(&S)"
+
+#: src/resources/menus.xrc:289
 msgid "Remove Same-as-Source Translations"
 msgstr "移除和來源文字相同的翻譯"
 
+#: src/resources/menus.xrc:292
 msgid "&Purge deleted translations"
 msgstr "清除已刪除的譯文(&P)"
 
+#: src/resources/menus.xrc:293
 msgid "&Purge Deleted Translations"
 msgstr "清除已刪除的譯文(&P)"
 
+#: src/resources/menus.xrc:297
 msgid "&Properties…"
 msgstr "屬性(&P)…"
 
+#: src/resources/menus.xrc:304 src/resources/menus.xrc:466
 msgid "&Go"
 msgstr "前往(&G)"
 
+#: src/resources/menus.xrc:307
 msgid "&Done and next"
 msgstr "完成並前往下一筆譯文(&D)"
 
+#: src/resources/menus.xrc:308
 msgid "&Done and Next"
 msgstr "完成並前往下一筆譯文(&D)"
 
+#: src/resources/menus.xrc:314
 msgid "Previously edited"
 msgstr "先前編輯過"
 
+#: src/resources/menus.xrc:315
 msgid "Previously Edited"
 msgstr "先前編輯過"
 
+#: src/resources/menus.xrc:320
 msgid "&Previous translation"
 msgstr "前一筆譯文(&P)"
 
+#: src/resources/menus.xrc:321
 msgid "&Previous Translation"
 msgstr "前一筆譯文(&P)"
 
+#: src/resources/menus.xrc:325
 msgid "&Next translation"
 msgstr "下一筆譯文(&N)"
 
+#: src/resources/menus.xrc:326
 msgid "&Next Translation"
 msgstr "下一筆譯文(&N)"
 
+#: src/resources/menus.xrc:330
 msgid "P&revious unfinished"
 msgstr "前一筆未完成譯文(&R)"
 
+#: src/resources/menus.xrc:331
 msgid "P&revious Unfinished"
 msgstr "前一筆未完成譯文(&R)"
 
+#: src/resources/menus.xrc:335
 msgid "Ne&xt unfinished"
 msgstr "下一筆未完成譯文(&X)"
 
+#: src/resources/menus.xrc:336
 msgid "Ne&xt Unfinished"
 msgstr "下一筆未完成譯文(&X)"
 
+#: src/resources/menus.xrc:341
 msgid "Previous plural form"
 msgstr "前一筆複數型譯文"
 
+#: src/resources/menus.xrc:342
 msgid "Previous Plural Form"
 msgstr "前一筆複數型譯文"
 
+#: src/resources/menus.xrc:346
 msgid "Next plural form"
 msgstr "下一筆複數型譯文"
 
+#: src/resources/menus.xrc:347
 msgid "Next Plural Form"
 msgstr "下一筆複數型譯文"
 
+#: src/resources/menus.xrc:356 src/resources/menus.xrc:473
 msgid "&Online help"
 msgstr "線上說明(&O)"
 
+#: src/resources/menus.xrc:357 src/resources/menus.xrc:474
 msgid "&Online Help"
 msgstr "線上說明(&O)"
 
+#: src/resources/menus.xrc:363 src/resources/menus.xrc:480
 msgid "&GNU gettext manual"
 msgstr "GNU gettext 手冊(&G)"
 
+#: src/resources/menus.xrc:364 src/resources/menus.xrc:481
 msgid "&GNU gettext Manual"
 msgstr "GNU gettext 手冊(&G)"
 
+#: src/resources/menus.xrc:368 src/resources/menus.xrc:485
+msgid "Email &support…"
+msgstr "電子郵件技術支援(&S)…"
+
+#: src/resources/menus.xrc:369 src/resources/menus.xrc:486
+msgid "Email &Support…"
+msgstr "電子郵件技術支援(&S)…"
+
+#: src/resources/menus.xrc:373 src/resources/menus.xrc:490
 msgid "&About Poedit"
 msgstr "關於 Poedit(&A)"
 
+#: src/resources/menus.xrc:374 src/resources/menus.xrc:375
+#: src/resources/menus.xrc:491 src/resources/menus.xrc:492
 msgid "&About"
 msgstr "關於(&A)"
 
+#: src/resources/prefs.xrc:4
 msgid "Extractor setup"
 msgstr "擷取器設定"
 
+#: src/resources/prefs.xrc:27
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "請以分號隔開副檔名清單 (例如 *.cpp; *.h)："
 
+#: src/resources/prefs.xrc:43
 msgid "Invocation:"
 msgstr "喚起："
 
+#: src/resources/prefs.xrc:47
 msgid "Command to extract translations:"
 msgstr "擷取譯文的命令:"
 
-msgid ""
-"This is the command used to launch the extractor.\n"
+#: src/resources/prefs.xrc:61
+msgid "This is the command used to launch the extractor.\n"
 "%o expands to the name of output file, %K to list\n"
 "of keywords, %F to list of input files,\n"
 "%C to charset flag (see below)."
-msgstr ""
-"這是用來啟動抽取器的指令。\n"
+msgstr "這是用來啟動抽取器的指令。\n"
 "%o 會展開成輸出檔的名稱，%K 是\n"
 "關鍵字清單，%F 是輸入檔清單，\n"
 "%C 是字集旗標 (參閱下方)。"
 
+#: src/resources/prefs.xrc:70
 msgid "An item in keywords list:"
 msgstr "關鍵字清單中的一個項目："
 
-msgid ""
-"This will be attached to the command line once\n"
+#: src/resources/prefs.xrc:84
+msgid "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
-msgstr ""
-"這個內容會按照每個關鍵字逐次\n"
+msgstr "這個內容會按照每個關鍵字逐次\n"
 "附到命令列中。%k 會展開成關鍵字。"
 
+#: src/resources/prefs.xrc:93
 msgid "An item in input files list:"
 msgstr "輸入檔清單中的一個項目："
 
+#: src/resources/prefs.xrc:107
 #, c-format
-msgid ""
-"This will be attached to the command line once\n"
+msgid "This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
-msgstr ""
-"這個內容會按照每個輸入檔逐次\n"
+msgstr "這個內容會按照每個輸入檔逐次\n"
 "附到命令列中。%f 會展開成檔名。"
 
+#: src/resources/prefs.xrc:116 src/resources/properties.xrc:124
 msgid "Source code charset:"
 msgstr "原始程式碼字元集："
 
+#: src/resources/prefs.xrc:130
 #, c-format
-msgid ""
-"This will be attached to the command line\n"
+msgid "This will be attached to the command line\n"
 "only if source code charset was given. %c expands to charset value."
-msgstr ""
-"只有在給定原始碼字集時，這個內容\n"
+msgstr "只有在給定原始碼字集時，這個內容\n"
 "才會附到命令列中。%c 會展開成字集的值。"
 
+#: src/resources/properties.xrc:4 src/resources/properties.xrc:153
 msgid "Translation Properties"
 msgstr "譯文屬性"
 
+#: src/resources/properties.xrc:19
 msgid "Project name and version:"
 msgstr "專案名稱及版本："
 
+#: src/resources/properties.xrc:34
 msgid "Language team:"
 msgstr "語言團隊："
 
+#: src/resources/properties.xrc:66
 msgid "Plural forms:"
 msgstr "複數型："
 
+#: src/resources/properties.xrc:73
 msgid "Use default rules for this language"
 msgstr "使用這個語言的預設規則"
 
+#: src/resources/properties.xrc:82
 msgid "Use custom expression"
 msgstr "使用自訂運算式"
 
+#: src/resources/properties.xrc:98
 msgid "Learn about plural forms"
 msgstr "深入瞭解複數型"
 
+#: src/resources/properties.xrc:112
 msgid "Charset:"
 msgstr "字元集："
 
+#: src/resources/properties.xrc:138
 msgid "Advanced Extraction Settings…"
 msgstr "進階擷取設定…"
 
+#: src/resources/properties.xrc:139
 msgid "Advanced extraction settings…"
 msgstr "進階擷取設定…"
 
+#: src/resources/properties.xrc:154
 msgid "Translation properties"
 msgstr "譯文屬性"
 
+#: src/resources/properties.xrc:157
 msgid "Sources Paths"
 msgstr "原始程式碼路徑"
 
+#: src/resources/properties.xrc:158
 msgid "Sources paths"
 msgstr "原始程式碼路徑"
 
+#: src/resources/properties.xrc:164
 msgid "Extract text from source files in the following directories:"
 msgstr "擷取下列目錄中的原始程式檔文字:"
 
+#: src/resources/properties.xrc:173
 msgid "Base path:"
 msgstr "基底路徑:"
 
+#: src/resources/properties.xrc:227
+msgid "Customize File Extensions…"
+msgstr "自訂檔案副檔名⋯"
+
+#: src/resources/properties.xrc:228
+msgid "Customize file extensions…"
+msgstr "自訂檔案副檔名⋯"
+
+#: src/resources/properties.xrc:241
 msgid "Sources Keywords"
 msgstr "原始程式碼關鍵字"
 
+#: src/resources/properties.xrc:242
 msgid "Sources keywords"
 msgstr "原始程式碼關鍵字"
 
-msgid ""
-"Use these keywords (function names) to recognize translatable strings\n"
+#: src/resources/properties.xrc:248
+msgid "Use these keywords (function names) to recognize translatable strings\n"
 "in source files:"
 msgstr "在原始程式碼中使用這些關鍵字 (函式名稱) 以辨識可翻譯字串："
 
+#: src/resources/properties.xrc:264
 msgid "Also use default keywords for supported languages"
 msgstr "同時為支援的語言使用預設關鍵字"
 
+#: src/resources/properties.xrc:271
 msgid "Learn about gettext keywords"
 msgstr "深入瞭解 gettext 關鍵字"
 
-msgid "Update summary"
-msgstr "更新摘要"
-
-msgid ""
-"These strings were found in the sources but were not in the file.\n"
+#: src/resources/summary.xrc:32
+msgid "These strings were found in the sources but were not in the file.\n"
 "Poedit will add them to the file now."
-msgstr ""
-"來源有這些檔案沒有的字串。\n"
+msgstr "來源有這些檔案沒有的字串。\n"
 "Poedit 現在會將這些字串加到檔案。"
 
-msgid "New strings"
-msgstr "新字串"
-
-msgid ""
-"These strings are no longer in the source code.\n"
+#: src/resources/summary.xrc:53
+msgid "These strings are no longer in the source code.\n"
 "Poedit will remove them from the file now."
-msgstr ""
-"原始碼已經沒有這些字串。\n"
+msgstr "原始碼已經沒有這些字串。\n"
 "Poedit 現在會從檔案移除這些字串。"
 
+#: src/resources/summary.xrc:66
 msgid "Obsolete strings"
 msgstr "過時字串"
 
+#: src/resources/summary.xrc:79
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 筆新增字串，0 筆過時字串)"
 
-msgid "Open"
-msgstr ""
-
+#: src/resources/toolbar.xrc:13 src/resources/toolbar.xrc:17
 msgid "Open file"
 msgstr "開啟檔案"
 
+#: src/resources/toolbar.xrc:22 src/resources/toolbar.xrc:26
 msgid "Save file"
 msgstr "儲存檔案"
 
+#: src/resources/toolbar.xrc:34
 msgid "Validate"
 msgstr "驗證"
 
+#: src/resources/toolbar.xrc:35
 msgid "Check for errors in the translation"
 msgstr "檢查譯文中是否有錯誤"
 
+#: src/resources/toolbar.xrc:49
+msgid "Pre-translate strings that don’t have a translation yet"
+msgstr "前置翻譯尚未翻譯的字串"
+
+#: src/resources/toolbar.xrc:57 src/wx/main_toolbar.cpp:136
 msgid "Update from code"
 msgstr "從原始程式碼進行更新"
 
+#: src/resources/toolbar.xrc:58 src/wx/main_toolbar.cpp:136
 msgid "Update from Code"
 msgstr "從原始程式碼進行更新"
 
+#: src/resources/toolbar.xrc:59 src/wx/main_toolbar.cpp:137
 msgid "Update from source code"
 msgstr "從原始程式碼更新"
 
+#: src/resources/toolbar.xrc:67
 msgid "Sidebar"
 msgstr "側邊欄"
 
+#: src/resources/toolbar.xrc:68
 msgid "Show or hide the sidebar"
 msgstr "顯示或隱藏側邊欄"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
+#: src/sidebar.cpp:139
 msgid "Previous source text"
 msgstr "過去的來源文字"
 
-msgid ""
-"The old source text (before it changed during an update) that the now-"
-"inaccurate translation corresponds to."
+#: src/sidebar.cpp:142
+msgid "The old source text (before it changed during an update) that the now-inaccurate translation corresponds to."
 msgstr "現在的不精確譯文對應的是（在用模板檔更新之前）舊的源文。"
 
+#: src/sidebar.cpp:168
 msgid "Notes for translators"
 msgstr "給譯者的備註"
 
+#: src/sidebar.cpp:201
 msgid "Comment"
 msgstr "註解"
 
+#: src/sidebar.cpp:231 src/sidebar.cpp:250
 msgid "Add comment"
 msgstr "新增註解"
 
+#: src/sidebar.cpp:233 src/sidebar.cpp:235 src/sidebar.cpp:253
 msgid "Add Comment"
 msgstr "新增註解"
 
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:436
+msgid "from your TM"
+msgstr "來自私有譯文記憶"
+
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:441
+msgid "machine translation"
+msgstr "機器翻譯譯文"
+
+#. TRANSLATORS: This is followed by a logo of e.g. Microsoft Translator, forming a sentence e.g. "translated by MS Translator"
+#: src/sidebar.cpp:449
+msgid "translated by"
+msgstr "譯文來源為"
+
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:456
+msgid "human translation"
+msgstr "人工譯文"
+
+#: src/sidebar.cpp:592
 msgid "Delete From Translation Memory"
 msgstr "從譯文記憶庫中刪除"
 
+#: src/sidebar.cpp:592
 msgid "Delete from translation memory"
 msgstr "從譯文記憶庫中刪除"
 
+#: src/sidebar.cpp:593
+msgid "Report Bad Translation"
+msgstr "回報為品質不佳的譯文"
+
+#: src/sidebar.cpp:593
+msgid "Report bad translation"
+msgstr "回報為品質不佳的譯文"
+
+#: src/sidebar.cpp:652
 msgid "Translation suggestions"
 msgstr "翻譯建議"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
+#: src/sidebar.cpp:695
 msgid "No matches found"
 msgstr "找不到符合條件的項目"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (macOS, Linux).
+#: src/sidebar.cpp:698
 msgid "No Matches Found"
 msgstr "找不到符合條件的項目"
 
+#: src/sidebar.cpp:734 src/sidebar_pro.cpp:325
 msgid "This string was found in Poedit’s translation memory."
 msgstr "這個字串已儲存於 Poedit 的譯文記憶庫。"
 
-msgid ""
-"Translation suggestions require that source text is available. They don’t "
-"work if only IDs without the actual text are used."
-msgstr ""
-"翻譯建議需要可供使用的來源文字。如果僅使用沒有實際文字的 ID，翻譯建議將無法運"
-"作。"
+#: src/sidebar.cpp:984
+msgid "Translation suggestions require that source text is available. They don’t work if only IDs without the actual text are used."
+msgstr "翻譯建議需要可供使用的來源文字。如果僅使用沒有實際文字的 ID，翻譯建議將無法運作。"
 
-msgid ""
-"Translation suggestions require that source text’s language is known. Poedit "
-"couldn’t detect it in this file."
-msgstr ""
-"需要先知道來源文字的語言，才能提供翻譯建議。Poedit 無法從這個檔案偵測語言。"
+#: src/sidebar.cpp:989
+msgid "Translation suggestions require that source text’s language is known. Poedit couldn’t detect it in this file."
+msgstr "需要先知道來源文字的語言，才能提供翻譯建議。Poedit 無法從這個檔案偵測語言。"
 
+#. TRANSLATORS: Tooltip explaining the Quality: label
+#: src/sidebar_pro.cpp:86
+msgid "Currently enabled quality level of online suggestions"
+msgstr "目前已啟用網路線上建議的品質等級"
+
+#. TRANSLATORS: Quality level for the "Quality: %s" label; needs to be short
+#: src/sidebar_pro.cpp:121
+msgid "Premium"
+msgstr "進階版"
+
+#. TRANSLATORS: Quality level for the "Quality: %s" label; needs to be short
+#: src/sidebar_pro.cpp:126
+msgid "Standard"
+msgstr "標準"
+
+#. TRANSLATORS: This needs to be *short*, it is shown in the sidebar
+#. after "Translation suggestions". %s will be replaced by "Standard"
+#. or "Premium". "(Quality) level" or "tier" are synonyms for it.
+#: src/sidebar_pro.cpp:132
+#, c-format
+msgid "Quality: %s"
+msgstr "品質：%s"
+
+#. TRANSLATORS: Label for the part where currently used translation engine is shown
+#: src/sidebar_pro.cpp:151
+msgid "Machine translation uses:"
+msgstr "機器翻譯使用："
+
+#: src/sidebar_pro.cpp:227
+msgid "Terminology"
+msgstr "術語"
+
+#: src/sidebar_pro.cpp:321
+msgid "This suggestion was contributed by another translator to the online TM."
+msgstr "這筆線上建議譯文是由其他譯者貢獻給線上譯文記憶。"
+
+#: src/sidebar_pro.cpp:323
+msgid "This suggestion was machine-translated online."
+msgstr "這筆線上建議譯文來自線上機器翻譯。"
+
+#: src/sidebar_pro.cpp:512
+#, c-format
+msgid "%d out of %d online suggestion left."
+msgid_plural "%d out of %d online suggestions left."
+msgstr[0] "尚餘 %d 個線上建議譯文額度，總計 %d 個。"
+
+#: src/sidebar_pro.cpp:517
+msgid "Remove this limitation"
+msgstr "移除這項限制"
+
+#: src/sidebar_pro.cpp:521
+msgid "Online suggestions are limited to only 10 in the free version. Upgrade to Pro to remove this limitation."
+msgstr "免費版本中每日僅提供 10 筆線上建議譯文，請升級至 Pro 以移除這項限制。"
+
+#: src/sidebar_pro.cpp:523
+msgid "Unlock online suggestions"
+msgstr "解除線上建議譯文的限制"
+
+#: src/sidebar_pro.cpp:547
+msgid "Exceeded online TM daily limit."
+msgstr "超過線上譯文記憶的每日使用上限。"
+
+#: src/sidebar_pro.cpp:580
+msgid "Connect to the Internet to get additional suggestions."
+msgstr "連線至網際網路以取得額外的建議譯文。"
+
+#. TRANSLATORS: Label indicating that translations made in the current file are contributed to the online translation memory. Related to the "Contribute my translations to the online TM" string.
+#: src/sidebar_pro.cpp:655
+msgid "Contributing"
+msgstr "貢獻翻譯"
+
+#: src/sidebar_pro.cpp:656
+msgid "Your translations are contributed to the online translation memory as you make them. Thanks for making the suggestions better!"
+msgstr "當您寫下翻譯時，您也將翻譯貢獻到線上的譯文記憶庫中。感謝您的參與，讓翻譯建議變得更好！"
+
+#. TRANSLATORS: Label indicating that the current file
+#: src/sidebar_pro.cpp:662
+msgid "Private"
+msgstr "私人使用"
+
+#: src/sidebar_pro.cpp:663
+msgid "Translations from this file are not shared with the online translation memory."
+msgstr "此檔案中的翻譯並不會分享到線上譯文記憶庫中。"
+
+#: src/sidebar_pro.cpp:688
+msgid "Privacy settings"
+msgstr "隱私設定"
+
+#: src/sidebar_pro.cpp:694
+#, c-format
+msgid "While editing the file “%s”:"
+msgstr "編輯「%s」檔案時："
+
+#: src/sidebar_pro.cpp:756
+msgid "Not interested"
+msgstr "不感興趣"
+
+#: src/sidebar_pro.cpp:982
+msgid "Pre-translation"
+msgstr "前置翻譯"
+
+#: src/sidebar_pro.cpp:987
+msgid "Pre-translate all items at once and focus on making corrections, instead of translating them one by one."
+msgstr "立即為全部項目進行前置翻譯並聚焦於修正譯文，而不是逐條進行翻譯。"
+
+#: src/sidebar_pro.cpp:1101
+msgid "Stay Informed!"
+msgstr "接收通知！"
+
+#: src/sidebar_pro.cpp:1102
+msgid "Subscribe"
+msgstr "訂閱"
+
+#: src/sidebar_pro.cpp:1106
+msgid "Sign up for Poedit newsletter and be the first to know about what’s new. I hate spam too, so expect only a few emails a year."
+msgstr "訂閱 Poedit 新聞來得到第一手新消息。我也討厭垃圾信，所以你大概一年只會從這裡收到幾封信而已。"
+
+#: src/sidebar_pro.cpp:1117
+msgid "Email address"
+msgstr "電子郵件位址"
+
+#: src/sidebar_pro.cpp:1140
+msgid "You’re signed up. Please check your email for a confirmation message."
+msgstr "您已經註冊。請檢查您的電子信箱，會有一則確認訊息。"
+
+#. TRANSLATORS: "Dictionaries" is the name of the application (see https://dictionaries.io), i.e. shouldn't be translated
+#: src/sidebar_pro.cpp:1210
+msgid "Dictionaries for Mac, Windows & Kindle"
+msgstr "適用於 Mac、Windows 及 Kindle 的字典程式"
+
+#: src/sidebar_pro.cpp:1222
+msgid "Did you know I also made a dictionaries app for Mac, Windows and Kindle? It supports over 80 languages and is a great companion to Poedit."
+msgstr "開發者開發了一款適用於 Mac、Windows 及 Kindle 的字典應用程式，這款應用程式支援超過 80 種語言，是 Poedit 的絕佳輔助程式。"
+
+#: src/sidebar_terminology.cpp:49
+msgid "Glossary Entry"
+msgstr "術語表術語"
+
+#: src/sidebar_terminology.cpp:55 src/sidebar_terminology.cpp:185
+msgid "Term"
+msgstr "術語"
+
+#: src/sidebar_terminology.cpp:60
+msgid "Additional description or notes"
+msgstr "其他描述或備註"
+
+#: src/sidebar_terminology.cpp:66 src/sidebar_terminology.cpp:187
+msgid "Notes"
+msgstr "備註"
+
+#: src/sidebar_terminology.cpp:128
+msgid "CSV Glossary Import"
+msgstr "CSV 術語表匯入"
+
+#: src/sidebar_terminology.cpp:138
+msgid "Source language:"
+msgstr "來源語言："
+
+#: src/sidebar_terminology.cpp:142
+msgid "Translation language:"
+msgstr "翻譯語言："
+
+#: src/sidebar_terminology.cpp:149
+msgid "Import rules:"
+msgstr "匯入規則："
+
+#: src/sidebar_terminology.cpp:153
+msgid "Skip the first row"
+msgstr "略過第一列"
+
+#: src/sidebar_terminology.cpp:158
+msgid "Column separator:"
+msgstr "欄位分隔符號："
+
+#: src/sidebar_terminology.cpp:161
+msgid "Term column:"
+msgstr "術語欄："
+
+#: src/sidebar_terminology.cpp:164
+msgid "Definition column:"
+msgstr "定義欄："
+
+#: src/sidebar_terminology.cpp:167
+msgid "Notes column:"
+msgstr "備註欄："
+
+#: src/sidebar_terminology.cpp:177 src/sidebar_terminology.cpp:261
+msgid "Preview of imported glossary data:"
+msgstr "匯入術語表資料的預覽表："
+
+#. TRANSLATORS: %d is the number of entries in the preview, %s is the total number of entries in the file
+#: src/sidebar_terminology.cpp:257
+#, c-format
+msgid "Preview of imported glossary data (%d out of %s shown):"
+msgstr "匯入術語表資料的預覽（顯示 %2$s 筆中的 %1$d 筆資料）："
+
+#: src/sidebar_terminology.cpp:396 src/wx_translatable_strings.h:102
+msgid "Edit"
+msgstr "編輯"
+
+#: src/sidebar_terminology.cpp:496
+msgid "Word or phrase"
+msgstr "單字或片語"
+
+#: src/sidebar_terminology.cpp:518
+msgid "Add entries to the glossary"
+msgstr "加入條目到術語表"
+
+#: src/sidebar_terminology.cpp:524
+msgid "Search previously made translations and glossaries to ensure consistency. Both the current file and your translation memory are consulted."
+msgstr "搜尋先前所做的翻譯與術語表來確保翻譯一致性。無論是當前的檔案還是您的翻譯記憶都會被諮詢。"
+
+#: src/sidebar_terminology.cpp:536
+msgid "Unlock terminology search"
+msgstr "解鎖術語搜尋功能"
+
+#: src/sidebar_terminology.cpp:626
+msgid "Glossary"
+msgstr "術語表"
+
+#: src/sidebar_terminology.cpp:632
+msgid "This File"
+msgstr "此檔案"
+
+#: src/sidebar_terminology.cpp:696
+msgid "Add Glossary Entry…"
+msgstr "加入術語表條目…"
+
+#: src/sidebar_terminology.cpp:696
+msgid "Add glossary entry…"
+msgstr "加入術語表術語…"
+
+#: src/sidebar_terminology.cpp:697
+msgid "Import Glossary from CSV File…"
+msgstr "從 CSV 檔案匯入術語表…"
+
+#: src/sidebar_terminology.cpp:697
+msgid "Import glossary from CSV file…"
+msgstr "從 CSV 檔案匯入術語表…"
+
+#: src/sidebar_terminology.cpp:720
+msgid "Select CSV glossary file to import"
+msgstr "選擇要匯入的 CSV 術語表檔案"
+
+#: src/sidebar_terminology.cpp:723
+msgid "CSV Files"
+msgstr "CSV 檔案"
+
+#: src/sidebar_terminology.cpp:749
+msgid "Importing glossary"
+msgstr "正在匯入術語表"
+
+#: src/sidebar_terminology.cpp:756
+#, c-format
+msgid "Imported %s terms from CSV file “%s” into the glossary."
+msgstr "已從 CSV 檔案「%s」匯入 %s 個術語至術語表中。"
+
+#: src/statistics.cpp:275 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Items"
+msgstr "項目數"
+
+#: src/statistics.cpp:276 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Words"
+msgstr "字數"
+
+#: src/statistics.cpp:277 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Characters"
+msgstr "字元數"
+
+#: src/statistics.cpp:291 src/statistics.cpp:412
+msgid "Translated"
+msgstr "已翻譯"
+
+#: src/statistics.cpp:296 src/statistics.cpp:335 src/statistics.cpp:413
+#: src/statistics.cpp:417
+msgctxt "column/row header"
+msgid "Needs work"
+msgstr "待校閱"
+
+#: src/statistics.cpp:301 src/statistics.cpp:414
+msgid "Translations with errors"
+msgstr "含有錯誤"
+
+#: src/statistics.cpp:328 src/statistics.cpp:416 src/statistics.cpp:428
+msgid "Strings in source language"
+msgstr "來源語言中的字串"
+
+#: src/statistics.cpp:340 src/statistics.cpp:418
+msgid "Not translated"
+msgstr "尚未翻譯"
+
+#: src/statistics.cpp:351
+msgid "Include code and placeholders"
+msgstr "包含程式碼與佔位字元"
+
+#: src/statistics.cpp:352
+msgid "If checked, word and character counts will also include placeholders, HTML markup and code."
+msgstr "勾選後，文字與字元計數將包含佔位字元、HTML 標記與程式碼。"
+
+#: src/statistics.cpp:362
+msgid "Characters are counted including spaces."
+msgstr "空格也會列入字元數計算。"
+
+#: src/statistics.cpp:368
+msgid "Copy to clipboard"
+msgstr "複製到剪貼簿"
+
+#: src/statistics.cpp:370
+msgid "Copy to Clipboard"
+msgstr "複製到剪貼簿"
+
+#: src/statistics.cpp:722
+#, c-format
+msgid "The file “%s” couldn’t be opened: %s"
+msgstr "無法開啟「%s」檔案：%s"
+
+#: src/subprocess.cpp:219 src/subprocess.cpp:251
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "無法執行程式：%s"
+
+#: src/tm/tmx_io.cpp:88 src/tm/tmx_io.cpp:104
 msgid "The TMX file is malformed."
 msgstr "TMX 檔案格式錯誤。"
 
-msgid "No translations were found in the TMX file."
-msgstr "在 TMX 檔案中找不到譯文。"
-
+#: src/tm/transmem.cpp:87
 #, c-format
 msgid "Translation memory database is corrupted: %s (%d)."
 msgstr "譯文記憶庫已損毀：%s (%d)。"
 
+#: src/tm/transmem.cpp:90
 #, c-format
 msgid "Translation memory error: %s (%d)."
 msgstr "譯文記憶庫錯誤：%s (%d)。"
 
+#: src/uilang.cpp:233
 msgid "(Use default language)"
 msgstr "(使用預設語言)"
 
+#: src/uilang.cpp:244
 msgid "Language selection"
 msgstr "語言選擇"
 
+#: src/uilang.cpp:244
 msgid "Select your preferred language"
 msgstr "選取您偏好的語言"
 
+#: src/uilang.cpp:261
 msgid "You must restart Poedit for this change to take effect."
 msgstr "您得要重新啟動 Poedit 這項更動才會生效。"
 
+#: src/utility.cpp:143 src/utility.cpp:153
 msgid "Cannot create temporary directory."
 msgstr "無法建立暫存目錄。"
 
+#: src/welcomescreen.cpp:141
 msgid "There are no translations. That’s unusual."
 msgstr "沒有譯文。這並不尋常。"
 
-msgid ""
-"Translatable entries aren’t added manually in the Gettext system, but are "
-"automatically extracted\n"
-"from source code. This way, they stay up to date and accurate.\n"
-"Translators typically use PO template files (POTs) prepared for them by the "
-"developer."
-msgstr ""
-"可翻譯條目並非以手動方式加入 Gettext 系統中，而是自動從源碼\n"
-"中抽出。如此一來，條目不只能維持在最新狀態，還能保持精確。\n"
-"譯者通常使用開發者提供的 PO 模板檔 (POT)。"
+#: src/welcomescreen.cpp:150
+msgid "Translatable entries aren’t added manually in the Gettext system, but are automatically extracted from source code. This way, they stay up to date and accurate. Translators typically use PO template files (POTs) prepared for them by the developer."
+msgstr "在 Gettext 系統中，可翻譯項目並非手動新增，而是自動從原始程式碼中擷取。如此一來，這些項目才能保持最新狀態和準確性。翻譯人員通常會使用開發人員為其準備的 PO 範本檔案（POT）。"
 
-msgid "(Learn more about GNU gettext)"
-msgstr "(深入瞭解 GNU gettext)"
+#: src/welcomescreen.cpp:153
+msgid "Learn more about GNU gettext"
+msgstr "深入瞭解 GNU gettext"
 
-msgid ""
-"The simplest way to fill this file with translations is to update it from a "
-"POT:"
+#: src/welcomescreen.cpp:157
+msgid "The simplest way to fill this file with translations is to update it from a POT:"
 msgstr "填充翻譯至檔案的最簡易解法，就是從 POT 檔更新："
 
+#: src/welcomescreen.cpp:162
 msgid "Update from POT"
 msgstr "從 POT 檔更新"
 
+#: src/welcomescreen.cpp:163
 msgid "Take translatable strings from an existing POT template."
 msgstr "從既有的 POT 模板檔拿取可翻譯字串。"
 
-msgid ""
-"You can also extract translatable strings directly from the source code:"
+#: src/welcomescreen.cpp:167
+msgid "You can also extract translatable strings directly from the source code:"
 msgstr "您也可以直接從原始碼抽出可翻譯字串："
 
+#: src/welcomescreen.cpp:172
 msgid "Extract from sources"
 msgstr "從來源更新"
 
+#: src/welcomescreen.cpp:173
 msgid "Configure source code extraction in Properties."
 msgstr "在「屬性」中設定原始碼抽出項目。"
 
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "版本 %s"
-
+#: src/welcomescreen.cpp:272
 msgid "Create new"
 msgstr "新增"
 
+#: src/welcomescreen.cpp:273
 msgid "Create new translation from POT template."
 msgstr "從 POT 模板建立新翻譯。"
 
+#: src/welcomescreen.cpp:278
 msgid "Browse files"
 msgstr "瀏覽檔案"
 
+#: src/welcomescreen.cpp:279
 msgid "Open and edit translation files."
 msgstr "開啟及編輯翻譯檔案。"
 
+#: src/welcomescreen.cpp:286
+msgid "Translate WordPress theme or plugin"
+msgstr "為 WordPress 佈景主題或外掛進行本地化"
+
+#: src/welcomescreen.cpp:287
+msgid "Edit WordPress translations over FTP or locally."
+msgstr "在 FTP 或是本機編輯 WordPress 翻譯。"
+
+#: src/welcomescreen.cpp:292
 msgid "Translate cloud project"
 msgstr "翻譯雲端專案"
 
+#: src/welcomescreen.cpp:293
 msgid "Collaborate with other people online."
 msgstr "與其他人在線上協作。"
 
+#: src/welcomescreen.cpp:316
 msgid "Recent files"
 msgstr "最近檔案"
 
+#: src/wordpress/wordpress.cpp:101 src/wordpress/wordpress.cpp:108
+#, c-format
+msgid "Failed to read file “%s”."
+msgstr "無法讀取檔案「%s」。"
+
+#: src/wordpress/wordpress.cpp:165
+#, c-format
+msgid "Confused by ambiguous values of “%s” in %s."
+msgstr "因「%s」(在 %s 中) 的值含糊不清而困惑。"
+
+#: src/wordpress/wordpress.cpp:294 src/wordpress/wordpress.cpp:544
+#: src/wordpress/wordpress.cpp:591
+#, c-format
+msgid "Couldn’t detect POs location for “%s”."
+msgstr "無法偵測「%s」的 PO 位置。"
+
+#: src/wordpress/wordpress.cpp:670
+#, c-format
+msgid "The “%s” theme isn’t localization-ready."
+msgstr "「%s」主題尚未本地化就緒。"
+
+#: src/wordpress/wordpress.cpp:687
+#, c-format
+msgid "Couldn’t detect translation domain of the “%s” theme."
+msgstr "無法偵測「%s」主題的譯文領域。"
+
+#: src/wordpress/wordpress.cpp:714
+#, c-format
+msgid "Couldn't detect translation domain of the \"%s\" theme."
+msgstr "無法偵測「%s」主題的譯文領域。"
+
+#: src/wordpress/wordpress.cpp:769
+msgid "Confused: multiple main plugin files."
+msgstr "困惑：多份主要外掛檔。"
+
+#: src/wordpress/wordpress.cpp:819
+#, c-format
+msgid "The “%s” plugin isn’t localization-ready."
+msgstr "「%s」外掛尚未本地化就緒。"
+
+#: src/wordpress/wordpress.cpp:840 src/wordpress/wordpress.cpp:857
+#, c-format
+msgid "Couldn’t detect translation domain of the “%s” plugin."
+msgstr "無法偵測「%s」外掛的譯文領域。"
+
+#: src/wordpress/wordpress.cpp:923
+msgid "Found neither WordPress theme nor plugin in the folder."
+msgstr "資料夾中沒找到 WordPress 主題，也沒找到 WordPress 外掛。"
+
+#: src/wordpress/wordpress.cpp:940
+#, c-format
+msgid "Translations folder (%s) doesn’t exist."
+msgstr "譯文資料夾 (%s) 不存在。"
+
+#: src/wordpress/wordpress_gui.cpp:77
+msgid "<big>Drag and drop <b>theme or plugin folder</b> here</big>\n\n"
+"or use the “Choose folder” button"
+msgstr "<big>請將<b>主題或外掛資料夾</b>拖放到這裡</big>\n\n"
+"或使用「選擇資料夾」按鈕"
+
+#: src/wordpress/wordpress_gui.cpp:79
+msgid "<big>Drag and Drop <b>Theme or Plugin Folder</b> Here</big>\n\n"
+"or use the “Choose Folder” button"
+msgstr "<big>請將<b>主題或外掛資料夾</b>拖放到這裡</big>\n\n"
+"或使用「選擇資料夾」按鈕"
+
+#: src/wordpress/wordpress_gui.cpp:101
+#, c-format
+msgid "Folder “%s”"
+msgstr "「%s」資料夾已加入"
+
+#: src/wordpress/wordpress_gui.cpp:162
+msgid "Work With Files"
+msgstr "處理檔案"
+
+#: src/wordpress/wordpress_gui.cpp:162
+msgid "Work with files"
+msgstr "處理檔案"
+
+#: src/wordpress/wordpress_gui.cpp:164
+msgid "Connect to Server"
+msgstr "連接至伺服器"
+
+#: src/wordpress/wordpress_gui.cpp:164
+msgid "Connect to server"
+msgstr "連接至伺服器"
+
+#: src/wordpress/wordpress_gui.cpp:165
+msgid "On This Computer"
+msgstr "在這台電腦"
+
+#: src/wordpress/wordpress_gui.cpp:165
+msgid "On this computer"
+msgstr "在這台電腦"
+
+#: src/wordpress/wordpress_gui.cpp:168
+msgid "Continue"
+msgstr "繼續"
+
+#: src/wordpress/wordpress_gui.cpp:210
+msgid "Choose Folder…"
+msgstr "選取資料夾…"
+
+#: src/wordpress/wordpress_gui.cpp:210
+msgid "Choose folder…"
+msgstr "選取資料夾…"
+
+#: src/wordpress/wordpress_gui.cpp:217
+msgid "Create a new translation"
+msgstr "建立 PO 譯文檔案"
+
+#: src/wordpress/wordpress_gui.cpp:220
+msgid "Choose this if you want to translate the theme or plugin into your language."
+msgstr "若您想要將主題或外掛翻譯成您的語言，則請選擇這個項目。"
+
+#: src/wordpress/wordpress_gui.cpp:233
+msgid "Create a POT"
+msgstr "建立 POT"
+
+#: src/wordpress/wordpress_gui.cpp:235
+msgid "This option is for theme and plugin developers. Poedit will create an empty template (POT) that translations can be based on."
+msgstr "這個選項是給主題與外掛的開發者使用的。Poedit 會製作空的模板檔 (POT)，翻譯則是根據此模板再製而成。"
+
+#: src/wordpress/wordpress_gui.cpp:248
+msgid "Select the folder with the WordPress theme or plugin"
+msgstr "選取 WordPress 佈景主題或外掛的資料夾"
+
+#: src/wordpress/wordpress_gui.cpp:280
+msgid "Enter connection details for your WordPress server. Poedit will retrieve available themes and plugins from it and let you translate directly on the server."
+msgstr "請為您的 WordPress 伺服器輸入連線細節。Poedit 會從裡面取得可用主題和外掛，並讓您直接在伺服器上翻譯。"
+
+#: src/wordpress/wordpress_gui.cpp:287
+msgid "Protocol:"
+msgstr "通訊協定:"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "FTP (insecure)"
+msgstr "FTP (不安全)"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "FTP with SSL"
+msgstr "FTPS (採用 SSL 加密 FTP 傳輸)"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "SFTP"
+msgstr "SFTP"
+
+#: src/wordpress/wordpress_gui.cpp:293
+msgid "Choose a recent server"
+msgstr "選取最近連線過的伺服器"
+
+#: src/wordpress/wordpress_gui.cpp:302 src/wordpress/wordpress_gui.cpp:538
+msgid "Recent Servers"
+msgstr "最近伺服器"
+
+#: src/wordpress/wordpress_gui.cpp:302 src/wordpress/wordpress_gui.cpp:538
+msgid "Recent servers"
+msgstr "最近伺服器"
+
+#: src/wordpress/wordpress_gui.cpp:306
+msgid "Server:"
+msgstr "伺服器:"
+
+#: src/wordpress/wordpress_gui.cpp:310
+msgid "Remote Path:"
+msgstr "遠端路徑:"
+
+#: src/wordpress/wordpress_gui.cpp:310
+msgid "Remote path:"
+msgstr "遠端路徑:"
+
+#: src/wordpress/wordpress_gui.cpp:312
+msgid "Detected automatically"
+msgstr "自動偵測"
+
+#: src/wordpress/wordpress_gui.cpp:315
+msgid "Port:"
+msgstr "連接埠:"
+
+#: src/wordpress/wordpress_gui.cpp:321
+msgid "Username:"
+msgstr "使用者名稱:"
+
+#: src/wordpress/wordpress_gui.cpp:325
+msgid "Password:"
+msgstr "密碼:"
+
+#: src/wordpress/wordpress_gui.cpp:332
+msgid "Remember my credentials"
+msgstr "記住連線認證"
+
+#: src/wordpress/wordpress_gui.cpp:333
+msgid "Connect"
+msgstr "連線"
+
+#: src/wordpress/wordpress_gui.cpp:346
+msgid "Select the plugin or theme to translate:"
+msgstr "選取外掛或佈景主題以進行本地化:"
+
+#: src/wordpress/wordpress_gui.cpp:398
+msgid "Connecting to WordPress server…"
+msgstr "正在連線至 WordPress 伺服器…"
+
+#: src/wordpress/wordpress_gui.cpp:416
+#, c-format
+msgid "Theme: %s"
+msgstr "佈景主題: %s"
+
+#: src/wordpress/wordpress_gui.cpp:419
+#, c-format
+msgid "Plugin: %s"
+msgstr "外掛: %s"
+
+#: src/wordpress/wordpress_gui.cpp:534
+msgid "No Recent Servers"
+msgstr "沒有最近連線過的伺服器"
+
+#: src/wordpress/wordpress_gui.cpp:534
+msgid "No recent servers"
+msgstr "沒有最近連線過的伺服器"
+
+#: src/wordpress/wordpress_gui.cpp:552
+msgid "Clear Recent Servers"
+msgstr "清除最近連線過的伺服器"
+
+#: src/wordpress/wordpress_gui.cpp:552
+msgid "Clear recent servers"
+msgstr "清除最近連線過的伺服器"
+
+#: src/wordpress/wordpress_gui.cpp:825
+msgid "Failed to extract WordPress information."
+msgstr "無法擷取 WordPress 資訊。"
+
+#: src/wordpress/wordpress_gui.cpp:826
+msgid "WordPress error"
+msgstr "WordPress 錯誤"
+
+#: src/wordpress/wordpress_gui.cpp:835
+#, c-format
+msgid "Poedit couldn’t understand the content of the folder you selected. This may be a problem with the plugin/theme or it may be Poedit being silly. The error is:\n\n"
+" • %s\n\n"
+"Please email help@poedit.net and we’ll sort it out."
+msgstr "Poedit 無法瞭解選取資料夾中的內容。這可能是外掛/佈景主題的問題，或是 Poedit 仍有需要改善之處。錯誤:\n\n"
+" • %s\n\n"
+"請傳送電子郵件至 help@poedit.net，我們會試著解決。"
+
+#. TRANSLATORS: This is a button that sends an email to support when clicked
+#: src/wordpress/wordpress_gui.cpp:841
+msgid "Email support"
+msgstr "電子郵件技術支援"
+
+#: src/wordpress/wordpress_gui.cpp:842
+msgid "View log"
+msgstr "檢視記錄"
+
+#. TRANSLATORS: This is a button that sends an email to support when clicked
+#: src/wordpress/wordpress_gui.cpp:845
+msgid "Email Support"
+msgstr "電子郵件技術支援"
+
+#: src/wordpress/wordpress_gui.cpp:846
+msgid "View Log"
+msgstr "檢視記錄"
+
+#: src/wordpress/wordpress_gui.cpp:857
+msgid "WordPress Errors Log"
+msgstr "WordPress 錯誤記錄"
+
+#: src/wordpress/wordpress_gui.cpp:858
+msgid "Please email this log to help@poedit.net. Thank you!"
+msgstr "請將這份記錄以電子郵件方式傳送至 help@poedit.net，謝謝！"
+
+#: src/wordpress/wordpress_gui.cpp:938
+msgid "Analyzing WordPress server…"
+msgstr "WordPress 伺服器分析中..."
+
+#: src/wordpress/wordpress_gui.cpp:959
+msgid "Downloading translation data…"
+msgstr "翻譯資料下載中..."
+
+#: src/wordpress/wordpress_gui.cpp:984
+msgid "Unpacking translation data…"
+msgstr "翻譯資料解壓縮中..."
+
+#: src/wordpress/wordpress_gui.cpp:989
+msgid "Error unpacking downloaded WordPress data."
+msgstr "解壓縮下載的 WordPress 資料時發生錯誤。"
+
+#: src/wordpress/wordpress_gui.cpp:1014 src/wordpress/wordpress_gui.cpp:1029
+msgid "Analyzing WordPress code…"
+msgstr "正在分析 WordPress 程式碼…"
+
+#: src/wordpress/wordpress_gui.cpp:1039
+msgid "WordPress translation file is ready, but there were some non-fatal issues with the corresponding source code."
+msgstr "WordPress 翻譯檔案已就緒，但對應的原始程式碼存在一些非致命問題。"
+
+#: src/wx/main_toolbar.cpp:123
 msgid "Sync"
 msgstr "同步"
 
+#: src/wx/main_toolbar.cpp:124
 msgid "Synchronize the translation with Crowdin"
 msgstr "與 Crowdin 同步譯文"
 
-#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
-#. ("Poedit" here, but please use "%s")
-#, c-format
-msgid "About %s"
-msgstr "關於 %s"
+#: src/wx/main_toolbar.cpp:170
+msgid "Upgrade to Poedit Pro to get additional features and support Poedit's development."
+msgstr "升級至 Poedit Pro 以取得其他功能，並支援 Poedit 的開發。"
 
 #. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+#: src/wx_translatable_strings.h:49
 #, c-format
 msgid "%s Preferences"
 msgstr "%s 偏好設定"
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
+#: src/wx_translatable_strings.h:60
 #, c-format
 msgctxt "macOS menu item"
 msgid "About %s"
 msgstr "關於 %s"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:64
 msgctxt "macOS menu item"
 msgid "Services"
 msgstr "服務"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#: src/wx_translatable_strings.h:66
 #, c-format
 msgctxt "macOS menu item"
 msgid "Hide %s"
 msgstr "隱藏 %s"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:68
 msgctxt "macOS menu item"
 msgid "Hide Others"
 msgstr "隱藏其他"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:70
 msgctxt "macOS menu item"
 msgid "Show All"
 msgstr "顯示全部"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#: src/wx_translatable_strings.h:72
 #, c-format
 msgctxt "macOS menu item"
 msgid "Quit %s"
 msgstr "結束 %s"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:74
 msgid "Preferences…"
 msgstr "偏好設定…"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:76
 msgid "Preferences..."
 msgstr "設定偏好..."
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:78
 msgctxt "macOS menu item"
 msgid "Preferences..."
 msgstr "設定偏好..."
 
+#: src/wx_translatable_strings.h:92
 msgid "&Apply"
 msgstr "套用(&A)"
 
+#: src/wx_translatable_strings.h:92
 msgid "Apply"
 msgstr "套用"
 
+#: src/wx_translatable_strings.h:93
 msgid "&Back"
 msgstr "返回(&B)"
 
+#: src/wx_translatable_strings.h:93
 msgid "Back"
 msgstr "返回"
 
+#: src/wx_translatable_strings.h:94
 msgid "&Cancel"
 msgstr "取消(&C)"
 
+#: src/wx_translatable_strings.h:95
 msgid "&Clear"
 msgstr "清除(&C)"
 
+#: src/wx_translatable_strings.h:95
 msgid "Clear"
 msgstr "清除"
 
+#: src/wx_translatable_strings.h:98
 msgid "Copy"
 msgstr "複製"
 
+#: src/wx_translatable_strings.h:99
 msgid "Cu&t"
 msgstr "剪下(&T)"
 
+#: src/wx_translatable_strings.h:99
 msgid "Cut"
 msgstr "剪下"
 
-msgid "Edit"
-msgstr "編輯"
-
+#: src/wx_translatable_strings.h:103
 msgid "&Quit"
 msgstr "離開(&Q)"
 
+#: src/wx_translatable_strings.h:105
 msgid "Help"
 msgstr "說明"
 
+#: src/wx_translatable_strings.h:106
 msgid "&New"
 msgstr "新增(&N)"
 
+#: src/wx_translatable_strings.h:106
 msgid "New"
 msgstr "新增"
 
+#: src/wx_translatable_strings.h:107
 msgid "&No"
 msgstr "否(&N)"
 
+#: src/wx_translatable_strings.h:107
 msgid "No"
 msgstr "否"
 
+#: src/wx_translatable_strings.h:108
 msgid "&OK"
 msgstr "確定(&O)"
 
+#: src/wx_translatable_strings.h:109
 msgid "Open…"
 msgstr "開啟…"
 
+#: src/wx_translatable_strings.h:110
 msgid "&Open..."
 msgstr "開啟(&O)..."
 
+#: src/wx_translatable_strings.h:110
 msgid "Open..."
 msgstr "開啟..."
 
+#: src/wx_translatable_strings.h:111
 msgid "&Paste"
 msgstr "貼上(&P)"
 
+#: src/wx_translatable_strings.h:111
 msgid "Paste"
 msgstr "貼上"
 
+#: src/wx_translatable_strings.h:112
 msgid "Preferences"
 msgstr "偏好設定"
 
+#: src/wx_translatable_strings.h:113
 msgid "&Redo"
 msgstr "重做(&R)"
 
+#: src/wx_translatable_strings.h:114
 msgid "Refresh"
 msgstr "重新整理"
 
+#: src/wx_translatable_strings.h:116
 msgid "&Save as"
 msgstr "另存為(&S)"
 
+#: src/wx_translatable_strings.h:116
 msgid "Save as"
 msgstr "另存為"
 
+#: src/wx_translatable_strings.h:117
 msgid "Select &All"
 msgstr "選取全部(&A)"
 
+#: src/wx_translatable_strings.h:117
 msgid "Select All"
 msgstr "選取全部"
 
+#: src/wx_translatable_strings.h:118
 msgid "&Undo"
 msgstr "復原(&U)"
 
+#: src/wx_translatable_strings.h:119
 msgid "&Yes"
 msgstr "是(&Y)"
 
+#: src/wx_translatable_strings.h:119
 msgid "Yes"
 msgstr "是"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:125
 msgctxt "keyboard key"
 msgid "Alt+"
 msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:127
 msgctxt "keyboard key"
 msgid "Shift+"
 msgstr "Shift+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:129
 msgctxt "keyboard key"
 msgid "Enter"
 msgstr "Enter"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:131
 msgctxt "keyboard key"
 msgid "Up"
 msgstr "向上鍵"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:133
 msgctxt "keyboard key"
 msgid "Down"
 msgstr "向下鍵"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:135
 msgctxt "keyboard key"
 msgid "Left"
 msgstr "向左鍵"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:137
 msgctxt "keyboard key"
 msgid "Right"
 msgstr "向右鍵"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+#: src/wx_translatable_strings.h:140
 msgctxt "keyboard key"
 msgid "ctrl"
 msgstr "ctrl"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+#: src/wx_translatable_strings.h:142
 msgctxt "keyboard key"
 msgid "alt"
 msgstr "alt"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+#: src/wx_translatable_strings.h:144
 msgctxt "keyboard key"
 msgid "shift"
 msgstr "shift"
+
+#: src/wx_translatable_strings.h:152
+msgid "Warning: "
+msgstr "警告："
+

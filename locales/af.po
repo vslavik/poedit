@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2024-10-31 12:30+0100\n"
-"PO-Revision-Date: 2024-10-01 10:16\n"
+"POT-Creation-Date: 2025-03-21 15:42+0100\n"
+"PO-Revision-Date: 2025-03-22 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -17,760 +17,1190 @@ msgstr ""
 "X-Crowdin-File: /locales/poedit.pot\n"
 "X-Crowdin-File-ID: 3\n"
 
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#: src/aboutbox.cpp:135 src/wx_translatable_strings.h:42
+#, c-format
+msgid "About %s"
+msgstr "Oor %s"
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#: src/aboutbox.cpp:167 src/welcomescreen.cpp:265
+#: src/wx_translatable_strings.h:46
+#, c-format
+msgid "Version %s"
+msgstr "Weergawe %s"
+
+#: src/aboutbox.cpp:168
+msgid "Based on the open source version →"
+msgstr "Gebaseer op die oopbronweergawe →"
+
+#: src/aboutbox.cpp:174
+msgid "Acknowledgements"
+msgstr "Erkennings"
+
+#: src/aboutbox.cpp:175
+msgid "License Agreement"
+msgstr "Lisensieooreenkoms"
+
+#: src/aboutbox.cpp:182 src/prefsdlg.cpp:503
+msgid "Terms of Use"
+msgstr "Gebruiksvoorwaardes"
+
+#: src/aboutbox.cpp:183
+msgid "Privacy Policy"
+msgstr "Privaatheidsbeleid"
+
+#: src/aboutbox.cpp:244
+#, c-format
+msgid "Licensed to %s"
+msgstr "Gelisensieer aan %s"
+
+#: src/aboutbox.cpp:246
+msgid "Free version (please upgrade!)"
+msgstr "Gratis weergawe (gradeer asb. op!)"
+
+#: src/attentionbar.cpp:83
 msgid "Hide this notification message"
 msgstr "Versteek hierdie kennisgewingsboodskap"
 
+#: src/attentionbar.cpp:291
 msgid "Don’t Show Again"
 msgstr "Moenie Weer Toon Nie"
 
+#: src/attentionbar.cpp:291
 msgid "Don’t show again"
 msgstr "Moenie weer toon nie"
 
+#: src/cat_operations.cpp:123
+msgid "Both files must be of the same file format."
+msgstr ""
+
+#: src/cat_update.cpp:93
 #, c-format
 msgid "(New: %i, obsolete: %i)"
 msgstr "(Nuut: %i, verouderd: %i)"
 
-msgid "Collecting source files…"
-msgstr "Versamel tans bronlêers…"
+#: src/cat_update.cpp:98
+msgid "Update Summary"
+msgstr ""
 
-msgid "Extracting translatable strings…"
-msgstr "Ekstraheer tans vertaalbare stringe…"
+#. TRANSLATORS: Title of window showing summary (added/removed strings, issues) of updating translations from sources or POT file
+#: src/cat_update.cpp:98 src/resources/summary.xrc:4
+msgid "Update summary"
+msgstr "Werk opsomming by"
 
-msgid "Failed to load file with extracted translations."
-msgstr "Kon nie lêer met geëkstraheerde vertalings laai nie."
+#: src/cat_update.cpp:100 src/resources/summary.xrc:24
+msgid "Issues"
+msgstr ""
 
-msgid "Merging differences…"
-msgstr "Voeg tans verskille saam…"
+#: src/cat_update.cpp:101
+msgid "New Strings"
+msgstr ""
 
+#: src/cat_update.cpp:101 src/resources/summary.xrc:45
+msgid "New strings"
+msgstr "Nuwe stringe"
+
+#: src/cat_update.cpp:102
+msgid "Removed Strings"
+msgstr ""
+
+#: src/cat_update.cpp:102
+msgid "Removed strings"
+msgstr ""
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:105 src/cloud_accounts_ui.cpp:263 src/manager.cpp:404
+#: src/recent_files.cpp:555 src/wx_translatable_strings.h:104
+msgid "File"
+msgstr "Lêer"
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:107
+msgid "Line"
+msgstr ""
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:109
+msgid "Issue"
+msgstr ""
+
+#: src/cat_update.cpp:205 src/cat_update.cpp:461
 msgid "Updating translations"
 msgstr "Werk tans vertalings by"
 
+#: src/cat_update.cpp:206
+#, c-format
+msgid "Found %d template file supported by Poedit Pro."
+msgid_plural "Found %d template files supported by Poedit Pro."
+msgstr[0] "%d sjabloonlêer gevind wat deur Poedit Pro ondersteun word."
+msgstr[1] "%d sjabloonlêers gevind wat deur Poedit Pro ondersteun word."
+
+#. TRANSLATORS: %s is a filename here, e.g. "mainpage.twig"
+#: src/cat_update.cpp:208
+msgid "Poedit Pro can extract strings from template files, but this functionality isn’t available in the free version. Would you like to upgrade to the Pro version?"
+msgstr "Poedit Pro kan wtringe uit sjabloonlêers ekstraheer maar hierdie funksie is nie in die gratis weergawe beskikbaar nie. Wil u opgradeer na die Pro-weergawe?"
+
+#: src/cat_update.cpp:211 src/licensing_ui.cpp:691 src/sidebar_pro.cpp:1212
+msgid "Learn More"
+msgstr "Leer Meer"
+
+#: src/cat_update.cpp:211 src/customcontrols.cpp:326 src/licensing_ui.cpp:691
+#: src/sidebar_pro.cpp:1212
+msgid "Learn more"
+msgstr "Leer meer"
+
+#: src/cat_update.cpp:216
+msgid "Don’t ask again"
+msgstr "Moenie weer vra nie"
+
+#: src/cat_update.cpp:217
+msgid "Skip templates"
+msgstr "Slaan sjablone oor"
+
+#: src/cat_update.cpp:226
+msgid "Found the following template files:"
+msgstr "Die volgende sjabloonlêers is gevind:"
+
+#: src/cat_update.cpp:245
+msgid "Don’t Ask Again"
+msgstr "Moenie Weer Vra Nie"
+
+#: src/cat_update.cpp:246
+msgid "Skip Templates"
+msgstr "Slaan Sjablone Oor"
+
+#: src/cat_update.cpp:297
+msgid "Collecting source files…"
+msgstr "Versamel tans bronlêers…"
+
+#: src/cat_update.cpp:321
+#, c-format
+msgid "Extracting translatable strings from %s file…"
+msgid_plural "Extracting translatable strings from %s files…"
+msgstr[0] "Ekstraheer tans vertaalbare stringe van %s-lêer…"
+msgstr[1] "Ekstraheer tans vertaalbare stringe van %s-lêers…"
+
+#: src/cat_update.cpp:348
+#, c-format
+msgid "Failed to extract WordPress metadata from file %s."
+msgstr "Kon nie WordPress-metadata vanuit lêer %s ekstraheer nie."
+
+#: src/cat_update.cpp:356 src/cat_update.cpp:492
+msgid "Failed to load file with extracted translations."
+msgstr "Kon nie lêer met geëkstraheerde vertalings laai nie."
+
+#: src/cat_update.cpp:380
+#, c-format
+msgid "In: %s"
+msgstr "In: %s"
+
+#: src/cat_update.cpp:387 src/edframe.cpp:1778
+msgid "Source code not available."
+msgstr "Bronkode nie beskikbaar."
+
+#: src/cat_update.cpp:388 src/edframe.cpp:1782
+msgid "Translations couldn’t be updated from the source code, because no code was found in the location specified in the file’s Properties."
+msgstr "Vertalings kon nie vanuit die bronkode bygewerk word nie omdat geen kode in die gespesifiseerde ligging in die lêereienskappe gevind is nie."
+
+#: src/cat_update.cpp:392
+msgid "Permission denied."
+msgstr "Toestemming geweier."
+
+#: src/cat_update.cpp:393
+msgid "You don’t have permission to read source code files from the location specified in the file’s Properties."
+msgstr "U het nie toestemming om bronkodelêers vanuit die gespesifiseerde ligging in die lêer se Eienskappe te lees nie."
+
+#. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
+#: src/cat_update.cpp:398
+msgid "If you previously denied access to your files, you can allow it in System Settings > Privacy & Security > Files & Folders."
+msgstr "Indien u voorheen toegang tot u lêers geweier het, kan u dit in Stelselinstellings > Privaatheid & Sekuriteit > Lêers & Vouers toelaat."
+
+#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
+#: src/cat_update.cpp:403
+msgid "If you previously denied access to your files, you can allow it in System Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr "Indien u voorheen toegang tot u lêers geweier het, kan u dit in Stelselvoorkeure > Sekuriteit & Privaatheid > Privaatheid > Lêers & Vouers toelaat."
+
+#: src/cat_update.cpp:409
+msgid "Failed to extract strings from source code."
+msgstr ""
+
+#: src/cat_update.cpp:443 src/edapp.cpp:1186 src/edframe.cpp:952
+#: src/edframe.cpp:2955
 #, c-format
 msgid "The file “%s” couldn’t be opened."
 msgstr "Fiilde \"%s\" horiima udditaade."
 
-msgid "Invalid file"
-msgstr "Ongeldige lêer"
+#: src/cat_update.cpp:481
+msgid "Determining differences…"
+msgstr ""
 
+#: src/cat_update.cpp:489 src/cat_update.cpp:547
+msgid "Merging differences…"
+msgstr "Voeg tans verskille saam…"
+
+#: src/cat_update.cpp:502
+msgid "Translation file is already up to date, no changes to strings were made."
+msgstr ""
+
+#: src/cat_update.cpp:508
+#, c-format
+msgid "Translation file was updated with %s change."
+msgid_plural "Translation file was updated with %s changes."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/cat_update.cpp:511
+msgid "New strings to translate:"
+msgstr ""
+
+#: src/cat_update.cpp:512
+msgid "Removed strings (no longer used):"
+msgstr ""
+
+#: src/cat_update.cpp:517
+msgid "Template files skipped (Pro-only):"
+msgstr ""
+
+#: src/cat_update.cpp:605
+#, c-format
+msgid "%d issue with the source strings was detected."
+msgid_plural "%d issues with the source strings were detected."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/cat_update.cpp:632
+msgid "View Details…"
+msgstr ""
+
+#: src/cat_update.cpp:632
+msgid "View details…"
+msgstr ""
+
+#: src/catalog.cpp:125
 #, c-format
 msgid "Malformed header: “%s”"
 msgstr "Misvormde kop: “%s”"
 
+#: src/catalog.cpp:588
 msgid "PO Translation Files"
 msgstr "PO-vertaallêers"
 
+#: src/catalog.cpp:590
 msgid "POT Translation Templates"
 msgstr "POT-vertaalsjablone"
 
+#: src/catalog.cpp:592
 msgid "XLIFF Translation Files"
 msgstr "XLIFF-vertaallêers"
 
+#: src/catalog.cpp:594
+msgid "Xcode Localization Catalog"
+msgstr ""
+
+#: src/catalog.cpp:596
 msgid "JSON Translation Files"
 msgstr "Piille Fire JSON"
 
 #. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+#: src/catalog.cpp:599
 msgid "Flutter Translation Files"
 msgstr "Piillde Firo Flutter"
 
+#: src/catalog.cpp:608
 msgid "All Translation Files"
 msgstr "Alle Vertaallêers"
 
+#: src/catalog.cpp:1152
 msgid "The file is in a format not recognized by Poedit."
 msgstr "Fiilde ndee woni ko e mbayka ko Poedit heftinaani."
 
-msgid ""
-"This JSON file isn’t a translations file and cannot be edited in Poedit."
+#: src/catalog_json.cpp:91
+msgid "This JSON file isn’t a translations file and cannot be edited in Poedit."
 msgstr "Ndee fiilde JSON wonaa fiilde firo etee waawaa taƴteede e Poedit."
 
+#: src/catalog_json.cpp:140
 #, c-format
 msgid "Reading file content failed with the following error: %s"
 msgstr "Targol loowdi fiilde woorii kadi addii ndee-ɗoo juumre: %s"
 
+#: src/catalog_json.cpp:151 src/catalog_po.cpp:1142 src/catalog_xliff.cpp:556
 #, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
+msgid "File “%s” is read-only and cannot be saved.\n"
 "Please save it under different name."
-msgstr ""
-"Lêer “%s” is leesalleen en kan nie bewaar word nie.\n"
+msgstr "Lêer “%s” is leesalleen en kan nie bewaar word nie.\n"
 "Bewaar dit onder ’n ander naam."
 
+#: src/catalog_json.cpp:165 src/catalog_po.cpp:1178 src/catalog_po.cpp:1260
+#: src/catalog_po.cpp:1316 src/catalog_po.cpp:1373 src/catalog_po.cpp:1404
+#: src/catalog_po.cpp:1598 src/catalog_xliff.cpp:567 src/edframe.cpp:1339
+#: src/prefsdlg.cpp:757
 #, c-format
 msgid "Couldn’t save file %s."
 msgstr "Kon nie lêer %s bewaar nie."
 
+#: src/catalog_json.cpp:503
 msgid "Screenshots:"
 msgstr "Skermkiekies:"
 
+#: src/catalog_po.cpp:130
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
 msgstr[0] "%i reël van lêer “%s” is nie korrek gelaai nie."
 msgstr[1] "%i reëls van lêer “%s” is nie korrek gelaai nie."
 
+#: src/catalog_po.cpp:145
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "Reël %d van lêer “%s” is korrup (geen geldige %s-data)."
 
+#: src/catalog_po.cpp:352
 msgid "Broken PO file: singular form msgstr used together with msgid_plural"
 msgstr "Gebroke PO-lêer: enkelvoudvorm msgstr is gebruik saam met msgid_plural"
 
+#: src/catalog_po.cpp:404
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr "Gebroke PO-lêer: meervoudvorm msgstr is gebruik sonder msgid_plural"
 
+#: src/catalog_po.cpp:926 src/catalog_po.cpp:940 src/catalog_po.cpp:953
+#: src/catalog_po.cpp:965
 msgid "Couldn’t load the file, it is probably damaged."
 msgstr "Horiima loowde fiilde ndee, ena gasa nde moƴƴaani."
 
-msgid ""
-"There were errors when loading the file. Some data may be missing or "
-"corrupted as the result."
-msgstr ""
-"Daar was foute tydens die laai van die lêer. As gevolg daarvan kan sommige "
-"data ontbreek of korrup wees."
+#: src/catalog_po.cpp:945
+msgid "There were errors when loading the file. Some data may be missing or corrupted as the result."
+msgstr "Daar was foute tydens die laai van die lêer. As gevolg daarvan kan sommige data ontbreek of korrup wees."
 
-msgid ""
-"There was a problem formatting the file nicely (but it was saved all right)."
-msgstr ""
-"Iets het skeefgeloop met netjiese formattering van die lêer (maar dit is wel "
-"bewaar)."
+#: src/catalog_po.cpp:1269
+msgid "There was a problem formatting the file nicely (but it was saved all right)."
+msgstr "Iets het skeefgeloop met netjiese formattering van die lêer (maar dit is wel bewaar)."
 
+#: src/catalog_po.cpp:1521
 #, c-format
-msgid ""
-"The file couldn’t be saved in “%s” charset as specified in translation "
-"settings.\n"
-"\n"
+msgid "The file couldn’t be saved in “%s” charset as specified in translation settings.\n\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
-msgstr ""
-"Die lêer kon nie met die “%s” karakterstel gestoor word soos aangedui in die "
-"vertalingsinstellings nie.\n"
-"\n"
+msgstr "Die lêer kon nie met die “%s” karakterstel gestoor word soos aangedui in die vertalingsinstellings nie.\n\n"
 "Daarom is dit met UTF-8 kodering gestoor en die opstelling is aangepas."
 
+#: src/catalog_po.cpp:1523 src/edframe.cpp:3221
 msgid "Error saving file"
 msgstr "Fout met bewaar van lêer"
 
+#: src/catalog_po.cpp:1674
 #, c-format
 msgid "“%s” is not a valid POT file."
 msgstr "“%s” is nie ’n geldige POT-lêer nie."
 
+#: src/catalog_xcloc.cpp:85 src/catalog_xcloc.cpp:88
+msgid "Unexpectedly missing content in the XCLOC file."
+msgstr ""
+
+#: src/catalog_xcloc.cpp:99
+msgid "Saving in a different location is not supported for XCLOC files."
+msgstr ""
+
+#: src/catalog_xliff.cpp:473
 #, c-format
 msgid "Error while loading XLIFF file: %s"
 msgstr "Juumre tuma loowgol fiilde XLIFF: %s"
 
+#: src/catalog_xliff.cpp:518
 #, c-format
 msgid "unsupported version (%s)"
 msgstr "Yamre (%s) tammbitaaka"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
+#: src/catalog_xliff.cpp:679 src/catalog_xliff.cpp:866
 msgid "Broken markup in translation string."
 msgstr "Gebroke markup in vertaalstring."
 
-msgid "Add Account"
-msgstr "Voeg rekening toe"
+#: src/cloud_accounts_ui.cpp:82
+msgid "Connect Poedit with supported cloud localization platforms to seamlessly sync translations managed on them."
+msgstr "Koppel Poedit met ondersteunde wolklokaliseringsplatforms om vertalings daarop naatloos te sinchroniseer."
 
-msgid "Add account"
-msgstr "Voeg rekening toe"
-
-#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
-#, c-format
-msgid "Learn more about %s"
-msgstr "Leer meer oor %s"
-
-msgid ""
-"Connect Poedit with supported cloud localization platforms to seamlessly "
-"sync translations managed on them."
-msgstr ""
-"Koppel Poedit met ondersteunde wolklokaliseringsplatforms om vertalings "
-"daarop naatloos te sinchroniseer."
-
+#: src/cloud_accounts_ui.cpp:85 src/welcomescreen.cpp:295
 msgid "How does cloud sync work?"
 msgstr "Hoe werk wolksinchronisering?"
 
+#: src/cloud_accounts_ui.cpp:96
 msgid "Account"
 msgstr "Rekening"
 
+#: src/cloud_accounts_ui.cpp:159
 msgid "(not signed in)"
 msgstr "(nie aangeteken nie)"
 
-msgid "File"
-msgstr "Lêer"
-
+#: src/cloud_accounts_ui.cpp:353
 msgid "Open cloud translation"
 msgstr "Open wolkvertaling"
 
+#: src/cloud_accounts_ui.cpp:365
 msgid "Manage accounts"
 msgstr "Bestuur rekeninge"
 
+#: src/cloud_accounts_ui.cpp:374 src/export_html.cpp:77
 msgid "Project:"
 msgstr "Projek:"
 
+#: src/cloud_accounts_ui.cpp:378 src/export_html.cpp:79
+#: src/resources/prefs.xrc:11 src/resources/prefs.xrc:15
+#: src/resources/properties.xrc:54 src/wordpress/wordpress_gui.cpp:228
+#: src/wordpress/wordpress_gui.cpp:354
 msgid "Language:"
 msgstr "Taal: "
 
+#: src/cloud_accounts_ui.cpp:433
 msgid "Sign in to Cloud Account"
 msgstr "Teken aan op wolkrekening"
 
+#: src/cloud_accounts_ui.cpp:433
 msgid "Sign in to cloud account"
 msgstr "Teken aan op wolkrekening"
 
+#: src/cloud_accounts_ui.cpp:524
 msgid "No translation projects listed in your account."
 msgstr "Geen vertaalprojekte aanwesig in u rekening nie."
 
+#: src/cloud_accounts_ui.cpp:633 src/crowdin_gui.cpp:347
 msgid "Downloading latest translations…"
 msgstr "Laai tans nuutste vertalings af…"
 
 #. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#: src/cloud_accounts_ui.cpp:729
 #, c-format
 msgid "Sign in to %s"
 msgstr "Teken aan by %s"
 
+#: src/cloud_sync.h:99
 msgid "Syncing"
 msgstr "Sinchronisering"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#: src/cloud_sync.h:116
 #, c-format
 msgid "Uploading translations to %s…"
 msgstr "Laai tans vertalings op na %s…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#: src/cloud_sync.h:168
 #, c-format
 msgid "Uploading translations to %s failed."
 msgstr "Oplaai van vertalings na %s het misluk."
 
+#: src/cloud_sync.h:169
 msgid "Syncing error"
 msgstr "Sinchroniseerfout"
 
+#: src/commentdlg.cpp:48
 msgid "Add"
 msgstr "Voeg toe"
 
+#: src/crowdin_client.cpp:144
 msgid "Unknown Crowdin error."
 msgstr "Onbekende Crowdin-fout."
 
+#: src/crowdin_client.cpp:154
 msgid "Not authorized, please sign in again."
 msgstr "Nie gemagtig nie, teken weer aan."
 
+#. TRANSLATORS: Crowdin has string-based and file-based project kinds (see https://support.crowdin.com/creating-project/#file-based-project)
+#: src/crowdin_client.cpp:346
+msgid "String-based Crowdin projects are not supported."
+msgstr "String-gebaseerde Crowdin-projekte word nie ondersteun nie."
+
+#: src/crowdin_client.cpp:350
 msgid "Downloading translations is disabled in this project."
 msgstr "Aflaai van vertalings vir hierdie projek is gedeaktiveer."
 
+#: src/crowdin_gui.cpp:94 src/localazy_gui.cpp:105
 msgid "Sign In"
 msgstr "Teken Aan"
 
+#: src/crowdin_gui.cpp:94 src/localazy_gui.cpp:105
 msgid "Sign in"
 msgstr "Teken aan"
 
+#: src/crowdin_gui.cpp:96 src/localazy_gui.cpp:107
 msgid "Sign Out"
 msgstr "Teken Af"
 
+#: src/crowdin_gui.cpp:96 src/localazy_gui.cpp:107
 msgid "Sign out"
 msgstr "Teken af"
 
+#: src/crowdin_gui.cpp:103
 msgid "Learn more about Crowdin"
 msgstr "Leer meer oor Crowdin"
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool."
-msgstr ""
-"Crowdin is ’n aanlyn lokaliseringsbestuurplatform en "
-"meewerkvertaalnutsmiddel."
+#: src/crowdin_gui.cpp:134
+msgid "Crowdin is an online translation management platform and collaborative translation tool. We use Crowdin ourselves to translate Poedit into many languages, and we love it."
+msgstr "Crowdin is ’n aanlyn vertaalbestuurplatform en meewerkingsvertaalnutsmiddel. Ons gebruik self Crowdin om Poedit in vele tale te vertaal, en ons is mal daaroor."
 
+#: src/crowdin_gui.cpp:198 src/localazy_gui.cpp:210
 msgid "Waiting for authentication…"
 msgstr "Wag tans vir bekragtiging…"
 
+#: src/crowdin_gui.cpp:199 src/localazy_gui.cpp:211
 msgid "Updating user information…"
 msgstr "Werk tans gebruikersinligting by…"
 
+#: src/crowdin_gui.cpp:306
 msgid "Sign in to Crowdin"
 msgstr "Teken aan op Crowdin"
 
+#: src/crowdin_gui.cpp:326
 msgid "Syncing with Crowdin failed."
 msgstr "Sinchronisering met Crowdin het misluk."
 
+#: src/crowdin_gui.cpp:327
 msgid "Crowdin error"
 msgstr "Crowdin-fout"
 
+#: src/crowdin_gui.cpp:335
 msgid "Uploading translations…"
 msgstr "Laai tans vertalings op…"
 
+#: src/customcontrols.cpp:282 src/wx_translatable_strings.h:98
 msgid "&Copy"
 msgstr "&Kopieer"
 
-msgid "Learn more"
-msgstr "Leer meer"
-
+#: src/edapp.cpp:510 src/resources/menus.xrc:377 src/resources/menus.xrc:494
+#: src/wx_translatable_strings.h:105
 msgid "&Help"
 msgstr "&Hulp"
 
+#: src/edapp.cpp:800
 msgid "MO files can’t be directly edited in Poedit."
 msgstr "MO-lêers kan nie direk in Poedit gewysig word nie."
 
+#: src/edapp.cpp:801
 msgid "Error opening file"
 msgstr "Fout tydens open van lêer"
 
-msgid ""
-"Please open and edit the corresponding PO file instead. When you save it, "
-"the MO file will be updated as well."
-msgstr ""
-"Open en wysig liewer die ooreenstemmende PO-lêer. Wanneer u dit bewaar, word "
-"die MO-lêer ook bygewerk."
+#: src/edapp.cpp:803
+msgid "Please open and edit the corresponding PO file instead. When you save it, the MO file will be updated as well."
+msgstr "Open en wysig liewer die ooreenstemmende PO-lêer. Wanneer u dit bewaar, word die MO-lêer ook bygewerk."
 
+#: src/edapp.cpp:844
 msgid "don’t delete temporary files (for debugging)"
 msgstr "moenie tydelike lêers skrap nie (vir foutopsporing)"
 
+#: src/edapp.cpp:846
 msgid "handle a poedit:// URI"
 msgstr "gebruik poedit:// URI"
 
+#: src/edapp.cpp:848
 msgid "go to item at given line number"
 msgstr "gaan na item met gegewe reëlnommer"
 
+#: src/edapp.cpp:871
 msgid "Failed to communicate with Poedit process."
 msgstr "Kommunikasie met die Poedit-proses het misluk."
 
+#: src/edapp.cpp:993 src/edapp.cpp:998
 #, c-format
 msgid "Unhandled exception occurred: %s"
 msgstr "Onhanteerde uitsondering het voorgekom: %s"
 
+#: src/edapp.cpp:1156
 msgid "Select translation template"
 msgstr "Kies vertalingsjabloon"
 
+#: src/edapp.cpp:1187 src/edframe.cpp:953 src/edframe.cpp:2687
+#: src/edframe.cpp:2956
+msgid "Invalid file"
+msgstr "Ongeldige lêer"
+
+#: src/edapp.cpp:1220 src/wordpress/wordpress_gui.cpp:137
+msgid "WordPress"
+msgstr "WordPress"
+
+#: src/edapp.cpp:1271 src/edframe.cpp:2859
 msgid "Select translation file"
 msgstr "Kies vertalingslêer"
 
+#: src/edapp.cpp:1373
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit is ’n maklik-om-te-gebruik vertaalwysiger."
 
+#: src/edframe.cpp:445
 msgid "You can’t drop more than one file on Poedit window."
 msgstr "U kan nie meer as een lêer in die Poedit-venster los nie."
 
+#: src/edframe.cpp:452
 #, c-format
 msgid "File “%s” is not a translation file."
 msgstr "Lêer “%s” is nie ’n vertaallêer nie."
 
+#: src/edframe.cpp:459 src/recent_files.cpp:349
 #, c-format
 msgid "File “%s” doesn’t exist."
 msgstr "Lêer “%s” bestaan nie."
 
+#: src/edframe.cpp:476
 msgid "Poedit"
 msgstr "Poedit "
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
+#: src/edframe.cpp:890
 #, c-format
-msgid ""
-"Spellchecking is disabled, because the dictionary for %s isn’t installed."
-msgstr ""
-"Speltoets is gedeaktiveer omdat die woordeboek vir %s nie geïnstalleer is "
-"nie."
+msgid "Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgstr "Speltoets is gedeaktiveer omdat die woordeboek vir %s nie geïnstalleer is nie."
 
+#: src/edframe.cpp:894
 msgid "Install"
 msgstr "Installeer"
 
+#: src/edframe.cpp:986 src/edframe.cpp:1161
 #, c-format
 msgid "The file “%s” has been changed by another application."
 msgstr "Die lêer “%s” is deur ’n ander toepassing verander."
 
+#: src/edframe.cpp:987 src/edframe.cpp:991
 msgid "Reload file"
 msgstr "Herlaai lêer"
 
-msgid ""
-"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
-"be lost if you do."
-msgstr ""
-"Wil u die lêer vanaf die skyf herlaai? U onbewaarde wysigings in Poedit sal "
-"verlore gaan indien u dit doen."
+#: src/edframe.cpp:990
+msgid "Do you want to reload the file from disk? Your unsaved edits in Poedit will be lost if you do."
+msgstr "Wil u die lêer vanaf die skyf herlaai? U onbewaarde wysigings in Poedit sal verlore gaan indien u dit doen."
 
+#. TRANSLATORS: Button next to a QA warning: causes the warning to be dismissed
+#: src/edframe.cpp:991 src/editing_area.cpp:325 src/editing_area.cpp:377
 msgid "Ignore"
 msgstr "Ignoreer"
 
+#: src/edframe.cpp:991
 msgid "Reload File"
 msgstr "Herlaai lêer"
 
+#: src/edframe.cpp:1095
 msgid "The file has been modified. Do you want to save changes?"
 msgstr "Die lêer is verander. Wil u die veranderinge bewaar?"
 
+#: src/edframe.cpp:1096
 msgid "Save changes"
 msgstr "Bewaar veranderinge"
 
+#: src/edframe.cpp:1099
 msgid "Your changes will be lost if you don’t save them."
 msgstr "U veranderinge gaan verlore indien u dit nie bewaar nie."
 
+#: src/edframe.cpp:1102 src/edframe.cpp:1162 src/sidebar_terminology.cpp:70
+#: src/wx_translatable_strings.h:115
 msgid "Save"
 msgstr "Bewaar"
 
+#: src/edframe.cpp:1104
 msgid "Do&n’t save"
 msgstr "Mo&enie bewaar nie"
 
+#: src/edframe.cpp:1106
 msgid "Don’t Save"
 msgstr "Moenie Bewaar Nie"
 
+#: src/edframe.cpp:1165
 msgid "The changes made by the other application will be lost if you save."
-msgstr ""
-"Die veranderinge wat deur die ander toepassing gemaak is, sal verlore gaan "
-"indien u bewaar."
+msgstr "Die veranderinge wat deur die ander toepassing gemaak is, sal verlore gaan indien u bewaar."
 
+#: src/edframe.cpp:1166 src/edframe.cpp:2268 src/licensing_ui.cpp:284
+#: src/prefsdlg.cpp:770 src/prefsdlg.cpp:1103 src/resources/comment.xrc:41
+#: src/resources/manager.xrc:63 src/sidebar_terminology.cpp:73
+#: src/wx_translatable_strings.h:94
 msgid "Cancel"
 msgstr "Kanseleer"
 
+#: src/edframe.cpp:1166
 msgid "Save Anyway"
 msgstr "Bewaar in elk geval"
 
+#: src/edframe.cpp:1166
 msgid "Save anyway"
 msgstr "Bewaar in elk geval"
 
+#: src/edframe.cpp:1219
 msgid "Save as…"
 msgstr "Bewaar as…"
 
+#: src/edframe.cpp:1268
 msgid "Compile to…"
 msgstr "Kompileer na…"
 
+#: src/edframe.cpp:1271
 msgid "Compiled Translation Files"
 msgstr "Gekompileerde Vertaallêers"
 
+#: src/edframe.cpp:1312
 msgid "Export to HTML…"
-msgstr ""
+msgstr "Stuur uit na HTML…"
 
+#: src/edframe.cpp:1315
 msgid "HTML Files"
 msgstr "HTML-lêers"
 
+#: src/edframe.cpp:1330
+msgid "Exporting to HTML"
+msgstr "Stuur tans uit na HTML"
+
+#: src/edframe.cpp:1364
+msgid "Export to Excel"
+msgstr "Stuur uit na Excel"
+
+#: src/edframe.cpp:1367 src/edframe.cpp:1401
+msgid "Excel Files"
+msgstr "Excel-lêers"
+
+#: src/edframe.cpp:1379
+msgid "Exporting to Excel"
+msgstr "Stuur tans uit na Excel"
+
+#: src/edframe.cpp:1398
+msgid "Import from Excel"
+msgstr "Voer in vanaf Excel"
+
+#: src/edframe.cpp:1423
+msgid "Importing from Excel"
+msgstr "Voer tans in vanaf Excel"
+
+#. TRANSLATORS: %s is filename of Excel file
+#: src/edframe.cpp:1440
 #, c-format
-msgid "In: %s"
-msgstr "In: %s"
+msgid "The “%s” file does not appear to contain any translations intended for this file."
+msgstr "Die “%s”-lêer blyk geen vertalings wat vir hierdie lêer bedoel is te hê nie."
 
-msgid "Source code not available."
-msgstr "Bronkode nie beskikbaar."
+#: src/edframe.cpp:1445
+msgid "No translations were updated from the Excel file."
+msgstr "Geen vertalings is bygewerk vanaf die Excel-lêer."
 
+#. TRANSLATORS: %s is a (formatted) number here
+#: src/edframe.cpp:1452
+#, c-format
+msgid "%s string was updated from the Excel file."
+msgid_plural "%s strings were updated from the Excel file."
+msgstr[0] "%s string is bygewerk vanaf die Excel-lêer."
+msgstr[1] "%s stringe is bygewerk vanaf die Excel-lêer."
+
+#: src/edframe.cpp:1456
+msgid "Translations updated:"
+msgstr "Vertalings bygewerk:"
+
+#: src/edframe.cpp:1457
+msgid "Strings matched in translation file:"
+msgstr "Trefferstringe in vertaallêer:"
+
+#: src/edframe.cpp:1458
+msgid "Excel rows processed:"
+msgstr "Excel-rye verwerk:"
+
+#: src/edframe.cpp:1779
 msgid "Updating failed"
 msgstr "Bywerking het misluk"
 
-msgid ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the file’s Properties."
+#: src/edframe.cpp:1852
+msgid "Open reference file"
 msgstr ""
-"Vertalings kon nie vanuit die bronkode bygewerk word nie omdat geen kode in "
-"die gespesifiseerde ligging in die lêereienskappe gevind is nie."
 
-msgid "Permission denied."
-msgstr "Toestemming geweier."
+#: src/edframe.cpp:1883 src/resources/menus.xrc:267
+msgid "Update from &POT File…"
+msgstr "Werk by vanuit &POT-lêer…"
 
-msgid ""
-"You don’t have permission to read source code files from the location "
-"specified in the file’s Properties."
+#: src/edframe.cpp:1883 src/resources/menus.xrc:266
+msgid "Update from &POT file…"
+msgstr "Werk by vanuit &POT-lêer…"
+
+#: src/edframe.cpp:1887
+msgid "Update from Reference File…"
 msgstr ""
-"U het nie toestemming om bronkodelêers vanuit die gespesifiseerde ligging in "
-"die lêer se Eienskappe te lees nie."
 
-#. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Settings > Privacy & Security > Files & Folders."
+#: src/edframe.cpp:1887
+msgid "Update from reference file…"
 msgstr ""
-"Indien u voorheen toegang tot u lêers geweier het, kan u dit in "
-"Stelselinstellings > Privaatheid & Sekuriteit > Lêers & Vouers toelaat."
 
-#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
-msgstr ""
-"Indien u voorheen toegang tot u lêers geweier het, kan u dit in "
-"Stelselvoorkeure > Sekuriteit & Privaatheid > Privaatheid > Lêers & Vouers "
-"toelaat."
-
-msgid "Translation entries in the file are probably incorrect."
-msgstr "Vertalingsinskrywings in die lêer is waarskynlik verkeerd."
-
-msgid "Updating the file failed. Click on 'Details >>' for details."
-msgstr "Bywerk van lêer het misluk. Klik op ‘Details >>’ vir details."
-
-msgid "Open translation template"
-msgstr "Open vertalingsjabloon"
-
+#: src/edframe.cpp:2020
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "%d probleem met die vertaling gevind."
 msgstr[1] "%d probleme met die vertaling gevind."
 
+#: src/edframe.cpp:2025 src/edframe.cpp:2071
 msgid "Validation results"
 msgstr "Valideringsresultate"
 
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
-"Inskrywings met foute is in rooi gemerk in die lys. Details van die fout "
-"word vertoon wanneer u so ’n inskrywing kies."
+#: src/edframe.cpp:2028
+msgid "Entries with errors were marked in red in the list. Details of the error will be shown when you select such an entry."
+msgstr "Inskrywings met foute is in rooi gemerk in die lys. Details van die fout word vertoon wanneer u so ’n inskrywing kies."
 
+#: src/edframe.cpp:2037
 msgid "The file was saved safely."
 msgstr "Die lêer is veilig bewaar."
 
-msgid ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
-msgstr ""
-"Die lêer is veilig bewaar en in die MO-formaat gekompileer maar sal "
-"waarskynlik nie korrek werk nie."
+#: src/edframe.cpp:2040
+msgid "The file was saved safely and compiled into the MO format, but it will probably not work correctly."
+msgstr "Die lêer is veilig bewaar en in die MO-formaat gekompileer maar sal waarskynlik nie korrek werk nie."
 
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-msgstr ""
-"Die lêer is veilig bewaar maar dit kan nie in die MO-formaat gekompileer en "
-"gebruik word nie."
+#: src/edframe.cpp:2043
+msgid "The file was saved safely, but it cannot be compiled into the MO format and used."
+msgstr "Die lêer is veilig bewaar maar dit kan nie in die MO-formaat gekompileer en gebruik word nie."
 
-msgid ""
-"The file was compiled into the MO format, but it will probably not work "
-"correctly."
-msgstr ""
-"Die lêer is in die MO-formaat gekompileer maar sal waarskynlik nie reg werk "
-"nie."
+#: src/edframe.cpp:2052
+msgid "The file was compiled into the MO format, but it will probably not work correctly."
+msgstr "Die lêer is in die MO-formaat gekompileer maar sal waarskynlik nie reg werk nie."
 
+#: src/edframe.cpp:2056
 msgid "The file cannot be compiled into the MO format and used."
 msgstr "Die lêer kan nie in die MO-formaat gekompileer en gebruik word nie."
 
+#: src/edframe.cpp:2070
 msgid "No problems with the translation found."
 msgstr "Geen probleme met die vertaling gevind."
 
+#: src/edframe.cpp:2080
 #, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural ""
-"The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] ""
-"Die vertaling is gereed vir gebruik maar %d inskrywing is nog nie vertaal "
-"nie."
-msgstr[1] ""
-"Die vertaling is gereed vir gebruik maar %d inskrywings is nog nie vertaal "
-"nie."
+msgid_plural "The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] "Die vertaling is gereed vir gebruik maar %d inskrywing is nog nie vertaal nie."
+msgstr[1] "Die vertaling is gereed vir gebruik maar %d inskrywings is nog nie vertaal nie."
 
+#: src/edframe.cpp:2085
 msgid "The translation is ready for use."
 msgstr "Die vertaling is gereed vir gebruik."
 
+#: src/edframe.cpp:2251
+msgid "Translation Quality Warnings"
+msgstr "Vertalingskwaliteitwaarskuwings"
+
+#: src/edframe.cpp:2254
+msgid "Poedit performs automated quality checks on translations. You can configure which categories of checks are useful for you and disable unwanted ones here."
+msgstr "Poedit voer geoutomatiseerde kwaliteitstoetse op vertalings uit. U kan hier verstel welke toetskategorieë vir u nuttig is en ongewenstes deaktiveer."
+
+#: src/edframe.cpp:2265 src/resources/manager.xrc:55
+#: src/resources/summary.xrc:87 src/sidebar_pro.cpp:1146
+#: src/wx_translatable_strings.h:108
+msgid "OK"
+msgstr "Goed"
+
+#: src/edframe.cpp:2510 src/prefsdlg.cpp:484 src/sidebar_pro.cpp:705
+msgid "Contributing translations improves the quality of online suggestions for everybody — the more people do it, the better the suggestions can be. Your translations are submitted anonymously and are available to other translators using Poedit or other CAT tools."
+msgstr "Bydra van vertalings verbeter die kwaliteit van aanlynvoorstelle vir almal — hoe meer mense dit doen, hoe beter word die voorstelle. U vertalings word anoniem ingedien en is beskikbaar vir ander vertalers wat Poedit of ander CAT-nutsmiddels gebruik."
+
+#: src/edframe.cpp:2515
+msgid "Can Poedit contribute your translations of this file to the online translation memory?"
+msgstr "Mag Poedit u vertalings van hierdie lêer tot die aanlynvertaalgeheue bydra?"
+
+#. TRANSLATORS: Try to keep this as short as the original. If you can't, break it into two lines.
+#: src/edframe.cpp:2519 src/sidebar_pro.cpp:701
+msgid "Apply to all files I edit"
+msgstr "Pas toe op alle lêers wat ek wysig"
+
+#: src/edframe.cpp:2520
+msgid "Contribute"
+msgstr "Dra By"
+
+#: src/edframe.cpp:2527
+msgid "Keep Private"
+msgstr "Hou Privaat"
+
+#: src/edframe.cpp:2527
+msgid "Keep private"
+msgstr "Hou privaat"
+
+#: src/edframe.cpp:2686
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr "Poedit het ongeldige inhoud in die lêer “%s” outomaties gerepareer."
 
-msgid ""
-"The file contained duplicate items, which is not allowed in PO files and "
-"would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as needing work and correct "
-"them if necessary."
-msgstr ""
-"Die lêer het duplikaatitems bevat, wat ontoelaatbaar in PO-lêers is en die "
-"lêer onbruikbaar sal maak. Poedit het die fout herstel maar u moet nuwe "
-"vertalings van enige items wat vir aandag gemerk is nagaan en regstel indien "
-"nodig."
+#: src/edframe.cpp:2691
+msgid "The file contained duplicate items, which is not allowed in PO files and would prevent the file from being used. Poedit fixed the issue, but you should review translations of any items marked as needing work and correct them if necessary."
+msgstr "Die lêer het duplikaatitems bevat, wat ontoelaatbaar in PO-lêers is en die lêer onbruikbaar sal maak. Poedit het die fout herstel maar u moet nuwe vertalings van enige items wat vir aandag gemerk is nagaan en regstel indien nodig."
 
+#: src/edframe.cpp:2707
 msgid "Language of the translation isn’t set."
 msgstr "Taal vir die vertaling is nie ingestel nie."
 
+#: src/edframe.cpp:2709
 msgid "Set Language"
 msgstr "Stel Taal In"
 
+#: src/edframe.cpp:2709
 msgid "Set language"
 msgstr "Stel taal"
 
 #. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-msgid ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
-msgstr ""
-"Voorstelle is nie beskikbaar indien die vertaaltaal verkeer ingestel is nie. "
-"Ander funksies, soos meervoudsvorme, kan ook hierdeur geraak word."
+#: src/edframe.cpp:2712 src/edframe.cpp:2728
+msgid "Suggestions are not available if the translation language is not set correctly. Other features, such as plural forms, may be affected as well."
+msgstr "Voorstelle is nie beskikbaar indien die vertaaltaal verkeer ingestel is nie. Ander funksies, soos meervoudsvorme, kan ook hierdeur geraak word."
 
+#: src/edframe.cpp:2726 src/pretranslate.cpp:508
 msgid "Language of the translation is the same as source language."
 msgstr "Taal van die vertaling is dieselfde as brontaal."
 
+#: src/edframe.cpp:2729
 msgid "Fix Language"
 msgstr "Repareer Taal"
 
+#: src/edframe.cpp:2729
 msgid "Fix language"
 msgstr "Repareer taal"
 
-msgid ""
-"This file has entries with plural forms, but doesn’t have Plural-Forms "
-"header configured."
-msgstr ""
-"Hierdie lêer bevat inskrywings met meervoudsvorme maar geen Meervoudsvorm-"
-"kop is opgestel nie."
+#: src/edframe.cpp:2746
+msgid "This file has entries with plural forms, but doesn’t have Plural-Forms header configured."
+msgstr "Hierdie lêer bevat inskrywings met meervoudsvorme maar geen Meervoudsvorm-kop is opgestel nie."
 
-msgid ""
-"Entries in this file have different plural forms count from what the file’s "
-"Plural-Forms header says"
-msgstr ""
-"Inskrywings in hierdie lêer se meervoudsformtelling verskil van wat die lêer "
-"se Meervourdsvorm-kop sê"
+#: src/edframe.cpp:2750
+msgid "Entries in this file have different plural forms count from what the file’s Plural-Forms header says"
+msgstr "Inskrywings in hierdie lêer se meervoudsformtelling verskil van wat die lêer se Meervourdsvorm-kop sê"
 
+#: src/edframe.cpp:2759
 msgid "Required header Plural-Forms is missing."
 msgstr "Vereiste Meervoudsvorm-kop ontbreek."
 
+#: src/edframe.cpp:2763
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "Sintaksfout in Meervoudsvorm-kop (“%s”)."
 
+#: src/edframe.cpp:2775
 msgid "Fix the Header"
 msgstr "Repareer die Kop"
 
+#: src/edframe.cpp:2775
 msgid "Fix the header"
 msgstr "Repareer die kop"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
+#: src/edframe.cpp:2793
 #, c-format
 msgid "Plural forms expression used by the file is unusual for %s."
-msgstr ""
-"Meervoudsvormuitdrukking wat deur die lêer vir %s gebruik word, is ongewoon."
+msgstr "Meervoudsvormuitdrukking wat deur die lêer vir %s gebruik word, is ongewoon."
 
 #. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
+#: src/edframe.cpp:2798
 msgid "Review"
 msgstr "Hersien"
 
+#. TRANSLATORS: "original" as in "used in this file originally, as it was when opened"
+#: src/edframe.cpp:2834
+msgid "String IDs (original)"
+msgstr "String-ID’s (oorspronklik)"
+
+#: src/edframe.cpp:2839 src/edframe.cpp:2942 src/edlistctrl.cpp:739
+#: src/export_html.cpp:146
+msgid "unknown language"
+msgstr "onbekende taal"
+
+#. TRANSLATORS: "original" as in "used in this file originally, as it was when opened"; "%s" is language name
+#: src/edframe.cpp:2841
+#, c-format
+msgid "%s (original)"
+msgstr "%s (oorspronklik)"
+
+#: src/edframe.cpp:2853
+msgid "Load from Another File…"
+msgstr "Laai van ’n ander lêer…"
+
+#: src/edframe.cpp:2853
+msgid "Load from another file…"
+msgstr "Laai van ’n ander lêer…"
+
+#: src/edframe.cpp:2897
 msgid "Would you like to use English for source text?"
 msgstr "Wil u Engels as bronteks gebruik?"
 
+#: src/edframe.cpp:2899
 #, c-format
-msgid ""
-"This file uses string IDs instead of source text. Poedit can load English "
-"texts from the “%s” file for you."
-msgstr ""
-"Hierdie lêer gebruik string-ID’s i.p.v. bronteks. Poedit kan vir u Engelse "
-"tekse van die “%s”-lêer laai."
+msgid "This file uses string IDs instead of source text. Poedit can load English texts from the “%s” file for you."
+msgstr "Hierdie lêer gebruik string-ID’s i.p.v. bronteks. Poedit kan vir u Engelse tekse van die “%s”-lêer laai."
 
 #. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+#: src/edframe.cpp:2901
 msgid "Load English"
 msgstr "Laai Engels"
 
+#: src/edframe.cpp:3034 src/export_html.cpp:103
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
 msgstr "Vertaal: %d van %d (%d %%)"
 
+#: src/edframe.cpp:3038 src/export_html.cpp:105
 #, c-format
 msgid "Remaining: %d"
 msgstr "Oorblywend: %d"
 
+#: src/edframe.cpp:3043
 #, c-format
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "%d fout"
 msgstr[1] "%d foute"
 
+#: src/edframe.cpp:3048 src/export_html.cpp:117
 #, c-format
 msgid "%d entry"
 msgid_plural "%d entries"
 msgstr[0] "%d inskrywing"
 msgstr[1] "%d inskrywings"
 
+#: src/edframe.cpp:3077
 msgid " (unsaved)"
 msgstr " (onbewaar)"
 
+#: src/edframe.cpp:3118
 msgid " (modified)"
 msgstr " (verander)"
 
+#: src/edframe.cpp:3188 src/edframe.cpp:3192
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "Kon nie vertaalgeheue bywerk nie: %s"
 
+#: src/edframe.cpp:3220
+#, c-format
+msgid "The file “%s” couldn’t be saved."
+msgstr ""
+
+#: src/edframe.cpp:3330 src/resources/menus.xrc:288
 msgid "Remove same-as-source translations"
-msgstr ""
+msgstr "Verwyder dieselfde-as-bron-vertalings"
 
-msgid ""
-"Do you want to remove all translations that are idential to the source text?"
-msgstr ""
+#: src/edframe.cpp:3332
+msgid "Do you want to remove all translations that are idential to the source text?"
+msgstr "Wil u alle vertalings wat identies aan die bronteks is, verwyder?"
 
-msgid ""
-"This action will delete any translations that match the source text exactly. "
-"This cannot be undone."
-msgstr ""
+#: src/edframe.cpp:3333
+msgid "This action will delete any translations that match the source text exactly. This cannot be undone."
+msgstr "Hierdie aksie sal enige vertalings skrap wat presies met die bronteks ooreenkom. Dit kan nie ontdaan word nie."
 
+#: src/edframe.cpp:3337 src/edframe.cpp:3364
 msgid "Keep"
 msgstr "Behou"
 
+#: src/edframe.cpp:3337
 msgid "Remove"
-msgstr ""
+msgstr "Verwyder"
 
+#: src/edframe.cpp:3356
 msgid "Purge deleted translations"
 msgstr "Purgeer geskrapte vertalings"
 
+#: src/edframe.cpp:3358
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr "Wil u alle vertalings wat nie meer gebruik word nie, verwyder?"
 
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"Indien u met purgering voortgaan word alle vertalings wat as “skrap” gemerk "
-"is, verwyder. U sal dit weer moet vertaal sou dit in die toekoms weer "
-"toegevoeg word."
+#: src/edframe.cpp:3360
+msgid "If you continue with purging, all translations marked as deleted will be permanently removed. You will have to translate them again if they are added back in the future."
+msgstr "Indien u met purgering voortgaan word alle vertalings wat as “skrap” gemerk is, verwyder. U sal dit weer moet vertaal sou dit in die toekoms weer toegevoeg word."
 
+#: src/edframe.cpp:3364
 msgid "Purge"
 msgstr "Purgeer"
 
+#: src/edframe.cpp:3432 src/resources/menus.xrc:113
 msgid "Copy from source text"
 msgstr "Kopieer vanaf bronteks"
 
+#: src/edframe.cpp:3434 src/resources/menus.xrc:114
 msgid "Copy from Source Text"
 msgstr "Kopieer vanaf Bronteks"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/edframe.cpp:3436 src/edframe.cpp:3443 src/edframe.cpp:3451
+#: src/sidebar.cpp:422 src/sidebar.cpp:835 src/sidebar.cpp:861
+#: src/sidebar.cpp:863 src/wx_translatable_strings.h:123
 msgctxt "keyboard key"
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
+#: src/edframe.cpp:3439 src/resources/menus.xrc:108
 msgid "Clear translation"
 msgstr "Wis vertaling"
 
+#: src/edframe.cpp:3441 src/resources/menus.xrc:109
 msgid "Clear Translation"
 msgstr "Wis Vertaling"
 
+#: src/edframe.cpp:3446 src/resources/comment.xrc:4 src/sidebar.cpp:251
 msgid "Edit comment"
 msgstr "Wysig kommentaar"
 
+#: src/edframe.cpp:3448 src/sidebar.cpp:254
 msgid "Edit Comment"
 msgstr "Wysig Kommentaar"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
+#: src/edframe.cpp:3459 src/fileviewer.cpp:100
 msgid "Code Occurrences"
 msgstr "Kodevoorkomste"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
+#: src/edframe.cpp:3459
 msgid "Code occurrences"
 msgstr "Kodevoorkomste"
 
+#: src/edframe.cpp:3683
 msgid "Hide Sidebar"
 msgstr "Versteek Systaaf"
 
+#: src/edframe.cpp:3685 src/resources/menus.xrc:242
 msgid "Show Sidebar"
 msgstr "Toon Systaaf"
 
+#: src/edframe.cpp:3716
 msgid "Hide Status Bar"
 msgstr "Versteek Statusbalk"
 
+#: src/edframe.cpp:3718 src/resources/menus.xrc:248
 msgid "Show Status Bar"
 msgstr "Toon Statusbalk"
 
+#: src/editing_area.cpp:326
+msgid "Dismiss and ignore the warning."
+msgstr "Wys af en ignoreer die waarskuwing."
+
+#. TRANSLATORS: Reverse of the "Ignore" button, undoes that action
+#: src/editing_area.cpp:377
+msgid "Don’t ignore"
+msgstr "Moenie ignoreer"
+
+#: src/editing_area.cpp:411
 msgid "String length in characters: translation | source"
 msgstr "Stringlengte in karakters: vertaling | bron"
 
+#: src/editing_area.cpp:414
 msgid "String length in characters"
 msgstr "Stringlengte in karakters"
 
+#: src/editing_area.cpp:461 src/editing_area.cpp:787 src/edlistctrl.cpp:663
+#: src/edlistctrl.cpp:717 src/export_html.cpp:143
 msgid "Source text"
 msgstr "Bronteks"
 
+#: src/editing_area.cpp:483 src/editing_area.cpp:853 src/editing_area.cpp:869
 msgid "Singular"
 msgstr "Enkelvoud"
 
+#: src/editing_area.cpp:488 src/editing_area.cpp:874
 msgid "Plural"
 msgstr "Meervoud"
 
+#: src/editing_area.cpp:534 src/sidebar_terminology.cpp:57
+#: src/sidebar_terminology.cpp:186 src/statistics.cpp:284
+#: src/statistics.cpp:411
 msgid "Translation"
 msgstr "Vertaling"
 
+#: src/editing_area.cpp:543
 msgid "Pre-translated"
 msgstr "Voorafvertaal"
 
+#: src/editing_area.cpp:566
 msgid "Needs Work"
 msgstr "Kort Werk"
 
@@ -782,687 +1212,1269 @@ msgstr "Kort Werk"
 #. "needs review" implies that somebody else should review the string after
 #. I am done with it (i.e. consider it good), while "needs work" implies I
 #. need to return to it and finish the translation.
+#: src/editing_area.cpp:566
 msgid "Needs work"
 msgstr "Kort aandag"
 
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
+#: src/editing_area.cpp:638
+msgid "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
-msgstr ""
-"POT-lêers is slegs sjablone en bevat self geen vertalings nie.\n"
+msgstr "POT-lêers is slegs sjablone en bevat self geen vertalings nie.\n"
 "Skep ’n nuwe PO-lêer, gebaseer op die sjabloon, om ’n vertaling te maak."
 
+#: src/editing_area.cpp:645
 msgid "Create new translation"
 msgstr "Skep nuwe vertaling"
 
+#: src/editing_area.cpp:646
 msgid "Make a new translation from this POT file."
 msgstr "Skep ’n nuwe vertaling van hierdie POT-lêer."
 
 #. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+#: src/editing_area.cpp:785 src/edlistctrl.cpp:711 src/export_html.cpp:137
 msgid "Source text ID"
 msgstr "ID binndol iwdi"
 
+#: src/editing_area.cpp:840
 msgid "Everything"
 msgstr "Alles"
 
+#: src/editing_area.cpp:845
 #, c-format
 msgid "Form %i"
 msgstr "Vorm %i"
 
+#: src/editing_area.cpp:847
 #, c-format
 msgid "Form %i (unused)"
 msgstr "Vorm %i (ongebruik)"
 
+#: src/editing_area.cpp:858
 msgid "Zero"
 msgstr "Nul"
 
+#: src/editing_area.cpp:860
 msgid "One"
 msgstr "Een"
 
+#: src/editing_area.cpp:862
 msgid "Two"
 msgstr "Twee"
 
+#: src/editing_area.cpp:876
 msgid "Other"
 msgstr "Ander"
 
 #. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#: src/editing_area.cpp:1060
 #, c-format
 msgid "String context: %s"
 msgstr "Stringkonteks: %s"
 
 #. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#: src/editing_area.cpp:1067
 #, c-format
 msgid "String identifier: %s"
 msgstr "Stringidentifiseerder: %s"
 
+#: src/editing_area.cpp:1075
 #, c-format
 msgid "%s Format"
 msgstr "%s-Formaat"
 
 #. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#: src/editing_area.cpp:1075
 #, c-format
 msgid "%s format"
 msgstr "%s-formaat"
 
+#: src/edlistctrl.cpp:668 src/edlistctrl.cpp:740 src/export_html.cpp:145
 #, c-format
 msgid "Translation — %s"
 msgstr "Vertaling — %s"
 
+#: src/edlistctrl.cpp:672
 msgid "ID"
 msgstr "ID"
 
+#: src/edlistctrl.cpp:716 src/export_html.cpp:142
 #, c-format
 msgid "Source text — %s"
 msgstr "Bronteks — %s"
 
-msgid "unknown language"
-msgstr "onbekende taal"
-
+#: src/errors.cpp:84
 #, c-format
 msgid "Network error: %s (%d)"
 msgstr "Netwerkfout: %s (%d)"
 
+#: src/errors.cpp:93
 msgid "Unknown error"
 msgstr "Onbekende fout"
 
-#, c-format
-msgid "Failed command: %s"
-msgstr "Mislukte bevel: %s"
+#: src/excel_io.cpp:261 src/excel_io.cpp:298 src/excel_io.cpp:302
+msgid "Failed to create the Excel file."
+msgstr "Kon nie die Excel-lêer skep nie."
 
+#: src/excel_io.cpp:351 src/excel_io.cpp:395 src/excel_io.cpp:419
+msgid "Failed to import from Excel file."
+msgstr "Kon nie vanaf Excel-lêer invoer nie."
+
+#: src/excel_io.cpp:428
+msgid "Excel Import"
+msgstr "Excel-invoer"
+
+#. TRANSLATORS: Shown above a list of columns and their meaning
+#: src/excel_io.cpp:442
+msgid "Import from Excel columns as:"
+msgstr "Voer in vanaf Excel-kolomme as:"
+
+#: src/excel_io.cpp:452
+msgid "ID:"
+msgstr "ID:"
+
+#: src/excel_io.cpp:460
+msgid "Context:"
+msgstr "Konteks:"
+
+#: src/excel_io.cpp:467
+msgid "Source text ID:"
+msgstr "Bronteks-ID:"
+
+#: src/excel_io.cpp:467
+msgid "Source text:"
+msgstr "Bronteks:"
+
+#: src/excel_io.cpp:478
+msgid "Translation:"
+msgstr "Vertaling:"
+
+#: src/excel_io.cpp:485 src/sidebar_terminology.cpp:192
+msgid "Import"
+msgstr "Voer in"
+
+#: src/extractors/extractor.cpp:373
 msgid "Failed to merge gettext catalogs."
 msgstr "Kon nie gettext-katalogi saamvoeg nie."
 
+#: src/fileviewer.cpp:132
 msgid "Open in Editor"
 msgstr "Open in Wysiger"
 
+#: src/fileviewer.cpp:132
 msgid "Open in editor"
 msgstr "Open in wysiger"
 
-msgid ""
-"No information about this string’s occurrences in the source code is "
-"provided in the file."
-msgstr ""
-"Geen inligting oor hierdie string se voorkomste in die bronkode word in die "
-"lêer verskaf nie."
+#: src/fileviewer.cpp:256
+msgid "No information about this string’s occurrences in the source code is provided in the file."
+msgstr "Geen inligting oor hierdie string se voorkomste in die bronkode word in die lêer verskaf nie."
 
+#: src/fileviewer.cpp:256
 msgid "No usage information"
 msgstr "Geen gebruiksinligting"
 
+#: src/fileviewer.cpp:262
 #, c-format
 msgid "%d code occurrence"
 msgid_plural "%d code occurrences"
 msgstr[0] "%d kodevoorkoms"
 msgstr[1] "%d kodevoorkomste"
 
+#: src/fileviewer.cpp:283
 msgid "Source code not found"
 msgstr "Bronkode nie gevind nie"
 
-msgid ""
-"Poedit cannot show source code where the string is used, because the file is "
-"either not available in the referenced location or it is a symbolic "
-"reference that doesn’t point to a real file."
-msgstr ""
-"Poedit kan nie die bronkode toon waar die string gebruik word nie omdat die "
-"lêer òf nie beskikbaar is in die ligging waarna verwys word nie òf dit is ’n "
-"simboliese verwysing wat nie na ’n werklike lêer wys nie."
+#: src/fileviewer.cpp:284
+msgid "Poedit cannot show source code where the string is used, because the file is either not available in the referenced location or it is a symbolic reference that doesn’t point to a real file."
+msgstr "Poedit kan nie die bronkode toon waar die string gebruik word nie omdat die lêer òf nie beskikbaar is in die ligging waarna verwys word nie òf dit is ’n simboliese verwysing wat nie na ’n werklike lêer wys nie."
 
+#: src/fileviewer.cpp:298
 msgid "File cannot be opened"
 msgstr "Lêer kan nie geopen word nie"
 
+#: src/fileviewer.cpp:299
 #, c-format
 msgid "Poedit was unable to open the “%s” file."
 msgstr "Poedit kon nie die “%s”-lêer open nie."
 
+#: src/findframe.cpp:83 src/findframe.cpp:101 src/findframe.cpp:300
+#: src/resources/menus.xrc:156
 msgid "Find"
 msgstr "Soek"
 
+#: src/findframe.cpp:102 src/findframe.cpp:300
 msgid "Replace"
 msgstr "Vervang"
 
 #. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+#: src/findframe.cpp:118
 msgid "Options"
 msgstr "Opsies"
 
+#: src/findframe.cpp:122
 msgid "Ignore case"
 msgstr "Ignoreer hoof-/kleinletters"
 
+#: src/findframe.cpp:123
 msgid "Wrap around"
 msgstr "Omvou"
 
+#: src/findframe.cpp:124
 msgid "Whole words only"
 msgstr "Slegs heel woorde"
 
+#: src/findframe.cpp:125
 msgid "Find in source texts"
 msgstr "Soek in brontekste"
 
+#: src/findframe.cpp:126
 msgid "Find in translations"
 msgstr "Soek in vertalings"
 
+#: src/findframe.cpp:127
 msgid "Find in comments"
 msgstr "Vind in kommentaar"
 
+#: src/findframe.cpp:148 src/licensing_ui.cpp:535 src/titleless_window.cpp:82
+#: src/wx_translatable_strings.h:96
 msgid "Close"
 msgstr "Maak toe"
 
+#: src/findframe.cpp:149
 msgid "Replace &All"
 msgstr "Vervang &Alles"
 
+#: src/findframe.cpp:149
 msgid "Replace &all"
 msgstr "Vervang &alles"
 
+#: src/findframe.cpp:150
 msgid "&Replace"
 msgstr "&Vervang"
 
+#: src/findframe.cpp:151
 msgid "< &Previous"
 msgstr "< &Vorige"
 
+#: src/findframe.cpp:152
 msgid "&Next >"
 msgstr "&Volgende >"
 
+#: src/findframe.cpp:235
 msgid "String to find"
 msgstr "String om te soek"
 
+#: src/findframe.cpp:236
 msgid "Replacement string"
 msgstr "Vervangende string"
 
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "Kan nie program uitvoer nie: %s"
+#: src/gexecute.cpp:131 src/gexecute.cpp:146 src/gexecute.cpp:170
+msgid "warning: "
+msgstr "waarskuwing: "
+
+#: src/gexecute.cpp:171
+msgid "error: "
+msgstr "fout: "
+
+#: src/glossary.cpp:273 src/glossary.cpp:277
+msgid "Failed to read the CSV file."
+msgstr "Kon nie die CSV-lêer lees nie."
 
 #. TRANSLATORS: placeholder/hint in language controls
+#: src/languagectrl.cpp:138
 msgid "Language name or code"
 msgstr "Taalnaam of -kode"
 
+#: src/languagectrl.cpp:210
 msgid "Translation Language"
 msgstr "Taal van Vertaling"
 
+#: src/languagectrl.cpp:217
 msgid "Language of the translation:"
 msgstr "Taal van die vertaling:"
 
+#: src/licensing.cpp:196 src/licensing.cpp:206
+msgid "Invalid license key"
+msgstr "Ongeldige lisensiesleutel"
+
+#: src/licensing.cpp:211
+msgid "Subscription expired"
+msgstr "Intekening het verval"
+
+#: src/licensing.cpp:218
+#, c-format
+msgid "App updates expired, license is only valid for version %s"
+msgstr "Toepbywerkings het verstryk, lisensie is slegs geldig vir weergawe %s"
+
+#: src/licensing.cpp:224
+#, c-format
+msgid "License key only valid for older Poedit version (%s)"
+msgstr "Lisensiesleutel slegs geldig vir ouer Poedit weergawe (%s)"
+
+#: src/licensing.cpp:231
+msgid "Maximum allowed activations exceeded"
+msgstr "Maksimum aantal aktiverings is oorskry"
+
+#: src/licensing.cpp:236 src/licensing.cpp:263
+#, c-format
+msgid "Unknown activation error (%s)"
+msgstr "Onbekende aktiveringsfout (%s)"
+
+#: src/licensing_ui.cpp:92 src/licensing_ui.cpp:97 src/licensing_ui.cpp:859
+#: src/licensing_ui.cpp:872 src/licensing_ui.cpp:884
+msgid "Poedit Activation"
+msgstr "Poedit-aktivering"
+
+#: src/licensing_ui.cpp:92 src/licensing_ui.cpp:102
+#: src/marketing_services.cpp:49 src/wx/main_toolbar.cpp:155
+#: src/wx/main_toolbar.cpp:182
+msgid "Upgrade to Pro"
+msgstr "Gradeer op na Pro"
+
+#: src/licensing_ui.cpp:248
+msgid "Please enter your license key:"
+msgstr "Voer asb. u lisensiesleutel in:"
+
+#: src/licensing_ui.cpp:257
+msgid "You should find your key in the confirmation email you received after you purchased Poedit. Activation requires internet connection."
+msgstr "U behoort u sleutel te vind in die e-pos wat u na aankoop van Poedit ter bevestiging ontvang het. ’n Internetverbinding is nodig vir aktivering."
+
+#: src/licensing_ui.cpp:262
+msgid "Retrieve lost license key"
+msgstr "Kry verlore lisensiesleutel terug"
+
+#: src/licensing_ui.cpp:271
+msgid "Buy Online…"
+msgstr "Koop Aanlyn…"
+
+#: src/licensing_ui.cpp:271
+msgid "Buy online…"
+msgstr "Koop aanlyn…"
+
+#: src/licensing_ui.cpp:286 src/licensing_ui.cpp:290
+msgid "Activate"
+msgstr "Aktiveer"
+
+#: src/licensing_ui.cpp:316
+msgid "Activating your license…"
+msgstr "Aktiveer tans u lisensie…"
+
+#: src/licensing_ui.cpp:327
+msgid "Would you like to hear about new versions?"
+msgstr "Wil u nuus oor nuwe weergawes ontvang?"
+
+#: src/licensing_ui.cpp:328
+msgid "We’ll send you an email when a new major version is released. No marketing, no spammy newsletters. Just very rare heads-up about new versions."
+msgstr "Ons sal vir u ’n e-pos stuur wanneer ’n nuwe weergawe vrygestel is. Geen bemarking, geen gemorspos. Slegs skaars kennisgewings oor nuwe weergawes."
+
+#: src/licensing_ui.cpp:331 src/licensing_ui.cpp:690
+msgid "No, thanks"
+msgstr "Nee, dankie"
+
+#: src/licensing_ui.cpp:331
+msgid "Notify me"
+msgstr "Laat weet my"
+
+#: src/licensing_ui.cpp:358
+msgid "Upgrade your Pro license"
+msgstr "Gradeer u Pro-lisensie op"
+
+#: src/licensing_ui.cpp:377
+msgid "Renew your license"
+msgstr "Hernieu u lisensie"
+
+#: src/licensing_ui.cpp:395
+msgid "Add more devices"
+msgstr "Voeg nog toestelle toe"
+
+#: src/licensing_ui.cpp:440
+msgid "Thank you!"
+msgstr "Dankie!"
+
+#: src/licensing_ui.cpp:446
+msgid "Your copy is upgraded to Poedit Pro."
+msgstr "U kopie is opgegradeer na Poedit Pro."
+
+#: src/licensing_ui.cpp:450 src/licensing_ui.cpp:454
+msgid "Manage License"
+msgstr "Bestuur lisensie"
+
+#: src/licensing_ui.cpp:454
+msgid "Manage license"
+msgstr "Bestuur lisensie"
+
+#. TRANSLATORS: "Renew" as a verb meaning making something that stopped working (a subscription) work again by prolonging it for another period.
+#: src/licensing_ui.cpp:479 src/licensing_ui.cpp:862 src/licensing_ui.cpp:875
+#: src/licensing_ui.cpp:1161
+msgid "Renew"
+msgstr "Hernieu"
+
+#: src/licensing_ui.cpp:497
+msgid "Deactivate"
+msgstr "Deaktiveer"
+
+#: src/licensing_ui.cpp:509
+msgid "Deactivating your license…"
+msgstr "Deaktiveer tans u lisensie…"
+
+#: src/licensing_ui.cpp:567
+msgid "Upgrade to Poedit Pro to Unlock WordPress Extras"
+msgstr "Gradeer op na Poedit Pro om ekstra funksionaliteit van WordPress te ontgrendel"
+
+#: src/licensing_ui.cpp:568 src/licensing_ui.cpp:589
+msgid "Upgrade to take advantage of Pro’s extra smarts: it understands WordPress themes and plugins and sets everything up for you. You can focus on translating and don’t have to worry about the technical details. With the free version, you would have to do everything manually yourself."
+msgstr "Gradeer op om wins te trek uit Pro se ekstra slimmighede: dit verstaan WordPress-temas en -inproppe en stel alles vir u op. U kan op vertaling fokus en hoef nie te bekommer oor die tegniese detail nie. Met die gratis weergawe moet u alles handmatig doen."
+
+#: src/licensing_ui.cpp:571
+msgid "Upgrade to Poedit Pro to Unlock Statistics"
+msgstr "Gradeer op na Poedit Pro om Statistiek te Ontgrendel"
+
+#: src/licensing_ui.cpp:574
+msgid "Upgrade to Poedit Pro to Unlock Online Suggestions"
+msgstr "Gradeer op na Poedit Pro om Aanlynvoorstelle te Ontgrendel"
+
+#: src/licensing_ui.cpp:577
+msgid "Upgrade to Poedit Pro to Unlock Templates Support"
+msgstr "Gradeer op na Poedit Pro om Sjabloonondersteuning te Ontgrendel"
+
+#: src/licensing_ui.cpp:581
+msgid "Upgrade to Poedit Pro to Unlock Extra Features"
+msgstr "Gradeer op na Poedit Pro om Ekstra Funksionaliteit te Ontgrendel"
+
+#: src/licensing_ui.cpp:588
+msgid "WordPress extras require upgrade to Poedit Pro"
+msgstr "Ekstra funksionaliteit van WordPress vereis opgradering na Poedit Pro"
+
+#: src/licensing_ui.cpp:593
+msgid "Statistics require upgrade to Poedit Pro"
+msgstr "Statistiek vereis opgradering na Poedit Pro"
+
+#: src/licensing_ui.cpp:596
+msgid "Online TM suggestions require upgrade to Poedit Pro"
+msgstr "Aanlyn-TM-voorstelle vereis opgradering na Poedit Pro"
+
+#: src/licensing_ui.cpp:599
+msgid "Templates support requires upgrade to Poedit Pro"
+msgstr "Sjabloonondersteuning vereis opgradering na Poedit Pro"
+
+#: src/licensing_ui.cpp:602
+msgid "Customizable warnings require upgrade to Poedit Pro"
+msgstr "Vir verstelbare waarskuwings moet u na Poedit Pro opgradeer"
+
+#: src/licensing_ui.cpp:605
+msgid "Customizable file extensions require upgrade to Poedit Pro"
+msgstr "Vir verstelbare lêeruitbreidings moet u na Poedit Pro opgradeer"
+
+#: src/licensing_ui.cpp:608
+msgid "Terminology search and glossaries require upgrade to Poedit Pro"
+msgstr "Vir terminologiesoektog en glossaria moet u na Poedit Pro opgradeer"
+
+#: src/licensing_ui.cpp:611
+msgid "Replacing source text requires upgrade to Poedit Pro"
+msgstr "Brontekservanging vereis opgradering na Poedit Pro"
+
+#: src/licensing_ui.cpp:614
+msgid "Merging translation files requires upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:617
+msgid "Excel import and export require upgrade to Poedit Pro"
+msgstr "Excel-invoer en -uitstuur vereis ’n opgradering na Poedit Pro"
+
+#: src/licensing_ui.cpp:649
+msgid "Purchasing the full version will unlock additional features in Poedit, including:"
+msgstr "Aankoop van die volledige weergawe sal bykomende funksies in Poedit ontgrendel, insluitend:"
+
+#: src/licensing_ui.cpp:663
+msgid "Suggestions from online translation memory"
+msgstr "Voorstelle van die aanlynvertaalgeheue"
+
+#: src/licensing_ui.cpp:664
+msgid "Machine translation with DeepL, Google Translate or Microsoft Translator"
+msgstr "Masjienvertaling met DeepL, Google Translate of Microsoft Translator"
+
+#: src/licensing_ui.cpp:665
+msgid "Worry-free setup for WordPress themes and plugins"
+msgstr "Kommervrye opstelling vir WordPress-temas en -inproppe"
+
+#: src/licensing_ui.cpp:666
+msgid "Extract strings from Twig or Blade templates"
+msgstr "Ekstraheer stringe uit Twig- of Blade-sjablone"
+
+#: src/licensing_ui.cpp:667
+msgid "Word count and statistics"
+msgstr "Woordtelling en statistiek"
+
+#: src/licensing_ui.cpp:668
+msgid "Excel import and export"
+msgstr "Excel-invoer en -uitstuur"
+
+#: src/licensing_ui.cpp:669
+msgid "Merging translation files for all file formats"
+msgstr ""
+
+#: src/licensing_ui.cpp:670
+msgid "Customizable QA checks and warnings"
+msgstr "Verstelbare QA-toetse en waarskuwings"
+
+#: src/licensing_ui.cpp:671
+msgid "Replace source text with translations from another file"
+msgstr "Vervang bronteks met vertalings van ’n ander lêer"
+
+#: src/licensing_ui.cpp:672
+msgid "Terminology search and glossaries"
+msgstr "Terminologiesoektog en glossaria"
+
+#: src/licensing_ui.cpp:673
+msgid "Personal priority support"
+msgstr "Persoonlikeprioriteitondersteuning"
+
+#: src/licensing_ui.cpp:679
+msgid "Enter license key"
+msgstr "Voer lisensiesleutel in"
+
+#: src/licensing_ui.cpp:689
+msgid "Upgrade…"
+msgstr "Gradeer Op…"
+
+#: src/licensing_ui.cpp:754 src/licensing_ui.cpp:780
+#, c-format
+msgid "Licensed to: %s"
+msgstr "Gelisensieer aan: %s"
+
+#. TRANSLATORS: %s is replaced at runtime with e.g. "Poedit Pro" or "Poedit Pro+"
+#: src/licensing_ui.cpp:756 src/licensing_ui.cpp:785
+#, c-format
+msgid "License type: %s"
+msgstr "Lisensietipe: %s"
+
+#: src/licensing_ui.cpp:780
+msgid "(personal license)"
+msgstr "(persoonlike lisensie)"
+
+#: src/licensing_ui.cpp:859
+msgid "Subscription expired."
+msgstr "Intekening het verval."
+
+#: src/licensing_ui.cpp:861
+msgid "Your license was deactivated on this computer because your subscription expired."
+msgstr "U lisensie is gedeaktiveer op hierdie rekenaar omdat u intekening verstryk het."
+
+#: src/licensing_ui.cpp:871
+#, c-format
+msgid "Your license was deactivated on this computer because it only includes app updates up to Poedit version %s."
+msgstr "U lisensie is gedeaktiveer op hierdie rekenaar omdat dit slegs bywerkings ondersteun tot en met Poedit weervawe %s."
+
+#: src/licensing_ui.cpp:872
+msgid "App updates expired."
+msgstr "Toepbywerkings het verstryk."
+
+#: src/licensing_ui.cpp:884
+msgid "License deactivated."
+msgstr "Lisensie gedeaktiveer."
+
+#: src/licensing_ui.cpp:886
+msgid "Your license was deactivated on this computer. Please email help@poedit.net if you are not sure why this happened."
+msgstr "U lisensie is op hierdie rekenaar gedeaktiveer. Stuur ’n e-pos aan help@poedit.net indien u onseker is waarom dit gebeur het."
+
+#. TRANSLATORS: %s is a placeholder for subscription name, e.g. Pro+ or Pro
+#: src/licensing_ui.cpp:1112
+#, c-format
+msgid "Your %s subscription expired."
+msgstr "U %s-intekening het verval."
+
+#. TRANSLATORS: "Expired" as in ended e.g. after 1 year
+#: src/licensing_ui.cpp:1117
+msgid "Machine translation service expired."
+msgstr "Masjienvertaaldiens het verstryk."
+
+#. TRANSLATORS: "standard" here is the same word as the standalone string "Standard".
+#: src/licensing_ui.cpp:1125
+msgid "Machine translation quality is reduced to standard."
+msgstr "Masjoenvertalingkwaliteit is na standaard verlaag."
+
+#: src/localazy_client.cpp:385
 msgid "All strings"
 msgstr "Alle stringe"
 
+#: src/localazy_client.cpp:404
 msgid "Couldn’t download Localazy project details."
 msgstr "Kon nie Localazy-projekdetails aflaai nie."
 
+#: src/localazy_client.cpp:476 src/localazy_client.cpp:490
 msgid "There was an error when uploading translations to Localazy."
 msgstr "Daar was ’n fout met die oplaai van vertalings na Localazy."
 
+#: src/localazy_gui.cpp:103
 msgid "Projects"
 msgstr "Projekte"
 
-msgid ""
-"Localazy is a highly automated localization platform allowing anyone to "
-"translate their products and content into multiple languages easily."
-msgstr ""
-"Localazy is ’n hoogs geoutomatiseerde lokaliseringsplatform wat enigeen "
-"toelaat om maklik hul produkte en inhoud in meerdere tale te vertaal."
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#: src/localazy_gui.cpp:115
+#, c-format
+msgid "Learn more about %s"
+msgstr "Leer meer oor %s"
 
+#: src/localazy_gui.cpp:146
+msgid "Localazy is a highly automated localization platform allowing anyone to translate their products and content into multiple languages easily."
+msgstr "Localazy is ’n hoogs geoutomatiseerde lokaliseringsplatform wat enigeen toelaat om maklik hul produkte en inhoud in meerdere tale te vertaal."
+
+#: src/localazy_gui.cpp:241
 msgid "Add Project"
 msgstr "Voeg projek toe"
 
+#: src/localazy_gui.cpp:241
 msgid "Add project"
 msgstr "Voeg projek toe"
 
+#: src/manager.cpp:117
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - Katalogusbestuurder"
 
+#: src/manager.cpp:162 src/prefsdlg.cpp:877
 msgid "Edit…"
 msgstr "Wysig…"
 
+#: src/manager.cpp:167
 msgid "Create new translations project"
 msgstr "Skep nuwe vertaalprojek"
 
+#: src/manager.cpp:168
 msgid "Delete the project"
 msgstr "Skrap die projek"
 
+#: src/manager.cpp:169
 msgid "Edit the project"
 msgstr "Wysig die projek"
 
+#: src/manager.cpp:199 src/resources/toolbar.xrc:41 src/statistics.cpp:258
+msgid "Statistics"
+msgstr "Statistiek"
+
+#: src/manager.cpp:200 src/resources/toolbar.xrc:42
+msgid "Show translation statistics"
+msgstr "Toon vertaalstatistiek"
+
+#: src/manager.cpp:202
 msgid "Update all"
 msgstr "Werk alles by"
 
+#: src/manager.cpp:203
 msgid "Update all catalogs in the project"
 msgstr "Werk alle katalogusse in die projek by"
 
+#: src/manager.cpp:405
 msgid "Total"
 msgstr "Totaal"
 
+#: src/manager.cpp:406
 msgid "Untrans"
 msgstr "Onvertaal"
 
+#: src/manager.cpp:407
 msgctxt "column/row header"
 msgid "Needs Work"
 msgstr "Kort Werk"
 
+#: src/manager.cpp:408
 msgid "Errors"
 msgstr "Foute"
 
+#: src/manager.cpp:409
 msgid "Last modified"
 msgstr "Laas gewysig"
 
+#: src/manager.cpp:440 src/propertiesdlg.cpp:478
 msgid "Select directory"
 msgstr "Kies gids "
 
+#: src/manager.cpp:460
 msgid "Directories:"
 msgstr "Gidse:"
 
+#: src/manager.cpp:532
 msgid "<unnamed>"
 msgstr "<naamloos>"
 
+#: src/manager.cpp:570
 #, c-format
 msgid "Do you want to delete project “%s”?"
 msgstr "Wil u projek “%s” skrap?"
 
+#: src/manager.cpp:571
 msgid "Delete project"
 msgstr "Skrap projek"
 
+#: src/manager.cpp:574
 msgid "Deleting the project will not delete any translation files."
 msgstr "Skrap van die projek sal geen vertaallêers skrap nie."
 
+#: src/manager.cpp:602
 msgid "Confirmation"
 msgstr "Bevestiging"
 
+#: src/manager.cpp:602
 msgid "Update all catalogs in this project?"
 msgstr "Werk alle katalogusse in hierdie projek by?"
 
+#: src/manager.cpp:603
 msgid "Performs update from source code on all files in the project."
-msgstr ""
-"Dit voer ’n bywerking vanaf die bronkode op alle lêers in die projek uit."
+msgstr "Dit voer ’n bywerking vanaf die bronkode op alle lêers in die projek uit."
 
+#: src/manager.cpp:612
+msgid "Updating project catalogs"
+msgstr "Werk tans projekkatalogusse by"
+
+#: src/menus.cpp:138
 msgid "Check for Updates…"
 msgstr "Gaan na vir Bywerkings…"
 
+#: src/menus.cpp:140
 msgid "Catalogs Manager"
 msgstr "Katalogusbestuurder"
 
+#: src/menus.cpp:143
+msgid "License…"
+msgstr "Lisensie…"
+
+#: src/menus.cpp:155
 msgid "&Preferences…"
 msgstr "&Voorkeure…"
 
+#: src/menus.cpp:170 src/resources/menus.xrc:95 src/resources/menus.xrc:450
+#: src/wx_translatable_strings.h:102
 msgid "&Edit"
 msgstr "W&ysig"
 
+#: src/menus.cpp:190 src/wx_translatable_strings.h:118
 msgid "Undo"
 msgstr "Ontdaan"
 
+#: src/menus.cpp:191 src/wx_translatable_strings.h:113
 msgid "Redo"
 msgstr "Herdoen"
 
+#: src/menus.cpp:200
 msgid "Paste and Match Style"
 msgstr "Plak en Pas Styl Aan"
 
+#: src/menus.cpp:203 src/prefsdlg.cpp:1103 src/sidebar_terminology.cpp:77
+#: src/wx_translatable_strings.h:100
 msgid "Delete"
 msgstr "Skrap"
 
+#: src/menus.cpp:212
 msgid "Spelling and Grammar"
 msgstr "Spelling en Grammatika"
 
+#: src/menus.cpp:214
 msgid "Show Spelling and Grammar"
 msgstr "Toon Spelling en Grammatika"
 
+#: src/menus.cpp:215
 msgid "Check Document Now"
 msgstr "Gaan Dokument Nou Na"
 
+#: src/menus.cpp:217
 msgid "Check Spelling While Typing"
 msgstr "Gaan Spelling Intyds Na"
 
+#: src/menus.cpp:218
 msgid "Check Grammar With Spelling"
 msgstr "Gaan Grammatika Met Spelling Na"
 
+#: src/menus.cpp:219
 msgid "Correct Spelling Automatically"
 msgstr "Korrigeer Spelling Outomaties"
 
+#: src/menus.cpp:222
 msgid "Substitutions"
 msgstr "Vervangings"
 
+#: src/menus.cpp:224
 msgid "Show Substitutions"
 msgstr "Toon Vervangings"
 
+#: src/menus.cpp:226
 msgid "Smart Copy/Paste"
 msgstr "Slimkopieer/-plak"
 
+#: src/menus.cpp:227
 msgid "Smart Quotes"
 msgstr "Slimaanhalingstekens"
 
+#: src/menus.cpp:228
 msgid "Smart Dashes"
 msgstr "Slimstrepe"
 
+#: src/menus.cpp:229
 msgid "Smart Links"
 msgstr "Slimskakels"
 
+#: src/menus.cpp:230
 msgid "Text Replacement"
 msgstr "Teksvervanging"
 
+#: src/menus.cpp:233
 msgid "Transformations"
 msgstr "Omvormings"
 
+#: src/menus.cpp:235
 msgid "Make Upper Case"
 msgstr "Maak Hoofletters"
 
+#: src/menus.cpp:236
 msgid "Make Lower Case"
 msgstr "Maak Kleinletters"
 
+#: src/menus.cpp:237
 msgid "Capitalize"
 msgstr "Maak Beginhoofletters"
 
+#: src/menus.cpp:240
 msgid "Speech"
 msgstr "Spraak"
 
+#: src/menus.cpp:242
 msgid "Start Speaking"
 msgstr "Begin Praat"
 
+#: src/menus.cpp:243
 msgid "Stop Speaking"
 msgstr "Hou op Praat"
 
+#: src/menus.cpp:246 src/resources/menus.xrc:177 src/resources/menus.xrc:460
 msgid "&View"
 msgstr "&Bekyk"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:252
 msgid "Show Toolbar"
 msgstr "Toon Nutsbalk"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:255
 msgid "Customize Toolbar…"
 msgstr "Pas Taakbalk Aan…"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:258
 msgid "Enter Full Screen"
 msgstr "Gaan na Volskerm"
 
+#: src/menus.cpp:265 src/menus.cpp:296 src/resources/menus.xrc:352
+#: src/resources/menus.xrc:469
 msgid "Window"
 msgstr "Venster"
 
+#: src/menus.cpp:266
 msgid "Minimize"
 msgstr "Minimaliseer"
 
+#: src/menus.cpp:267
 msgid "Zoom"
 msgstr "Vergroot/verklein"
 
+#: src/menus.cpp:269 src/welcomescreen.cpp:222 src/welcomescreen.cpp:262
 msgid "Welcome to Poedit"
 msgstr "Welkom by Poedit"
 
+#: src/menus.cpp:274
 msgid "Bring All to Front"
 msgstr "Bring Alles na Vore"
 
+#: src/prefsdlg.cpp:177
 msgid "Information about the translator"
 msgstr "Inligting oor die vertaler"
 
+#: src/prefsdlg.cpp:184
 msgid "Name:"
 msgstr "Naam:"
 
+#: src/prefsdlg.cpp:187
 msgid "Your Name"
 msgstr "U Naam"
 
+#: src/prefsdlg.cpp:189
 msgid "Email:"
 msgstr "E-pos:"
 
+#: src/prefsdlg.cpp:192
 msgid "you@example.com"
 msgstr "gebruiker@voorbeeld.co.za"
 
-msgid ""
-"Your name and email address are only used to set the Last-Translator header "
-"of GNU gettext files."
-msgstr ""
-"U naam en e-posadres word slegs gebruik om die “Laaste-Vertaler”-kop van die "
-"GNU-gettext-lêers in te stel."
+#: src/prefsdlg.cpp:195
+msgid "Your name and email address are only used to set the Last-Translator header of GNU gettext files."
+msgstr "U naam en e-posadres word slegs gebruik om die “Laaste-Vertaler”-kop van die GNU-gettext-lêers in te stel."
 
+#: src/prefsdlg.cpp:204
 msgid "Editing"
 msgstr "Wysiging"
 
+#: src/prefsdlg.cpp:207
 msgid "Automatically compile MO file when saving"
 msgstr "Maak outomaties MO-lêer tydens stoor"
 
-msgid "Show summary after updating files"
-msgstr "Toon opsomming na bywerking van lêers"
-
+#: src/prefsdlg.cpp:212
 msgid "Check spelling"
 msgstr "Gaan spelling na"
 
+#: src/prefsdlg.cpp:214
 msgid "Always change focus to text input field"
 msgstr "Verander altyd fokus na teks-toevoerveld"
 
-msgid ""
-"Never let the list of strings take focus. If enabled, you must use Ctrl-"
-"arrows for keyboard navigation but you can also type text immediately, "
-"without having to press Tab to change focus."
-msgstr ""
-"Moet nooit die stringlys laat fokus nie. Indien dit geaktiveer is moet Ctrl-"
-"pyltjies vir sleutelbordnavigasie gebruik word maar teks kan ook onmiddellik "
-"toegevoer word sonder om Tab te druk om fokus te verander."
+#: src/prefsdlg.cpp:216
+msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
+msgstr "Moet nooit die stringlys laat fokus nie. Indien dit geaktiveer is moet Ctrl-pyltjies vir sleutelbordnavigasie gebruik word maar teks kan ook onmiddellik toegevoer word sonder om Tab te druk om fokus te verander."
 
+#: src/prefsdlg.cpp:224
 msgid "Appearance"
 msgstr "Voorkoms"
 
+#: src/prefsdlg.cpp:231
 msgid "Use custom list font:"
 msgstr "Gebruik pasgemaakte lysfont:"
 
+#: src/prefsdlg.cpp:234
 msgid "Use custom text fields font:"
 msgstr "Gebruik pasgemaakte teksveldfont:"
 
+#: src/prefsdlg.cpp:245
 msgid "Change UI language"
 msgstr "Verander koppelvlaktaal"
 
 #. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
+#: src/prefsdlg.cpp:255
 msgid "(requires Windows 8 or newer)"
 msgstr "(vereis Windows 8 of nuwer)"
 
+#: src/prefsdlg.cpp:358
 msgid "General"
 msgstr "Algemeen"
 
+#: src/prefsdlg.cpp:380
 msgid "Use translation memory"
 msgstr "Gebruik vertaalgeheue"
 
+#: src/prefsdlg.cpp:390
 msgid "Manage…"
 msgstr "Bestuur…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
+#: src/prefsdlg.cpp:397
 msgid "When updating from sources"
 msgstr "Tydens bywerking vanuit bronne"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
+#: src/prefsdlg.cpp:400
 msgid "fuzzy match within the file"
 msgstr "wollerige trefslae binne die lêer"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
+#: src/prefsdlg.cpp:402
 msgid "pre-translate from TM"
 msgstr "voorafvertaal vanaf TM"
 
-msgid ""
-"Poedit can attempt to fill in new entries from only previous translations in "
-"the file or from your entire translation memory. Using the TM won’t be very "
-"effective if it’s near-empty, but it will get better as you add more "
-"translations to it."
-msgstr ""
-"Poedit kan probeer om nuwe inskrywings slegs vanaf vorige vertalings in die "
-"lêer of vanuit u gehele vertaalgeheue in te vul. Gebruik van die TM sal nie "
-"baie effektief indien dit byna leeg is nie, maar dit sal beter raak soos u "
-"meer vertalings toevoeg."
+#: src/prefsdlg.cpp:418
+msgid "Poedit can attempt to fill in new entries from only previous translations in the file or from your entire translation memory. Using the TM won’t be very effective if it’s near-empty, but it will get better as you add more translations to it."
+msgstr "Poedit kan probeer om nuwe inskrywings slegs vanaf vorige vertalings in die lêer of vanuit u gehele vertaalgeheue in te vul. Gebruik van die TM sal nie baie effektief indien dit byna leeg is nie, maar dit sal beter raak soos u meer vertalings toevoeg."
 
+#: src/prefsdlg.cpp:454
+msgid "Use suggestions from online collaborative TM"
+msgstr "Gebruik voorstelle van aanltnsamewerkingsvertaalgeheue"
+
+#: src/prefsdlg.cpp:469
+msgid "Poedit uses a large online translation memory that includes both contributed human translations and state-of-the-art machine translations."
+msgstr "Poedit gebruik ’n groot aanlynvertaalgeheue wat mensvertaalde en gevorderde masjienvertalings insluit."
+
+#: src/prefsdlg.cpp:472 src/sidebar_pro.cpp:698
+msgid "Contribute my translations to the online TM"
+msgstr "Voeg my vertalings tot die aanlyn-TM"
+
+#: src/prefsdlg.cpp:473 src/sidebar_pro.cpp:699
+msgid "Keep my translations private"
+msgstr "Hou my vertalings privaat"
+
+#: src/prefsdlg.cpp:474
+msgid "Ask me for each file individually"
+msgstr "Vra my apart vir elke lêer"
+
+#: src/prefsdlg.cpp:492 src/sidebar_pro.cpp:159
+msgid "Change Settings…"
+msgstr "Verander Instellings…"
+
+#: src/prefsdlg.cpp:492 src/sidebar_pro.cpp:159
+msgid "Change settings…"
+msgstr "Verander instellings…"
+
+#: src/prefsdlg.cpp:580
 msgid "Stored translations:"
 msgstr "Bewaarde vertalings:"
 
+#: src/prefsdlg.cpp:581
 msgid "Database size on disk:"
 msgstr "Databasisgrootte op skyf:"
 
+#: src/prefsdlg.cpp:596
 msgid "Import Translation Files…"
 msgstr "Voer Vertaallêers In…"
 
+#: src/prefsdlg.cpp:596
 msgid "Import translation files…"
 msgstr "Voer vertaallêers in…"
 
+#: src/prefsdlg.cpp:598
 msgid "Import From TMX…"
 msgstr "Voer In Vanaf TMX…"
 
+#: src/prefsdlg.cpp:598
 msgid "Import from TMX…"
 msgstr "Voer in vanaf TMX…"
 
+#: src/prefsdlg.cpp:599
 msgid "Export To TMX…"
 msgstr "Stuur Uit Na TMX…"
 
+#: src/prefsdlg.cpp:599
 msgid "Export to TMX…"
 msgstr "Stuur uit na TMX…"
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+#: src/prefsdlg.cpp:602 src/prefsdlg.cpp:770
 msgid "Reset"
 msgstr "Herstel"
 
+#: src/prefsdlg.cpp:621
 msgid "Select translation files to import"
 msgstr "Kies vertaalleêrs om in te voer"
 
-msgid "Translation Memory"
-msgstr "Vertaalgeheue"
-
-msgid "Importing translations…"
-msgstr "Vertalings word ingevoer…"
-
-#, c-format
-msgid "Error loading translation file “%s”."
-msgstr "Fout tydens laai van vertalingslêer “%s”."
-
-msgid "Finalizing…"
-msgstr "Rond tans af…"
-
+#: src/prefsdlg.cpp:654
 msgid "Select TMX files to import"
 msgstr "Kies TMX-lêers om in te voer"
 
+#: src/prefsdlg.cpp:657 src/prefsdlg.cpp:733
 msgid "TMX Files"
 msgstr "TMX-lêers"
 
+#: src/prefsdlg.cpp:684
+msgid "Importing translations…"
+msgstr "Vertalings word ingevoer…"
+
+#: src/prefsdlg.cpp:685
+msgid "Importing translation memory failed."
+msgstr "Invoer van vertaalgeheue van het misluk."
+
+#: src/prefsdlg.cpp:699
 #, c-format
-msgid "Importing translation memory from “%s” failed."
-msgstr "Invoer van vertaalgeheue van “%s” het misluk."
+msgid "Importing from “%s”…"
+msgstr "Voer tans in vanaf “%s”…"
 
-msgid "Import error"
-msgstr "Invoerfout"
+#. TRANSLATORS: %s is a (formatted) number here
+#: src/prefsdlg.cpp:717
+#, c-format
+msgid "%s translation was imported."
+msgid_plural "%s translations were imported."
+msgstr[0] "%s vertaling is ingevoer."
+msgstr[1] "%s vertalings is ingevoer."
 
+#: src/prefsdlg.cpp:730
 msgid "Export as…"
 msgstr "Stuur Uit as…"
 
+#: src/prefsdlg.cpp:745
 msgid "Exporting translations…"
 msgstr "Stuur vertalings uit…"
 
+#: src/prefsdlg.cpp:746
 #, c-format
 msgid "Exporting translation memory to “%s” failed."
 msgstr "Uitstuur van vertaalgeheue van “%s” het misluk."
 
-msgid "Export error"
-msgstr "Uitstuurfout"
-
+#: src/prefsdlg.cpp:764
 msgid "Reset translation memory"
 msgstr "Herstel vertaalgeheue"
 
+#: src/prefsdlg.cpp:765
 msgid "Are you sure you want to reset the translation memory?"
 msgstr "Is u seker u wil die vertaalgeheue herstel?"
 
-msgid ""
-"Resetting the translation memory will irrevocably delete all stored "
-"translations from it. You can’t undo this operation."
-msgstr ""
-"Deur die vertaalgeheue te herstel sal alle bewaarde vertalings permanent "
-"geskrap word. Dit kan nie ontdaan word nie."
+#: src/prefsdlg.cpp:766
+msgid "Resetting the translation memory will irrevocably delete all stored translations from it. You can’t undo this operation."
+msgstr "Deur die vertaalgeheue te herstel sal alle bewaarde vertalings permanent geskrap word. Dit kan nie ontdaan word nie."
 
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
+#: src/prefsdlg.cpp:808
 msgid "TM"
 msgstr "TM"
 
-msgid ""
-"Source code extractors are used to find translatable strings in the source "
-"code files and extract them so that they can be translated."
-msgstr ""
-"Bronkodeëkstraheerders word gebruik om vertaalbare stringe in die "
-"bronkodelêers te soek en vir vertaling te ekstraheer."
+#: src/prefsdlg.cpp:810 src/sidebar_terminology.cpp:638
+msgid "Translation Memory"
+msgstr "Vertaalgeheue"
 
+#: src/prefsdlg.cpp:830
+msgid "Source code extractors are used to find translatable strings in the source code files and extract them so that they can be translated."
+msgstr "Bronkodeëkstraheerders word gebruik om vertaalbare stringe in die bronkodelêers te soek en vir vertaling te ekstraheer."
+
+#: src/prefsdlg.cpp:843
 msgid "Custom Extractors:"
 msgstr "Pasgemaakte Ekstraheerders:"
 
+#: src/prefsdlg.cpp:843
 msgid "Custom extractors:"
 msgstr "Pasgemaakte ekstraheerders:"
 
+#: src/prefsdlg.cpp:929
 msgid "GNU gettext"
 msgstr "GNU gettext"
 
-msgid ""
-"Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
-"+, C#, Perl, Python, Java, JavaScript and others)."
-msgstr ""
-"Ondersteun alle programmeringstale wat deur GNU-gettext-nutsmiddels herken "
-"word (PHP, C/C++, C#, Perl, Python, Java, JavaScript en andere)."
+#: src/prefsdlg.cpp:935
+msgid "Supports all programming languages recognized by GNU gettext tools (PHP, C/C++, C#, Perl, Python, Java, JavaScript and others)."
+msgstr "Ondersteun alle programmeringstale wat deur GNU-gettext-nutsmiddels herken word (PHP, C/C++, C#, Perl, Python, Java, JavaScript en andere)."
 
+#. TRANSLATORS: Templates for themes etc. - e.g. Twig or Volt templates
+#: src/prefsdlg.cpp:945
+msgid "Templates"
+msgstr "Sjablone"
+
+#: src/prefsdlg.cpp:946
+msgid "(Twig, Volt, Blade)"
+msgstr "(Twig, Volt, Blade)"
+
+#: src/prefsdlg.cpp:961
+msgid "Extracts translations from template files."
+msgstr "Ekstraheer vertalings vanuit sjabloonlêers."
+
+#: src/prefsdlg.cpp:964
+msgid "Enable"
+msgstr "Aktiveer"
+
+#: src/prefsdlg.cpp:1096
 msgid "Delete extractor"
 msgstr "Skrap ekstraheerder"
 
+#: src/prefsdlg.cpp:1097
 #, c-format
 msgid "Are you sure you want to delete the “%s” extractor?"
 msgstr "Is u seker u wil die “%s”-ekstraheerder skrap?"
 
+#: src/prefsdlg.cpp:1135
 msgid "Extractors"
 msgstr "Ekstraheerders"
 
+#: src/prefsdlg.cpp:1193
 msgid "Accounts"
 msgstr "Rekeninge"
 
+#: src/prefsdlg.cpp:1213
 msgid "Automatically check for updates"
 msgstr "Soek outomaties na bywerkings"
 
+#: src/prefsdlg.cpp:1216
 msgid "Include beta versions"
 msgstr "Sluit betaweergawes in"
 
-msgid ""
-"Beta versions contain the latest new features and improvements, but may be a "
-"bit less stable."
-msgstr ""
-"Betaweergawes bevat die nuutste funksies en verbeteringe maar is minder "
-"stabiel."
+#: src/prefsdlg.cpp:1219
+msgid "Beta versions contain the latest new features and improvements, but may be a bit less stable."
+msgstr "Betaweergawes bevat die nuutste funksies en verbeteringe maar is minder stabiel."
 
+#: src/prefsdlg.cpp:1248
 msgid "Updates"
 msgstr "Bywerkings"
 
-msgid ""
-"These settings affect internal formatting of PO files. Adjust them if you "
-"have specific requirements e.g. because of version control."
-msgstr ""
-"Hierdie instellings beïnvloed interne formattering van PO-lêers. Pas dit aan "
-"indien u spesifieke behoeftes het, bv. weens weergawebeheer."
+#: src/prefsdlg.cpp:1266
+msgid "These settings affect internal formatting of PO files. Adjust them if you have specific requirements e.g. because of version control."
+msgstr "Hierdie instellings beïnvloed interne formattering van PO-lêers. Pas dit aan indien u spesifieke behoeftes het, bv. weens weergawebeheer."
 
+#: src/prefsdlg.cpp:1270
 msgid "Line endings:"
 msgstr "Reëleindes:"
 
+#: src/prefsdlg.cpp:1273
 msgid "Unix (recommended)"
 msgstr "Unix (aanbeveel)"
 
+#: src/prefsdlg.cpp:1274
 msgid "Windows"
 msgstr "Windows"
 
 #. TRANSLATORS: Followed by text control for entering number; wraps text at given width
+#: src/prefsdlg.cpp:1278
 msgid "Wrap at:"
 msgstr "Vou om by:"
 
+#: src/prefsdlg.cpp:1289
 msgid "Preserve formatting of existing files"
 msgstr "Behou formattering van bestaande lêers"
 
+#: src/prefsdlg.cpp:1341
 msgid "Advanced"
 msgstr "Gevorderd"
 
+#: src/prefsdlg.cpp:1369
 msgid "Settings"
-msgstr ""
+msgstr "Instellings"
 
+#: src/pretranslate.cpp:129
 msgid "Preparing strings…"
 msgstr "Berei tans stringe voor…"
 
+#: src/pretranslate.cpp:239
 msgid "Pre-translating from translation memory…"
 msgstr "Voorvertaling vanaf vertaalgeheue…"
 
+#: src/pretranslate.cpp:250 src/pretranslate.cpp:296
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
 msgstr[0] "%u string is voorafvertaal"
 msgstr[1] "%u stringe is voorafvertaal"
 
+#: src/pretranslate.cpp:259
+msgid "Uploading strings for cloud pre-translation…"
+msgstr "Stringe word opgelaai vir wolkvoorafvertaling…"
+
+#: src/pretranslate.cpp:300 src/pretranslate.cpp:357
 msgid "Pre-translating…"
 msgstr "Vertaal tans vooraf…"
 
+#: src/pretranslate.cpp:366
+#, c-format
+msgid "%d entry was pre-translated."
+msgid_plural "%d entries were pre-translated."
+msgstr[0] "%d inskrywing is voorafvertaal."
+msgstr[1] "%d inskrywings is voorafvertaal."
+
+#: src/pretranslate.cpp:372
+msgid "The translations were marked as needing work, because they may be inaccurate. You should review them for correctness."
+msgstr "Die vertalings is vir aandag gemerk omdat dit onakkuraat mag wees. U moet dit vir juistheid nagaan."
+
+#: src/pretranslate.cpp:375
+msgid "Exact matches from TM"
+msgstr ""
+
+#: src/pretranslate.cpp:376
+msgid "Approximate matches from TM"
+msgstr ""
+
+#. TRANSLATORS: shown instead of number when user disabled this kind of pre-translation results
+#: src/pretranslate.cpp:383
+msgid "disabled"
+msgstr ""
+
+#: src/pretranslate.cpp:384
+msgid "Machine translation"
+msgstr ""
+
+#: src/pretranslate.cpp:389
+msgid "No entries could be pre-translated."
+msgstr "Geen inskrywings kon voorafvertaal word nie."
+
+#: src/pretranslate.cpp:390
+msgid "The TM doesn’t contain any strings similar to the content of this file. It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually."
+msgstr "Die vertaalgeheue bevat geen stringe soortgelyk aan die inhoud van hierdie lêer nie. Dit is slegs effektief vir halfoutomatiese vertalings nadat Poedit genoeg geleer het van lêers wat u per hand vertaal het."
+
+#: src/pretranslate.cpp:418
 msgid "Cannot pre-translate without source text."
 msgstr "Kan nie vooraf vertaal sonder bronteks nie."
 
@@ -1476,1077 +2488,2106 @@ msgstr "Kan nie vooraf vertaal sonder bronteks nie."
 #. some users into thinking it's all that needs to be done (spoken from
 #. experience). "Pre-translate" nicely expresses that it's only the step done
 #. *before* actual translation.
+#: src/pretranslate.cpp:419 src/pretranslate.cpp:434 src/pretranslate.cpp:443
+#: src/pretranslate.cpp:489 src/pretranslate.cpp:616
+#: src/resources/toolbar.xrc:48 src/sidebar_pro.cpp:983
 msgid "Pre-translate"
 msgstr "Voorafvertaling"
 
-msgid ""
-"Pre-translation requires that source text is available. It doesn’t work if "
-"only IDs without the actual text are used."
-msgstr ""
-"Voorafvertaling vereis dat bronteks beskikbaar is. Dit werk nie indien slegs "
-"ID’s sonder die werklike teks gebruik word."
+#: src/pretranslate.cpp:423
+msgid "Pre-translation requires that source text is available. It doesn’t work if only IDs without the actual text are used."
+msgstr "Voorafvertaling vereis dat bronteks beskikbaar is. Dit werk nie indien slegs ID’s sonder die werklike teks gebruik word."
 
+#: src/pretranslate.cpp:433
 msgid "Cannot pre-translate from unknown language."
 msgstr "Kan nie vanuit onbekende taal voorafvertaal nie."
 
-msgid ""
-"Pre-translation requires that source text’s language is known. Poedit "
-"couldn’t detect it in this file."
-msgstr ""
-"Voorafvertaling vereis dat die brontekstaal bekend is. Poedit kon dit nie in "
-"hierdie lêer bespeur nie."
+#: src/pretranslate.cpp:438
+msgid "Pre-translation requires that source text’s language is known. Poedit couldn’t detect it in this file."
+msgstr "Voorafvertaling vereis dat die brontekstaal bekend is. Poedit kon dit nie in hierdie lêer bespeur nie."
 
+#: src/pretranslate.cpp:448
+msgid "Use online suggestions"
+msgstr "Gebruik aanlynvoorstelle"
+
+#: src/pretranslate.cpp:449
+msgid "Try to fetch translations from the online TM as well. Notice that the translations will not be perfect and will still need to be corrected by a human translator."
+msgstr "Probeer ook om vertalings vanaf die aanlyn-TM te verkry. Let daarop dat die vertalings nie foutloos sal wees nie en dat ’n menslike vertaler dit steeds sal moet korrigeer."
+
+#: src/pretranslate.cpp:476
 msgid "Only fill in exact matches"
 msgstr "Vul slegs presiese trefslae in"
 
-msgid ""
-"By default, inaccurate results are also included, but marked as needing "
-"work. Check this option to only include perfect matches."
-msgstr ""
-"Onakkurate resultate word by verstek ook ingesluit, maar gemerk vir aandag. "
-"Merk hierdie blokkie om slegs akkurate trefslae in te sluit."
+#: src/pretranslate.cpp:479
+msgid "By default, inaccurate results are also included, but marked as needing work. Check this option to only include perfect matches."
+msgstr "Onakkurate resultate word by verstek ook ingesluit, maar gemerk vir aandag. Merk hierdie blokkie om slegs akkurate trefslae in te sluit."
 
+#: src/pretranslate.cpp:481
+msgid "By default, inaccurate results and machine translation are also included, but marked as needing work. Check this option to only include perfect human translations."
+msgstr "Onakkurate resultate en masjienvertalings word by verstek ook ingesluit, maar gemerk vir aandag. Merk hierdie blokkie om slegs mensvertalings in te sluit."
+
+#: src/pretranslate.cpp:483
 msgid "Don’t mark exact matches as needing work"
 msgstr "Moenie presiese trefslae vir aandag merk nie"
 
-msgid ""
-"Only enable if you trust the quality of your TM. By default, all matches "
-"from the TM are marked as needing work and should be reviewed before use."
-msgstr ""
-"Aktiveer slegs indien u die gehalte van u TM vertrou. Alle trefslae vanuit "
-"die TM word by verstek vir aandag gemerk en moet hersien word voor gebruik."
+#: src/pretranslate.cpp:484
+msgid "Don’t mark machine translation as needing work"
+msgstr "Moenie masjienvertalings markeer met ‘werk nodig’ nie"
 
-msgid ""
-"Pre-translation automatically finds exact or fuzzy matches for untranslated "
-"strings in the translation memory and fills in their translations."
-msgstr ""
-"Voorafvertaling vind presiese of wollerige trefslae vir onvertaalde stringe "
-"outomaties in die vertaalgeheue en vul hul vertalings in."
+#: src/pretranslate.cpp:486
+msgid "Only enable if you trust the quality of your TM. By default, all matches from the TM are marked as needing work and should be reviewed before use."
+msgstr "Aktiveer slegs indien u die gehalte van u TM vertrou. Alle trefslae vanuit die TM word by verstek vir aandag gemerk en moet hersien word voor gebruik."
 
+#: src/pretranslate.cpp:493
+msgid "Pre-translation automatically finds exact or fuzzy matches for untranslated strings in the translation memory and fills in their translations."
+msgstr "Voorafvertaling vind presiese of wollerige trefslae vir onvertaalde stringe outomaties in die vertaalgeheue en vul hul vertalings in."
+
+#: src/pretranslate.cpp:495
+msgid "Pre-translation automatically searches existing translations and uses machine translation to fill in initial translations for strings that are not yet translated."
+msgstr "Voorafvertaling deursoek outomaties bestaande vertalings en gebruik masjienvertalings om aanvanklike vertalings in te vul vir stringe wat nog nie vertaal is nie."
+
+#: src/pretranslate.cpp:533
+msgid "Machine translation:"
+msgstr "Masjienvertaling:"
+
+#. TRANSLATORS: "Upgrade" as in upgrading from Pro to Pro+ version; "provider" is machine translation provider. This string needs to be as short as possible.
+#: src/pretranslate.cpp:545
+msgid "Upgrade for more providers"
+msgstr "Gradeer op vir meer verskaffers"
+
+#. TRANSLATORS: Part of larger line of UI: "Machine translation: [e.g. Google] with tone of voice: [formal/informal/automatic]". If "tone of voice" sounds weird, you can use "formality". See https://support.deepl.com/hc/en-us/articles/4406432463762-About-the-formal-informal-feature for explanation of what tone of voice / formality is.
+#: src/pretranslate.cpp:556
+msgid "with tone of voice:"
+msgstr "met stemtoon:"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:562
+msgid "automatic"
+msgstr "outomaties"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:564
+msgid "formal"
+msgstr "formeel"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:566
+msgid "informal"
+msgstr "informeel"
+
+#: src/pretranslate.cpp:651 src/sidebar_pro.cpp:551
+msgid "Exceeded machine translation quota."
+msgstr "Oorskry masjienvertaalkwota."
+
+#: src/pretranslate.cpp:660
 #, c-format
-msgid "%d entry was pre-translated."
-msgid_plural "%d entries were pre-translated."
-msgstr[0] "%d inskrywing is voorafvertaal."
-msgstr[1] "%d inskrywings is voorafvertaal."
+msgid "Machine translation usage: %d / %d\n"
+"%s"
+msgstr "Masjienvertalingsgebruik: %d / %d\n"
+"%s"
 
-msgid ""
-"The translations were marked as needing work, because they may be "
-"inaccurate. You should review them for correctness."
-msgstr ""
-"Die vertalings is vir aandag gemerk omdat dit onakkuraat mag wees. U moet "
-"dit vir juistheid nagaan."
+#: src/pretranslate.cpp:660
+msgid "Quota is rolling monthly."
+msgstr "Kwota rol maandeliks oor."
 
-msgid "No entries could be pre-translated."
-msgstr "Geen inskrywings kon voorafvertaal word nie."
+#: src/pretranslate.cpp:663 src/sidebar_pro.cpp:475
+msgid "Add machine translation credit"
+msgstr "Voeg masjienvertalingskrediet toe"
 
-msgid ""
-"The TM doesn’t contain any strings similar to the content of this file. It "
-"is only effective for semi-automatic translations after Poedit learns enough "
-"from files that you translated manually."
-msgstr ""
-"Die vertaalgeheue bevat geen stringe soortgelyk aan die inhoud van hierdie "
-"lêer nie. Dit is slegs effektief vir halfoutomatiese vertalings nadat Poedit "
-"genoeg geleer het van lêers wat u per hand vertaal het."
+#: src/progress_ui.cpp:172 src/wx_translatable_strings.h:151
+msgid "Error: "
+msgstr "Fout: "
 
+#: src/progress_ui.cpp:176
+#, c-format
+msgid "%d error occurred:"
+msgid_plural "%d errors occurred:"
+msgstr[0] "%d fout het voorgekom:"
+msgstr[1] "%d foute het voorgekom:"
+
+#: src/progress_ui.cpp:285
+msgid "An error occurred."
+msgstr "’n Fout het voorgekom."
+
+#: src/progress_ui.cpp:291
+#, c-format
+msgid "%d error occurred."
+msgid_plural "%d errors occurred."
+msgstr[0] "%d fout het voorgekom."
+msgstr[1] "%d foute het voorgekom."
+
+#: src/progress_ui.cpp:438
 msgid "Cancelling…"
 msgstr "Kanselleer tans…"
 
+#. TRANSLATORS: This text is shown as a hint/advice. The %s→%s part is replaced with menu item pointer, "File→New WordPress Translation".
+#: src/propertiesdlg.cpp:92
+#, c-format
+msgid "Use %s→%s for full WordPress functionality."
+msgstr "Gebruik %s→%s vir volledige WordPress-funksionaliteit."
+
+#: src/propertiesdlg.cpp:93 src/resources/menus.xrc:5
+#: src/resources/menus.xrc:384 src/wx_translatable_strings.h:104
+msgid "&File"
+msgstr "&Lêer"
+
+#: src/propertiesdlg.cpp:94 src/resources/menus.xrc:17
+#: src/resources/menus.xrc:396
+msgid "New WordPress Translation…"
+msgstr "Nuwe WordPress-vertaling…"
+
+#: src/propertiesdlg.cpp:94 src/resources/menus.xrc:16
+#: src/resources/menus.xrc:395
+msgid "New WordPress translation…"
+msgstr "Nuwe WordPress-vertaling…"
+
+#: src/propertiesdlg.cpp:366
 msgid "Drag Folders or Files Here"
 msgstr "Sleep vouers of lêers hier"
 
+#: src/propertiesdlg.cpp:366
 msgid "Drag folders or files here"
 msgstr "Sleep vouers of lêers hier"
 
+#: src/propertiesdlg.cpp:471
 msgid "Add Folders…"
 msgstr "Voeg Vouers Toe…"
 
+#: src/propertiesdlg.cpp:471
 msgid "Add folders…"
 msgstr "Voeg vouers toe…"
 
+#: src/propertiesdlg.cpp:472
 msgid "Add Files…"
 msgstr "Voeg Lêers Toe…"
 
+#: src/propertiesdlg.cpp:472
 msgid "Add files…"
 msgstr "Voeg lêers toe…"
 
+#: src/propertiesdlg.cpp:474
 msgid "Add Wildcard…"
 msgstr "Voeg Swartpiet toe…"
 
+#: src/propertiesdlg.cpp:474
 msgid "Add wildcard…"
 msgstr "Voeg swartpiet toe…"
 
 #. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+#: src/propertiesdlg.cpp:545
 msgid "Reveal in Finder"
 msgstr "Toon in Finder"
 
 #. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+#: src/propertiesdlg.cpp:548
 msgid "Show in Explorer"
 msgstr "Toon in Explorer"
 
+#: src/propertiesdlg.cpp:550
 msgid "Show in Folder"
 msgstr "Toon in vouer"
 
+#: src/propertiesdlg.cpp:581
 msgid "Paths"
 msgstr "Paaie"
 
+#: src/propertiesdlg.cpp:601
 msgid "Excluded paths"
 msgstr "Uitgesluite paaie"
 
+#: src/propertiesdlg.cpp:619
 msgid "Advanced extraction settings"
 msgstr "Gevorderde ekstraheerinstellings"
 
+#: src/propertiesdlg.cpp:625
 msgid "Extract notes for translators from:"
 msgstr "Ekstraheer notas vir vertalers vanaf:"
 
+#: src/propertiesdlg.cpp:627
 msgid "Comments prefixed with:"
 msgstr "Kommentaar voorafgegaan deur:"
 
+#: src/propertiesdlg.cpp:636
 msgid "All comments"
 msgstr "Alle kommentare"
 
+#: src/propertiesdlg.cpp:639
 msgid "Additional xgettext flags:"
 msgstr "Aanvullende xgettext-vlae:"
 
+#: src/propertiesdlg.cpp:779
 msgid "Additional keywords"
 msgstr "Aanvullende sleutelwoorde"
 
+#: src/propertiesdlg.cpp:810
 msgid "Name of the project the translation is for"
 msgstr "Naam van die projek waarvoor die vertaling is"
 
+#: src/propertiesdlg.cpp:811
 msgid "Team name and email address or URL"
 msgstr "Spannaam en e-posadres of bronadres"
 
+#: src/propertiesdlg.cpp:812
 msgid "e.g. nplurals=2; plural=(n > 1);"
 msgstr "bv. nplurals=2; plural=(n > 1);"
 
+#: src/propertiesdlg.cpp:817
+msgid "Custom file extensions are being used."
+msgstr "Pasgemaakte lêeruitbreidings word gebruik."
+
+#: src/propertiesdlg.cpp:872
 msgid "UTF-8 (recommended)"
 msgstr "UTF-8 (aanbeveel)"
 
+#: src/propertiesdlg.cpp:1055
 msgid "Please save the file first. This section cannot be edited until then."
-msgstr ""
-"Bewaar eers die lêer. Hierdie afdeling kan tot dan nie bewerk word nie."
+msgstr "Bewaar eers die lêer. Hierdie afdeling kan tot dan nie bewerk word nie."
 
+#: src/propertiesdlg.cpp:1177
+msgid "File Extensions"
+msgstr "Lêeruitbreidings"
+
+#: src/propertiesdlg.cpp:1189
+msgid "Extension or Wildcard"
+msgstr "Uitbreidings of wildekaart"
+
+#: src/propertiesdlg.cpp:1191
+msgid "Extractor"
+msgstr "Ekstraheerder"
+
+#: src/propertiesdlg.cpp:1266
+msgid "(unknown)"
+msgstr "(onbekend)"
+
+#: src/qa_checks.cpp:153
 msgid "Placeholders correctness"
 msgstr "Korrektheid van plekhouers"
 
+#: src/qa_checks.cpp:208
 #, c-format
 msgid "Placeholder “%s” is missing from translation."
 msgstr "Plekhouer “%s” word uit vertaling vermis."
 
+#: src/qa_checks.cpp:220
 #, c-format
 msgid "Superfluous placeholder “%s” that isn’t in source text."
 msgstr "’n Oorbodige plekhouer “%s” wat nie in brontekst is nie."
 
+#: src/qa_checks.cpp:256
 msgid "Plural form translations"
 msgstr "Meervoudsvertalings"
 
+#: src/qa_checks.cpp:277
 msgid "Not all plural forms are translated."
 msgstr "Nie alle meervoudsvorme is vertaal nie."
 
+#: src/qa_checks.cpp:289
 msgid "Inconsistent upper/lower case"
 msgstr "Inkonsekwente groot/kleinlettergebruik"
 
+#: src/qa_checks.cpp:305
 msgid "The translation should start as a sentence."
 msgstr "Die vertaling moet as ’n sin begin."
 
+#: src/qa_checks.cpp:313
 msgid "The translation should start with a lowercase character."
 msgstr "Die vertaling moet met ’n kleinletter begin."
 
+#: src/qa_checks.cpp:331
 msgid "Inconsistent whitespace"
 msgstr "Inkonsekwente witruimte"
 
+#: src/qa_checks.cpp:345
 msgid "The translation doesn’t start with a space."
 msgstr "Die vertaling begin nie met ’n spasie nie."
 
+#: src/qa_checks.cpp:351
 msgid "The translation starts with a space, but the source text doesn’t."
 msgstr "Die vertaling begin met ’n spasie maar nie die bronteks nie."
 
+#: src/qa_checks.cpp:357
 msgid "The translation is missing a newline at the end."
 msgstr "Die vertaling makeer ’n reëlafbreking aan die einde."
 
+#: src/qa_checks.cpp:363
 msgid "The translation ends with a newline, but the source text doesn’t."
 msgstr "Die vertaling eindig met ’n reëlafbreking maar nie die bronteks nie."
 
+#: src/qa_checks.cpp:369
 msgid "The translation is missing a space at the end."
 msgstr "Die vertaling makeer ’n spasie aan die einde."
 
+#: src/qa_checks.cpp:375
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "Die vertaling eindig met ’n spasie maar nie die bronteks nie."
 
+#: src/qa_checks.cpp:390
 msgid "Punctuation checks"
 msgstr "Leestekenkontrole"
 
+#: src/qa_checks.cpp:455
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr "Die vertaling moet met “%s” eindig."
 
+#: src/qa_checks.cpp:467
 #, c-format
 msgid "The translation should not end with “%s”."
 msgstr "Die vertaling moet nie met “%s” eindig nie."
 
+#: src/qa_checks.cpp:488
 #, c-format
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
 msgstr "Die vertaling eindig met “%s” maar die bronteks eindig met “%s”."
 
+#: src/recent_files.cpp:223
 msgid "Cloud"
 msgstr "Wolk"
 
+#: src/recent_files.cpp:404
 msgid "Clear Menu"
 msgstr "Wis kieslys"
 
+#: src/recent_files.cpp:404
 msgid "Clear menu"
 msgstr "Wis kieslys"
 
+#: src/resources/comment.xrc:10
 msgid "Comment:"
 msgstr "Kommentaar:"
 
+#: src/resources/comment.xrc:33
 msgid "Update"
 msgstr "Werk by"
 
+#: src/resources/comment.xrc:48 src/wx_translatable_strings.h:100
 msgid "&Delete"
 msgstr "&Skrap"
 
+#: src/resources/comment.xrc:49
 msgid "Delete the comment"
 msgstr "Verwyder die kommentaar"
 
+#: src/resources/manager.xrc:4
 msgid "Edit project"
 msgstr "Wysig projek"
 
+#: src/resources/manager.xrc:9
 msgid "Project name:"
 msgstr "Projeknaam:"
 
+#: src/resources/manager.xrc:39
 msgid "Browse"
 msgstr "Blaai"
 
+#: src/resources/manager.xrc:41
 msgid "Add directory to the list"
 msgstr "Voeg gids tot die lys toe"
 
-msgid "OK"
-msgstr "Goed"
-
-msgid "&File"
-msgstr "&Lêer"
-
+#: src/resources/menus.xrc:8 src/resources/menus.xrc:387
 msgid "&New…"
 msgstr "Open Onlangse&Nuut…"
 
+#: src/resources/menus.xrc:12 src/resources/menus.xrc:391
 msgid "New from &POT/PO file…"
 msgstr "Nuut vanuit &POT/PO-lêer…"
 
+#: src/resources/menus.xrc:13 src/resources/menus.xrc:392
 msgid "New From &POT/PO File…"
 msgstr "Nuut Vanuit POT/PO-lêer…"
 
+#: src/resources/menus.xrc:21 src/resources/menus.xrc:400
+#: src/wx_translatable_strings.h:109
 msgid "&Open…"
 msgstr "&Open…"
 
+#: src/resources/menus.xrc:25 src/resources/menus.xrc:404
 msgid "Open Recent"
 msgstr "Open Onlangse"
 
+#: src/resources/menus.xrc:26 src/resources/menus.xrc:405
 msgid "Open recent"
 msgstr "Open onlangse"
 
+#: src/resources/menus.xrc:29 src/resources/menus.xrc:408
 msgid "Open cloud translation…"
 msgstr "Open wolkvertaling…"
 
+#: src/resources/menus.xrc:30 src/resources/menus.xrc:409
 msgid "Open Cloud Translation…"
 msgstr "Open wolkvertaling…"
 
+#: src/resources/menus.xrc:34 src/resources/menus.xrc:413
 msgid "&Start window"
 msgstr "&Beginvenster"
 
+#: src/resources/menus.xrc:35 src/resources/menus.xrc:414
 msgid "&Start Window"
 msgstr "&Beginvenster"
 
+#: src/resources/menus.xrc:39 src/resources/menus.xrc:419
 msgid "Catalogs &manager"
 msgstr "Katalogus&bestuurder"
 
+#: src/resources/menus.xrc:40 src/resources/menus.xrc:420
 msgid "Catalogs &Manager"
 msgstr "Katalogus&bestuurder"
 
+#: src/resources/menus.xrc:44 src/resources/menus.xrc:424
+#: src/wx_translatable_strings.h:96
 msgid "&Close"
 msgstr "Maak &toe"
 
+#: src/resources/menus.xrc:48 src/wx_translatable_strings.h:115
 msgid "&Save"
 msgstr "&Bewaar"
 
+#: src/resources/menus.xrc:52
 msgid "Save &as…"
 msgstr "Bewaar &as…"
 
+#: src/resources/menus.xrc:53
 msgid "Save &As…"
 msgstr "Bewaar &As…"
 
+#: src/resources/menus.xrc:58
 msgid "Compile to MO…"
 msgstr "Kompileer na MO…"
 
+#: src/resources/menus.xrc:62
 msgid "E&xport to HTML…"
-msgstr ""
+msgstr "S&tuur uit as HTML…"
 
+#: src/resources/menus.xrc:66
+msgid "Export to Excel…"
+msgstr "Stuur uit na Excel…"
+
+#: src/resources/menus.xrc:69
+msgid "Import from Excel…"
+msgstr "Voer in vanaf Excel…"
+
+#: src/resources/menus.xrc:73 src/resources/menus.xrc:428
 msgid "Check for updates…"
 msgstr "Soek na bywerkings…"
 
+#: src/resources/menus.xrc:76 src/resources/menus.xrc:431
+msgid "&License…"
+msgstr "&Lisensie…"
+
+#: src/resources/menus.xrc:79 src/resources/menus.xrc:434
 msgid "Settings…"
 msgstr "Instellings…"
 
+#: src/resources/menus.xrc:83 src/resources/menus.xrc:438
+#: src/wx_translatable_strings.h:112
 msgid "&Preferences"
 msgstr "&Voorkeure"
 
+#: src/resources/menus.xrc:90 src/resources/menus.xrc:445
 msgid "E&xit"
 msgstr "&Verlaat"
 
+#: src/resources/menus.xrc:91 src/resources/menus.xrc:446
+#: src/wx_translatable_strings.h:103
 msgid "Quit"
 msgstr "Sluit Af"
 
+#: src/resources/menus.xrc:118
 msgid "Copy from singular"
 msgstr "Kopieer vanuit enkelvoudsvorm"
 
+#: src/resources/menus.xrc:119
 msgid "Copy From Singular"
 msgstr "Kopieer Vanuit Enkelvoudsvorm"
 
+#: src/resources/menus.xrc:124
 msgid "Translation needs &work"
 msgstr "Vertaling kort &aandag"
 
+#: src/resources/menus.xrc:125
 msgid "Translation Needs &Work"
 msgstr "Vertaling Kort &Aandag"
 
+#: src/resources/menus.xrc:130
 msgid "Edit &comment"
 msgstr "&Wysig kommentaar"
 
+#: src/resources/menus.xrc:131
 msgid "Edit &Comment"
 msgstr "Wysig &Kommentaar"
 
 #. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
+#: src/resources/menus.xrc:136 src/sidebar.cpp:651 src/sidebar_pro.cpp:219
 msgid "Suggestions"
 msgstr "Voorstelle"
 
+#: src/resources/menus.xrc:139 src/resources/menus.xrc:158
 msgid "&Find…"
 msgstr "&Soek…"
 
+#: src/resources/menus.xrc:144
 msgid "Replace…"
 msgstr "Vervang…"
 
+#: src/resources/menus.xrc:148
 msgid "Find next"
 msgstr "Soek volgende"
 
+#: src/resources/menus.xrc:152
 msgid "Find previous"
 msgstr "Soek vorige"
 
+#: src/resources/menus.xrc:162
 msgid "Find and Replace…"
 msgstr "Soek en Vervang…"
 
+#: src/resources/menus.xrc:166
 msgid "Find Next"
 msgstr "Soek Volgende"
 
+#: src/resources/menus.xrc:170
 msgid "Find Previous"
 msgstr "Soek Vorige"
 
+#: src/resources/menus.xrc:179
 msgid "Show string &ID"
 msgstr "Toon string-&ID"
 
+#: src/resources/menus.xrc:180
 msgid "Show String &ID"
 msgstr "Toon String-&ID"
 
+#: src/resources/menus.xrc:184
 msgid "Show warnings"
 msgstr "Toon waarskuwings"
 
+#: src/resources/menus.xrc:185
 msgid "Show Warnings"
 msgstr "Toon Waarskuwings"
 
+#: src/resources/menus.xrc:189
+msgid "Customize warnings…"
+msgstr "Pas waarskuwings aan…"
+
+#: src/resources/menus.xrc:190
+msgid "Customize Warnings…"
+msgstr "Pas waarskuwings aan…"
+
+#: src/resources/menus.xrc:194
 msgid "Sort by &file order"
 msgstr "Sorteer volgens &lêervolgorde"
 
+#: src/resources/menus.xrc:195
 msgid "Sort by &File Order"
 msgstr "Sorteer volgens &Lêervolgorde"
 
+#: src/resources/menus.xrc:199
 msgid "Sort by &source"
 msgstr "Sorteer volgens &bron"
 
+#: src/resources/menus.xrc:200
 msgid "Sort by &Source"
 msgstr "Sorteer volgens &Bron"
 
+#: src/resources/menus.xrc:204
 msgid "Sort by &translation"
 msgstr "Sorteer volgens &vertaling"
 
+#: src/resources/menus.xrc:205
 msgid "Sort by &Translation"
 msgstr "Sorteer volgens &Vertaling"
 
+#: src/resources/menus.xrc:210
 msgid "&Group by context"
 msgstr "&Groepeer volgens konteks"
 
+#: src/resources/menus.xrc:211
 msgid "&Group By Context"
 msgstr "&Groepeer Volgens Konteks"
 
+#: src/resources/menus.xrc:215
 msgid "Entries with errors first"
 msgstr "Inskrywings met foute eerste"
 
+#: src/resources/menus.xrc:216
 msgid "Entries with Errors First"
 msgstr "Inskrywings met Foute Eerste"
 
+#: src/resources/menus.xrc:220
 msgid "&Untranslated entries first"
 msgstr "&Onvertaalde inskrywings eerste"
 
+#: src/resources/menus.xrc:221
 msgid "&Untranslated Entries First"
 msgstr "&Onvertaalde Inskrywings Eerste"
 
+#: src/resources/menus.xrc:226
+msgid "Show &suggestions tab"
+msgstr "Toon &voorstelle-oortjie"
+
+#: src/resources/menus.xrc:227
+msgid "Show &Suggestions Tab"
+msgstr "Wys &voorstelle-oortjie"
+
+#: src/resources/menus.xrc:231
+msgid "Show &terminology tab"
+msgstr "Toon &terminologie-oortjie"
+
+#: src/resources/menus.xrc:232
+msgid "Show &Terminology Tab"
+msgstr "Toon &terminologie-oortjie"
+
+#: src/resources/menus.xrc:236
 msgid "&Show code occurrences"
 msgstr "&Toon kodevoorkomste"
 
+#: src/resources/menus.xrc:237
 msgid "&Show Code Occurrences"
 msgstr "&Toon kodevoorkomste"
 
+#: src/resources/menus.xrc:241
 msgid "Show sidebar"
 msgstr "Toon systaaf"
 
+#: src/resources/menus.xrc:247
 msgid "Show status bar"
 msgstr "Toon Statusbalk"
 
+#: src/resources/menus.xrc:255 src/resources/menus.xrc:463
 msgid "&Translation"
 msgstr "&Vertaling"
 
+#: src/resources/menus.xrc:258 src/statistics.cpp:312 src/statistics.cpp:415
+#: src/statistics.cpp:427
+msgid "Source Text"
+msgstr "Bronteks"
+
+#: src/resources/menus.xrc:262
 msgid "&Update from source code"
 msgstr "&Werk by vanuit bronkode"
 
+#: src/resources/menus.xrc:263
 msgid "&Update from Source Code"
 msgstr "&Werk By vanuit Bronkode"
 
-msgid "Update from &POT file…"
-msgstr "Werk by vanuit &POT-lêer…"
-
-msgid "Update from &POT File…"
-msgstr "Werk by vanuit &POT-lêer…"
-
+#: src/resources/menus.xrc:270
 msgid "Sync with Crowdin"
 msgstr "Sinchroniseer met Crowdin"
 
+#: src/resources/menus.xrc:274 src/resources/menus.xrc:275
 msgid "Pre-&translate…"
 msgstr "Vooraf&vertaal…"
 
+#: src/resources/menus.xrc:279
 msgid "&Validate translations"
 msgstr "&Valideer vertalings"
 
+#: src/resources/menus.xrc:280
 msgid "&Validate Translations"
 msgstr "&Valideer Vertalings"
 
-msgid "Remove Same-as-Source Translations"
-msgstr ""
+#: src/resources/menus.xrc:284
+msgid "&Statistics"
+msgstr "&Statistiek"
 
+#: src/resources/menus.xrc:289
+msgid "Remove Same-as-Source Translations"
+msgstr "Verwyder dieselfde-as-bron-vertalings"
+
+#: src/resources/menus.xrc:292
 msgid "&Purge deleted translations"
 msgstr "&Verwyder vertalings wat vir uitvee gemerk is"
 
+#: src/resources/menus.xrc:293
 msgid "&Purge Deleted Translations"
 msgstr "&Purgeer Geskrapte Vertalings"
 
+#: src/resources/menus.xrc:297
 msgid "&Properties…"
 msgstr "&Eienskappe…"
 
+#: src/resources/menus.xrc:304 src/resources/menus.xrc:466
 msgid "&Go"
 msgstr "&Gaan"
 
+#: src/resources/menus.xrc:307
 msgid "&Done and next"
 msgstr "&Gereed en volgende"
 
+#: src/resources/menus.xrc:308
 msgid "&Done and Next"
 msgstr "&Gereed en Volgende"
 
+#: src/resources/menus.xrc:314
 msgid "Previously edited"
 msgstr "Voorheen geredigeer"
 
+#: src/resources/menus.xrc:315
 msgid "Previously Edited"
 msgstr "Voorheen geredigeer"
 
+#: src/resources/menus.xrc:320
 msgid "&Previous translation"
 msgstr "&Vorige vertaling"
 
+#: src/resources/menus.xrc:321
 msgid "&Previous Translation"
 msgstr "&Vorige Vertaling"
 
+#: src/resources/menus.xrc:325
 msgid "&Next translation"
 msgstr "&Volgende vertaling"
 
+#: src/resources/menus.xrc:326
 msgid "&Next Translation"
 msgstr "&Volgende Vertaling"
 
+#: src/resources/menus.xrc:330
 msgid "P&revious unfinished"
 msgstr "V&orige onvoltooide"
 
+#: src/resources/menus.xrc:331
 msgid "P&revious Unfinished"
 msgstr "V&orige Onvoltooide"
 
+#: src/resources/menus.xrc:335
 msgid "Ne&xt unfinished"
 msgstr "&Volgende onvoltooide"
 
+#: src/resources/menus.xrc:336
 msgid "Ne&xt Unfinished"
 msgstr "&Volgende Onvoltooide"
 
+#: src/resources/menus.xrc:341
 msgid "Previous plural form"
 msgstr "Vorige meervoudsvorm"
 
+#: src/resources/menus.xrc:342
 msgid "Previous Plural Form"
 msgstr "Vorige Meervoudsvorm"
 
+#: src/resources/menus.xrc:346
 msgid "Next plural form"
 msgstr "Volgende meervoudsvorm"
 
+#: src/resources/menus.xrc:347
 msgid "Next Plural Form"
 msgstr "Volgende Meervoudsvorm"
 
+#: src/resources/menus.xrc:356 src/resources/menus.xrc:473
 msgid "&Online help"
 msgstr "&Aanlynhulp"
 
+#: src/resources/menus.xrc:357 src/resources/menus.xrc:474
 msgid "&Online Help"
 msgstr "&Aanlynhulp"
 
+#: src/resources/menus.xrc:363 src/resources/menus.xrc:480
 msgid "&GNU gettext manual"
 msgstr "&GNU-gettext-handleiding"
 
+#: src/resources/menus.xrc:364 src/resources/menus.xrc:481
 msgid "&GNU gettext Manual"
 msgstr "&GNU-gettext-handleiding"
 
+#: src/resources/menus.xrc:368 src/resources/menus.xrc:485
+msgid "Email &support…"
+msgstr "E-pos&ondersteuning…"
+
+#: src/resources/menus.xrc:369 src/resources/menus.xrc:486
+msgid "Email &Support…"
+msgstr "E-pos&ondersteuning…"
+
+#: src/resources/menus.xrc:373 src/resources/menus.xrc:490
 msgid "&About Poedit"
 msgstr "&Oor Poedit"
 
+#: src/resources/menus.xrc:374 src/resources/menus.xrc:375
+#: src/resources/menus.xrc:491 src/resources/menus.xrc:492
 msgid "&About"
 msgstr "&Oor"
 
+#: src/resources/prefs.xrc:4
 msgid "Extractor setup"
 msgstr "Ekstraheeropstelling"
 
+#: src/resources/prefs.xrc:27
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "Lys van uitbreidings geskei deur kommapunte (bv. *.cpp;*.h):"
 
+#: src/resources/prefs.xrc:43
 msgid "Invocation:"
 msgstr "Aanroeping:"
 
+#: src/resources/prefs.xrc:47
 msgid "Command to extract translations:"
 msgstr "Bevel om vertalings te ekstraheer:"
 
-msgid ""
-"This is the command used to launch the extractor.\n"
+#: src/resources/prefs.xrc:61
+msgid "This is the command used to launch the extractor.\n"
 "%o expands to the name of output file, %K to list\n"
 "of keywords, %F to list of input files,\n"
 "%C to charset flag (see below)."
-msgstr ""
-"Dit is die bevel wat gebruik word om die ekstraheerder te lanseer.\n"
+msgstr "Dit is die bevel wat gebruik word om die ekstraheerder te lanseer.\n"
 "%o brei uit na die naam van die afvoerlêer, %K na sleutelwoordlys,\n"
 "%F na toevoerlêerlys, %C na karakterstelvlag (sien hieronder)."
 
+#: src/resources/prefs.xrc:70
 msgid "An item in keywords list:"
 msgstr "’n Item in sleutelwoordelys:"
 
-msgid ""
-"This will be attached to the command line once\n"
+#: src/resources/prefs.xrc:84
+msgid "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
-msgstr ""
-"Dit sal vir elke sleutelwoord eenmaal bygevoeg word\n"
+msgstr "Dit sal vir elke sleutelwoord eenmaal bygevoeg word\n"
 "by die bevellyn.  %k brei uit na die sleutelwoord."
 
+#: src/resources/prefs.xrc:93
 msgid "An item in input files list:"
 msgstr "’n Item in toevoerlêerlys:"
 
+#: src/resources/prefs.xrc:107
 #, c-format
-msgid ""
-"This will be attached to the command line once\n"
+msgid "This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
-msgstr ""
-"Dit sal vir elke toevoerlêer eenmaal bygevoeg word\n"
+msgstr "Dit sal vir elke toevoerlêer eenmaal bygevoeg word\n"
 "by die bevellyn.  %f brei uit na die lêernaam."
 
+#: src/resources/prefs.xrc:116 src/resources/properties.xrc:124
 msgid "Source code charset:"
 msgstr "Bronkodekarakterstel:"
 
+#: src/resources/prefs.xrc:130
 #, c-format
-msgid ""
-"This will be attached to the command line\n"
+msgid "This will be attached to the command line\n"
 "only if source code charset was given. %c expands to charset value."
-msgstr ""
-"Dit word tot die opdragreël toegevoeg\n"
-"indien slegs bronkodekarakterstel gegee is. %c brei uit na "
-"karakterstelwaarde."
+msgstr "Dit word tot die opdragreël toegevoeg\n"
+"indien slegs bronkodekarakterstel gegee is. %c brei uit na karakterstelwaarde."
 
+#: src/resources/properties.xrc:4 src/resources/properties.xrc:153
 msgid "Translation Properties"
 msgstr "Vertaaleienskappe"
 
+#: src/resources/properties.xrc:19
 msgid "Project name and version:"
 msgstr "Projeknaam en -weergawe:"
 
+#: src/resources/properties.xrc:34
 msgid "Language team:"
 msgstr "Taalspan:"
 
+#: src/resources/properties.xrc:66
 msgid "Plural forms:"
 msgstr "Meervoudsvorme:"
 
+#: src/resources/properties.xrc:73
 msgid "Use default rules for this language"
 msgstr "Gebruik verstekreëls vir hierdie taal"
 
+#: src/resources/properties.xrc:82
 msgid "Use custom expression"
 msgstr "Gebruik pasgemaakte uitdrukking"
 
+#: src/resources/properties.xrc:98
 msgid "Learn about plural forms"
 msgstr "Meer inligting oor meervoudsvorme"
 
+#: src/resources/properties.xrc:112
 msgid "Charset:"
 msgstr "Karakterstel:"
 
+#: src/resources/properties.xrc:138
 msgid "Advanced Extraction Settings…"
 msgstr "Gevorderde Ekstraheerinstellings…"
 
+#: src/resources/properties.xrc:139
 msgid "Advanced extraction settings…"
 msgstr "Gevorderde ekstraheerinstellings…"
 
+#: src/resources/properties.xrc:154
 msgid "Translation properties"
 msgstr "Vertaaleienskappe"
 
+#: src/resources/properties.xrc:157
 msgid "Sources Paths"
 msgstr "Bronpaaie"
 
+#: src/resources/properties.xrc:158
 msgid "Sources paths"
 msgstr "Bronpaaie"
 
+#: src/resources/properties.xrc:164
 msgid "Extract text from source files in the following directories:"
 msgstr "Ekstraheer teks uit die bronlêers in die volgende gidse:"
 
+#: src/resources/properties.xrc:173
 msgid "Base path:"
 msgstr "Basispad:"
 
+#: src/resources/properties.xrc:227
+msgid "Customize File Extensions…"
+msgstr "Pas lêeruitbreidings aan…"
+
+#: src/resources/properties.xrc:228
+msgid "Customize file extensions…"
+msgstr "Pas lêeruitbreidings aan…"
+
+#: src/resources/properties.xrc:241
 msgid "Sources Keywords"
 msgstr "Bronsleutelwoorde"
 
+#: src/resources/properties.xrc:242
 msgid "Sources keywords"
 msgstr "Bronsleutelwoorde"
 
-msgid ""
-"Use these keywords (function names) to recognize translatable strings\n"
+#: src/resources/properties.xrc:248
+msgid "Use these keywords (function names) to recognize translatable strings\n"
 "in source files:"
-msgstr ""
-"Gebruik hierdie sleutelwoorde (funksiename) om vertaalbare stringe\n"
+msgstr "Gebruik hierdie sleutelwoorde (funksiename) om vertaalbare stringe\n"
 "in bronlêers te herken:"
 
+#: src/resources/properties.xrc:264
 msgid "Also use default keywords for supported languages"
 msgstr "Gebruik ook versteksleutelwoorde vir ondersteunde tale"
 
+#: src/resources/properties.xrc:271
 msgid "Learn about gettext keywords"
 msgstr "Meer inligting oof gettext-sleutelwoorde"
 
-msgid "Update summary"
-msgstr "Werk opsomming by"
-
-msgid ""
-"These strings were found in the sources but were not in the file.\n"
+#: src/resources/summary.xrc:32
+msgid "These strings were found in the sources but were not in the file.\n"
 "Poedit will add them to the file now."
-msgstr ""
-"Hierdie stringe is in die bronne gevind, maar nie in die lêer nie.\n"
+msgstr "Hierdie stringe is in die bronne gevind, maar nie in die lêer nie.\n"
 "Poedit sal dit nou tot die lêer toevoeg."
 
-msgid "New strings"
-msgstr "Nuwe stringe"
-
-msgid ""
-"These strings are no longer in the source code.\n"
+#: src/resources/summary.xrc:53
+msgid "These strings are no longer in the source code.\n"
 "Poedit will remove them from the file now."
-msgstr ""
-"Hierdie stringe is nie meer in die bronkode nie.\n"
+msgstr "Hierdie stringe is nie meer in die bronkode nie.\n"
 "Poedit sal dit nou uit die lêer verwyder."
 
+#: src/resources/summary.xrc:66
 msgid "Obsolete strings"
 msgstr "Verouderde stringe"
 
+#: src/resources/summary.xrc:79
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 nuut, 0 verouderd)"
 
-msgid "Open"
-msgstr ""
-
+#: src/resources/toolbar.xrc:13 src/resources/toolbar.xrc:17
 msgid "Open file"
 msgstr "Open lêer"
 
+#: src/resources/toolbar.xrc:22 src/resources/toolbar.xrc:26
 msgid "Save file"
 msgstr "Bewaar lêer"
 
+#: src/resources/toolbar.xrc:34
 msgid "Validate"
 msgstr "Valideer"
 
+#: src/resources/toolbar.xrc:35
 msgid "Check for errors in the translation"
 msgstr "Gaan die vertaling na vir foute"
 
+#: src/resources/toolbar.xrc:49
+msgid "Pre-translate strings that don’t have a translation yet"
+msgstr "Voorvertaal alle stringe wat nog nie ’n vertaling het nie"
+
+#: src/resources/toolbar.xrc:57 src/wx/main_toolbar.cpp:136
 msgid "Update from code"
 msgstr "Werk by vanuit kode"
 
+#: src/resources/toolbar.xrc:58 src/wx/main_toolbar.cpp:136
 msgid "Update from Code"
 msgstr "Werk By vanuit Kode"
 
+#: src/resources/toolbar.xrc:59 src/wx/main_toolbar.cpp:137
 msgid "Update from source code"
 msgstr "Werk by vanuit bronkode"
 
+#: src/resources/toolbar.xrc:67
 msgid "Sidebar"
 msgstr "Systaaf"
 
+#: src/resources/toolbar.xrc:68
 msgid "Show or hide the sidebar"
 msgstr "Toon of versteek die systaaf"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
+#: src/sidebar.cpp:139
 msgid "Previous source text"
 msgstr "Vorige bronteks"
 
-msgid ""
-"The old source text (before it changed during an update) that the now-"
-"inaccurate translation corresponds to."
-msgstr ""
-"Die ou bronteks (voor dit gedurende ’n bywerking verander is) waar die nou "
-"onakkurate vertaling mee ooreenstem."
+#: src/sidebar.cpp:142
+msgid "The old source text (before it changed during an update) that the now-inaccurate translation corresponds to."
+msgstr "Die ou bronteks (voor dit gedurende ’n bywerking verander is) waar die nou onakkurate vertaling mee ooreenstem."
 
+#: src/sidebar.cpp:168
 msgid "Notes for translators"
 msgstr "Notas vir vertalers"
 
+#: src/sidebar.cpp:201
 msgid "Comment"
 msgstr "Kommentaar"
 
+#: src/sidebar.cpp:231 src/sidebar.cpp:250
 msgid "Add comment"
 msgstr "Skryf kommentaar"
 
+#: src/sidebar.cpp:233 src/sidebar.cpp:235 src/sidebar.cpp:253
 msgid "Add Comment"
 msgstr "Skryf Kommentaar"
 
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:436
+msgid "from your TM"
+msgstr "vanuit u TM"
+
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:441
+msgid "machine translation"
+msgstr "masjienvertaling"
+
+#. TRANSLATORS: This is followed by a logo of e.g. Microsoft Translator, forming a sentence e.g. "translated by MS Translator"
+#: src/sidebar.cpp:449
+msgid "translated by"
+msgstr "vertaal deur"
+
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:456
+msgid "human translation"
+msgstr "mensevertaling"
+
+#: src/sidebar.cpp:592
 msgid "Delete From Translation Memory"
 msgstr "Skrap Uit Vertaalgeheue"
 
+#: src/sidebar.cpp:592
 msgid "Delete from translation memory"
 msgstr "Skrap uit vertaalgeheue"
 
+#: src/sidebar.cpp:593
+msgid "Report Bad Translation"
+msgstr "Rapporteer Swak Vertaling"
+
+#: src/sidebar.cpp:593
+msgid "Report bad translation"
+msgstr "Rapporteer swak vertaling"
+
+#: src/sidebar.cpp:652
 msgid "Translation suggestions"
 msgstr "Vertaalvoorstelle"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
+#: src/sidebar.cpp:695
 msgid "No matches found"
 msgstr "Geen trefslae gevind"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (macOS, Linux).
+#: src/sidebar.cpp:698
 msgid "No Matches Found"
 msgstr "Geen Trefslae Gevind"
 
+#: src/sidebar.cpp:734 src/sidebar_pro.cpp:325
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Hierdie string is in Poedit se vertaalgeheue gevind."
 
-msgid ""
-"Translation suggestions require that source text is available. They don’t "
-"work if only IDs without the actual text are used."
-msgstr ""
-"Vertalingsvoorstelle vereis dat bronteks beskikbaar is. Hulle werk nie "
-"indien slegs ID’s sonder die werklike teks gebruik word."
+#: src/sidebar.cpp:984
+msgid "Translation suggestions require that source text is available. They don’t work if only IDs without the actual text are used."
+msgstr "Vertalingsvoorstelle vereis dat bronteks beskikbaar is. Hulle werk nie indien slegs ID’s sonder die werklike teks gebruik word."
 
-msgid ""
-"Translation suggestions require that source text’s language is known. Poedit "
-"couldn’t detect it in this file."
-msgstr ""
-"Vertaalvoorstelle vereis dat die brontekstaal bekend is. Poedit kon dit nie "
-"in hierdie lêer bespeur nie."
+#: src/sidebar.cpp:989
+msgid "Translation suggestions require that source text’s language is known. Poedit couldn’t detect it in this file."
+msgstr "Vertaalvoorstelle vereis dat die brontekstaal bekend is. Poedit kon dit nie in hierdie lêer bespeur nie."
 
+#. TRANSLATORS: Tooltip explaining the Quality: label
+#: src/sidebar_pro.cpp:86
+msgid "Currently enabled quality level of online suggestions"
+msgstr "Geaktiveerde kwaliteitvlak van aanlynvoorstelle"
+
+#. TRANSLATORS: Quality level for the "Quality: %s" label; needs to be short
+#: src/sidebar_pro.cpp:121
+msgid "Premium"
+msgstr "Premie"
+
+#. TRANSLATORS: Quality level for the "Quality: %s" label; needs to be short
+#: src/sidebar_pro.cpp:126
+msgid "Standard"
+msgstr "Standaard"
+
+#. TRANSLATORS: This needs to be *short*, it is shown in the sidebar
+#. after "Translation suggestions". %s will be replaced by "Standard"
+#. or "Premium". "(Quality) level" or "tier" are synonyms for it.
+#: src/sidebar_pro.cpp:132
+#, c-format
+msgid "Quality: %s"
+msgstr "Kwaliteit: %s"
+
+#. TRANSLATORS: Label for the part where currently used translation engine is shown
+#: src/sidebar_pro.cpp:151
+msgid "Machine translation uses:"
+msgstr "Masjienvertaling gebruik:"
+
+#: src/sidebar_pro.cpp:227
+msgid "Terminology"
+msgstr "Terminologie"
+
+#: src/sidebar_pro.cpp:321
+msgid "This suggestion was contributed by another translator to the online TM."
+msgstr "Hierdie voorstel is deur ’n ander vertaler op die aanlyn-TM bygedra."
+
+#: src/sidebar_pro.cpp:323
+msgid "This suggestion was machine-translated online."
+msgstr "Hierdie voorstel is aanlyn per masjien vertaal."
+
+#: src/sidebar_pro.cpp:512
+#, c-format
+msgid "%d out of %d online suggestion left."
+msgid_plural "%d out of %d online suggestions left."
+msgstr[0] "%d uit %d aanlynvoorstelle oor."
+msgstr[1] "%d uit %d aanlynvoorstelle oor."
+
+#: src/sidebar_pro.cpp:517
+msgid "Remove this limitation"
+msgstr "Verwyder hierdie beperking"
+
+#: src/sidebar_pro.cpp:521
+msgid "Online suggestions are limited to only 10 in the free version. Upgrade to Pro to remove this limitation."
+msgstr "Aanlynvoorstelle word in die gratis weergawe tot 10 beperk. Gradeer op na Pro om hierdie beperking te verwyder."
+
+#: src/sidebar_pro.cpp:523
+msgid "Unlock online suggestions"
+msgstr "Ontgrendel aanlynvoorstelle"
+
+#: src/sidebar_pro.cpp:547
+msgid "Exceeded online TM daily limit."
+msgstr "Daaglikse TM-beperking is oorskry."
+
+#: src/sidebar_pro.cpp:580
+msgid "Connect to the Internet to get additional suggestions."
+msgstr "Verbind aan die Internet om aanvullende voorstelle te kry."
+
+#. TRANSLATORS: Label indicating that translations made in the current file are contributed to the online translation memory. Related to the "Contribute my translations to the online TM" string.
+#: src/sidebar_pro.cpp:655
+msgid "Contributing"
+msgstr "Dra by"
+
+#: src/sidebar_pro.cpp:656
+msgid "Your translations are contributed to the online translation memory as you make them. Thanks for making the suggestions better!"
+msgstr "Soos u dit maak word u vertalings tot die aanlynvertaalgeheue bygedra. Dankie dat u die voorstelle verbeter!"
+
+#. TRANSLATORS: Label indicating that the current file
+#: src/sidebar_pro.cpp:662
+msgid "Private"
+msgstr "Privaat"
+
+#: src/sidebar_pro.cpp:663
+msgid "Translations from this file are not shared with the online translation memory."
+msgstr "Vertalings van hierdie lêer word nie met die aanlynvertaalgeheue gedeel nie."
+
+#: src/sidebar_pro.cpp:688
+msgid "Privacy settings"
+msgstr "Privaatheidsinstellings"
+
+#: src/sidebar_pro.cpp:694
+#, c-format
+msgid "While editing the file “%s”:"
+msgstr "Tydens wysiging van die lêer “%s”:"
+
+#: src/sidebar_pro.cpp:756
+msgid "Not interested"
+msgstr "Stel nie belang nie"
+
+#: src/sidebar_pro.cpp:982
+msgid "Pre-translation"
+msgstr "Voorvertaling"
+
+#: src/sidebar_pro.cpp:987
+msgid "Pre-translate all items at once and focus on making corrections, instead of translating them one by one."
+msgstr "Voorvertaal alle items eenmalig en fokus op regstelling eerder as een-tot-een-vertalings."
+
+#: src/sidebar_pro.cpp:1101
+msgid "Stay Informed!"
+msgstr "Bly Ingelig!"
+
+#: src/sidebar_pro.cpp:1102
+msgid "Subscribe"
+msgstr "Teken in"
+
+#: src/sidebar_pro.cpp:1106
+msgid "Sign up for Poedit newsletter and be the first to know about what’s new. I hate spam too, so expect only a few emails a year."
+msgstr "Teken in op die Poedit-nuusbrief en wees eerste om te weet wat aangaan. Ek hou ook nie van gemorspos nie; verwag dus slegs ’n paar e-posse per jaar."
+
+#: src/sidebar_pro.cpp:1117
+msgid "Email address"
+msgstr "E-posadres"
+
+#: src/sidebar_pro.cpp:1140
+msgid "You’re signed up. Please check your email for a confirmation message."
+msgstr "U is ingeteken. Gaan u e-pos na vir ’n bevestigingsboodskap."
+
+#. TRANSLATORS: "Dictionaries" is the name of the application (see https://dictionaries.io), i.e. shouldn't be translated
+#: src/sidebar_pro.cpp:1210
+msgid "Dictionaries for Mac, Windows & Kindle"
+msgstr "Woordeboeke vir Mac, Windows & Kindle"
+
+#: src/sidebar_pro.cpp:1222
+msgid "Did you know I also made a dictionaries app for Mac, Windows and Kindle? It supports over 80 languages and is a great companion to Poedit."
+msgstr "Het u geweet dat ek ook woordeboeke vir Mac, Windows en Kindle maak? Dit steun meer as 80 tale en is ’n goeie bybehoorsel vir Poedit."
+
+#: src/sidebar_terminology.cpp:49
+msgid "Glossary Entry"
+msgstr "Glossariuminskrywing"
+
+#: src/sidebar_terminology.cpp:55 src/sidebar_terminology.cpp:185
+msgid "Term"
+msgstr "Term"
+
+#: src/sidebar_terminology.cpp:60
+msgid "Additional description or notes"
+msgstr "Bykomende beskrywing of notas"
+
+#: src/sidebar_terminology.cpp:66 src/sidebar_terminology.cpp:187
+msgid "Notes"
+msgstr "Notas"
+
+#: src/sidebar_terminology.cpp:128
+msgid "CSV Glossary Import"
+msgstr "CSV-glossariuminvoer"
+
+#: src/sidebar_terminology.cpp:138
+msgid "Source language:"
+msgstr "Brontaal:"
+
+#: src/sidebar_terminology.cpp:142
+msgid "Translation language:"
+msgstr "Taal van vertaling:"
+
+#: src/sidebar_terminology.cpp:149
+msgid "Import rules:"
+msgstr "Invoerreëls:"
+
+#: src/sidebar_terminology.cpp:153
+msgid "Skip the first row"
+msgstr "Slaan die eerste ry oor"
+
+#: src/sidebar_terminology.cpp:158
+msgid "Column separator:"
+msgstr "Kolomskeier:"
+
+#: src/sidebar_terminology.cpp:161
+msgid "Term column:"
+msgstr "Termkolom:"
+
+#: src/sidebar_terminology.cpp:164
+msgid "Definition column:"
+msgstr "Definisiekolom:"
+
+#: src/sidebar_terminology.cpp:167
+msgid "Notes column:"
+msgstr "Notaskolom:"
+
+#: src/sidebar_terminology.cpp:177 src/sidebar_terminology.cpp:261
+msgid "Preview of imported glossary data:"
+msgstr "Voorskou van ingevoerde glossariumdata:"
+
+#. TRANSLATORS: %d is the number of entries in the preview, %s is the total number of entries in the file
+#: src/sidebar_terminology.cpp:257
+#, c-format
+msgid "Preview of imported glossary data (%d out of %s shown):"
+msgstr "Voorskou van ingevoerde woordelysdata (%d uit %s word vertoon):"
+
+#: src/sidebar_terminology.cpp:396 src/wx_translatable_strings.h:102
+msgid "Edit"
+msgstr "Wysig"
+
+#: src/sidebar_terminology.cpp:496
+msgid "Word or phrase"
+msgstr "Woord of frase"
+
+#: src/sidebar_terminology.cpp:518
+msgid "Add entries to the glossary"
+msgstr "Voeg inskrywings aan die glossarium toe"
+
+#: src/sidebar_terminology.cpp:524
+msgid "Search previously made translations and glossaries to ensure consistency. Both the current file and your translation memory are consulted."
+msgstr "Deursoek voorheen geskepte vertalings en glossaria vir konsekwentheid. Die huidige lêer sowel as u vertaalgeheue word geraadpleeg."
+
+#: src/sidebar_terminology.cpp:536
+msgid "Unlock terminology search"
+msgstr "Ontgrendel terminologiesoektog"
+
+#: src/sidebar_terminology.cpp:626
+msgid "Glossary"
+msgstr "Glossarium"
+
+#: src/sidebar_terminology.cpp:632
+msgid "This File"
+msgstr "Hierdie lêer"
+
+#: src/sidebar_terminology.cpp:696
+msgid "Add Glossary Entry…"
+msgstr "Voeg glossariuminskrywing toe…"
+
+#: src/sidebar_terminology.cpp:696
+msgid "Add glossary entry…"
+msgstr "Voeg glossariuminskrywing toe…"
+
+#: src/sidebar_terminology.cpp:697
+msgid "Import Glossary from CSV File…"
+msgstr "Voer glossarium vanaf CSV-lêer toe…"
+
+#: src/sidebar_terminology.cpp:697
+msgid "Import glossary from CSV file…"
+msgstr "Voer glossarium vanaf CSV-lêer toe…"
+
+#: src/sidebar_terminology.cpp:720
+msgid "Select CSV glossary file to import"
+msgstr "Kies CSV-glossariumlêer om in te voer"
+
+#: src/sidebar_terminology.cpp:723
+msgid "CSV Files"
+msgstr "CSV-lêers"
+
+#: src/sidebar_terminology.cpp:749
+msgid "Importing glossary"
+msgstr "Voer tans woordelys in"
+
+#: src/sidebar_terminology.cpp:756
+#, c-format
+msgid "Imported %s terms from CSV file “%s” into the glossary."
+msgstr "%s terme ingevoer uit CSV-lêer “%s” in die woordelys."
+
+#: src/statistics.cpp:275 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Items"
+msgstr "Items"
+
+#: src/statistics.cpp:276 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Words"
+msgstr "Woorde"
+
+#: src/statistics.cpp:277 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Characters"
+msgstr "Karakters"
+
+#: src/statistics.cpp:291 src/statistics.cpp:412
+msgid "Translated"
+msgstr "Vertaal"
+
+#: src/statistics.cpp:296 src/statistics.cpp:335 src/statistics.cpp:413
+#: src/statistics.cpp:417
+msgctxt "column/row header"
+msgid "Needs work"
+msgstr "Kort aandag"
+
+#: src/statistics.cpp:301 src/statistics.cpp:414
+msgid "Translations with errors"
+msgstr "Vertalings met foute"
+
+#: src/statistics.cpp:328 src/statistics.cpp:416 src/statistics.cpp:428
+msgid "Strings in source language"
+msgstr "Stringe in brontaal"
+
+#: src/statistics.cpp:340 src/statistics.cpp:418
+msgid "Not translated"
+msgstr "Nie vertaal nie"
+
+#: src/statistics.cpp:351
+msgid "Include code and placeholders"
+msgstr "Sluit kode en plekhouers in"
+
+#: src/statistics.cpp:352
+msgid "If checked, word and character counts will also include placeholders, HTML markup and code."
+msgstr "Indien gemerk sal woord- en karaktertellings plekhouers, HTML-markering en kode insluit."
+
+#: src/statistics.cpp:362
+msgid "Characters are counted including spaces."
+msgstr "Karakters, insluitend spasies, word getel."
+
+#: src/statistics.cpp:368
+msgid "Copy to clipboard"
+msgstr "Kopieer na knipbord"
+
+#: src/statistics.cpp:370
+msgid "Copy to Clipboard"
+msgstr "Kopieer na Knipbord"
+
+#: src/statistics.cpp:722
+#, c-format
+msgid "The file “%s” couldn’t be opened: %s"
+msgstr "Fiilde \"%s\" horiima udditaade: %s"
+
+#: src/subprocess.cpp:219 src/subprocess.cpp:251
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "Kan nie program uitvoer nie: %s"
+
+#: src/tm/tmx_io.cpp:88 src/tm/tmx_io.cpp:104
 msgid "The TMX file is malformed."
 msgstr "Die TMX-lêer is misvorm."
 
-msgid "No translations were found in the TMX file."
-msgstr "Geen vertalings is in die TMX-lêer gevind nie."
-
+#: src/tm/transmem.cpp:87
 #, c-format
 msgid "Translation memory database is corrupted: %s (%d)."
 msgstr "Vertaalgeheuedatabasis is gekorrupteer: %s (%d)."
 
+#: src/tm/transmem.cpp:90
 #, c-format
 msgid "Translation memory error: %s (%d)."
 msgstr "Vertaalgeheuefout: %s (%d)."
 
+#: src/uilang.cpp:233
 msgid "(Use default language)"
 msgstr "(Gebruik verstektaal)"
 
+#: src/uilang.cpp:244
 msgid "Language selection"
 msgstr "Taalkeuse"
 
+#: src/uilang.cpp:244
 msgid "Select your preferred language"
 msgstr "Kies aseblief u voorkeurtaal"
 
+#: src/uilang.cpp:261
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Herbegin Poedit vir hierdie verandering om in werking te tree."
 
+#: src/utility.cpp:143 src/utility.cpp:153
 msgid "Cannot create temporary directory."
 msgstr "Kan nie tydelike gids skep nie."
 
+#: src/welcomescreen.cpp:141
 msgid "There are no translations. That’s unusual."
 msgstr "Daar is geen vertalings. Dit is vreemd."
 
-msgid ""
-"Translatable entries aren’t added manually in the Gettext system, but are "
-"automatically extracted\n"
-"from source code. This way, they stay up to date and accurate.\n"
-"Translators typically use PO template files (POTs) prepared for them by the "
-"developer."
-msgstr ""
-"Vertaalbare inskrywings word nie handmatig tot die Gettext-stelsel toegevoeg "
-"nie maar word outomaties vanuit\n"
-"die bronkode geëkstraheer. Op hierdie manier bly hulle op datum en "
-"akkuraat.\n"
-"Vertalers gebruik tipies PO-sjabloonlêers (POT’e) wat deur die ontwikkelaar "
-"voorberei is."
+#: src/welcomescreen.cpp:150
+msgid "Translatable entries aren’t added manually in the Gettext system, but are automatically extracted from source code. This way, they stay up to date and accurate. Translators typically use PO template files (POTs) prepared for them by the developer."
+msgstr "Vertaalbare inskrywings word nie handmatig tot die Gettext-stelsel toegevoeg nie maar word outomaties vanuit die bronkode geëkstraheer. Op hierdie manier bly hulle op datum en akkuraat. Vertalers gebruik tipies PO-sjabloonlêers (POT’e) wat deur die ontwikkelaar voorberei is."
 
-msgid "(Learn more about GNU gettext)"
-msgstr "(Kom meer te wete oor GNU gettext)"
+#: src/welcomescreen.cpp:153
+msgid "Learn more about GNU gettext"
+msgstr "Kom meer te wete oor GNU-gettext"
 
-msgid ""
-"The simplest way to fill this file with translations is to update it from a "
-"POT:"
-msgstr ""
-"Die eenvoudigste manier om hierdie lêer met vertalings aan te vul is deur "
-"dit vanuit ’n POT by te werk:"
+#: src/welcomescreen.cpp:157
+msgid "The simplest way to fill this file with translations is to update it from a POT:"
+msgstr "Die eenvoudigste manier om hierdie lêer met vertalings aan te vul is deur dit vanuit ’n POT by te werk:"
 
+#: src/welcomescreen.cpp:162
 msgid "Update from POT"
 msgstr "Werk by vanuit POT"
 
+#: src/welcomescreen.cpp:163
 msgid "Take translatable strings from an existing POT template."
 msgstr "Kry vertaalbare stringe vanuit ’n bestaande POT-sjabloon."
 
-msgid ""
-"You can also extract translatable strings directly from the source code:"
+#: src/welcomescreen.cpp:167
+msgid "You can also extract translatable strings directly from the source code:"
 msgstr "U kan ook vertaalbare stringe direk vanaf die bronkode ekstraheer:"
 
+#: src/welcomescreen.cpp:172
 msgid "Extract from sources"
 msgstr "Ekstraheer vanuit bronne"
 
+#: src/welcomescreen.cpp:173
 msgid "Configure source code extraction in Properties."
 msgstr "Stel bronkode-ekstrahering op in Eienskappe."
 
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "Weergawe %s"
-
+#: src/welcomescreen.cpp:272
 msgid "Create new"
 msgstr "Skep nuwe"
 
+#: src/welcomescreen.cpp:273
 msgid "Create new translation from POT template."
 msgstr "Skep nuwe vertaling vanaf POT-sjabloon."
 
+#: src/welcomescreen.cpp:278
 msgid "Browse files"
 msgstr "Blaai deur lêers"
 
+#: src/welcomescreen.cpp:279
 msgid "Open and edit translation files."
 msgstr "Open en wysig vertaallêers."
 
+#: src/welcomescreen.cpp:286
+msgid "Translate WordPress theme or plugin"
+msgstr "Vertaal WordPress-tema of -inprop"
+
+#: src/welcomescreen.cpp:287
+msgid "Edit WordPress translations over FTP or locally."
+msgstr "Wysig WordPress-vertalings oor FTP of lokaal."
+
+#: src/welcomescreen.cpp:292
 msgid "Translate cloud project"
 msgstr "Vertaal wolkprojek"
 
+#: src/welcomescreen.cpp:293
 msgid "Collaborate with other people online."
 msgstr "Werk aanlyn saam met ander mense."
 
+#: src/welcomescreen.cpp:316
 msgid "Recent files"
 msgstr "Onlangse lêers"
 
+#: src/wordpress/wordpress.cpp:101 src/wordpress/wordpress.cpp:108
+#, c-format
+msgid "Failed to read file “%s”."
+msgstr "Kon nie lêer “%s” lees nie."
+
+#: src/wordpress/wordpress.cpp:165
+#, c-format
+msgid "Confused by ambiguous values of “%s” in %s."
+msgstr "Verward deur dubbelsinnige waardes van “%s” in %s."
+
+#: src/wordpress/wordpress.cpp:294 src/wordpress/wordpress.cpp:544
+#: src/wordpress/wordpress.cpp:591
+#, c-format
+msgid "Couldn’t detect POs location for “%s”."
+msgstr "Kon nie die PO-ligging vir “%s” bespeur nie."
+
+#: src/wordpress/wordpress.cpp:670
+#, c-format
+msgid "The “%s” theme isn’t localization-ready."
+msgstr "Die “%s”-tema is nie geskik vir vertaling nie."
+
+#: src/wordpress/wordpress.cpp:687
+#, c-format
+msgid "Couldn’t detect translation domain of the “%s” theme."
+msgstr "Kon nie die vertaaldomein van die tema “%s” bespeur nie."
+
+#: src/wordpress/wordpress.cpp:714
+#, c-format
+msgid "Couldn't detect translation domain of the \"%s\" theme."
+msgstr "Kon nie die vertaaldomein van die tema “%s” bespeur nie."
+
+#: src/wordpress/wordpress.cpp:769
+msgid "Confused: multiple main plugin files."
+msgstr "Verwarring: veelvuldige hoofinproplêers."
+
+#: src/wordpress/wordpress.cpp:819
+#, c-format
+msgid "The “%s” plugin isn’t localization-ready."
+msgstr "Die “%s”-inprop is nie geskik vir vertaling nie."
+
+#: src/wordpress/wordpress.cpp:840 src/wordpress/wordpress.cpp:857
+#, c-format
+msgid "Couldn’t detect translation domain of the “%s” plugin."
+msgstr "Kon nie die vertaaldomein van die inprop “%s” bespeur nie."
+
+#: src/wordpress/wordpress.cpp:923
+msgid "Found neither WordPress theme nor plugin in the folder."
+msgstr "Geen WordPress-tema óf -inprop in die vouer gevind nie."
+
+#: src/wordpress/wordpress.cpp:940
+#, c-format
+msgid "Translations folder (%s) doesn’t exist."
+msgstr "Vouer met vertalings (%s) bestaan nie."
+
+#: src/wordpress/wordpress_gui.cpp:77
+msgid "<big>Drag and drop <b>theme or plugin folder</b> here</big>\n\n"
+"or use the “Choose folder” button"
+msgstr "<big>Sleep en los<b> tema- of inpropvouer</b> hier</big>\n\n"
+"of gebruik die “Kies vouer”-knop"
+
+#: src/wordpress/wordpress_gui.cpp:79
+msgid "<big>Drag and Drop <b>Theme or Plugin Folder</b> Here</big>\n\n"
+"or use the “Choose Folder” button"
+msgstr "<big>Sleep en los<b> Tema- of Inpropvouer</b> Hier</big>\n\n"
+"of gebruik die “Kies vouer”-knop"
+
+#: src/wordpress/wordpress_gui.cpp:101
+#, c-format
+msgid "Folder “%s”"
+msgstr "Vouer “%s”"
+
+#: src/wordpress/wordpress_gui.cpp:162
+msgid "Work With Files"
+msgstr "Werk Met Lêers"
+
+#: src/wordpress/wordpress_gui.cpp:162
+msgid "Work with files"
+msgstr "Werk met lêers"
+
+#: src/wordpress/wordpress_gui.cpp:164
+msgid "Connect to Server"
+msgstr "Verbind aan Bediener"
+
+#: src/wordpress/wordpress_gui.cpp:164
+msgid "Connect to server"
+msgstr "Verbind aan bediener"
+
+#: src/wordpress/wordpress_gui.cpp:165
+msgid "On This Computer"
+msgstr "Op Hierdie Rekenaar"
+
+#: src/wordpress/wordpress_gui.cpp:165
+msgid "On this computer"
+msgstr "Op hierdie rekenaar"
+
+#: src/wordpress/wordpress_gui.cpp:168
+msgid "Continue"
+msgstr "Gaan Voort"
+
+#: src/wordpress/wordpress_gui.cpp:210
+msgid "Choose Folder…"
+msgstr "Kies Vouer…"
+
+#: src/wordpress/wordpress_gui.cpp:210
+msgid "Choose folder…"
+msgstr "Kies vouer…"
+
+#: src/wordpress/wordpress_gui.cpp:217
+msgid "Create a new translation"
+msgstr "Skep ’n nuwe vertaling"
+
+#: src/wordpress/wordpress_gui.cpp:220
+msgid "Choose this if you want to translate the theme or plugin into your language."
+msgstr "Kies dit as u die tema of inprop na u eie taal wil vertaal."
+
+#: src/wordpress/wordpress_gui.cpp:233
+msgid "Create a POT"
+msgstr "Skep ’n POT"
+
+#: src/wordpress/wordpress_gui.cpp:235
+msgid "This option is for theme and plugin developers. Poedit will create an empty template (POT) that translations can be based on."
+msgstr "Hierdie opsie is vir tema- en inpropontwikkelaars. Poedit sal ’n leë sjabloon (POT) skep waarop vertalings gebaseer kan word."
+
+#: src/wordpress/wordpress_gui.cpp:248
+msgid "Select the folder with the WordPress theme or plugin"
+msgstr "Kies die vouer met die WordPress-tema of -inprop"
+
+#: src/wordpress/wordpress_gui.cpp:280
+msgid "Enter connection details for your WordPress server. Poedit will retrieve available themes and plugins from it and let you translate directly on the server."
+msgstr "Voer verbindingsdetails vir u WordPress-bediener in. Poedit sal beskikbare temas en inproppe daarvandaan afhaal en u direk op die bediener laat vertaal."
+
+#: src/wordpress/wordpress_gui.cpp:287
+msgid "Protocol:"
+msgstr "Protokol:"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "FTP (insecure)"
+msgstr "FTP (onveilig)"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "FTP with SSL"
+msgstr "FTP met SSL"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "SFTP"
+msgstr "SFTP"
+
+#: src/wordpress/wordpress_gui.cpp:293
+msgid "Choose a recent server"
+msgstr "Kies ’n onlangse bediener"
+
+#: src/wordpress/wordpress_gui.cpp:302 src/wordpress/wordpress_gui.cpp:538
+msgid "Recent Servers"
+msgstr "Onlangse bedieners"
+
+#: src/wordpress/wordpress_gui.cpp:302 src/wordpress/wordpress_gui.cpp:538
+msgid "Recent servers"
+msgstr "Onlangse bedieners"
+
+#: src/wordpress/wordpress_gui.cpp:306
+msgid "Server:"
+msgstr "Bediener:"
+
+#: src/wordpress/wordpress_gui.cpp:310
+msgid "Remote Path:"
+msgstr "Afstandspad:"
+
+#: src/wordpress/wordpress_gui.cpp:310
+msgid "Remote path:"
+msgstr "Afstandspad:"
+
+#: src/wordpress/wordpress_gui.cpp:312
+msgid "Detected automatically"
+msgstr "Outomaties bespeur"
+
+#: src/wordpress/wordpress_gui.cpp:315
+msgid "Port:"
+msgstr "Poort:"
+
+#: src/wordpress/wordpress_gui.cpp:321
+msgid "Username:"
+msgstr "Gebruikersnaam:"
+
+#: src/wordpress/wordpress_gui.cpp:325
+msgid "Password:"
+msgstr "Wagwoord:"
+
+#: src/wordpress/wordpress_gui.cpp:332
+msgid "Remember my credentials"
+msgstr "Onthou my aantekenbesonderhede"
+
+#: src/wordpress/wordpress_gui.cpp:333
+msgid "Connect"
+msgstr "Verbind"
+
+#: src/wordpress/wordpress_gui.cpp:346
+msgid "Select the plugin or theme to translate:"
+msgstr "Kies die inprop ka tema om te vertaal:"
+
+#: src/wordpress/wordpress_gui.cpp:398
+msgid "Connecting to WordPress server…"
+msgstr "Verbind aan WordPress-bediener…"
+
+#: src/wordpress/wordpress_gui.cpp:416
+#, c-format
+msgid "Theme: %s"
+msgstr "Tema: %s"
+
+#: src/wordpress/wordpress_gui.cpp:419
+#, c-format
+msgid "Plugin: %s"
+msgstr "Inprop: %s"
+
+#: src/wordpress/wordpress_gui.cpp:534
+msgid "No Recent Servers"
+msgstr "Geen Onlangse Bedieners"
+
+#: src/wordpress/wordpress_gui.cpp:534
+msgid "No recent servers"
+msgstr "Geen onlangse bedieners"
+
+#: src/wordpress/wordpress_gui.cpp:552
+msgid "Clear Recent Servers"
+msgstr "Wis Onlangse Bedieners"
+
+#: src/wordpress/wordpress_gui.cpp:552
+msgid "Clear recent servers"
+msgstr "Wis onlangse bedieners"
+
+#: src/wordpress/wordpress_gui.cpp:825
+msgid "Failed to extract WordPress information."
+msgstr "Kon nie WordPress-inligting uithaal nie."
+
+#: src/wordpress/wordpress_gui.cpp:826
+msgid "WordPress error"
+msgstr "WordPress-fout"
+
+#: src/wordpress/wordpress_gui.cpp:835
+#, c-format
+msgid "Poedit couldn’t understand the content of the folder you selected. This may be a problem with the plugin/theme or it may be Poedit being silly. The error is:\n\n"
+" • %s\n\n"
+"Please email help@poedit.net and we’ll sort it out."
+msgstr "Poedit verstaan nie die inhoud van die gekose vouer nie. Dit kan ’n probleem met die inprop/tema wees of Poedit is gewoon laf. Die fout is:\n\n"
+" • %s\n\n"
+"Stuur ’n e-pos na help@poedit.net sodat ons dit kan verhelp."
+
+#. TRANSLATORS: This is a button that sends an email to support when clicked
+#: src/wordpress/wordpress_gui.cpp:841
+msgid "Email support"
+msgstr "E-posondersteuning"
+
+#: src/wordpress/wordpress_gui.cpp:842
+msgid "View log"
+msgstr "Bekyk logboek"
+
+#. TRANSLATORS: This is a button that sends an email to support when clicked
+#: src/wordpress/wordpress_gui.cpp:845
+msgid "Email Support"
+msgstr "E-posondersteuning"
+
+#: src/wordpress/wordpress_gui.cpp:846
+msgid "View Log"
+msgstr "Bekyk Logboek"
+
+#: src/wordpress/wordpress_gui.cpp:857
+msgid "WordPress Errors Log"
+msgstr "WordPress-foutlogboek"
+
+#: src/wordpress/wordpress_gui.cpp:858
+msgid "Please email this log to help@poedit.net. Thank you!"
+msgstr "Stuur asb. hierdie loglêer na help@poedit.net. Dankie!"
+
+#: src/wordpress/wordpress_gui.cpp:938
+msgid "Analyzing WordPress server…"
+msgstr "Ontleed tans WordPress-bediener…"
+
+#: src/wordpress/wordpress_gui.cpp:959
+msgid "Downloading translation data…"
+msgstr "Laai tans vertaaldata af…"
+
+#: src/wordpress/wordpress_gui.cpp:984
+msgid "Unpacking translation data…"
+msgstr "Pak tans vertaaldata uit…"
+
+#: src/wordpress/wordpress_gui.cpp:989
+msgid "Error unpacking downloaded WordPress data."
+msgstr "Fout tydens die uitpak van afgelaaide WordPress-data."
+
+#: src/wordpress/wordpress_gui.cpp:1014 src/wordpress/wordpress_gui.cpp:1029
+msgid "Analyzing WordPress code…"
+msgstr "Ontleed tans WordPress-kode…"
+
+#: src/wordpress/wordpress_gui.cpp:1039
+msgid "WordPress translation file is ready, but there were some non-fatal issues with the corresponding source code."
+msgstr ""
+
+#: src/wx/main_toolbar.cpp:123
 msgid "Sync"
 msgstr "Sinchroniseer"
 
+#: src/wx/main_toolbar.cpp:124
 msgid "Synchronize the translation with Crowdin"
 msgstr "Sinchroniseer die vertaling met Crowdin"
 
-#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
-#. ("Poedit" here, but please use "%s")
-#, c-format
-msgid "About %s"
-msgstr "Oor %s"
+#: src/wx/main_toolbar.cpp:170
+msgid "Upgrade to Poedit Pro to get additional features and support Poedit's development."
+msgstr "Gradeer op na Poedit Pro vir bykomende funksies en steun die ontwikkeling van Poedit."
 
 #. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+#: src/wx_translatable_strings.h:49
 #, c-format
 msgid "%s Preferences"
 msgstr "%s Voorkeure"
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
+#: src/wx_translatable_strings.h:60
 #, c-format
 msgctxt "macOS menu item"
 msgid "About %s"
 msgstr "Oor %s"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:64
 msgctxt "macOS menu item"
 msgid "Services"
 msgstr "Dienste"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#: src/wx_translatable_strings.h:66
 #, c-format
 msgctxt "macOS menu item"
 msgid "Hide %s"
 msgstr "Verberg %s"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:68
 msgctxt "macOS menu item"
 msgid "Hide Others"
 msgstr "Verberg Andere"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:70
 msgctxt "macOS menu item"
 msgid "Show All"
 msgstr "Toon Alles"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#: src/wx_translatable_strings.h:72
 #, c-format
 msgctxt "macOS menu item"
 msgid "Quit %s"
 msgstr "Sluit %s af"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:74
 msgid "Preferences…"
 msgstr "Voorkeure…"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:76
 msgid "Preferences..."
 msgstr "Voorkeure…"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:78
 msgctxt "macOS menu item"
 msgid "Preferences..."
 msgstr "Voorkeure…"
 
+#: src/wx_translatable_strings.h:92
 msgid "&Apply"
 msgstr "&Pas Toe"
 
+#: src/wx_translatable_strings.h:92
 msgid "Apply"
 msgstr "Pas Toe"
 
+#: src/wx_translatable_strings.h:93
 msgid "&Back"
 msgstr "&Terug"
 
+#: src/wx_translatable_strings.h:93
 msgid "Back"
 msgstr "Terug"
 
+#: src/wx_translatable_strings.h:94
 msgid "&Cancel"
 msgstr "&Kanselleer"
 
+#: src/wx_translatable_strings.h:95
 msgid "&Clear"
 msgstr "&Wis"
 
+#: src/wx_translatable_strings.h:95
 msgid "Clear"
 msgstr "Wis"
 
+#: src/wx_translatable_strings.h:98
 msgid "Copy"
 msgstr "Kopieer"
 
+#: src/wx_translatable_strings.h:99
 msgid "Cu&t"
 msgstr "Kni&p"
 
+#: src/wx_translatable_strings.h:99
 msgid "Cut"
 msgstr "Knip"
 
-msgid "Edit"
-msgstr "Wysig"
-
+#: src/wx_translatable_strings.h:103
 msgid "&Quit"
 msgstr "&Sluit Af"
 
+#: src/wx_translatable_strings.h:105
 msgid "Help"
 msgstr "Hulp"
 
+#: src/wx_translatable_strings.h:106
 msgid "&New"
 msgstr "&Nuut"
 
+#: src/wx_translatable_strings.h:106
 msgid "New"
 msgstr "Nuwe"
 
+#: src/wx_translatable_strings.h:107
 msgid "&No"
 msgstr "&Nee"
 
+#: src/wx_translatable_strings.h:107
 msgid "No"
 msgstr "Nee"
 
+#: src/wx_translatable_strings.h:108
 msgid "&OK"
 msgstr "&Goed"
 
+#: src/wx_translatable_strings.h:109
 msgid "Open…"
 msgstr "Open…"
 
+#: src/wx_translatable_strings.h:110
 msgid "&Open..."
 msgstr "&Open…"
 
+#: src/wx_translatable_strings.h:110
 msgid "Open..."
 msgstr "Open…"
 
+#: src/wx_translatable_strings.h:111
 msgid "&Paste"
 msgstr "&Plak"
 
+#: src/wx_translatable_strings.h:111
 msgid "Paste"
 msgstr "Plak"
 
+#: src/wx_translatable_strings.h:112
 msgid "Preferences"
 msgstr "Voorkeure"
 
+#: src/wx_translatable_strings.h:113
 msgid "&Redo"
 msgstr "&Herdoen"
 
+#: src/wx_translatable_strings.h:114
 msgid "Refresh"
 msgstr "Verfris"
 
+#: src/wx_translatable_strings.h:116
 msgid "&Save as"
 msgstr "&Bewaar as"
 
+#: src/wx_translatable_strings.h:116
 msgid "Save as"
 msgstr "Bewaar as"
 
+#: src/wx_translatable_strings.h:117
 msgid "Select &All"
 msgstr "Kies &Alles"
 
+#: src/wx_translatable_strings.h:117
 msgid "Select All"
 msgstr "Kies Alles"
 
+#: src/wx_translatable_strings.h:118
 msgid "&Undo"
 msgstr "&Ontdaan"
 
+#: src/wx_translatable_strings.h:119
 msgid "&Yes"
 msgstr "&Ja"
 
+#: src/wx_translatable_strings.h:119
 msgid "Yes"
 msgstr "Ja"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:125
 msgctxt "keyboard key"
 msgid "Alt+"
-msgstr ""
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:127
 msgctxt "keyboard key"
 msgid "Shift+"
 msgstr "Wissel+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:129
 msgctxt "keyboard key"
 msgid "Enter"
 msgstr "Doen"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:131
 msgctxt "keyboard key"
 msgid "Up"
 msgstr "Op"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:133
 msgctxt "keyboard key"
 msgid "Down"
 msgstr "Af"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:135
 msgctxt "keyboard key"
 msgid "Left"
 msgstr "Links"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:137
 msgctxt "keyboard key"
 msgid "Right"
 msgstr "Regs"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+#: src/wx_translatable_strings.h:140
 msgctxt "keyboard key"
 msgid "ctrl"
 msgstr "beheer"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+#: src/wx_translatable_strings.h:142
 msgctxt "keyboard key"
 msgid "alt"
 msgstr "alt"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+#: src/wx_translatable_strings.h:144
 msgctxt "keyboard key"
 msgid "shift"
 msgstr "wissel"
+
+#: src/wx_translatable_strings.h:152
+msgid "Warning: "
+msgstr "Waarskuwing: "
+

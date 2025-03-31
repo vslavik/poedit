@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2024-10-31 12:30+0100\n"
-"PO-Revision-Date: 2024-10-14 10:16\n"
+"POT-Creation-Date: 2025-03-21 15:42+0100\n"
+"PO-Revision-Date: 2025-03-22 10:17\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -17,781 +17,1191 @@ msgstr ""
 "X-Crowdin-File: /locales/poedit.pot\n"
 "X-Crowdin-File-ID: 3\n"
 
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#: src/aboutbox.cpp:135 src/wx_translatable_strings.h:42
+#, c-format
+msgid "About %s"
+msgstr "Σχετικά με το %s"
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#: src/aboutbox.cpp:167 src/welcomescreen.cpp:265
+#: src/wx_translatable_strings.h:46
+#, c-format
+msgid "Version %s"
+msgstr "Έκδοση %s"
+
+#: src/aboutbox.cpp:168
+msgid "Based on the open source version →"
+msgstr "Βασισμένο στην έκδοση ανοιχτού κώδικα →"
+
+#: src/aboutbox.cpp:174
+msgid "Acknowledgements"
+msgstr "Ευχαριστίες"
+
+#: src/aboutbox.cpp:175
+msgid "License Agreement"
+msgstr "Άδεια χρήσης"
+
+#: src/aboutbox.cpp:182 src/prefsdlg.cpp:503
+msgid "Terms of Use"
+msgstr "Όροι χρήσης"
+
+#: src/aboutbox.cpp:183
+msgid "Privacy Policy"
+msgstr "Πολιτική απορρήτου"
+
+#: src/aboutbox.cpp:244
+#, c-format
+msgid "Licensed to %s"
+msgstr "Παραχώρηση αδείας χρήσης σε: %s"
+
+#: src/aboutbox.cpp:246
+msgid "Free version (please upgrade!)"
+msgstr "Δωρεάν έκδοση (παρακαλώ αναβαθμίστε!)"
+
+#: src/attentionbar.cpp:83
 msgid "Hide this notification message"
 msgstr "Απόκρυψη αυτού του μηνύματος ειδοποίησης"
 
+#: src/attentionbar.cpp:291
 msgid "Don’t Show Again"
 msgstr "Να μην εμφανιστεί ξανά"
 
+#: src/attentionbar.cpp:291
 msgid "Don’t show again"
 msgstr "Να μην εμφανιστεί ξανά"
 
+#: src/cat_operations.cpp:123
+msgid "Both files must be of the same file format."
+msgstr ""
+
+#: src/cat_update.cpp:93
 #, c-format
 msgid "(New: %i, obsolete: %i)"
 msgstr "(Νέα: %i, παρωχημένα: %i)"
 
-msgid "Collecting source files…"
-msgstr "Συλλογή αρχείων προέλευσης…"
+#: src/cat_update.cpp:98
+msgid "Update Summary"
+msgstr ""
 
-msgid "Extracting translatable strings…"
-msgstr "Εξαγωγή μεταφράσιμων συμβολοσειρών…"
+#. TRANSLATORS: Title of window showing summary (added/removed strings, issues) of updating translations from sources or POT file
+#: src/cat_update.cpp:98 src/resources/summary.xrc:4
+msgid "Update summary"
+msgstr "Περίληψη ενημέρωσης"
 
-msgid "Failed to load file with extracted translations."
-msgstr "Αποτυχία φόρτωσης αρχείου με εξαχθείσες μεταφράσεις."
+#: src/cat_update.cpp:100 src/resources/summary.xrc:24
+msgid "Issues"
+msgstr ""
 
-msgid "Merging differences…"
-msgstr "Συγχώνευση διαφορών…"
+#: src/cat_update.cpp:101
+msgid "New Strings"
+msgstr ""
 
+#: src/cat_update.cpp:101 src/resources/summary.xrc:45
+msgid "New strings"
+msgstr "Νέες συμβολοσειρές"
+
+#: src/cat_update.cpp:102
+msgid "Removed Strings"
+msgstr ""
+
+#: src/cat_update.cpp:102
+msgid "Removed strings"
+msgstr ""
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:105 src/cloud_accounts_ui.cpp:263 src/manager.cpp:404
+#: src/recent_files.cpp:555 src/wx_translatable_strings.h:104
+msgid "File"
+msgstr "Αρχείο"
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:107
+msgid "Line"
+msgstr ""
+
+#. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
+#: src/cat_update.cpp:109
+msgid "Issue"
+msgstr ""
+
+#: src/cat_update.cpp:205 src/cat_update.cpp:461
 msgid "Updating translations"
 msgstr "Ενημέρωση μεταφράσεων"
 
+#: src/cat_update.cpp:206
+#, c-format
+msgid "Found %d template file supported by Poedit Pro."
+msgid_plural "Found %d template files supported by Poedit Pro."
+msgstr[0] "Βρέθηκε %d αρχείο πρότυπου που υποστηρίζεται από το Poedit Pro."
+msgstr[1] "Βρέθηκαν %d αρχεία πρότυπου που υποστηρίζονται από το Poedit Pro."
+
+#. TRANSLATORS: %s is a filename here, e.g. "mainpage.twig"
+#: src/cat_update.cpp:208
+msgid "Poedit Pro can extract strings from template files, but this functionality isn’t available in the free version. Would you like to upgrade to the Pro version?"
+msgstr "Το Poedit Pro μπορεί να εξαγάγει συμβολοσειρές από αρχεία προτύπου, αλλά αυτή η λειτουργία δεν είναι διαθέσιμη στη δωρεάν έκδοση. Θα θέλατε να αναβαθμίσετε στην έκδοση Pro;"
+
+#: src/cat_update.cpp:211 src/licensing_ui.cpp:691 src/sidebar_pro.cpp:1212
+msgid "Learn More"
+msgstr "Μάθετε περισσότερα"
+
+#: src/cat_update.cpp:211 src/customcontrols.cpp:326 src/licensing_ui.cpp:691
+#: src/sidebar_pro.cpp:1212
+msgid "Learn more"
+msgstr "Μάθετε περισσότερα"
+
+#: src/cat_update.cpp:216
+msgid "Don’t ask again"
+msgstr "Να μην ερωτηθώ ξανά"
+
+#: src/cat_update.cpp:217
+msgid "Skip templates"
+msgstr "Παράβλεψη προτύπων"
+
+#: src/cat_update.cpp:226
+msgid "Found the following template files:"
+msgstr ""
+
+#: src/cat_update.cpp:245
+msgid "Don’t Ask Again"
+msgstr "Να μην ερωτηθώ ξανά"
+
+#: src/cat_update.cpp:246
+msgid "Skip Templates"
+msgstr "Παράβλεψη προτύπων"
+
+#: src/cat_update.cpp:297
+msgid "Collecting source files…"
+msgstr "Συλλογή αρχείων προέλευσης…"
+
+#: src/cat_update.cpp:321
+#, c-format
+msgid "Extracting translatable strings from %s file…"
+msgid_plural "Extracting translatable strings from %s files…"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/cat_update.cpp:348
+#, c-format
+msgid "Failed to extract WordPress metadata from file %s."
+msgstr "Απέτυχε η εξαγωγή μεταδεδομένων WordPress από το αρχείο %s."
+
+#: src/cat_update.cpp:356 src/cat_update.cpp:492
+msgid "Failed to load file with extracted translations."
+msgstr "Αποτυχία φόρτωσης αρχείου με εξαχθείσες μεταφράσεις."
+
+#: src/cat_update.cpp:380
+#, c-format
+msgid "In: %s"
+msgstr "Στο: %s"
+
+#: src/cat_update.cpp:387 src/edframe.cpp:1778
+msgid "Source code not available."
+msgstr "Ο πηγαίος κώδικας δεν είναι διαθέσιμος."
+
+#: src/cat_update.cpp:388 src/edframe.cpp:1782
+msgid "Translations couldn’t be updated from the source code, because no code was found in the location specified in the file’s Properties."
+msgstr "Δεν ήταν δυνατή η ενημέρωση των μεταφράσεων από τον πηγαίο κώδικα, επειδή δεν βρέθηκε κώδικας στην καθορισμένη τοποθεσία των ιδιοτήτων του αρχείου."
+
+#: src/cat_update.cpp:392
+msgid "Permission denied."
+msgstr "Δεν επιτρέπεται η πρόσβαση."
+
+#: src/cat_update.cpp:393
+msgid "You don’t have permission to read source code files from the location specified in the file’s Properties."
+msgstr "Δεν έχετε την άδεια να διαβάσετε αρχεία πηγαίου κώδικα από την τοποθεσία που καθορίζεται στις ιδιότητες του αρχείου."
+
+#. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
+#: src/cat_update.cpp:398
+msgid "If you previously denied access to your files, you can allow it in System Settings > Privacy & Security > Files & Folders."
+msgstr "Αν αρνηθήκατε στο παρελθόν την πρόσβαση στα αρχεία σας, μπορείτε να την επιτρέψετε στις Ρυθμίσεις συστήματος > Ασφάλεια και απόρρητο > Αρχεία και φάκελοι."
+
+#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
+#: src/cat_update.cpp:403
+msgid "If you previously denied access to your files, you can allow it in System Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr "Αν αρνηθήκατε στο παρελθόν την πρόσβαση στα αρχεία σας, μπορείτε να την επιτρέψετε στις Προτιμήσεις συστήματος > Ασφάλεια & απόρρητο > Απόρρητο > Αρχεία & φάκελοι."
+
+#: src/cat_update.cpp:409
+msgid "Failed to extract strings from source code."
+msgstr ""
+
+#: src/cat_update.cpp:443 src/edapp.cpp:1186 src/edframe.cpp:952
+#: src/edframe.cpp:2955
 #, c-format
 msgid "The file “%s” couldn’t be opened."
 msgstr "Το αρχείο \"%s\" δεν μπόρεσε να ανοίξει."
 
-msgid "Invalid file"
-msgstr "Μη έγκυρο αρχείο"
+#: src/cat_update.cpp:481
+msgid "Determining differences…"
+msgstr ""
 
+#: src/cat_update.cpp:489 src/cat_update.cpp:547
+msgid "Merging differences…"
+msgstr "Συγχώνευση διαφορών…"
+
+#: src/cat_update.cpp:502
+msgid "Translation file is already up to date, no changes to strings were made."
+msgstr ""
+
+#: src/cat_update.cpp:508
+#, c-format
+msgid "Translation file was updated with %s change."
+msgid_plural "Translation file was updated with %s changes."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/cat_update.cpp:511
+msgid "New strings to translate:"
+msgstr ""
+
+#: src/cat_update.cpp:512
+msgid "Removed strings (no longer used):"
+msgstr ""
+
+#: src/cat_update.cpp:517
+msgid "Template files skipped (Pro-only):"
+msgstr ""
+
+#: src/cat_update.cpp:605
+#, c-format
+msgid "%d issue with the source strings was detected."
+msgid_plural "%d issues with the source strings were detected."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/cat_update.cpp:632
+msgid "View Details…"
+msgstr ""
+
+#: src/cat_update.cpp:632
+msgid "View details…"
+msgstr ""
+
+#: src/catalog.cpp:125
 #, c-format
 msgid "Malformed header: “%s”"
 msgstr "Παραμορφωμένη κεφαλίδα: «%s»"
 
+#: src/catalog.cpp:588
 msgid "PO Translation Files"
 msgstr "Αρχεία μετάφρασης PO"
 
+#: src/catalog.cpp:590
 msgid "POT Translation Templates"
 msgstr "Πρότυπα μετάφρασης POT"
 
+#: src/catalog.cpp:592
 msgid "XLIFF Translation Files"
 msgstr "Αρχεία μετάφρασης XLIFF"
 
+#: src/catalog.cpp:594
+msgid "Xcode Localization Catalog"
+msgstr ""
+
+#: src/catalog.cpp:596
 msgid "JSON Translation Files"
 msgstr "Αρχεία μετάφρασης JSON"
 
 #. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
+#: src/catalog.cpp:599
 msgid "Flutter Translation Files"
 msgstr "Αρχεία Μετάφρασης Flutter"
 
+#: src/catalog.cpp:608
 msgid "All Translation Files"
 msgstr "Όλα τα αρχεία μετάφρασης"
 
+#: src/catalog.cpp:1152
 msgid "The file is in a format not recognized by Poedit."
 msgstr "Το αρχείο είναι σε μορφή που δεν αναγνωρίζεται από το Poedit."
 
-msgid ""
-"This JSON file isn’t a translations file and cannot be edited in Poedit."
-msgstr ""
-"Αυτό το αρχείο JSON δεν είναι αρχείο μεταφράσεων και δεν μπορεί να "
-"επεξεργαστεί στο Poedit."
+#: src/catalog_json.cpp:91
+msgid "This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgstr "Αυτό το αρχείο JSON δεν είναι αρχείο μεταφράσεων και δεν μπορεί να επεξεργαστεί στο Poedit."
 
+#: src/catalog_json.cpp:140
 #, c-format
 msgid "Reading file content failed with the following error: %s"
 msgstr "Η ανάγνωση περιεχομένου αρχείου απέτυχε με το ακόλουθο σφάλμα: %s"
 
+#: src/catalog_json.cpp:151 src/catalog_po.cpp:1142 src/catalog_xliff.cpp:556
 #, c-format
-msgid ""
-"File “%s” is read-only and cannot be saved.\n"
+msgid "File “%s” is read-only and cannot be saved.\n"
 "Please save it under different name."
-msgstr ""
-"Αρχείο %s είναι μόνο για ανάγνωση και δεν μπορεί να αποθηκευτεί.\n"
+msgstr "Αρχείο %s είναι μόνο για ανάγνωση και δεν μπορεί να αποθηκευτεί.\n"
 " Παρακαλώ αποθηκεύστε το με διαφορετικό όνομα."
 
+#: src/catalog_json.cpp:165 src/catalog_po.cpp:1178 src/catalog_po.cpp:1260
+#: src/catalog_po.cpp:1316 src/catalog_po.cpp:1373 src/catalog_po.cpp:1404
+#: src/catalog_po.cpp:1598 src/catalog_xliff.cpp:567 src/edframe.cpp:1339
+#: src/prefsdlg.cpp:757
 #, c-format
 msgid "Couldn’t save file %s."
 msgstr "Δεν ήταν δυνατή η αποθήκευση του αρχείου %s."
 
+#: src/catalog_json.cpp:503
 msgid "Screenshots:"
 msgstr "Στιγμιότυπα οθόνης:"
 
+#: src/catalog_po.cpp:130
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
 msgstr[0] "%i γραμμή του αρχείου “%s” δεν φορτώθηκε σωστά."
 msgstr[1] "%i γραμμές του αρχείου “%s” δεν φορτώθηκαν σωστά."
 
+#: src/catalog_po.cpp:145
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
-msgstr ""
-"Η γραμμή %d του αρχείου “%s” είναι κατεστραμμένη (μη έγκυρα δεδομένα %s)."
+msgstr "Η γραμμή %d του αρχείου “%s” είναι κατεστραμμένη (μη έγκυρα δεδομένα %s)."
 
+#: src/catalog_po.cpp:352
 msgid "Broken PO file: singular form msgstr used together with msgid_plural"
-msgstr ""
-"Κατεστραμμένο αρχείο PO: η μορφή ενικού msgstr χρησιμοποιείται μαζί με το "
-"msgid_plural"
+msgstr "Κατεστραμμένο αρχείο PO: η μορφή ενικού msgstr χρησιμοποιείται μαζί με το msgid_plural"
 
+#: src/catalog_po.cpp:404
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
-msgstr ""
-"Κατεστραμμένο αρχείο PO: το msgstr μορφής πληθυντικού χρησιμοποιείται χωρίς "
-"msgid_plural"
+msgstr "Κατεστραμμένο αρχείο PO: το msgstr μορφής πληθυντικού χρησιμοποιείται χωρίς msgid_plural"
 
+#: src/catalog_po.cpp:926 src/catalog_po.cpp:940 src/catalog_po.cpp:953
+#: src/catalog_po.cpp:965
 msgid "Couldn’t load the file, it is probably damaged."
 msgstr "Δεν ήταν δυνατή η φόρτωση του αρχείου, πιθανώς είναι κατεστραμμένο."
 
-msgid ""
-"There were errors when loading the file. Some data may be missing or "
-"corrupted as the result."
-msgstr ""
-"Παρουσιάστηκαν σφάλματα κατά τη φόρτωση του αρχείου. Ως αποτέλεσμα, ορισμένα "
-"δεδομένα ενδέχεται να λείπουν ή να είναι κατεστραμμένα."
+#: src/catalog_po.cpp:945
+msgid "There were errors when loading the file. Some data may be missing or corrupted as the result."
+msgstr "Παρουσιάστηκαν σφάλματα κατά τη φόρτωση του αρχείου. Ως αποτέλεσμα, ορισμένα δεδομένα ενδέχεται να λείπουν ή να είναι κατεστραμμένα."
 
-msgid ""
-"There was a problem formatting the file nicely (but it was saved all right)."
-msgstr ""
-"Παρουσιάστηκε πρόβλημα με τη σωστή μορφοποίηση του αρχείου (αλλά "
-"αποθηκεύτηκε σωστά)."
+#: src/catalog_po.cpp:1269
+msgid "There was a problem formatting the file nicely (but it was saved all right)."
+msgstr "Παρουσιάστηκε πρόβλημα με τη σωστή μορφοποίηση του αρχείου (αλλά αποθηκεύτηκε σωστά)."
 
+#: src/catalog_po.cpp:1521
 #, c-format
-msgid ""
-"The file couldn’t be saved in “%s” charset as specified in translation "
-"settings.\n"
-"\n"
+msgid "The file couldn’t be saved in “%s” charset as specified in translation settings.\n\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
-msgstr ""
-"Δεν ήταν δυνατή η αποθήκευση του αρχείου στο σύνολο χαρακτήρων “%s” όπως "
-"ορίζουν οι ρυθμίσεις μετάφρασης.\n"
-"\n"
+msgstr "Δεν ήταν δυνατή η αποθήκευση του αρχείου στο σύνολο χαρακτήρων “%s” όπως ορίζουν οι ρυθμίσεις μετάφρασης.\n\n"
 "Αντ' αυτού, αποθηκεύτηκε σε UTF-8 και η ρύθμιση τροποποιήθηκε αναλόγως."
 
+#: src/catalog_po.cpp:1523 src/edframe.cpp:3221
 msgid "Error saving file"
 msgstr "Σφάλμα αποθήκευσης αρχείου"
 
+#: src/catalog_po.cpp:1674
 #, c-format
 msgid "“%s” is not a valid POT file."
 msgstr "Το “%s” δεν είναι έγκυρο αρχείο POT."
 
+#: src/catalog_xcloc.cpp:85 src/catalog_xcloc.cpp:88
+msgid "Unexpectedly missing content in the XCLOC file."
+msgstr ""
+
+#: src/catalog_xcloc.cpp:99
+msgid "Saving in a different location is not supported for XCLOC files."
+msgstr ""
+
+#: src/catalog_xliff.cpp:473
 #, c-format
 msgid "Error while loading XLIFF file: %s"
 msgstr "Σφάλμα κατά τη φόρτωση του αρχείου XLIFF: %s"
 
+#: src/catalog_xliff.cpp:518
 #, c-format
 msgid "unsupported version (%s)"
 msgstr "μη υποστηριζόμενη έκδοση (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
+#: src/catalog_xliff.cpp:679 src/catalog_xliff.cpp:866
 msgid "Broken markup in translation string."
 msgstr "Κατεστραμμένη σήμανση στη συμβολοσειρά μετάφρασης."
 
-msgid "Add Account"
-msgstr "Προσθήκη λογαριασμού"
+#: src/cloud_accounts_ui.cpp:82
+msgid "Connect Poedit with supported cloud localization platforms to seamlessly sync translations managed on them."
+msgstr "Συνδέστε το Poedit με υποστηριζόμενες πλατφόρμες μετάφρασης cloud για να συγχρονίζετε απρόσκοπτα τις μεταφράσεις που διαχειρίζεστε σε αυτές."
 
-msgid "Add account"
-msgstr "Προσθήκη λογαριασμού"
-
-#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
-#, c-format
-msgid "Learn more about %s"
-msgstr "Μάθετε περισσότερα για το %s"
-
-msgid ""
-"Connect Poedit with supported cloud localization platforms to seamlessly "
-"sync translations managed on them."
-msgstr ""
-"Συνδέστε το Poedit με υποστηριζόμενες πλατφόρμες μετάφρασης cloud για να "
-"συγχρονίζετε απρόσκοπτα τις μεταφράσεις που διαχειρίζεστε σε αυτές."
-
+#: src/cloud_accounts_ui.cpp:85 src/welcomescreen.cpp:295
 msgid "How does cloud sync work?"
 msgstr "Πώς λειτουργεί ο συγχρονισμός στο Cloud;"
 
+#: src/cloud_accounts_ui.cpp:96
 msgid "Account"
 msgstr "Λογαριασμός"
 
+#: src/cloud_accounts_ui.cpp:159
 msgid "(not signed in)"
 msgstr "(Δεν έχετε συνδεθεί)"
 
-msgid "File"
-msgstr "Αρχείο"
-
+#: src/cloud_accounts_ui.cpp:353
 msgid "Open cloud translation"
 msgstr "Άνοιγμα Cloud μετάφρασης"
 
+#: src/cloud_accounts_ui.cpp:365
 msgid "Manage accounts"
 msgstr "Διαχείριση λογαριασμών"
 
+#: src/cloud_accounts_ui.cpp:374 src/export_html.cpp:77
 msgid "Project:"
 msgstr "Έργο:"
 
+#: src/cloud_accounts_ui.cpp:378 src/export_html.cpp:79
+#: src/resources/prefs.xrc:11 src/resources/prefs.xrc:15
+#: src/resources/properties.xrc:54 src/wordpress/wordpress_gui.cpp:228
+#: src/wordpress/wordpress_gui.cpp:354
 msgid "Language:"
 msgstr "Γλώσσα:"
 
+#: src/cloud_accounts_ui.cpp:433
 msgid "Sign in to Cloud Account"
 msgstr "Συνδεθείτε στον λογαριασμό Cloud"
 
+#: src/cloud_accounts_ui.cpp:433
 msgid "Sign in to cloud account"
 msgstr "Συνδεθείτε στο λογαριασμό cloud"
 
+#: src/cloud_accounts_ui.cpp:524
 msgid "No translation projects listed in your account."
 msgstr "Δεν υπάρχουν μεταφραστικά έργα στο λογαριασμό σας."
 
+#: src/cloud_accounts_ui.cpp:633 src/crowdin_gui.cpp:347
 msgid "Downloading latest translations…"
 msgstr "Λήψη τελευταίων μεταφράσεων…"
 
 #. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
+#: src/cloud_accounts_ui.cpp:729
 #, c-format
 msgid "Sign in to %s"
 msgstr "Συνδεθείτε στο %s"
 
+#: src/cloud_sync.h:99
 msgid "Syncing"
 msgstr "Συγχρονισμός"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#: src/cloud_sync.h:116
 #, c-format
 msgid "Uploading translations to %s…"
 msgstr "Μεταφόρτωση μεταφράσεων στο %s…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#: src/cloud_sync.h:168
 #, c-format
 msgid "Uploading translations to %s failed."
 msgstr "Η μεταφόρτωση μεταφράσεων στο %s απέτυχε."
 
+#: src/cloud_sync.h:169
 msgid "Syncing error"
 msgstr "Σφάλμα συγχρονισμού"
 
+#: src/commentdlg.cpp:48
 msgid "Add"
 msgstr "Προσθήκη"
 
+#: src/crowdin_client.cpp:144
 msgid "Unknown Crowdin error."
 msgstr "Άγνωστο σφάλμα Crowdin."
 
+#: src/crowdin_client.cpp:154
 msgid "Not authorized, please sign in again."
 msgstr "Δεν επιτρέπεται, Παρακαλούμε συνδεθείτε ξανά."
 
+#. TRANSLATORS: Crowdin has string-based and file-based project kinds (see https://support.crowdin.com/creating-project/#file-based-project)
+#: src/crowdin_client.cpp:346
+msgid "String-based Crowdin projects are not supported."
+msgstr ""
+
+#: src/crowdin_client.cpp:350
 msgid "Downloading translations is disabled in this project."
 msgstr "Η λήψη μεταφράσεων είναι απενεργοποιημένη για αυτό το έργο."
 
+#: src/crowdin_gui.cpp:94 src/localazy_gui.cpp:105
 msgid "Sign In"
 msgstr "Σύνδεση"
 
+#: src/crowdin_gui.cpp:94 src/localazy_gui.cpp:105
 msgid "Sign in"
 msgstr "Σύνδεση"
 
+#: src/crowdin_gui.cpp:96 src/localazy_gui.cpp:107
 msgid "Sign Out"
 msgstr "Αποσύνδεση"
 
+#: src/crowdin_gui.cpp:96 src/localazy_gui.cpp:107
 msgid "Sign out"
 msgstr "Αποσύνδεση"
 
+#: src/crowdin_gui.cpp:103
 msgid "Learn more about Crowdin"
 msgstr "Μάθετε περισσότερα σχετικά με το Crowdin"
 
-msgid ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool."
+#: src/crowdin_gui.cpp:134
+msgid "Crowdin is an online translation management platform and collaborative translation tool. We use Crowdin ourselves to translate Poedit into many languages, and we love it."
 msgstr ""
-"Το Crowdin είναι μια ηλεκτρονική πλατφόρμα διαχείρισης μεταφράσεων και ένα "
-"εργαλείο συνεργατικής μετάφρασης."
 
+#: src/crowdin_gui.cpp:198 src/localazy_gui.cpp:210
 msgid "Waiting for authentication…"
 msgstr "Αναμονή για έλεγχο ταυτότητας…"
 
+#: src/crowdin_gui.cpp:199 src/localazy_gui.cpp:211
 msgid "Updating user information…"
 msgstr "Ενημέρωση των πληροφοριών χρήστη…"
 
+#: src/crowdin_gui.cpp:306
 msgid "Sign in to Crowdin"
 msgstr "Σύνδεση στο Crowdin"
 
+#: src/crowdin_gui.cpp:326
 msgid "Syncing with Crowdin failed."
 msgstr "Ο συγχρονισμός με το Crowdin απέτυχε."
 
+#: src/crowdin_gui.cpp:327
 msgid "Crowdin error"
 msgstr "Σφάλμα Crodwin"
 
+#: src/crowdin_gui.cpp:335
 msgid "Uploading translations…"
 msgstr "Μεταφόρτωση μεταφράσεων…"
 
+#: src/customcontrols.cpp:282 src/wx_translatable_strings.h:98
 msgid "&Copy"
 msgstr "&Αντιγραφή"
 
-msgid "Learn more"
-msgstr "Μάθετε περισσότερα"
-
+#: src/edapp.cpp:510 src/resources/menus.xrc:377 src/resources/menus.xrc:494
+#: src/wx_translatable_strings.h:105
 msgid "&Help"
 msgstr "&Βοήθεια"
 
+#: src/edapp.cpp:800
 msgid "MO files can’t be directly edited in Poedit."
 msgstr "Τα αρχεία MO δεν μπορούν να επεξεργαστούν απευθείας στο Poedit."
 
+#: src/edapp.cpp:801
 msgid "Error opening file"
 msgstr "Σφάλμα ανοίγματος αρχείου"
 
-msgid ""
-"Please open and edit the corresponding PO file instead. When you save it, "
-"the MO file will be updated as well."
-msgstr ""
-"Παρακαλώ ανοίξτε και επεξεργαστείτε το αντίστοιχο αρχείο PO. Όταν το "
-"αποθηκεύσετε, θα ενημερωθεί και το αρχείο MO."
+#: src/edapp.cpp:803
+msgid "Please open and edit the corresponding PO file instead. When you save it, the MO file will be updated as well."
+msgstr "Παρακαλώ ανοίξτε και επεξεργαστείτε το αντίστοιχο αρχείο PO. Όταν το αποθηκεύσετε, θα ενημερωθεί και το αρχείο MO."
 
+#: src/edapp.cpp:844
 msgid "don’t delete temporary files (for debugging)"
 msgstr "μη διαγράψεις προσωρινά αρχεία (γι' αποσφαλμάτωση)"
 
+#: src/edapp.cpp:846
 msgid "handle a poedit:// URI"
 msgstr "χειρίσου ένα poedit:// URI"
 
+#: src/edapp.cpp:848
 msgid "go to item at given line number"
 msgstr "μετάβαση στο στοιχείο, στο δεδομένο αριθμό γραμμής"
 
+#: src/edapp.cpp:871
 msgid "Failed to communicate with Poedit process."
 msgstr "Αδυναμία επικοινωνίας με τη διεργασία Poedit."
 
+#: src/edapp.cpp:993 src/edapp.cpp:998
 #, c-format
 msgid "Unhandled exception occurred: %s"
 msgstr "Παρουσιάστηκε ανεπίλυτη εξαίρεση: %s"
 
+#: src/edapp.cpp:1156
 msgid "Select translation template"
 msgstr "Επιλογή προτύπου μετάφρασης"
 
+#: src/edapp.cpp:1187 src/edframe.cpp:953 src/edframe.cpp:2687
+#: src/edframe.cpp:2956
+msgid "Invalid file"
+msgstr "Μη έγκυρο αρχείο"
+
+#: src/edapp.cpp:1220 src/wordpress/wordpress_gui.cpp:137
+msgid "WordPress"
+msgstr "WordPress"
+
+#: src/edapp.cpp:1271 src/edframe.cpp:2859
 msgid "Select translation file"
 msgstr "Επιλογή αρχείου μετάφρασης"
 
+#: src/edapp.cpp:1373
 msgid "Poedit is an easy to use translation editor."
 msgstr "Το Poedit είναι ένας εύκολος στη χρήση επεξεργαστής μεταφράσεων."
 
+#: src/edframe.cpp:445
 msgid "You can’t drop more than one file on Poedit window."
 msgstr "Δεν μπορείτε να σύρετε παραπάνω από ένα αρχείο στο παράθυρο Poedit."
 
+#: src/edframe.cpp:452
 #, c-format
 msgid "File “%s” is not a translation file."
 msgstr "Το αρχείο “%s” δεν είναι αρχείο μετάφρασης."
 
+#: src/edframe.cpp:459 src/recent_files.cpp:349
 #, c-format
 msgid "File “%s” doesn’t exist."
 msgstr "Το αρχείο “%s” δεν υπάρχει."
 
+#: src/edframe.cpp:476
 msgid "Poedit"
 msgstr "Poedit"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
+#: src/edframe.cpp:890
 #, c-format
-msgid ""
-"Spellchecking is disabled, because the dictionary for %s isn’t installed."
-msgstr ""
-"Ο ορθογραφικός έλεγχος είναι απενεργοποιημένος, επειδή το λεξικό για %s δεν "
-"είναι εγκατεστημένο."
+msgid "Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgstr "Ο ορθογραφικός έλεγχος είναι απενεργοποιημένος, επειδή το λεξικό για %s δεν είναι εγκατεστημένο."
 
+#: src/edframe.cpp:894
 msgid "Install"
 msgstr "Εγκατάσταση"
 
+#: src/edframe.cpp:986 src/edframe.cpp:1161
 #, c-format
 msgid "The file “%s” has been changed by another application."
 msgstr "Το αρχείο “%s” έχει τροποποιηθεί από μια άλλη εφαρμογή."
 
+#: src/edframe.cpp:987 src/edframe.cpp:991
 msgid "Reload file"
 msgstr "Επαναφόρτωση αρχείου"
 
-msgid ""
-"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
-"be lost if you do."
-msgstr ""
-"Θέλετε να φορτώσετε εκ νέου το αρχείο από τον δίσκο; Αν το κάνετε, θα χαθούν "
-"οι μη αποθηκευμένες αλλαγές σας στο Poedit."
+#: src/edframe.cpp:990
+msgid "Do you want to reload the file from disk? Your unsaved edits in Poedit will be lost if you do."
+msgstr "Θέλετε να φορτώσετε εκ νέου το αρχείο από τον δίσκο; Αν το κάνετε, θα χαθούν οι μη αποθηκευμένες αλλαγές σας στο Poedit."
 
+#. TRANSLATORS: Button next to a QA warning: causes the warning to be dismissed
+#: src/edframe.cpp:991 src/editing_area.cpp:325 src/editing_area.cpp:377
 msgid "Ignore"
 msgstr "Παράβλεψη"
 
+#: src/edframe.cpp:991
 msgid "Reload File"
 msgstr "Επαναφόρτωση αρχείου"
 
+#: src/edframe.cpp:1095
 msgid "The file has been modified. Do you want to save changes?"
 msgstr "Το αρχείο έχει τροποποιηθεί. Θέλετε να αποθηκεύσετε τις αλλαγές;"
 
+#: src/edframe.cpp:1096
 msgid "Save changes"
 msgstr "Αποθήκευση αλλαγών"
 
+#: src/edframe.cpp:1099
 msgid "Your changes will be lost if you don’t save them."
 msgstr "Οι αλλαγές σας θα χαθούν εάν δεν τις αποθηκεύσετε."
 
+#: src/edframe.cpp:1102 src/edframe.cpp:1162 src/sidebar_terminology.cpp:70
+#: src/wx_translatable_strings.h:115
 msgid "Save"
 msgstr "Αποθήκευση"
 
+#: src/edframe.cpp:1104
 msgid "Do&n’t save"
 msgstr "&Χωρίς αποθήκευση"
 
+#: src/edframe.cpp:1106
 msgid "Don’t Save"
 msgstr "Χωρίς αποθήκευση"
 
+#: src/edframe.cpp:1165
 msgid "The changes made by the other application will be lost if you save."
-msgstr ""
-"Οι αλλαγές που έγιναν από την άλλη εφαρμογή θα χαθούν αν κάνετε αποθήκευση."
+msgstr "Οι αλλαγές που έγιναν από την άλλη εφαρμογή θα χαθούν αν κάνετε αποθήκευση."
 
+#: src/edframe.cpp:1166 src/edframe.cpp:2268 src/licensing_ui.cpp:284
+#: src/prefsdlg.cpp:770 src/prefsdlg.cpp:1103 src/resources/comment.xrc:41
+#: src/resources/manager.xrc:63 src/sidebar_terminology.cpp:73
+#: src/wx_translatable_strings.h:94
 msgid "Cancel"
 msgstr "Ακύρωση"
 
+#: src/edframe.cpp:1166
 msgid "Save Anyway"
 msgstr "Αποθήκευση οπωσδήποτε"
 
+#: src/edframe.cpp:1166
 msgid "Save anyway"
 msgstr "Αποθήκευση οπωσδήποτε"
 
+#: src/edframe.cpp:1219
 msgid "Save as…"
 msgstr "Αποθήκευση ως…"
 
+#: src/edframe.cpp:1268
 msgid "Compile to…"
 msgstr "Μεταγλώττιση σε…"
 
+#: src/edframe.cpp:1271
 msgid "Compiled Translation Files"
 msgstr "Μεταγλωττισμένα αρχεία μετάφρασης"
 
+#: src/edframe.cpp:1312
 msgid "Export to HTML…"
 msgstr "Εξαγωγή σε HTML…"
 
+#: src/edframe.cpp:1315
 msgid "HTML Files"
 msgstr "Αρχεία HTML"
 
+#: src/edframe.cpp:1330
+msgid "Exporting to HTML"
+msgstr ""
+
+#: src/edframe.cpp:1364
+msgid "Export to Excel"
+msgstr "Εξαγωγή σε Excel"
+
+#: src/edframe.cpp:1367 src/edframe.cpp:1401
+msgid "Excel Files"
+msgstr "Αρχεία Excel"
+
+#: src/edframe.cpp:1379
+msgid "Exporting to Excel"
+msgstr ""
+
+#: src/edframe.cpp:1398
+msgid "Import from Excel"
+msgstr "Εισαγωγή από Excel"
+
+#: src/edframe.cpp:1423
+msgid "Importing from Excel"
+msgstr ""
+
+#. TRANSLATORS: %s is filename of Excel file
+#: src/edframe.cpp:1440
 #, c-format
-msgid "In: %s"
-msgstr "Στο: %s"
+msgid "The “%s” file does not appear to contain any translations intended for this file."
+msgstr ""
 
-msgid "Source code not available."
-msgstr "Ο πηγαίος κώδικας δεν είναι διαθέσιμος."
+#: src/edframe.cpp:1445
+msgid "No translations were updated from the Excel file."
+msgstr ""
 
+#. TRANSLATORS: %s is a (formatted) number here
+#: src/edframe.cpp:1452
+#, c-format
+msgid "%s string was updated from the Excel file."
+msgid_plural "%s strings were updated from the Excel file."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/edframe.cpp:1456
+msgid "Translations updated:"
+msgstr ""
+
+#: src/edframe.cpp:1457
+msgid "Strings matched in translation file:"
+msgstr ""
+
+#: src/edframe.cpp:1458
+msgid "Excel rows processed:"
+msgstr ""
+
+#: src/edframe.cpp:1779
 msgid "Updating failed"
 msgstr "Η ενημέρωση απέτυχε"
 
-msgid ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the file’s Properties."
+#: src/edframe.cpp:1852
+msgid "Open reference file"
 msgstr ""
-"Δεν ήταν δυνατή η ενημέρωση των μεταφράσεων από τον πηγαίο κώδικα, επειδή "
-"δεν βρέθηκε κώδικας στην καθορισμένη τοποθεσία των ιδιοτήτων του αρχείου."
 
-msgid "Permission denied."
-msgstr "Δεν επιτρέπεται η πρόσβαση."
+#: src/edframe.cpp:1883 src/resources/menus.xrc:267
+msgid "Update from &POT File…"
+msgstr "Ενημέρωση από αρχείο &POT…"
 
-msgid ""
-"You don’t have permission to read source code files from the location "
-"specified in the file’s Properties."
+#: src/edframe.cpp:1883 src/resources/menus.xrc:266
+msgid "Update from &POT file…"
+msgstr "Ενημέρωση από αρχείο &POT…"
+
+#: src/edframe.cpp:1887
+msgid "Update from Reference File…"
 msgstr ""
-"Δεν έχετε την άδεια να διαβάσετε αρχεία πηγαίου κώδικα από την τοποθεσία που "
-"καθορίζεται στις ιδιότητες του αρχείου."
 
-#. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Settings > Privacy & Security > Files & Folders."
+#: src/edframe.cpp:1887
+msgid "Update from reference file…"
 msgstr ""
-"Αν αρνηθήκατε στο παρελθόν την πρόσβαση στα αρχεία σας, μπορείτε να την "
-"επιτρέψετε στις Ρυθμίσεις συστήματος > Ασφάλεια και απόρρητο > Αρχεία και "
-"φάκελοι."
 
-#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
-msgstr ""
-"Αν αρνηθήκατε στο παρελθόν την πρόσβαση στα αρχεία σας, μπορείτε να την "
-"επιτρέψετε στις Προτιμήσεις συστήματος > Ασφάλεια & απόρρητο > Απόρρητο > "
-"Αρχεία & φάκελοι."
-
-msgid "Translation entries in the file are probably incorrect."
-msgstr "Οι καταχωρήσεις μετάφρασης στο αρχείο είναι πιθανώς λανθασμένες."
-
-msgid "Updating the file failed. Click on 'Details >>' for details."
-msgstr ""
-"Αποτυχία ενημέρωσης αρχείου. Κάντε κλικ στο 'Λεπτομέρειες >>' για "
-"λεπτομέρειες."
-
-msgid "Open translation template"
-msgstr "Άνοιγμα προτύπου μετάφρασης"
-
+#: src/edframe.cpp:2020
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "Βρέθηκε %d ζήτημα στην μετάφραση."
 msgstr[1] "Βρέθηκαν %d ζητήματα στην μετάφραση."
 
+#: src/edframe.cpp:2025 src/edframe.cpp:2071
 msgid "Validation results"
 msgstr "Αποτέλεσμα επικύρωσης"
 
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
-"Οι θέσεις με σφάλματα έχουν επισημανθεί με κόκκινο στην λίστα. Οι "
-"λεπτομέρειες του σφάλματος θα εμφανιστούν, όταν επιλέξεις τη συγκεκριμένη "
-"θέση."
+#: src/edframe.cpp:2028
+msgid "Entries with errors were marked in red in the list. Details of the error will be shown when you select such an entry."
+msgstr "Οι θέσεις με σφάλματα έχουν επισημανθεί με κόκκινο στην λίστα. Οι λεπτομέρειες του σφάλματος θα εμφανιστούν, όταν επιλέξεις τη συγκεκριμένη θέση."
 
+#: src/edframe.cpp:2037
 msgid "The file was saved safely."
 msgstr "Το αρχείο αποθηκεύτηκε με ασφάλεια."
 
-msgid ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
-msgstr ""
-"Το αρχείο σώθηκε με ασφάλεια και μεταγλωττίστηκε σε μορφή MO, αλλά κατά πάσα "
-"πιθανότητα δεν θα λειτουργήσει σωστά."
+#: src/edframe.cpp:2040
+msgid "The file was saved safely and compiled into the MO format, but it will probably not work correctly."
+msgstr "Το αρχείο σώθηκε με ασφάλεια και μεταγλωττίστηκε σε μορφή MO, αλλά κατά πάσα πιθανότητα δεν θα λειτουργήσει σωστά."
 
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-msgstr ""
-"Το αρχείο αποθηκεύθηκε επιτυχώς, όμως δεν μπορεί να γίνει σύνθεση του "
-"αρχείου σε μορφή MO, ώστε, μετά, να χρησιμοποιηθεί."
+#: src/edframe.cpp:2043
+msgid "The file was saved safely, but it cannot be compiled into the MO format and used."
+msgstr "Το αρχείο αποθηκεύθηκε επιτυχώς, όμως δεν μπορεί να γίνει σύνθεση του αρχείου σε μορφή MO, ώστε, μετά, να χρησιμοποιηθεί."
 
-msgid ""
-"The file was compiled into the MO format, but it will probably not work "
-"correctly."
-msgstr ""
-"Το αρχείο μεταγλωττίστηκε σε μορφή MO, αλλά κατά πάσα πιθανότητα δεν θα "
-"λειτουργήσει σωστά."
+#: src/edframe.cpp:2052
+msgid "The file was compiled into the MO format, but it will probably not work correctly."
+msgstr "Το αρχείο μεταγλωττίστηκε σε μορφή MO, αλλά κατά πάσα πιθανότητα δεν θα λειτουργήσει σωστά."
 
+#: src/edframe.cpp:2056
 msgid "The file cannot be compiled into the MO format and used."
-msgstr ""
-"Αυτό το αρχείο δεν μπορεί να μεταγλωττιστεί σε μορφή MO και να "
-"χρησιμοποιηθεί."
+msgstr "Αυτό το αρχείο δεν μπορεί να μεταγλωττιστεί σε μορφή MO και να χρησιμοποιηθεί."
 
+#: src/edframe.cpp:2070
 msgid "No problems with the translation found."
 msgstr "Δεν βρέθηκε κανένα πρόβλημα στην μετάφραση."
 
+#: src/edframe.cpp:2080
 #, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural ""
-"The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] ""
-"Η μετάφραση είναι έτοιμη για χρήση, αλλά %d καταχώρηση δεν έχει μεταφραστεί "
-"ακόμα."
-msgstr[1] ""
-"Η μετάφραση είναι έτοιμη για χρήση, αλλά %d καταχωρήσεις δεν έχουν "
-"μεταφραστεί ακόμα."
+msgid_plural "The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] "Η μετάφραση είναι έτοιμη για χρήση, αλλά %d καταχώρηση δεν έχει μεταφραστεί ακόμα."
+msgstr[1] "Η μετάφραση είναι έτοιμη για χρήση, αλλά %d καταχωρήσεις δεν έχουν μεταφραστεί ακόμα."
 
+#: src/edframe.cpp:2085
 msgid "The translation is ready for use."
 msgstr "Η μετάφραση είναι έτοιμη προς χρήση."
 
+#: src/edframe.cpp:2251
+msgid "Translation Quality Warnings"
+msgstr "Προειδοποιήσεις ποιότητας μετάφρασης"
+
+#: src/edframe.cpp:2254
+msgid "Poedit performs automated quality checks on translations. You can configure which categories of checks are useful for you and disable unwanted ones here."
+msgstr "Το Poedit εκτελεί αυτοματοποιημένους ποιοτικούς ελέγχους στις μεταφράσεις. Μπορείτε να ρυθμίσετε ποιες κατηγορίες ελέγχων είναι χρήσιμες για εσάς και να απενεργοποιήσετε τις ανεπιθύμητες εδώ."
+
+#: src/edframe.cpp:2265 src/resources/manager.xrc:55
+#: src/resources/summary.xrc:87 src/sidebar_pro.cpp:1146
+#: src/wx_translatable_strings.h:108
+msgid "OK"
+msgstr "OK"
+
+#: src/edframe.cpp:2510 src/prefsdlg.cpp:484 src/sidebar_pro.cpp:705
+msgid "Contributing translations improves the quality of online suggestions for everybody — the more people do it, the better the suggestions can be. Your translations are submitted anonymously and are available to other translators using Poedit or other CAT tools."
+msgstr "Η συμβολή μεταφράσεων βελτιώνει την ποιότητα των διαδικτυακών προτάσεων για όλους - όσο περισσότερα άτομα το κάνουν, τόσο καλύτερες θα είναι οι υποδείξεις. Οι μεταφράσεις σας υποβάλλονται ανώνυμα και είναι διαθέσιμες σε άλλους μεταφραστές που χρησιμοποιούν το Poedit ή άλλα εργαλεία CAT."
+
+#: src/edframe.cpp:2515
+msgid "Can Poedit contribute your translations of this file to the online translation memory?"
+msgstr "Μπορεί το Poedit να συμβάλει τις μεταφράσεις σας σε αυτό το αρχείο στην μνήμη online μετάφρασης;"
+
+#. TRANSLATORS: Try to keep this as short as the original. If you can't, break it into two lines.
+#: src/edframe.cpp:2519 src/sidebar_pro.cpp:701
+msgid "Apply to all files I edit"
+msgstr "Εφαρμογή σε όλα τα αρχεία"
+
+#: src/edframe.cpp:2520
+msgid "Contribute"
+msgstr "Συνεισφορά"
+
+#: src/edframe.cpp:2527
+msgid "Keep Private"
+msgstr "Να παραμείνει απόρρητο"
+
+#: src/edframe.cpp:2527
+msgid "Keep private"
+msgstr "Να παραμείνει απόρρητο"
+
+#: src/edframe.cpp:2686
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr "Το Poedit διόρθωσε αυτόματα το μη έγκυρο περιεχόμενο στο αρχείο “%s”."
 
-msgid ""
-"The file contained duplicate items, which is not allowed in PO files and "
-"would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as needing work and correct "
-"them if necessary."
-msgstr ""
-"Το αρχείο περιέχει αντίγραφα στοιχεία, το οποίο δεν επιτρέπεται στα αρχεία "
-"PO και θα αποτρέψει το αρχείο από το να χρησιμοποιηθεί. Το Poedit διόρθωσε "
-"το θέμα, αλλά θα πρέπει να επανεξετάσετε τις μεταφράσεις οποιουδήποτε "
-"στοιχείου έχει επισημανθεί ότι χρειάζεται δουλειά και να το διορθώσετε εάν "
-"είναι απαραίτητο."
+#: src/edframe.cpp:2691
+msgid "The file contained duplicate items, which is not allowed in PO files and would prevent the file from being used. Poedit fixed the issue, but you should review translations of any items marked as needing work and correct them if necessary."
+msgstr "Το αρχείο περιέχει αντίγραφα στοιχεία, το οποίο δεν επιτρέπεται στα αρχεία PO και θα αποτρέψει το αρχείο από το να χρησιμοποιηθεί. Το Poedit διόρθωσε το θέμα, αλλά θα πρέπει να επανεξετάσετε τις μεταφράσεις οποιουδήποτε στοιχείου έχει επισημανθεί ότι χρειάζεται δουλειά και να το διορθώσετε εάν είναι απαραίτητο."
 
+#: src/edframe.cpp:2707
 msgid "Language of the translation isn’t set."
 msgstr "Δεν έχει οριστεί η γλώσσα της μετάφρασης."
 
+#: src/edframe.cpp:2709
 msgid "Set Language"
 msgstr "Ορισμός γλώσσας"
 
+#: src/edframe.cpp:2709
 msgid "Set language"
 msgstr "Ορισμός γλώσσας"
 
 #. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-msgid ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
-msgstr ""
-"Οι υποδείξεις δεν είναι διαθέσιμες αν η γλώσσα μετάφρασης δεν έχει οριστεί "
-"σωστά. Άλλες λειτουργίες, όπως ο πληθυντικός, μπορεί επίσης να επηρεαστούν."
+#: src/edframe.cpp:2712 src/edframe.cpp:2728
+msgid "Suggestions are not available if the translation language is not set correctly. Other features, such as plural forms, may be affected as well."
+msgstr "Οι υποδείξεις δεν είναι διαθέσιμες αν η γλώσσα μετάφρασης δεν έχει οριστεί σωστά. Άλλες λειτουργίες, όπως ο πληθυντικός, μπορεί επίσης να επηρεαστούν."
 
+#: src/edframe.cpp:2726 src/pretranslate.cpp:508
 msgid "Language of the translation is the same as source language."
 msgstr "Η γλώσσα μετάφρασης είναι η ίδια όπως η πηγαία γλώσσα."
 
+#: src/edframe.cpp:2729
 msgid "Fix Language"
 msgstr "Διόρθωση γλώσσας"
 
+#: src/edframe.cpp:2729
 msgid "Fix language"
 msgstr "Διόρθωση γλώσσας"
 
-msgid ""
-"This file has entries with plural forms, but doesn’t have Plural-Forms "
-"header configured."
-msgstr ""
-"Αυτό το αρχείο περιέχει καταχωρήσεις με πληθυντικούς αριθμούς, αλλά δεν "
-"είναι ρυθμισμένη η κεφαλίδα \"Plural-Forms\" του."
+#: src/edframe.cpp:2746
+msgid "This file has entries with plural forms, but doesn’t have Plural-Forms header configured."
+msgstr "Αυτό το αρχείο περιέχει καταχωρήσεις με πληθυντικούς αριθμούς, αλλά δεν είναι ρυθμισμένη η κεφαλίδα \"Plural-Forms\" του."
 
-msgid ""
-"Entries in this file have different plural forms count from what the file’s "
-"Plural-Forms header says"
-msgstr ""
-"Οι καταχωρήσεις σε αυτό το αρχείο έχουν διαφορετικό αριθμό μορφών "
-"πληθυντικού από αυτόν που αναφέρει η κεφαλίδα \"Plural-Forms\" του αρχείου"
+#: src/edframe.cpp:2750
+msgid "Entries in this file have different plural forms count from what the file’s Plural-Forms header says"
+msgstr "Οι καταχωρήσεις σε αυτό το αρχείο έχουν διαφορετικό αριθμό μορφών πληθυντικού από αυτόν που αναφέρει η κεφαλίδα \"Plural-Forms\" του αρχείου"
 
+#: src/edframe.cpp:2759
 msgid "Required header Plural-Forms is missing."
 msgstr "Λείπει η απαιτούμενη κεφαλίδα «Plural-Forms»."
 
+#: src/edframe.cpp:2763
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "Σφάλμα σύνταξης στην κεφαλίδα \"Plural-Forms\" (\"%s\")."
 
+#: src/edframe.cpp:2775
 msgid "Fix the Header"
 msgstr "Επιδιόρθωση της κεφαλίδας"
 
+#: src/edframe.cpp:2775
 msgid "Fix the header"
 msgstr "Επιδιόρθωση κεφαλίδας"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
+#: src/edframe.cpp:2793
 #, c-format
 msgid "Plural forms expression used by the file is unusual for %s."
-msgstr ""
-"Η έκφραση των μορφών πληθυντικού του αρχείου είναι ασυνήθιστη για τα %s."
+msgstr "Η έκφραση των μορφών πληθυντικού του αρχείου είναι ασυνήθιστη για τα %s."
 
 #. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
+#: src/edframe.cpp:2798
 msgid "Review"
 msgstr "Επισκόπηση"
 
+#. TRANSLATORS: "original" as in "used in this file originally, as it was when opened"
+#: src/edframe.cpp:2834
+msgid "String IDs (original)"
+msgstr "Αναγνωριστικά Συμβολοσειράς (πρωτότυπο)"
+
+#: src/edframe.cpp:2839 src/edframe.cpp:2942 src/edlistctrl.cpp:739
+#: src/export_html.cpp:146
+msgid "unknown language"
+msgstr "άγνωστη γλώσσα"
+
+#. TRANSLATORS: "original" as in "used in this file originally, as it was when opened"; "%s" is language name
+#: src/edframe.cpp:2841
+#, c-format
+msgid "%s (original)"
+msgstr "%s (πρωτότυπο)"
+
+#: src/edframe.cpp:2853
+msgid "Load from Another File…"
+msgstr "Φόρτωση από άλλο αρχείο…"
+
+#: src/edframe.cpp:2853
+msgid "Load from another file…"
+msgstr "Φόρτωση από άλλο αρχείο…"
+
+#: src/edframe.cpp:2897
 msgid "Would you like to use English for source text?"
 msgstr "Θέλετε να χρησιμοποιήσετε αγγλικά για το πηγαίο κείμενο;"
 
+#: src/edframe.cpp:2899
 #, c-format
-msgid ""
-"This file uses string IDs instead of source text. Poedit can load English "
-"texts from the “%s” file for you."
-msgstr ""
-"Αυτό το αρχείο χρησιμοποιεί αναγνωριστικά συμβολοσειράς αντί για πηγαίο "
-"κείμενο. Το Poedit μπορεί να φορτώσει αγγλικά κείμενα από το αρχείο “%s” για "
-"εσάς."
+msgid "This file uses string IDs instead of source text. Poedit can load English texts from the “%s” file for you."
+msgstr "Αυτό το αρχείο χρησιμοποιεί αναγνωριστικά συμβολοσειράς αντί για πηγαίο κείμενο. Το Poedit μπορεί να φορτώσει αγγλικά κείμενα από το αρχείο “%s” για εσάς."
 
 #. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
+#: src/edframe.cpp:2901
 msgid "Load English"
 msgstr "Φόρτωση αγγλικών"
 
+#: src/edframe.cpp:3034 src/export_html.cpp:103
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
 msgstr "Μεταφράστηκαν: %d από %d (%d %%)"
 
+#: src/edframe.cpp:3038 src/export_html.cpp:105
 #, c-format
 msgid "Remaining: %d"
 msgstr "Απομένουν: %d"
 
+#: src/edframe.cpp:3043
 #, c-format
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "%d σφάλμα"
 msgstr[1] "%d σφάλματα"
 
+#: src/edframe.cpp:3048 src/export_html.cpp:117
 #, c-format
 msgid "%d entry"
 msgid_plural "%d entries"
 msgstr[0] "%d καταχώρηση"
 msgstr[1] "%d καταχωρήσεις"
 
+#: src/edframe.cpp:3077
 msgid " (unsaved)"
 msgstr " (μη αποθηκευμένο)"
 
+#: src/edframe.cpp:3118
 msgid " (modified)"
 msgstr " (τροποποιημένο)"
 
+#: src/edframe.cpp:3188 src/edframe.cpp:3192
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "Αδυναμία ενημέρωσης της μεταφραστικής μνήμης: %s"
 
+#: src/edframe.cpp:3220
+#, c-format
+msgid "The file “%s” couldn’t be saved."
+msgstr ""
+
+#: src/edframe.cpp:3330 src/resources/menus.xrc:288
 msgid "Remove same-as-source translations"
 msgstr "Αφαίρεση μεταφράσεων όμοιων με το αρχικό κείμενο"
 
-msgid ""
-"Do you want to remove all translations that are idential to the source text?"
-msgstr ""
-"Θέλετε να αφαιρέσετε όλες τις μεταφράσεις που είναι ίδιες με το αρχικό "
-"κείμενο;"
+#: src/edframe.cpp:3332
+msgid "Do you want to remove all translations that are idential to the source text?"
+msgstr "Θέλετε να αφαιρέσετε όλες τις μεταφράσεις που είναι ίδιες με το αρχικό κείμενο;"
 
-msgid ""
-"This action will delete any translations that match the source text exactly. "
-"This cannot be undone."
-msgstr ""
-"Αυτή η ενέργεια θα διαγράψει τυχόν μεταφράσεις που ταιριάζουν ακριβώς με το "
-"αρχικό κείμενο. Δεν είναι δυνατή η αναίρεση."
+#: src/edframe.cpp:3333
+msgid "This action will delete any translations that match the source text exactly. This cannot be undone."
+msgstr "Αυτή η ενέργεια θα διαγράψει τυχόν μεταφράσεις που ταιριάζουν ακριβώς με το αρχικό κείμενο. Δεν είναι δυνατή η αναίρεση."
 
+#: src/edframe.cpp:3337 src/edframe.cpp:3364
 msgid "Keep"
 msgstr "Διατήρηση"
 
+#: src/edframe.cpp:3337
 msgid "Remove"
 msgstr "Αφαίρεση"
 
+#: src/edframe.cpp:3356
 msgid "Purge deleted translations"
 msgstr "Ε&κκαθάριση διαγραμμένων μεταφράσεων"
 
+#: src/edframe.cpp:3358
 msgid "Do you want to remove all translations that are no longer used?"
-msgstr ""
-"Θα ήθελες να αφαιρεθούν όλες οι μεταφράσεις, οι οποίες έπαψαν να "
-"χρησιμοποιούνται;"
+msgstr "Θα ήθελες να αφαιρεθούν όλες οι μεταφράσεις, οι οποίες έπαψαν να χρησιμοποιούνται;"
 
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"Αν συνεχίσεις με την εκκαθάριση, θα απομακρυνθούν όλες τις μεταφράσεις οι "
-"οποίες έχουν επισημανθεί ως διαγραμμένες.\n"
-"Θα πρέπει να ξανακάνεις τις μεταφράσεις, από την αρχή, αν προστεθούν ξανά "
-"στο μέλλον."
+#: src/edframe.cpp:3360
+msgid "If you continue with purging, all translations marked as deleted will be permanently removed. You will have to translate them again if they are added back in the future."
+msgstr "Αν συνεχίσεις με την εκκαθάριση, θα απομακρυνθούν όλες τις μεταφράσεις οι οποίες έχουν επισημανθεί ως διαγραμμένες.\n"
+"Θα πρέπει να ξανακάνεις τις μεταφράσεις, από την αρχή, αν προστεθούν ξανά στο μέλλον."
 
+#: src/edframe.cpp:3364
 msgid "Purge"
 msgstr "Εκκαθάριση"
 
+#: src/edframe.cpp:3432 src/resources/menus.xrc:113
 msgid "Copy from source text"
 msgstr "Αντιγραφή από αρχικό κείμενο"
 
+#: src/edframe.cpp:3434 src/resources/menus.xrc:114
 msgid "Copy from Source Text"
 msgstr "Αντιγραφή από αρχικό κείμενο"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/edframe.cpp:3436 src/edframe.cpp:3443 src/edframe.cpp:3451
+#: src/sidebar.cpp:422 src/sidebar.cpp:835 src/sidebar.cpp:861
+#: src/sidebar.cpp:863 src/wx_translatable_strings.h:123
 msgctxt "keyboard key"
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
+#: src/edframe.cpp:3439 src/resources/menus.xrc:108
 msgid "Clear translation"
 msgstr "Εκκαθάριση μετάφρασης"
 
+#: src/edframe.cpp:3441 src/resources/menus.xrc:109
 msgid "Clear Translation"
 msgstr "Εκκαθάριση μετάφρασης"
 
+#: src/edframe.cpp:3446 src/resources/comment.xrc:4 src/sidebar.cpp:251
 msgid "Edit comment"
 msgstr "Επεξεργασία σχολίου"
 
+#: src/edframe.cpp:3448 src/sidebar.cpp:254
 msgid "Edit Comment"
 msgstr "Επεξεργασία σχολίου"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
+#: src/edframe.cpp:3459 src/fileviewer.cpp:100
 msgid "Code Occurrences"
 msgstr "Εμφανίσεις κώδικα"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
+#: src/edframe.cpp:3459
 msgid "Code occurrences"
 msgstr "Εμφανίσεις κώδικα"
 
+#: src/edframe.cpp:3683
 msgid "Hide Sidebar"
 msgstr "Απόκρυψη πλευρικής μπάρας"
 
+#: src/edframe.cpp:3685 src/resources/menus.xrc:242
 msgid "Show Sidebar"
 msgstr "Εμφάνιση πλευρικής μπάρας"
 
+#: src/edframe.cpp:3716
 msgid "Hide Status Bar"
 msgstr "Απόκρυψη γραμμής κατάστασης"
 
+#: src/edframe.cpp:3718 src/resources/menus.xrc:248
 msgid "Show Status Bar"
 msgstr "Εμφάνιση γραμμής κατάστασης"
 
+#: src/editing_area.cpp:326
+msgid "Dismiss and ignore the warning."
+msgstr "Απόρριψη και παράβλεψη προειδοποίησης."
+
+#. TRANSLATORS: Reverse of the "Ignore" button, undoes that action
+#: src/editing_area.cpp:377
+msgid "Don’t ignore"
+msgstr "Να μη γίνει παράλειψη"
+
+#: src/editing_area.cpp:411
 msgid "String length in characters: translation | source"
 msgstr "Μήκος συμβολοσειράς σε χαρακτήρες: μετάφραση | αρχική"
 
+#: src/editing_area.cpp:414
 msgid "String length in characters"
 msgstr "Μήκος συμβολοσειράς σε χαρακτήρες"
 
+#: src/editing_area.cpp:461 src/editing_area.cpp:787 src/edlistctrl.cpp:663
+#: src/edlistctrl.cpp:717 src/export_html.cpp:143
 msgid "Source text"
 msgstr "Αρχικό κείμενο"
 
+#: src/editing_area.cpp:483 src/editing_area.cpp:853 src/editing_area.cpp:869
 msgid "Singular"
 msgstr "Ενικός"
 
+#: src/editing_area.cpp:488 src/editing_area.cpp:874
 msgid "Plural"
 msgstr "Πληθυντικός"
 
+#: src/editing_area.cpp:534 src/sidebar_terminology.cpp:57
+#: src/sidebar_terminology.cpp:186 src/statistics.cpp:284
+#: src/statistics.cpp:411
 msgid "Translation"
 msgstr "Μετάφραση"
 
+#: src/editing_area.cpp:543
 msgid "Pre-translated"
 msgstr "Προ-μεταφρασμένο"
 
+#: src/editing_area.cpp:566
 msgid "Needs Work"
 msgstr "Χρειάζεται δουλειά"
 
@@ -803,694 +1213,1269 @@ msgstr "Χρειάζεται δουλειά"
 #. "needs review" implies that somebody else should review the string after
 #. I am done with it (i.e. consider it good), while "needs work" implies I
 #. need to return to it and finish the translation.
+#: src/editing_area.cpp:566
 msgid "Needs work"
 msgstr "Χρειάζεται δουλειά"
 
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
+#: src/editing_area.cpp:638
+msgid "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
-msgstr ""
-"Τα αρχεία POT είναι μόνο πρότυπα και δεν περιέχουν μεταφράσεις. \n"
-"Για να κάνετε μια μετάφραση, δημιουργήστε ένα νέο αρχείο PO που βασίζεται "
-"στο πρότυπο."
+msgstr "Τα αρχεία POT είναι μόνο πρότυπα και δεν περιέχουν μεταφράσεις. \n"
+"Για να κάνετε μια μετάφραση, δημιουργήστε ένα νέο αρχείο PO που βασίζεται στο πρότυπο."
 
+#: src/editing_area.cpp:645
 msgid "Create new translation"
 msgstr "Δημιουργία νέας μετάφρασης"
 
+#: src/editing_area.cpp:646
 msgid "Make a new translation from this POT file."
 msgstr "Δημιουργία νέας μετάφρασης από αυτό το αρχείο POT."
 
 #. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
+#: src/editing_area.cpp:785 src/edlistctrl.cpp:711 src/export_html.cpp:137
 msgid "Source text ID"
 msgstr "Αναγνωριστικό πηγαίου κειμένου"
 
+#: src/editing_area.cpp:840
 msgid "Everything"
 msgstr "Τα πάντα"
 
+#: src/editing_area.cpp:845
 #, c-format
 msgid "Form %i"
 msgstr "Μορφή %i"
 
+#: src/editing_area.cpp:847
 #, c-format
 msgid "Form %i (unused)"
 msgstr "Μορφή %i (αχρησιμοποίητη)"
 
+#: src/editing_area.cpp:858
 msgid "Zero"
 msgstr "Μηδέν"
 
+#: src/editing_area.cpp:860
 msgid "One"
 msgstr "Ένα"
 
+#: src/editing_area.cpp:862
 msgid "Two"
 msgstr "Δύο"
 
+#: src/editing_area.cpp:876
 msgid "Other"
 msgstr "Άλλο"
 
 #. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
+#: src/editing_area.cpp:1060
 #, c-format
 msgid "String context: %s"
 msgstr "Περιεχόμενο συμβολοσειράς: %s"
 
 #. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
+#: src/editing_area.cpp:1067
 #, c-format
 msgid "String identifier: %s"
 msgstr "Αναγνωριστικό συμβολοσειράς: %s"
 
+#: src/editing_area.cpp:1075
 #, c-format
 msgid "%s Format"
 msgstr "Μορφή %s"
 
 #. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#: src/editing_area.cpp:1075
 #, c-format
 msgid "%s format"
 msgstr "Μορφή %s"
 
+#: src/edlistctrl.cpp:668 src/edlistctrl.cpp:740 src/export_html.cpp:145
 #, c-format
 msgid "Translation — %s"
 msgstr "Μετάφραση — %s"
 
+#: src/edlistctrl.cpp:672
 msgid "ID"
 msgstr "ID"
 
+#: src/edlistctrl.cpp:716 src/export_html.cpp:142
 #, c-format
 msgid "Source text — %s"
 msgstr "Αρχικό κείμενο — %s"
 
-msgid "unknown language"
-msgstr "άγνωστη γλώσσα"
-
+#: src/errors.cpp:84
 #, c-format
 msgid "Network error: %s (%d)"
 msgstr "Σφάλμα δικτύου: %s (%d)"
 
+#: src/errors.cpp:93
 msgid "Unknown error"
 msgstr "Άγνωστο σφάλμα"
 
-#, c-format
-msgid "Failed command: %s"
-msgstr "Απέτυχε η εντολή: %s"
+#: src/excel_io.cpp:261 src/excel_io.cpp:298 src/excel_io.cpp:302
+msgid "Failed to create the Excel file."
+msgstr "Αποτυχία δημιουργίας του αρχείου Excel."
 
+#: src/excel_io.cpp:351 src/excel_io.cpp:395 src/excel_io.cpp:419
+msgid "Failed to import from Excel file."
+msgstr "Αποτυχία εισαγωγής από το αρχείο Excel."
+
+#: src/excel_io.cpp:428
+msgid "Excel Import"
+msgstr "Εισαγωγή Excel"
+
+#. TRANSLATORS: Shown above a list of columns and their meaning
+#: src/excel_io.cpp:442
+msgid "Import from Excel columns as:"
+msgstr "Εισαγωγή από στήλες του Excel ως:"
+
+#: src/excel_io.cpp:452
+msgid "ID:"
+msgstr "Αναγνωριστικό:"
+
+#: src/excel_io.cpp:460
+msgid "Context:"
+msgstr "Συμφραζόμενα:"
+
+#: src/excel_io.cpp:467
+msgid "Source text ID:"
+msgstr "Αναγνωριστικό αρχικού κειμένου:"
+
+#: src/excel_io.cpp:467
+msgid "Source text:"
+msgstr "Αρχικό κείμενο:"
+
+#: src/excel_io.cpp:478
+msgid "Translation:"
+msgstr "Μετάφραση:"
+
+#: src/excel_io.cpp:485 src/sidebar_terminology.cpp:192
+msgid "Import"
+msgstr "Εισαγωγή"
+
+#: src/extractors/extractor.cpp:373
 msgid "Failed to merge gettext catalogs."
 msgstr "Απέτυχε η συγχώνευση καταλόγων gettext."
 
+#: src/fileviewer.cpp:132
 msgid "Open in Editor"
 msgstr "Άνοιγμα στο εργαλείο επεξεργασίας"
 
+#: src/fileviewer.cpp:132
 msgid "Open in editor"
 msgstr "Άνοιγμα στο εργαλείο επεξεργασίας"
 
-msgid ""
-"No information about this string’s occurrences in the source code is "
-"provided in the file."
-msgstr ""
-"Δεν παρέχεται καμία πληροφορία στο αρχείο για τις εμφανίσεις αυτής της "
-"συμβολοσειράς στον πηγαίο κώδικα."
+#: src/fileviewer.cpp:256
+msgid "No information about this string’s occurrences in the source code is provided in the file."
+msgstr "Δεν παρέχεται καμία πληροφορία στο αρχείο για τις εμφανίσεις αυτής της συμβολοσειράς στον πηγαίο κώδικα."
 
+#: src/fileviewer.cpp:256
 msgid "No usage information"
 msgstr "Καμία πληροφορία χρήσης"
 
+#: src/fileviewer.cpp:262
 #, c-format
 msgid "%d code occurrence"
 msgid_plural "%d code occurrences"
 msgstr[0] "%d εμφάνιση κώδικα"
 msgstr[1] "%d εμφανίσεις κώδικα"
 
+#: src/fileviewer.cpp:283
 msgid "Source code not found"
 msgstr "Δεν βρέθηκε πηγαίος κώδικας"
 
-msgid ""
-"Poedit cannot show source code where the string is used, because the file is "
-"either not available in the referenced location or it is a symbolic "
-"reference that doesn’t point to a real file."
-msgstr ""
-"Το Poedit δεν μπορεί να εμφανίσει τον πηγαίο κώδικα όπου χρησιμοποιείται η "
-"συμβολοσειρά, επειδή το αρχείο είτε δεν είναι διαθέσιμο στην αναφερόμενη "
-"τοποθεσία, είτε πρόκειται για συμβολική αναφορά που δεν δείχνει σε "
-"πραγματικό αρχείο."
+#: src/fileviewer.cpp:284
+msgid "Poedit cannot show source code where the string is used, because the file is either not available in the referenced location or it is a symbolic reference that doesn’t point to a real file."
+msgstr "Το Poedit δεν μπορεί να εμφανίσει τον πηγαίο κώδικα όπου χρησιμοποιείται η συμβολοσειρά, επειδή το αρχείο είτε δεν είναι διαθέσιμο στην αναφερόμενη τοποθεσία, είτε πρόκειται για συμβολική αναφορά που δεν δείχνει σε πραγματικό αρχείο."
 
+#: src/fileviewer.cpp:298
 msgid "File cannot be opened"
 msgstr "Αδυναμία ανοίγματος αρχείου"
 
+#: src/fileviewer.cpp:299
 #, c-format
 msgid "Poedit was unable to open the “%s” file."
 msgstr "Το Poedit δεν μπόρεσε να ανοίξει το αρχείο \"%s\"."
 
+#: src/findframe.cpp:83 src/findframe.cpp:101 src/findframe.cpp:300
+#: src/resources/menus.xrc:156
 msgid "Find"
 msgstr "Εύρεση"
 
+#: src/findframe.cpp:102 src/findframe.cpp:300
 msgid "Replace"
 msgstr "Αντικατάσταση"
 
 #. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+#: src/findframe.cpp:118
 msgid "Options"
 msgstr "Επιλογές"
 
+#: src/findframe.cpp:122
 msgid "Ignore case"
 msgstr "Παράβλεψη πεζών-κεφαλαίων"
 
+#: src/findframe.cpp:123
 msgid "Wrap around"
 msgstr "Επιστροφή στην αρχή"
 
+#: src/findframe.cpp:124
 msgid "Whole words only"
 msgstr "Μόνο ολόκληρες λέξεις"
 
+#: src/findframe.cpp:125
 msgid "Find in source texts"
 msgstr "Εύρεση στα πηγαία κείμενα"
 
+#: src/findframe.cpp:126
 msgid "Find in translations"
 msgstr "Εύρεση στις μεταφράσεις"
 
+#: src/findframe.cpp:127
 msgid "Find in comments"
 msgstr "Εύρεση στα σχόλια"
 
+#: src/findframe.cpp:148 src/licensing_ui.cpp:535 src/titleless_window.cpp:82
+#: src/wx_translatable_strings.h:96
 msgid "Close"
 msgstr "Κλείσιμο"
 
+#: src/findframe.cpp:149
 msgid "Replace &All"
 msgstr "Αντικατάσταση &όλων"
 
+#: src/findframe.cpp:149
 msgid "Replace &all"
 msgstr "Αντικατάσταση &όλων"
 
+#: src/findframe.cpp:150
 msgid "&Replace"
 msgstr "&Αντικατάσταση"
 
+#: src/findframe.cpp:151
 msgid "< &Previous"
 msgstr "< &Προηγούμενο"
 
+#: src/findframe.cpp:152
 msgid "&Next >"
 msgstr "&Επόμενο >"
 
+#: src/findframe.cpp:235
 msgid "String to find"
 msgstr "Συμβολοσειρά προς εύρεση"
 
+#: src/findframe.cpp:236
 msgid "Replacement string"
 msgstr "Συμβολοσειρά αντικατάστασης"
 
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "Αδυναμία εκτέλεσης προγράμματος: %s"
+#: src/gexecute.cpp:131 src/gexecute.cpp:146 src/gexecute.cpp:170
+msgid "warning: "
+msgstr ""
+
+#: src/gexecute.cpp:171
+msgid "error: "
+msgstr ""
+
+#: src/glossary.cpp:273 src/glossary.cpp:277
+msgid "Failed to read the CSV file."
+msgstr "Αποτυχία ανάγνωσης του αρχείου CSV."
 
 #. TRANSLATORS: placeholder/hint in language controls
+#: src/languagectrl.cpp:138
 msgid "Language name or code"
 msgstr "Όνομα γλώσσας ή κωδικός"
 
+#: src/languagectrl.cpp:210
 msgid "Translation Language"
 msgstr "Γλώσσα μετάφρασης"
 
+#: src/languagectrl.cpp:217
 msgid "Language of the translation:"
 msgstr "Γλώσσα της μετάφρασης:"
 
+#: src/licensing.cpp:196 src/licensing.cpp:206
+msgid "Invalid license key"
+msgstr "Μη έγκυρο κλειδί άδειας"
+
+#: src/licensing.cpp:211
+msgid "Subscription expired"
+msgstr "Η συνδρομή έληξε"
+
+#: src/licensing.cpp:218
+#, c-format
+msgid "App updates expired, license is only valid for version %s"
+msgstr "Οι ενημερώσεις εφαρμογής έληξαν, η άδεια είναι έγκυρη μόνο για την έκδοση %s"
+
+#: src/licensing.cpp:224
+#, c-format
+msgid "License key only valid for older Poedit version (%s)"
+msgstr "Το κλειδί άδειας είναι έγκυρο μόνο για παλαιότερη έκδοση του Poedit (%s)"
+
+#: src/licensing.cpp:231
+msgid "Maximum allowed activations exceeded"
+msgstr "Ξεπεράστηκε ο μέγιστος αριθμός επιτρεπόμενων ενεργοποιήσεων"
+
+#: src/licensing.cpp:236 src/licensing.cpp:263
+#, c-format
+msgid "Unknown activation error (%s)"
+msgstr "Άγνωστο σφάλμα ενεργοποίησης (%s)"
+
+#: src/licensing_ui.cpp:92 src/licensing_ui.cpp:97 src/licensing_ui.cpp:859
+#: src/licensing_ui.cpp:872 src/licensing_ui.cpp:884
+msgid "Poedit Activation"
+msgstr "Ενεργοποίηση Poedit"
+
+#: src/licensing_ui.cpp:92 src/licensing_ui.cpp:102
+#: src/marketing_services.cpp:49 src/wx/main_toolbar.cpp:155
+#: src/wx/main_toolbar.cpp:182
+msgid "Upgrade to Pro"
+msgstr "Αναβάθμιση σε Pro"
+
+#: src/licensing_ui.cpp:248
+msgid "Please enter your license key:"
+msgstr "Παρακαλώ εισαγάγετε το κλειδί άδειάς σας:"
+
+#: src/licensing_ui.cpp:257
+msgid "You should find your key in the confirmation email you received after you purchased Poedit. Activation requires internet connection."
+msgstr "Θα πρέπει να βρείτε το κλειδί σας στο email επιβεβαίωσης που λάβατε όταν αγοράσατε το Poedit. Η ενεργοποίηση απαιτεί σύνδεση στο διαδίκτυο."
+
+#: src/licensing_ui.cpp:262
+msgid "Retrieve lost license key"
+msgstr "Ανάκτηση κλειδιού άδειας χρήσης"
+
+#: src/licensing_ui.cpp:271
+msgid "Buy Online…"
+msgstr "Αγορά στο διαδίκτυο…"
+
+#: src/licensing_ui.cpp:271
+msgid "Buy online…"
+msgstr "Αγορά στο διαδίκτυο…"
+
+#: src/licensing_ui.cpp:286 src/licensing_ui.cpp:290
+msgid "Activate"
+msgstr "Ενεργοποίηση"
+
+#: src/licensing_ui.cpp:316
+msgid "Activating your license…"
+msgstr "Ενεργοποίηση της άδειάς σας…"
+
+#: src/licensing_ui.cpp:327
+msgid "Would you like to hear about new versions?"
+msgstr "Θα θέλατε να μαθαίνετε για νέες εκδόσεις;"
+
+#: src/licensing_ui.cpp:328
+msgid "We’ll send you an email when a new major version is released. No marketing, no spammy newsletters. Just very rare heads-up about new versions."
+msgstr "Θα σας στείλουμε ένα email όταν κυκλοφορήσει μια νέα κύρια έκδοση. Δεν θα λάβετε διαφημίσεις ή περιττά ενημερωτικά δελτία, παρά μόνο σπάνιες ειδοποιήσεις για νέες εκδόσεις."
+
+#: src/licensing_ui.cpp:331 src/licensing_ui.cpp:690
+msgid "No, thanks"
+msgstr "Όχι, ευχαριστώ"
+
+#: src/licensing_ui.cpp:331
+msgid "Notify me"
+msgstr "Να ειδοποιούμαι"
+
+#: src/licensing_ui.cpp:358
+msgid "Upgrade your Pro license"
+msgstr "Αναβαθμίστε την άδεια χρήσης Pro"
+
+#: src/licensing_ui.cpp:377
+msgid "Renew your license"
+msgstr "Ανανεώστε την άδειά σας"
+
+#: src/licensing_ui.cpp:395
+msgid "Add more devices"
+msgstr "Προσθήκη περισσότερων συσκευών"
+
+#: src/licensing_ui.cpp:440
+msgid "Thank you!"
+msgstr "Ευχαριστούμε!"
+
+#: src/licensing_ui.cpp:446
+msgid "Your copy is upgraded to Poedit Pro."
+msgstr "Το αντίγραφό σας έχει αναβαθμιστεί στο Poedit Pro."
+
+#: src/licensing_ui.cpp:450 src/licensing_ui.cpp:454
+msgid "Manage License"
+msgstr "Διαχείριση άδειας"
+
+#: src/licensing_ui.cpp:454
+msgid "Manage license"
+msgstr "Διαχείριση άδειας"
+
+#. TRANSLATORS: "Renew" as a verb meaning making something that stopped working (a subscription) work again by prolonging it for another period.
+#: src/licensing_ui.cpp:479 src/licensing_ui.cpp:862 src/licensing_ui.cpp:875
+#: src/licensing_ui.cpp:1161
+msgid "Renew"
+msgstr "Ανανέωση"
+
+#: src/licensing_ui.cpp:497
+msgid "Deactivate"
+msgstr "Απενεργοποίηση"
+
+#: src/licensing_ui.cpp:509
+msgid "Deactivating your license…"
+msgstr "Απενεργοποίηση της άδειας σας…"
+
+#: src/licensing_ui.cpp:567
+msgid "Upgrade to Poedit Pro to Unlock WordPress Extras"
+msgstr "Αναβαθμίστε στο Poedit Pro για να ξεκλειδώσετε επιπλέον λειτουργίες του WordPress"
+
+#: src/licensing_ui.cpp:568 src/licensing_ui.cpp:589
+msgid "Upgrade to take advantage of Pro’s extra smarts: it understands WordPress themes and plugins and sets everything up for you. You can focus on translating and don’t have to worry about the technical details. With the free version, you would have to do everything manually yourself."
+msgstr "Αναβαθμίστε για να αξιοποιήσετε τις έξυπνες λειτουργίες του Pro: αναγνωρίζει τα πρόσθετα και τα θέματα του WordPress και ρυθμίζει τα πάντα για εσάς. Μπορείτε να επικεντρωθείτε στη μετάφραση, χωρίς να ανησυχείτε για τις τεχνικές λεπτομέρειες. Με τη δωρεάν έκδοση, θα πρέπει να κάνετε τα πάντα χειροκίνητα."
+
+#: src/licensing_ui.cpp:571
+msgid "Upgrade to Poedit Pro to Unlock Statistics"
+msgstr "Αναβάθμιση στο Poedit Pro για ξεκλείδωμα στατιστικών"
+
+#: src/licensing_ui.cpp:574
+msgid "Upgrade to Poedit Pro to Unlock Online Suggestions"
+msgstr "Αναβαθμίστε στο Poedit Pro για να ξεκλειδώσετε τις διαδικτυακές προτάσεις"
+
+#: src/licensing_ui.cpp:577
+msgid "Upgrade to Poedit Pro to Unlock Templates Support"
+msgstr "Αναβαθμίστε στο Poedit Pro για να ξεκλειδώσετε την υποστήριξη προτύπων"
+
+#: src/licensing_ui.cpp:581
+msgid "Upgrade to Poedit Pro to Unlock Extra Features"
+msgstr "Αναβαθμίστε στο Poedit Pro για να ξεκλειδώσετε επιπλέον λειτουργίες"
+
+#: src/licensing_ui.cpp:588
+msgid "WordPress extras require upgrade to Poedit Pro"
+msgstr "Οι επιπλέον λειτουργίες του WordPress απαιτούν αναβάθμιση στο Poedit Pro"
+
+#: src/licensing_ui.cpp:593
+msgid "Statistics require upgrade to Poedit Pro"
+msgstr "Τα στατιστικά απαιτούν αναβάθμιση σε Poedit Pro"
+
+#: src/licensing_ui.cpp:596
+msgid "Online TM suggestions require upgrade to Poedit Pro"
+msgstr "Οι διαδικτυακές προτάσεις ΜΜ απαιτούν αναβάθμιση στο Poedit Pro"
+
+#: src/licensing_ui.cpp:599
+msgid "Templates support requires upgrade to Poedit Pro"
+msgstr "Η υποστήριξη προτύπων απαιτεί αναβάθμιση στο Poedit Pro"
+
+#: src/licensing_ui.cpp:602
+msgid "Customizable warnings require upgrade to Poedit Pro"
+msgstr "Οι προσαρμόσιμες προειδοποιήσεις απαιτούν αναβάθμιση στο Poedit Pro"
+
+#: src/licensing_ui.cpp:605
+msgid "Customizable file extensions require upgrade to Poedit Pro"
+msgstr "Οι προσαρμόσιμες επεκτάσεις αρχείων απαιτούν αναβάθμιση στο Poedit Pro"
+
+#: src/licensing_ui.cpp:608
+msgid "Terminology search and glossaries require upgrade to Poedit Pro"
+msgstr "Η αναζήτηση ορολογίας και τα γλωσσάρια απαιτούν αναβάθμιση στο Poedit Pro"
+
+#: src/licensing_ui.cpp:611
+msgid "Replacing source text requires upgrade to Poedit Pro"
+msgstr "Η αντικατάσταση του πηγαίου κειμένου απαιτεί αναβάθμιση στο Poedit Pro"
+
+#: src/licensing_ui.cpp:614
+msgid "Merging translation files requires upgrade to Poedit Pro"
+msgstr ""
+
+#: src/licensing_ui.cpp:617
+msgid "Excel import and export require upgrade to Poedit Pro"
+msgstr "Η εισαγωγή και εξαγωγή Excel απαιτούν αναβάθμιση στο Poedit Pro"
+
+#: src/licensing_ui.cpp:649
+msgid "Purchasing the full version will unlock additional features in Poedit, including:"
+msgstr "Αγοράζοντας την πλήρη έκδοση θα ξεκλειδώσει επιπλέον δυνατότητες στο Poedit, όπως:"
+
+#: src/licensing_ui.cpp:663
+msgid "Suggestions from online translation memory"
+msgstr "Προτάσεις από τη διαδικτυακή μεταφραστική μνήμη"
+
+#: src/licensing_ui.cpp:664
+msgid "Machine translation with DeepL, Google Translate or Microsoft Translator"
+msgstr "Μητρική μετάφραση με DeepL, Google Translate ή Microsoft Translator"
+
+#: src/licensing_ui.cpp:665
+msgid "Worry-free setup for WordPress themes and plugins"
+msgstr "Εύκολη ρύθμιση θεμάτων και προσθέτων του WordPress"
+
+#: src/licensing_ui.cpp:666
+msgid "Extract strings from Twig or Blade templates"
+msgstr "Εξαγωγή συμβολοσειρών από πρότυπα του Twig ή του Blade"
+
+#: src/licensing_ui.cpp:667
+msgid "Word count and statistics"
+msgstr "Πλήθος λέξεων και στατιστικά"
+
+#: src/licensing_ui.cpp:668
+msgid "Excel import and export"
+msgstr "Εισαγωγή και εξαγωγή Excel"
+
+#: src/licensing_ui.cpp:669
+msgid "Merging translation files for all file formats"
+msgstr ""
+
+#: src/licensing_ui.cpp:670
+msgid "Customizable QA checks and warnings"
+msgstr "Προσαρμόσιμοι έλεγχοι και προειδοποιήσεις ΔΠ"
+
+#: src/licensing_ui.cpp:671
+msgid "Replace source text with translations from another file"
+msgstr "Αντικατάσταση πηγαίου κειμένου με μεταφράσεις από άλλο αρχείο"
+
+#: src/licensing_ui.cpp:672
+msgid "Terminology search and glossaries"
+msgstr "Αναζήτηση ορολογίας και γλωσσάρια"
+
+#: src/licensing_ui.cpp:673
+msgid "Personal priority support"
+msgstr "Προσωπική υποστήριξη προτεραιότητας"
+
+#: src/licensing_ui.cpp:679
+msgid "Enter license key"
+msgstr "Εισαγωγή κλειδιού άδειας"
+
+#: src/licensing_ui.cpp:689
+msgid "Upgrade…"
+msgstr "Αναβάθμιση…"
+
+#: src/licensing_ui.cpp:754 src/licensing_ui.cpp:780
+#, c-format
+msgid "Licensed to: %s"
+msgstr "Παραχώρηση αδείας χρήσης σε: %s"
+
+#. TRANSLATORS: %s is replaced at runtime with e.g. "Poedit Pro" or "Poedit Pro+"
+#: src/licensing_ui.cpp:756 src/licensing_ui.cpp:785
+#, c-format
+msgid "License type: %s"
+msgstr "Τύπος άδειας: %s"
+
+#: src/licensing_ui.cpp:780
+msgid "(personal license)"
+msgstr "(προσωπική άδεια)"
+
+#: src/licensing_ui.cpp:859
+msgid "Subscription expired."
+msgstr "Η συνδρομή έληξε."
+
+#: src/licensing_ui.cpp:861
+msgid "Your license was deactivated on this computer because your subscription expired."
+msgstr "Η άδεια σας απενεργοποιήθηκε σε αυτόν τον υπολογιστή επειδή η συνδρομή σας έληξε."
+
+#: src/licensing_ui.cpp:871
+#, c-format
+msgid "Your license was deactivated on this computer because it only includes app updates up to Poedit version %s."
+msgstr "Η άδεια σας απενεργοποιήθηκε σε αυτόν τον υπολογιστή, επειδή περιλαμβάνει μόνο ενημερώσεις εφαρμογής έως την έκδοση %s του Poedit."
+
+#: src/licensing_ui.cpp:872
+msgid "App updates expired."
+msgstr "Οι ενημερώσεις της εφαρμογής έληξαν."
+
+#: src/licensing_ui.cpp:884
+msgid "License deactivated."
+msgstr "Η άδεια απενεργοποιήθηκε."
+
+#: src/licensing_ui.cpp:886
+msgid "Your license was deactivated on this computer. Please email help@poedit.net if you are not sure why this happened."
+msgstr "Η άδεια σας απενεργοποιήθηκε σε αυτόν τον υπολογιστή. Παρακαλούμε στείλτε email στο help@poedit.net εάν δεν είστε σίγουροι γιατί συνέβη αυτό."
+
+#. TRANSLATORS: %s is a placeholder for subscription name, e.g. Pro+ or Pro
+#: src/licensing_ui.cpp:1112
+#, c-format
+msgid "Your %s subscription expired."
+msgstr "Η συνδρομή %s έληξε."
+
+#. TRANSLATORS: "Expired" as in ended e.g. after 1 year
+#: src/licensing_ui.cpp:1117
+msgid "Machine translation service expired."
+msgstr "Η υπηρεσία μηχανικής μετάφρασης έληξε."
+
+#. TRANSLATORS: "standard" here is the same word as the standalone string "Standard".
+#: src/licensing_ui.cpp:1125
+msgid "Machine translation quality is reduced to standard."
+msgstr "Η ποιότητα της μηχανικής μετάφρασης μειώνεται σε τυπική."
+
+#: src/localazy_client.cpp:385
 msgid "All strings"
 msgstr "Όλες οι συμβολοσειρές"
 
+#: src/localazy_client.cpp:404
 msgid "Couldn’t download Localazy project details."
 msgstr "Δεν ήταν δυνατή η λήψη λεπτομερειών έργου από το Localazy."
 
+#: src/localazy_client.cpp:476 src/localazy_client.cpp:490
 msgid "There was an error when uploading translations to Localazy."
 msgstr "Προέκυψε σφάλμα κατά τη μεταφόρτωση μεταφράσεων στο Localazy."
 
+#: src/localazy_gui.cpp:103
 msgid "Projects"
 msgstr "Έργα"
 
-msgid ""
-"Localazy is a highly automated localization platform allowing anyone to "
-"translate their products and content into multiple languages easily."
-msgstr ""
-"Το Localazy είναι μια εξαιρετικά αυτοματοποιημένη πλατφόρμα μετάφρασης που "
-"επιτρέπει σε οποιονδήποτε να μεταφράσει εύκολα τα προϊόντα και το "
-"περιεχόμενό του σε πολλαπλές γλώσσες."
+#. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
+#: src/localazy_gui.cpp:115
+#, c-format
+msgid "Learn more about %s"
+msgstr "Μάθετε περισσότερα για το %s"
 
+#: src/localazy_gui.cpp:146
+msgid "Localazy is a highly automated localization platform allowing anyone to translate their products and content into multiple languages easily."
+msgstr "Το Localazy είναι μια εξαιρετικά αυτοματοποιημένη πλατφόρμα μετάφρασης που επιτρέπει σε οποιονδήποτε να μεταφράσει εύκολα τα προϊόντα και το περιεχόμενό του σε πολλαπλές γλώσσες."
+
+#: src/localazy_gui.cpp:241
 msgid "Add Project"
 msgstr "Προσθήκη έργου"
 
+#: src/localazy_gui.cpp:241
 msgid "Add project"
 msgstr "Προσθήκη έργου"
 
+#: src/manager.cpp:117
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - Διαχείριση καταλόγων"
 
+#: src/manager.cpp:162 src/prefsdlg.cpp:877
 msgid "Edit…"
 msgstr "Επεξεργασία…"
 
+#: src/manager.cpp:167
 msgid "Create new translations project"
 msgstr "Δημιουργία νέου έργου μετάφρασης"
 
+#: src/manager.cpp:168
 msgid "Delete the project"
 msgstr "Διαγραφή του έργου"
 
+#: src/manager.cpp:169
 msgid "Edit the project"
 msgstr "Επεξεργασία του έργου"
 
+#: src/manager.cpp:199 src/resources/toolbar.xrc:41 src/statistics.cpp:258
+msgid "Statistics"
+msgstr "Στατιστικά"
+
+#: src/manager.cpp:200 src/resources/toolbar.xrc:42
+msgid "Show translation statistics"
+msgstr "Εμφάνιση στατιστικών μεταφράσεων"
+
+#: src/manager.cpp:202
 msgid "Update all"
 msgstr "Ενημέρωση όλων"
 
+#: src/manager.cpp:203
 msgid "Update all catalogs in the project"
 msgstr "Ενημέρωση όλων των καταλόγων στο έργο"
 
+#: src/manager.cpp:405
 msgid "Total"
 msgstr "Σύνολο"
 
+#: src/manager.cpp:406
 msgid "Untrans"
 msgstr "Μη μεταφρασμένο"
 
+#: src/manager.cpp:407
 msgctxt "column/row header"
 msgid "Needs Work"
 msgstr "Χρειάζεται δουλειά"
 
+#: src/manager.cpp:408
 msgid "Errors"
 msgstr "Σφάλματα"
 
+#: src/manager.cpp:409
 msgid "Last modified"
 msgstr "Τελευταία τροποποίηση"
 
+#: src/manager.cpp:440 src/propertiesdlg.cpp:478
 msgid "Select directory"
 msgstr "Επιλογή καταλόγου"
 
+#: src/manager.cpp:460
 msgid "Directories:"
 msgstr "Κατάλογοι:"
 
+#: src/manager.cpp:532
 msgid "<unnamed>"
 msgstr "<χωρίς όνομα>"
 
+#: src/manager.cpp:570
 #, c-format
 msgid "Do you want to delete project “%s”?"
 msgstr "Θέλετε να διαγράψετε το έργο “%s”;"
 
+#: src/manager.cpp:571
 msgid "Delete project"
 msgstr "Διαγραφή έργου"
 
+#: src/manager.cpp:574
 msgid "Deleting the project will not delete any translation files."
 msgstr "Η διαγραφή του έργου δεν θα διαγράψει κανένα αρχείο μετάφρασης."
 
+#: src/manager.cpp:602
 msgid "Confirmation"
 msgstr "Επιβεβαίωση"
 
+#: src/manager.cpp:602
 msgid "Update all catalogs in this project?"
 msgstr "Ενημέρωση όλων των καταλόγων αυτού του έργου;"
 
+#: src/manager.cpp:603
 msgid "Performs update from source code on all files in the project."
 msgstr "Εκτελεί ενημέρωση από τον πηγαίο κώδικα σε όλα τα αρχεία του έργου."
 
+#: src/manager.cpp:612
+msgid "Updating project catalogs"
+msgstr ""
+
+#: src/menus.cpp:138
 msgid "Check for Updates…"
 msgstr "Έλεγχος για ενημερώσεις…"
 
+#: src/menus.cpp:140
 msgid "Catalogs Manager"
 msgstr "Διαχείριση καταλόγων"
 
+#: src/menus.cpp:143
+msgid "License…"
+msgstr "Άδεια…"
+
+#: src/menus.cpp:155
 msgid "&Preferences…"
 msgstr "&Προτιμήσεις…"
 
+#: src/menus.cpp:170 src/resources/menus.xrc:95 src/resources/menus.xrc:450
+#: src/wx_translatable_strings.h:102
 msgid "&Edit"
 msgstr "&Επεξεργασία"
 
+#: src/menus.cpp:190 src/wx_translatable_strings.h:118
 msgid "Undo"
 msgstr "Αναίρεση"
 
+#: src/menus.cpp:191 src/wx_translatable_strings.h:113
 msgid "Redo"
 msgstr "Επανάληψη"
 
+#: src/menus.cpp:200
 msgid "Paste and Match Style"
 msgstr "Επικόλληση και αντιστοίχιση στυλ"
 
+#: src/menus.cpp:203 src/prefsdlg.cpp:1103 src/sidebar_terminology.cpp:77
+#: src/wx_translatable_strings.h:100
 msgid "Delete"
 msgstr "Διαγραφή"
 
+#: src/menus.cpp:212
 msgid "Spelling and Grammar"
 msgstr "Ορθογραφία και γραμματική"
 
+#: src/menus.cpp:214
 msgid "Show Spelling and Grammar"
 msgstr "Εμφάνιση ορθογραφίας και γραμματικής"
 
+#: src/menus.cpp:215
 msgid "Check Document Now"
 msgstr "Έλεγχος εγγράφου τώρα"
 
+#: src/menus.cpp:217
 msgid "Check Spelling While Typing"
 msgstr "Έλεγχος ορθογραφίας κατά την πληκτρολόγηση"
 
+#: src/menus.cpp:218
 msgid "Check Grammar With Spelling"
 msgstr "Έλεγχος γραμματικής με ορθογραφία"
 
+#: src/menus.cpp:219
 msgid "Correct Spelling Automatically"
 msgstr "Αυτόματη διόρθωση ορθογραφίας"
 
+#: src/menus.cpp:222
 msgid "Substitutions"
 msgstr "Αντικαταστάσεις"
 
+#: src/menus.cpp:224
 msgid "Show Substitutions"
 msgstr "Εμφάνιση των Αντικαταστάσεων"
 
+#: src/menus.cpp:226
 msgid "Smart Copy/Paste"
 msgstr "Έξυπνη αντιγραφή/επικόλληση"
 
+#: src/menus.cpp:227
 msgid "Smart Quotes"
 msgstr "Έξυπνα εισαγωγικά"
 
+#: src/menus.cpp:228
 msgid "Smart Dashes"
 msgstr "Έξυπνες παύλες"
 
+#: src/menus.cpp:229
 msgid "Smart Links"
 msgstr "Έξυπνοι σύνδεσμοι"
 
+#: src/menus.cpp:230
 msgid "Text Replacement"
 msgstr "Αντικατάσταση κειμένου"
 
+#: src/menus.cpp:233
 msgid "Transformations"
 msgstr "Μετασχηματισμοί"
 
+#: src/menus.cpp:235
 msgid "Make Upper Case"
 msgstr "Μετατροπή σε Κεφαλαία"
 
+#: src/menus.cpp:236
 msgid "Make Lower Case"
 msgstr "Μετατροπή σε Πεζά"
 
+#: src/menus.cpp:237
 msgid "Capitalize"
 msgstr "Κεφαλαιοποίηση"
 
+#: src/menus.cpp:240
 msgid "Speech"
 msgstr "Ομιλία"
 
+#: src/menus.cpp:242
 msgid "Start Speaking"
 msgstr "Έναρξη ομιλίας"
 
+#: src/menus.cpp:243
 msgid "Stop Speaking"
 msgstr "Διακοπή ομιλίας"
 
+#: src/menus.cpp:246 src/resources/menus.xrc:177 src/resources/menus.xrc:460
 msgid "&View"
 msgstr "&Προβολή"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:252
 msgid "Show Toolbar"
 msgstr "Εμφάνιση γραμμής εργαλείων"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:255
 msgid "Customize Toolbar…"
 msgstr "Προσαρμογή γραμμής εργαλείων…"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+#: src/menus.cpp:258
 msgid "Enter Full Screen"
 msgstr "Πλήρης οθόνη"
 
+#: src/menus.cpp:265 src/menus.cpp:296 src/resources/menus.xrc:352
+#: src/resources/menus.xrc:469
 msgid "Window"
 msgstr "Παράθυρο"
 
+#: src/menus.cpp:266
 msgid "Minimize"
 msgstr "Ελαχιστοποίηση"
 
+#: src/menus.cpp:267
 msgid "Zoom"
 msgstr "Ζουμ"
 
+#: src/menus.cpp:269 src/welcomescreen.cpp:222 src/welcomescreen.cpp:262
 msgid "Welcome to Poedit"
 msgstr "Καλώς ήρθες στο Poedit"
 
+#: src/menus.cpp:274
 msgid "Bring All to Front"
 msgstr "Μεταφορά όλων στο προσκήνιο"
 
+#: src/prefsdlg.cpp:177
 msgid "Information about the translator"
 msgstr "Πληροφορίες σχετικά με τον μεταφραστή"
 
+#: src/prefsdlg.cpp:184
 msgid "Name:"
 msgstr "Όνομα:"
 
+#: src/prefsdlg.cpp:187
 msgid "Your Name"
 msgstr "Το όνομά σας"
 
+#: src/prefsdlg.cpp:189
 msgid "Email:"
 msgstr "Email:"
 
+#: src/prefsdlg.cpp:192
 msgid "you@example.com"
 msgstr "you@example.com"
 
-msgid ""
-"Your name and email address are only used to set the Last-Translator header "
-"of GNU gettext files."
-msgstr ""
-"Το όνομα και η διεύθυνση email σας χρησιμοποιούνται μόνο για τον ορισμό της "
-"επικεφαλίδας \"Last-Translator\" στα αρχεία GNU gettext."
+#: src/prefsdlg.cpp:195
+msgid "Your name and email address are only used to set the Last-Translator header of GNU gettext files."
+msgstr "Το όνομα και η διεύθυνση email σας χρησιμοποιούνται μόνο για τον ορισμό της επικεφαλίδας \"Last-Translator\" στα αρχεία GNU gettext."
 
+#: src/prefsdlg.cpp:204
 msgid "Editing"
 msgstr "Επεξεργασία"
 
+#: src/prefsdlg.cpp:207
 msgid "Automatically compile MO file when saving"
 msgstr "Αυτόματη μεταγλώττιση αρχείου MO κατά την αποθήκευση"
 
-msgid "Show summary after updating files"
-msgstr "Εμφάνιση σύνοψης μετά την ενημέρωση αρχείων"
-
+#: src/prefsdlg.cpp:212
 msgid "Check spelling"
 msgstr "Έλεγχος ορθογραφίας"
 
+#: src/prefsdlg.cpp:214
 msgid "Always change focus to text input field"
 msgstr "Πάντα αλλαγή εστίασης στο πεδίο εισόδου κειμένου"
 
-msgid ""
-"Never let the list of strings take focus. If enabled, you must use Ctrl-"
-"arrows for keyboard navigation but you can also type text immediately, "
-"without having to press Tab to change focus."
-msgstr ""
-"Ποτέ μην αφήνετε τη λίστα των στίχων να εστιαστεί. Αν ενεργοποιηθεί, πρέπει "
-"να χρησιμοποιήσετε το Ctrl-βελάκια για πλοήγηση μέσω πληκτρολογίου, αλλά "
-"μπορείτε επίσης να πληκτρολογήσετε κείμενο αμέσως, χωρίς να χρειαστεί να "
-"πατήσετε το πλήκτρο Tab για αλλαγή εστίασης."
+#: src/prefsdlg.cpp:216
+msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
+msgstr "Ποτέ μην αφήνετε τη λίστα των στίχων να εστιαστεί. Αν ενεργοποιηθεί, πρέπει να χρησιμοποιήσετε το Ctrl-βελάκια για πλοήγηση μέσω πληκτρολογίου, αλλά μπορείτε επίσης να πληκτρολογήσετε κείμενο αμέσως, χωρίς να χρειαστεί να πατήσετε το πλήκτρο Tab για αλλαγή εστίασης."
 
+#: src/prefsdlg.cpp:224
 msgid "Appearance"
 msgstr "Εμφάνιση"
 
+#: src/prefsdlg.cpp:231
 msgid "Use custom list font:"
 msgstr "Χρήση προσαρμοσμένης γραμματοσειράς λιστών:"
 
+#: src/prefsdlg.cpp:234
 msgid "Use custom text fields font:"
 msgstr "Χρήση προσαρμοσμένης γραμματοσειράς πεδίων κειμένου:"
 
+#: src/prefsdlg.cpp:245
 msgid "Change UI language"
 msgstr "Αλλαγή γλώσσας περιβάλλοντος εργασίας"
 
 #. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
+#: src/prefsdlg.cpp:255
 msgid "(requires Windows 8 or newer)"
 msgstr "(απαιτεί Windows 8 ή νεότερα)"
 
+#: src/prefsdlg.cpp:358
 msgid "General"
 msgstr "Γενικά"
 
+#: src/prefsdlg.cpp:380
 msgid "Use translation memory"
 msgstr "Χρήση μεταφραστικής μνήμης"
 
+#: src/prefsdlg.cpp:390
 msgid "Manage…"
 msgstr "Διαχείριση…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
+#: src/prefsdlg.cpp:397
 msgid "When updating from sources"
 msgstr "Κατά την ενημέρωση από πηγές"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
+#: src/prefsdlg.cpp:400
 msgid "fuzzy match within the file"
 msgstr "ασαφή αντιστοιχία στον φάκελο"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
+#: src/prefsdlg.cpp:402
 msgid "pre-translate from TM"
 msgstr "προ-μετάφραση από τη Μετ.Μνήμη"
 
-msgid ""
-"Poedit can attempt to fill in new entries from only previous translations in "
-"the file or from your entire translation memory. Using the TM won’t be very "
-"effective if it’s near-empty, but it will get better as you add more "
-"translations to it."
-msgstr ""
-"Το Poedit μπορεί να προσπαθήσει να συμπληρώσει νέες καταχωρήσεις μόνο από "
-"προηγούμενες μεταφράσεις στο αρχείο ή από ολόκληρη την μνήμη μετάφρασης. Η "
-"χρήση της Μνήμης Μετάφρασης δεν θα είναι πολύ αποτελεσματική εάν είναι "
-"σχεδόν άδεια, αλλά θα γίνει καλύτερη όσο προσθέτετε περισσότερες μεταφράσεις "
-"σε αυτή."
+#: src/prefsdlg.cpp:418
+msgid "Poedit can attempt to fill in new entries from only previous translations in the file or from your entire translation memory. Using the TM won’t be very effective if it’s near-empty, but it will get better as you add more translations to it."
+msgstr "Το Poedit μπορεί να προσπαθήσει να συμπληρώσει νέες καταχωρήσεις μόνο από προηγούμενες μεταφράσεις στο αρχείο ή από ολόκληρη την μνήμη μετάφρασης. Η χρήση της Μνήμης Μετάφρασης δεν θα είναι πολύ αποτελεσματική εάν είναι σχεδόν άδεια, αλλά θα γίνει καλύτερη όσο προσθέτετε περισσότερες μεταφράσεις σε αυτή."
 
+#: src/prefsdlg.cpp:454
+msgid "Use suggestions from online collaborative TM"
+msgstr "Χρήση προτάσεων από την διαδικτυακή συλλογική μεταφραστική μνήμη"
+
+#: src/prefsdlg.cpp:469
+msgid "Poedit uses a large online translation memory that includes both contributed human translations and state-of-the-art machine translations."
+msgstr "Το Poedit χρησιμοποιεί μία τεράστια διαδικτυακή μεταφραστική μνήμη που συμπεριλαμβάνει τόσο ανθρώπινες μεταφράσεις όσο και μεταφράσεις από μηχανές τελευταίας τεχνολογίας."
+
+#: src/prefsdlg.cpp:472 src/sidebar_pro.cpp:698
+msgid "Contribute my translations to the online TM"
+msgstr "Συνεισφορά μεταφράσεων στη διαδικτυακή μεταφραστική μνήμη"
+
+#: src/prefsdlg.cpp:473 src/sidebar_pro.cpp:699
+msgid "Keep my translations private"
+msgstr "Να παραμένουν ιδιωτικές οι μεταφράσεις"
+
+#: src/prefsdlg.cpp:474
+msgid "Ask me for each file individually"
+msgstr "Ερώτηση για κάθε αρχείο ξεχωριστά"
+
+#: src/prefsdlg.cpp:492 src/sidebar_pro.cpp:159
+msgid "Change Settings…"
+msgstr "Αλλαγή ρυθμίσεων…"
+
+#: src/prefsdlg.cpp:492 src/sidebar_pro.cpp:159
+msgid "Change settings…"
+msgstr "Αλλαγή ρυθμίσεων…"
+
+#: src/prefsdlg.cpp:580
 msgid "Stored translations:"
 msgstr "Αποθηκευμένες μεταφράσεις:"
 
+#: src/prefsdlg.cpp:581
 msgid "Database size on disk:"
 msgstr "Μέγεθος βάσης δεδομένων στο δίσκο:"
 
+#: src/prefsdlg.cpp:596
 msgid "Import Translation Files…"
 msgstr "Εισαγωγή αρχείων μετάφρασης…"
 
+#: src/prefsdlg.cpp:596
 msgid "Import translation files…"
 msgstr "Εισαγωγή αρχείων μετάφρασης…"
 
+#: src/prefsdlg.cpp:598
 msgid "Import From TMX…"
 msgstr "Εισαγωγή από TMX…"
 
+#: src/prefsdlg.cpp:598
 msgid "Import from TMX…"
 msgstr "Εισαγωγή από TMX…"
 
+#: src/prefsdlg.cpp:599
 msgid "Export To TMX…"
 msgstr "Εξαγωγή σε TMX…"
 
+#: src/prefsdlg.cpp:599
 msgid "Export to TMX…"
 msgstr "Εξαγωγή σε TMX…"
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+#: src/prefsdlg.cpp:602 src/prefsdlg.cpp:770
 msgid "Reset"
 msgstr "Επαναφορά"
 
+#: src/prefsdlg.cpp:621
 msgid "Select translation files to import"
 msgstr "Επέλεξε τα αρχεία μετάφρασης προς εισαγωγή"
 
-msgid "Translation Memory"
-msgstr "Μεταφραστική μνήμη"
-
-msgid "Importing translations…"
-msgstr "Εισαγωγή μεταφράσεων…"
-
-#, c-format
-msgid "Error loading translation file “%s”."
-msgstr "Σφάλμα φόρτωσης του αρχείου μετάφρασης “%s”."
-
-msgid "Finalizing…"
-msgstr "Ολοκλήρωση…"
-
+#: src/prefsdlg.cpp:654
 msgid "Select TMX files to import"
 msgstr "Επιλέξτε αρχεία TMX για εισαγωγή"
 
+#: src/prefsdlg.cpp:657 src/prefsdlg.cpp:733
 msgid "TMX Files"
 msgstr "Αρχεία TMX"
 
+#: src/prefsdlg.cpp:684
+msgid "Importing translations…"
+msgstr "Εισαγωγή μεταφράσεων…"
+
+#: src/prefsdlg.cpp:685
+msgid "Importing translation memory failed."
+msgstr ""
+
+#: src/prefsdlg.cpp:699
 #, c-format
-msgid "Importing translation memory from “%s” failed."
-msgstr "Η εισαγωγή μεταφραστικής μνήμης από το “%s” απέτυχε."
+msgid "Importing from “%s”…"
+msgstr ""
 
-msgid "Import error"
-msgstr "Σφάλμα εισαγωγής"
+#. TRANSLATORS: %s is a (formatted) number here
+#: src/prefsdlg.cpp:717
+#, c-format
+msgid "%s translation was imported."
+msgid_plural "%s translations were imported."
+msgstr[0] ""
+msgstr[1] ""
 
+#: src/prefsdlg.cpp:730
 msgid "Export as…"
 msgstr "Εξαγωγή ως…"
 
+#: src/prefsdlg.cpp:745
 msgid "Exporting translations…"
 msgstr "Εξαγωγή μεταφράσεων…"
 
+#: src/prefsdlg.cpp:746
 #, c-format
 msgid "Exporting translation memory to “%s” failed."
 msgstr "Αποτυχία εξαγωγής μεταφραστικής μνήμης στο “%s”."
 
-msgid "Export error"
-msgstr "Σφάλμα εξαγωγής"
-
+#: src/prefsdlg.cpp:764
 msgid "Reset translation memory"
 msgstr "Επαναφορά μεταφραστικής μνήμης"
 
+#: src/prefsdlg.cpp:765
 msgid "Are you sure you want to reset the translation memory?"
 msgstr "Είστε σίγουροι ότι θέλετε να επαναφέρετε την μνήμη μεταφράσεων;"
 
-msgid ""
-"Resetting the translation memory will irrevocably delete all stored "
-"translations from it. You can’t undo this operation."
-msgstr ""
-"Η επαναφορά της μνήμης μεταφράσεων θα διαγράψει αμετάκλητα όλες τις "
-"αποθηκευμένες μεταφράσεις από αυτήν. Δεν μπορείτε να αναιρέσετε αυτή τη "
-"λειτουργία."
+#: src/prefsdlg.cpp:766
+msgid "Resetting the translation memory will irrevocably delete all stored translations from it. You can’t undo this operation."
+msgstr "Η επαναφορά της μνήμης μεταφράσεων θα διαγράψει αμετάκλητα όλες τις αποθηκευμένες μεταφράσεις από αυτήν. Δεν μπορείτε να αναιρέσετε αυτή τη λειτουργία."
 
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
+#: src/prefsdlg.cpp:808
 msgid "TM"
 msgstr "ΜΜ"
 
-msgid ""
-"Source code extractors are used to find translatable strings in the source "
-"code files and extract them so that they can be translated."
-msgstr ""
-"Τα εργαλεία εξαγωγής πηγαίου κώδικα χρησιμοποιούνται για την εύρεση και την "
-"εξαγωγή μεταφράσιμων συμβολοσειρών από τα αρχεία πηγαίου κώδικα ώστε να "
-"μπορέσουν να μεταφραστούν."
+#: src/prefsdlg.cpp:810 src/sidebar_terminology.cpp:638
+msgid "Translation Memory"
+msgstr "Μεταφραστική μνήμη"
 
+#: src/prefsdlg.cpp:830
+msgid "Source code extractors are used to find translatable strings in the source code files and extract them so that they can be translated."
+msgstr "Τα εργαλεία εξαγωγής πηγαίου κώδικα χρησιμοποιούνται για την εύρεση και την εξαγωγή μεταφράσιμων συμβολοσειρών από τα αρχεία πηγαίου κώδικα ώστε να μπορέσουν να μεταφραστούν."
+
+#: src/prefsdlg.cpp:843
 msgid "Custom Extractors:"
 msgstr "Προσαρμοσμένα εργαλεία εξαγωγής:"
 
+#: src/prefsdlg.cpp:843
 msgid "Custom extractors:"
 msgstr "Προσαρμοσμένα εργαλεία εξαγωγής:"
 
+#: src/prefsdlg.cpp:929
 msgid "GNU gettext"
 msgstr "GNU gettext"
 
-msgid ""
-"Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
-"+, C#, Perl, Python, Java, JavaScript and others)."
-msgstr ""
-"Υποστηρίζει όλες τις γλώσσες προγραμματισμού που αναγνωρίζονται από τα "
-"εργαλεία GNU gettext (PHP, C/C++, C#, Perl, Python, Java, JavaScript και "
-"άλλες)."
+#: src/prefsdlg.cpp:935
+msgid "Supports all programming languages recognized by GNU gettext tools (PHP, C/C++, C#, Perl, Python, Java, JavaScript and others)."
+msgstr "Υποστηρίζει όλες τις γλώσσες προγραμματισμού που αναγνωρίζονται από τα εργαλεία GNU gettext (PHP, C/C++, C#, Perl, Python, Java, JavaScript και άλλες)."
 
+#. TRANSLATORS: Templates for themes etc. - e.g. Twig or Volt templates
+#: src/prefsdlg.cpp:945
+msgid "Templates"
+msgstr "Πρότυπα"
+
+#: src/prefsdlg.cpp:946
+msgid "(Twig, Volt, Blade)"
+msgstr "(Twig, Volt, Blade)"
+
+#: src/prefsdlg.cpp:961
+msgid "Extracts translations from template files."
+msgstr "Εξάγει μεταφράσεις από αρχεία προτύπων."
+
+#: src/prefsdlg.cpp:964
+msgid "Enable"
+msgstr "Ενεργοποίηση"
+
+#: src/prefsdlg.cpp:1096
 msgid "Delete extractor"
 msgstr "Διαγραφή εργαλείου εξαγωγής"
 
+#: src/prefsdlg.cpp:1097
 #, c-format
 msgid "Are you sure you want to delete the “%s” extractor?"
 msgstr "Θέλετε σίγουρα να διαγράψετε το εργαλείο εξαγωγής \"%s\";"
 
+#: src/prefsdlg.cpp:1135
 msgid "Extractors"
 msgstr "Εργαλεία εξαγωγής"
 
+#: src/prefsdlg.cpp:1193
 msgid "Accounts"
 msgstr "Λογαριασμοί"
 
+#: src/prefsdlg.cpp:1213
 msgid "Automatically check for updates"
 msgstr "Αυτόματος έλεγχος για ενημερώσεις"
 
+#: src/prefsdlg.cpp:1216
 msgid "Include beta versions"
 msgstr "Συμπερίληψη εκδόσεων beta"
 
-msgid ""
-"Beta versions contain the latest new features and improvements, but may be a "
-"bit less stable."
-msgstr ""
-"Οι εκδόσεις beta περιέχουν τις πιο πρόσφατες λειτουργίες και βελτιώσεις, "
-"αλλά μπορεί να είναι λιγότερο σταθερές."
+#: src/prefsdlg.cpp:1219
+msgid "Beta versions contain the latest new features and improvements, but may be a bit less stable."
+msgstr "Οι εκδόσεις beta περιέχουν τις πιο πρόσφατες λειτουργίες και βελτιώσεις, αλλά μπορεί να είναι λιγότερο σταθερές."
 
+#: src/prefsdlg.cpp:1248
 msgid "Updates"
 msgstr "Ενημερώσεις"
 
-msgid ""
-"These settings affect internal formatting of PO files. Adjust them if you "
-"have specific requirements e.g. because of version control."
-msgstr ""
-"Αυτές οι ρυθμίσεις επηρεάζουν την εσωτερική μορφοποίηση των αρχείων PO. "
-"Προσαρμόστε τις αν έχετε ειδικές απαιτήσεις π.χ. λόγω ελέγχου έκδοσης."
+#: src/prefsdlg.cpp:1266
+msgid "These settings affect internal formatting of PO files. Adjust them if you have specific requirements e.g. because of version control."
+msgstr "Αυτές οι ρυθμίσεις επηρεάζουν την εσωτερική μορφοποίηση των αρχείων PO. Προσαρμόστε τις αν έχετε ειδικές απαιτήσεις π.χ. λόγω ελέγχου έκδοσης."
 
+#: src/prefsdlg.cpp:1270
 msgid "Line endings:"
 msgstr "Καταλήξεις γραμμής:"
 
+#: src/prefsdlg.cpp:1273
 msgid "Unix (recommended)"
 msgstr "Unix (προτείνεται)"
 
+#: src/prefsdlg.cpp:1274
 msgid "Windows"
 msgstr "Windows"
 
 #. TRANSLATORS: Followed by text control for entering number; wraps text at given width
+#: src/prefsdlg.cpp:1278
 msgid "Wrap at:"
 msgstr "Αναδίπλωση σε:"
 
+#: src/prefsdlg.cpp:1289
 msgid "Preserve formatting of existing files"
 msgstr "Διατήρηση μορφοποίησης υπαρχόντων αρχείων"
 
+#: src/prefsdlg.cpp:1341
 msgid "Advanced"
 msgstr "Σύνθετα"
 
+#: src/prefsdlg.cpp:1369
 msgid "Settings"
 msgstr "Ρυθμίσεις"
 
+#: src/pretranslate.cpp:129
 msgid "Preparing strings…"
 msgstr "Προετοιμασία συμβολοσειρών…"
 
+#: src/pretranslate.cpp:239
 msgid "Pre-translating from translation memory…"
 msgstr "Προ-μετάφραση από τη μεταφραστική μνήμη…"
 
+#: src/pretranslate.cpp:250 src/pretranslate.cpp:296
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
 msgstr[0] "Προ-μεταφρασμένη συμβολοσειρά %u"
 msgstr[1] "Προ-μεταφρασμένες συμβολοσειρές %u"
 
+#: src/pretranslate.cpp:259
+msgid "Uploading strings for cloud pre-translation…"
+msgstr "Μεταφόρτωση συμβολοσειρών για προμετάφραση στο cloud…"
+
+#: src/pretranslate.cpp:300 src/pretranslate.cpp:357
 msgid "Pre-translating…"
 msgstr "Προ-μετάφραση…"
 
+#: src/pretranslate.cpp:366
+#, c-format
+msgid "%d entry was pre-translated."
+msgid_plural "%d entries were pre-translated."
+msgstr[0] "%d καταχώρηση προ-μεταφράστηκε."
+msgstr[1] "%d καταχωρήσεις προ-μεταφράστηκαν."
+
+#: src/pretranslate.cpp:372
+msgid "The translations were marked as needing work, because they may be inaccurate. You should review them for correctness."
+msgstr "Οι μεταφράσεις επισημάνθηκαν ως \"απαιτεί εργασία\", επειδή μπορεί να είναι ανακριβείς. Θα πρέπει να τις εξετάσετε για την ορθότητα τους."
+
+#: src/pretranslate.cpp:375
+msgid "Exact matches from TM"
+msgstr ""
+
+#: src/pretranslate.cpp:376
+msgid "Approximate matches from TM"
+msgstr ""
+
+#. TRANSLATORS: shown instead of number when user disabled this kind of pre-translation results
+#: src/pretranslate.cpp:383
+msgid "disabled"
+msgstr ""
+
+#: src/pretranslate.cpp:384
+msgid "Machine translation"
+msgstr ""
+
+#: src/pretranslate.cpp:389
+msgid "No entries could be pre-translated."
+msgstr "Οι καταχωρήσεις δεν μπόρεσαν να προ-μεταφραστούν."
+
+#: src/pretranslate.cpp:390
+msgid "The TM doesn’t contain any strings similar to the content of this file. It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually."
+msgstr "Η Μνήμη Μεταφράσεων δεν περιέχει καμία συμβολοσειρά παρόμοια με το περιεχόμενο αυτού του αρχείου. Είναι μόνο αποτελεσματική για ημι-αυτόματες μεταφράσεις αφού το Poedit μάθει αρκετά από αρχεία που έχετε μεταφράσει με μη αυτόματο τρόπο."
+
+#: src/pretranslate.cpp:418
 msgid "Cannot pre-translate without source text."
 msgstr "Δεν είναι δυνατή η προ-μετάφραση χωρίς πηγαίο κείμενο."
 
@@ -1504,1091 +2489,2110 @@ msgstr "Δεν είναι δυνατή η προ-μετάφραση χωρίς �
 #. some users into thinking it's all that needs to be done (spoken from
 #. experience). "Pre-translate" nicely expresses that it's only the step done
 #. *before* actual translation.
+#: src/pretranslate.cpp:419 src/pretranslate.cpp:434 src/pretranslate.cpp:443
+#: src/pretranslate.cpp:489 src/pretranslate.cpp:616
+#: src/resources/toolbar.xrc:48 src/sidebar_pro.cpp:983
 msgid "Pre-translate"
 msgstr "Προ-μετάφραση"
 
-msgid ""
-"Pre-translation requires that source text is available. It doesn’t work if "
-"only IDs without the actual text are used."
-msgstr ""
-"Η προμετάφραση απαιτεί να είναι διαθέσιμο το αρχικό κείμενο. Δεν λειτουργεί "
-"αν χρησιμοποιούνται μόνο αναγνωριστικά χωρίς το πραγματικό κείμενο."
+#: src/pretranslate.cpp:423
+msgid "Pre-translation requires that source text is available. It doesn’t work if only IDs without the actual text are used."
+msgstr "Η προμετάφραση απαιτεί να είναι διαθέσιμο το αρχικό κείμενο. Δεν λειτουργεί αν χρησιμοποιούνται μόνο αναγνωριστικά χωρίς το πραγματικό κείμενο."
 
+#: src/pretranslate.cpp:433
 msgid "Cannot pre-translate from unknown language."
 msgstr "Δεν είναι δυνατή η προμετάφραση από άγνωστη γλώσσα."
 
-msgid ""
-"Pre-translation requires that source text’s language is known. Poedit "
-"couldn’t detect it in this file."
-msgstr ""
-"Η προμετάφραση απαιτεί να είναι γνωστή η γλώσσα του αρχικού κειμένου. Το "
-"Poedit δεν μπόρεσε να την ανιχνεύσει σε αυτό το αρχείο."
+#: src/pretranslate.cpp:438
+msgid "Pre-translation requires that source text’s language is known. Poedit couldn’t detect it in this file."
+msgstr "Η προμετάφραση απαιτεί να είναι γνωστή η γλώσσα του αρχικού κειμένου. Το Poedit δεν μπόρεσε να την ανιχνεύσει σε αυτό το αρχείο."
 
+#: src/pretranslate.cpp:448
+msgid "Use online suggestions"
+msgstr "Χρήση διαδικτυακών υποδείξεων"
+
+#: src/pretranslate.cpp:449
+msgid "Try to fetch translations from the online TM as well. Notice that the translations will not be perfect and will still need to be corrected by a human translator."
+msgstr "Προσπαθήστε επίσης να φέρετε μεταφράσεις από την διαδικτυακή Μνήμη Μεταφράσεων. Προσέξτε ότι οι μεταφράσεις δεν θα είναι τέλειες και θα χρειάζονται ακόμα να διορθωθούν από έναν ανθρώπινο μεταφραστή."
+
+#: src/pretranslate.cpp:476
 msgid "Only fill in exact matches"
 msgstr "Συμπληρώστε μόνο ακριβείς αντιστοιχίες"
 
-msgid ""
-"By default, inaccurate results are also included, but marked as needing "
-"work. Check this option to only include perfect matches."
-msgstr ""
-"Από προεπιλογή, περιλαμβάνονται επίσης ανακριβή αποτελέσματα, αλλά "
-"επισημαίνονται με την ετικέτα «Χρειάζεται δουλειά». Ενεργοποιήστε αυτήν την "
-"επιλογή για να συμπεριλαμβάνονται μόνο τέλειες αντιστοιχίες."
+#: src/pretranslate.cpp:479
+msgid "By default, inaccurate results are also included, but marked as needing work. Check this option to only include perfect matches."
+msgstr "Από προεπιλογή, περιλαμβάνονται επίσης ανακριβή αποτελέσματα, αλλά επισημαίνονται με την ετικέτα «Χρειάζεται δουλειά». Ενεργοποιήστε αυτήν την επιλογή για να συμπεριλαμβάνονται μόνο τέλειες αντιστοιχίες."
 
+#: src/pretranslate.cpp:481
+msgid "By default, inaccurate results and machine translation are also included, but marked as needing work. Check this option to only include perfect human translations."
+msgstr "Από προεπιλογή, περιλαμβάνονται επίσης ανακριβή αποτελέσματα και μηχανική μετάφραση, αλλά επισημαίνονται με την ετικέτα «Χρειάζεται δουλειά». Ενεργοποιήστε αυτήν την επιλογή για να συμπεριλαμβάνονται μόνο τέλειες μεταφράσεις από ανθρώπους."
+
+#: src/pretranslate.cpp:483
 msgid "Don’t mark exact matches as needing work"
 msgstr "Μην επισημάνετε ακριβείς αντιστοιχίες ως χρειάζεται δουλειά"
 
-msgid ""
-"Only enable if you trust the quality of your TM. By default, all matches "
-"from the TM are marked as needing work and should be reviewed before use."
-msgstr ""
-"Ενεργοποιήστε μόνο εάν εμπιστεύεστε την ποιότητα της μνήμης μεταφράσεων σας. "
-"Από προεπιλογή, όλες οι αντιστοιχίες από την Μνήμη Μεταφράσεων "
-"επισημαίνονται ως \"απαιτεί εργασία\" και πρέπει να θεωρηθούν πριν την χρήση."
+#: src/pretranslate.cpp:484
+msgid "Don’t mark machine translation as needing work"
+msgstr "Μην επισημαίνετε ότι η μηχανική μετάφραση χρειάζεται εργασία"
 
-msgid ""
-"Pre-translation automatically finds exact or fuzzy matches for untranslated "
-"strings in the translation memory and fills in their translations."
-msgstr ""
-"Η προ-μετάφραση βρίσκει αυτόματα ακριβείς ή ασαφείς αντιστοιχίες για "
-"αμετάφραστες συμβολοσειρές στην μνήμη μεταφράσεων και συμπληρώνει τις "
-"μεταφράσεις τους."
+#: src/pretranslate.cpp:486
+msgid "Only enable if you trust the quality of your TM. By default, all matches from the TM are marked as needing work and should be reviewed before use."
+msgstr "Ενεργοποιήστε μόνο εάν εμπιστεύεστε την ποιότητα της μνήμης μεταφράσεων σας. Από προεπιλογή, όλες οι αντιστοιχίες από την Μνήμη Μεταφράσεων επισημαίνονται ως \"απαιτεί εργασία\" και πρέπει να θεωρηθούν πριν την χρήση."
 
+#: src/pretranslate.cpp:493
+msgid "Pre-translation automatically finds exact or fuzzy matches for untranslated strings in the translation memory and fills in their translations."
+msgstr "Η προ-μετάφραση βρίσκει αυτόματα ακριβείς ή ασαφείς αντιστοιχίες για αμετάφραστες συμβολοσειρές στην μνήμη μεταφράσεων και συμπληρώνει τις μεταφράσεις τους."
+
+#: src/pretranslate.cpp:495
+msgid "Pre-translation automatically searches existing translations and uses machine translation to fill in initial translations for strings that are not yet translated."
+msgstr "Η προ-μετάφραση αναζητά αυτόματα τις υπάρχουσες μεταφράσεις και χρησιμοποιεί μηχανική μετάφραση για να συμπληρώσει τις αρχικές μεταφράσεις για συμβολοσειρές που δεν έχουν μεταφραστεί ακόμα."
+
+#: src/pretranslate.cpp:533
+msgid "Machine translation:"
+msgstr "Μηχανική μετάφραση:"
+
+#. TRANSLATORS: "Upgrade" as in upgrading from Pro to Pro+ version; "provider" is machine translation provider. This string needs to be as short as possible.
+#: src/pretranslate.cpp:545
+msgid "Upgrade for more providers"
+msgstr "Αναβάθμιση για περισσότερους παρόχους"
+
+#. TRANSLATORS: Part of larger line of UI: "Machine translation: [e.g. Google] with tone of voice: [formal/informal/automatic]". If "tone of voice" sounds weird, you can use "formality". See https://support.deepl.com/hc/en-us/articles/4406432463762-About-the-formal-informal-feature for explanation of what tone of voice / formality is.
+#: src/pretranslate.cpp:556
+msgid "with tone of voice:"
+msgstr "με τόνο φωνής:"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:562
+msgid "automatic"
+msgstr "αυτόματο"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:564
+msgid "formal"
+msgstr "επίσημο"
+
+#. TRANSLATORS: one of possible choices for "tone of voice"
+#: src/pretranslate.cpp:566
+msgid "informal"
+msgstr "ανεπίσημο"
+
+#: src/pretranslate.cpp:651 src/sidebar_pro.cpp:551
+msgid "Exceeded machine translation quota."
+msgstr "Υπέρβαση ποσόστωσης αυτόματης μετάφρασης."
+
+#: src/pretranslate.cpp:660
 #, c-format
-msgid "%d entry was pre-translated."
-msgid_plural "%d entries were pre-translated."
-msgstr[0] "%d καταχώρηση προ-μεταφράστηκε."
-msgstr[1] "%d καταχωρήσεις προ-μεταφράστηκαν."
+msgid "Machine translation usage: %d / %d\n"
+"%s"
+msgstr "Χρήση αυτόματης μετάφρασης: %d / %d\n"
+"%s"
 
-msgid ""
-"The translations were marked as needing work, because they may be "
-"inaccurate. You should review them for correctness."
+#: src/pretranslate.cpp:660
+msgid "Quota is rolling monthly."
+msgstr "Η ποσόστωση ανανεώνεται μηνιαίως."
+
+#: src/pretranslate.cpp:663 src/sidebar_pro.cpp:475
+msgid "Add machine translation credit"
+msgstr "Προσθήκη πίστωσης μηχανικής μετάφρασης"
+
+#: src/progress_ui.cpp:172 src/wx_translatable_strings.h:151
+msgid "Error: "
 msgstr ""
-"Οι μεταφράσεις επισημάνθηκαν ως \"απαιτεί εργασία\", επειδή μπορεί να είναι "
-"ανακριβείς. Θα πρέπει να τις εξετάσετε για την ορθότητα τους."
 
-msgid "No entries could be pre-translated."
-msgstr "Οι καταχωρήσεις δεν μπόρεσαν να προ-μεταφραστούν."
+#: src/progress_ui.cpp:176
+#, c-format
+msgid "%d error occurred:"
+msgid_plural "%d errors occurred:"
+msgstr[0] ""
+msgstr[1] ""
 
-msgid ""
-"The TM doesn’t contain any strings similar to the content of this file. It "
-"is only effective for semi-automatic translations after Poedit learns enough "
-"from files that you translated manually."
+#: src/progress_ui.cpp:285
+msgid "An error occurred."
 msgstr ""
-"Η Μνήμη Μεταφράσεων δεν περιέχει καμία συμβολοσειρά παρόμοια με το "
-"περιεχόμενο αυτού του αρχείου. Είναι μόνο αποτελεσματική για ημι-αυτόματες "
-"μεταφράσεις αφού το Poedit μάθει αρκετά από αρχεία που έχετε μεταφράσει με "
-"μη αυτόματο τρόπο."
 
+#: src/progress_ui.cpp:291
+#, c-format
+msgid "%d error occurred."
+msgid_plural "%d errors occurred."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/progress_ui.cpp:438
 msgid "Cancelling…"
 msgstr "Ακύρωση…"
 
+#. TRANSLATORS: This text is shown as a hint/advice. The %s→%s part is replaced with menu item pointer, "File→New WordPress Translation".
+#: src/propertiesdlg.cpp:92
+#, c-format
+msgid "Use %s→%s for full WordPress functionality."
+msgstr "Χρησιμοποίησε %s→%s για πλήρη λειτουργικότητα του WordPress."
+
+#: src/propertiesdlg.cpp:93 src/resources/menus.xrc:5
+#: src/resources/menus.xrc:384 src/wx_translatable_strings.h:104
+msgid "&File"
+msgstr "&Αρχείο"
+
+#: src/propertiesdlg.cpp:94 src/resources/menus.xrc:17
+#: src/resources/menus.xrc:396
+msgid "New WordPress Translation…"
+msgstr "Νέα μετάφραση WordPress…"
+
+#: src/propertiesdlg.cpp:94 src/resources/menus.xrc:16
+#: src/resources/menus.xrc:395
+msgid "New WordPress translation…"
+msgstr "Νέα μετάφραση WordPress…"
+
+#: src/propertiesdlg.cpp:366
 msgid "Drag Folders or Files Here"
 msgstr "Σύρετε φακέλους ή αρχεία εδώ"
 
+#: src/propertiesdlg.cpp:366
 msgid "Drag folders or files here"
 msgstr "Σύρετε φακέλους ή αρχεία εδώ"
 
+#: src/propertiesdlg.cpp:471
 msgid "Add Folders…"
 msgstr "Προσθήκη φακέλων…"
 
+#: src/propertiesdlg.cpp:471
 msgid "Add folders…"
 msgstr "Προσθήκη φακέλων…"
 
+#: src/propertiesdlg.cpp:472
 msgid "Add Files…"
 msgstr "Προσθήκη αρχείων…"
 
+#: src/propertiesdlg.cpp:472
 msgid "Add files…"
 msgstr "Προσθήκη αρχείων…"
 
+#: src/propertiesdlg.cpp:474
 msgid "Add Wildcard…"
 msgstr "Προσθήκη χαρακτήρα αναπλήρωσης…"
 
+#: src/propertiesdlg.cpp:474
 msgid "Add wildcard…"
 msgstr "Προσθήκη χαρακτήρα αναπλήρωσης…"
 
 #. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+#: src/propertiesdlg.cpp:545
 msgid "Reveal in Finder"
 msgstr "Αποκάλυψη στο Finder"
 
 #. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+#: src/propertiesdlg.cpp:548
 msgid "Show in Explorer"
 msgstr "Εμφάνιση στην Εξερεύνηση"
 
+#: src/propertiesdlg.cpp:550
 msgid "Show in Folder"
 msgstr "Εμφάνιση στο φάκελο"
 
+#: src/propertiesdlg.cpp:581
 msgid "Paths"
 msgstr "Διαδρομές"
 
+#: src/propertiesdlg.cpp:601
 msgid "Excluded paths"
 msgstr "Εξαιρούμενες διαδρομές"
 
+#: src/propertiesdlg.cpp:619
 msgid "Advanced extraction settings"
 msgstr "Σύνθετες ρυθμίσεις εξαγωγής"
 
+#: src/propertiesdlg.cpp:625
 msgid "Extract notes for translators from:"
 msgstr "Εξαγωγή σημειώσεων για μεταφραστές από:"
 
+#: src/propertiesdlg.cpp:627
 msgid "Comments prefixed with:"
 msgstr "Σχόλια με πρόθεμα:"
 
+#: src/propertiesdlg.cpp:636
 msgid "All comments"
 msgstr "Όλα τα σχόλια"
 
+#: src/propertiesdlg.cpp:639
 msgid "Additional xgettext flags:"
 msgstr "Επιπρόσθετες ετικέτες xgettext:"
 
+#: src/propertiesdlg.cpp:779
 msgid "Additional keywords"
 msgstr "Επιπρόσθετες λέξεις-κλειδιά"
 
+#: src/propertiesdlg.cpp:810
 msgid "Name of the project the translation is for"
 msgstr "Το όνομα του έργου για το οποίο είναι η μετάφραση"
 
+#: src/propertiesdlg.cpp:811
 msgid "Team name and email address or URL"
 msgstr "Όνομα ομάδας και διεύθυνση email ή διεύθυνση URL"
 
+#: src/propertiesdlg.cpp:812
 msgid "e.g. nplurals=2; plural=(n > 1);"
 msgstr "π.χ. nplurals=2; plural=(n > 1);"
 
+#: src/propertiesdlg.cpp:817
+msgid "Custom file extensions are being used."
+msgstr "Χρησιμοποιούνται προσαρμοσμένες επεκτάσεις αρχείων."
+
+#: src/propertiesdlg.cpp:872
 msgid "UTF-8 (recommended)"
 msgstr "UTF-8 (προτείνεται)"
 
+#: src/propertiesdlg.cpp:1055
 msgid "Please save the file first. This section cannot be edited until then."
-msgstr ""
-"Παρακαλώ αποθήκευσε αυτό το αρχείο, πρώτα, ώστε να μπορεί να γίνει, μετά, "
-"επεξεργασία αυτού του τμήματος."
+msgstr "Παρακαλώ αποθήκευσε αυτό το αρχείο, πρώτα, ώστε να μπορεί να γίνει, μετά, επεξεργασία αυτού του τμήματος."
 
+#: src/propertiesdlg.cpp:1177
+msgid "File Extensions"
+msgstr "Επεκτάσεις αρχείων"
+
+#: src/propertiesdlg.cpp:1189
+msgid "Extension or Wildcard"
+msgstr "Επέκταση ή χαρακτήρας αναπλήρωσης"
+
+#: src/propertiesdlg.cpp:1191
+msgid "Extractor"
+msgstr "Εργαλείο εξαγωγής"
+
+#: src/propertiesdlg.cpp:1266
+msgid "(unknown)"
+msgstr "(άγνωστο)"
+
+#: src/qa_checks.cpp:153
 msgid "Placeholders correctness"
 msgstr "Ορθότητα συμβόλων υποκατάστασης"
 
+#: src/qa_checks.cpp:208
 #, c-format
 msgid "Placeholder “%s” is missing from translation."
 msgstr "Το σύμβολο υποκατάστασης «%s» λείπει από τη μετάφραση."
 
+#: src/qa_checks.cpp:220
 #, c-format
 msgid "Superfluous placeholder “%s” that isn’t in source text."
 msgstr "Περιττό σύμβολο υποκατάστασης «%s» που δεν υπάρχει στο αρχικό κείμενο."
 
+#: src/qa_checks.cpp:256
 msgid "Plural form translations"
 msgstr "Μεταφράσεις πληθυντικού"
 
+#: src/qa_checks.cpp:277
 msgid "Not all plural forms are translated."
 msgstr "Δεν είναι όλες οι μορφές πληθυντικού μεταφρασμένες."
 
+#: src/qa_checks.cpp:289
 msgid "Inconsistent upper/lower case"
 msgstr "Ασυμφωνία κεφαλαίων/πεζών"
 
+#: src/qa_checks.cpp:305
 msgid "The translation should start as a sentence."
 msgstr "Η μετάφραση πρέπει να ξεκινά ως μία πρόταση."
 
+#: src/qa_checks.cpp:313
 msgid "The translation should start with a lowercase character."
 msgstr "Η μετάφραση θα πρέπει να ξεκινά με πεζό χαρακτήρα."
 
+#: src/qa_checks.cpp:331
 msgid "Inconsistent whitespace"
 msgstr "Ασυμφωνία κενού διαστήματος"
 
+#: src/qa_checks.cpp:345
 msgid "The translation doesn’t start with a space."
 msgstr "Η μετάφραση δεν ξεκινά με κενό."
 
+#: src/qa_checks.cpp:351
 msgid "The translation starts with a space, but the source text doesn’t."
 msgstr "Η μετάφραση ξεκινά με κενό, αλλά το πηγαίο κείμενο όχι."
 
+#: src/qa_checks.cpp:357
 msgid "The translation is missing a newline at the end."
 msgstr "Απουσιάζει νέα γραμμή στο τέλος της μετάφρασης."
 
+#: src/qa_checks.cpp:363
 msgid "The translation ends with a newline, but the source text doesn’t."
 msgstr "Η μετάφραση τελειώνει με νέα γραμμή, σε αντίθεση με το αρχικό κείμενο."
 
+#: src/qa_checks.cpp:369
 msgid "The translation is missing a space at the end."
 msgstr "Στην μετάφραση λείπει ένα κενό στο τέλος."
 
+#: src/qa_checks.cpp:375
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "Η μετάφραση τελειώνει με κενό, αλλά το πηγαίο κείμενο όχι."
 
+#: src/qa_checks.cpp:390
 msgid "Punctuation checks"
 msgstr "Έλεγχοι"
 
+#: src/qa_checks.cpp:455
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr "Η μετάφραση θα πρέπει να τελειώνει με %s."
 
+#: src/qa_checks.cpp:467
 #, c-format
 msgid "The translation should not end with “%s”."
 msgstr "Η μετάφραση δεν πρέπει να τελειώνει με \"%s\"."
 
+#: src/qa_checks.cpp:488
 #, c-format
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
 msgstr "Η μετάφραση τελειώνει με %s, αλλά το πηγαίο κείμενο τελειώνει με %s."
 
+#: src/recent_files.cpp:223
 msgid "Cloud"
 msgstr "Cloud"
 
+#: src/recent_files.cpp:404
 msgid "Clear Menu"
 msgstr "Απαλοιφή μενού"
 
+#: src/recent_files.cpp:404
 msgid "Clear menu"
 msgstr "Απαλοιφή μενού"
 
+#: src/resources/comment.xrc:10
 msgid "Comment:"
 msgstr "Σχόλιο:"
 
+#: src/resources/comment.xrc:33
 msgid "Update"
 msgstr "Ενημέρωση"
 
+#: src/resources/comment.xrc:48 src/wx_translatable_strings.h:100
 msgid "&Delete"
 msgstr "&Διαγραφή"
 
+#: src/resources/comment.xrc:49
 msgid "Delete the comment"
 msgstr "Διαγραφή του σχολίου"
 
+#: src/resources/manager.xrc:4
 msgid "Edit project"
 msgstr "Επεξεργασία έργου"
 
+#: src/resources/manager.xrc:9
 msgid "Project name:"
 msgstr "Όνομα έργου:"
 
+#: src/resources/manager.xrc:39
 msgid "Browse"
 msgstr "Αναζήτηση"
 
+#: src/resources/manager.xrc:41
 msgid "Add directory to the list"
 msgstr "Προσθήκη φακέλου στη λίστα"
 
-msgid "OK"
-msgstr "OK"
-
-msgid "&File"
-msgstr "&Αρχείο"
-
+#: src/resources/menus.xrc:8 src/resources/menus.xrc:387
 msgid "&New…"
 msgstr "&Νέο…"
 
+#: src/resources/menus.xrc:12 src/resources/menus.xrc:391
 msgid "New from &POT/PO file…"
 msgstr "Νέο από αρχείο &POT/PO…"
 
+#: src/resources/menus.xrc:13 src/resources/menus.xrc:392
 msgid "New From &POT/PO File…"
 msgstr "Νέο από αρχείο &POT/PO…"
 
+#: src/resources/menus.xrc:21 src/resources/menus.xrc:400
+#: src/wx_translatable_strings.h:109
 msgid "&Open…"
 msgstr "&Άνοιγμα…"
 
+#: src/resources/menus.xrc:25 src/resources/menus.xrc:404
 msgid "Open Recent"
 msgstr "Άνοιγμα πρόσφατου"
 
+#: src/resources/menus.xrc:26 src/resources/menus.xrc:405
 msgid "Open recent"
 msgstr "Άνοιγμα πρόσφατου"
 
+#: src/resources/menus.xrc:29 src/resources/menus.xrc:408
 msgid "Open cloud translation…"
 msgstr "Άνοιγμα μετάφρασης από το cloud…"
 
+#: src/resources/menus.xrc:30 src/resources/menus.xrc:409
 msgid "Open Cloud Translation…"
 msgstr "Άνοιγμα μετάφρασης από το cloud…"
 
+#: src/resources/menus.xrc:34 src/resources/menus.xrc:413
 msgid "&Start window"
 msgstr "&Παράθυρο εκκίνησης"
 
+#: src/resources/menus.xrc:35 src/resources/menus.xrc:414
 msgid "&Start Window"
 msgstr "&Παράθυρο εκκίνησης"
 
+#: src/resources/menus.xrc:39 src/resources/menus.xrc:419
 msgid "Catalogs &manager"
 msgstr "&Διαχείριση καταλόγων"
 
+#: src/resources/menus.xrc:40 src/resources/menus.xrc:420
 msgid "Catalogs &Manager"
 msgstr "&Διαχείριση καταλόγων"
 
+#: src/resources/menus.xrc:44 src/resources/menus.xrc:424
+#: src/wx_translatable_strings.h:96
 msgid "&Close"
 msgstr "&Κλείσιμο"
 
+#: src/resources/menus.xrc:48 src/wx_translatable_strings.h:115
 msgid "&Save"
 msgstr "&Αποθήκευση"
 
+#: src/resources/menus.xrc:52
 msgid "Save &as…"
 msgstr "Αποθήκευση &ως…"
 
+#: src/resources/menus.xrc:53
 msgid "Save &As…"
 msgstr "Αποθήκευση &ως…"
 
+#: src/resources/menus.xrc:58
 msgid "Compile to MO…"
 msgstr "Μεταγλώττιση σε MO…"
 
+#: src/resources/menus.xrc:62
 msgid "E&xport to HTML…"
 msgstr "Ε&ξαγωγή σε HTML…"
 
+#: src/resources/menus.xrc:66
+msgid "Export to Excel…"
+msgstr "Εξαγωγή σε Excel…"
+
+#: src/resources/menus.xrc:69
+msgid "Import from Excel…"
+msgstr "Εισαγωγή από Excel…"
+
+#: src/resources/menus.xrc:73 src/resources/menus.xrc:428
 msgid "Check for updates…"
 msgstr "Έλεγχος για ενημερώσεις…"
 
+#: src/resources/menus.xrc:76 src/resources/menus.xrc:431
+msgid "&License…"
+msgstr "Ά&δεια…"
+
+#: src/resources/menus.xrc:79 src/resources/menus.xrc:434
 msgid "Settings…"
 msgstr "Ρυθμίσεις…"
 
+#: src/resources/menus.xrc:83 src/resources/menus.xrc:438
+#: src/wx_translatable_strings.h:112
 msgid "&Preferences"
 msgstr "&Προτιμήσεις"
 
+#: src/resources/menus.xrc:90 src/resources/menus.xrc:445
 msgid "E&xit"
 msgstr "Έ&ξοδος"
 
+#: src/resources/menus.xrc:91 src/resources/menus.xrc:446
+#: src/wx_translatable_strings.h:103
 msgid "Quit"
 msgstr "Έξοδος"
 
+#: src/resources/menus.xrc:118
 msgid "Copy from singular"
 msgstr "Αντιγραφή από ενικό"
 
+#: src/resources/menus.xrc:119
 msgid "Copy From Singular"
 msgstr "Αντιγραφή από ενικό"
 
+#: src/resources/menus.xrc:124
 msgid "Translation needs &work"
 msgstr "Η μετάφραση είναι α&νέτοιμη"
 
+#: src/resources/menus.xrc:125
 msgid "Translation Needs &Work"
 msgstr "Η Μετάφραση Είναι Α&νέτοιμη"
 
+#: src/resources/menus.xrc:130
 msgid "Edit &comment"
 msgstr "Επεξεργασία &σχολίου"
 
+#: src/resources/menus.xrc:131
 msgid "Edit &Comment"
 msgstr "Επεξεργασία &σχολίου"
 
 #. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
+#: src/resources/menus.xrc:136 src/sidebar.cpp:651 src/sidebar_pro.cpp:219
 msgid "Suggestions"
 msgstr "Προτάσεις"
 
+#: src/resources/menus.xrc:139 src/resources/menus.xrc:158
 msgid "&Find…"
 msgstr "&Εύρεση…"
 
+#: src/resources/menus.xrc:144
 msgid "Replace…"
 msgstr "Αντικατάσταση…"
 
+#: src/resources/menus.xrc:148
 msgid "Find next"
 msgstr "Εύρεση επόμενου"
 
+#: src/resources/menus.xrc:152
 msgid "Find previous"
 msgstr "Εύρεση προηγούμενου"
 
+#: src/resources/menus.xrc:162
 msgid "Find and Replace…"
 msgstr "Εύρεση και αντικατάσταση…"
 
+#: src/resources/menus.xrc:166
 msgid "Find Next"
 msgstr "Εύρεση επόμενου"
 
+#: src/resources/menus.xrc:170
 msgid "Find Previous"
 msgstr "Εύρεση προηγούμενου"
 
+#: src/resources/menus.xrc:179
 msgid "Show string &ID"
 msgstr "Εμφάνιση αναγνωριστικού &συμβολοσειράς"
 
+#: src/resources/menus.xrc:180
 msgid "Show String &ID"
 msgstr "Εμφάνιση αναγνωριστικού &συμβολοσειράς"
 
+#: src/resources/menus.xrc:184
 msgid "Show warnings"
 msgstr "Προβολή προειδοποιήσεων"
 
+#: src/resources/menus.xrc:185
 msgid "Show Warnings"
 msgstr "Προβολή προειδοποιήσεων"
 
+#: src/resources/menus.xrc:189
+msgid "Customize warnings…"
+msgstr "Προσαρμογή προειδοποιήσεων…"
+
+#: src/resources/menus.xrc:190
+msgid "Customize Warnings…"
+msgstr "Προσαρμογή προειδοποιήσεων…"
+
+#: src/resources/menus.xrc:194
 msgid "Sort by &file order"
 msgstr "Ταξινόμηση κατά σειρά &αρχείων"
 
+#: src/resources/menus.xrc:195
 msgid "Sort by &File Order"
 msgstr "Ταξινόμηση κατά σειρά &αρχείων"
 
+#: src/resources/menus.xrc:199
 msgid "Sort by &source"
 msgstr "Ταξινόμηση κατά &πηγή"
 
+#: src/resources/menus.xrc:200
 msgid "Sort by &Source"
 msgstr "Ταξινόμηση κατά &πηγή"
 
+#: src/resources/menus.xrc:204
 msgid "Sort by &translation"
 msgstr "Ταξινόμηση κατά &μετάφραση"
 
+#: src/resources/menus.xrc:205
 msgid "Sort by &Translation"
 msgstr "Ταξινόμηση κατά &μετάφραση"
 
+#: src/resources/menus.xrc:210
 msgid "&Group by context"
 msgstr "Ομαδοποίηση κατά &συμφραζόμενα"
 
+#: src/resources/menus.xrc:211
 msgid "&Group By Context"
 msgstr "Ομαδοποίηση κατά &συμφραζόμενα"
 
+#: src/resources/menus.xrc:215
 msgid "Entries with errors first"
 msgstr "Καταχωρήσεις με σφάλματα πρώτες"
 
+#: src/resources/menus.xrc:216
 msgid "Entries with Errors First"
 msgstr "Καταχωρήσεις με σφάλματα πρώτες"
 
+#: src/resources/menus.xrc:220
 msgid "&Untranslated entries first"
 msgstr "Πρώτα οι &αμετάφραστες καταχωρήσεις"
 
+#: src/resources/menus.xrc:221
 msgid "&Untranslated Entries First"
 msgstr "Πρώτα οι &Αμετάφραστες Καταχωρήσεις"
 
+#: src/resources/menus.xrc:226
+msgid "Show &suggestions tab"
+msgstr "Εμφάνιση καρτέλας &προτάσεων"
+
+#: src/resources/menus.xrc:227
+msgid "Show &Suggestions Tab"
+msgstr "Εμφάνιση Καρτέλας Προτάσεων"
+
+#: src/resources/menus.xrc:231
+msgid "Show &terminology tab"
+msgstr "Εμφάνιση καρτέλας &ορολογίας"
+
+#: src/resources/menus.xrc:232
+msgid "Show &Terminology Tab"
+msgstr "Εμφάνιση καρτέλας &ορολογίας"
+
+#: src/resources/menus.xrc:236
 msgid "&Show code occurrences"
 msgstr "&Προβολή εμφανίσεων κώδικα"
 
+#: src/resources/menus.xrc:237
 msgid "&Show Code Occurrences"
 msgstr "&Προβολή εμφανίσεων κώδικα"
 
+#: src/resources/menus.xrc:241
 msgid "Show sidebar"
 msgstr "Εμφάνιση πλευρικής γραμμής"
 
+#: src/resources/menus.xrc:247
 msgid "Show status bar"
 msgstr "Εμφάνιση γραμμής κατάστασης"
 
+#: src/resources/menus.xrc:255 src/resources/menus.xrc:463
 msgid "&Translation"
 msgstr "&Μετάφραση"
 
+#: src/resources/menus.xrc:258 src/statistics.cpp:312 src/statistics.cpp:415
+#: src/statistics.cpp:427
+msgid "Source Text"
+msgstr "Αρχικό κείμενο"
+
+#: src/resources/menus.xrc:262
 msgid "&Update from source code"
 msgstr "&Ενημέρωση από πηγαίο κώδικα"
 
+#: src/resources/menus.xrc:263
 msgid "&Update from Source Code"
 msgstr "&Ενημέρωση από πηγαίο κώδικα"
 
-msgid "Update from &POT file…"
-msgstr "Ενημέρωση από αρχείο &POT…"
-
-msgid "Update from &POT File…"
-msgstr "Ενημέρωση από αρχείο &POT…"
-
+#: src/resources/menus.xrc:270
 msgid "Sync with Crowdin"
 msgstr "Συγχρονισμός με το Crowdin"
 
+#: src/resources/menus.xrc:274 src/resources/menus.xrc:275
 msgid "Pre-&translate…"
 msgstr "Προ-&μετάφραση…"
 
+#: src/resources/menus.xrc:279
 msgid "&Validate translations"
 msgstr "Επι&κύρωση μεταφράσεων"
 
+#: src/resources/menus.xrc:280
 msgid "&Validate Translations"
 msgstr "Επι&κύρωση μεταφράσεων"
 
+#: src/resources/menus.xrc:284
+msgid "&Statistics"
+msgstr "&Στατιστικά"
+
+#: src/resources/menus.xrc:289
 msgid "Remove Same-as-Source Translations"
 msgstr "Αφαίρεση μεταφράσεων όμοιων με το αρχικό κείμενο"
 
+#: src/resources/menus.xrc:292
 msgid "&Purge deleted translations"
 msgstr "Ε&κκαθάριση των διαγραμμένων μεταφράσεων"
 
+#: src/resources/menus.xrc:293
 msgid "&Purge Deleted Translations"
 msgstr "Ε&κκαθάριση των Διαγραμμένων Μεταφράσεων"
 
+#: src/resources/menus.xrc:297
 msgid "&Properties…"
 msgstr "&Ιδιότητες…"
 
+#: src/resources/menus.xrc:304 src/resources/menus.xrc:466
 msgid "&Go"
 msgstr "&Μετάβαση"
 
+#: src/resources/menus.xrc:307
 msgid "&Done and next"
 msgstr "&Τέλος και επόμενο"
 
+#: src/resources/menus.xrc:308
 msgid "&Done and Next"
 msgstr "&Τέλος και επόμενο"
 
+#: src/resources/menus.xrc:314
 msgid "Previously edited"
 msgstr "Προηγουμένως επεξεργασμένο"
 
+#: src/resources/menus.xrc:315
 msgid "Previously Edited"
 msgstr "Προηγουμένως Επεξεργάστηκε"
 
+#: src/resources/menus.xrc:320
 msgid "&Previous translation"
 msgstr "&Προηγούμενη μετάφραση"
 
+#: src/resources/menus.xrc:321
 msgid "&Previous Translation"
 msgstr "&Προηγούμενη μετάφραση"
 
+#: src/resources/menus.xrc:325
 msgid "&Next translation"
 msgstr "&Επόμενη μετάφραση"
 
+#: src/resources/menus.xrc:326
 msgid "&Next Translation"
 msgstr "&Επόμενη μετάφραση"
 
+#: src/resources/menus.xrc:330
 msgid "P&revious unfinished"
 msgstr "&Προηγούμενο ατελές"
 
+#: src/resources/menus.xrc:331
 msgid "P&revious Unfinished"
 msgstr "&Προηγούμενο ατελές"
 
+#: src/resources/menus.xrc:335
 msgid "Ne&xt unfinished"
 msgstr "&Επόμενο ατελές"
 
+#: src/resources/menus.xrc:336
 msgid "Ne&xt Unfinished"
 msgstr "&Επόμενο ατελές"
 
+#: src/resources/menus.xrc:341
 msgid "Previous plural form"
 msgstr "Προηγούμενη μορφή πληθυντικού"
 
+#: src/resources/menus.xrc:342
 msgid "Previous Plural Form"
 msgstr "Προηγούμενη μορφή πληθυντικού"
 
+#: src/resources/menus.xrc:346
 msgid "Next plural form"
 msgstr "Επόμενη μορφή πληθυντικού"
 
+#: src/resources/menus.xrc:347
 msgid "Next Plural Form"
 msgstr "Επόμενη μορφή πληθυντικού"
 
+#: src/resources/menus.xrc:356 src/resources/menus.xrc:473
 msgid "&Online help"
 msgstr "&Διαδικτυακή βοήθεια"
 
+#: src/resources/menus.xrc:357 src/resources/menus.xrc:474
 msgid "&Online Help"
 msgstr "&Διαδικτυακή βοήθεια"
 
+#: src/resources/menus.xrc:363 src/resources/menus.xrc:480
 msgid "&GNU gettext manual"
 msgstr "&Οδηγίες χρήσης του GNU gettext"
 
+#: src/resources/menus.xrc:364 src/resources/menus.xrc:481
 msgid "&GNU gettext Manual"
 msgstr "&Οδηγίες χρήσης του GNU gettext"
 
+#: src/resources/menus.xrc:368 src/resources/menus.xrc:485
+msgid "Email &support…"
+msgstr "&Υποστήριξη μέσω email…"
+
+#: src/resources/menus.xrc:369 src/resources/menus.xrc:486
+msgid "Email &Support…"
+msgstr "&Υποστήριξη μέσω email…"
+
+#: src/resources/menus.xrc:373 src/resources/menus.xrc:490
 msgid "&About Poedit"
 msgstr "&Σχετικά με το Poedit"
 
+#: src/resources/menus.xrc:374 src/resources/menus.xrc:375
+#: src/resources/menus.xrc:491 src/resources/menus.xrc:492
 msgid "&About"
 msgstr "&Σχετικά"
 
+#: src/resources/prefs.xrc:4
 msgid "Extractor setup"
 msgstr "Ρύθμιση εργαλείου εξαγωγής"
 
+#: src/resources/prefs.xrc:27
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "Η λίστα των επεκτάσεων χωρίζεται από άνω τελείες (πχ *.cpp · *.h):"
 
+#: src/resources/prefs.xrc:43
 msgid "Invocation:"
 msgstr "Κλήση:"
 
+#: src/resources/prefs.xrc:47
 msgid "Command to extract translations:"
 msgstr "Εντολή εξαγωγής μεταφράσεων:"
 
-msgid ""
-"This is the command used to launch the extractor.\n"
+#: src/resources/prefs.xrc:61
+msgid "This is the command used to launch the extractor.\n"
 "%o expands to the name of output file, %K to list\n"
 "of keywords, %F to list of input files,\n"
 "%C to charset flag (see below)."
-msgstr ""
-"Αυτή είναι η εντολή εκτέλεσης του εργαλείου εξαγωγής.\n"
+msgstr "Αυτή είναι η εντολή εκτέλεσης του εργαλείου εξαγωγής.\n"
 "Το %o αναπτύσσει το όνομα του αρχείου εξόδου, το %K τη λίστα\n"
 "των λέξεων-κλειδιών, το %F τη λίστα των αρχείων εισόδου,\n"
 "το %C τη σημαία του συνόλου χαρακτήρων (βλέπε παρακάτω)."
 
+#: src/resources/prefs.xrc:70
 msgid "An item in keywords list:"
 msgstr "Ένα αντικείμενο στη λίστα των λέξεων κλειδιών:"
 
-msgid ""
-"This will be attached to the command line once\n"
+#: src/resources/prefs.xrc:84
+msgid "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
-msgstr ""
-"Αυτό θα προσαρτηθεί στη γραμμή εντολών μία φορά\n"
+msgstr "Αυτό θα προσαρτηθεί στη γραμμή εντολών μία φορά\n"
 "για κάθε λέξη κλειδί. Το %k αναπτύσσει τη λέξη κλειδί."
 
+#: src/resources/prefs.xrc:93
 msgid "An item in input files list:"
 msgstr "Ένα αντικείμενο στη λίστα των αρχείων εισαγωγής:"
 
+#: src/resources/prefs.xrc:107
 #, c-format
-msgid ""
-"This will be attached to the command line once\n"
+msgid "This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
-msgstr ""
-"Αυτό θα προσαρτηθεί στη γραμμή εντολών μία φορά\n"
+msgstr "Αυτό θα προσαρτηθεί στη γραμμή εντολών μία φορά\n"
 "για κάθε αρχείο εισόδου. Το %f αναπτύσσει το όνομα αρχείου."
 
+#: src/resources/prefs.xrc:116 src/resources/properties.xrc:124
 msgid "Source code charset:"
 msgstr "Σύνολο χαρακτήρων πηγαίου κώδικα:"
 
+#: src/resources/prefs.xrc:130
 #, c-format
-msgid ""
-"This will be attached to the command line\n"
+msgid "This will be attached to the command line\n"
 "only if source code charset was given. %c expands to charset value."
-msgstr ""
-"Αυτό θα προσαρτηθεί στη γραμμή εντολών μόνο αν δοθεί\n"
-"το σύνολο χαρακτήρων πηγαίου κώδικα. Το %c αναπτύσσει την τιμή του συνόλου "
-"χαρακτήρων."
+msgstr "Αυτό θα προσαρτηθεί στη γραμμή εντολών μόνο αν δοθεί\n"
+"το σύνολο χαρακτήρων πηγαίου κώδικα. Το %c αναπτύσσει την τιμή του συνόλου χαρακτήρων."
 
+#: src/resources/properties.xrc:4 src/resources/properties.xrc:153
 msgid "Translation Properties"
 msgstr "Ιδιότητες μετάφρασης"
 
+#: src/resources/properties.xrc:19
 msgid "Project name and version:"
 msgstr "Όνομα και έκδοση έργου:"
 
+#: src/resources/properties.xrc:34
 msgid "Language team:"
 msgstr "Ομάδα μετάφρασης:"
 
+#: src/resources/properties.xrc:66
 msgid "Plural forms:"
 msgstr "Μορφές πληθυντικού:"
 
+#: src/resources/properties.xrc:73
 msgid "Use default rules for this language"
 msgstr "Χρήση προεπιλεγμένων κανόνων για αυτή τη γλώσσα"
 
+#: src/resources/properties.xrc:82
 msgid "Use custom expression"
 msgstr "Χρήση προσαρμοσμένων εκφράσεων"
 
+#: src/resources/properties.xrc:98
 msgid "Learn about plural forms"
 msgstr "Μάθετε για τις μορφές πληθυντικού"
 
+#: src/resources/properties.xrc:112
 msgid "Charset:"
 msgstr "Σύνολο χαρακτήρων:"
 
+#: src/resources/properties.xrc:138
 msgid "Advanced Extraction Settings…"
 msgstr "Σύνθετες ρυθμίσεις εξαγωγής…"
 
+#: src/resources/properties.xrc:139
 msgid "Advanced extraction settings…"
 msgstr "Σύνθετες ρυθμίσεις εξαγωγής…"
 
+#: src/resources/properties.xrc:154
 msgid "Translation properties"
 msgstr "Ιδιότητες μετάφρασης"
 
+#: src/resources/properties.xrc:157
 msgid "Sources Paths"
 msgstr "Διαδρομές πηγών"
 
+#: src/resources/properties.xrc:158
 msgid "Sources paths"
 msgstr "Διαδρομές πηγών"
 
+#: src/resources/properties.xrc:164
 msgid "Extract text from source files in the following directories:"
 msgstr "Εξαγωγή του κειμένου από τα πηγαία αρχεία στους ακόλουθους φακέλους:"
 
+#: src/resources/properties.xrc:173
 msgid "Base path:"
 msgstr "Διαδρομή βάσης:"
 
+#: src/resources/properties.xrc:227
+msgid "Customize File Extensions…"
+msgstr "Προσαρμογή επεκτάσεων αρχείων…"
+
+#: src/resources/properties.xrc:228
+msgid "Customize file extensions…"
+msgstr "Προσαρμογή επεκτάσεων αρχείων…"
+
+#: src/resources/properties.xrc:241
 msgid "Sources Keywords"
 msgstr "Λέξεις-κλειδιά πηγών"
 
+#: src/resources/properties.xrc:242
 msgid "Sources keywords"
 msgstr "Λέξεις-κλειδιά πηγών"
 
-msgid ""
-"Use these keywords (function names) to recognize translatable strings\n"
+#: src/resources/properties.xrc:248
+msgid "Use these keywords (function names) to recognize translatable strings\n"
 "in source files:"
-msgstr ""
-"Χρήση αυτών των λέξεων κλειδιών (ονόματα συναρτήσεων) προς αναγνώριση "
-"μεταφράσιμων στίχων\n"
+msgstr "Χρήση αυτών των λέξεων κλειδιών (ονόματα συναρτήσεων) προς αναγνώριση μεταφράσιμων στίχων\n"
 "στα πηγαία αρχεία:"
 
+#: src/resources/properties.xrc:264
 msgid "Also use default keywords for supported languages"
-msgstr ""
-"Χρησιμοποιήστε επίσης τις προεπιλεγμένες λέξεις-κλειδιά για υποστηριζόμενες "
-"γλώσσες"
+msgstr "Χρησιμοποιήστε επίσης τις προεπιλεγμένες λέξεις-κλειδιά για υποστηριζόμενες γλώσσες"
 
+#: src/resources/properties.xrc:271
 msgid "Learn about gettext keywords"
 msgstr "Μάθετε για τις λέξεις-κλειδιά του gettext"
 
-msgid "Update summary"
-msgstr "Περίληψη ενημέρωσης"
-
-msgid ""
-"These strings were found in the sources but were not in the file.\n"
+#: src/resources/summary.xrc:32
+msgid "These strings were found in the sources but were not in the file.\n"
 "Poedit will add them to the file now."
-msgstr ""
-"Αυτές οι συμβολοσειρές βρέθηκαν στα πηγαία αρχεία, αλλά δεν ήταν στο "
-"αρχείο.\n"
+msgstr "Αυτές οι συμβολοσειρές βρέθηκαν στα πηγαία αρχεία, αλλά δεν ήταν στο αρχείο.\n"
 "Το Poedit θα τα προσθέσει στο αρχείο τώρα."
 
-msgid "New strings"
-msgstr "Νέες συμβολοσειρές"
-
-msgid ""
-"These strings are no longer in the source code.\n"
+#: src/resources/summary.xrc:53
+msgid "These strings are no longer in the source code.\n"
 "Poedit will remove them from the file now."
-msgstr ""
-"Αυτές οι συμβολοσειρές δεν υπάρχουν πλέον στον πηγαίο κώδικα.\n"
+msgstr "Αυτές οι συμβολοσειρές δεν υπάρχουν πλέον στον πηγαίο κώδικα.\n"
 "Το Poedit θα τις αφαιρέσει από το αρχείο."
 
+#: src/resources/summary.xrc:66
 msgid "Obsolete strings"
 msgstr "Παρωχημένες συμβολοσειρές"
 
+#: src/resources/summary.xrc:79
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 νέα, 0 παρωχημένα)"
 
-msgid "Open"
-msgstr ""
-
+#: src/resources/toolbar.xrc:13 src/resources/toolbar.xrc:17
 msgid "Open file"
 msgstr "Άνοιγμα αρχείου"
 
+#: src/resources/toolbar.xrc:22 src/resources/toolbar.xrc:26
 msgid "Save file"
 msgstr "Αποθήκευση αρχείου"
 
+#: src/resources/toolbar.xrc:34
 msgid "Validate"
 msgstr "Επικύρωση"
 
+#: src/resources/toolbar.xrc:35
 msgid "Check for errors in the translation"
 msgstr "Έλεγχος λαθών στη μετάφραση"
 
+#: src/resources/toolbar.xrc:49
+msgid "Pre-translate strings that don’t have a translation yet"
+msgstr "Προ-μετάφραση συμβολοσειρών που δεν έχουν ακόμη μετάφραση"
+
+#: src/resources/toolbar.xrc:57 src/wx/main_toolbar.cpp:136
 msgid "Update from code"
 msgstr "Ενημέρωση από κώδικα"
 
+#: src/resources/toolbar.xrc:58 src/wx/main_toolbar.cpp:136
 msgid "Update from Code"
 msgstr "Ενημέρωση από κώδικα"
 
+#: src/resources/toolbar.xrc:59 src/wx/main_toolbar.cpp:137
 msgid "Update from source code"
 msgstr "Ενημέρωση από πηγαίο κώδικα"
 
+#: src/resources/toolbar.xrc:67
 msgid "Sidebar"
 msgstr "Πλευρικό πάνελ"
 
+#: src/resources/toolbar.xrc:68
 msgid "Show or hide the sidebar"
 msgstr "Εμφάνιση ή απόκρυψη πλευρικής γραμμής"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
+#: src/sidebar.cpp:139
 msgid "Previous source text"
 msgstr "Προηγούμενο αρχικό κείμενο"
 
-msgid ""
-"The old source text (before it changed during an update) that the now-"
-"inaccurate translation corresponds to."
-msgstr ""
-"Το παλιό αρχικό κείμενο (πριν από την αλλαγή κατά την ενημέρωση) που "
-"αντιστοιχεί στην πλέον ανακριβή μετάφραση."
+#: src/sidebar.cpp:142
+msgid "The old source text (before it changed during an update) that the now-inaccurate translation corresponds to."
+msgstr "Το παλιό αρχικό κείμενο (πριν από την αλλαγή κατά την ενημέρωση) που αντιστοιχεί στην πλέον ανακριβή μετάφραση."
 
+#: src/sidebar.cpp:168
 msgid "Notes for translators"
 msgstr "Σημειώσεις για μεταφραστές"
 
+#: src/sidebar.cpp:201
 msgid "Comment"
 msgstr "Σχόλιο"
 
+#: src/sidebar.cpp:231 src/sidebar.cpp:250
 msgid "Add comment"
 msgstr "Προσθήκη σχολίου"
 
+#: src/sidebar.cpp:233 src/sidebar.cpp:235 src/sidebar.cpp:253
 msgid "Add Comment"
 msgstr "Προσθήκη σχολίου"
 
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:436
+msgid "from your TM"
+msgstr "από τη μεταφραστική σας μνήμη"
+
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:441
+msgid "machine translation"
+msgstr "αυτόματη μετάφραση"
+
+#. TRANSLATORS: This is followed by a logo of e.g. Microsoft Translator, forming a sentence e.g. "translated by MS Translator"
+#: src/sidebar.cpp:449
+msgid "translated by"
+msgstr "μεταφράστηκε από"
+
+#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
+#: src/sidebar.cpp:456
+msgid "human translation"
+msgstr "ανθρώπινη μετάφραση"
+
+#: src/sidebar.cpp:592
 msgid "Delete From Translation Memory"
 msgstr "Διαγραφή από μεταφραστική μνήμη"
 
+#: src/sidebar.cpp:592
 msgid "Delete from translation memory"
 msgstr "Διαγραφή από μεταφραστική μνήμη"
 
+#: src/sidebar.cpp:593
+msgid "Report Bad Translation"
+msgstr "Αναφορά κακής μετάφρασης"
+
+#: src/sidebar.cpp:593
+msgid "Report bad translation"
+msgstr "Αναφορά κακής μετάφρασης"
+
+#: src/sidebar.cpp:652
 msgid "Translation suggestions"
 msgstr "Προτάσεις μετάφρασης"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
+#: src/sidebar.cpp:695
 msgid "No matches found"
 msgstr "Δεν βρέθηκαν αντιστοιχίες"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (macOS, Linux).
+#: src/sidebar.cpp:698
 msgid "No Matches Found"
 msgstr "Δεν βρέθηκαν αντιστοιχίες"
 
+#: src/sidebar.cpp:734 src/sidebar_pro.cpp:325
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Αυτή η συμβολοσειρά βρέθηκε στη μεταφραστική μνήμη του Poedit."
 
-msgid ""
-"Translation suggestions require that source text is available. They don’t "
-"work if only IDs without the actual text are used."
-msgstr ""
-"Οι προτάσεις μετάφρασης απαιτούν να είναι διαθέσιμο το αρχικό κείμενο. Δεν "
-"λειτουργούν αν χρησιμοποιούνται μόνο αναγνωριστικά χωρίς το πραγματικό "
-"κείμενο."
+#: src/sidebar.cpp:984
+msgid "Translation suggestions require that source text is available. They don’t work if only IDs without the actual text are used."
+msgstr "Οι προτάσεις μετάφρασης απαιτούν να είναι διαθέσιμο το αρχικό κείμενο. Δεν λειτουργούν αν χρησιμοποιούνται μόνο αναγνωριστικά χωρίς το πραγματικό κείμενο."
 
-msgid ""
-"Translation suggestions require that source text’s language is known. Poedit "
-"couldn’t detect it in this file."
-msgstr ""
-"Οι προτάσεις μετάφρασης απαιτούν να είναι γνωστή η γλώσσα του αρχικού "
-"κειμένου. Το Poedit δεν μπόρεσε να την ανιχνεύσει σε αυτό το αρχείο."
+#: src/sidebar.cpp:989
+msgid "Translation suggestions require that source text’s language is known. Poedit couldn’t detect it in this file."
+msgstr "Οι προτάσεις μετάφρασης απαιτούν να είναι γνωστή η γλώσσα του αρχικού κειμένου. Το Poedit δεν μπόρεσε να την ανιχνεύσει σε αυτό το αρχείο."
 
+#. TRANSLATORS: Tooltip explaining the Quality: label
+#: src/sidebar_pro.cpp:86
+msgid "Currently enabled quality level of online suggestions"
+msgstr "Τρέχον ενεργοποιημένο επίπεδο ποιότητας για τις ηλεκτρονικές υποδείξεις"
+
+#. TRANSLATORS: Quality level for the "Quality: %s" label; needs to be short
+#: src/sidebar_pro.cpp:121
+msgid "Premium"
+msgstr "Premium"
+
+#. TRANSLATORS: Quality level for the "Quality: %s" label; needs to be short
+#: src/sidebar_pro.cpp:126
+msgid "Standard"
+msgstr "Τυπική"
+
+#. TRANSLATORS: This needs to be *short*, it is shown in the sidebar
+#. after "Translation suggestions". %s will be replaced by "Standard"
+#. or "Premium". "(Quality) level" or "tier" are synonyms for it.
+#: src/sidebar_pro.cpp:132
+#, c-format
+msgid "Quality: %s"
+msgstr "Ποιότητα: %s"
+
+#. TRANSLATORS: Label for the part where currently used translation engine is shown
+#: src/sidebar_pro.cpp:151
+msgid "Machine translation uses:"
+msgstr "Η μηχανική μετάφραση χρησιμοποιεί:"
+
+#: src/sidebar_pro.cpp:227
+msgid "Terminology"
+msgstr "Ορολογία"
+
+#: src/sidebar_pro.cpp:321
+msgid "This suggestion was contributed by another translator to the online TM."
+msgstr "Αυτή η πρόταση υπεβλήθη από κάποιον άλλο μεταφραστή στη διαδικτυακή ΜΜ."
+
+#: src/sidebar_pro.cpp:323
+msgid "This suggestion was machine-translated online."
+msgstr "Αυτή η πρόταση μεταφράστηκε αυτόματα στο διαδίκτυο."
+
+#: src/sidebar_pro.cpp:512
+#, c-format
+msgid "%d out of %d online suggestion left."
+msgid_plural "%d out of %d online suggestions left."
+msgstr[0] "%d από %d διαδικτυακή συμβουλή απομένει."
+msgstr[1] "%d από %d διαδικτυακές συμβουλές απομένουν."
+
+#: src/sidebar_pro.cpp:517
+msgid "Remove this limitation"
+msgstr "Κατάργηση αυτού του περιορισμού"
+
+#: src/sidebar_pro.cpp:521
+msgid "Online suggestions are limited to only 10 in the free version. Upgrade to Pro to remove this limitation."
+msgstr "Οι διαδικτυακές προτάσεις περιορίζονται σε μόλις 10 στη δωρεάν έκδοση. Αναβαθμίστε στο Pro για να καταργήσετε αυτόν τον περιορισμό."
+
+#: src/sidebar_pro.cpp:523
+msgid "Unlock online suggestions"
+msgstr "Ξεκλείδωμα διαδικτυακών προτάσεων"
+
+#: src/sidebar_pro.cpp:547
+msgid "Exceeded online TM daily limit."
+msgstr "Υπέρβαση του ημερήσιου ορίου ΜΜ."
+
+#: src/sidebar_pro.cpp:580
+msgid "Connect to the Internet to get additional suggestions."
+msgstr "Συνδεθείτε στο διαδίκτυο για να λάβετε επιπρόσθετες προτάσεις."
+
+#. TRANSLATORS: Label indicating that translations made in the current file are contributed to the online translation memory. Related to the "Contribute my translations to the online TM" string.
+#: src/sidebar_pro.cpp:655
+msgid "Contributing"
+msgstr "Συνεισφορά"
+
+#: src/sidebar_pro.cpp:656
+msgid "Your translations are contributed to the online translation memory as you make them. Thanks for making the suggestions better!"
+msgstr "Οι μεταφράσεις σας συνεισφέρονται στη διαδικτυακή μεταφραστική μνήμη ενώ τις κάνετε. Ευχαριστούμε που κάνετε τις προτάσεις καλύτερες!"
+
+#. TRANSLATORS: Label indicating that the current file
+#: src/sidebar_pro.cpp:662
+msgid "Private"
+msgstr "Απόρρητο"
+
+#: src/sidebar_pro.cpp:663
+msgid "Translations from this file are not shared with the online translation memory."
+msgstr "Οι μεταφράσεις από αυτό το αρχείο δεν μοιράζονται με τη διαδικτυακή μεταφραστική μνήμη."
+
+#: src/sidebar_pro.cpp:688
+msgid "Privacy settings"
+msgstr "Ρυθμίσεις ιδιωτικότητας"
+
+#: src/sidebar_pro.cpp:694
+#, c-format
+msgid "While editing the file “%s”:"
+msgstr "Κατά την επεξεργασία του αρχείου “%s”:"
+
+#: src/sidebar_pro.cpp:756
+msgid "Not interested"
+msgstr "Δεν ενδιαφέρομαι"
+
+#: src/sidebar_pro.cpp:982
+msgid "Pre-translation"
+msgstr "Προ-μετάφραση"
+
+#: src/sidebar_pro.cpp:987
+msgid "Pre-translate all items at once and focus on making corrections, instead of translating them one by one."
+msgstr "Προ-μεταφράστε αμέσως όλα τα στοιχεία και εστιάστε στη διόρθωση, αντί να τα μεταφράσετε ένα προς ένα."
+
+#: src/sidebar_pro.cpp:1101
+msgid "Stay Informed!"
+msgstr "Μείνετε ενημερωμένοι!"
+
+#: src/sidebar_pro.cpp:1102
+msgid "Subscribe"
+msgstr "Εγγραφή"
+
+#: src/sidebar_pro.cpp:1106
+msgid "Sign up for Poedit newsletter and be the first to know about what’s new. I hate spam too, so expect only a few emails a year."
+msgstr "Εγγραφείτε στο ενημερωτικό δελτίο του Poedit για να μαθαίνετε πρώτοι σχετικά με τα νέα χαρακτηριστικά. Απεχθάνομαι κι εγώ τα ανεπιθύμητα μηνύματα, οπότε θα λαμβάνετε μόνο λίγα email το χρόνο."
+
+#: src/sidebar_pro.cpp:1117
+msgid "Email address"
+msgstr "Διεύθυνση email"
+
+#: src/sidebar_pro.cpp:1140
+msgid "You’re signed up. Please check your email for a confirmation message."
+msgstr "Έχετε εγγραφεί. Παρακαλώ ελέγξτε το email σας για ένα μήνυμα επιβεβαίωσης."
+
+#. TRANSLATORS: "Dictionaries" is the name of the application (see https://dictionaries.io), i.e. shouldn't be translated
+#: src/sidebar_pro.cpp:1210
+msgid "Dictionaries for Mac, Windows & Kindle"
+msgstr "Λεξικά για Mac, Windows & Kindle"
+
+#: src/sidebar_pro.cpp:1222
+msgid "Did you know I also made a dictionaries app for Mac, Windows and Kindle? It supports over 80 languages and is a great companion to Poedit."
+msgstr "Γνωρίζατε ότι δημιούργησα και μια εφαρμογή λεξικών για Mac, Windows και Kindle; Υποστηρίζει πάνω από 80 γλώσσες και είναι ένας σπουδαίος σύντροφος για το Poedit."
+
+#: src/sidebar_terminology.cpp:49
+msgid "Glossary Entry"
+msgstr "Καταχώρηση γλωσσαρίου"
+
+#: src/sidebar_terminology.cpp:55 src/sidebar_terminology.cpp:185
+msgid "Term"
+msgstr "Όρος"
+
+#: src/sidebar_terminology.cpp:60
+msgid "Additional description or notes"
+msgstr "Πρόσθετη περιγραφή ή σημειώσεις"
+
+#: src/sidebar_terminology.cpp:66 src/sidebar_terminology.cpp:187
+msgid "Notes"
+msgstr "Σημειώσεις"
+
+#: src/sidebar_terminology.cpp:128
+msgid "CSV Glossary Import"
+msgstr "Εισαγωγή γλωσσαρίου CSV"
+
+#: src/sidebar_terminology.cpp:138
+msgid "Source language:"
+msgstr "Αρχική γλώσσα:"
+
+#: src/sidebar_terminology.cpp:142
+msgid "Translation language:"
+msgstr "Γλώσσα μετάφρασης:"
+
+#: src/sidebar_terminology.cpp:149
+msgid "Import rules:"
+msgstr "Εισαγωγή κανόνων:"
+
+#: src/sidebar_terminology.cpp:153
+msgid "Skip the first row"
+msgstr "Παράλειψη πρώτης γραμμής"
+
+#: src/sidebar_terminology.cpp:158
+msgid "Column separator:"
+msgstr "Διαχωριστής στήλης:"
+
+#: src/sidebar_terminology.cpp:161
+msgid "Term column:"
+msgstr "Στήλη όρων:"
+
+#: src/sidebar_terminology.cpp:164
+msgid "Definition column:"
+msgstr "Στήλη ορισμών:"
+
+#: src/sidebar_terminology.cpp:167
+msgid "Notes column:"
+msgstr "Στήλη σημειώσεων:"
+
+#: src/sidebar_terminology.cpp:177 src/sidebar_terminology.cpp:261
+msgid "Preview of imported glossary data:"
+msgstr "Προεπισκόπηση των εισαχθέντων δεδομένων γλωσσαρίου:"
+
+#. TRANSLATORS: %d is the number of entries in the preview, %s is the total number of entries in the file
+#: src/sidebar_terminology.cpp:257
+#, c-format
+msgid "Preview of imported glossary data (%d out of %s shown):"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:396 src/wx_translatable_strings.h:102
+msgid "Edit"
+msgstr "Επεξεργασία"
+
+#: src/sidebar_terminology.cpp:496
+msgid "Word or phrase"
+msgstr "Λέξη ή φράση"
+
+#: src/sidebar_terminology.cpp:518
+msgid "Add entries to the glossary"
+msgstr "Προσθήκη καταχωρήσεων στο γλωσσάριο"
+
+#: src/sidebar_terminology.cpp:524
+msgid "Search previously made translations and glossaries to ensure consistency. Both the current file and your translation memory are consulted."
+msgstr "Αναζητήστε προηγούμενες μεταφράσεις και γλωσσάρια για να εξασφαλίσετε τη συνοχή. Τόσο το τρέχον αρχείο, όσο και η μεταφραστική σας μνήμη λαμβάνονται υπόψη."
+
+#: src/sidebar_terminology.cpp:536
+msgid "Unlock terminology search"
+msgstr "Ξεκλείδωμα αναζήτησης ορολογίας"
+
+#: src/sidebar_terminology.cpp:626
+msgid "Glossary"
+msgstr "Γλωσσάριο"
+
+#: src/sidebar_terminology.cpp:632
+msgid "This File"
+msgstr "Αυτό το αρχείο"
+
+#: src/sidebar_terminology.cpp:696
+msgid "Add Glossary Entry…"
+msgstr "Προσθήκη καταχώρησης γλωσσαρίου…"
+
+#: src/sidebar_terminology.cpp:696
+msgid "Add glossary entry…"
+msgstr "Προσθήκη καταχώρησης γλωσσαρίου…"
+
+#: src/sidebar_terminology.cpp:697
+msgid "Import Glossary from CSV File…"
+msgstr "Εισαγωγή γλωσσαρίου από αρχείο CSV…"
+
+#: src/sidebar_terminology.cpp:697
+msgid "Import glossary from CSV file…"
+msgstr "Εισαγωγή γλωσσαρίου από αρχείο CSV…"
+
+#: src/sidebar_terminology.cpp:720
+msgid "Select CSV glossary file to import"
+msgstr "Επιλέξτε αρχείο γλωσσαρίου CSV για εισαγωγή"
+
+#: src/sidebar_terminology.cpp:723
+msgid "CSV Files"
+msgstr "Αρχεία CSV"
+
+#: src/sidebar_terminology.cpp:749
+msgid "Importing glossary"
+msgstr ""
+
+#: src/sidebar_terminology.cpp:756
+#, c-format
+msgid "Imported %s terms from CSV file “%s” into the glossary."
+msgstr ""
+
+#: src/statistics.cpp:275 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Items"
+msgstr "Στοιχεία"
+
+#: src/statistics.cpp:276 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Words"
+msgstr "Λέξεις"
+
+#: src/statistics.cpp:277 src/statistics.cpp:411 src/statistics.cpp:427
+msgid "Characters"
+msgstr "Χαρακτήρες"
+
+#: src/statistics.cpp:291 src/statistics.cpp:412
+msgid "Translated"
+msgstr "Μεταφρασμένα"
+
+#: src/statistics.cpp:296 src/statistics.cpp:335 src/statistics.cpp:413
+#: src/statistics.cpp:417
+msgctxt "column/row header"
+msgid "Needs work"
+msgstr "Χρειάζεται δουλειά"
+
+#: src/statistics.cpp:301 src/statistics.cpp:414
+msgid "Translations with errors"
+msgstr "Μεταφράσεις με σφάλματα"
+
+#: src/statistics.cpp:328 src/statistics.cpp:416 src/statistics.cpp:428
+msgid "Strings in source language"
+msgstr "Συμβολοσειρές στην πηγαία γλώσσα"
+
+#: src/statistics.cpp:340 src/statistics.cpp:418
+msgid "Not translated"
+msgstr "Μη μεταφρασμένα"
+
+#: src/statistics.cpp:351
+msgid "Include code and placeholders"
+msgstr "Συμπερίληψη κώδικα και συμβόλων υποκατάστασης"
+
+#: src/statistics.cpp:352
+msgid "If checked, word and character counts will also include placeholders, HTML markup and code."
+msgstr "Αν ενεργοποιηθεί, η μέτρηση λέξεων και χαρακτήρων θα περιλαμβάνει επίσης σύμβολα υποκατάστασης, επισήμανση HTML και κώδικα."
+
+#: src/statistics.cpp:362
+msgid "Characters are counted including spaces."
+msgstr "Ο αριθμός χαρακτήρων περιλαμβάνει και τα κενά."
+
+#: src/statistics.cpp:368
+msgid "Copy to clipboard"
+msgstr "Αντιγραφή στο πρόχειρο"
+
+#: src/statistics.cpp:370
+msgid "Copy to Clipboard"
+msgstr "Αντιγραφή στο πρόχειρο"
+
+#: src/statistics.cpp:722
+#, c-format
+msgid "The file “%s” couldn’t be opened: %s"
+msgstr "Το αρχείο “%s” δεν μπόρεσε να ανοίξει: %s"
+
+#: src/subprocess.cpp:219 src/subprocess.cpp:251
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "Αδυναμία εκτέλεσης προγράμματος: %s"
+
+#: src/tm/tmx_io.cpp:88 src/tm/tmx_io.cpp:104
 msgid "The TMX file is malformed."
 msgstr "Το αρχείο TMX είναι παραμορφωμένο."
 
-msgid "No translations were found in the TMX file."
-msgstr "Δε βρέθηκε καμία μετάφραση στο αρχείο TMX."
-
+#: src/tm/transmem.cpp:87
 #, c-format
 msgid "Translation memory database is corrupted: %s (%d)."
 msgstr "Η βάση δεδομένων μεταφραστικής μνήμης είναι κατεστραμμένη: %s (%d)."
 
+#: src/tm/transmem.cpp:90
 #, c-format
 msgid "Translation memory error: %s (%d)."
 msgstr "Σφάλμα μεταφραστικής μνήμης: %s (%d)."
 
+#: src/uilang.cpp:233
 msgid "(Use default language)"
 msgstr "(Χρήση προεπιλεγμένης γλώσσας)"
 
+#: src/uilang.cpp:244
 msgid "Language selection"
 msgstr "Επιλογή γλώσσας"
 
+#: src/uilang.cpp:244
 msgid "Select your preferred language"
 msgstr "Επιλέξτε την προτιμώμενη γλώσσα σας"
 
+#: src/uilang.cpp:261
 msgid "You must restart Poedit for this change to take effect."
-msgstr ""
-"Πρέπει να γίνει επανεκκίνηση του Poedit, ώστε αυτή η αλλαγή να έχει επίδραση."
+msgstr "Πρέπει να γίνει επανεκκίνηση του Poedit, ώστε αυτή η αλλαγή να έχει επίδραση."
 
+#: src/utility.cpp:143 src/utility.cpp:153
 msgid "Cannot create temporary directory."
 msgstr "Αδυναμία δημιουργίας του φακέλου των προσωρινών αρχείων."
 
+#: src/welcomescreen.cpp:141
 msgid "There are no translations. That’s unusual."
 msgstr "Δεν υπάρχουν μεταφράσεις. Αυτό είναι ασυνήθιστο."
 
-msgid ""
-"Translatable entries aren’t added manually in the Gettext system, but are "
-"automatically extracted\n"
-"from source code. This way, they stay up to date and accurate.\n"
-"Translators typically use PO template files (POTs) prepared for them by the "
-"developer."
+#: src/welcomescreen.cpp:150
+msgid "Translatable entries aren’t added manually in the Gettext system, but are automatically extracted from source code. This way, they stay up to date and accurate. Translators typically use PO template files (POTs) prepared for them by the developer."
 msgstr ""
-"Οι μεταφράσιμες καταχωρήσεις δεν προστίθενται αυτόματα στο σύστημα του "
-"Gettext, αλλά εξάγονται αυτόματα\n"
-"από τον πηγαίο κώδικα. Με αυτόν τον τρόπο, παραμένουν ενημερωμένες και "
-"ακριβείς.\n"
-"Οι μεταφραστές χρησιμοποιούν συνήθως τα αρχεία προτύπων PO (POT), που "
-"προετοιμάζονται από τον προγραμματιστή."
 
-msgid "(Learn more about GNU gettext)"
-msgstr "(Μάθε περισσότερα για το GNU gettext)"
-
-msgid ""
-"The simplest way to fill this file with translations is to update it from a "
-"POT:"
+#: src/welcomescreen.cpp:153
+msgid "Learn more about GNU gettext"
 msgstr ""
-"Ο απλούστερος τρόπος για να συμπληρώσετε αυτό το αρχείο με μεταφράσεις είναι "
-"η ενημέρωση από ένα POT:"
 
+#: src/welcomescreen.cpp:157
+msgid "The simplest way to fill this file with translations is to update it from a POT:"
+msgstr "Ο απλούστερος τρόπος για να συμπληρώσετε αυτό το αρχείο με μεταφράσεις είναι η ενημέρωση από ένα POT:"
+
+#: src/welcomescreen.cpp:162
 msgid "Update from POT"
 msgstr "Ενημέρωση από το αρχείο POΤ"
 
+#: src/welcomescreen.cpp:163
 msgid "Take translatable strings from an existing POT template."
 msgstr "Πάρε μεταφράσιμους στίχους από ένα υπάρχον πρότυπο .POT."
 
-msgid ""
-"You can also extract translatable strings directly from the source code:"
-msgstr ""
-"Μπορείς, επίσης να εξάγεις μεταφράσιμους στίχους, κατευθείαν από τον πηγαίο "
-"κώδικα:"
+#: src/welcomescreen.cpp:167
+msgid "You can also extract translatable strings directly from the source code:"
+msgstr "Μπορείς, επίσης να εξάγεις μεταφράσιμους στίχους, κατευθείαν από τον πηγαίο κώδικα:"
 
+#: src/welcomescreen.cpp:172
 msgid "Extract from sources"
 msgstr "Εξαγωγή από τις πηγές"
 
+#: src/welcomescreen.cpp:173
 msgid "Configure source code extraction in Properties."
 msgstr "Ρύθμισε την εξαγωγή του πηγαίου κώδικα στις Ιδιότητες."
 
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "Έκδοση %s"
-
+#: src/welcomescreen.cpp:272
 msgid "Create new"
 msgstr "Δημιουργία νέας"
 
+#: src/welcomescreen.cpp:273
 msgid "Create new translation from POT template."
 msgstr "Δημιουργία νέας μετάφρασης από πρότυπο POT."
 
+#: src/welcomescreen.cpp:278
 msgid "Browse files"
 msgstr "Αναζήτηση αρχείων"
 
+#: src/welcomescreen.cpp:279
 msgid "Open and edit translation files."
 msgstr "Άνοιγμα και επεξεργασία αρχείων μετάφρασης."
 
+#: src/welcomescreen.cpp:286
+msgid "Translate WordPress theme or plugin"
+msgstr "Μετάφραση ενός θέματος WordPress ή πρόσθετου"
+
+#: src/welcomescreen.cpp:287
+msgid "Edit WordPress translations over FTP or locally."
+msgstr "Επεξεργασία μεταφράσεων WordPress μέσω FTP ή τοπικά."
+
+#: src/welcomescreen.cpp:292
 msgid "Translate cloud project"
 msgstr "Μετάφραση έργου από το cloud"
 
+#: src/welcomescreen.cpp:293
 msgid "Collaborate with other people online."
 msgstr "Συνεργαστείτε με άλλα άτομα σε απευθείας σύνδεση."
 
+#: src/welcomescreen.cpp:316
 msgid "Recent files"
 msgstr "Πρόσφατα αρχεία"
 
+#: src/wordpress/wordpress.cpp:101 src/wordpress/wordpress.cpp:108
+#, c-format
+msgid "Failed to read file “%s”."
+msgstr "Απέτυχε η ανάγνωση του αρχείου \"%s\"."
+
+#: src/wordpress/wordpress.cpp:165
+#, c-format
+msgid "Confused by ambiguous values of “%s” in %s."
+msgstr "Σύγχυση με διφορούμενες τιμές του “%s” σε %s."
+
+#: src/wordpress/wordpress.cpp:294 src/wordpress/wordpress.cpp:544
+#: src/wordpress/wordpress.cpp:591
+#, c-format
+msgid "Couldn’t detect POs location for “%s”."
+msgstr "Αδυναμία εντοπισμού τοποθεσίας των PO για το \"%s”."
+
+#: src/wordpress/wordpress.cpp:670
+#, c-format
+msgid "The “%s” theme isn’t localization-ready."
+msgstr "Το θέμα “%s” δεν είναι έτοιμο για μετάφραση."
+
+#: src/wordpress/wordpress.cpp:687
+#, c-format
+msgid "Couldn’t detect translation domain of the “%s” theme."
+msgstr "Δεν ήταν δυνατή η ανίχνευση τομέα μετάφρασης του θέματος “%s”."
+
+#: src/wordpress/wordpress.cpp:714
+#, c-format
+msgid "Couldn't detect translation domain of the \"%s\" theme."
+msgstr "Αδυναμία εντοπισμού του διαδικτυακού τομέα μετάφρασης του θέματος \"%s\"."
+
+#: src/wordpress/wordpress.cpp:769
+msgid "Confused: multiple main plugin files."
+msgstr "Σύγχυση: πολλαπλά αρχεία κύριων ενθεμάτων."
+
+#: src/wordpress/wordpress.cpp:819
+#, c-format
+msgid "The “%s” plugin isn’t localization-ready."
+msgstr "Το πρόσθετο “%s” δεν είναι έτοιμο για μετάφραση."
+
+#: src/wordpress/wordpress.cpp:840 src/wordpress/wordpress.cpp:857
+#, c-format
+msgid "Couldn’t detect translation domain of the “%s” plugin."
+msgstr "Δεν ήταν δυνατή η ανίχνευση τομέα μετάφρασης του προσθέτου “%s”."
+
+#: src/wordpress/wordpress.cpp:923
+msgid "Found neither WordPress theme nor plugin in the folder."
+msgstr "Δεν βρέθηκε ούτε κάποιο θέμα WordPress, ούτε κάποιο πρόσθετο στον φάκελο."
+
+#: src/wordpress/wordpress.cpp:940
+#, c-format
+msgid "Translations folder (%s) doesn’t exist."
+msgstr "Ο φάκελος μεταφράσεων (%s) δεν υπάρχει."
+
+#: src/wordpress/wordpress_gui.cpp:77
+msgid "<big>Drag and drop <b>theme or plugin folder</b> here</big>\n\n"
+"or use the “Choose folder” button"
+msgstr "<big>Σύρετε και εναποθέστε <b>τον φάκελο θέματος ή προσθέτου</b> εδώ</big>\n\n"
+"ή χρησιμοποιήστε το κουμπί “Επιλογή φακέλου”"
+
+#: src/wordpress/wordpress_gui.cpp:79
+msgid "<big>Drag and Drop <b>Theme or Plugin Folder</b> Here</big>\n\n"
+"or use the “Choose Folder” button"
+msgstr "<big>Σύρετε και εναποθέστε <b>τον φάκελο θέματος ή προσθέτου</b> εδώ</big>\n\n"
+"ή χρησιμοποιήστε το κουμπί “Επιλογή φακέλου”"
+
+#: src/wordpress/wordpress_gui.cpp:101
+#, c-format
+msgid "Folder “%s”"
+msgstr "Φάκελος “%s”"
+
+#: src/wordpress/wordpress_gui.cpp:162
+msgid "Work With Files"
+msgstr "Εργασία με αρχεία"
+
+#: src/wordpress/wordpress_gui.cpp:162
+msgid "Work with files"
+msgstr "Εργασία με αρχεία"
+
+#: src/wordpress/wordpress_gui.cpp:164
+msgid "Connect to Server"
+msgstr "Σύνδεση σε διακομιστή"
+
+#: src/wordpress/wordpress_gui.cpp:164
+msgid "Connect to server"
+msgstr "Σύνδεση σε διακομιστή"
+
+#: src/wordpress/wordpress_gui.cpp:165
+msgid "On This Computer"
+msgstr "Σε αυτό τον υπολογιστή"
+
+#: src/wordpress/wordpress_gui.cpp:165
+msgid "On this computer"
+msgstr "Σε αυτόν τον υπολογιστή"
+
+#: src/wordpress/wordpress_gui.cpp:168
+msgid "Continue"
+msgstr "Συνέχεια"
+
+#: src/wordpress/wordpress_gui.cpp:210
+msgid "Choose Folder…"
+msgstr "Επιλογή φακέλου…"
+
+#: src/wordpress/wordpress_gui.cpp:210
+msgid "Choose folder…"
+msgstr "Επιλογή φακέλου…"
+
+#: src/wordpress/wordpress_gui.cpp:217
+msgid "Create a new translation"
+msgstr "Δημιουργία νέας μετάφρασης"
+
+#: src/wordpress/wordpress_gui.cpp:220
+msgid "Choose this if you want to translate the theme or plugin into your language."
+msgstr "Επιλέξτε αυτό αν θέλετε να μεταφράσετε το θέμα ή το πρόσθετο στη γλώσσα σας."
+
+#: src/wordpress/wordpress_gui.cpp:233
+msgid "Create a POT"
+msgstr "Δημιουργία POT"
+
+#: src/wordpress/wordpress_gui.cpp:235
+msgid "This option is for theme and plugin developers. Poedit will create an empty template (POT) that translations can be based on."
+msgstr "Αυτή η επιλογή είναι για δημιουργούς θεμάτων και προσθέτων. Το Poedit θα δημιουργήσει ένα κενό πρότυπο (POT) στο οποίο μπορούν να βασιστούν οι μεταφράσεις."
+
+#: src/wordpress/wordpress_gui.cpp:248
+msgid "Select the folder with the WordPress theme or plugin"
+msgstr "Επιλέξτε τον φάκελο με το θέμα ή το πρόσθετο WordPress"
+
+#: src/wordpress/wordpress_gui.cpp:280
+msgid "Enter connection details for your WordPress server. Poedit will retrieve available themes and plugins from it and let you translate directly on the server."
+msgstr "Εισαγάγετε τα στοιχεία σύνδεσης για τον διακομιστή WordPress σας. Το Poedit θα ανακτήσει τα διαθέσιμα θέματα και πρόσθετα και θα σας επιτρέψει να μεταφράσετε απευθείας στον διακομιστή."
+
+#: src/wordpress/wordpress_gui.cpp:287
+msgid "Protocol:"
+msgstr "Πρωτόκολλο:"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "FTP (insecure)"
+msgstr "FTP (μη ασφαλές)"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "FTP with SSL"
+msgstr "FTP με SSL"
+
+#: src/wordpress/wordpress_gui.cpp:288
+msgid "SFTP"
+msgstr "SFTP"
+
+#: src/wordpress/wordpress_gui.cpp:293
+msgid "Choose a recent server"
+msgstr "Επιλογή πρόσφατου διακομιστή"
+
+#: src/wordpress/wordpress_gui.cpp:302 src/wordpress/wordpress_gui.cpp:538
+msgid "Recent Servers"
+msgstr "Πρόσφατοι διακομιστές"
+
+#: src/wordpress/wordpress_gui.cpp:302 src/wordpress/wordpress_gui.cpp:538
+msgid "Recent servers"
+msgstr "Πρόσφατοι διακομιστές"
+
+#: src/wordpress/wordpress_gui.cpp:306
+msgid "Server:"
+msgstr "Διακομιστής:"
+
+#: src/wordpress/wordpress_gui.cpp:310
+msgid "Remote Path:"
+msgstr "Απομακρυσμένη διαδρομή:"
+
+#: src/wordpress/wordpress_gui.cpp:310
+msgid "Remote path:"
+msgstr "Απομακρυσμένη διαδρομή:"
+
+#: src/wordpress/wordpress_gui.cpp:312
+msgid "Detected automatically"
+msgstr "Εντοπίστηκε αυτόματα"
+
+#: src/wordpress/wordpress_gui.cpp:315
+msgid "Port:"
+msgstr "Θύρα:"
+
+#: src/wordpress/wordpress_gui.cpp:321
+msgid "Username:"
+msgstr "Όνομα χρήστη:"
+
+#: src/wordpress/wordpress_gui.cpp:325
+msgid "Password:"
+msgstr "Κωδικός πρόσβασης:"
+
+#: src/wordpress/wordpress_gui.cpp:332
+msgid "Remember my credentials"
+msgstr "Απομνημόνευση διαπιστευτηρίων"
+
+#: src/wordpress/wordpress_gui.cpp:333
+msgid "Connect"
+msgstr "Σύνδεση"
+
+#: src/wordpress/wordpress_gui.cpp:346
+msgid "Select the plugin or theme to translate:"
+msgstr "Επιλογή της προσθήκης ή του θέματος για μετάφραση:"
+
+#: src/wordpress/wordpress_gui.cpp:398
+msgid "Connecting to WordPress server…"
+msgstr "Σύνδεση στο διακομιστή WordPress…"
+
+#: src/wordpress/wordpress_gui.cpp:416
+#, c-format
+msgid "Theme: %s"
+msgstr "Θέμα: %s"
+
+#: src/wordpress/wordpress_gui.cpp:419
+#, c-format
+msgid "Plugin: %s"
+msgstr "Προσθήκη: %s"
+
+#: src/wordpress/wordpress_gui.cpp:534
+msgid "No Recent Servers"
+msgstr "Κανένας πρόσφατος διακομιστής"
+
+#: src/wordpress/wordpress_gui.cpp:534
+msgid "No recent servers"
+msgstr "Κανένας πρόσφατος διακομιστής"
+
+#: src/wordpress/wordpress_gui.cpp:552
+msgid "Clear Recent Servers"
+msgstr "Απαλοιφή πρόσφατων διακομιστών"
+
+#: src/wordpress/wordpress_gui.cpp:552
+msgid "Clear recent servers"
+msgstr "Απαλοιφή πρόσφατων διακομιστών"
+
+#: src/wordpress/wordpress_gui.cpp:825
+msgid "Failed to extract WordPress information."
+msgstr "Απέτυχε η εξαγωγή πληροφοριών WordPress."
+
+#: src/wordpress/wordpress_gui.cpp:826
+msgid "WordPress error"
+msgstr "Σφάλμα WordPress"
+
+#: src/wordpress/wordpress_gui.cpp:835
+#, c-format
+msgid "Poedit couldn’t understand the content of the folder you selected. This may be a problem with the plugin/theme or it may be Poedit being silly. The error is:\n\n"
+" • %s\n\n"
+"Please email help@poedit.net and we’ll sort it out."
+msgstr "Το Ποέντιτ δεν μπόρεσε να καταλάβει το περιεχόμενο του επιλεγμένου φακέλου.\n"
+"Μπορεί να υπάρχει κάποιο πρόβλημα με το ένθεμα,\n"
+"ή το Ποέντιτ να μην φέρεται έξυπνα.\n"
+"Το σφάλμα είναι:\n\n"
+" • %s\n\n"
+"Παρακαλώ στείλε μήνυμα στο help@poedit.net, και θα βρούμε την άκρη του προβλήματος."
+
+#. TRANSLATORS: This is a button that sends an email to support when clicked
+#: src/wordpress/wordpress_gui.cpp:841
+msgid "Email support"
+msgstr "Υποστήριξη μέσω email"
+
+#: src/wordpress/wordpress_gui.cpp:842
+msgid "View log"
+msgstr "Προβολή αρχείου καταγραφής"
+
+#. TRANSLATORS: This is a button that sends an email to support when clicked
+#: src/wordpress/wordpress_gui.cpp:845
+msgid "Email Support"
+msgstr "Υποστήριξη μέσω email"
+
+#: src/wordpress/wordpress_gui.cpp:846
+msgid "View Log"
+msgstr "Προβολή αρχείου καταγραφής"
+
+#: src/wordpress/wordpress_gui.cpp:857
+msgid "WordPress Errors Log"
+msgstr "Αρχείο καταγραφής σφαλμάτων WordPress"
+
+#: src/wordpress/wordpress_gui.cpp:858
+msgid "Please email this log to help@poedit.net. Thank you!"
+msgstr "Παρακαλώ ταχυδρόμησε αυτήν την καταγραφή στη διεύθυνση help@poedit.net. Ευχαριστώ!"
+
+#: src/wordpress/wordpress_gui.cpp:938
+msgid "Analyzing WordPress server…"
+msgstr "Ανάλυση διακομιστή WordPress…"
+
+#: src/wordpress/wordpress_gui.cpp:959
+msgid "Downloading translation data…"
+msgstr "Λήψη δεδομένων μετάφρασης…"
+
+#: src/wordpress/wordpress_gui.cpp:984
+msgid "Unpacking translation data…"
+msgstr "Άνοιγμα δεδομένων μετάφρασης…"
+
+#: src/wordpress/wordpress_gui.cpp:989
+msgid "Error unpacking downloaded WordPress data."
+msgstr "Σφάλμα ανοίγματος ληφθέντων δεδομένων WordPress."
+
+#: src/wordpress/wordpress_gui.cpp:1014 src/wordpress/wordpress_gui.cpp:1029
+msgid "Analyzing WordPress code…"
+msgstr "Ανάλυση κώδικα WordPress…"
+
+#: src/wordpress/wordpress_gui.cpp:1039
+msgid "WordPress translation file is ready, but there were some non-fatal issues with the corresponding source code."
+msgstr ""
+
+#: src/wx/main_toolbar.cpp:123
 msgid "Sync"
 msgstr "Συγχρονισμός"
 
+#: src/wx/main_toolbar.cpp:124
 msgid "Synchronize the translation with Crowdin"
 msgstr "Συγχρονισμός μετάφρασης με το Crowdin"
 
-#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
-#. ("Poedit" here, but please use "%s")
-#, c-format
-msgid "About %s"
-msgstr "Σχετικά με το %s"
+#: src/wx/main_toolbar.cpp:170
+msgid "Upgrade to Poedit Pro to get additional features and support Poedit's development."
+msgstr "Αναβαθμίστε στο Poedit Pro για να αποκτήσετε πρόσθετες λειτουργίες και για να υποστηρίξετε την ανάπτυξη του Poedit."
 
 #. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+#: src/wx_translatable_strings.h:49
 #, c-format
 msgid "%s Preferences"
 msgstr "Προτιμήσεις %s"
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
+#: src/wx_translatable_strings.h:60
 #, c-format
 msgctxt "macOS menu item"
 msgid "About %s"
 msgstr "Σχετικά με το %s"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:64
 msgctxt "macOS menu item"
 msgid "Services"
 msgstr "Υπηρεσίες"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#: src/wx_translatable_strings.h:66
 #, c-format
 msgctxt "macOS menu item"
 msgid "Hide %s"
 msgstr "Απόκρυψη %s"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:68
 msgctxt "macOS menu item"
 msgid "Hide Others"
 msgstr "Απόκρυψη άλλων"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:70
 msgctxt "macOS menu item"
 msgid "Show All"
 msgstr "Εμφάνιση όλων"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#: src/wx_translatable_strings.h:72
 #, c-format
 msgctxt "macOS menu item"
 msgid "Quit %s"
 msgstr "Κλείσιμο %s"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:74
 msgid "Preferences…"
 msgstr "Προτιμήσεις…"
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:76
 msgid "Preferences..."
 msgstr "Προτιμήσεις..."
 
 #. TRANSLATORS: macOS item in app menu
+#: src/wx_translatable_strings.h:78
 msgctxt "macOS menu item"
 msgid "Preferences..."
 msgstr "Προτιμήσεις..."
 
+#: src/wx_translatable_strings.h:92
 msgid "&Apply"
 msgstr "&Εφαρμογή"
 
+#: src/wx_translatable_strings.h:92
 msgid "Apply"
 msgstr "Εφαρμογή"
 
+#: src/wx_translatable_strings.h:93
 msgid "&Back"
 msgstr "&Πίσω"
 
+#: src/wx_translatable_strings.h:93
 msgid "Back"
 msgstr "Πίσω"
 
+#: src/wx_translatable_strings.h:94
 msgid "&Cancel"
 msgstr "&Ακύρωση"
 
+#: src/wx_translatable_strings.h:95
 msgid "&Clear"
 msgstr "&Απαλοιφή"
 
+#: src/wx_translatable_strings.h:95
 msgid "Clear"
 msgstr "Απαλοιφή"
 
+#: src/wx_translatable_strings.h:98
 msgid "Copy"
 msgstr "Αντιγραφή"
 
+#: src/wx_translatable_strings.h:99
 msgid "Cu&t"
 msgstr "Απο&κοπή"
 
+#: src/wx_translatable_strings.h:99
 msgid "Cut"
 msgstr "Αποκοπή"
 
-msgid "Edit"
-msgstr "Επεξεργασία"
-
+#: src/wx_translatable_strings.h:103
 msgid "&Quit"
 msgstr "&Έξοδος"
 
+#: src/wx_translatable_strings.h:105
 msgid "Help"
 msgstr "Βοήθεια"
 
+#: src/wx_translatable_strings.h:106
 msgid "&New"
 msgstr "&Νέα"
 
+#: src/wx_translatable_strings.h:106
 msgid "New"
 msgstr "Νέα"
 
+#: src/wx_translatable_strings.h:107
 msgid "&No"
 msgstr "&Όχι"
 
+#: src/wx_translatable_strings.h:107
 msgid "No"
 msgstr "Όχι"
 
+#: src/wx_translatable_strings.h:108
 msgid "&OK"
 msgstr "&OK"
 
+#: src/wx_translatable_strings.h:109
 msgid "Open…"
 msgstr "Άνοιγμα…"
 
+#: src/wx_translatable_strings.h:110
 msgid "&Open..."
 msgstr "&Άνοιγμα..."
 
+#: src/wx_translatable_strings.h:110
 msgid "Open..."
 msgstr "Άνοιγμα..."
 
+#: src/wx_translatable_strings.h:111
 msgid "&Paste"
 msgstr "&Επικόλληση"
 
+#: src/wx_translatable_strings.h:111
 msgid "Paste"
 msgstr "Επικόλληση"
 
+#: src/wx_translatable_strings.h:112
 msgid "Preferences"
 msgstr "Προτιμήσεις"
 
+#: src/wx_translatable_strings.h:113
 msgid "&Redo"
 msgstr "&Επανάληψη"
 
+#: src/wx_translatable_strings.h:114
 msgid "Refresh"
 msgstr "Ανανέωση"
 
+#: src/wx_translatable_strings.h:116
 msgid "&Save as"
 msgstr "&Αποθήκευση ως"
 
+#: src/wx_translatable_strings.h:116
 msgid "Save as"
 msgstr "Αποθήκευση ως"
 
+#: src/wx_translatable_strings.h:117
 msgid "Select &All"
 msgstr "Επιλογή ό&λων"
 
+#: src/wx_translatable_strings.h:117
 msgid "Select All"
 msgstr "Επιλογή όλων"
 
+#: src/wx_translatable_strings.h:118
 msgid "&Undo"
 msgstr "&Αναίρεση"
 
+#: src/wx_translatable_strings.h:119
 msgid "&Yes"
 msgstr "&Ναι"
 
+#: src/wx_translatable_strings.h:119
 msgid "Yes"
 msgstr "Ναι"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:125
 msgctxt "keyboard key"
 msgid "Alt+"
 msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:127
 msgctxt "keyboard key"
 msgid "Shift+"
 msgstr "Shift+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:129
 msgctxt "keyboard key"
 msgid "Enter"
 msgstr "Enter"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:131
 msgctxt "keyboard key"
 msgid "Up"
 msgstr "Πάνω"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:133
 msgctxt "keyboard key"
 msgid "Down"
 msgstr "Κάτω"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:135
 msgctxt "keyboard key"
 msgid "Left"
 msgstr "Αριστερά"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#: src/wx_translatable_strings.h:137
 msgctxt "keyboard key"
 msgid "Right"
 msgstr "Δεξιά"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+#: src/wx_translatable_strings.h:140
 msgctxt "keyboard key"
 msgid "ctrl"
 msgstr "ctrl"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+#: src/wx_translatable_strings.h:142
 msgctxt "keyboard key"
 msgid "alt"
 msgstr "alt"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+#: src/wx_translatable_strings.h:144
 msgctxt "keyboard key"
 msgid "shift"
 msgstr "shift"
+
+#: src/wx_translatable_strings.h:152
+msgid "Warning: "
+msgstr ""
+
