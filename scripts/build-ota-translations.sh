@@ -13,7 +13,7 @@ trap finish EXIT
 recode-sr-latin <locales/sr.po >locales/sr@latin.po
 
 # check PO files for errors and fix the ones that won't compile:
-uv run scripts/check-translations.py --github --remove-errors || touch ota-had-errors
+uv run --script scripts/check-translations.py --github --remove-errors || touch ota-had-errors
 # double-check that fixes were correct:
 for po in locales/*.po ; do
     msgfmt -c -o /dev/null $po

@@ -120,4 +120,5 @@ scripts/do-update-translations-lists.sh
 git status
 echo ""
 
-uv run scripts/check-translations.sh
+uv run --script scripts/check-translations.py
+
