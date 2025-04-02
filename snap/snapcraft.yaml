@@ -18,15 +18,15 @@ description: >
 
     $ snap connect poedit:password-manager-service
 
-base: core20
+base: core24
 grade: stable
 confinement: strict
 compression: lzo
 icon: artwork/linux/appicon/scalable/apps/net.poedit.Poedit.svg
 
-architectures:
-  - build-on: amd64
-  - build-on: arm64
+platforms:
+  amd64:
+  arm64:
 
 layout:
   /usr/share/aspell:
@@ -35,31 +35,32 @@ layout:
     symlink: $SNAP/usr/share/hunspell
   /usr/share/myspell:
     symlink: $SNAP/usr/share/myspell
-  /usr/lib/$SNAPCRAFT_ARCH_TRIPLET/enchant-2:
-    symlink: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/enchant-2
+  /usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/enchant-2:
+    symlink: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/enchant-2
 
 apps:
   poedit:
     command: bin/poedit
     desktop: share/applications/net.poedit.Poedit.desktop
-    extensions: [gnome-3-38]
+    extensions: [gnome]
+    common-id: net.poedit.Poedit
+    plugs:
+      - home
+      - network
+      - removable-media
+      - mount-observe
+      - password-manager-service
 
   poedit-uri-handler:
     command: bin/poedit
     desktop: share/applications/net.poedit.PoeditURI.desktop
-    extensions: [gnome-3-38]
-
-plugs:
-  # File access
-  home:
-  removable-media:
-  mount-observe:
-
-  # Crowdin access
-  network:
-
-  # Secret Service access
-  password-manager-service:
+    extensions: [gnome]
+    plugs:
+      - home
+      - network
+      - removable-media
+      - mount-observe
+      - password-manager-service
 
 parts:
   poedit:
@@ -86,7 +87,6 @@ parts:
       - libicu-dev
       - libjpeg-dev
       - liblucene++-dev
-      - libnotify-dev
       - libsecret-1-dev
       - libtiff5-dev
       - pkg-config
@@ -98,59 +98,36 @@ parts:
 
       ./bootstrap
       ./configure \
-        --with-wx-prefix="$SNAPCRAFT_STAGE" \
-        CPPFLAGS="-DSNAPCRAFT -I${SNAPCRAFT_STAGE}/include -I${SNAPCRAFT_PART_INSTALL}/../build/deps/json/src" \
-        LDFLAGS="-Wl,--copy-dt-needed-entries -L${SNAPCRAFT_STAGE}/lib" \
-        PKG_CONFIG_PATH="${SNAPCRAFT_STAGE}"/lib/pkgconfig
-      make -j1
-      make prefix="${SNAPCRAFT_PART_INSTALL}" install-strip
+        --with-wx-prefix="$CRAFT_STAGE" \
+        CPPFLAGS="-DSNAPCRAFT -I${CRAFT_STAGE}/include -I${CRAFT_PART_INSTALL}/../build/deps/json/src" \
+        LDFLAGS="-Wl,--copy-dt-needed-entries -L${CRAFT_STAGE}/lib" \
+        PKG_CONFIG_PATH="${CRAFT_STAGE}"/lib/pkgconfig
+      make -j4
+      make prefix="${CRAFT_PART_INSTALL}" install-strip
 
       # Fix-up application icon lookup
-      mkdir -p ${SNAPCRAFT_PART_INSTALL}/meta/gui/
-      cp artwork/linux/appicon/scalable/apps/net.poedit.Poedit.svg ${SNAPCRAFT_PART_INSTALL}/meta/gui/icon.svg
+      mkdir -p ${CRAFT_PART_INSTALL}/meta/gui/
+      cp artwork/linux/appicon/scalable/apps/net.poedit.Poedit.svg ${CRAFT_PART_INSTALL}/meta/gui/icon.svg
       sed --in-place -e 's|^Icon=.*|Icon=\${SNAP}/meta/gui/icon.svg|' \
-        "${SNAPCRAFT_PART_INSTALL}"/share/applications/net.poedit*.desktop
+        "${CRAFT_PART_INSTALL}"/share/applications/net.poedit*.desktop
 
     stage-packages:
-      # Called by Poedit
       - gettext
-
-      # Required by Unity/GNOME?
-      - libcanberra-gtk3-module
-
       - libcld2-0
       - libcpprest2.10
       - libgtkspell3-3-0
-      - libice6
       - liblucene++0v5
       - libsecret-1-0
-      - libsm6
-      - libxxf86vm1
-
-    filesets:
-      executables:
-        - bin/*
-      files-in-stage-packages:
-        - usr/*
-      resources:
-        - share/*
-      exclude-gtk-runtime:
-        - -usr/lib/*/libgtk-*
-        - -usr/lib/*/libgdk*
-        - -usr/lib/*/libcairo*
-        - -usr/lib/*/libpango*
-        - -usr/lib/*/libwayland*
 
     stage:
-      - $executables
-      - $files-in-stage-packages
-      - $resources
+      - bin/*
+      - usr/*
+      - share/*
 
     prime:
-      - $executables
-      - $files-in-stage-packages
-      - $resources
-      - $exclude-gtk-runtime
+      - bin/*
+      - usr/*
+      - share/*
 
   wxwidgets:
     source: deps/wx
@@ -159,7 +136,6 @@ parts:
       - gettext
       - libexpat1-dev
       - libjpeg-dev
-      - libnotify-dev
       - libpng-dev
       - libsecret-1-dev
       - libtiff5-dev
@@ -174,58 +150,41 @@ parts:
       ./configure \
         --disable-shared \
         --disable-sound \
-        --prefix="${SNAPCRAFT_STAGE}" \
+        --prefix="${CRAFT_STAGE}" \
         --with-gtk=3 \
         --without-opengl \
         --without-sdl \
+        --disable-html \
+        --disable-richtext \
         --enable-debug \
         --enable-webview \
         --with-cxx=14 \
         --enable-stl
       make -j4
-      make prefix="${SNAPCRAFT_PART_INSTALL}" install
+      make prefix="${CRAFT_PART_INSTALL}" install
 
-    stage-packages:
-      # For addr2line, required by wxWidgets error dialog
-      - binutils
-
-    filesets:
-      autoconf-macros:
-        - share/aclocal/*
-      bakefiles:
-        - share/bakefile/*
-      files-from-stage-packages:
-        - usr/*
-      executables:
-        - bin/*
-      headers:
-        - include/*
-      libraries:
-        - lib/*
-      localizations:
-        - share/locale/*
     stage:
-      - $autoconf-macros
-      - $executables
-      - $files-from-stage-packages
-      - $headers
-      - $libraries
-      - $localizations
+      - share/aclocal/*
+      - bin/*
+      - usr/*
+      - include/*
+      - lib/*
+      - share/locale/*
     override-stage: |
       set -eu
 
-      snapcraftctl stage
+      craftctl default
 
       # Fixup wrong wx-config link
       ln \
         --force \
         --relative \
         --symbolic \
-        "${SNAPCRAFT_STAGE}"/lib/wx/config/gtk3-unicode-static-3.2 \
-        "${SNAPCRAFT_STAGE}"/bin/wx-config
+        "${CRAFT_STAGE}"/lib/wx/config/gtk3-unicode-static-3.2 \
+        "${CRAFT_STAGE}"/bin/wx-config
     prime:
-      - $files-from-stage-packages
-      - $localizations
+      - usr/*
+      - share/locale/*
 
   spellcheck-dictionaries:
     plugin: nil
@@ -236,11 +195,9 @@ parts:
       apt download $(apt-cache showpkg hunspell-dictionary | awk '/Pa/, /Reverse P/ {next} {print $1 | "sort"}')
       find -name '*.deb' | xargs --max-args=1 --replace={} --verbose dpkg-deb --extract {} ../install
 
-    filesets:
-      dictionaries:
-        - usr/share/hunspell/*
-        - usr/share/myspell/*
     stage:
-      - $dictionaries
+      - usr/share/hunspell/*
+      - usr/share/myspell/*
     prime:
-      - $dictionaries
+      - usr/share/hunspell/*
+      - usr/share/myspell/*
