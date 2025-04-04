@@ -1733,7 +1733,7 @@ bool POCatalog::Merge(const POCatalogPtr& refcat)
     std::vector<wxString> args { "msgmerge", "-q", "--force-po", "--previous" };
     if (Config::MergeBehavior() == Merge_None)
     {
-        args.push_back(" --no-fuzzy-matching");
+        args.push_back("--no-fuzzy-matching");
     }
 
     args.push_back("-o");
