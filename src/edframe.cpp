@@ -1691,6 +1691,9 @@ void PoeditFrame::OnUpdateFromPOTUpdate(wxUpdateUIEvent& event)
 {
     OnHasCatalogUpdate(event);
 
+    if (!m_catalog)
+        return;
+
     switch (m_catalog->GetFileType())
     {
         case Catalog::Type::POT:
