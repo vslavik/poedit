@@ -2419,10 +2419,20 @@ void PoeditFrame::OfferSideloadingSourceText()
         return;
 
     wxFileName fn(filename);
+    wxFileName ref;
 
-    wildcard.Replace("*", "en");
-    wxFileName ref(wildcard);
-    if (!ref.FileExists() || fn == ref)
+    for (auto candidate: {"en", "en.default", "default"})
+    {
+        auto w(wildcard);
+        w.Replace("*", candidate);
+        wxFileName fnw(w);
+        if (fnw.FileExists() && fnw != fn)
+        {
+            ref = fnw;
+            break;
+        }
+    }
+    if (!ref.IsOk())
         return;
 
     wxFileName displayRef(ref);
