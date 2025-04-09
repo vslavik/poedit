@@ -1583,6 +1583,7 @@ void PoeditFrame::UpdateCatalog(const wxString& pot_file)
     // This ensures that the list control won't be redrawn during Update()
     // call when a dialog box is hidden; another alternative would be to call
     // m_list->CatalogChanged(NULL) here
+    // *or* to make sure PerformUpdateFromXXX() always returns a new Catalog instance
     std::shared_ptr<wxWindowUpdateLocker> locker;
     if (m_list)
         locker.reset(new wxWindowUpdateLocker(m_list));
@@ -1617,7 +1618,7 @@ void PoeditFrame::UpdateCatalog(const wxString& pot_file)
         bg_work = PerformUpdateFromReferenceWithUI(this, m_catalog, pot_file);
     }
 
-    bg_work.then_on_main([=](CatalogPtr updated_catalog)
+    bg_work.then_on_main([this,locker](CatalogPtr updated_catalog)
     {
         if (!updated_catalog)
             return;
@@ -1636,6 +1637,8 @@ void PoeditFrame::UpdateCatalog(const wxString& pot_file)
                 RefreshControls();
             });
         }
+
+        // locker gets released now and the list is redrawn
     });
 }
 
