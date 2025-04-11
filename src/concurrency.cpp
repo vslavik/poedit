@@ -145,6 +145,8 @@ void dispatch::cleanup()
     if (gs_main_thread_executor)
         gs_main_thread_executor->close();
 
-    gs_background_executor.reset();
-    gs_main_thread_executor.reset();
+    // Don't destroy executor objects, because some still-in-fly tasks may be
+    // referencing them.
+    // Ideally, we would like to shut down worker queues, but that's easier said than done
+    // (except boost's basic_thread_pool).
 }
