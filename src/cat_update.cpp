@@ -215,7 +215,7 @@ InterimResults ExtractPOTFromSources(CatalogPtr catalog)
 {
     auto po = std::dynamic_pointer_cast<POCatalog>(catalog);
     if (!po)
-        throw ExtractionException(ExtractionError::Unspecified);
+        BOOST_THROW_EXCEPTION(ExtractionException(ExtractionError::Unspecified));
 
     Progress progress(1);
     progress.message(_(L"Collecting source files…"));
@@ -223,7 +223,7 @@ InterimResults ExtractPOTFromSources(CatalogPtr catalog)
     auto spec = catalog->GetSourceCodeSpec();
     if (!spec)
     {
-        throw ExtractionException(ExtractionError::NoSourcesFound);
+        BOOST_THROW_EXCEPTION(ExtractionException(ExtractionError::NoSourcesFound));
     }
 
     InterimResults output;
@@ -246,7 +246,7 @@ InterimResults ExtractPOTFromSources(CatalogPtr catalog)
         TempDirectory tmpdir;
         auto result = Extractor::ExtractWithAll(tmpdir, *spec, files);
         if (!result)
-            throw ExtractionException(ExtractionError::Unspecified);
+            BOOST_THROW_EXCEPTION(ExtractionException(ExtractionError::Unspecified));
 
         try
         {
@@ -257,12 +257,12 @@ InterimResults ExtractPOTFromSources(CatalogPtr catalog)
         catch (...)
         {
             wxLogError(_("Failed to load file with extracted translations."));
-            throw ExtractionException(ExtractionError::Unspecified);
+            BOOST_THROW_EXCEPTION(ExtractionException(ExtractionError::Unspecified));
         }
     }
     else
     {
-        throw ExtractionException(ExtractionError::NoSourcesFound);
+        BOOST_THROW_EXCEPTION(ExtractionException(ExtractionError::NoSourcesFound));
     }
 
 

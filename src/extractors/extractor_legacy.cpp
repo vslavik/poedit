@@ -315,7 +315,7 @@ ExtractionOutput LegacyExtractor::Extract(TempDirectory& tmpdir,
         if (output.failed())
         {
             err.log_all();
-            throw ExtractionException(ExtractionError::Unspecified);
+            BOOST_THROW_EXCEPTION(ExtractionException(ExtractionError::Unspecified));
         }
 
         partials.push_back({tempfile, err});

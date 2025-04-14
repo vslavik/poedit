@@ -38,7 +38,7 @@ CloudAccountClient& CloudAccountClient::Get(const std::string& service_name)
     if (service_name == LocalazyClient::SERVICE_NAME)
         return LocalazyClient::Get();
 
-    throw std::logic_error("invalid cloud service name");
+    BOOST_THROW_EXCEPTION(std::logic_error("invalid cloud service name"));
 }
 
 

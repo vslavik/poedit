@@ -257,9 +257,9 @@ inline wxString try_find_program(const wxString& program, const wxString&) { ret
 inline Arguments::Arguments(const wxString&) {}
 inline std::vector<wxString> Output::extract_lines(const std::string&) { return {}; }
 inline void Runner::preprocess_args(Arguments&) const {}
-inline dispatch::future<Output> Runner::do_run_async(Arguments&&) { wxASSERT(false); throw std::logic_error("not implemented"); }
-inline Output Runner::do_run_sync(Arguments&&) { wxASSERT(false); throw std::logic_error("not implemented"); }
-inline wxExecuteEnv& Runner::wxenv() { wxASSERT(false); throw std::logic_error("not implemented"); }
+inline dispatch::future<Output> Runner::do_run_async(Arguments&&) { wxASSERT(false); BOOST_THROW_EXCEPTION(std::logic_error("not implemented")); }
+inline Output Runner::do_run_sync(Arguments&&) { wxASSERT(false); BOOST_THROW_EXCEPTION(std::logic_error("not implemented")); }
+inline wxExecuteEnv& Runner::wxenv() { wxASSERT(false); BOOST_THROW_EXCEPTION(std::logic_error("not implemented")); }
 
 #endif // MACOS_BUILD_WITHOUT_APPKIT
 

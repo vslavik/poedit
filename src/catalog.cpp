@@ -1166,7 +1166,7 @@ CatalogPtr Catalog::Create(const wxString& filename, int flags)
     }
 
     if (!cat)
-        throw Exception(_("The file is in a format not recognized by Poedit."));
+        BOOST_THROW_EXCEPTION(Exception(_("The file is in a format not recognized by Poedit.")));
 
     if (flags & CreationFlag_IgnoreTranslations)
     {

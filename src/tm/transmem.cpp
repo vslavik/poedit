@@ -84,16 +84,16 @@ namespace
             case LuceneException::CorruptIndex:                                                                 \
             case LuceneException::FileNotFound:                                                                 \
             case LuceneException::NoSuchDirectory:                                                              \
-                throw Exception(wxString::Format(_("Translation memory database is corrupted: %s (%d)."),       \
-                                                 e.getError(), (int)e.getType()));                              \
+                BOOST_THROW_EXCEPTION(Exception(wxString::Format(_("Translation memory database is corrupted: %s (%d)."), \
+                                                 e.getError(), (int)e.getType())));                             \
             default:                                                                                            \
-                throw Exception(wxString::Format(_("Translation memory error: %s (%d)."),                       \
-                                                 e.getError(), (int)e.getType()));                              \
+                BOOST_THROW_EXCEPTION(Exception(wxString::Format(_("Translation memory error: %s (%d)."),       \
+                                                 e.getError(), (int)e.getType())));                             \
         }                                                                                                       \
     }                                                                                                           \
     catch (std::exception& e)                                                                                   \
     {                                                                                                           \
-        throw Exception(e.what());                                                                              \
+        BOOST_THROW_EXCEPTION(Exception(e.what()));                                                             \
     }
 
 

@@ -83,7 +83,7 @@ inline void CheckReadPermissions(const wxString& basepath, const wxString& path)
 {
     if (!wxIsReadable(basepath + path))
     {
-        throw ExtractionException(ExtractionError::PermissionDenied);
+        BOOST_THROW_EXCEPTION(ExtractionException(ExtractionError::PermissionDenied));
     }
 }
 
@@ -187,7 +187,7 @@ Extractor::FilesList Extractor::CollectAllFiles(const SourceCodeSpec& sources)
         }
         else
         {
-            throw ExtractionException(ExtractionError::NoSourcesFound, path);
+            BOOST_THROW_EXCEPTION(ExtractionException(ExtractionError::NoSourcesFound, path));
         }
     }
 
@@ -244,7 +244,7 @@ ExtractionOutput Extractor::ExtractWithAll(TempDirectory& tmpdir,
 
     if (partials.empty())
     {
-        throw ExtractionException(ExtractionError::NoSourcesFound);
+        BOOST_THROW_EXCEPTION(ExtractionException(ExtractionError::NoSourcesFound));
     }
     else if (partials.size() == 1)
     {
@@ -364,7 +364,7 @@ ExtractionOutput Extractor::ConcatPartials(TempDirectory& tmpdir, const std::vec
     {
         wxLogError("msgcat: %s", output.std_err);
         wxLogError(_("Failed to merge gettext catalogs."));
-        throw ExtractionException(ExtractionError::Unspecified);
+        BOOST_THROW_EXCEPTION(ExtractionException(ExtractionError::Unspecified));
     }
 
     return result;

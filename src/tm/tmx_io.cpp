@@ -81,11 +81,11 @@ int TMX::ImportFromFile(std::istream& file, TranslationMemory& tm)
     xml_document doc;
     auto result = doc.load(file);
     if (!result)
-        throw std::runtime_error(result.description());
+        BOOST_THROW_EXCEPTION(std::runtime_error(result.description()));
 
     auto root = doc.child("tmx");
     if (!root)
-        throw Exception(_("The TMX file is malformed."));
+        BOOST_THROW_EXCEPTION(Exception(_("The TMX file is malformed.")));
 
     std::string defaultSrclang;
     std::string defaultDate;
@@ -101,7 +101,7 @@ int TMX::ImportFromFile(std::istream& file, TranslationMemory& tm)
     int counter = 0;
     auto body = root.child("body");
     if (!body)
-        throw Exception(_("The TMX file is malformed."));
+        BOOST_THROW_EXCEPTION(Exception(_("The TMX file is malformed.")));
 
     tm.ImportData([=,&counter,&body](auto& writer)
     {

@@ -508,14 +508,14 @@ std::shared_ptr<XLIFFCatalog> XLIFFCatalog::OpenImpl(const wxString& filename, I
     xml_document doc;
     auto result = doc.load_file(filename.fn_str(), PUGI_PARSE_FLAGS);
     if (!result)
-        throw XLIFFReadException(result.description());
+        BOOST_THROW_EXCEPTION(XLIFFReadException(result.description()));
 
     auto xliff_root = doc.child("xliff");
     std::string xliff_version = xliff_root.attribute("version").value();
 
     auto cat = creator.CreateFromDoc(std::move(doc), xliff_version);
     if (!cat)
-        throw XLIFFReadException(wxString::Format(_("unsupported version (%s)"), xliff_version));
+        BOOST_THROW_EXCEPTION(XLIFFReadException(wxString::Format(_("unsupported version (%s)"), xliff_version)));
 
     cat->Parse(xliff_root);
 

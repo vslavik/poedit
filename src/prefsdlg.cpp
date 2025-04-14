@@ -661,7 +661,7 @@ private:
                 f.close();
 
                 if ( !tempfile.Commit() )
-                    throw Exception(wxString::Format(_(L"Couldn’t save file %s."), wxFileName(p).GetFullName()));
+                    BOOST_THROW_EXCEPTION(Exception(wxString::Format(_(L"Couldn’t save file %s."), wxFileName(p).GetFullName())));
             });
         }
     }

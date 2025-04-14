@@ -82,10 +82,10 @@ std::shared_ptr<XLIFFCatalog> XCLOCCatalog::Open(const wxString& filename)
     // but we only care about l18n content. Find the embedded XLIFF file and open that:
     wxDir dir(filename + "/Localized Contents");
     if (!dir.IsOpened())
-        throw Exception(_("Unexpectedly missing content in the XCLOC file."));
+        BOOST_THROW_EXCEPTION(Exception(_("Unexpectedly missing content in the XCLOC file.")));
 
     if (!dir.GetFirst(&c.embedded_xliff, "*.xliff", wxDIR_FILES))
-        throw Exception(_("Unexpectedly missing content in the XCLOC file."));
+        BOOST_THROW_EXCEPTION(Exception(_("Unexpectedly missing content in the XCLOC file.")));
 
     return OpenImpl(dir.GetNameWithSep() + c.embedded_xliff, c);
 }
@@ -96,7 +96,7 @@ bool XCLOCCatalog::Save(const wxString& filename, bool save_mo,
                         CompilationStatus& mo_compilation_status)
 {
     if (filename != m_originalFilename)
-        throw Exception(_("Saving in a different location is not supported for XCLOC files."));
+        BOOST_THROW_EXCEPTION(Exception(_("Saving in a different location is not supported for XCLOC files.")));
 
     // update mtime for the directory to indicate that the file was modified; without this, it wouldn't
     // be apparent as we're actually writing a file inside a subdirectory in the bundle:

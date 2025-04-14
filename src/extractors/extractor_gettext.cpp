@@ -167,7 +167,7 @@ public:
         if (output.failed())
         {
             err.log_all();
-            throw ExtractionException(ExtractionError::Unspecified);
+            BOOST_THROW_EXCEPTION(ExtractionException(ExtractionError::Unspecified));
         }
 
         return {outfile, err};

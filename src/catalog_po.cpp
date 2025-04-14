@@ -923,7 +923,7 @@ void POCatalog::Load(const wxString& po_file, int flags)
 
     if (!f.Open(po_file, wxConvISO8859_1))
     {
-        throw Exception(_(L"Couldn’t load the file, it is probably damaged."));
+        BOOST_THROW_EXCEPTION(Exception(_(L"Couldn’t load the file, it is probably damaged.")));
     }
 
     {
@@ -937,7 +937,7 @@ void POCatalog::Load(const wxString& po_file, int flags)
     wxCSConv encConv(m_header.Charset);
     if (!f.Open(po_file, encConv))
     {
-        throw Exception(_(L"Couldn’t load the file, it is probably damaged."));
+        BOOST_THROW_EXCEPTION(Exception(_(L"Couldn’t load the file, it is probably damaged.")));
     }
 
     if (!VerifyFileCharset(f, po_file, m_header.Charset))
@@ -950,7 +950,7 @@ void POCatalog::Load(const wxString& po_file, int flags)
     parser.IgnoreTranslations(flags & CreationFlag_IgnoreTranslations);
     if (!parser.Parse())
     {
-        throw Exception(_(L"Couldn’t load the file, it is probably damaged."));
+        BOOST_THROW_EXCEPTION(Exception(_(L"Couldn’t load the file, it is probably damaged.")));
     }
 
     m_sourceLanguage = parser.GetSpecifiedMsgidLanguage();  // may be, and likely will, invalid
@@ -962,7 +962,7 @@ void POCatalog::Load(const wxString& po_file, int flags)
     // If we didn't find any entries, the file must be invalid:
     if (!parser.FileIsValid)
     {
-        throw Exception(_(L"Couldn’t load the file, it is probably damaged."));
+        BOOST_THROW_EXCEPTION(Exception(_(L"Couldn’t load the file, it is probably damaged.")));
     }
 
     f.Close();

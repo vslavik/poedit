@@ -339,11 +339,11 @@ dispatch::future<CrowdinClient::ProjectDetails> CrowdinClient::GetProjectDetails
         if (get_value(d, "type", 0) != 0)
         {
             // TRANSLATORS: Crowdin has string-based and file-based project kinds (see https://support.crowdin.com/creating-project/#file-based-project)
-            throw Exception(_("String-based Crowdin projects are not supported."));
+            BOOST_THROW_EXCEPTION(Exception(_("String-based Crowdin projects are not supported.")));
         }
 
         if (get_value(d, "publicDownloads", false) == false)
-            throw Exception(_("Downloading translations is disabled in this project."));
+            BOOST_THROW_EXCEPTION(Exception(_("Downloading translations is disabled in this project.")));
 
         for (const auto& langCode: d.at("targetLanguageIds"))
             prj->languages.push_back(Language::FromLanguageTag(std::string(langCode)));

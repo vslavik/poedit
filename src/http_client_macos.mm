@@ -109,8 +109,10 @@ public:
 
                 NSError *err = nil;
                 if (![[NSFileManager defaultManager] moveItemAtPath:[location path] toPath:outputPath error:&err])
-                    throw std::runtime_error(str::to_utf8([err localizedDescription]));
-
+                {
+                     BOOST_THROW_EXCEPTION(std::runtime_error(str::to_utf8([err localizedDescription])));
+                }
+    
                 promise->set_value(std::move(file));
             }
             catch (...)

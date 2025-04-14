@@ -1313,7 +1313,9 @@ void PoeditFrame::ExportCatalogToHTML(const wxString& filename)
         m_catalog->ExportToHTML(f);
         f.close();
         if (!tempfile.Commit())
-            throw Exception(wxString::Format(_(L"Couldn’t save file %s."), filename));
+        {
+            BOOST_THROW_EXCEPTION(Exception(wxString::Format(_(L"Couldn’t save file %s."), filename)));
+        }
     },
     [progress](){});
 }
