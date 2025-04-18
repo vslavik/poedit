@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets">
+    <Import Project="deps\boost\boost.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <PropertyGroup>
+    <PoeditFeatures>HAVE_CLD2;HAVE_HTTP_CLIENT</PoeditFeatures>
+    <CrtOverrides>_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS</CrtOverrides>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>$(PoeditFeatures);$(CrtOverrides);XML_STATIC;_NO_ASYNCRTIMP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>
