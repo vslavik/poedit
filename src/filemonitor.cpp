@@ -111,11 +111,11 @@ const int MONITORING_FLASG = wxFSW_EVENT_CREATE | wxFSW_EVENT_RENAME | wxFSW_EVE
 class FSWatcher
 {
 public:
-    static FSWatcher& Get()
+    static auto Get()
     {
         if (!ms_instance)
             ms_instance.reset(new FSWatcher);
-        return *ms_instance;
+        return ms_instance;
     }
 
     void Add(const wxFileName& dir)
@@ -171,10 +171,10 @@ private:
     std::vector<wxFileName> m_pending;
     std::unique_ptr<wxFileSystemWatcher> m_watcher;
 
-    static std::unique_ptr<FSWatcher> ms_instance;
+    static std::shared_ptr<FSWatcher> ms_instance;
 };
 
-std::unique_ptr<FSWatcher> FSWatcher::ms_instance;
+std::shared_ptr<FSWatcher> FSWatcher::ms_instance;
 
 } // anonymous namespace
 
@@ -184,16 +184,22 @@ public:
     Impl(const wxFileName& fn)
     {
         m_dir = wxFileName::DirName(fn.GetPath());
-        FSWatcher::Get().Add(m_dir);
+        auto watcher = FSWatcher::Get();
+        watcher->Add(m_dir);
+        m_watcher = watcher;
     }
 
     ~Impl()
     {
-        FSWatcher::Get().Remove(m_dir);
+        // we may be being destroyed after FSWatcher::CleanUp was called, in which
+        // case nothing needs to be done
+        if (auto watcher = m_watcher.lock())
+            watcher->Remove(m_dir);
     }
 
 private:
     wxFileName m_dir;
+    std::weak_ptr<FSWatcher> m_watcher;
 };
 
 #endif // !__WXOSX__
@@ -202,7 +208,7 @@ private:
 void FileMonitor::EventLoopStarted()
 {
 #ifndef __WXOSX__
-    FSWatcher::Get().EventLoopStarted();
+    FSWatcher::Get()->EventLoopStarted();
 #endif
 }
 
