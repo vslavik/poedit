@@ -319,7 +319,7 @@ static const int LUCENE_QUERY_MAX_DOCS = 500;
 static const double QUALITY_THRESHOLD = 0.6;
 
 // Maximum allowed difference in phrase length, in #terms.
-static const int MAX_ALLOWED_LENGTH_DIFFERENCE = 2;
+static const int MAX_ALLOWED_LENGTH_DIFFERENCE = 3;
 
 
 void AddOrUpdateResult(SuggestionsList& all, Suggestion&& r)
