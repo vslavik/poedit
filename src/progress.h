@@ -37,7 +37,7 @@
 
     Modelled after https://developer.apple.com/documentation/foundation/nsprogress
  */
-class Progress
+class Progress : public std::enable_shared_from_this<Progress>
 {
 public:
     Progress(int totalCount);
@@ -72,7 +72,7 @@ private:
 class ProgressObserver
 {
 public:
-    ProgressObserver() : m_observedProgress(nullptr) {}
+    ProgressObserver() {}
     virtual ~ProgressObserver();
 
     void attach(Progress& observedProgress);
@@ -82,7 +82,7 @@ public:
     virtual void update_progress(double completedFraction) = 0;
 
 private:
-    Progress *m_observedProgress;
+    std::weak_ptr<Progress> m_observedProgress;
 };
 
 #endif // Poedit_progress_h

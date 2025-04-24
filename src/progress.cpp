@@ -192,17 +192,18 @@ void Progress::set(int count)
 
 void ProgressObserver::attach(Progress& observedProgress)
 {
-    m_observedProgress = &observedProgress;
+    m_observedProgress = observedProgress.weak_from_this();
     observedProgress.m_impl->set_observer(this);
 }
 
 void ProgressObserver::detach()
 {
-    if (m_observedProgress)
+    if (auto observed = m_observedProgress.lock())
     {
-        m_observedProgress->m_impl->set_observer(nullptr);
-        m_observedProgress = nullptr;
+        observed->m_impl->set_observer(nullptr);
     }
+
+    m_observedProgress.reset();
 }
 
 ProgressObserver::~ProgressObserver()
