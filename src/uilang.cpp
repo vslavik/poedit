@@ -99,6 +99,8 @@ auto get_preferred_languages()
         auto size = langs.size();
         for (size_t i = 0; i < size; ++i)
         {
+            // Normalize the code in-place.
+            // Note that `lang` reference is invalidated in the loop below.
             auto& lang = langs[i];
             lang = as_tag(lang);
 
@@ -112,7 +114,7 @@ auto get_preferred_languages()
                     langs.push_back(lang2);
                     if (lang2 == "sr-Cyrl")
 						langs.push_back("sr");
-                    if ((pos = lang.rfind('-')) == wxString::npos)
+                    if ((pos = lang2.rfind('-')) == wxString::npos)
                         break;
                 }
             }
