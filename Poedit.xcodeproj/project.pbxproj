@@ -1216,6 +1216,7 @@
 				B23D1F72181446EF00E6B212 /* Copy Auxiliary Binaries */,
 				B2B7D470170DD91C00ED0AFE /* Copy Gettext bundle and extensions */,
 				B2D0B1102BFCFEF400527A5A /* Codesign Gettext bundle */,
+				1F75370E7D76220D09E8681C /* Fixup & codesign Sparkle.framework */,
 				B2CE6D2A1AD0096C007E6863 /* Copy Quicklook plugin */,
 				B2CC62E117DB7E2D0097461B /* Set CFBundleVersion from git */,
 				B2E83707170C96DB00F31559 /* Copy PO Translations */,
@@ -1485,6 +1486,27 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1F75370E7D76220D09E8681C /* Fixup & codesign Sparkle.framework */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(TARGET_BUILD_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Sparkle.framework",
+			);
+			name = "Fixup & codesign Sparkle.framework";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Sparkle.framework",
+				"$(DERIVED_FILE_DIR)/codesign.sparkle.done",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -rf \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"/Sparkle.framework/XPCServices \\\n       \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"/Sparkle.framework/Versions/*/XPCServices\nscripts/macos-sign-bundle.sh \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sparkle.framework\"\n\ntouch ${DERIVED_FILE_DIR}/codesign.sparkle.done\n";
+		};
 		B25CC3CE2BC8247900BED2FD /* Copy PO Translations */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2579,7 +2601,6 @@
 			repositoryURL = "https://github.com/sparkle-project/Sparkle";
 			requirement = {
 				kind = upToNextMajorVersion;
-				maximumVersion = "";
 				minimumVersion = 2.7.0;
 			};
 		};
