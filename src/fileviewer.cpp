@@ -28,6 +28,7 @@
 #include "fileviewer.h"
 
 #include <wx/filename.h>
+#include <wx/mimetype.h>
 #include <wx/log.h>
 #include <wx/button.h>
 #include <wx/panel.h>
@@ -264,6 +265,7 @@ void FileViewer::ShowReferences(CatalogPtr catalog, CatalogItemPtr item, int def
         );
         for (auto& r: m_references)
             m_file->Append(bidi::platform_mark_direction(r));
+        m_chosenRefIndex = defaultReference;
         m_file->SetSelection(defaultReference);
 
         m_file->SetMinSize(wxDefaultSize);
@@ -392,14 +394,41 @@ void FileViewer::ShowError(const char *icon, const wxString& msg, const wxString
 
 void FileViewer::OnChoice(wxCommandEvent &event)
 {
-    SelectReference(m_references[event.GetSelection()]);
+    m_chosenRefIndex = event.GetSelection();
+    SelectReference(m_references[m_chosenRefIndex]);
 }
 
-void FileViewer::OnEditFile(wxCommandEvent&)
+void FileViewer::OnEditFile(wxCommandEvent &)
 {
     wxFileName filename = GetFilename(bidi::strip_control_chars(m_file->GetStringSelection()));
-    if (filename.IsOk())
-        wxLaunchDefaultApplication(filename.GetFullPath());
+    if (filename.IsOk()) {
+        wxFileType *c_type;
+        c_type = wxTheMimeTypesManager->GetFileTypeFromExtension(filename.GetExt());
+        if (c_type) {
+    	      wxString command, filePath;
+    	      filePath = filename.GetFullPath();
+    	      wxFileType::MessageParameters param;
+    	      wxFileType::MessageParameters &paramRef = param;
+    	      c_type->GetOpenCommand(&command, paramRef);
+
+            if ( command.EndsWith("vim ") || command.EndsWith("view ") ) {
+                command.Append("-g ");  //  To make an indepedent window instance of Vi-like editor/viewer
+
+                wxString refItem = m_references[m_chosenRefIndex];
+
+                wxString lineNumberStr = refItem.AfterLast(':');
+                if (lineNumberStr.length() < refItem.length() ) {  //  succeed to extract the line number
+                    command.Append('+').Append(lineNumberStr);
+                }
+
+                command.Append(' ').Append(filePath);
+
+                wxExecute(command, wxEXEC_ASYNC);
+            } else {
+                wxLaunchDefaultApplication(filename.GetFullPath());
+            }
+        }
+    }
 }
 
 
