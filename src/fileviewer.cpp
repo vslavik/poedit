@@ -439,7 +439,7 @@ void FileViewer::EditorHelper(wxString command, wxString lineNumberStr, wxFileNa
         case Vim:
             {
                 command += "-g ";  //  To make an indepedent window instance of Vi-like editor or the vim process stucks, not able to find tty for it.
-                command += '+' + lineNumberStr;
+                command += wxString::Format("+%s", lineNumberStr);
                 command += ' ' + filename.GetFullPath();
 
                 wxExecute(command, wxEXEC_ASYNC);
