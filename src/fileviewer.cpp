@@ -265,7 +265,7 @@ void FileViewer::ShowReferences(CatalogPtr catalog, CatalogItemPtr item, int def
         );
         for (auto& r: m_references)
             m_file->Append(bidi::platform_mark_direction(r));
-        m_chosenRefIndex = defaultReference;
+        m_selectedRefIndex = defaultReference;
         m_file->SetSelection(defaultReference);
 
         m_file->SetMinSize(wxDefaultSize);
@@ -394,39 +394,51 @@ void FileViewer::ShowError(const char *icon, const wxString& msg, const wxString
 
 void FileViewer::OnChoice(wxCommandEvent &event)
 {
-    m_chosenRefIndex = event.GetSelection();
-    SelectReference(m_references[m_chosenRefIndex]);
+    m_selectedRefIndex = event.GetSelection();
+    SelectReference(m_references[m_selectedRefIndex]);
 }
 
-void FileViewer::OnEditFile(wxCommandEvent &)
+void FileViewer::OnEditFile(wxCommandEvent&)
 {
     wxFileName filename = GetFilename(bidi::strip_control_chars(m_file->GetStringSelection()));
-    if (filename.IsOk()) {
-        wxFileType *c_type;
-        c_type = wxTheMimeTypesManager->GetFileTypeFromExtension(filename.GetExt());
-        if (c_type) {
-    	      wxString command, filePath;
-    	      filePath = filename.GetFullPath();
-    	      wxFileType::MessageParameters param;
-    	      wxFileType::MessageParameters &paramRef = param;
-    	      c_type->GetOpenCommand(&command, paramRef);
+    if (!filename.IsOk())
+        return;
 
-            if ( command.EndsWith("vim ") || command.EndsWith("view ") ) {
-                command.Append("-g ");  //  To make an indepedent window instance of Vi-like editor/viewer
+    wxFileType *fileType = wxTheMimeTypesManager->GetFileTypeFromExtension(filename.GetExt());
+    if (fileType) {
+        wxString command;
+        wxFileType::MessageParameters paramDummy;
+        fileType->GetOpenCommand(&command, paramDummy);  //  In fact only command is necessary
 
-                wxString refItem = m_references[m_chosenRefIndex];
+        enum eNumEditor{
+           Vim,
+           //  Possible to add other editor(s)
+           Others
+        } editor = Others;;
 
-                wxString lineNumberStr = refItem.AfterLast(':');
-                if (lineNumberStr.length() < refItem.length() ) {  //  succeed to extract the line number
-                    command.Append('+').Append(lineNumberStr);
+        if (command.EndsWith("vim ")) editor = Vim;
+
+        switch (editor) {
+            case Vim:
+                {
+                    command += "-g ";  //  To make an indepedent window instance of Vi-like editor or the vim process stucks, not able to find tty for it.
+
+                    wxString refItem = m_references[m_selectedRefIndex];
+
+                    wxString lineNumberStr = refItem.AfterLast(':');
+                    if (!lineNumberStr.empty()) {  //  succeed to extract the line number
+                        command += '+' + lineNumberStr;
+                    }
+
+                    command += ' ' + filename.GetFullPath();
+
+                    wxExecute(command, wxEXEC_ASYNC);
                 }
+                break;
 
-                command.Append(' ').Append(filePath);
-
-                wxExecute(command, wxEXEC_ASYNC);
-            } else {
+            case Others: //  intentionally
+            default:
                 wxLaunchDefaultApplication(filename.GetFullPath());
-            }
         }
     }
 }
