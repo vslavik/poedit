@@ -97,12 +97,29 @@ fixup_windows_rc_files()
     done
 }
 
+
+# remove changes that only touch refresh header and do nothing else:
+remove_date_only_changes()
+{
+    if ! git ls-files $1 --error-unmatch >/dev/null 2>&1 ; then
+        return
+    fi
+
+    changes=$(git diff --no-ext-diff $1 | grep '^[+-][^+-]' | grep -v '\(PO-Revision\|POT-Creation\)-Date' | wc -l)
+    if [ $changes -eq 0 ] ; then
+        git checkout $1
+    fi
+}
+
+
 # Remove some issues with Crowdin-generated files
 fixup_po_files()
 {
-    for i in locales/*.po ; do
-        # nothing currently
-        true
+    for p in locales/*.po ; do
+        msgmerge --quiet -o $p.tmp --no-fuzzy-matching $p locales/poedit.pot
+        msgattrib --no-obsolete -o $p $p.tmp
+        rm $p.tmp
+        remove_date_only_changes $p
     done
 }
 
@@ -112,9 +129,10 @@ remove_unsupported_languages
 remove_empty_lproj_string_files
 build_sr_latin
 fixup_windows_rc_files
-fixup_po_files
 
 scripts/refresh-pot.sh
+fixup_po_files
+
 scripts/do-update-translations-lists.sh
 
 git status
