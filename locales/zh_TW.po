@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2025-05-07 14:32+0200\n"
+"POT-Creation-Date: 2025-05-16 18:17+0200\n"
 "PO-Revision-Date: 2025-04-05 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
@@ -98,11 +98,11 @@ msgstr "無法載入包含擷取翻譯的檔案。"
 msgid "In: %s"
 msgstr "在：%s"
 
-#: src/cat_update.cpp:290 src/edframe.cpp:1612
+#: src/cat_update.cpp:290 src/edframe.cpp:1606
 msgid "Source code not available."
 msgstr "原始程式碼無法使用。"
 
-#: src/cat_update.cpp:291 src/edframe.cpp:1616
+#: src/cat_update.cpp:291 src/edframe.cpp:1610
 msgid ""
 "Translations couldn’t be updated from the source code, because no code was "
 "found in the location specified in the file’s Properties."
@@ -140,8 +140,8 @@ msgstr ""
 msgid "Failed to extract strings from source code."
 msgstr "無法從原始程式碼中擷取字串。"
 
-#: src/cat_update.cpp:346 src/edapp.cpp:1100 src/edframe.cpp:935
-#: src/edframe.cpp:2483
+#: src/cat_update.cpp:346 src/edapp.cpp:1103 src/edframe.cpp:929
+#: src/edframe.cpp:2477
 #, c-format
 msgid "The file “%s” couldn’t be opened."
 msgstr "無法開啟檔案「%s」。"
@@ -251,7 +251,7 @@ msgstr ""
 #: src/catalog_json.cpp:165 src/catalog_po.cpp:1198 src/catalog_po.cpp:1280
 #: src/catalog_po.cpp:1354 src/catalog_po.cpp:1363 src/catalog_po.cpp:1420
 #: src/catalog_po.cpp:1451 src/catalog_po.cpp:1645 src/catalog_xliff.cpp:567
-#: src/edframe.cpp:1323 src/prefsdlg.cpp:664
+#: src/edframe.cpp:1317 src/prefsdlg.cpp:664
 #, c-format
 msgid "Couldn’t save file %s."
 msgstr "無法儲存檔案 %s。"
@@ -307,7 +307,7 @@ msgstr ""
 "\n"
 "已改存成 UTF-8，亦已修改對應設定。"
 
-#: src/catalog_po.cpp:1570 src/edframe.cpp:2746
+#: src/catalog_po.cpp:1570 src/edframe.cpp:2740
 msgid "Error saving file"
 msgstr "儲存檔案時發生錯誤"
 
@@ -499,60 +499,60 @@ msgstr "複製(&C)"
 msgid "Learn more"
 msgstr "深入瞭解"
 
-#: src/edapp.cpp:452 src/resources/menus.xrc:336 src/resources/menus.xrc:441
+#: src/edapp.cpp:453 src/resources/menus.xrc:336 src/resources/menus.xrc:441
 #: src/wx_translatable_strings.h:105
 msgid "&Help"
 msgstr "說明(&H)"
 
-#: src/edapp.cpp:729
+#: src/edapp.cpp:732
 msgid "MO files can’t be directly edited in Poedit."
 msgstr "無法在 Poedit 中直接編輯 MO 檔。"
 
-#: src/edapp.cpp:730
+#: src/edapp.cpp:733
 msgid "Error opening file"
 msgstr "開啟檔案發生錯誤"
 
-#: src/edapp.cpp:732
+#: src/edapp.cpp:735
 msgid ""
 "Please open and edit the corresponding PO file instead. When you save it, "
 "the MO file will be updated as well."
 msgstr "請改開啟並編輯對應的 PO 檔。當您儲存時，MO 檔會同時更新。"
 
-#: src/edapp.cpp:773
+#: src/edapp.cpp:776
 msgid "don’t delete temporary files (for debugging)"
 msgstr "不要刪除暫存檔 (用於偵錯)"
 
-#: src/edapp.cpp:775
+#: src/edapp.cpp:778
 msgid "handle a poedit:// URI"
 msgstr "處理 poedit:// URI"
 
-#: src/edapp.cpp:777
+#: src/edapp.cpp:780
 msgid "go to item at given line number"
 msgstr "前往指定列號的項目"
 
-#: src/edapp.cpp:800
+#: src/edapp.cpp:803
 msgid "Failed to communicate with Poedit process."
 msgstr "無法與 Poedit 程序溝通。"
 
-#: src/edapp.cpp:913 src/edapp.cpp:918
+#: src/edapp.cpp:916 src/edapp.cpp:921
 #, c-format
 msgid "Unhandled exception occurred: %s"
 msgstr "遭遇未處理的例外：%s"
 
-#: src/edapp.cpp:1070
+#: src/edapp.cpp:1073
 msgid "Select translation template"
 msgstr "選擇翻譯模板"
 
-#: src/edapp.cpp:1101 src/edframe.cpp:936 src/edframe.cpp:2301
-#: src/edframe.cpp:2484
+#: src/edapp.cpp:1104 src/edframe.cpp:930 src/edframe.cpp:2295
+#: src/edframe.cpp:2478
 msgid "Invalid file"
 msgstr "檔案無效"
 
-#: src/edapp.cpp:1121
+#: src/edapp.cpp:1124
 msgid "Select translation file"
 msgstr "選擇翻譯檔案"
 
-#: src/edapp.cpp:1222
+#: src/edapp.cpp:1225
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit 是個易用的翻譯編輯器。"
 
@@ -577,185 +577,185 @@ msgstr "Poedit"
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: src/edframe.cpp:873
+#: src/edframe.cpp:867
 #, c-format
 msgid ""
 "Spellchecking is disabled, because the dictionary for %s isn’t installed."
 msgstr "由於尚未安裝 %s 字典，因此拼字檢查已停用。"
 
-#: src/edframe.cpp:877
+#: src/edframe.cpp:871
 msgid "Install"
 msgstr "安裝"
 
-#: src/edframe.cpp:969 src/edframe.cpp:1144
+#: src/edframe.cpp:963 src/edframe.cpp:1138
 #, c-format
 msgid "The file “%s” has been changed by another application."
 msgstr "「%s」檔案已被其他應用程式修改。"
 
-#: src/edframe.cpp:970 src/edframe.cpp:974
+#: src/edframe.cpp:964 src/edframe.cpp:968
 msgid "Reload file"
 msgstr "重新載入檔案"
 
-#: src/edframe.cpp:973
+#: src/edframe.cpp:967
 msgid ""
 "Do you want to reload the file from disk? Your unsaved edits in Poedit will "
 "be lost if you do."
 msgstr "是否從硬碟重新載入檔案？這麼做會導致您在 Poedit 的未儲存編輯消失不見。"
 
-#: src/edframe.cpp:974
+#: src/edframe.cpp:968
 msgid "Ignore"
 msgstr "忽略"
 
-#: src/edframe.cpp:974
+#: src/edframe.cpp:968
 msgid "Reload File"
 msgstr "重新載入檔案"
 
-#: src/edframe.cpp:1078
+#: src/edframe.cpp:1072
 msgid "The file has been modified. Do you want to save changes?"
 msgstr "檔案已經修改。是否儲存變更？"
 
-#: src/edframe.cpp:1079
+#: src/edframe.cpp:1073
 msgid "Save changes"
 msgstr "儲存變更"
 
-#: src/edframe.cpp:1082
+#: src/edframe.cpp:1076
 msgid "Your changes will be lost if you don’t save them."
 msgstr "如果不儲存，便會失去剛剛進行的變更。"
 
-#: src/edframe.cpp:1085 src/edframe.cpp:1145 src/resources/toolbar.xrc:24
+#: src/edframe.cpp:1079 src/edframe.cpp:1139 src/resources/toolbar.xrc:24
 #: src/resources/toolbar.xrc:29 src/wx_translatable_strings.h:115
 msgid "Save"
 msgstr "儲存"
 
-#: src/edframe.cpp:1087
+#: src/edframe.cpp:1081
 msgid "Do&n’t save"
 msgstr "不要儲存(&N)"
 
-#: src/edframe.cpp:1089
+#: src/edframe.cpp:1083
 msgid "Don’t Save"
 msgstr "不要儲存"
 
-#: src/edframe.cpp:1148
+#: src/edframe.cpp:1142
 msgid "The changes made by the other application will be lost if you save."
 msgstr "如果儲存，其他應用程式所做的變更就會消失不見。"
 
-#: src/edframe.cpp:1149 src/prefsdlg.cpp:677 src/prefsdlg.cpp:964
+#: src/edframe.cpp:1143 src/prefsdlg.cpp:677 src/prefsdlg.cpp:964
 #: src/resources/comment.xrc:41 src/resources/manager.xrc:63
 #: src/wx_translatable_strings.h:94
 msgid "Cancel"
 msgstr "取消"
 
-#: src/edframe.cpp:1149
+#: src/edframe.cpp:1143
 msgid "Save Anyway"
 msgstr "仍要儲存"
 
-#: src/edframe.cpp:1149
+#: src/edframe.cpp:1143
 msgid "Save anyway"
 msgstr "仍要儲存"
 
-#: src/edframe.cpp:1202
+#: src/edframe.cpp:1196
 msgid "Save as…"
 msgstr "另存新檔…"
 
-#: src/edframe.cpp:1251
+#: src/edframe.cpp:1245
 msgid "Compile to…"
 msgstr "編譯成…"
 
-#: src/edframe.cpp:1254
+#: src/edframe.cpp:1248
 msgid "Compiled Translation Files"
 msgstr "已編譯的譯文檔案"
 
-#: src/edframe.cpp:1295
+#: src/edframe.cpp:1289
 msgid "Export to HTML…"
 msgstr "匯出為 HTML…"
 
-#: src/edframe.cpp:1298
+#: src/edframe.cpp:1292
 msgid "HTML Files"
 msgstr "HTML 檔案"
 
-#: src/edframe.cpp:1313
+#: src/edframe.cpp:1307
 msgid "Exporting to HTML"
 msgstr "正在匯出為 HTML"
 
-#: src/edframe.cpp:1613
+#: src/edframe.cpp:1607
 msgid "Updating failed"
 msgstr "更新失敗"
 
-#: src/edframe.cpp:1680
+#: src/edframe.cpp:1674
 msgid "Open reference file"
 msgstr "開啟參照檔案"
 
-#: src/edframe.cpp:1714 src/resources/menus.xrc:235
+#: src/edframe.cpp:1708 src/resources/menus.xrc:235
 msgid "Update from &POT File…"
 msgstr "從 POT 檔案進行更新(&P)…"
 
-#: src/edframe.cpp:1714 src/resources/menus.xrc:234
+#: src/edframe.cpp:1708 src/resources/menus.xrc:234
 msgid "Update from &POT file…"
 msgstr "從 POT 檔案進行更新(&P)…"
 
-#: src/edframe.cpp:1840
+#: src/edframe.cpp:1834
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "譯文中發現 %d 個問題。"
 
-#: src/edframe.cpp:1845 src/edframe.cpp:1891
+#: src/edframe.cpp:1839 src/edframe.cpp:1885
 msgid "Validation results"
 msgstr "驗證結果"
 
-#: src/edframe.cpp:1848
+#: src/edframe.cpp:1842
 msgid ""
 "Entries with errors were marked in red in the list. Details of the error "
 "will be shown when you select such an entry."
 msgstr "出錯的項目在清單中以紅色標記。您可以點選該項目以顯示詳細的錯誤資訊。"
 
-#: src/edframe.cpp:1857
+#: src/edframe.cpp:1851
 msgid "The file was saved safely."
 msgstr "檔案已順利儲存。"
 
-#: src/edframe.cpp:1860
+#: src/edframe.cpp:1854
 msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
 msgstr "檔案已順利儲存，且成功編譯為 MO 格式的檔案，但有可能無法正確運作。"
 
-#: src/edframe.cpp:1863
+#: src/edframe.cpp:1857
 msgid ""
 "The file was saved safely, but it cannot be compiled into the MO format and "
 "used."
 msgstr "檔案已順利儲存，但無法編譯成 MO 格式的檔案，所以無法使用。"
 
-#: src/edframe.cpp:1872
+#: src/edframe.cpp:1866
 msgid ""
 "The file was compiled into the MO format, but it will probably not work "
 "correctly."
 msgstr "已編譯成 MO 格式的檔案，但有可能無法正確運作。"
 
-#: src/edframe.cpp:1876
+#: src/edframe.cpp:1870
 msgid "The file cannot be compiled into the MO format and used."
 msgstr "無法編譯成 MO 格式的檔案，所以無法使用。"
 
-#: src/edframe.cpp:1890
+#: src/edframe.cpp:1884
 msgid "No problems with the translation found."
 msgstr "找不到譯文的問題。"
 
-#: src/edframe.cpp:1900
+#: src/edframe.cpp:1894
 #, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
 msgid_plural ""
 "The translation is ready for use, but %d entries are not translated yet."
 msgstr[0] "譯文已準備就緒，但仍有 %d 個項目尚未翻譯。"
 
-#: src/edframe.cpp:1905
+#: src/edframe.cpp:1899
 msgid "The translation is ready for use."
 msgstr "譯文已準備就緒。"
 
-#: src/edframe.cpp:2300
+#: src/edframe.cpp:2294
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr "Poedit 已自動修正 %s 檔案中無效的內容。"
 
-#: src/edframe.cpp:2305
+#: src/edframe.cpp:2299
 msgid ""
 "The file contained duplicate items, which is not allowed in PO files and "
 "would prevent the file from being used. Poedit fixed the issue, but you "
@@ -765,20 +765,20 @@ msgstr ""
 "檔案包含重複項目，然而 PO 檔並不允許重複，進而使檔案無法使用。Poedit 已修正這"
 "個問題，但您應該校閱任何標記為需要處理的項目，如有需要也請校正其內容。"
 
-#: src/edframe.cpp:2321
+#: src/edframe.cpp:2315
 msgid "Language of the translation isn’t set."
 msgstr "尚未設定目標語言。"
 
-#: src/edframe.cpp:2323
+#: src/edframe.cpp:2317
 msgid "Set Language"
 msgstr "設定語言"
 
-#: src/edframe.cpp:2323
+#: src/edframe.cpp:2317
 msgid "Set language"
 msgstr "設定語言"
 
 #. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-#: src/edframe.cpp:2326 src/edframe.cpp:2342
+#: src/edframe.cpp:2320 src/edframe.cpp:2336
 msgid ""
 "Suggestions are not available if the translation language is not set "
 "correctly. Other features, such as plural forms, may be affected as well."
@@ -786,65 +786,65 @@ msgstr ""
 "如果沒有正確設定目標語言，便無法使用建議譯文；其他功能如複數型設定，也可能受"
 "到影響。"
 
-#: src/edframe.cpp:2340
+#: src/edframe.cpp:2334
 msgid "Language of the translation is the same as source language."
 msgstr "目標語言與來源語言相同。"
 
-#: src/edframe.cpp:2343
+#: src/edframe.cpp:2337
 msgid "Fix Language"
 msgstr "修正語言"
 
-#: src/edframe.cpp:2343
+#: src/edframe.cpp:2337
 msgid "Fix language"
 msgstr "修正語言"
 
-#: src/edframe.cpp:2360
+#: src/edframe.cpp:2354
 msgid ""
 "This file has entries with plural forms, but doesn’t have Plural-Forms "
 "header configured."
 msgstr "這個檔案有複數型條目，卻未設定 Plural-Forms 標頭。"
 
-#: src/edframe.cpp:2364
+#: src/edframe.cpp:2358
 msgid ""
 "Entries in this file have different plural forms count from what the file’s "
 "Plural-Forms header says"
 msgstr "這個檔案中條目的複數形式數目，與檔案中 Plural-Forms 標頭的記錄不符"
 
-#: src/edframe.cpp:2373
+#: src/edframe.cpp:2367
 msgid "Required header Plural-Forms is missing."
 msgstr "遺失必要的 Plural-Forms 標頭。"
 
-#: src/edframe.cpp:2377
+#: src/edframe.cpp:2371
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "Plural-Forms 標頭中有語法錯誤 (%s)。"
 
-#: src/edframe.cpp:2389
+#: src/edframe.cpp:2383
 msgid "Fix the Header"
 msgstr "修正標頭"
 
-#: src/edframe.cpp:2389
+#: src/edframe.cpp:2383
 msgid "Fix the header"
 msgstr "修正標頭"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: src/edframe.cpp:2407
+#: src/edframe.cpp:2401
 #, c-format
 msgid "Plural forms expression used by the file is unusual for %s."
 msgstr "檔案所採用的複數形式表述式，對%s來說不常見。"
 
 #. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
-#: src/edframe.cpp:2412
+#: src/edframe.cpp:2406
 msgid "Review"
 msgstr "校閱"
 
-#: src/edframe.cpp:2456
+#: src/edframe.cpp:2450
 msgid "Would you like to use English for source text?"
 msgstr "您要使用英文作為來源文字嗎？"
 
-#: src/edframe.cpp:2458
+#: src/edframe.cpp:2452
 #, c-format
 msgid ""
 "This file uses string IDs instead of source text. Poedit can load English "
@@ -853,82 +853,82 @@ msgstr ""
 "此檔案使用字串 ID 而非來源文字。Poedit 可以為您從「%s」檔案載入英文文字。"
 
 #. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
-#: src/edframe.cpp:2460
+#: src/edframe.cpp:2454
 msgid "Load English"
 msgstr "載入英文"
 
-#: src/edframe.cpp:2561 src/export_html.cpp:103
+#: src/edframe.cpp:2555 src/export_html.cpp:103
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
 msgstr "已翻譯 %d 筆，總計 %d 筆 (完成度為 %d%%)"
 
-#: src/edframe.cpp:2565 src/export_html.cpp:105
+#: src/edframe.cpp:2559 src/export_html.cpp:105
 #, c-format
 msgid "Remaining: %d"
 msgstr "尚餘 %d 筆原文未翻譯"
 
-#: src/edframe.cpp:2570
+#: src/edframe.cpp:2564
 #, c-format
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "%d 項錯誤"
 
-#: src/edframe.cpp:2575 src/export_html.cpp:117
+#: src/edframe.cpp:2569 src/export_html.cpp:117
 #, c-format
 msgid "%d entry"
 msgid_plural "%d entries"
 msgstr[0] "%d 個項目"
 
-#: src/edframe.cpp:2604
+#: src/edframe.cpp:2598
 msgid " (unsaved)"
 msgstr " (未儲存)"
 
-#: src/edframe.cpp:2645
+#: src/edframe.cpp:2639
 msgid " (modified)"
 msgstr " (已修改)"
 
-#: src/edframe.cpp:2713 src/edframe.cpp:2717
+#: src/edframe.cpp:2707 src/edframe.cpp:2711
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "無法更新譯文記憶庫：%s"
 
-#: src/edframe.cpp:2745
+#: src/edframe.cpp:2739
 #, c-format
 msgid "The file “%s” couldn’t be saved."
 msgstr "無法儲存「%s」檔案。"
 
-#: src/edframe.cpp:2855 src/resources/menus.xrc:252
+#: src/edframe.cpp:2849 src/resources/menus.xrc:252
 msgid "Remove same-as-source translations"
 msgstr "移除和來源文字相同的翻譯"
 
-#: src/edframe.cpp:2857
+#: src/edframe.cpp:2851
 msgid ""
 "Do you want to remove all translations that are idential to the source text?"
 msgstr "請問您是否想要移除所有和來源文字相同的譯文？"
 
-#: src/edframe.cpp:2858
+#: src/edframe.cpp:2852
 msgid ""
 "This action will delete any translations that match the source text exactly. "
 "This cannot be undone."
 msgstr "這個動作會刪除所有和來源文字完全相同的譯文，不能取消。"
 
-#: src/edframe.cpp:2862 src/edframe.cpp:2889
+#: src/edframe.cpp:2856 src/edframe.cpp:2883
 msgid "Keep"
 msgstr "保留"
 
-#: src/edframe.cpp:2862
+#: src/edframe.cpp:2856
 msgid "Remove"
 msgstr "移除"
 
-#: src/edframe.cpp:2881
+#: src/edframe.cpp:2875
 msgid "Purge deleted translations"
 msgstr "清除已刪除的譯文"
 
-#: src/edframe.cpp:2883
+#: src/edframe.cpp:2877
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr "確定要移除全部不再使用的譯文？"
 
-#: src/edframe.cpp:2885
+#: src/edframe.cpp:2879
 msgid ""
 "If you continue with purging, all translations marked as deleted will be "
 "permanently removed. You will have to translate them again if they are added "
@@ -937,66 +937,66 @@ msgstr ""
 "如果繼續清除，全部標示為已刪除的譯文便會永久移除。如果未來這些訊息再次加入，"
 "就必須再重新翻譯一次。"
 
-#: src/edframe.cpp:2889
+#: src/edframe.cpp:2883
 msgid "Purge"
 msgstr "清除"
 
-#: src/edframe.cpp:2946 src/resources/menus.xrc:99
+#: src/edframe.cpp:2940 src/resources/menus.xrc:99
 msgid "Copy from source text"
 msgstr "從原文複製"
 
-#: src/edframe.cpp:2948 src/resources/menus.xrc:100
+#: src/edframe.cpp:2942 src/resources/menus.xrc:100
 msgid "Copy from Source Text"
 msgstr "從原文複製"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
-#: src/edframe.cpp:2950 src/edframe.cpp:2957 src/edframe.cpp:2965
-#: src/sidebar.cpp:360 src/sidebar.cpp:720 src/sidebar.cpp:745
-#: src/sidebar.cpp:747 src/wx_translatable_strings.h:123
+#: src/edframe.cpp:2944 src/edframe.cpp:2951 src/edframe.cpp:2959
+#: src/sidebar.cpp:360 src/sidebar.cpp:727 src/sidebar.cpp:752
+#: src/sidebar.cpp:754 src/wx_translatable_strings.h:123
 msgctxt "keyboard key"
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
-#: src/edframe.cpp:2953 src/resources/menus.xrc:94
+#: src/edframe.cpp:2947 src/resources/menus.xrc:94
 msgid "Clear translation"
 msgstr "清除譯文"
 
-#: src/edframe.cpp:2955 src/resources/menus.xrc:95
+#: src/edframe.cpp:2949 src/resources/menus.xrc:95
 msgid "Clear Translation"
 msgstr "清除譯文"
 
-#: src/edframe.cpp:2960 src/resources/comment.xrc:4 src/sidebar.cpp:246
+#: src/edframe.cpp:2954 src/resources/comment.xrc:4 src/sidebar.cpp:246
 msgid "Edit comment"
 msgstr "編輯註解"
 
-#: src/edframe.cpp:2962 src/sidebar.cpp:249
+#: src/edframe.cpp:2956 src/sidebar.cpp:249
 msgid "Edit Comment"
 msgstr "編輯註解"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
-#: src/edframe.cpp:2973 src/fileviewer.cpp:100
+#: src/edframe.cpp:2967 src/fileviewer.cpp:100
 msgid "Code Occurrences"
 msgstr "程式碼出現處"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
-#: src/edframe.cpp:2973
+#: src/edframe.cpp:2967
 msgid "Code occurrences"
 msgstr "程式碼出現處"
 
-#: src/edframe.cpp:3197
+#: src/edframe.cpp:3191
 msgid "Hide Sidebar"
 msgstr "隱藏側邊欄"
 
-#: src/edframe.cpp:3199 src/resources/menus.xrc:214
+#: src/edframe.cpp:3193 src/resources/menus.xrc:214
 msgid "Show Sidebar"
 msgstr "顯示側邊欄"
 
-#: src/edframe.cpp:3230
+#: src/edframe.cpp:3224
 msgid "Hide Status Bar"
 msgstr "隱藏狀態列"
 
-#: src/edframe.cpp:3232 src/resources/menus.xrc:220
+#: src/edframe.cpp:3226 src/resources/menus.xrc:220
 msgid "Show Status Bar"
 msgstr "顯示狀態列"
 
@@ -2864,11 +2864,11 @@ msgstr "找不到符合條件的項目"
 msgid "No Matches Found"
 msgstr "找不到符合條件的項目"
 
-#: src/sidebar.cpp:619
+#: src/sidebar.cpp:623
 msgid "This string was found in Poedit’s translation memory."
 msgstr "這個字串已儲存於 Poedit 的譯文記憶庫。"
 
-#: src/sidebar.cpp:868
+#: src/sidebar.cpp:877
 msgid ""
 "Translation suggestions require that source text is available. They don’t "
 "work if only IDs without the actual text are used."
@@ -2876,7 +2876,7 @@ msgstr ""
 "翻譯建議需要可供使用的來源文字。如果僅使用沒有實際文字的 ID，翻譯建議將無法運"
 "作。"
 
-#: src/sidebar.cpp:873
+#: src/sidebar.cpp:882
 msgid ""
 "Translation suggestions require that source text’s language is known. Poedit "
 "couldn’t detect it in this file."
