@@ -101,21 +101,18 @@ public:
 
     void close() override
     {
-      std::lock_guard<std::mutex> lock(m_mutex);
-      m_closed = true;
+        m_closed.store(true, std::memory_order_release);
     }
 
     bool closed() override
     {
-      std::lock_guard<std::mutex> lock(m_mutex);
-      return m_closed;
+        return m_closed.load(std::memory_order_acquire);
     }
 
     bool try_executing_one() override { return false; }
 
 private:
-    std::mutex m_mutex;
-    bool m_closed;
+    std::atomic<bool> m_closed;
 };
 
 
@@ -669,10 +666,16 @@ public:
     cancellation_token() : m_cancelled(false) {}
 
     /// Signal the operation to cancel when the return value is no longer wanted
-    void cancel() { m_cancelled = true; }
+    void cancel()
+    {
+        m_cancelled.store(true, std::memory_order_release);
+    }
 
     /// Should the operation be cancelled?
-    bool is_cancelled() const { return m_cancelled; }
+    bool is_cancelled() const
+    {
+        return m_cancelled.load(std::memory_order_acquire);
+    }
 
     /// Throw execution_cancelled if the operation should be cancelled
     void throw_if_cancelled() const
@@ -682,7 +685,7 @@ public:
     }
 
 private:
-    std::atomic_bool m_cancelled;
+    std::atomic<bool> m_cancelled;
 };
 
 /// Pointer to cancellation_token
