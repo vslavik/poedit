@@ -107,7 +107,7 @@ class PoeditFrame : public PoeditFrameBase
 
         static int GetOpenWindowsCount() { return (int)ms_instances.size(); }
 
-        bool Destroy() override;
+        ~PoeditFrame();
 
         /// Reads catalog, refreshes controls, takes ownership of catalog.
         void ReadCatalog(const CatalogPtr& cat);
