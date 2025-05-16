@@ -130,6 +130,9 @@ public:
 
     void submit(work&& closure) override
     {
+        if (closed())
+            return;
+
         dispatch_async_cxx(std::forward<work>(closure));
     }
 };
@@ -143,6 +146,9 @@ public:
 
     void submit(work&& closure)
     {
+        if (closed())
+            return;
+
         pplx::create_task([f{std::move(closure)}]() mutable { f(); });
     }
 };
@@ -153,6 +159,14 @@ class background_queue_executor : public boost::basic_thread_pool
 {
 public:
     static background_queue_executor& get();
+
+    void submit(work&& closure)
+    {
+        if (closed())
+            return;
+
+        boost::basic_thread_pool::submit(std::forward<work>(closure));
+    }
 };
 
 #endif // HAVE_DISPATCH etc.
@@ -165,6 +179,9 @@ public:
 
     void submit(work&& closure)
     {
+        if (closed())
+            return;
+
 #ifdef HAVE_DISPATCH
         // Note that we intentially don't use dispatch_async_cxx() and dispatch_get_main_queue() here,
         // but rather choose to channel everything through wxApp::CallAfter(). This is because
@@ -173,7 +190,11 @@ public:
         // it then needs to schedule something on the main thread again.
         // See e.g. https://www.thecave.com/2015/08/10/dispatch-async-to-main-queue-doesnt-work-with-modal-window-on-mac-os-x/
 #endif
-        wxTheApp->CallAfter(std::forward<work>(closure));
+        if (wxTheApp)
+        {
+            wxTheApp->CallAfter(std::forward<work>(closure));
+        }
+        // else: deep in app shutdown, can't post to main thread's event loop anymore
     }
 };
 
