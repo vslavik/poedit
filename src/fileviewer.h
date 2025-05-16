@@ -62,6 +62,7 @@ private:
     void SelectReference(const wxString& ref);
     void ShowHTMLContent(const wxString& markup);
     void ShowError(const char *icon, const wxString& msg, const wxString& description = "", const wxString& references = "");
+    void EditorHelper(wxString command, wxString lineNumberStr, wxFileName filename);
 
 private:
     wxString m_basePath;
@@ -72,6 +73,7 @@ private:
     wxButton *m_openInEditor;
     wxWebView *m_content;
     wxSizer *m_topBarSizer;
+    int m_selectedRefIndex;
 
     void OnChoice(wxCommandEvent &event);
     void OnEditFile(wxCommandEvent &event);
