@@ -27,6 +27,7 @@
 #include <wx/clipbrd.h>
 #include <wx/config.h>
 #include <wx/cpp.h>
+#include <wx/evtloop.h>
 #include <wx/filedlg.h>
 #include <wx/fs_zip.h>
 #include <wx/image.h>
@@ -495,7 +496,9 @@ bool PoeditApp::OnInit()
 void PoeditApp::OnEventLoopEnter(wxEventLoopBase *loop)
 {
     wxApp::OnEventLoopEnter(loop);
-    FileMonitor::EventLoopStarted();
+
+    if (loop->IsMain())
+        FileMonitor::EventLoopStarted();
 }
 
 int PoeditApp::OnExit()
