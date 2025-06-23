@@ -64,6 +64,9 @@ const std::wregex RE_LANG_CODE(L"([a-z]){2,3}(_([A-Z]{2}|[0-9]{3}))?(@[a-z]+)?")
 // a more permissive variant of the same that TryNormalize() would fix
 const std::wregex RE_LANG_CODE_PERMISSIVE(L"([a-zA-Z]){2,3}([_-]([a-zA-Z]{2}|[0-9]{3}))?(@[a-zA-Z]+)?");
 
+// approximate match for BCP 47 language tags
+const std::wregex RE_LANG_CODE_BCP47(LR"(^[a-zA-Z]{2,3}(-[A-Z][a-z]{3})?(-([A-Z]{2}|\d{3}))?$)");
+
 // try some normalizations: s/-/_/, case adjustments
 void TryNormalize(std::wstring& s)
 {
@@ -322,6 +325,11 @@ void Language::Init(const std::string& code)
 bool Language::IsValidCode(const std::wstring& s)
 {
     return std::regex_match(s, RE_LANG_CODE);
+}
+
+bool Language::IsPlausibleCode(const std::wstring& s)
+{
+    return std::regex_match(s, RE_LANG_CODE_PERMISSIVE) || std::regex_match(s, RE_LANG_CODE_BCP47);
 }
 
 std::string Language::Lang() const
@@ -636,7 +644,8 @@ Language Language::TryGuessFromFilename(const wxString& filename, wxString *wild
     while (pos != wxString::npos)
     {
         auto part = name.substr(pos+1);
-        lang = Language::TryParseWithValidation(part);
+        if (Language::IsPlausibleCode(part))
+            lang = Language::TryParseWithValidation(part);
         if (lang.IsValid())
         {
             if (wildcard)
@@ -663,12 +672,16 @@ Language Language::TryGuessFromFilename(const wxString& filename, wxString *wild
         wxString rest, wmatch;
         if (dirs[i].EndsWith(".lproj", &rest))
         {
-            lang = Language::TryParseWithValidation(rest.ToStdWstring());
+            auto l = rest.ToStdWstring();
+            if (Language::IsPlausibleCode(l))
+                lang = Language::TryParseWithValidation(l);
             wmatch = "*.lproj";
         }
         else
         {
-            lang = Language::TryParseWithValidation(dirs[i].ToStdWstring());
+            auto l = dirs[i].ToStdWstring();
+            if (Language::IsPlausibleCode(l))
+                lang = Language::TryParseWithValidation(l);
             wmatch = "*";
         }
         if (lang.IsValid())
