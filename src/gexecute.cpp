@@ -166,29 +166,34 @@ ParsedGettextErrors parse_gettext_stderr(const subprocess::Output& output, const
 
     struct StdPrefixEater
     {
-        StdPrefixEater()
-            : m_prefixWarning(str::to_wstring(wxGetTranslation("warning: ", "gettext-tools"))),
-              m_prefixError(str::to_wstring(wxGetTranslation("error: ", "gettext-tools")))
+        StdPrefixEater(const std::wstring& warning, const std::wstring& error)
+            : m_prefixWarning(warning), m_prefixError(error)
         {}
 
-        inline void eat_std_prefixes(std::wstring& err, ParsedGettextErrors::Item& rec)
+        inline bool eat_std_prefixes(std::wstring& err, ParsedGettextErrors::Item& rec)
         {
             if (boost::starts_with(err, m_prefixError))
             {
                 err = err.substr(m_prefixError.length());
                 // this is the default already, but let's be explicit:
                 rec.level = ParsedGettextErrors::Error;
+                return true;
             }
             else if (boost::starts_with(err, m_prefixWarning))
             {
                 err = err.substr(m_prefixWarning.length());
                 rec.level = ParsedGettextErrors::Warning;
+                return true;
             }
+            return false;
         }
 
         std::wstring m_prefixWarning, m_prefixError;
     };
-    StdPrefixEater eater;
+
+    StdPrefixEater eaterEnglish(L"warning: ", L"error: ");
+    StdPrefixEater eaterLocalized(str::to_wstring(wxGetTranslation("warning: ", "gettext-tools")),
+                                  str::to_wstring(wxGetTranslation("error: ", "gettext-tools")));
 
     process_error_output
     (
@@ -201,7 +206,8 @@ ParsedGettextErrors parse_gettext_stderr(const subprocess::Output& output, const
             ParsedGettextErrors::Item rec;
 
             // recognizing standard prefixes first simplifies differentiating between then and file:line locations:
-            eater.eat_std_prefixes(err, rec);
+            if (!eaterLocalized.eat_std_prefixes(err, rec))
+                eaterEnglish.eat_std_prefixes(err, rec);
 
             static const std::wregex RE_LOCATION(L"^([^\r\n]+):([0-9]+): ", std::regex_constants::ECMAScript | std::regex_constants::optimize);
             std::wsmatch match;
@@ -213,7 +219,8 @@ ParsedGettextErrors parse_gettext_stderr(const subprocess::Output& output, const
             }
 
             // have to do again, as the standard format is e.g. "test.c:7: warning: text..."
-            eater.eat_std_prefixes(err, rec);
+            if (!eaterLocalized.eat_std_prefixes(err, rec))
+                eaterEnglish.eat_std_prefixes(err, rec);
 
             rec.text = err;
 
