@@ -497,7 +497,7 @@ void PoeditApp::OnEventLoopEnter(wxEventLoopBase *loop)
 {
     wxApp::OnEventLoopEnter(loop);
 
-    if (loop->IsMain())
+    if (loop && loop->IsMain())
         FileMonitor::EventLoopStarted();
 }
 
