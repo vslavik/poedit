@@ -291,6 +291,8 @@ wxBitmap GetPoeditAppIcon([[maybe_unused]]int pointSize)
         appicon.SetScaleFactor(scale);
         return appicon;
     }
+#elif defined(__WXOSX__)
+    return wxBitmap(NSApplication.sharedApplication.applicationIconImage);
 #elif defined(__WXGTK__)
     return wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, wxSize(pointSize, pointSize));
 #else
