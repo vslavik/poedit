@@ -28,6 +28,7 @@
 #include "fileviewer.h"
 
 #include <wx/filename.h>
+#include <wx/mimetype.h>
 #include <wx/log.h>
 #include <wx/button.h>
 #include <wx/panel.h>
@@ -267,6 +268,7 @@ void FileViewer::ShowReferences(CatalogPtr catalog, CatalogItemPtr item, int def
         );
         for (auto& r: m_references)
             m_file->Append(bidi::platform_mark_direction(r));
+        m_selectedRefIndex = defaultReference;
         m_file->SetSelection(defaultReference);
 
         m_file->SetMinSize(wxDefaultSize);
@@ -395,14 +397,62 @@ void FileViewer::ShowError(const char *icon, const wxString& msg, const wxString
 
 void FileViewer::OnChoice(wxCommandEvent &event)
 {
-    SelectReference(m_references[event.GetSelection()]);
+    m_selectedRefIndex = event.GetSelection();
+    SelectReference(m_references[m_selectedRefIndex]);
 }
 
 void FileViewer::OnEditFile(wxCommandEvent&)
 {
     wxFileName filename = GetFilename(bidi::strip_control_chars(m_file->GetStringSelection()));
-    if (filename.IsOk())
-        wxLaunchDefaultApplication(filename.GetFullPath());
+    if (!filename.IsOk())
+        return;
+
+    //  extract line number
+    wxString refItem = m_references[m_selectedRefIndex];
+    wxString lineNumberStr = refItem.AfterLast(':');
+
+    //  extract editor command name
+    wxFileType *fileType = wxTheMimeTypesManager->GetFileTypeFromExtension(filename.GetExt());
+    if (fileType) {
+        wxString command;
+        wxFileType::MessageParameters paramDummy;
+        fileType->GetOpenCommand(&command, paramDummy);  //  In fact only command is necessary
+
+        if (!command.empty()) {
+            if(!lineNumberStr.empty()) {
+                EditorHelper(command, lineNumberStr, filename);
+            } else {
+                wxLaunchDefaultApplication(filename.GetFullPath());
+            }
+        }
+    }
+}
+
+
+void FileViewer::EditorHelper(wxString command, wxString lineNumberStr, wxFileName filename)
+{
+    enum eNumEditor{
+       Vim,
+       //  Possible to add other editor(s)
+       Others
+    } editor = Others;;
+    if (command.EndsWith("vim ")) editor = Vim;
+
+    switch (editor) {
+        case Vim:
+            {
+                command += "-g ";  //  To make an indepedent window instance of Vi-like editor or the vim process stucks, not able to find tty for it.
+                command += wxString::Format("+%s", lineNumberStr);
+                command += ' ' + filename.GetFullPath();
+
+                wxExecute(command, wxEXEC_ASYNC);
+            }
+            break;
+
+        case Others: //  intentionally
+        default:
+            wxLaunchDefaultApplication(filename.GetFullPath());
+    }
 }
 
 
