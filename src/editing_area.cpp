@@ -433,16 +433,19 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
     m_labelPlural->SetFont(m_labelPlural->GetFont().Bold());
     m_textOrigPlural = new SourceTextCtrl(this, wxID_ANY);
 
-    auto *sizer = new wxBoxSizer(wxVERTICAL);
-    SetSizer(sizer);
+    auto *rootSizer = new wxBoxSizer(wxVERTICAL);
+    SetSizer(rootSizer);
 
 #if defined(__WXMSW__)
-    sizer->AddSpacer(PX(4) - 4); // account for fixed 4px sash above
+    rootSizer->AddSpacer(PX(4) - 4); // account for fixed 4px sash above
 #elif defined(__WXOSX__)
-    sizer->AddSpacer(PX(2));
+    rootSizer->AddSpacer(PX(2));
 #endif
-    sizer->Add(sourceLineSizer, wxSizerFlags().Expand().Border(wxLEFT, PX(5)));
-    sizer->AddSpacer(PX(6));
+
+    m_controlsSizer = new wxBoxSizer(wxVERTICAL);
+
+    m_controlsSizer->Add(sourceLineSizer, wxSizerFlags().Expand().Border(wxLEFT, PX(5)));
+    m_controlsSizer->AddSpacer(PX(6));
 
     auto origTextSizer = new wxBoxSizer(wxVERTICAL);
     origTextSizer->AddSpacer(PX(4));
@@ -450,12 +453,18 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
     origTextSizer->Add(m_textOrig, wxSizerFlags(1).Expand());
     origTextSizer->Add(m_labelPlural, wxSizerFlags().Border(wxLEFT, PX(5)));
     origTextSizer->Add(m_textOrigPlural, wxSizerFlags(1).Expand());
-    sizer->Add(origTextSizer, wxSizerFlags(1).Expand());
+    m_controlsSizer->Add(origTextSizer, wxSizerFlags(1).Expand());
 
     if (mode == POT)
-        CreateTemplateControls(sizer);
+        CreateTemplateControls(m_controlsSizer);
     else
-        CreateEditControls(sizer);
+        CreateEditControls(m_controlsSizer);
+
+    m_placeholderSizer = CreatePlaceholderControls();
+
+    rootSizer->Add(m_controlsSizer, wxSizerFlags(1).Expand());
+    rootSizer->Add(m_placeholderSizer, wxSizerFlags(1).Expand());
+    rootSizer->Hide(m_placeholderSizer);
 
     SetupTextCtrlSizes();
 
@@ -468,6 +477,7 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
     #endif
         m_labelSingular->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
         m_labelPlural->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
+        m_labelPlaceholder->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
     });
 }
 
@@ -596,6 +606,25 @@ void EditingArea::CreateTemplateControls(wxBoxSizer *panelSizer)
 }
 
 
+wxBoxSizer* EditingArea::CreatePlaceholderControls()
+{
+    auto sizer = new wxBoxSizer(wxVERTICAL);
+
+    sizer->AddStretchSpacer();
+    sizer->Add(new wxStaticBitmap(this, wxID_ANY, wxArtProvider::GetBitmap("EmptyMultiSelectionTemplate")),
+               wxSizerFlags().Center().Border(wxBOTTOM, PX(10)));
+    m_labelPlaceholder = new wxStaticText(this, wxID_ANY, _("Use the Edit menu to perform bulk actions on selected strings."));
+    sizer->Add(m_labelPlaceholder, wxSizerFlags().Expand());
+    sizer->AddStretchSpacer();
+
+    auto outerSizer = new wxBoxSizer(wxHORIZONTAL);
+    outerSizer->AddStretchSpacer(1);
+    outerSizer->Add(sizer, wxSizerFlags(1).Expand().Border(wxALL, PX(10)));
+    outerSizer->AddStretchSpacer(1);
+    return outerSizer;
+}
+
+
 void EditingArea::SetupTextCtrlSizes()
 {
     int minh = m_textOrig->GetCharHeight();
@@ -622,6 +651,10 @@ void EditingArea::OnPaint(wxPaintEvent&)
 #ifdef __WXOSX__
     width += 1; // correct for half-pixel undrawn part on the right side
 #endif
+
+    // In case of multiple selection, we don't want to draw the source/trans sections backgrounds
+    if (!m_isSingleSelection)
+        return;
 
     const int paddingTop = MACOS_OR_OTHER(dc.GetContentScaleFactor() > 1.0 ? PX(5) : PX(6), PX(6));
     const int paddingBottom = PX(5);
@@ -857,11 +890,10 @@ void EditingArea::SetSingleSelectionMode()
         return;
     m_isSingleSelection = true;
 
-    if (m_fuzzy)
-        m_fuzzy->Show(m_fuzzyToggleNeeded);
-    m_charCounter->Show();
-
-    Enable();
+    GetSizer()->Show(m_placeholderSizer, false);
+    GetSizer()->Show(m_controlsSizer, true);
+    Layout();
+    Refresh();
 }
 
 
@@ -871,21 +903,14 @@ void EditingArea::SetMultipleSelectionMode()
         return;
     m_isSingleSelection = false;
 
-    // TODO: Show better UI
-
-    if (m_fuzzy)
-        m_fuzzy->Hide();
-    m_charCounter->Hide();
-    ShowPluralFormUI(false);
-    ShowPart(m_tagIdOrContext, false);
-    ShowPart(m_tagFormat, false);
-    ShowPart(m_tagPretranslated, false);
-    ShowPart(m_issueLine, false);
-
     m_textOrig->Clear();
     if (m_textTrans)
         m_textTrans->Clear();
-    Disable();
+
+    GetSizer()->Show(m_controlsSizer, false);
+    GetSizer()->Show(m_placeholderSizer, true);
+    Layout();
+    Refresh();
 }
 
 

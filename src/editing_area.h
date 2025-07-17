@@ -122,6 +122,8 @@ private:
 
     void CreateEditControls(wxBoxSizer *sizer);
     void CreateTemplateControls(wxBoxSizer *sizer);
+    wxBoxSizer *CreatePlaceholderControls();
+
     void SetupTextCtrlSizes();
 
     void ShowPluralFormUI(bool show);
@@ -142,6 +144,8 @@ private:
 
     bool m_dontAutoclearFuzzyStatus;
 
+    wxBoxSizer *m_controlsSizer, *m_placeholderSizer;
+
     SourceTextCtrl *m_textOrig, *m_textOrigPlural;
 
     SwitchButton *m_fuzzy;
@@ -152,6 +156,7 @@ private:
     wxBookCtrlBase *m_pluralNotebook;
     wxStaticText *m_labelSingular, *m_labelPlural;
     wxStaticText *m_labelSource, *m_labelTrans;
+    wxStaticText *m_labelPlaceholder;
 
     TagLabel *m_tagIdOrContext;
     TagLabel *m_tagFormat;
