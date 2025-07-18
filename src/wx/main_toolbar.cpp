@@ -29,10 +29,15 @@
 #include "utility.h"
 #include "unicode_helpers.h"
 
+#include <wx/bmpbuttn.h>
+#include <wx/dcmemory.h>
+#include <wx/stattext.h>
 #include <wx/intl.h>
 #include <wx/settings.h>
 #include <wx/toolbar.h>
 #include <wx/xrc/xmlres.h>
+#include <wx/graphics.h>
+#include <wx/scopedptr.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/uxtheme.h>
@@ -57,9 +62,13 @@ public:
         gtk_style_context_add_class(gtk_widget_get_style_context(GTK_WIDGET(gtb)), GTK_STYLE_CLASS_PRIMARY_TOOLBAR);
         SetIcon(0 , "document-open-symbolic");
         SetIcon(1 , "document-save-symbolic");
+        //      2 // separator
         SetIcon(3 , "poedit-validate-symbolic");
-        SetIcon(4 , "poedit-update-symbolic");
-        SetIcon(6 , "sidebar-symbolic");
+        //      4 // separator
+        SetIcon(5 , "poedit-pretranslate-symbolic");
+        SetIcon(6 , "poedit-update-symbolic");
+        //      7 // separator
+        SetIcon(8 , "poedit-sidebar-symbolic");
 #endif
 
 #ifdef __WXMSW__
@@ -70,7 +79,7 @@ public:
             m_tb->SetBackgroundColour(wxRGBToColour(::GetThemeSysColor(hTheme, COLOR_WINDOW)));
         }
 
-        unsigned padding = PX(4);
+        unsigned padding = PX(10);
         ::SendMessage((HWND) m_tb->GetHWND(), TB_SETPADDING, 0, MAKELPARAM(padding, padding));
         
          m_tb->SetDoubleBuffered(true);
@@ -86,12 +95,12 @@ public:
             tool->SetLabel(_("Sync"));
             m_tb->SetToolShortHelp(m_idUpdate, _("Synchronize the translation with Crowdin"));
             #ifdef __WXGTK3__
-            SetIcon(4 , "poedit-sync-symbolic");
+            SetIcon(6 , "poedit-sync-symbolic");
             #else
-            m_tb->SetToolNormalBitmap(m_idUpdate, wxArtProvider::GetBitmap("poedit-sync", wxART_TOOLBAR));
+            m_tb->SetToolNormalBitmap(m_idUpdate, wxArtProvider::GetBitmap("sync", wxART_TOOLBAR));
             #endif
             #ifdef __WXMSW__
-            m_tb->SetToolDisabledBitmap(m_idUpdate, wxArtProvider::GetBitmap("poedit-sync@disabled", wxART_TOOLBAR));
+            m_tb->SetToolDisabledBitmap(m_idUpdate, wxArtProvider::GetBitmap("sync@disabled", wxART_TOOLBAR));
             #endif
         }
         else
@@ -99,12 +108,12 @@ public:
             tool->SetLabel(MSW_OR_OTHER(_("Update from code"), _("Update from Code")));
             m_tb->SetToolShortHelp(m_idUpdate, _("Update from source code"));
             #ifdef __WXGTK3__
-            SetIcon(4 , "poedit-update-symbolic");
+            SetIcon(6 , "poedit-update-symbolic");
             #else
-            m_tb->SetToolNormalBitmap(m_idUpdate, wxArtProvider::GetBitmap("poedit-update", wxART_TOOLBAR));
+            m_tb->SetToolNormalBitmap(m_idUpdate, wxArtProvider::GetBitmap("update", wxART_TOOLBAR));
             #endif
             #ifdef __WXMSW__
-            m_tb->SetToolDisabledBitmap(m_idUpdate, wxArtProvider::GetBitmap("poedit-update@disabled", wxART_TOOLBAR));
+            m_tb->SetToolDisabledBitmap(m_idUpdate, wxArtProvider::GetBitmap("update@disabled", wxART_TOOLBAR));
             #endif
         }
     }
@@ -140,7 +149,9 @@ std::unique_ptr<MainToolbar> MainToolbar::CreateWX(wxFrame *parent)
 }
 
 
+#ifndef __WXOSX__
 std::unique_ptr<MainToolbar> MainToolbar::Create(wxFrame *parent)
 {
     return CreateWX(parent);
 }
+#endif
