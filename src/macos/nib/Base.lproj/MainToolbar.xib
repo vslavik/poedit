@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23727" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23727"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="POToolbarController">
+            <connections>
+                <outlet property="toolbar" destination="doe-SA-OhG" id="eKC-iN-upE"/>
+                <outlet property="updateItem" destination="DeK-oG-e4E" id="LNU-zm-XLL"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <toolbar implicitIdentifier="09D11707-F4A3-4FD5-970E-AC5832E91C2B" explicitIdentifier="mainToolbar" showsBaselineSeparator="NO" displayMode="iconOnly" sizeMode="regular" id="doe-SA-OhG" userLabel="MainToolbar">
+            <allowedToolbarItems>
+                <toolbarItem implicitItemIdentifier="89BD7E67-DEF0-4846-BD60-8E4D4CA5CBA5" explicitItemIdentifier="validate" label="Validate" paletteLabel="Validate" toolTip="Check for errors in the translation" image="ValidateTemplate" sizingBehavior="auto" id="Bju-lL-qG1" customClass="POToolbarItem">
+                    <button key="view" verticalHuggingPriority="750" id="iO8-We-y3K">
+                        <rect key="frame" x="10" y="14" width="30" height="23"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ValidateTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IYy-dq-COs">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="onValidate:" target="-2" id="9wm-DJ-Z1v"/>
+                        </connections>
+                    </button>
+                </toolbarItem>
+                <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="Nto-3f-Pgd"/>
+                <toolbarItem implicitItemIdentifier="990E9651-0690-4860-BDF8-2553CD2D2DED" explicitItemIdentifier="pretranslate" label="Pre-translate" paletteLabel="Pre-translate" toolTip="Pre-translate strings that don’t have a translation yet" image="PreTranslateTemplate" sizingBehavior="auto" id="mbd-HL-Tn6" userLabel="PreTranslate" customClass="POToolbarItem">
+                    <button key="view" verticalHuggingPriority="750" id="lzI-hl-3pf">
+                        <rect key="frame" x="23" y="14" width="30" height="23"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="PreTranslateTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zvz-bh-Td0">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="onPreTranslate:" target="-2" id="DzL-zt-d0M"/>
+                        </connections>
+                    </button>
+                </toolbarItem>
+                <toolbarItem implicitItemIdentifier="724C34D9-7AA5-4755-A2C3-F6FA71FC2899" explicitItemIdentifier="update" label="Update from Code" paletteLabel="Update from Code" toolTip="Update from source code" image="UpdateTemplate" sizingBehavior="auto" id="DeK-oG-e4E" customClass="POToolbarItem">
+                    <button key="view" verticalHuggingPriority="750" id="UXw-a6-iaX">
+                        <rect key="frame" x="37" y="14" width="30" height="23"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="UpdateTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Daj-3m-bFM">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="onUpdate:" target="-2" id="iG6-ka-7xC"/>
+                        </connections>
+                    </button>
+                </toolbarItem>
+                <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="Ili-91-cb8"/>
+                <toolbarItem implicitItemIdentifier="15F9AB4B-F975-4E30-AE32-F4E1F2572910" explicitItemIdentifier="sidebar" label="Sidebar" paletteLabel="Sidebar" toolTip="Show or hide the sidebar" image="SidebarTemplate" sizingBehavior="auto" id="Ox8-kO-qee" customClass="POToolbarItem">
+                    <button key="view" verticalHuggingPriority="750" id="xpd-bh-Tvv">
+                        <rect key="frame" x="9" y="14" width="30" height="23"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="SidebarTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7hI-iB-WVJ">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="onSidebar:" target="-2" id="hsf-gE-awK"/>
+                        </connections>
+                    </button>
+                </toolbarItem>
+            </allowedToolbarItems>
+            <defaultToolbarItems>
+                <toolbarItem reference="Bju-lL-qG1"/>
+                <toolbarItem reference="Nto-3f-Pgd"/>
+                <toolbarItem reference="mbd-HL-Tn6"/>
+                <toolbarItem reference="DeK-oG-e4E"/>
+                <toolbarItem reference="Ili-91-cb8"/>
+                <toolbarItem reference="Ox8-kO-qee"/>
+            </defaultToolbarItems>
+            <connections>
+                <outlet property="delegate" destination="-2" id="fl3-AV-eGV"/>
+            </connections>
+            <point key="canvasLocation" x="652" y="267"/>
+        </toolbar>
+    </objects>
+    <resources>
+        <image name="PreTranslateTemplate" width="24" height="24"/>
+        <image name="SidebarTemplate" width="24" height="24"/>
+        <image name="UpdateTemplate" width="24" height="24"/>
+        <image name="ValidateTemplate" width="24" height="24"/>
+    </resources>
+</document>
