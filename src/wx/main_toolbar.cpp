@@ -38,7 +38,7 @@
 #include <wx/msw/uxtheme.h>
 #endif
 
-#ifdef __WXGTK__
+#ifdef __WXGTK3__
 #include <gtk/gtk.h>
 #endif
 

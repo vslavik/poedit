@@ -46,26 +46,6 @@
 namespace
 {
 
-#if defined(__WXGTK20__) && !defined(__WXGTK3__)
-// translates poedit item id or Tango stock item id to "legacy" GNOME id:
-wxString GetGnomeStockId(const wxString& id)
-{
-    #define MAP(poedit, gnome) if ( id == _T(poedit) ) return _T(gnome)
-
-    MAP("document-open",        "gtk-open");
-    MAP("document-save",        "gtk-save");
-    MAP("window-close",         "gtk-close");
-
-    MAP("folder-open@symbolic", "gtk-jump-to");
-    MAP("list-add@symbolic",    "list-add");
-    MAP("list-remove@symbolic", "list-remove");
-
-    #undef MAP
-
-    return wxEmptyString; // no match found
-}
-#endif // __WXGTK20__
-
 // Check if a given icon needs mirroring in right-to-left locales:
 bool ShouldBeMirorredInRTL(const wxArtID& id, const wxArtClient& client)
 {
@@ -179,18 +159,6 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id_,
     // Note: On Unix, this code is only called as last resort, if standard
     //       theme provider (that uses current icon theme and files from
     //       /usr/share/icons/<theme>) didn't find any matching icon.
-
-#if defined(__WXGTK20__) && !defined(__WXGTK3__)
-    // try legacy GNOME icons from standard theme:
-    wxString gnomeId = GetGnomeStockId(id);
-    if ( !gnomeId.empty() )
-    {
-        wxLogTrace("poedit.icons", "-> legacy '%s'", gnomeId.c_str());
-        wxBitmap gbmp(wxArtProvider::GetBitmap(gnomeId, client, size));
-        if ( gbmp.Ok() )
-            return gbmp;
-    }
-#endif // defined(__WXGTK20__) && !defined(__WXGTK3__)
 
 #ifdef __WXGTK3__
     CHECK_FOR_VARIANT(symbolic);

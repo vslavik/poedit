@@ -28,10 +28,6 @@
 
 #include <wx/artprov.h>
 
-#if defined(__WXGTK20__)
-    #define HAS_THEMES_SUPPORT
-#endif
-
 #ifndef __WXOSX__
 class PoeditArtProvider : public wxArtProvider
 {
