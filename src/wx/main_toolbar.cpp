@@ -53,24 +53,25 @@ class WXMainToolbar : public MainToolbar
 public:
     WXMainToolbar(wxFrame *parent)
     {
-        m_tb = wxXmlResource::Get()->LoadToolBar(parent, "toolbar");
-        m_idUpdate = XRCID("toolbar_update");
+        long style = wxTB_HORIZONTAL | wxTB_FLAT | wxTB_HORZ_TEXT | wxBORDER_NONE;
+#ifdef __WXMSW__
+        style |= wxTB_NODIVIDER;
+#endif
+        m_tb = new wxToolBar(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, style, "toolbar");
+        m_tb->SetMargins(3, 3);
 
 #ifdef __WXGTK3__
         GtkToolbar *gtb = Toolbar();
         gtk_toolbar_set_icon_size(gtb, GTK_ICON_SIZE_SMALL_TOOLBAR);
         gtk_style_context_add_class(gtk_widget_get_style_context(GTK_WIDGET(gtb)), GTK_STYLE_CLASS_PRIMARY_TOOLBAR);
-        SetIcon(0 , "document-open-symbolic");
-        SetIcon(1 , "document-save-symbolic");
-        //      2 // separator
-        SetIcon(3 , "poedit-validate-symbolic");
-        //      4 // separator
-        SetIcon(5 , "poedit-pretranslate-symbolic");
-        SetIcon(6 , "poedit-update-symbolic");
-        //      7 // separator
-        SetIcon(8 , "poedit-sidebar-symbolic");
 #endif
 
+        CreateTools();
+        m_idUpdate = XRCID("toolbar_update");
+
+        m_tb->Realize();
+        parent->SetToolBar(m_tb);
+     
 #ifdef __WXMSW__
         // De-uglify the toolbar a bit on Windows 10:
         if (wxUxThemeIsActive())
@@ -95,7 +96,7 @@ public:
             tool->SetLabel(_("Sync"));
             m_tb->SetToolShortHelp(m_idUpdate, _("Synchronize the translation with Crowdin"));
             #ifdef __WXGTK3__
-            SetIcon(6 , "poedit-sync-symbolic");
+            SetIcon(m_idUpdate, "sync");
             #else
             m_tb->SetToolNormalBitmap(m_idUpdate, wxArtProvider::GetBitmap("sync", wxART_TOOLBAR));
             #endif
@@ -108,7 +109,7 @@ public:
             tool->SetLabel(MSW_OR_OTHER(_("Update from code"), _("Update from Code")));
             m_tb->SetToolShortHelp(m_idUpdate, _("Update from source code"));
             #ifdef __WXGTK3__
-            SetIcon(6 , "poedit-update-symbolic");
+            SetIcon(m_idUpdate , "update");
             #else
             m_tb->SetToolNormalBitmap(m_idUpdate, wxArtProvider::GetBitmap("update", wxART_TOOLBAR));
             #endif
@@ -118,8 +119,48 @@ public:
         }
     }
 
-#ifdef __WXGTK3__
 private:
+    void CreateTools()
+    {
+        AddTool(wxID_OPEN, wxEmptyString, "document-open", _("Open file"));
+        AddTool(wxID_SAVE, wxEmptyString, "document-save", _("Save file"));
+
+        m_tb->AddSeparator();
+
+        AddTool(XRCID("menu_validate"), _("Validate"), "validate", _("Check for errors in the translation"));
+
+        AddTool(XRCID("menu_pretranslate"), _("Pre-translate"), "pretranslate", _("Pre-translate strings that don't have a translation yet"));
+        AddTool(XRCID("toolbar_update"), MSW_OR_OTHER(_("Update from code"), _("Update from Code")), "update", _("Update from source code"));
+
+        m_tb->AddStretchableSpace();
+
+        AddTool(XRCID("show_sidebar"), wxEmptyString, "sidebar", _("Show or hide the sidebar"));
+    }
+
+    wxToolBarToolBase *AddTool(int id, const wxString& label, const wxString& icon, const wxString& shortHelp)
+    {
+        auto tool = m_tb->AddTool
+        (
+            id,
+            label,
+            wxArtProvider::GetBitmap(icon, wxART_TOOLBAR),
+#ifdef __WXMSW__
+            wxArtProvider::GetBitmap(icon + "@disabled", wxART_TOOLBAR),
+#else
+            wxNullBitmap,
+#endif
+            wxITEM_NORMAL,
+            shortHelp
+        );
+
+#ifdef __WXGTK3__
+        SetIcon(id, icon);
+#endif
+
+        return tool;
+    }
+
+#ifdef __WXGTK3__
     GtkToolbar *Toolbar()
     {
     #ifdef __WXGTK4__
@@ -129,12 +170,16 @@ private:
     #endif
     }
 
-    void SetIcon(int index, const char *name)
+    void SetIcon(int toolId, const wxString& name)
     {
-         GtkToolItem *i = gtk_toolbar_get_nth_item(Toolbar(), index);
-         gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(i), NULL);
-         gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(i), name);
-    } 
+        auto icon = name.StartsWith("document-")
+                    ? wxString::Format("%s-symbolic", name)
+                    : wxString::Format("poedit-%s-symbolic", name);
+
+        GtkToolItem* i = gtk_toolbar_get_nth_item(Toolbar(), m_tb->GetToolPos(toolId));
+        gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(i), NULL);
+        gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(i), icon.utf8_str());
+    }
 #endif
 
 private:

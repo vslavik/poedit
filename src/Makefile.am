@@ -93,8 +93,7 @@ XRC_RESOURCES = \
         $(srcdir)/resources/manager.xrc \
         $(srcdir)/resources/menus.xrc \
         $(srcdir)/resources/prefs.xrc \
-        $(srcdir)/resources/properties.xrc \
-        $(srcdir)/resources/toolbar.xrc
+        $(srcdir)/resources/properties.xrc
 
 compiled_xrc.cpp: $(XRC_RESOURCES)
 	$(WXRC) -v -c -o $@ $(XRC_RESOURCES)
