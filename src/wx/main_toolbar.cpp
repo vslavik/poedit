@@ -143,15 +143,7 @@ private:
 };
 
 
-std::unique_ptr<MainToolbar> MainToolbar::CreateWX(wxFrame *parent)
+std::unique_ptr<MainToolbar> MainToolbar::Create(wxFrame *parent)
 {
     return std::unique_ptr<MainToolbar>(new WXMainToolbar(parent));
 }
-
-
-#ifndef __WXOSX__
-std::unique_ptr<MainToolbar> MainToolbar::Create(wxFrame *parent)
-{
-    return CreateWX(parent);
-}
-#endif
