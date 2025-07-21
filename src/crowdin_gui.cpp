@@ -46,7 +46,9 @@
 #include <wx/choice.h>
 #include <wx/config.h>
 #include <wx/dataview.h>
+#include <wx/dcclient.h>
 #include <wx/dialog.h>
+#include <wx/graphics.h>
 #include <wx/msgdlg.h>
 #include <wx/renderer.h>
 #include <wx/sizer.h>
@@ -56,6 +58,62 @@
 #include <wx/windowptr.h>
 
 #include <regex>
+
+
+namespace
+{
+
+class RecommendedLabel : public wxPanel
+{
+public:
+    RecommendedLabel(wxWindow *parent) : wxPanel(parent, wxID_ANY)
+    {
+        auto label = new wxStaticText(this, wxID_ANY, _("Recommended"));
+#ifdef __WXOSX__
+        label->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
+
+        auto sizer = new wxBoxSizer(wxHORIZONTAL);
+        sizer->AddSpacer(PX(4));
+        sizer->Add(label, wxSizerFlags(1).Center().Border(wxALL, PX(2)));
+        sizer->AddSpacer(PX(4));
+        SetSizer(sizer);
+
+        Bind(wxEVT_PAINT, [=](wxPaintEvent&)
+        {
+            wxPaintDC dc(this);
+            std::unique_ptr<wxGraphicsContext> gc(wxGraphicsContext::Create(dc));
+            gc->SetBrush(m_bg);
+            gc->SetPen(*wxTRANSPARENT_PEN);
+
+            auto rect = GetClientRect();
+            if (!rect.IsEmpty())
+            {
+                gc->DrawRoundedRectangle(rect.x, rect.y, rect.width, rect.height, PX(2));
+            }
+        });
+
+        ColorScheme::SetupWindowColors(this, [=]
+        {
+            auto fg = ColorScheme::GetBlendedOn(Color::TagWarningLineFg, this, Color::TagWarningLineBg);
+            m_bg = ColorScheme::GetBlendedOn(Color::TagWarningLineBg, this);
+            label->SetForegroundColour(fg);
+#ifdef __WXMSW__
+            for (auto c : GetChildren())
+                c->SetBackgroundColour(m_bg);
+#endif
+        });
+
+        m_container.DisableSelfFocus();
+    }
+
+    bool AcceptsFocus() const override { return false; }
+
+private:
+    wxColour m_bg;
+};
+
+} // anonymous namespace
 
 
 CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
@@ -73,7 +131,13 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
     auto logo = new StaticBitmap(this, GetServiceLogo());
     logo->SetCursor(wxCURSOR_HAND);
     logo->Bind(wxEVT_LEFT_UP, [this](wxMouseEvent&){ wxLaunchDefaultBrowser(GetServiceLearnMoreURL()); });
-    sizer->Add(logo, wxSizerFlags().PXDoubleBorder(wxBOTTOM));
+
+    auto logosizer = new wxBoxSizer(wxHORIZONTAL);
+    logosizer->Add(logo, wxSizerFlags().Center());
+    logosizer->AddStretchSpacer();
+    logosizer->Add(new RecommendedLabel(this), wxSizerFlags().Center());
+    sizer->Add(logosizer, wxSizerFlags().Expand().PXDoubleBorder(wxBOTTOM));
+
     auto explain = new ExplanationLabel(this, GetServiceDescription());
     sizer->Add(explain, wxSizerFlags().Expand());
 
