@@ -1653,9 +1653,7 @@ void PoeditFrame::OnUpdateFromSources(wxCommandEvent&)
 
 void PoeditFrame::OnUpdateFromSourcesUpdate(wxUpdateUIEvent& event)
 {
-    event.Enable(m_catalog &&
-                 m_catalog->HasSourcesConfigured() &&
-                 !CanSyncWithCrowdin(m_catalog));
+    event.Enable(m_catalog && m_catalog->HasSourcesConfigured());
 }
 
 void PoeditFrame::OnUpdateFromPOT(wxCommandEvent&)
@@ -1768,26 +1766,19 @@ void PoeditFrame::OnUpdateSmart(wxCommandEvent& event)
 {
     if (!m_catalog)
         return;
-#ifdef HAVE_HTTP_CLIENT
-    if (CanSyncWithCrowdin(m_catalog))
-        OnUpdateFromCrowdin(event);
-    else
-#endif
-        OnUpdateFromSources(event);
+
+    // TODO: handle POTs here too
+    OnUpdateFromSources(event);
 }
 
 void PoeditFrame::OnUpdateSmartUpdate(wxUpdateUIEvent& event)
 {
     event.Enable(false);
-    if (m_catalog)
-    {
-#ifdef HAVE_HTTP_CLIENT
-       if (CanSyncWithCrowdin(m_catalog))
-            OnUpdateFromCrowdinUpdate(event);
-        else
-#endif
-            OnUpdateFromSourcesUpdate(event);
-    }
+    if (!m_catalog)
+        return;
+
+    // TODO: handle POTs here too
+    OnUpdateFromSourcesUpdate(event);
 }
 
 

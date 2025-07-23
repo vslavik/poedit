@@ -48,11 +48,10 @@
 
 @interface POToolbarController : NSObject<NSToolbarDelegate> {
     wxFrame *m_parent;
-    int id_validate, id_pretranslate, id_update, id_sidebar;
-    NSImage *m_imgUpdate, *m_imgSync;
+    int id_validate, id_pretranslate, id_update, id_sync, id_sidebar;
 }
 
-@property IBOutlet NSToolbarItem *updateItem;
+@property IBOutlet NSToolbarItem *syncItem;
 @property IBOutlet NSToolbar *toolbar;
 
 - (id)initWithParent:(wxFrame*)parent;
@@ -71,9 +70,8 @@
         id_validate = XRCID("menu_validate");
         id_pretranslate = XRCID("menu_pretranslate");
         id_update = XRCID("toolbar_update");
+        id_sync = XRCID("menu_update_from_crowdin");
         id_sidebar = XRCID("show_sidebar");
-        m_imgUpdate = [NSImage imageNamed:@"UpdateTemplate"];
-        m_imgSync = [NSImage imageNamed:@"SyncTemplate"];
     }
     return self;
 }
@@ -92,18 +90,11 @@
 
 - (void)enableSyncWithCrowdin:(BOOL)on
 {
-    NSToolbarItem *tool = self.updateItem;
+    NSToolbarItem *tool = self.syncItem;
     if (on)
     {
         [tool setLabel:str::to_NS(_("Sync"))];
         [tool setToolTip:str::to_NS(_("Synchronize the translation with Crowdin"))];
-        [tool setImage:m_imgSync];
-    }
-    else
-    {
-        [tool setLabel:str::to_NS(_("Update from Code"))];
-        [tool setToolTip:str::to_NS(_("Update from source code"))];
-        [tool setImage:m_imgUpdate];
     }
 }
 
@@ -117,6 +108,8 @@
         wxid = id_pretranslate;
     else if (action == @selector(onUpdate:))
         wxid = id_update;
+    else if (action == @selector(onSync:))
+        wxid = id_sync;
     else if (action == @selector(onSidebar:))
         wxid = id_sidebar;
     else
@@ -149,6 +142,12 @@
 {
     #pragma unused(sender)
     [self wxSendEvent:id_update];
+}
+
+- (IBAction)onSync:(id)sender
+{
+    #pragma unused(sender)
+    [self wxSendEvent:id_sync];
 }
 
 - (IBAction)onSidebar:(id)sender

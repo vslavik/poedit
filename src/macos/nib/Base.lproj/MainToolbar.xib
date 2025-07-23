@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23727" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23727"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="POToolbarController">
             <connections>
+                <outlet property="syncItem" destination="bBQ-cb-PdM" id="Nb1-0r-Xnw"/>
                 <outlet property="toolbar" destination="doe-SA-OhG" id="eKC-iN-upE"/>
-                <outlet property="updateItem" destination="DeK-oG-e4E" id="LNU-zm-XLL"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -55,6 +56,19 @@
                         </connections>
                     </button>
                 </toolbarItem>
+                <toolbarItem implicitItemIdentifier="B89304A3-9049-47DE-8C53-ADB5044493B2" explicitItemIdentifier="sync" label="Sync" paletteLabel="Sync" image="SyncTemplate" bordered="YES" sizingBehavior="auto" id="bBQ-cb-PdM" userLabel="Sync" customClass="POToolbarItem">
+                    <button key="view" verticalHuggingPriority="750" id="Tic-n8-zTd">
+                        <rect key="frame" x="2" y="14" width="30" height="23"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="SyncTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gDK-DW-23G">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="onSync:" target="-2" id="XT7-ZW-4yC"/>
+                        </connections>
+                    </button>
+                </toolbarItem>
                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="Ili-91-cb8"/>
                 <toolbarItem implicitItemIdentifier="15F9AB4B-F975-4E30-AE32-F4E1F2572910" explicitItemIdentifier="sidebar" label="Sidebar" paletteLabel="Sidebar" toolTip="Show or hide the sidebar" image="SidebarTemplate" sizingBehavior="auto" id="Ox8-kO-qee" customClass="POToolbarItem">
                     <button key="view" verticalHuggingPriority="750" id="xpd-bh-Tvv">
@@ -75,6 +89,7 @@
                 <toolbarItem reference="Nto-3f-Pgd"/>
                 <toolbarItem reference="mbd-HL-Tn6"/>
                 <toolbarItem reference="DeK-oG-e4E"/>
+                <toolbarItem reference="bBQ-cb-PdM"/>
                 <toolbarItem reference="Ili-91-cb8"/>
                 <toolbarItem reference="Ox8-kO-qee"/>
             </defaultToolbarItems>
@@ -87,6 +102,7 @@
     <resources>
         <image name="PreTranslateTemplate" width="24" height="24"/>
         <image name="SidebarTemplate" width="24" height="24"/>
+        <image name="SyncTemplate" width="24" height="24"/>
         <image name="UpdateTemplate" width="24" height="24"/>
         <image name="ValidateTemplate" width="24" height="24"/>
     </resources>

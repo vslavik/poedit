@@ -67,10 +67,7 @@ public:
 #endif
 
         CreateTools();
-        m_idUpdate = XRCID("toolbar_update");
-
-        m_tb->Realize();
-        parent->SetToolBar(m_tb);
+        m_idSync = XRCID("menu_update_from_crowdin");
      
 #ifdef __WXMSW__
         // De-uglify the toolbar a bit on Windows 10:
@@ -85,37 +82,19 @@ public:
         
          m_tb->SetDoubleBuffered(true);
 #endif
+
+         m_tb->Realize();
+         parent->SetToolBar(m_tb);
     }
 
     void EnableSyncWithCrowdin(bool on) override
     {
-        auto tool = m_tb->FindById(m_idUpdate);
+        auto tool = m_tb->FindById(m_idSync);
 
         if (on)
         {
             tool->SetLabel(_("Sync"));
-            m_tb->SetToolShortHelp(m_idUpdate, _("Synchronize the translation with Crowdin"));
-            #ifdef __WXGTK3__
-            SetIcon(m_idUpdate, "sync");
-            #else
-            m_tb->SetToolNormalBitmap(m_idUpdate, wxArtProvider::GetBitmap("sync", wxART_TOOLBAR));
-            #endif
-            #ifdef __WXMSW__
-            m_tb->SetToolDisabledBitmap(m_idUpdate, wxArtProvider::GetBitmap("sync@disabled", wxART_TOOLBAR));
-            #endif
-        }
-        else
-        {
-            tool->SetLabel(MSW_OR_OTHER(_("Update from code"), _("Update from Code")));
-            m_tb->SetToolShortHelp(m_idUpdate, _("Update from source code"));
-            #ifdef __WXGTK3__
-            SetIcon(m_idUpdate , "update");
-            #else
-            m_tb->SetToolNormalBitmap(m_idUpdate, wxArtProvider::GetBitmap("update", wxART_TOOLBAR));
-            #endif
-            #ifdef __WXMSW__
-            m_tb->SetToolDisabledBitmap(m_idUpdate, wxArtProvider::GetBitmap("update@disabled", wxART_TOOLBAR));
-            #endif
+            m_tb->SetToolShortHelp(m_idSync, _("Synchronize the translation with Crowdin"));
         }
     }
 
@@ -131,6 +110,7 @@ private:
 
         AddTool(XRCID("menu_pretranslate"), _("Pre-translate"), "pretranslate", _("Pre-translate strings that don't have a translation yet"));
         AddTool(XRCID("toolbar_update"), MSW_OR_OTHER(_("Update from code"), _("Update from Code")), "update", _("Update from source code"));
+        AddTool(XRCID("menu_update_from_crowdin"), _("Sync"), "sync", "");
 
         m_tb->AddStretchableSpace();
 
@@ -184,7 +164,7 @@ private:
 
 private:
     wxToolBar *m_tb;
-    int m_idUpdate;
+    int m_idSync;
 };
 
 
