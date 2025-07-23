@@ -52,6 +52,7 @@ build_sr_latin()
     recode-sr-latin <locales/win/windows_strings-Serbian_Cyrillic.rc >locales/win/windows_strings-Serbian_Latin.rc
     recode-sr-latin <locales/macos/sr.lproj/InfoPlist.strings >locales/macos/sr-Latn.lproj/InfoPlist.strings
     recode-sr-latin <locales/macos/sr.lproj/MoveApplication.strings >locales/macos/sr-Latn.lproj/MoveApplication.strings
+    recode-sr-latin <src/macos/nib/sr.lproj/MainToolbar.strings >src/macos/nib/sr-Latn.lproj/MainToolbar.strings
 }
 
 # Massage RC files from Crowdin to be actually usable:
@@ -123,6 +124,22 @@ fixup_po_files()
     done
 }
 
+# If not even the toolbar is (almost) fully translated, there's really no point
+# in shipping the translation, is there?
+remove_insufficient_macos_translations()
+{
+    full_labels_count=$(grep '\.label' src/macos/nib/en.lproj/MainToolbar.strings | wc -l)
+    cutoff=$(expr $full_labels_count - 1)
+    for i in src/macos/nib/*.lproj/MainToolbar.strings ; do
+        cnt=$(grep '\.label' "$i" | wc -l)
+        if [ $cnt -lt $cutoff ] ; then
+            rm -f "$i"
+        fi
+    done
+}
+
+
+remove_insufficient_macos_translations
 
 remove_unsupported_languages
 

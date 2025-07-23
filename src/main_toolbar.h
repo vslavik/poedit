@@ -39,9 +39,6 @@ public:
 
     static std::unique_ptr<MainToolbar> Create(wxFrame *parent);
 
-protected:
-    static std::unique_ptr<MainToolbar> CreateWX(wxFrame *parent);
-
     MainToolbar() {}
 };
 
