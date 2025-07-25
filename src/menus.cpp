@@ -107,7 +107,7 @@ wxMenuBar *MenusManager::CreateMenu(Menu purpose)
 #ifndef HAVE_HTTP_CLIENT
     wxMenu *menu;
     wxMenuItem *item;
-    item = bar->FindItem(XRCID("menu_update_from_crowdin"), &menu);
+    item = bar->FindItem(XRCID("menu_cloud_sync"), &menu);
     if (item)
         menu->Destroy(item);
     item = bar->FindItem(XRCID("menu_open_cloud"), &menu);

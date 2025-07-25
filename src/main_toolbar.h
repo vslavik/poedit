@@ -26,6 +26,8 @@
 #ifndef Poedit_main_toolbar_h
 #define Poedit_main_toolbar_h
 
+#include "cloud_sync.h"
+
 #include <wx/frame.h>
 #include <memory>
 
@@ -35,7 +37,7 @@ class MainToolbar
 public:
     virtual ~MainToolbar() {}
 
-    virtual void EnableSyncWithCrowdin(bool on) = 0;
+    virtual void EnableCloudSync(std::shared_ptr<CloudSyncDestination> sync, bool isCrowdin) = 0;
 
     static std::unique_ptr<MainToolbar> Create(wxFrame *parent);
 

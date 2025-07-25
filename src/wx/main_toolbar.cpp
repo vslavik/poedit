@@ -67,7 +67,7 @@ public:
 #endif
 
         CreateTools();
-        m_idSync = XRCID("menu_update_from_crowdin");
+        m_idSync = XRCID("menu_cloud_sync");
      
 #ifdef __WXMSW__
         // De-uglify the toolbar a bit on Windows 10:
@@ -87,15 +87,35 @@ public:
          parent->SetToolBar(m_tb);
     }
 
-    void EnableSyncWithCrowdin(bool on) override
+    void EnableCloudSync(std::shared_ptr<CloudSyncDestination> sync, bool isCrowdin) override
     {
         auto tool = m_tb->FindById(m_idSync);
+        wxString icon;
 
-        if (on)
+        if (!sync || isCrowdin)
         {
+            icon = "sync";
             tool->SetLabel(_("Sync"));
             m_tb->SetToolShortHelp(m_idSync, _("Synchronize the translation with Crowdin"));
         }
+        else
+        {
+            icon = "upload";
+            tool->SetLabel(_("Upload"));
+            // TRANSLATORS: this is the tooltip for the "Upload" button in the toolbar, %s is hostname or service (Crowdin, ftp.foo.com etc.)
+            auto tooltip = wxString::Format(_("Upload the translation to %s"), sync->GetName());
+            m_tb->SetToolShortHelp(m_idSync, tooltip);
+        }
+
+#ifdef __WXGTK3__
+        SetIcon(m_idSync, icon);
+#else
+        m_tb->SetToolNormalBitmap(m_idSync, wxArtProvider::GetBitmap(icon, wxART_TOOLBAR));
+#endif
+#ifdef __WXMSW__
+        m_tb->SetToolDisabledBitmap(m_idSync, wxArtProvider::GetBitmap(icon + "@disabled", wxART_TOOLBAR));
+#endif
+
     }
 
 private:
@@ -110,7 +130,7 @@ private:
 
         AddTool(XRCID("menu_pretranslate"), _("Pre-translate"), "pretranslate", _("Pre-translate strings that don't have a translation yet"));
         AddTool(XRCID("toolbar_update"), MSW_OR_OTHER(_("Update from code"), _("Update from Code")), "update", _("Update from source code"));
-        AddTool(XRCID("menu_update_from_crowdin"), _("Sync"), "sync", "");
+        AddTool(XRCID("menu_cloud_sync"), _("Sync"), "sync", "");
 
         m_tb->AddStretchableSpace();
 

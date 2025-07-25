@@ -70,7 +70,7 @@
         id_validate = XRCID("menu_validate");
         id_pretranslate = XRCID("menu_pretranslate");
         id_update = XRCID("toolbar_update");
-        id_sync = XRCID("menu_update_from_crowdin");
+        id_sync = XRCID("menu_cloud_sync");
         id_sidebar = XRCID("show_sidebar");
     }
     return self;
@@ -88,13 +88,23 @@
     [window setToolbar:nil];
 }
 
-- (void)enableSyncWithCrowdin:(BOOL)on
+- (void)enableCloudSync:(std::shared_ptr<CloudSyncDestination>)dest isCrowdin:(BOOL)isCrowdin
 {
     NSToolbarItem *tool = self.syncItem;
-    if (on)
+
+    if (!dest || isCrowdin)
     {
+        [tool setImage:[NSImage imageNamed:@"SyncTemplate"]];
         [tool setLabel:str::to_NS(_("Sync"))];
         [tool setToolTip:str::to_NS(_("Synchronize the translation with Crowdin"))];
+    }
+    else
+    {
+        [tool setImage:[NSImage imageNamed:@"UploadTemplate"]];
+        [tool setLabel:str::to_NS(_("Upload"))];
+        // TRANSLATORS: this is the tooltip for the "Upload" button in the toolbar, %s is hostname or service (Crowdin, ftp.foo.com etc.)
+        auto tooltip = wxString::Format(_("Upload the translation to %s"), dest->GetName());
+        [tool setToolTip:str::to_NS(tooltip)];
     }
 }
 
@@ -178,9 +188,9 @@ public:
         [m_controller uninstallToolbar:m_parent];
     }
 
-    void EnableSyncWithCrowdin(bool on) override
+    void EnableCloudSync(std::shared_ptr<CloudSyncDestination> sync, bool isCrowdin) override
     {
-        [m_controller enableSyncWithCrowdin:on];
+        [m_controller enableCloudSync:sync isCrowdin:isCrowdin];
     }
 
 private:

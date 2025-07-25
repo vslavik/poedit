@@ -308,7 +308,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_update_from_src"), PoeditFrame::OnUpdateFromSources)
    EVT_MENU           (XRCID("menu_update_from_pot"),PoeditFrame::OnUpdateFromPOT)
   #ifdef HAVE_HTTP_CLIENT
-   EVT_MENU           (XRCID("menu_update_from_crowdin"),PoeditFrame::OnUpdateFromCrowdin)
+   EVT_MENU           (XRCID("menu_cloud_sync"),PoeditFrame::OnCloudSync)
   #endif
    EVT_MENU           (XRCID("toolbar_update"),PoeditFrame::OnUpdateSmart)
    EVT_MENU           (XRCID("menu_validate"),    PoeditFrame::OnValidate)
@@ -381,7 +381,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_UPDATE_UI(XRCID("menu_validate"),      PoeditFrame::OnIsEditableUpdate)
    EVT_UPDATE_UI(XRCID("menu_update_from_src"), PoeditFrame::OnUpdateFromSourcesUpdate)
  #ifdef HAVE_HTTP_CLIENT
-   EVT_UPDATE_UI(XRCID("menu_update_from_crowdin"), PoeditFrame::OnUpdateFromCrowdinUpdate)
+   EVT_UPDATE_UI(XRCID("menu_cloud_sync"), PoeditFrame::OnCloudSyncUpdate)
  #endif
    EVT_UPDATE_UI(XRCID("menu_update_from_pot"), PoeditFrame::OnUpdateFromPOTUpdate)
    EVT_UPDATE_UI(XRCID("toolbar_update"), PoeditFrame::OnUpdateSmartUpdate)
@@ -1713,7 +1713,8 @@ void PoeditFrame::OnUpdateFromPOTUpdate(wxUpdateUIEvent& event)
 }
 
 #ifdef HAVE_HTTP_CLIENT
-void PoeditFrame::OnUpdateFromCrowdin(wxCommandEvent&)
+
+void PoeditFrame::CloudSyncWithCrowdin()
 {
     if (m_modified)
     {
@@ -1754,13 +1755,50 @@ void PoeditFrame::OnUpdateFromCrowdin(wxCommandEvent&)
     });
 }
 
-void PoeditFrame::OnUpdateFromCrowdinUpdate(wxUpdateUIEvent& event)
+void PoeditFrame::CloudSyncUpload()
 {
+    CloudSyncProgressWindow::RunSync(this, m_catalog->GetCloudSync(), m_catalog);
+}
+
+void PoeditFrame::OnCloudSync(wxCommandEvent&)
+{
+    if (CanSyncWithCrowdin(m_catalog))
+    {
+        CloudSyncWithCrowdin();
+    }
+    else
+    {
+        CloudSyncUpload();
+    }
+}
+
+void PoeditFrame::OnCloudSyncUpdate(wxUpdateUIEvent& event)
+{
+    event.Enable(false);
+    if (!m_catalog || !m_catalog->HasCapability(Catalog::Cap::Translations))
+        return;
+
+    auto sync = m_catalog->GetCloudSync();
+    bool isCrowdin = CanSyncWithCrowdin(m_catalog);
+
+    event.Enable(sync || isCrowdin);
+
+    if (!sync || isCrowdin)
+    {
+        event.SetText(_("Sync with Crowdin"));
+    }
+    else
+    {
+        // TRANSLATORS: this is the menu action to upload to server/cloud; %s is hostname or service (Crowdin, ftp.foo.com etc.)
+        event.SetText(wxString::Format(_("Upload to %s"), sync->GetName()));
+    }
+
     event.Enable(m_catalog &&
                  m_catalog->HasCapability(Catalog::Cap::Translations) &&
-                 CanSyncWithCrowdin(m_catalog));
+                 (CanSyncWithCrowdin(m_catalog) || m_catalog->GetCloudSync() != nullptr));
 }
-#endif
+
+#endif // HAVE_HTTP_CLIENT
 
 void PoeditFrame::OnUpdateSmart(wxCommandEvent& event)
 {
@@ -2249,7 +2287,7 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
         SetupCloudSyncIfShouldBeDoneAutomatically(m_catalog);
     }
 
-    m_toolbar->EnableSyncWithCrowdin(CanSyncWithCrowdin(m_catalog));
+    m_toolbar->EnableCloudSync(m_catalog->GetCloudSync(), CanSyncWithCrowdin(m_catalog));
 #endif
 
     FixDuplicatesIfPresent();
