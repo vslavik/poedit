@@ -184,6 +184,12 @@ public:
         Checks if @a s has the form of language code.
      */
     static bool IsValidCode(const std::wstring& s);
+    /**
+        Checks if @a s has the form of language code, being more permissive and allowing
+        e.g. BCP 47 -- i..e something suitable for passing to TryParse().
+     */
+    static bool IsPlausibleCode(const std::wstring& s);
+
 
     bool operator==(const Language& other) const { return m_code == other.m_code; }
     bool operator!=(const Language& other) const { return m_code != other.m_code; }

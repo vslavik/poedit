@@ -199,8 +199,11 @@ wxFileName FileViewer::GetFilename(wxString ref) const
     }
 
     wxPathFormat pathfmt = ref.Contains(_T('\\')) ? wxPATH_WIN : wxPATH_UNIX;
-    wxFileName filename(ref.BeforeLast(_T(':')), pathfmt);
 
+    auto without_linenumber = ref.BeforeLast(_T(':'));
+    auto filepath = without_linenumber.empty() ? ref : without_linenumber;
+
+    wxFileName filename(filepath, pathfmt);
     if ( filename.IsRelative() )
     {
         wxFileName relative(filename);

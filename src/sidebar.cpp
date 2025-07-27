@@ -604,9 +604,13 @@ void SuggestionsSidebarBlock::InitControls()
 
 SuggestionsSidebarBlock::~SuggestionsSidebarBlock()
 {
-    ClearSuggestionsMenu();
-    for (auto i : m_suggestionMenuItems)
-        delete i;
+    if (m_suggestionsMenu)
+    {
+        ClearSuggestionsMenu();
+        for (auto i : m_suggestionsMenuItems)
+            delete i;
+    }
+    // else: m_suggestionsMenuItems are already deleted
 }
 
 wxString SuggestionsSidebarBlock::GetIconForSuggestion(const Suggestion&) const
@@ -713,15 +717,18 @@ void SuggestionsSidebarBlock::UpdateSuggestions(const SuggestionsList& hits)
 
 void SuggestionsSidebarBlock::BuildSuggestionsMenu(int count)
 {
-    m_suggestionMenuItems.reserve(SUGGESTIONS_MENU_ENTRIES);
+    m_suggestionsMenuItems.reserve(SUGGESTIONS_MENU_ENTRIES);
     auto menu = m_suggestionsMenu;
+    if (!menu)
+        return;
+
     for (int i = 0; i < count; i++)
     {
         auto text = wxString::Format("(empty)\t%s%d", wxGETTEXT_IN_CONTEXT("keyboard key", "Ctrl+"), i+1);
         auto item = new wxMenuItem(menu, wxID_ANY, text);
         item->SetBitmap(wxArtProvider::GetBitmap("SuggestionTMTemplate"));
 
-        m_suggestionMenuItems.push_back(item);
+        m_suggestionsMenuItems.push_back(item);
         menu->Append(item);
 
         m_suggestionsMenu->Bind(wxEVT_MENU, [this,i,menu](wxCommandEvent&){
@@ -758,7 +765,7 @@ void SuggestionsSidebarBlock::UpdateSuggestionsMenu()
         if (text.length() > 100)
             text = text.substr(0, 100) + L"…";
 
-        auto item = m_suggestionMenuItems[index];
+        auto item = m_suggestionsMenuItems[index];
         m_suggestionsMenu->Append(item);
 
         auto label = wxControl::EscapeMnemonics(wxString::Format(formatMask, text, index+1));
@@ -772,11 +779,13 @@ void SuggestionsSidebarBlock::UpdateSuggestionsMenu()
 void SuggestionsSidebarBlock::ClearSuggestionsMenu()
 {
     auto m = m_suggestionsMenu;
+    if (!m)
+        return;
 
     auto menuItems = m->GetMenuItems();
     for (auto i: menuItems)
     {
-        if (std::find(m_suggestionMenuItems.begin(), m_suggestionMenuItems.end(), i) != m_suggestionMenuItems.end())
+        if (std::find(m_suggestionsMenuItems.begin(), m_suggestionsMenuItems.end(), i) != m_suggestionsMenuItems.end())
             m->Remove(i);
     }
 }

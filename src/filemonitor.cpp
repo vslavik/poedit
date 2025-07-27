@@ -113,8 +113,14 @@ class FSWatcher
 public:
     static auto Get()
     {
+        static bool s_initialized = false;
         if (!ms_instance)
+        {
+            wxCHECK_MSG(!s_initialized, ms_instance, "using FSWatcher after cleanup");
+            
             ms_instance.reset(new FSWatcher);
+            s_initialized = true;
+        }
         return ms_instance;
     }
 
@@ -185,7 +191,8 @@ public:
     {
         m_dir = wxFileName::DirName(fn.GetPath());
         auto watcher = FSWatcher::Get();
-        watcher->Add(m_dir);
+        if (watcher)
+            watcher->Add(m_dir);
         m_watcher = watcher;
     }
 
@@ -208,7 +215,9 @@ private:
 void FileMonitor::EventLoopStarted()
 {
 #ifndef __WXOSX__
-    FSWatcher::Get()->EventLoopStarted();
+    auto watcher = FSWatcher::Get();
+    if (watcher)
+        watcher->EventLoopStarted();
 #endif
 }
 

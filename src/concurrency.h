@@ -101,21 +101,18 @@ public:
 
     void close() override
     {
-      std::lock_guard<std::mutex> lock(m_mutex);
-      m_closed = true;
+        m_closed.store(true, std::memory_order_release);
     }
 
     bool closed() override
     {
-      std::lock_guard<std::mutex> lock(m_mutex);
-      return m_closed;
+        return m_closed.load(std::memory_order_acquire);
     }
 
     bool try_executing_one() override { return false; }
 
 private:
-    std::mutex m_mutex;
-    bool m_closed;
+    std::atomic<bool> m_closed;
 };
 
 
@@ -130,6 +127,9 @@ public:
 
     void submit(work&& closure) override
     {
+        if (closed())
+            return;
+
         dispatch_async_cxx(std::forward<work>(closure));
     }
 };
@@ -143,6 +143,9 @@ public:
 
     void submit(work&& closure)
     {
+        if (closed())
+            return;
+
         pplx::create_task([f{std::move(closure)}]() mutable { f(); });
     }
 };
@@ -153,6 +156,14 @@ class background_queue_executor : public boost::basic_thread_pool
 {
 public:
     static background_queue_executor& get();
+
+    void submit(work&& closure)
+    {
+        if (closed())
+            return;
+
+        boost::basic_thread_pool::submit(std::forward<work>(closure));
+    }
 };
 
 #endif // HAVE_DISPATCH etc.
@@ -165,6 +176,9 @@ public:
 
     void submit(work&& closure)
     {
+        if (closed())
+            return;
+
 #ifdef HAVE_DISPATCH
         // Note that we intentially don't use dispatch_async_cxx() and dispatch_get_main_queue() here,
         // but rather choose to channel everything through wxApp::CallAfter(). This is because
@@ -173,7 +187,11 @@ public:
         // it then needs to schedule something on the main thread again.
         // See e.g. https://www.thecave.com/2015/08/10/dispatch-async-to-main-queue-doesnt-work-with-modal-window-on-mac-os-x/
 #endif
-        wxTheApp->CallAfter(std::forward<work>(closure));
+        if (wxTheApp)
+        {
+            wxTheApp->CallAfter(std::forward<work>(closure));
+        }
+        // else: deep in app shutdown, can't post to main thread's event loop anymore
     }
 };
 
@@ -648,10 +666,16 @@ public:
     cancellation_token() : m_cancelled(false) {}
 
     /// Signal the operation to cancel when the return value is no longer wanted
-    void cancel() { m_cancelled = true; }
+    void cancel()
+    {
+        m_cancelled.store(true, std::memory_order_release);
+    }
 
     /// Should the operation be cancelled?
-    bool is_cancelled() const { return m_cancelled; }
+    bool is_cancelled() const
+    {
+        return m_cancelled.load(std::memory_order_acquire);
+    }
 
     /// Throw execution_cancelled if the operation should be cancelled
     void throw_if_cancelled() const
@@ -661,7 +685,7 @@ public:
     }
 
 private:
-    std::atomic_bool m_cancelled;
+    std::atomic<bool> m_cancelled;
 };
 
 /// Pointer to cancellation_token

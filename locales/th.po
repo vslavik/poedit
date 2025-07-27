@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2025-04-04 17:10+0200\n"
+"POT-Creation-Date: 2025-05-16 18:17+0200\n"
 "PO-Revision-Date: 2025-04-05 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Thai\n"
@@ -17,261 +17,178 @@ msgstr ""
 "X-Crowdin-File: /locales/poedit.pot\n"
 "X-Crowdin-File-ID: 3\n"
 
-#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
-#. ("Poedit" here, but please use "%s")
-#: src/aboutbox.cpp:135 src/wx_translatable_strings.h:42
-#, c-format
-msgid "About %s"
-msgstr "เกี่ยวกับ %s"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#: src/aboutbox.cpp:167 src/welcomescreen.cpp:265
-#: src/wx_translatable_strings.h:46
-#, c-format
-msgid "Version %s"
-msgstr "รุ่น %s"
-
-#: src/aboutbox.cpp:168
-msgid "Based on the open source version →"
-msgstr "ยึดตามรุ่นโอเพนซอร์ซ →"
-
-#: src/aboutbox.cpp:174
-msgid "Acknowledgements"
-msgstr "กิตติกรรมประกาศ"
-
-#: src/aboutbox.cpp:175
-msgid "License Agreement"
-msgstr "ข้อตกลงสัญญาอนุญาต"
-
-#: src/aboutbox.cpp:182 src/prefsdlg.cpp:503
-msgid "Terms of Use"
-msgstr "ข้อกำหนดการใช้งาน"
-
-#: src/aboutbox.cpp:183
-msgid "Privacy Policy"
-msgstr "นโยบายความเป็นส่วนตัว"
-
-#: src/aboutbox.cpp:244
-#, c-format
-msgid "Licensed to %s"
-msgstr "สัญญาอนุญาตแก่ %s"
-
-#: src/aboutbox.cpp:246
-msgid "Free version (please upgrade!)"
-msgstr "เวอร์ชั่นฟรี (โปรดอัปเกรด)"
-
-#: src/attentionbar.cpp:83
+#: src/attentionbar.cpp:82
 msgid "Hide this notification message"
 msgstr "ซ่อนข้อความแจ้งเตือนนี้"
 
-#: src/attentionbar.cpp:291
+#: src/attentionbar.cpp:294
 msgid "Don’t Show Again"
 msgstr "ไม่ต้องแสดงอีก"
 
-#: src/attentionbar.cpp:291
+#: src/attentionbar.cpp:294
 msgid "Don’t show again"
 msgstr "ไม่ต้องแสดงอีก"
 
-#: src/cat_operations.cpp:172
-msgid "Both files must be of the same file format."
-msgstr ""
-
-#: src/cat_update.cpp:118
+#: src/cat_update.cpp:99
 msgid "Update Summary"
 msgstr ""
 
 #. TRANSLATORS: Title of window showing summary (added/removed strings, issues) of updating translations from sources or POT file
-#: src/cat_update.cpp:118
+#: src/cat_update.cpp:99
 msgid "Update summary"
 msgstr "อัพเดตผลลัพธ์"
 
-#: src/cat_update.cpp:150 src/findframe.cpp:148 src/licensing_ui.cpp:535
-#: src/titleless_window.cpp:82 src/wx_translatable_strings.h:96
+#: src/cat_update.cpp:131 src/findframe.cpp:148 src/titleless_window.cpp:82
+#: src/wx_translatable_strings.h:96
 msgid "Close"
 msgstr "ปิด"
 
-#: src/cat_update.cpp:180
+#: src/cat_update.cpp:161
 msgid "Issues"
 msgstr ""
 
 #. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
-#: src/cat_update.cpp:183 src/cloud_accounts_ui.cpp:263 src/manager.cpp:404
-#: src/recent_files.cpp:555 src/wx_translatable_strings.h:104
+#: src/cat_update.cpp:164 src/cloud_accounts_ui.cpp:266 src/manager.cpp:377
+#: src/recent_files.cpp:548 src/wx_translatable_strings.h:104
 msgid "File"
 msgstr "ไฟล์"
 
 #. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
-#: src/cat_update.cpp:185
+#: src/cat_update.cpp:166
 msgid "Line"
 msgstr ""
 
 #. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
-#: src/cat_update.cpp:187
+#: src/cat_update.cpp:168
 msgid "Issue"
 msgstr ""
 
-#: src/cat_update.cpp:201 src/cat_update.cpp:203
+#: src/cat_update.cpp:182 src/cat_update.cpp:184
 msgid "New Strings"
 msgstr ""
 
-#: src/cat_update.cpp:201 src/cat_update.cpp:203
+#: src/cat_update.cpp:182 src/cat_update.cpp:184
 msgid "New strings"
 msgstr "สตริงใหม่"
 
-#: src/cat_update.cpp:214 src/cat_update.cpp:216
+#: src/cat_update.cpp:195 src/cat_update.cpp:197
 msgid "Removed Strings"
 msgstr ""
 
-#: src/cat_update.cpp:214 src/cat_update.cpp:216
+#: src/cat_update.cpp:195 src/cat_update.cpp:197
 msgid "Removed strings"
 msgstr ""
 
-#: src/cat_update.cpp:262 src/cat_update.cpp:518
-msgid "Updating translations"
-msgstr "กำลังอัปเดตการแปลภาษา"
-
-#: src/cat_update.cpp:263
-#, c-format
-msgid "Found %d template file supported by Poedit Pro."
-msgid_plural "Found %d template files supported by Poedit Pro."
-msgstr[0] "พบไฟล์เทมเพลต %d ไฟล์ที่รองรับโดย Poedit Pro"
-
-#. TRANSLATORS: %s is a filename here, e.g. "mainpage.twig"
-#: src/cat_update.cpp:265
-msgid "Poedit Pro can extract strings from template files, but this functionality isn’t available in the free version. Would you like to upgrade to the Pro version?"
-msgstr "Poedit Pro สามารถแยกสตริงจากไฟล์แม่แบบได้ แต่ฟังก์ชั่นนี้ไม่สามารถใช้งานในเวอร์ชั่นฟรีได้ คุณต้องการอัปเกรดเป็นเวอร์ชั่น Pro หรือไม่"
-
-#: src/cat_update.cpp:268 src/licensing_ui.cpp:691 src/sidebar_pro.cpp:1212
-msgid "Learn More"
-msgstr "เรียนรู้เพิ่มเติม"
-
-#: src/cat_update.cpp:268 src/customcontrols.cpp:326 src/licensing_ui.cpp:691
-#: src/sidebar_pro.cpp:1212
-msgid "Learn more"
-msgstr "เรียนรู้เพิ่มเติม"
-
-#: src/cat_update.cpp:273
-msgid "Don’t ask again"
-msgstr "ไม่ต้องถามอีก"
-
-#: src/cat_update.cpp:274
-msgid "Skip templates"
-msgstr "ข้ามแม่แบบ"
-
-#: src/cat_update.cpp:283
-msgid "Found the following template files:"
-msgstr ""
-
-#: src/cat_update.cpp:302
-msgid "Don’t Ask Again"
-msgstr "ไม่ต้องถามอีก"
-
-#: src/cat_update.cpp:303
-msgid "Skip Templates"
-msgstr "ข้ามแม่แบบ"
-
-#: src/cat_update.cpp:354
+#: src/cat_update.cpp:221
 msgid "Collecting source files…"
 msgstr "กำลังรวบรวมไฟล์ต้นฉบับ…"
 
-#: src/cat_update.cpp:378
+#: src/cat_update.cpp:237
 #, c-format
 msgid "Extracting translatable strings from %s file…"
 msgid_plural "Extracting translatable strings from %s files…"
 msgstr[0] ""
 
-#: src/cat_update.cpp:405
-#, c-format
-msgid "Failed to extract WordPress metadata from file %s."
-msgstr "การดึงข้อมูลเมตาของ WordPress จากไฟล์ %s ล้มเหลว"
-
-#: src/cat_update.cpp:413 src/cat_update.cpp:549
+#: src/cat_update.cpp:259 src/cat_update.cpp:395
 msgid "Failed to load file with extracted translations."
 msgstr "ไม่สามารถโหลดไฟล์ที่มีการแปลแยก"
 
-#: src/cat_update.cpp:437
+#: src/cat_update.cpp:283
 #, c-format
 msgid "In: %s"
 msgstr "ใน: %s"
 
-#: src/cat_update.cpp:444 src/edframe.cpp:1778
+#: src/cat_update.cpp:290 src/edframe.cpp:1606
 msgid "Source code not available."
 msgstr "ซอร์สโค้ดไม่พร้อมใช้งาน"
 
-#: src/cat_update.cpp:445 src/edframe.cpp:1782
-msgid "Translations couldn’t be updated from the source code, because no code was found in the location specified in the file’s Properties."
-msgstr "ไม่สามารถอัพเดตการแปลจากซอร์สโค้ดได้ เนื่องจากไม่พบโค้ดใดๆ ในตำแหน่งที่ระบุในคุณสมบัติของไฟล์"
+#: src/cat_update.cpp:291 src/edframe.cpp:1610
+msgid ""
+"Translations couldn’t be updated from the source code, because no code was "
+"found in the location specified in the file’s Properties."
+msgstr ""
+"ไม่สามารถอัพเดตการแปลจากซอร์สโค้ดได้ เนื่องจากไม่พบโค้ดใดๆ ในตำแหน่งที่ระบุในคุณสมบัติของไฟล์"
 
-#: src/cat_update.cpp:449
+#: src/cat_update.cpp:295
 msgid "Permission denied."
 msgstr "สิทธิ์การใช้งานถูกปฏิเสธ!"
 
-#: src/cat_update.cpp:450
-msgid "You don’t have permission to read source code files from the location specified in the file’s Properties."
+#: src/cat_update.cpp:296
+msgid ""
+"You don’t have permission to read source code files from the location "
+"specified in the file’s Properties."
 msgstr "คุณไม่ได้รับอนุญาตให้อ่านไฟล์รหัสต้นฉบับจากตำแหน่งที่ระบุในคุณสมบัติของไฟล์"
 
 #. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-#: src/cat_update.cpp:455
-msgid "If you previously denied access to your files, you can allow it in System Settings > Privacy & Security > Files & Folders."
-msgstr "หากก่อนหน้านี้คุณปฏิเสธการเข้าถึงไฟล์ คุณสามารถอนุญาตได้ในการตั้งค่าระบบ > ความเป็นส่วนตัวและความปลอดภัย > ไฟล์และโฟลเดอร์"
+#: src/cat_update.cpp:301
+msgid ""
+"If you previously denied access to your files, you can allow it in System "
+"Settings > Privacy & Security > Files & Folders."
+msgstr ""
+"หากก่อนหน้านี้คุณปฏิเสธการเข้าถึงไฟล์ คุณสามารถอนุญาตได้ในการตั้งค่าระบบ > "
+"ความเป็นส่วนตัวและความปลอดภัย > ไฟล์และโฟลเดอร์"
 
 #. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
-#: src/cat_update.cpp:460
-msgid "If you previously denied access to your files, you can allow it in System Preferences > Security & Privacy > Privacy > Files & Folders."
-msgstr "หากก่อนหน้านี้คุณถูกปฏิเสธการเข้าถึงไฟล์ของคุณ คุณสามารถอนุญาตได้ในการตั้งค่าระบบ> ความปลอดภัยและความเป็นส่วนตัว> ความเป็นส่วนตัว> ไฟล์และโฟลเดอร์"
+#: src/cat_update.cpp:306
+msgid ""
+"If you previously denied access to your files, you can allow it in System "
+"Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr ""
+"หากก่อนหน้านี้คุณถูกปฏิเสธการเข้าถึงไฟล์ของคุณ คุณสามารถอนุญาตได้ในการตั้งค่าระบบ> "
+"ความปลอดภัยและความเป็นส่วนตัว> ความเป็นส่วนตัว> ไฟล์และโฟลเดอร์"
 
-#: src/cat_update.cpp:466
+#: src/cat_update.cpp:312
 msgid "Failed to extract strings from source code."
 msgstr ""
 
-#: src/cat_update.cpp:500 src/edapp.cpp:1186 src/edframe.cpp:952
-#: src/edframe.cpp:2955
+#: src/cat_update.cpp:346 src/edapp.cpp:1103 src/edframe.cpp:929
+#: src/edframe.cpp:2477
 #, c-format
 msgid "The file “%s” couldn’t be opened."
 msgstr "ไฟล์ “%s” ไม่สามารถเปิดได้"
 
-#: src/cat_update.cpp:538
+#: src/cat_update.cpp:364
+msgid "Updating translations"
+msgstr "กำลังอัปเดตการแปลภาษา"
+
+#: src/cat_update.cpp:384
 msgid "Determining differences…"
 msgstr ""
 
-#: src/cat_update.cpp:546 src/cat_update.cpp:604
+#: src/cat_update.cpp:392 src/cat_update.cpp:445
 msgid "Merging differences…"
 msgstr "กำลังผสานส่วนที่แตกต่าง…"
 
-#: src/cat_update.cpp:559
-msgid "Translation file is already up to date, no changes to strings were made."
+#: src/cat_update.cpp:405
+msgid ""
+"Translation file is already up to date, no changes to strings were made."
 msgstr ""
 
-#: src/cat_update.cpp:565
+#: src/cat_update.cpp:411
 #, c-format
 msgid "Translation file was updated with %s change."
 msgid_plural "Translation file was updated with %s changes."
 msgstr[0] ""
 
-#: src/cat_update.cpp:568
+#: src/cat_update.cpp:414
 msgid "New strings to translate:"
 msgstr ""
 
-#: src/cat_update.cpp:569
+#: src/cat_update.cpp:415
 msgid "Removed strings (no longer used):"
 msgstr ""
 
-#: src/cat_update.cpp:574
-msgid "Template files skipped (Pro-only):"
-msgstr ""
-
-#: src/cat_update.cpp:662
+#: src/cat_update.cpp:503
 #, c-format
 msgid "%d issue with the source strings was detected."
 msgid_plural "%d issues with the source strings were detected."
 msgstr[0] ""
 
-#: src/cat_update.cpp:689
+#: src/cat_update.cpp:530
 msgid "View Details…"
 msgstr ""
 
-#: src/cat_update.cpp:689
+#: src/cat_update.cpp:530
 msgid "View details…"
 msgstr ""
 
@@ -314,7 +231,8 @@ msgid "The file is in a format not recognized by Poedit."
 msgstr "ไฟล์อยู่ในรูปแบบที่ Poedit ไม่รู้จัก"
 
 #: src/catalog_json.cpp:91
-msgid "This JSON file isn’t a translations file and cannot be edited in Poedit."
+msgid ""
+"This JSON file isn’t a translations file and cannot be edited in Poedit."
 msgstr "ไฟล์ JSON นี้ไม่ใช่ไฟล์การแปลและไม่สามารถแก้ไขได้ใน Poedit"
 
 #: src/catalog_json.cpp:140
@@ -322,17 +240,19 @@ msgstr "ไฟล์ JSON นี้ไม่ใช่ไฟล์การแป
 msgid "Reading file content failed with the following error: %s"
 msgstr "การอ่านเนื้อหาไฟล์ล้มเหลวโดยมีข้อผิดพลาดต่อไปนี้: %s"
 
-#: src/catalog_json.cpp:151 src/catalog_po.cpp:1146 src/catalog_xliff.cpp:556
+#: src/catalog_json.cpp:151 src/catalog_po.cpp:1162 src/catalog_xliff.cpp:556
 #, c-format
-msgid "File “%s” is read-only and cannot be saved.\n"
+msgid ""
+"File “%s” is read-only and cannot be saved.\n"
 "Please save it under different name."
-msgstr "ไฟล์ \"%s\" อ่านได้อย่างเดียวและไม่สามารถบันทึกได้\n"
+msgstr ""
+"ไฟล์ \"%s\" อ่านได้อย่างเดียวและไม่สามารถบันทึกได้\n"
 "โปรดบันทึกโดยใช้ชื่ออื่น"
 
-#: src/catalog_json.cpp:165 src/catalog_po.cpp:1182 src/catalog_po.cpp:1264
-#: src/catalog_po.cpp:1320 src/catalog_po.cpp:1384 src/catalog_po.cpp:1415
-#: src/catalog_po.cpp:1617 src/catalog_xliff.cpp:567 src/edframe.cpp:1339
-#: src/prefsdlg.cpp:757
+#: src/catalog_json.cpp:165 src/catalog_po.cpp:1198 src/catalog_po.cpp:1280
+#: src/catalog_po.cpp:1354 src/catalog_po.cpp:1363 src/catalog_po.cpp:1420
+#: src/catalog_po.cpp:1451 src/catalog_po.cpp:1645 src/catalog_xliff.cpp:567
+#: src/edframe.cpp:1317 src/prefsdlg.cpp:664
 #, c-format
 msgid "Couldn’t save file %s."
 msgstr "ไม่สามารถบันทึกไฟล์ %s"
@@ -366,25 +286,33 @@ msgid "Couldn’t load the file, it is probably damaged."
 msgstr "ไม่สามารถโหลดไฟล์ เนื่องจากอาจเป็นเพราะไฟล์เสียหาย"
 
 #: src/catalog_po.cpp:949
-msgid "There were errors when loading the file. Some data may be missing or corrupted as the result."
+msgid ""
+"There were errors when loading the file. Some data may be missing or "
+"corrupted as the result."
 msgstr "เกิดข้อผิดพลาดขณะโหลดไฟล์ ข้อมูลบางส่วนอาจขาดหายหรือไม่ถูกต้องดังผลลัพธ์"
 
-#: src/catalog_po.cpp:1273
-msgid "There was a problem formatting the file nicely (but it was saved all right)."
+#: src/catalog_po.cpp:1289
+msgid ""
+"There was a problem formatting the file nicely (but it was saved all right)."
 msgstr "มีปัญหาในการจัดรูปแบบไฟล์ให้เป็นระเบียบ (แต่ไฟล์ถูกบันทึกเรียบร้อยแล้ว)"
 
-#: src/catalog_po.cpp:1540
+#: src/catalog_po.cpp:1568
 #, c-format
-msgid "The file couldn’t be saved in “%s” charset as specified in translation settings.\n\n"
+msgid ""
+"The file couldn’t be saved in “%s” charset as specified in translation "
+"settings.\n"
+"\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
-msgstr "ไฟล์ไม่สามารถบันทึกเป็นชุดอักขระ \"%s\" อย่างที่ได้ระบุไว้ในการตั้งค่าการแปล\n\n"
+msgstr ""
+"ไฟล์ไม่สามารถบันทึกเป็นชุดอักขระ \"%s\" อย่างที่ได้ระบุไว้ในการตั้งค่าการแปล\n"
+"\n"
 "จะบันทึกเป็น UTF-8 แทนและการตั้งค่าจะบันทึกตามนี้"
 
-#: src/catalog_po.cpp:1542 src/edframe.cpp:3221
+#: src/catalog_po.cpp:1570 src/edframe.cpp:2740
 msgid "Error saving file"
 msgstr "ข้อผิดพลาดขณะบันทึกแฟ้ม"
 
-#: src/catalog_po.cpp:1693
+#: src/catalog_po.cpp:1721
 #, c-format
 msgid "“%s” is not a valid POT file."
 msgstr "“%s” ไม่ใช่ไฟล์ POT ที่ถูกต้อง"
@@ -412,80 +340,82 @@ msgstr "เวอร์ชั่นที่ไม่สนับสนุน (%
 msgid "Broken markup in translation string."
 msgstr "มาร์กอัปใช้งานไม่ได้ในการแปลสตริง"
 
-#: src/cloud_accounts_ui.cpp:82
-msgid "Connect Poedit with supported cloud localization platforms to seamlessly sync translations managed on them."
-msgstr "เชื่อมต่อ Poedit กับแพลตฟอร์มการแปลบนคลาวด์ที่รองรับเพื่อซิงค์การแปลที่จัดการได้อย่างราบรื่น"
+#: src/cloud_accounts_ui.cpp:81
+msgid ""
+"Connect Poedit with supported cloud localization platforms to seamlessly "
+"sync translations managed on them."
+msgstr ""
+"เชื่อมต่อ Poedit กับแพลตฟอร์มการแปลบนคลาวด์ที่รองรับเพื่อซิงค์การแปลที่จัดการได้อย่างราบรื่น"
 
-#: src/cloud_accounts_ui.cpp:85 src/welcomescreen.cpp:295
+#: src/cloud_accounts_ui.cpp:84 src/welcomescreen.cpp:286
 msgid "How does cloud sync work?"
 msgstr "การซิงค์บนคลาวด์ทำงานอย่างไร"
 
-#: src/cloud_accounts_ui.cpp:96
+#: src/cloud_accounts_ui.cpp:91
 msgid "Account"
 msgstr "บัญชีผู้ใช้"
 
-#: src/cloud_accounts_ui.cpp:159
+#: src/cloud_accounts_ui.cpp:160
 msgid "(not signed in)"
 msgstr "(ไม่ได้เข้าสู่ระบบ)"
 
-#: src/cloud_accounts_ui.cpp:353
+#: src/cloud_accounts_ui.cpp:356
 msgid "Open cloud translation"
 msgstr "เปิดการแปลบนคลาวด์"
 
-#: src/cloud_accounts_ui.cpp:365
+#: src/cloud_accounts_ui.cpp:368
 msgid "Manage accounts"
 msgstr "จัดการบัญชี"
 
-#: src/cloud_accounts_ui.cpp:374 src/export_html.cpp:77
+#: src/cloud_accounts_ui.cpp:377 src/export_html.cpp:77
 msgid "Project:"
 msgstr "โครงการ:"
 
-#: src/cloud_accounts_ui.cpp:378 src/export_html.cpp:79
+#: src/cloud_accounts_ui.cpp:381 src/export_html.cpp:79
 #: src/resources/prefs.xrc:11 src/resources/prefs.xrc:15
-#: src/resources/properties.xrc:54 src/wordpress/wordpress_gui.cpp:228
-#: src/wordpress/wordpress_gui.cpp:354
+#: src/resources/properties.xrc:54
 msgid "Language:"
 msgstr "ภาษา:"
 
-#: src/cloud_accounts_ui.cpp:433
+#: src/cloud_accounts_ui.cpp:436
 msgid "Sign in to Cloud Account"
 msgstr "ลงชื่อเข้าใช้บัญชีคลาวด์"
 
-#: src/cloud_accounts_ui.cpp:433
+#: src/cloud_accounts_ui.cpp:436
 msgid "Sign in to cloud account"
 msgstr "ลงชื่อเข้าใช้บัญชีคลาวด์"
 
-#: src/cloud_accounts_ui.cpp:524
+#: src/cloud_accounts_ui.cpp:527
 msgid "No translation projects listed in your account."
 msgstr "ไม่มีโครงการแปลอยู่ในบัญชีของคุณ"
 
-#: src/cloud_accounts_ui.cpp:633 src/crowdin_gui.cpp:347
+#: src/cloud_accounts_ui.cpp:636 src/crowdin_gui.cpp:339
 msgid "Downloading latest translations…"
 msgstr "กำลังดาวน์โหลดการแปลล่าสุด…"
 
 #. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
-#: src/cloud_accounts_ui.cpp:729
+#: src/cloud_accounts_ui.cpp:732
 #, c-format
 msgid "Sign in to %s"
 msgstr "เข้าสู่ระบบ %s"
 
-#: src/cloud_sync.h:99
+#: src/cloud_sync.h:98
 msgid "Syncing"
 msgstr "กำลังซิงค์"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
-#: src/cloud_sync.h:116
+#: src/cloud_sync.h:115
 #, c-format
 msgid "Uploading translations to %s…"
 msgstr "กำลังอัปโหลดงานแปลไปยัง %s"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
-#: src/cloud_sync.h:168
+#: src/cloud_sync.h:167
 #, c-format
 msgid "Uploading translations to %s failed."
 msgstr "การอัปโหลดคำแปลไปยัง %s ล้มเหลว"
 
-#: src/cloud_sync.h:169
+#: src/cloud_sync.h:168
 msgid "Syncing error"
 msgstr "ข้อผิดพลาดการซิงค์"
 
@@ -493,68 +423,71 @@ msgstr "ข้อผิดพลาดการซิงค์"
 msgid "Add"
 msgstr "เพิ่ม"
 
-#: src/crowdin_client.cpp:144
+#: src/crowdin_client.cpp:143
 msgid "Unknown Crowdin error."
 msgstr "ข้อผิดพลาด Crowdin ที่ไม่รู้จัก"
 
-#: src/crowdin_client.cpp:154
+#: src/crowdin_client.cpp:153
 msgid "Not authorized, please sign in again."
 msgstr "ไม่ได้รับอนุญาต โปรดเข้าสู่ระบบอีกครั้ง"
 
 #. TRANSLATORS: Crowdin has string-based and file-based project kinds (see https://support.crowdin.com/creating-project/#file-based-project)
-#: src/crowdin_client.cpp:346
+#: src/crowdin_client.cpp:342
 msgid "String-based Crowdin projects are not supported."
 msgstr ""
 
-#: src/crowdin_client.cpp:350
+#: src/crowdin_client.cpp:346
 msgid "Downloading translations is disabled in this project."
 msgstr "การดาวน์โหลดการแปลถูกปิดใช้งานในโครงการนี้"
 
-#: src/crowdin_gui.cpp:94 src/localazy_gui.cpp:105
+#: src/crowdin_gui.cpp:90 src/localazy_gui.cpp:101
 msgid "Sign In"
 msgstr "ลงชื่อเข้าใช้"
 
-#: src/crowdin_gui.cpp:94 src/localazy_gui.cpp:105
+#: src/crowdin_gui.cpp:90 src/localazy_gui.cpp:101
 msgid "Sign in"
 msgstr "ลงชื่อเข้าใช้"
 
-#: src/crowdin_gui.cpp:96 src/localazy_gui.cpp:107
+#: src/crowdin_gui.cpp:92 src/localazy_gui.cpp:103
 msgid "Sign Out"
 msgstr "ออกจากระบบ"
 
-#: src/crowdin_gui.cpp:96 src/localazy_gui.cpp:107
+#: src/crowdin_gui.cpp:92 src/localazy_gui.cpp:103
 msgid "Sign out"
 msgstr "ออกจากระบบ"
 
-#: src/crowdin_gui.cpp:103
+#: src/crowdin_gui.cpp:99
 msgid "Learn more about Crowdin"
 msgstr "เรียนรู้เพิ่มเติมเกี่ยวกับ Crowdin"
 
-#: src/crowdin_gui.cpp:134
-msgid "Crowdin is an online translation management platform and collaborative translation tool. We use Crowdin ourselves to translate Poedit into many languages, and we love it."
+#: src/crowdin_gui.cpp:126
+msgid ""
+"Crowdin is an online translation management platform and collaborative "
+"translation tool. We use Crowdin ourselves to translate Poedit into many "
+"languages, and we love it."
 msgstr ""
 
-#: src/crowdin_gui.cpp:198 src/localazy_gui.cpp:210
+#: src/crowdin_gui.cpp:190 src/localazy_gui.cpp:202
 msgid "Waiting for authentication…"
 msgstr "กำลังรอการรับรองความถูกต้อง..."
 
-#: src/crowdin_gui.cpp:199 src/localazy_gui.cpp:211
+#: src/crowdin_gui.cpp:191 src/localazy_gui.cpp:203
 msgid "Updating user information…"
 msgstr "กำลังอัปเดตข้อมูลผู้ใช้…"
 
-#: src/crowdin_gui.cpp:306
+#: src/crowdin_gui.cpp:298
 msgid "Sign in to Crowdin"
 msgstr "ลงชื่อเข้าใช้บัญชี Crowdin"
 
-#: src/crowdin_gui.cpp:326
+#: src/crowdin_gui.cpp:318
 msgid "Syncing with Crowdin failed."
 msgstr "การซิงค์กับ Crowdin ล้มเหลว"
 
-#: src/crowdin_gui.cpp:327
+#: src/crowdin_gui.cpp:319
 msgid "Crowdin error"
 msgstr "ข้อผิดพลาดของ Crowdin"
 
-#: src/crowdin_gui.cpp:335
+#: src/crowdin_gui.cpp:327
 msgid "Uploading translations…"
 msgstr "กำลังอัปโหลดงานแปล…"
 
@@ -562,634 +495,548 @@ msgstr "กำลังอัปโหลดงานแปล…"
 msgid "&Copy"
 msgstr "&คัดลอก"
 
-#: src/edapp.cpp:510 src/resources/menus.xrc:377 src/resources/menus.xrc:494
+#: src/customcontrols.cpp:326
+msgid "Learn more"
+msgstr "เรียนรู้เพิ่มเติม"
+
+#: src/edapp.cpp:453 src/resources/menus.xrc:336 src/resources/menus.xrc:441
 #: src/wx_translatable_strings.h:105
 msgid "&Help"
 msgstr "&ช่วยเหลือ"
 
-#: src/edapp.cpp:800
+#: src/edapp.cpp:732
 msgid "MO files can’t be directly edited in Poedit."
 msgstr "ไฟล์ MO ไม่สามารถแก้ไขโดยตรงใน Poedit ได้"
 
-#: src/edapp.cpp:801
+#: src/edapp.cpp:733
 msgid "Error opening file"
 msgstr "เกิดข้อผิดพลาดในการเปิดไฟล์"
 
-#: src/edapp.cpp:803
-msgid "Please open and edit the corresponding PO file instead. When you save it, the MO file will be updated as well."
+#: src/edapp.cpp:735
+msgid ""
+"Please open and edit the corresponding PO file instead. When you save it, "
+"the MO file will be updated as well."
 msgstr "โปรดเปิดและแก้ไขไฟล์ PO ที่เกี่ยวข้องแทน เมื่อคุณบันทึก ไฟล์ MO จะถูกอัพเดตไปด้วย"
 
-#: src/edapp.cpp:844
+#: src/edapp.cpp:776
 msgid "don’t delete temporary files (for debugging)"
 msgstr "ไม่ต้องลบไฟล์ชั่วคราว (สำหรับการดีบั๊ก)"
 
-#: src/edapp.cpp:846
+#: src/edapp.cpp:778
 msgid "handle a poedit:// URI"
 msgstr "จัดการ URI poedit://"
 
-#: src/edapp.cpp:848
+#: src/edapp.cpp:780
 msgid "go to item at given line number"
 msgstr "ไปยังรายการที่อยู่ในหมายเลขบรรทัดที่ระบุ"
 
-#: src/edapp.cpp:871
+#: src/edapp.cpp:803
 msgid "Failed to communicate with Poedit process."
 msgstr "การสื่อสารกับกระบวนการ Poedit ล้มเหลว"
 
-#: src/edapp.cpp:993 src/edapp.cpp:998
+#: src/edapp.cpp:916 src/edapp.cpp:921
 #, c-format
 msgid "Unhandled exception occurred: %s"
 msgstr "เกิดข้อยกเว้นที่จัดการไม่ได้: %s"
 
-#: src/edapp.cpp:1156
+#: src/edapp.cpp:1073
 msgid "Select translation template"
 msgstr "เลือกเทมเพลตการแปล"
 
-#: src/edapp.cpp:1187 src/edframe.cpp:953 src/edframe.cpp:2687
-#: src/edframe.cpp:2956
+#: src/edapp.cpp:1104 src/edframe.cpp:930 src/edframe.cpp:2295
+#: src/edframe.cpp:2478
 msgid "Invalid file"
 msgstr "ไฟล์ไม่ถูกต้อง"
 
-#: src/edapp.cpp:1220 src/wordpress/wordpress_gui.cpp:137
-msgid "WordPress"
-msgstr "WordPress"
-
-#: src/edapp.cpp:1271 src/edframe.cpp:2859
+#: src/edapp.cpp:1124
 msgid "Select translation file"
 msgstr "เลือกไฟล์แปล"
 
-#: src/edapp.cpp:1373
+#: src/edapp.cpp:1225
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit เป็นโปรแกรมแก้ไขการแปลที่ง่ายต่อการใช้งาน"
 
-#: src/edframe.cpp:445
+#: src/edframe.cpp:424
 msgid "You can’t drop more than one file on Poedit window."
 msgstr "คุณไม่สามารถวางไฟล์มากกว่าหนึ่งไฟล์ในหน้าต่าง Poedit"
 
-#: src/edframe.cpp:452
+#: src/edframe.cpp:431
 #, c-format
 msgid "File “%s” is not a translation file."
 msgstr "ไฟล์ “%s” ไม่ใช่ไฟล์ในการแปล"
 
-#: src/edframe.cpp:459 src/recent_files.cpp:349
+#: src/edframe.cpp:438 src/recent_files.cpp:342
 #, c-format
 msgid "File “%s” doesn’t exist."
 msgstr "ไม่มีไฟล์ \"%s\" อยู่"
 
-#: src/edframe.cpp:476
+#: src/edframe.cpp:455
 msgid "Poedit"
 msgstr "Poedit"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: src/edframe.cpp:890
+#: src/edframe.cpp:867
 #, c-format
-msgid "Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgid ""
+"Spellchecking is disabled, because the dictionary for %s isn’t installed."
 msgstr "การตรวจคำสะกดถูกปิดใช้งาน เนื่องจากไม่ได้ติดตั้งพจนานุกรมสำหรับภาษา %s"
 
-#: src/edframe.cpp:894
+#: src/edframe.cpp:871
 msgid "Install"
 msgstr "ติดตั้ง"
 
-#: src/edframe.cpp:986 src/edframe.cpp:1161
+#: src/edframe.cpp:963 src/edframe.cpp:1138
 #, c-format
 msgid "The file “%s” has been changed by another application."
 msgstr "ไฟล์ \"%s\" ถูกเปลี่ยนแปลงโดยแอปพลิเคชันอื่นแล้ว"
 
-#: src/edframe.cpp:987 src/edframe.cpp:991
+#: src/edframe.cpp:964 src/edframe.cpp:968
 msgid "Reload file"
 msgstr "โหลดไฟล์ซ้ำ"
 
-#: src/edframe.cpp:990
-msgid "Do you want to reload the file from disk? Your unsaved edits in Poedit will be lost if you do."
-msgstr "คุณต้องการรีโหลดไฟล์จากดิสก์หรือไม่? การแก้ไขที่ยังไม่บันทึกของคุณใน Poedit จะสูยหายหากคุณรีโหลด"
+#: src/edframe.cpp:967
+msgid ""
+"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
+"be lost if you do."
+msgstr ""
+"คุณต้องการรีโหลดไฟล์จากดิสก์หรือไม่? การแก้ไขที่ยังไม่บันทึกของคุณใน Poedit จะสูยหายหากคุณรีโหลด"
 
-#. TRANSLATORS: Button next to a QA warning: causes the warning to be dismissed
-#: src/edframe.cpp:991 src/editing_area.cpp:325 src/editing_area.cpp:377
+#: src/edframe.cpp:968
 msgid "Ignore"
 msgstr "เพิกเฉย"
 
-#: src/edframe.cpp:991
+#: src/edframe.cpp:968
 msgid "Reload File"
 msgstr "โหลดไฟล์ซ้ำ"
 
-#: src/edframe.cpp:1095
+#: src/edframe.cpp:1072
 msgid "The file has been modified. Do you want to save changes?"
 msgstr "ไฟล์ถูกเปลี่ยนแปลง คุณต้องการบันทึกการเปลี่ยนแปลงหรือไม่?"
 
-#: src/edframe.cpp:1096
+#: src/edframe.cpp:1073
 msgid "Save changes"
 msgstr "บันทึกการเปลี่ยนแปลง"
 
-#: src/edframe.cpp:1099
+#: src/edframe.cpp:1076
 msgid "Your changes will be lost if you don’t save them."
 msgstr "การเปลี่ยนแปลงของคุณจะสูญหายถ้าคุณไม่บันทึกไว้"
 
-#: src/edframe.cpp:1102 src/edframe.cpp:1162 src/sidebar_terminology.cpp:70
-#: src/wx_translatable_strings.h:115
+#: src/edframe.cpp:1079 src/edframe.cpp:1139 src/resources/toolbar.xrc:24
+#: src/resources/toolbar.xrc:29 src/wx_translatable_strings.h:115
 msgid "Save"
 msgstr "บันทึก"
 
-#: src/edframe.cpp:1104
+#: src/edframe.cpp:1081
 msgid "Do&n’t save"
 msgstr "&ไม่ต้องบันทึก"
 
-#: src/edframe.cpp:1106
+#: src/edframe.cpp:1083
 msgid "Don’t Save"
 msgstr "ไม่ต้องบันทึก"
 
-#: src/edframe.cpp:1165
+#: src/edframe.cpp:1142
 msgid "The changes made by the other application will be lost if you save."
 msgstr "การเปลี่ยนแปลงที่ทำโดยแอปพลิเคชันอื่นจะถูกละทิ้งและการเปลี่นแปลงนั้นจะสูญหาย"
 
-#: src/edframe.cpp:1166 src/edframe.cpp:2268 src/licensing_ui.cpp:284
-#: src/prefsdlg.cpp:770 src/prefsdlg.cpp:1103 src/resources/comment.xrc:41
-#: src/resources/manager.xrc:63 src/sidebar_terminology.cpp:73
+#: src/edframe.cpp:1143 src/prefsdlg.cpp:677 src/prefsdlg.cpp:964
+#: src/resources/comment.xrc:41 src/resources/manager.xrc:63
 #: src/wx_translatable_strings.h:94
 msgid "Cancel"
 msgstr "ยกเลิก"
 
-#: src/edframe.cpp:1166
+#: src/edframe.cpp:1143
 msgid "Save Anyway"
 msgstr "บันทึกต่อไป"
 
-#: src/edframe.cpp:1166
+#: src/edframe.cpp:1143
 msgid "Save anyway"
 msgstr "บันทึกต่อไป"
 
-#: src/edframe.cpp:1219
+#: src/edframe.cpp:1196
 msgid "Save as…"
 msgstr "บันทึกเป็น…"
 
-#: src/edframe.cpp:1268
+#: src/edframe.cpp:1245
 msgid "Compile to…"
 msgstr "คอมไพล์ไปยัง…"
 
-#: src/edframe.cpp:1271
+#: src/edframe.cpp:1248
 msgid "Compiled Translation Files"
 msgstr "ไฟล์การแปลที่คอมไพล์แล้ว"
 
-#: src/edframe.cpp:1312
+#: src/edframe.cpp:1289
 msgid "Export to HTML…"
 msgstr "ส่ง&ออกเป็น HTML…"
 
-#: src/edframe.cpp:1315
+#: src/edframe.cpp:1292
 msgid "HTML Files"
 msgstr "ไฟล์ HTML"
 
-#: src/edframe.cpp:1330
+#: src/edframe.cpp:1307
 msgid "Exporting to HTML"
 msgstr ""
 
-#: src/edframe.cpp:1364
-msgid "Export to Excel"
-msgstr "ส่งออกไปยัง Excel"
-
-#: src/edframe.cpp:1367 src/edframe.cpp:1401
-msgid "Excel Files"
-msgstr "ไฟล์ Excel"
-
-#: src/edframe.cpp:1379
-msgid "Exporting to Excel"
-msgstr ""
-
-#: src/edframe.cpp:1398
-msgid "Import from Excel"
-msgstr "นำเข้าจาก Excel"
-
-#: src/edframe.cpp:1423
-msgid "Importing from Excel"
-msgstr ""
-
-#. TRANSLATORS: %s is filename of Excel file
-#: src/edframe.cpp:1440
-#, c-format
-msgid "The “%s” file does not appear to contain any translations intended for this file."
-msgstr ""
-
-#: src/edframe.cpp:1445
-msgid "No translations were updated from the Excel file."
-msgstr ""
-
-#. TRANSLATORS: %s is a (formatted) number here
-#: src/edframe.cpp:1452
-#, c-format
-msgid "%s string was updated from the Excel file."
-msgid_plural "%s strings were updated from the Excel file."
-msgstr[0] ""
-
-#: src/edframe.cpp:1456
-msgid "Translations updated:"
-msgstr ""
-
-#: src/edframe.cpp:1457
-msgid "Strings matched in translation file:"
-msgstr ""
-
-#: src/edframe.cpp:1458
-msgid "Excel rows processed:"
-msgstr ""
-
-#: src/edframe.cpp:1779
+#: src/edframe.cpp:1607
 msgid "Updating failed"
 msgstr "การอัปเดตล้มเหลว"
 
-#: src/edframe.cpp:1852
+#: src/edframe.cpp:1674
 msgid "Open reference file"
 msgstr ""
 
-#: src/edframe.cpp:1883 src/resources/menus.xrc:267
+#: src/edframe.cpp:1708 src/resources/menus.xrc:235
 msgid "Update from &POT File…"
 msgstr "อัพเดตจากไ&ฟล์ POT…"
 
-#: src/edframe.cpp:1883 src/resources/menus.xrc:266
+#: src/edframe.cpp:1708 src/resources/menus.xrc:234
 msgid "Update from &POT file…"
 msgstr "อัพเดตจาก&ไฟล์ POT…"
 
-#: src/edframe.cpp:1887
-msgid "Update from Reference File…"
-msgstr ""
-
-#: src/edframe.cpp:1887
-msgid "Update from reference file…"
-msgstr ""
-
-#: src/edframe.cpp:2020
+#: src/edframe.cpp:1834
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "พบปัญหา %d รายการในการแปล"
 
-#: src/edframe.cpp:2025 src/edframe.cpp:2071
+#: src/edframe.cpp:1839 src/edframe.cpp:1885
 msgid "Validation results"
 msgstr "ผลการตรวจสอบ"
 
-#: src/edframe.cpp:2028
-msgid "Entries with errors were marked in red in the list. Details of the error will be shown when you select such an entry."
-msgstr "รายการที่มีข้อผิดพลาดจะถูกทำเครื่องหมายเป็นสีแดงไว้ในรายการ รายละเอียดของข้อผิดพลาดจะแสดงเมื่อคุณเลือกรายการดังกล่าว"
+#: src/edframe.cpp:1842
+msgid ""
+"Entries with errors were marked in red in the list. Details of the error "
+"will be shown when you select such an entry."
+msgstr ""
+"รายการที่มีข้อผิดพลาดจะถูกทำเครื่องหมายเป็นสีแดงไว้ในรายการ "
+"รายละเอียดของข้อผิดพลาดจะแสดงเมื่อคุณเลือกรายการดังกล่าว"
 
-#: src/edframe.cpp:2037
+#: src/edframe.cpp:1851
 msgid "The file was saved safely."
 msgstr "บันทึกไฟล์อย่างปลอดภัยแล้ว"
 
-#: src/edframe.cpp:2040
-msgid "The file was saved safely and compiled into the MO format, but it will probably not work correctly."
+#: src/edframe.cpp:1854
+msgid ""
+"The file was saved safely and compiled into the MO format, but it will "
+"probably not work correctly."
 msgstr "บันทึกไฟล์อย่างปลอดภัยและคอมไพล์ไฟล์เป็นรูปแบบ MO แล้ว แต่ไฟล์อาจทำงานอย่างไม่ถูกต้อง"
 
-#: src/edframe.cpp:2043
-msgid "The file was saved safely, but it cannot be compiled into the MO format and used."
-msgstr "บันทึกไฟล์อย่างปลอดภัยแล้ว แต่ไม่สามารถคอมไพล์เป็นรูปแบบ MO และไม่สามารถนำมาใช้งานได้"
+#: src/edframe.cpp:1857
+msgid ""
+"The file was saved safely, but it cannot be compiled into the MO format and "
+"used."
+msgstr ""
+"บันทึกไฟล์อย่างปลอดภัยแล้ว แต่ไม่สามารถคอมไพล์เป็นรูปแบบ MO และไม่สามารถนำมาใช้งานได้"
 
-#: src/edframe.cpp:2052
-msgid "The file was compiled into the MO format, but it will probably not work correctly."
+#: src/edframe.cpp:1866
+msgid ""
+"The file was compiled into the MO format, but it will probably not work "
+"correctly."
 msgstr "คอมไพล์ไฟล์เป็นรูปแบบ MO แล้ว แต่ไฟล์อาจทำงานอย่างไม่ถูกต้อง"
 
-#: src/edframe.cpp:2056
+#: src/edframe.cpp:1870
 msgid "The file cannot be compiled into the MO format and used."
 msgstr "ไม่สามารถคอมไพล์ไฟล์เป็นรูปแบบ MO และไม่สามารถนำมาใช้งานได้"
 
-#: src/edframe.cpp:2070
+#: src/edframe.cpp:1884
 msgid "No problems with the translation found."
 msgstr "ไม่พบปัญหาในการแปล"
 
-#: src/edframe.cpp:2080
+#: src/edframe.cpp:1894
 #, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural "The translation is ready for use, but %d entries are not translated yet."
+msgid_plural ""
+"The translation is ready for use, but %d entries are not translated yet."
 msgstr[0] "การแปลพร้อมใช้งานแล้ว แต่มีรายการที่ยังไม่ได้แปล %d รายการ"
 
-#: src/edframe.cpp:2085
+#: src/edframe.cpp:1899
 msgid "The translation is ready for use."
 msgstr "การแปลพร้อมใช้งานแล้ว"
 
-#: src/edframe.cpp:2251
-msgid "Translation Quality Warnings"
-msgstr "คำเตือนเกี่ยวกับคุณภาพการแปล"
-
-#: src/edframe.cpp:2254
-msgid "Poedit performs automated quality checks on translations. You can configure which categories of checks are useful for you and disable unwanted ones here."
-msgstr "Poedit จะทำการตรวจสอบคุณภาพของการแปลโดยอัตโนมัติ คุณสามารถกำหนดค่าหมวดหมู่ในการตรวจสอบที่คุณต้องการและปิดใช้งานหมวดหมู่ที่ไม่ต้องการได้ที่นี่"
-
-#: src/edframe.cpp:2265 src/resources/manager.xrc:55 src/sidebar_pro.cpp:1146
-#: src/wx_translatable_strings.h:108
-msgid "OK"
-msgstr "ตกลง"
-
-#: src/edframe.cpp:2510 src/prefsdlg.cpp:484 src/sidebar_pro.cpp:705
-msgid "Contributing translations improves the quality of online suggestions for everybody — the more people do it, the better the suggestions can be. Your translations are submitted anonymously and are available to other translators using Poedit or other CAT tools."
-msgstr "การร่วมแปลช่วยปรับปรุงคุณภาพของคำแนะนำออนไลน์สำหรับทุกคน ยิ่งมีคนร่วมแปลมากเท่าใด คำแนะนำยิ่งดีขึ้นเท่านั้น การแปลของคุณจะถูกส่งโดยไม่ระบุชื่อและจะสามารถใช้งานได้โดยผู้แปลคนอื่นๆ ที่ใช้ Poedit หรือเครื่องมือ CAT อื่นๆ"
-
-#: src/edframe.cpp:2515
-msgid "Can Poedit contribute your translations of this file to the online translation memory?"
-msgstr "Poedit สามารถนำการแปลของคุณที่อยู่ในไฟล์นี้ไปเก็บไว้ในหน่วยความจำการแปลออนไลน์ได้หรือไม่"
-
-#. TRANSLATORS: Try to keep this as short as the original. If you can't, break it into two lines.
-#: src/edframe.cpp:2519 src/sidebar_pro.cpp:701
-msgid "Apply to all files I edit"
-msgstr "นำไปใช้กับไฟล์ทั้งหมดที่ฉันแก้ไข"
-
-#: src/edframe.cpp:2520
-msgid "Contribute"
-msgstr "ร่วมให้ข้อมูล"
-
-#: src/edframe.cpp:2527
-msgid "Keep Private"
-msgstr "เก็บเป็นส่วนตัว"
-
-#: src/edframe.cpp:2527
-msgid "Keep private"
-msgstr "เก็บเป็นส่วนตัว"
-
-#: src/edframe.cpp:2686
+#: src/edframe.cpp:2294
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr "Poedit ได้แก้ไขเนื้อหาที่ไม่ถูกต้องในไฟล์ “%s” โดยอัตโนมัติแล้ว"
 
-#: src/edframe.cpp:2691
-msgid "The file contained duplicate items, which is not allowed in PO files and would prevent the file from being used. Poedit fixed the issue, but you should review translations of any items marked as needing work and correct them if necessary."
-msgstr "ไฟล์นี้ประกอบด้วยรายการที่ซ้ำกัน ซึ่งไม่สามารถมีในไฟล์ PO และอาจทำให้ไฟล์ดังกล่าวไม่สามารถนำมาใช้งานได้ Poedit จึงได้แก้ไขปัญหาไว้แล้ว แต่คุณก็ควรจะตรวจทานการแปลรายการบางรายการที่ถูกทำเครื่องหมายว่าต้องการตรวจทานและแก้ไขให้ถูกต้องเมื่อจำเป็น"
+#: src/edframe.cpp:2299
+msgid ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as needing work and correct "
+"them if necessary."
+msgstr ""
+"ไฟล์นี้ประกอบด้วยรายการที่ซ้ำกัน ซึ่งไม่สามารถมีในไฟล์ PO "
+"และอาจทำให้ไฟล์ดังกล่าวไม่สามารถนำมาใช้งานได้ Poedit จึงได้แก้ไขปัญหาไว้แล้ว "
+"แต่คุณก็ควรจะตรวจทานการแปลรายการบางรายการที่ถูกทำเครื่องหมายว่าต้องการตรวจทานและแก้ไขให้ถูกต้องเมื่อจำเป็น"
 
-#: src/edframe.cpp:2707
+#: src/edframe.cpp:2315
 msgid "Language of the translation isn’t set."
 msgstr "ไม่ได้กำหนดภาษาการแปล"
 
-#: src/edframe.cpp:2709
+#: src/edframe.cpp:2317
 msgid "Set Language"
 msgstr "กำหนดภาษา"
 
-#: src/edframe.cpp:2709
+#: src/edframe.cpp:2317
 msgid "Set language"
 msgstr "กำหนดภาษา"
 
 #. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-#: src/edframe.cpp:2712 src/edframe.cpp:2728
-msgid "Suggestions are not available if the translation language is not set correctly. Other features, such as plural forms, may be affected as well."
-msgstr "คำแนะนำจะไม่สามารถใช้งานได้ถ้าคุณไม่ได้กำหนดภาษาการแปลอย่างถูกต้อง โดยอาจมีผลกระทบต่อคุณสมบัติอื่นๆ ด้วย อย่างเช่นรูปแบบพหูพจน์ ฯลฯ"
+#: src/edframe.cpp:2320 src/edframe.cpp:2336
+msgid ""
+"Suggestions are not available if the translation language is not set "
+"correctly. Other features, such as plural forms, may be affected as well."
+msgstr ""
+"คำแนะนำจะไม่สามารถใช้งานได้ถ้าคุณไม่ได้กำหนดภาษาการแปลอย่างถูกต้อง "
+"โดยอาจมีผลกระทบต่อคุณสมบัติอื่นๆ ด้วย อย่างเช่นรูปแบบพหูพจน์ ฯลฯ"
 
-#: src/edframe.cpp:2726 src/pretranslate.cpp:512
+#: src/edframe.cpp:2334
 msgid "Language of the translation is the same as source language."
 msgstr "ภาษาการแปลเหมือนกับภาษาต้นฉบับ"
 
-#: src/edframe.cpp:2729
+#: src/edframe.cpp:2337
 msgid "Fix Language"
 msgstr "แก้ไขภาษา"
 
-#: src/edframe.cpp:2729
+#: src/edframe.cpp:2337
 msgid "Fix language"
 msgstr "แก้ไขภาษา"
 
-#: src/edframe.cpp:2746
-msgid "This file has entries with plural forms, but doesn’t have Plural-Forms header configured."
+#: src/edframe.cpp:2354
+msgid ""
+"This file has entries with plural forms, but doesn’t have Plural-Forms "
+"header configured."
 msgstr "ไฟล์นี้มีรายการที่มีรูปแบบพหูพจน์ แต่ไม่ได้กำหนดค่าส่วนหัว Plural-Forms ไว้"
 
-#: src/edframe.cpp:2750
-msgid "Entries in this file have different plural forms count from what the file’s Plural-Forms header says"
-msgstr "รายการในไฟล์นี้มีการนับรูปแบบพหูพจน์แตกต่างจากที่กำหนดไว้ในส่วนหัว Plural-Forms ของไฟล์"
+#: src/edframe.cpp:2358
+msgid ""
+"Entries in this file have different plural forms count from what the file’s "
+"Plural-Forms header says"
+msgstr ""
+"รายการในไฟล์นี้มีการนับรูปแบบพหูพจน์แตกต่างจากที่กำหนดไว้ในส่วนหัว Plural-Forms ของไฟล์"
 
-#: src/edframe.cpp:2759
+#: src/edframe.cpp:2367
 msgid "Required header Plural-Forms is missing."
 msgstr "ส่วนหัว Plural-Forms ที่จำเป็นไม่มีอยู่"
 
-#: src/edframe.cpp:2763
+#: src/edframe.cpp:2371
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "ไวยากรณ์ผิดพลาดในส่วนหัว Plural-Forms (\"%s\")"
 
-#: src/edframe.cpp:2775
+#: src/edframe.cpp:2383
 msgid "Fix the Header"
 msgstr "แก้ไขส่วนหัว"
 
-#: src/edframe.cpp:2775
+#: src/edframe.cpp:2383
 msgid "Fix the header"
 msgstr "แก้ไขส่วนหัว"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: src/edframe.cpp:2793
+#: src/edframe.cpp:2401
 #, c-format
 msgid "Plural forms expression used by the file is unusual for %s."
 msgstr "นิพจน์รูปแบบพหูพจน์ที่ใช้โดยไฟล์ผิดปกติสำหรับ %s"
 
 #. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
-#: src/edframe.cpp:2798
+#: src/edframe.cpp:2406
 msgid "Review"
 msgstr "ตรวจทาน"
 
-#. TRANSLATORS: "original" as in "used in this file originally, as it was when opened"
-#: src/edframe.cpp:2834
-msgid "String IDs (original)"
-msgstr "รหัสสตริง (ต้นฉบับ)"
-
-#: src/edframe.cpp:2839 src/edframe.cpp:2942 src/edlistctrl.cpp:739
-#: src/export_html.cpp:146
-msgid "unknown language"
-msgstr "ภาษาที่ไม่รู้จัก"
-
-#. TRANSLATORS: "original" as in "used in this file originally, as it was when opened"; "%s" is language name
-#: src/edframe.cpp:2841
-#, c-format
-msgid "%s (original)"
-msgstr "%s (ต้นฉบับ)"
-
-#: src/edframe.cpp:2853
-msgid "Load from Another File…"
-msgstr "โหลดจากไฟล์อื่น…"
-
-#: src/edframe.cpp:2853
-msgid "Load from another file…"
-msgstr "โหลดจากไฟล์อื่น…"
-
-#: src/edframe.cpp:2897
+#: src/edframe.cpp:2450
 msgid "Would you like to use English for source text?"
 msgstr "คุณต้องการใช้ภาษาอังกฤษสำหรับข้อความต้นฉบับหรือไม่?"
 
-#: src/edframe.cpp:2899
+#: src/edframe.cpp:2452
 #, c-format
-msgid "This file uses string IDs instead of source text. Poedit can load English texts from the “%s” file for you."
-msgstr "ไฟล์นี้ใช้รหัสสตริงแทนข้อความต้นฉบับ Poedit สามารถโหลดข้อความภาษาอังกฤษจากไฟล์ “%s” ให้คุณได้"
+msgid ""
+"This file uses string IDs instead of source text. Poedit can load English "
+"texts from the “%s” file for you."
+msgstr ""
+"ไฟล์นี้ใช้รหัสสตริงแทนข้อความต้นฉบับ Poedit สามารถโหลดข้อความภาษาอังกฤษจากไฟล์ “%s” "
+"ให้คุณได้"
 
 #. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
-#: src/edframe.cpp:2901
+#: src/edframe.cpp:2454
 msgid "Load English"
 msgstr "โหลดภาษาอังกฤษ"
 
-#: src/edframe.cpp:3034 src/export_html.cpp:103
+#: src/edframe.cpp:2555 src/export_html.cpp:103
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
 msgstr "แปลแล้ว: %d จาก %d (%d %%)"
 
-#: src/edframe.cpp:3038 src/export_html.cpp:105
+#: src/edframe.cpp:2559 src/export_html.cpp:105
 #, c-format
 msgid "Remaining: %d"
 msgstr "คงเหลือ: %d"
 
-#: src/edframe.cpp:3043
+#: src/edframe.cpp:2564
 #, c-format
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "ข้อผิดพลาด %d รายการ"
 
-#: src/edframe.cpp:3048 src/export_html.cpp:117
+#: src/edframe.cpp:2569 src/export_html.cpp:117
 #, c-format
 msgid "%d entry"
 msgid_plural "%d entries"
 msgstr[0] "%d รายการ"
 
-#: src/edframe.cpp:3077
+#: src/edframe.cpp:2598
 msgid " (unsaved)"
 msgstr " (ยังไม่ได้บันทึก)"
 
-#: src/edframe.cpp:3118
+#: src/edframe.cpp:2639
 msgid " (modified)"
 msgstr " (ถูกแก้ไข)"
 
-#: src/edframe.cpp:3188 src/edframe.cpp:3192
+#: src/edframe.cpp:2707 src/edframe.cpp:2711
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "ไม่สามารถอัพเดตหน่วยความจำการแปล: %s"
 
-#: src/edframe.cpp:3220
+#: src/edframe.cpp:2739
 #, c-format
 msgid "The file “%s” couldn’t be saved."
 msgstr ""
 
-#: src/edframe.cpp:3330 src/resources/menus.xrc:288
+#: src/edframe.cpp:2849 src/resources/menus.xrc:252
 msgid "Remove same-as-source translations"
 msgstr "ลบการแปลที่มีแหล่งที่มาเดียวกัน"
 
-#: src/edframe.cpp:3332
-msgid "Do you want to remove all translations that are idential to the source text?"
+#: src/edframe.cpp:2851
+msgid ""
+"Do you want to remove all translations that are idential to the source text?"
 msgstr "คุณต้องการลบคำแปลทั้งหมดที่เหมือนกับข้อความต้นฉบับหรือไม่"
 
-#: src/edframe.cpp:3333
-msgid "This action will delete any translations that match the source text exactly. This cannot be undone."
+#: src/edframe.cpp:2852
+msgid ""
+"This action will delete any translations that match the source text exactly. "
+"This cannot be undone."
 msgstr "การดำเนินการนี้จะลบคำแปลใดๆ ที่ตรงกับข้อความต้นฉบับพอดี ซึ่งไม่สามารถย้อนกลับได้"
 
-#: src/edframe.cpp:3337 src/edframe.cpp:3364
+#: src/edframe.cpp:2856 src/edframe.cpp:2883
 msgid "Keep"
 msgstr "เก็บไว้"
 
-#: src/edframe.cpp:3337
+#: src/edframe.cpp:2856
 msgid "Remove"
 msgstr "ลบออก"
 
-#: src/edframe.cpp:3356
+#: src/edframe.cpp:2875
 msgid "Purge deleted translations"
 msgstr "ล้างข้อมูลการแปลที่ลบไปแล้ว"
 
-#: src/edframe.cpp:3358
+#: src/edframe.cpp:2877
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr "คุณต้องการลบการแปลทั้งหมดที่ไม่ได้ใช้งานอีกต่อไปหรือไม่"
 
-#: src/edframe.cpp:3360
-msgid "If you continue with purging, all translations marked as deleted will be permanently removed. You will have to translate them again if they are added back in the future."
-msgstr "ถ้าคุณดำเนินการล้างข้อมูลต่อไป การแปลทั้งหมดที่ทำเครื่องหมายว่าลบแล้วจะถูกเอาออกอย่างถาวร ถ้ามีการนำข้อความเหล่านี้กลับมาใช้อีกในอนาคต คุณจะต้องแปลข้อความเหล่านี้ใหม่"
+#: src/edframe.cpp:2879
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"ถ้าคุณดำเนินการล้างข้อมูลต่อไป การแปลทั้งหมดที่ทำเครื่องหมายว่าลบแล้วจะถูกเอาออกอย่างถาวร "
+"ถ้ามีการนำข้อความเหล่านี้กลับมาใช้อีกในอนาคต คุณจะต้องแปลข้อความเหล่านี้ใหม่"
 
-#: src/edframe.cpp:3364
+#: src/edframe.cpp:2883
 msgid "Purge"
 msgstr "ล้างข้อมูล"
 
-#: src/edframe.cpp:3432 src/resources/menus.xrc:113
+#: src/edframe.cpp:2940 src/resources/menus.xrc:99
 msgid "Copy from source text"
 msgstr "คัดลอกจากข้อความต้นฉบับ"
 
-#: src/edframe.cpp:3434 src/resources/menus.xrc:114
+#: src/edframe.cpp:2942 src/resources/menus.xrc:100
 msgid "Copy from Source Text"
 msgstr "คัดลอกจากข้อความต้นฉบับ"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
-#: src/edframe.cpp:3436 src/edframe.cpp:3443 src/edframe.cpp:3451
-#: src/sidebar.cpp:422 src/sidebar.cpp:835 src/sidebar.cpp:861
-#: src/sidebar.cpp:863 src/wx_translatable_strings.h:123
+#: src/edframe.cpp:2944 src/edframe.cpp:2951 src/edframe.cpp:2959
+#: src/sidebar.cpp:360 src/sidebar.cpp:727 src/sidebar.cpp:752
+#: src/sidebar.cpp:754 src/wx_translatable_strings.h:123
 msgctxt "keyboard key"
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
-#: src/edframe.cpp:3439 src/resources/menus.xrc:108
+#: src/edframe.cpp:2947 src/resources/menus.xrc:94
 msgid "Clear translation"
 msgstr "ล้างการแปล"
 
-#: src/edframe.cpp:3441 src/resources/menus.xrc:109
+#: src/edframe.cpp:2949 src/resources/menus.xrc:95
 msgid "Clear Translation"
 msgstr "ล้างการแปล"
 
-#: src/edframe.cpp:3446 src/resources/comment.xrc:4 src/sidebar.cpp:251
+#: src/edframe.cpp:2954 src/resources/comment.xrc:4 src/sidebar.cpp:246
 msgid "Edit comment"
 msgstr "แก้ไขคำแนะนำ"
 
-#: src/edframe.cpp:3448 src/sidebar.cpp:254
+#: src/edframe.cpp:2956 src/sidebar.cpp:249
 msgid "Edit Comment"
 msgstr "แก้ไขคำแนะนำ"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
-#: src/edframe.cpp:3459 src/fileviewer.cpp:100
+#: src/edframe.cpp:2967 src/fileviewer.cpp:100
 msgid "Code Occurrences"
 msgstr "ตำแหน่งที่พบในรหัส"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
-#: src/edframe.cpp:3459
+#: src/edframe.cpp:2967
 msgid "Code occurrences"
 msgstr "ตำแหน่งที่พบในรหัส"
 
-#: src/edframe.cpp:3683
+#: src/edframe.cpp:3191
 msgid "Hide Sidebar"
 msgstr "ซ่อนแถบด้านข้าง"
 
-#: src/edframe.cpp:3685 src/resources/menus.xrc:242
+#: src/edframe.cpp:3193 src/resources/menus.xrc:214
 msgid "Show Sidebar"
 msgstr "แสดงแถบด้านข้าง"
 
-#: src/edframe.cpp:3716
+#: src/edframe.cpp:3224
 msgid "Hide Status Bar"
 msgstr "ซ่อนแถบสถานะ"
 
-#: src/edframe.cpp:3718 src/resources/menus.xrc:248
+#: src/edframe.cpp:3226 src/resources/menus.xrc:220
 msgid "Show Status Bar"
 msgstr "แสดงแถบสถานะ"
 
-#: src/editing_area.cpp:326
-msgid "Dismiss and ignore the warning."
-msgstr "ปิดและเพิกเฉยคำเตือน"
-
-#. TRANSLATORS: Reverse of the "Ignore" button, undoes that action
-#: src/editing_area.cpp:377
-msgid "Don’t ignore"
-msgstr "อย่าเพิกเฉย"
-
-#: src/editing_area.cpp:411
+#: src/editing_area.cpp:354
 msgid "String length in characters: translation | source"
 msgstr "ความยาวสตริงในหน่วยอักขระ: การแปล | ต้นฉบับ"
 
-#: src/editing_area.cpp:414
+#: src/editing_area.cpp:357
 msgid "String length in characters"
 msgstr "ความยาวสตริงในหน่วยอักขระ"
 
-#: src/editing_area.cpp:461 src/editing_area.cpp:787 src/edlistctrl.cpp:663
+#: src/editing_area.cpp:404 src/editing_area.cpp:715 src/edlistctrl.cpp:663
 #: src/edlistctrl.cpp:717 src/export_html.cpp:143
 msgid "Source text"
 msgstr "ข้อความต้นฉบับ"
 
-#: src/editing_area.cpp:483 src/editing_area.cpp:853 src/editing_area.cpp:869
+#: src/editing_area.cpp:426 src/editing_area.cpp:781 src/editing_area.cpp:797
 msgid "Singular"
 msgstr "เอกพจน์"
 
-#: src/editing_area.cpp:488 src/editing_area.cpp:874
+#: src/editing_area.cpp:431 src/editing_area.cpp:802
 msgid "Plural"
 msgstr "พหูพจน์"
 
-#: src/editing_area.cpp:534 src/sidebar_terminology.cpp:57
-#: src/sidebar_terminology.cpp:186 src/statistics.cpp:284
-#: src/statistics.cpp:411
+#: src/editing_area.cpp:477
 msgid "Translation"
 msgstr "การแปล"
 
-#: src/editing_area.cpp:543
+#: src/editing_area.cpp:486
 msgid "Pre-translated"
 msgstr "แปลล่วงหน้าแล้ว"
 
-#: src/editing_area.cpp:566
+#: src/editing_area.cpp:509
 msgid "Needs Work"
 msgstr "ต้องการตรวจทาน"
 
@@ -1201,78 +1048,80 @@ msgstr "ต้องการตรวจทาน"
 #. "needs review" implies that somebody else should review the string after
 #. I am done with it (i.e. consider it good), while "needs work" implies I
 #. need to return to it and finish the translation.
-#: src/editing_area.cpp:566
+#: src/editing_area.cpp:509
 msgid "Needs work"
 msgstr "ต้องการตรวจทาน"
 
-#: src/editing_area.cpp:638
-msgid "POT files are only templates and don’t contain any translations themselves.\n"
+#: src/editing_area.cpp:566
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
-msgstr "ไฟล์ POT เป็นเพียงแม่แบบเท่านั้นและไม่ประกอบด้วยการแปลใดๆ\n"
+msgstr ""
+"ไฟล์ POT เป็นเพียงแม่แบบเท่านั้นและไม่ประกอบด้วยการแปลใดๆ\n"
 "เมื่อต้องการทำการแปล ให้สร้างไฟล์ PO ใหม่โดยยึดตามแม่แบบ"
 
-#: src/editing_area.cpp:645
+#: src/editing_area.cpp:573
 msgid "Create new translation"
 msgstr "สร้างการแปลใหม่"
 
-#: src/editing_area.cpp:646
+#: src/editing_area.cpp:574
 msgid "Make a new translation from this POT file."
 msgstr "สร้างการแปลใหม่จากไฟล์ POT นี้"
 
 #. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
-#: src/editing_area.cpp:785 src/edlistctrl.cpp:711 src/export_html.cpp:137
+#: src/editing_area.cpp:713 src/edlistctrl.cpp:711 src/export_html.cpp:137
 msgid "Source text ID"
 msgstr "รหัสข้อความต้นฉบับ"
 
-#: src/editing_area.cpp:840
+#: src/editing_area.cpp:768
 msgid "Everything"
 msgstr "ทุกอย่าง"
 
-#: src/editing_area.cpp:845
+#: src/editing_area.cpp:773
 #, c-format
 msgid "Form %i"
 msgstr "ฟอร์ม %i"
 
-#: src/editing_area.cpp:847
+#: src/editing_area.cpp:775
 #, c-format
 msgid "Form %i (unused)"
 msgstr "แบบฟอร์ม %i (ไม่ได้ใช้งาน)"
 
-#: src/editing_area.cpp:858
+#: src/editing_area.cpp:786
 msgid "Zero"
 msgstr "ศูนย์"
 
-#: src/editing_area.cpp:860
+#: src/editing_area.cpp:788
 msgid "One"
 msgstr "หนึ่ง"
 
-#: src/editing_area.cpp:862
+#: src/editing_area.cpp:790
 msgid "Two"
 msgstr "สอง"
 
-#: src/editing_area.cpp:876
+#: src/editing_area.cpp:804
 msgid "Other"
 msgstr "อื่นๆ"
 
 #. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
-#: src/editing_area.cpp:1060
+#: src/editing_area.cpp:988
 #, c-format
 msgid "String context: %s"
 msgstr "บริบทสตริง: %s"
 
 #. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
-#: src/editing_area.cpp:1067
+#: src/editing_area.cpp:995
 #, c-format
 msgid "String identifier: %s"
 msgstr "ตัวระบุสตริง: %s"
 
-#: src/editing_area.cpp:1075
+#: src/editing_area.cpp:1003
 #, c-format
 msgid "%s Format"
 msgstr "รูปแบบ %s"
 
 #. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
-#: src/editing_area.cpp:1075
+#: src/editing_area.cpp:1003
 #, c-format
 msgid "%s format"
 msgstr "รูปแบบ %s"
@@ -1291,6 +1140,10 @@ msgstr "ID"
 msgid "Source text — %s"
 msgstr "ข้อความต้นฉบับ — %s"
 
+#: src/edlistctrl.cpp:739 src/export_html.cpp:146
+msgid "unknown language"
+msgstr "ภาษาที่ไม่รู้จัก"
+
 #: src/errors.cpp:84
 #, c-format
 msgid "Network error: %s (%d)"
@@ -1300,48 +1153,7 @@ msgstr "ข้อผิดพลาดของเครือข่าย: %s (
 msgid "Unknown error"
 msgstr "ข้อผิดพลาดที่ไม่รู้จัก"
 
-#: src/excel_io.cpp:261 src/excel_io.cpp:298 src/excel_io.cpp:302
-msgid "Failed to create the Excel file."
-msgstr "ไม่สามารถสร้างไฟล์ Excel ได้"
-
-#: src/excel_io.cpp:351 src/excel_io.cpp:395 src/excel_io.cpp:419
-msgid "Failed to import from Excel file."
-msgstr "ไม่สามารถนำเข้าจากไฟล์ Excel ได้"
-
-#: src/excel_io.cpp:428
-msgid "Excel Import"
-msgstr "นำเข้า Excel"
-
-#. TRANSLATORS: Shown above a list of columns and their meaning
-#: src/excel_io.cpp:442
-msgid "Import from Excel columns as:"
-msgstr "นำเข้าจากคอลัมน์ Excel เป็น:"
-
-#: src/excel_io.cpp:452
-msgid "ID:"
-msgstr "ID:"
-
-#: src/excel_io.cpp:460
-msgid "Context:"
-msgstr "บริบท:"
-
-#: src/excel_io.cpp:467
-msgid "Source text ID:"
-msgstr "ID ข้อความต้นฉบับ:"
-
-#: src/excel_io.cpp:467
-msgid "Source text:"
-msgstr "ข้อความต้นฉบับ:"
-
-#: src/excel_io.cpp:478
-msgid "Translation:"
-msgstr "การแปลภาษา"
-
-#: src/excel_io.cpp:485 src/sidebar_terminology.cpp:192
-msgid "Import"
-msgstr "นําเข้า"
-
-#: src/extractors/extractor.cpp:373
+#: src/extractors/extractor.cpp:366
 msgid "Failed to merge gettext catalogs."
 msgstr "การผสานแค็ตตาล็อก gettext ล้มเหลว"
 
@@ -1354,7 +1166,9 @@ msgid "Open in editor"
 msgstr "เปิดในตัวแก้ไข"
 
 #: src/fileviewer.cpp:256
-msgid "No information about this string’s occurrences in the source code is provided in the file."
+msgid ""
+"No information about this string’s occurrences in the source code is "
+"provided in the file."
 msgstr "ไม่มีข้อมูลเกี่ยวกับตำแหน่งที่พบของสตริงนี้ในรหัสต้นฉบับในไฟล์"
 
 #: src/fileviewer.cpp:256
@@ -1367,25 +1181,30 @@ msgid "%d code occurrence"
 msgid_plural "%d code occurrences"
 msgstr[0] "ตำแหน่งที่พบในรหัส %d ตำแหน่ง"
 
-#: src/fileviewer.cpp:283
+#: src/fileviewer.cpp:282
 msgid "Source code not found"
 msgstr "ไม่พบรหัสต้นฉบับ"
 
-#: src/fileviewer.cpp:284
-msgid "Poedit cannot show source code where the string is used, because the file is either not available in the referenced location or it is a symbolic reference that doesn’t point to a real file."
-msgstr "Poedit ไม่สามารถแสดงรหัสต้นฉบับส่วนที่ใช้สตริงได้ เนื่องจากไม่มีไฟล์ในตำแหน่งที่อ้างอิง หรือเป็นการอ้างอิงแบบสัญลักษณ์ที่ไม่ชี้ไปยังไฟล์จริง"
+#: src/fileviewer.cpp:283
+msgid ""
+"Poedit cannot show source code where the string is used, because the file is "
+"either not available in the referenced location or it is a symbolic "
+"reference that doesn’t point to a real file."
+msgstr ""
+"Poedit ไม่สามารถแสดงรหัสต้นฉบับส่วนที่ใช้สตริงได้ เนื่องจากไม่มีไฟล์ในตำแหน่งที่อ้างอิง "
+"หรือเป็นการอ้างอิงแบบสัญลักษณ์ที่ไม่ชี้ไปยังไฟล์จริง"
 
-#: src/fileviewer.cpp:298
+#: src/fileviewer.cpp:297
 msgid "File cannot be opened"
 msgstr "ไม่สามารถเปิดไฟล์"
 
-#: src/fileviewer.cpp:299
+#: src/fileviewer.cpp:298
 #, c-format
 msgid "Poedit was unable to open the “%s” file."
 msgstr "Poedit ไม่สามารถเปิดไฟล์ “%s”"
 
 #: src/findframe.cpp:83 src/findframe.cpp:101 src/findframe.cpp:300
-#: src/resources/menus.xrc:156
+#: src/resources/menus.xrc:142
 msgid "Find"
 msgstr "ค้นหา"
 
@@ -1458,452 +1277,144 @@ msgstr ""
 msgid "error: "
 msgstr ""
 
-#: src/glossary.cpp:273 src/glossary.cpp:277
-msgid "Failed to read the CSV file."
-msgstr "ไม่สามารถอ่านไฟล์ CSV ได้"
-
 #. TRANSLATORS: placeholder/hint in language controls
 #: src/languagectrl.cpp:138
 msgid "Language name or code"
 msgstr "ชื่อภาษาหรือรหัส"
 
-#: src/languagectrl.cpp:210
+#: src/languagectrl.cpp:208
 msgid "Translation Language"
 msgstr "ภาษาการแปล"
 
-#: src/languagectrl.cpp:217
+#: src/languagectrl.cpp:215
 msgid "Language of the translation:"
 msgstr "ภาษาของการแปล:"
 
-#: src/licensing.cpp:196 src/licensing.cpp:206
-msgid "Invalid license key"
-msgstr "คีย์ใบอนุญาตไม่ถูกต้อง"
-
-#: src/licensing.cpp:211
-msgid "Subscription expired"
-msgstr "การสมัครสมาชิกหมดอายุแล้ว"
-
-#: src/licensing.cpp:218
-#, c-format
-msgid "App updates expired, license is only valid for version %s"
-msgstr "การอัปเดตแอปหมดอายุแล้ว ใบอนุญาตใช้ได้เฉพาะเวอร์ชัน %s เท่านั้น"
-
-#: src/licensing.cpp:224
-#, c-format
-msgid "License key only valid for older Poedit version (%s)"
-msgstr "คีย์ใบอนุญาตสามารถใช้ได้กับ Poedit เวอร์ชั่นเก่าเท่านั้น (%s)"
-
-#: src/licensing.cpp:231
-msgid "Maximum allowed activations exceeded"
-msgstr "เกินจำนวนการเปิดใช้งานสูงสุดแล้ว"
-
-#: src/licensing.cpp:236 src/licensing.cpp:263
-#, c-format
-msgid "Unknown activation error (%s)"
-msgstr "ข้อผิดพลาดการเปิดใช้งานที่ไม่รู้จัก (%s)"
-
-#: src/licensing_ui.cpp:92 src/licensing_ui.cpp:97 src/licensing_ui.cpp:859
-#: src/licensing_ui.cpp:872 src/licensing_ui.cpp:884
-msgid "Poedit Activation"
-msgstr "การเปิดใช้งาน Poedit"
-
-#: src/licensing_ui.cpp:92 src/licensing_ui.cpp:102
-#: src/marketing_services.cpp:49 src/wx/main_toolbar.cpp:155
-#: src/wx/main_toolbar.cpp:182
-msgid "Upgrade to Pro"
-msgstr "อัพเกรดเป็นรุ่นโปร"
-
-#: src/licensing_ui.cpp:248
-msgid "Please enter your license key:"
-msgstr "โปรดป้อนไลเซนล์คีย์ของคุณที่นี่:"
-
-#: src/licensing_ui.cpp:257
-msgid "You should find your key in the confirmation email you received after you purchased Poedit. Activation requires internet connection."
-msgstr "คุณควรจะพบคีย์ของคุณในอีเมลยืนยันที่คุณได้รับหลังจากซื้อ Poedit การเปิดใช้งานต้องการการเชื่อมต่ออินเทอร์เน็ต"
-
-#: src/licensing_ui.cpp:262
-msgid "Retrieve lost license key"
-msgstr "เรียกคืนคีย์ใบอนุญาตที่หายไป"
-
-#: src/licensing_ui.cpp:271
-msgid "Buy Online…"
-msgstr "ซื้อออนไลน์…"
-
-#: src/licensing_ui.cpp:271
-msgid "Buy online…"
-msgstr "ซื้อออนไลน์…"
-
-#: src/licensing_ui.cpp:286 src/licensing_ui.cpp:290
-msgid "Activate"
-msgstr "เปิดใช้งาน"
-
-#: src/licensing_ui.cpp:316
-msgid "Activating your license…"
-msgstr "กำลังเปิดใช้งานใบอนุญาตของคุณ…"
-
-#: src/licensing_ui.cpp:327
-msgid "Would you like to hear about new versions?"
-msgstr "คุณต้องการรับการแจ้งเตือนเมื่อมีเวอร์ชั่นใหม่หรือไม่?"
-
-#: src/licensing_ui.cpp:328
-msgid "We’ll send you an email when a new major version is released. No marketing, no spammy newsletters. Just very rare heads-up about new versions."
-msgstr "เราจะส่งอีเมลถึงคุณเมื่อเวอร์ชั่นหลักใหม่เปิดตัวแล้ว เราจะไม่ส่งข้อมูลเกี่ยวกับการตลาดหรือข้อมูลที่เป็นสแปม แต่จะส่งเพียงข่าวเกี่ยวกับเวอร์ชั่นใหม่ให้คุณ"
-
-#: src/licensing_ui.cpp:331 src/licensing_ui.cpp:690
-msgid "No, thanks"
-msgstr "ไม่ ขอบคุณ"
-
-#: src/licensing_ui.cpp:331
-msgid "Notify me"
-msgstr "แจ้งเตือนฉัน"
-
-#: src/licensing_ui.cpp:358
-msgid "Upgrade your Pro license"
-msgstr "อัปเกรดใบอนุญาตของคุณเป็นแบบ Pro"
-
-#: src/licensing_ui.cpp:377
-msgid "Renew your license"
-msgstr "ต่ออายุใบอนุญาตของคุณ"
-
-#: src/licensing_ui.cpp:395
-msgid "Add more devices"
-msgstr "เพิ่มอุปกรณ์เพิ่มเติม"
-
-#: src/licensing_ui.cpp:440
-msgid "Thank you!"
-msgstr "ขอบคุณ!"
-
-#: src/licensing_ui.cpp:446
-msgid "Your copy is upgraded to Poedit Pro."
-msgstr "สำเนาของคุณได้ถูกอัปเกรดเป็น Poedit Pro แล้ว"
-
-#: src/licensing_ui.cpp:450 src/licensing_ui.cpp:454
-msgid "Manage License"
-msgstr "จัดการสิทธิ์การใช้งาน"
-
-#: src/licensing_ui.cpp:454
-msgid "Manage license"
-msgstr "จัดการสิทธิ์การใช้งาน"
-
-#. TRANSLATORS: "Renew" as a verb meaning making something that stopped working (a subscription) work again by prolonging it for another period.
-#: src/licensing_ui.cpp:479 src/licensing_ui.cpp:862 src/licensing_ui.cpp:875
-#: src/licensing_ui.cpp:1161
-msgid "Renew"
-msgstr "ต่ออายุ"
-
-#: src/licensing_ui.cpp:497
-msgid "Deactivate"
-msgstr "ปิดการใช้งาน"
-
-#: src/licensing_ui.cpp:509
-msgid "Deactivating your license…"
-msgstr "กำลังปิดการใช้งานใบอนุญาตของคุณ…"
-
-#: src/licensing_ui.cpp:567
-msgid "Upgrade to Poedit Pro to Unlock WordPress Extras"
-msgstr "อัปเกรดเป็น Poedit Pro เพื่อปลดล็อค WordPress Extras"
-
-#: src/licensing_ui.cpp:568 src/licensing_ui.cpp:589
-msgid "Upgrade to take advantage of Pro’s extra smarts: it understands WordPress themes and plugins and sets everything up for you. You can focus on translating and don’t have to worry about the technical details. With the free version, you would have to do everything manually yourself."
-msgstr "อัปเกรดเพื่อใช้ประโยชน์สูงสุดในเวอร์ชั่น Pro: คุณสามารถใช้ธีมและปลั๊กอิน WordPress ได้โดยที่โปรแกรมจะตั้งค่าทุกอย่างให้คุณเอง และคุณสามารถทำการแปลได้โดยที่ไม่ต้องกังวลเกี่ยวกับรายละเอียดทางเทคนิคใดๆ แต่ในเวอร์ชั่นฟรี คุณจะต้องทำทุกอย่างนี้ด้วยตนเอง"
-
-#: src/licensing_ui.cpp:571
-msgid "Upgrade to Poedit Pro to Unlock Statistics"
-msgstr "อัปเกรดเป็น Poedit Pro เพื่อปลดล็อคสถิติ"
-
-#: src/licensing_ui.cpp:574
-msgid "Upgrade to Poedit Pro to Unlock Online Suggestions"
-msgstr "อัปเกรดเป็น Poedit Pro เพื่อปลดล็อคคำแนะนำออนไลน์"
-
-#: src/licensing_ui.cpp:577
-msgid "Upgrade to Poedit Pro to Unlock Templates Support"
-msgstr "อัปเกรดเป็น Poedit Pro เพื่อปลดล็อคการรองรับแม่แบบ"
-
-#: src/licensing_ui.cpp:581
-msgid "Upgrade to Poedit Pro to Unlock Extra Features"
-msgstr "อัปเกรดเป็น Poedit Pro เพื่อปลดล็อคคุณสมบัติพิเศษ"
-
-#: src/licensing_ui.cpp:588
-msgid "WordPress extras require upgrade to Poedit Pro"
-msgstr "การใช้ WordPress extras จำเป็นต้องอัปเกรดเป็น Poedit Pro"
-
-#: src/licensing_ui.cpp:593
-msgid "Statistics require upgrade to Poedit Pro"
-msgstr "การใช้สถิติจำเป็นต้องอัปเกรดเป็น Poedit Pro"
-
-#: src/licensing_ui.cpp:596
-msgid "Online TM suggestions require upgrade to Poedit Pro"
-msgstr "การใช้คำแนะนำจากหน่วยความจำการแปลออนไลน์จำเป็นต้องอัปเกรดเป็น Poedit Pro"
-
-#: src/licensing_ui.cpp:599
-msgid "Templates support requires upgrade to Poedit Pro"
-msgstr "การใช้การรองรับแม่แบบจำเป็นต้องอัปเกรดเป็น Poedit Pro"
-
-#: src/licensing_ui.cpp:602
-msgid "Customizable warnings require upgrade to Poedit Pro"
-msgstr "ต้องอัพเกรดเป็น Poedit Pro เพื่อใช้คำเตือนแบบปรับแต่งได้"
-
-#: src/licensing_ui.cpp:605
-msgid "Customizable file extensions require upgrade to Poedit Pro"
-msgstr "ต้องอัพเกรดเป็น Poedit Pro เพื่อใช้นามสกุลไฟล์แบบปรับแต่งได้"
-
-#: src/licensing_ui.cpp:608
-msgid "Terminology search and glossaries require upgrade to Poedit Pro"
-msgstr "ต้องอัพเกรดเป็น Poedit Pro เพื่อใช้การค้นหาอภิธานศัพท์และอภิธานศัพท์"
-
-#: src/licensing_ui.cpp:611
-msgid "Replacing source text requires upgrade to Poedit Pro"
-msgstr "การแทนที่ข้อความต้นฉบับจำเป็นต้องอัปเกรดเป็น Poedit Pro"
-
-#: src/licensing_ui.cpp:614
-msgid "Merging translation files requires upgrade to Poedit Pro"
-msgstr ""
-
-#: src/licensing_ui.cpp:617
-msgid "Excel import and export require upgrade to Poedit Pro"
-msgstr "การนำเข้าและส่งออก Excel จำเป็นต้องอัปเกรดเป็น Poedit Pro"
-
-#: src/licensing_ui.cpp:649
-msgid "Purchasing the full version will unlock additional features in Poedit, including:"
-msgstr "ซื้อเวอร์ชั่นเต็มเพื่อปลดล็อคคุณสมบัติเพิ่มเติมใน Poedit ซึ่งประกอบด้วย:"
-
-#: src/licensing_ui.cpp:663
-msgid "Suggestions from online translation memory"
-msgstr "คำแนะนำจากหน่วยความจำการแปลออนไลน์"
-
-#: src/licensing_ui.cpp:664
-msgid "Machine translation with DeepL, Google Translate or Microsoft Translator"
-msgstr "การแปลด้วยเครื่องด้วย DeepL, Google Translate หรือ Microsoft Translator"
-
-#: src/licensing_ui.cpp:665
-msgid "Worry-free setup for WordPress themes and plugins"
-msgstr "ตั้งค่าธีมและปลั๊กอิน WordPress แบบไม่ต้องกังวล"
-
-#: src/licensing_ui.cpp:666
-msgid "Extract strings from Twig or Blade templates"
-msgstr "แยกสตริงจากเทมเพลต Twig หรือ Blade"
-
-#: src/licensing_ui.cpp:667
-msgid "Word count and statistics"
-msgstr "การนับจำนวนคำและสถิติ"
-
-#: src/licensing_ui.cpp:668
-msgid "Excel import and export"
-msgstr "การนำเข้าและส่งออก Excel"
-
-#: src/licensing_ui.cpp:669
-msgid "Merging translation files for all file formats"
-msgstr ""
-
-#: src/licensing_ui.cpp:670
-msgid "Customizable QA checks and warnings"
-msgstr "การตรวจสอบและคำเตือน QA แบบปรับแต่งได้"
-
-#: src/licensing_ui.cpp:671
-msgid "Replace source text with translations from another file"
-msgstr "แทนที่ข้อความต้นฉบับด้วยคำแปลจากไฟล์อื่น"
-
-#: src/licensing_ui.cpp:672
-msgid "Terminology search and glossaries"
-msgstr "การค้นหาอภิธานศัพท์และอภิธานศัพท์"
-
-#: src/licensing_ui.cpp:673
-msgid "Personal priority support"
-msgstr "การสนับสนุนสำคัญแบบส่วนตัว"
-
-#: src/licensing_ui.cpp:679
-msgid "Enter license key"
-msgstr "ป้อนคีย์ใบอนุญาต"
-
-#: src/licensing_ui.cpp:689
-msgid "Upgrade…"
-msgstr "อัปเกรด…"
-
-#: src/licensing_ui.cpp:754 src/licensing_ui.cpp:780
-#, c-format
-msgid "Licensed to: %s"
-msgstr "ผู้ที่ได้รับอนุญาตให้ใช้: %s"
-
-#. TRANSLATORS: %s is replaced at runtime with e.g. "Poedit Pro" or "Poedit Pro+"
-#: src/licensing_ui.cpp:756 src/licensing_ui.cpp:785
-#, c-format
-msgid "License type: %s"
-msgstr "ประเภทไลเซนส์:%s"
-
-#: src/licensing_ui.cpp:780
-msgid "(personal license)"
-msgstr "(สิทธิ์การใช้งานส่วนบุคคล)"
-
-#: src/licensing_ui.cpp:859
-msgid "Subscription expired."
-msgstr "การสมัครสมาชิกหมดอายุแล้ว."
-
-#: src/licensing_ui.cpp:861
-msgid "Your license was deactivated on this computer because your subscription expired."
-msgstr "ใบอนุญาตของคุณถูกปิดใช้งานบนคอมพิวเตอร์เครื่องนี้เนื่องจากการสมัครของคุณหมดอายุ"
-
-#: src/licensing_ui.cpp:871
-#, c-format
-msgid "Your license was deactivated on this computer because it only includes app updates up to Poedit version %s."
-msgstr "ใบอนุญาตของคุณถูกปิดใช้งานบนคอมพิวเตอร์เครื่องนี้เนื่องจากรวมเฉพาะการอัปเดตแอปจนถึงเวอร์ชัน Poedit %s เท่านั้น"
-
-#: src/licensing_ui.cpp:872
-msgid "App updates expired."
-msgstr "การอัปเดตแอปหมดอายุแล้ว"
-
-#: src/licensing_ui.cpp:884
-msgid "License deactivated."
-msgstr "ปิดการใช้งานใบอนุญาตแล้ว"
-
-#: src/licensing_ui.cpp:886
-msgid "Your license was deactivated on this computer. Please email help@poedit.net if you are not sure why this happened."
-msgstr "ใบอนุญาตของคุณได้ถูกปิดการใช้งานบนคอมพิวเตอร์นี้แล้ว โปรดส่งอีเมลไปที่ help@poedit.net ถ้าคุณไม่แน่ใจว่าสิ่งนี้เกิดขึ้นได้อย่างไร"
-
-#. TRANSLATORS: %s is a placeholder for subscription name, e.g. Pro+ or Pro
-#: src/licensing_ui.cpp:1112
-#, c-format
-msgid "Your %s subscription expired."
-msgstr "การสมัครของคุณ %s หมดอายุแล้ว"
-
-#. TRANSLATORS: "Expired" as in ended e.g. after 1 year
-#: src/licensing_ui.cpp:1117
-msgid "Machine translation service expired."
-msgstr "บริการแปลภาษาด้วยเครื่องหมดอายุแล้ว"
-
-#. TRANSLATORS: "standard" here is the same word as the standalone string "Standard".
-#: src/licensing_ui.cpp:1125
-msgid "Machine translation quality is reduced to standard."
-msgstr "คุณภาพการแปลด้วยคอมพิวเตอร์ถูกลดลงถึงมาตรฐานแล้ว"
-
-#: src/localazy_client.cpp:385
+#: src/localazy_client.cpp:381
 msgid "All strings"
 msgstr "สตริงทั้งหมด"
 
-#: src/localazy_client.cpp:404
+#: src/localazy_client.cpp:397
 msgid "Couldn’t download Localazy project details."
 msgstr "ไม่สามารถดาวน์โหลดรายละเอียดโปรเจ็กต์ Localazy ได้"
 
-#: src/localazy_client.cpp:476 src/localazy_client.cpp:490
+#: src/localazy_client.cpp:469 src/localazy_client.cpp:483
 msgid "There was an error when uploading translations to Localazy."
 msgstr "เกิดข้อผิดพลาดขณะอัปโหลดคำแปลไปยัง Localazy"
 
-#: src/localazy_gui.cpp:103
+#: src/localazy_gui.cpp:99
 msgid "Projects"
 msgstr "โครงการ"
 
 #. TRANSLATORS: %s is online service name, e.g. "Crowdin" or "Localazy"
-#: src/localazy_gui.cpp:115
+#: src/localazy_gui.cpp:111
 #, c-format
 msgid "Learn more about %s"
 msgstr "เรียนรู้เพิ่มเติมเกี่ยวกับ %s"
 
-#: src/localazy_gui.cpp:146
-msgid "Localazy is a highly automated localization platform allowing anyone to translate their products and content into multiple languages easily."
-msgstr "Localazy เป็นแพลตฟอร์มการแปลอัตโนมัติที่ช่วยให้ทุกคนสามารถแปลผลิตภัณฑ์และเนื้อหาของตนเป็นหลายภาษาได้อย่างง่ายดาย"
+#: src/localazy_gui.cpp:138
+msgid ""
+"Localazy is a highly automated localization platform allowing anyone to "
+"translate their products and content into multiple languages easily."
+msgstr ""
+"Localazy "
+"เป็นแพลตฟอร์มการแปลอัตโนมัติที่ช่วยให้ทุกคนสามารถแปลผลิตภัณฑ์และเนื้อหาของตนเป็นหลายภาษาได้อย่างง่ายดาย"
 
-#: src/localazy_gui.cpp:241
+#: src/localazy_gui.cpp:233
 msgid "Add Project"
 msgstr "เพิ่มโครงการ"
 
-#: src/localazy_gui.cpp:241
+#: src/localazy_gui.cpp:233
 msgid "Add project"
 msgstr "เพิ่มโครงการ"
 
-#: src/manager.cpp:117
+#: src/manager.cpp:94
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - ตัวจัดการแค็ตตาล็อก"
 
-#: src/manager.cpp:162 src/prefsdlg.cpp:877
+#: src/manager.cpp:139 src/prefsdlg.cpp:775
 msgid "Edit…"
 msgstr "แก้ไข…"
 
-#: src/manager.cpp:167
+#: src/manager.cpp:144
 msgid "Create new translations project"
 msgstr "สร้างโครงการแปลใหม่"
 
-#: src/manager.cpp:168
+#: src/manager.cpp:145
 msgid "Delete the project"
 msgstr "ลบโครงการ"
 
-#: src/manager.cpp:169
+#: src/manager.cpp:146
 msgid "Edit the project"
 msgstr "แก้ไขโครงการ"
 
-#: src/manager.cpp:199 src/resources/toolbar.xrc:41 src/statistics.cpp:258
-msgid "Statistics"
-msgstr "สถิติ"
-
-#: src/manager.cpp:200 src/resources/toolbar.xrc:42
-msgid "Show translation statistics"
-msgstr "แสดงสถิติการแปล"
-
-#: src/manager.cpp:202
+#: src/manager.cpp:176
 msgid "Update all"
 msgstr "อัปเดตทั้งหมด"
 
-#: src/manager.cpp:203
+#: src/manager.cpp:177
 msgid "Update all catalogs in the project"
 msgstr "อัพเดตแค็ตตาล็อกทั้งหมดในโครงการ"
 
-#: src/manager.cpp:405
+#: src/manager.cpp:378
 msgid "Total"
 msgstr "ทั้งหมด"
 
-#: src/manager.cpp:406
+#: src/manager.cpp:379
 msgid "Untrans"
 msgstr "ไม่ได้แปล"
 
-#: src/manager.cpp:407
+#: src/manager.cpp:380
 msgctxt "column/row header"
 msgid "Needs Work"
 msgstr "ต้องการตรวจทาน"
 
-#: src/manager.cpp:408
+#: src/manager.cpp:381
 msgid "Errors"
 msgstr "ข้อผิดพลาด"
 
-#: src/manager.cpp:409
+#: src/manager.cpp:382
 msgid "Last modified"
 msgstr "ปรับเปลี่ยนล่าสุด"
 
-#: src/manager.cpp:440 src/propertiesdlg.cpp:478
+#: src/manager.cpp:413 src/propertiesdlg.cpp:418
 msgid "Select directory"
 msgstr "เลือกไดเรกทอรี"
 
-#: src/manager.cpp:460
+#: src/manager.cpp:433
 msgid "Directories:"
 msgstr "ที่ตั้ง:"
 
-#: src/manager.cpp:532
+#: src/manager.cpp:503
 msgid "<unnamed>"
 msgstr "<ไม่มีชื่อ>"
 
-#: src/manager.cpp:570
+#: src/manager.cpp:539
 #, c-format
 msgid "Do you want to delete project “%s”?"
 msgstr "คุณต้องการลบโครงการ “%s” หรือไม่?"
 
-#: src/manager.cpp:571
+#: src/manager.cpp:540
 msgid "Delete project"
 msgstr "ลบโครงการ"
 
-#: src/manager.cpp:574
+#: src/manager.cpp:543
 msgid "Deleting the project will not delete any translation files."
 msgstr "การลบโครงการจะไม่ลบไฟล์การแปลใดๆ"
 
-#: src/manager.cpp:602
+#: src/manager.cpp:571
 msgid "Confirmation"
 msgstr "การยืนยัน"
 
-#: src/manager.cpp:602
+#: src/manager.cpp:571
 msgid "Update all catalogs in this project?"
 msgstr "ต้องการอัพเดตรายการทั้งหมดในโครงการนี้หรือไม่?"
 
-#: src/manager.cpp:603
+#: src/manager.cpp:572
 msgid "Performs update from source code on all files in the project."
 msgstr "ทำการอัพเดตจากรหัสต้นฉบับบนไฟล์ทั้งหมดในโครงการ"
 
-#: src/manager.cpp:612
+#: src/manager.cpp:579
 msgid "Updating project catalogs"
 msgstr ""
 
@@ -1915,546 +1426,526 @@ msgstr "ตรวจหาการอัพเดต…"
 msgid "Catalogs Manager"
 msgstr "ตัวจัดการแค็ตตาล็อก"
 
-#: src/menus.cpp:143
-msgid "License…"
-msgstr "ใบอนุญาต…"
-
-#: src/menus.cpp:155
+#: src/menus.cpp:152
 msgid "&Preferences…"
 msgstr "&การตั้งค่า..."
 
-#: src/menus.cpp:170 src/resources/menus.xrc:95 src/resources/menus.xrc:450
+#: src/menus.cpp:167 src/resources/menus.xrc:81 src/resources/menus.xrc:402
 #: src/wx_translatable_strings.h:102
 msgid "&Edit"
 msgstr "แ&ก้ไข"
 
-#: src/menus.cpp:190 src/wx_translatable_strings.h:118
+#: src/menus.cpp:187 src/wx_translatable_strings.h:118
 msgid "Undo"
 msgstr "เลิกทำ"
 
-#: src/menus.cpp:191 src/wx_translatable_strings.h:113
+#: src/menus.cpp:188 src/wx_translatable_strings.h:113
 msgid "Redo"
 msgstr "ทำซ้ำ"
 
-#: src/menus.cpp:200
+#: src/menus.cpp:197
 msgid "Paste and Match Style"
 msgstr "วางและปรับลักษณะให้ตรงกัน"
 
-#: src/menus.cpp:203 src/prefsdlg.cpp:1103 src/sidebar_terminology.cpp:77
-#: src/wx_translatable_strings.h:100
+#: src/menus.cpp:200 src/prefsdlg.cpp:964 src/wx_translatable_strings.h:100
 msgid "Delete"
 msgstr "ลบ"
 
-#: src/menus.cpp:212
+#: src/menus.cpp:209
 msgid "Spelling and Grammar"
 msgstr "การสะกดและไวยากรณ์"
 
-#: src/menus.cpp:214
+#: src/menus.cpp:211
 msgid "Show Spelling and Grammar"
 msgstr "แสดงการสะกดและไวยากรณ์"
 
-#: src/menus.cpp:215
+#: src/menus.cpp:212
 msgid "Check Document Now"
 msgstr "ตรวจสอบเอกสารตอนนี้"
 
-#: src/menus.cpp:217
+#: src/menus.cpp:214
 msgid "Check Spelling While Typing"
 msgstr "ตรวจสอบการสะกดขณะป้อน"
 
-#: src/menus.cpp:218
+#: src/menus.cpp:215
 msgid "Check Grammar With Spelling"
 msgstr "ตรวจสอบไวยากรณ์ด้วยการสะกด"
 
-#: src/menus.cpp:219
+#: src/menus.cpp:216
 msgid "Correct Spelling Automatically"
 msgstr "แก้ไขการสะกดโดยอัตโนมัติ"
 
-#: src/menus.cpp:222
+#: src/menus.cpp:219
 msgid "Substitutions"
 msgstr "การเปลี่ยนแทนที่"
 
-#: src/menus.cpp:224
+#: src/menus.cpp:221
 msgid "Show Substitutions"
 msgstr "แสดงการเปลี่ยนแทนที่"
 
-#: src/menus.cpp:226
+#: src/menus.cpp:223
 msgid "Smart Copy/Paste"
 msgstr "คัดลอกหรือวางอัจฉริยะ"
 
-#: src/menus.cpp:227
+#: src/menus.cpp:224
 msgid "Smart Quotes"
 msgstr "อัญประกาศอัจฉริยะ"
 
-#: src/menus.cpp:228
+#: src/menus.cpp:225
 msgid "Smart Dashes"
 msgstr "ขีดกลางอัจฉริยะ"
 
-#: src/menus.cpp:229
+#: src/menus.cpp:226
 msgid "Smart Links"
 msgstr "ลิงก์อัจฉริยะ"
 
-#: src/menus.cpp:230
+#: src/menus.cpp:227
 msgid "Text Replacement"
 msgstr "การแทนที่ข้อความ"
 
-#: src/menus.cpp:233
+#: src/menus.cpp:230
 msgid "Transformations"
 msgstr "การแปลงรูปแบบ"
 
-#: src/menus.cpp:235
+#: src/menus.cpp:232
 msgid "Make Upper Case"
 msgstr "ทำให้เป็นตัวพิมพ์ใหญ่"
 
-#: src/menus.cpp:236
+#: src/menus.cpp:233
 msgid "Make Lower Case"
 msgstr "ทำให้เป็นตัวพิมพ์เล็ก"
 
-#: src/menus.cpp:237
+#: src/menus.cpp:234
 msgid "Capitalize"
 msgstr "ขึ้นต้นด้วยตัวพิมพ์ใหญ่"
 
-#: src/menus.cpp:240
+#: src/menus.cpp:237
 msgid "Speech"
 msgstr "เสียงพูด"
 
-#: src/menus.cpp:242
+#: src/menus.cpp:239
 msgid "Start Speaking"
 msgstr "เริ่มพูด"
 
-#: src/menus.cpp:243
+#: src/menus.cpp:240
 msgid "Stop Speaking"
 msgstr "หยุดพูด"
 
-#: src/menus.cpp:246 src/resources/menus.xrc:177 src/resources/menus.xrc:460
+#: src/menus.cpp:243 src/resources/menus.xrc:163 src/resources/menus.xrc:412
 msgid "&View"
 msgstr "&มุมมอง"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
-#: src/menus.cpp:252
+#: src/menus.cpp:249
 msgid "Show Toolbar"
 msgstr "แสดงแถบเครื่องมือ"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
-#: src/menus.cpp:255
+#: src/menus.cpp:252
 msgid "Customize Toolbar…"
 msgstr "กำหนดแถบเครื่องมือ..."
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
-#: src/menus.cpp:258
+#: src/menus.cpp:255
 msgid "Enter Full Screen"
 msgstr "เข้าโหมดเต็มหน้าจอ"
 
-#: src/menus.cpp:265 src/menus.cpp:296 src/resources/menus.xrc:352
-#: src/resources/menus.xrc:469
+#: src/menus.cpp:262 src/menus.cpp:293 src/resources/menus.xrc:316
+#: src/resources/menus.xrc:421
 msgid "Window"
 msgstr "หน้าต่าง"
 
-#: src/menus.cpp:266
+#: src/menus.cpp:263
 msgid "Minimize"
 msgstr "ย่อให้เล็กที่สุด"
 
-#: src/menus.cpp:267
+#: src/menus.cpp:264
 msgid "Zoom"
 msgstr "ย่อ/ขยาย"
 
-#: src/menus.cpp:269 src/welcomescreen.cpp:222 src/welcomescreen.cpp:262
+#: src/menus.cpp:266 src/welcomescreen.cpp:220 src/welcomescreen.cpp:260
 msgid "Welcome to Poedit"
 msgstr "ยินดีต้อนรับสู่ Poedit"
 
-#: src/menus.cpp:274
+#: src/menus.cpp:271
 msgid "Bring All to Front"
 msgstr "นำทั้งหมดมาด้านหน้า"
 
-#: src/prefsdlg.cpp:177
+#: src/prefsdlg.cpp:172
 msgid "Information about the translator"
 msgstr "ข้อมูลเกี่ยวกับผู้แปล"
 
-#: src/prefsdlg.cpp:184
+#: src/prefsdlg.cpp:179
 msgid "Name:"
 msgstr "ชื่อ:"
 
-#: src/prefsdlg.cpp:187
+#: src/prefsdlg.cpp:182
 msgid "Your Name"
 msgstr "ชื่อของคุณ"
 
-#: src/prefsdlg.cpp:189
+#: src/prefsdlg.cpp:184
 msgid "Email:"
 msgstr "อีเมล:"
 
-#: src/prefsdlg.cpp:192
+#: src/prefsdlg.cpp:187
 msgid "you@example.com"
 msgstr "you@example.com"
 
-#: src/prefsdlg.cpp:195
-msgid "Your name and email address are only used to set the Last-Translator header of GNU gettext files."
-msgstr "ชื่อและที่อยู่อีเมลของคุณจะถูกนำไปใช้เพื่อกำหนดส่วนหัว Last-Translator ของไฟล์ GNU gettext เท่านั้น"
+#: src/prefsdlg.cpp:190
+msgid ""
+"Your name and email address are only used to set the Last-Translator header "
+"of GNU gettext files."
+msgstr ""
+"ชื่อและที่อยู่อีเมลของคุณจะถูกนำไปใช้เพื่อกำหนดส่วนหัว Last-Translator ของไฟล์ GNU gettext "
+"เท่านั้น"
 
-#: src/prefsdlg.cpp:204
+#: src/prefsdlg.cpp:199
 msgid "Editing"
 msgstr "การแก้ไข"
 
-#: src/prefsdlg.cpp:207
+#: src/prefsdlg.cpp:202
 msgid "Automatically compile MO file when saving"
 msgstr "คอมไพล์ไฟล์ MO โดยอัตโนมัติเมื่อบันทึก"
 
-#: src/prefsdlg.cpp:212
+#: src/prefsdlg.cpp:207
 msgid "Check spelling"
 msgstr "การตรวจสอบการสะกด"
 
-#: src/prefsdlg.cpp:214
+#: src/prefsdlg.cpp:209
 msgid "Always change focus to text input field"
 msgstr "เปลี่ยนโฟกัสไปยังพื้นที่ป้อนข้อความ"
 
-#: src/prefsdlg.cpp:216
-msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
-msgstr "อย่าโฟกัสไปที่รายการสตริง ถ้าเปิดใช้งาน คุณจะต้องใช้ลูกศรและ Ctrl สำหรับการนำทางแป้นพิมพ์ แต่คุณก็สามารถพิมพ์ข้อความได้ทันที โดยไม่ต้องกดปุ่ม Tab เพื่อเปลี่ยนโฟกัส"
+#: src/prefsdlg.cpp:211
+msgid ""
+"Never let the list of strings take focus. If enabled, you must use Ctrl-"
+"arrows for keyboard navigation but you can also type text immediately, "
+"without having to press Tab to change focus."
+msgstr ""
+"อย่าโฟกัสไปที่รายการสตริง ถ้าเปิดใช้งาน คุณจะต้องใช้ลูกศรและ Ctrl สำหรับการนำทางแป้นพิมพ์ "
+"แต่คุณก็สามารถพิมพ์ข้อความได้ทันที โดยไม่ต้องกดปุ่ม Tab เพื่อเปลี่ยนโฟกัส"
 
-#: src/prefsdlg.cpp:224
+#: src/prefsdlg.cpp:219
 msgid "Appearance"
 msgstr "ลักษณะที่ปรากฏ"
 
-#: src/prefsdlg.cpp:231
+#: src/prefsdlg.cpp:226
 msgid "Use custom list font:"
 msgstr "ใช้แบบอักษรรายการแบบกำหนดเอง:"
 
-#: src/prefsdlg.cpp:234
+#: src/prefsdlg.cpp:229
 msgid "Use custom text fields font:"
 msgstr "ใช้แบบอักษรพื้นที่ข้อความแบบกำหนดเอง:"
 
-#: src/prefsdlg.cpp:245
+#: src/prefsdlg.cpp:239
 msgid "Change UI language"
 msgstr "เปลี่ยนภาษา UI"
 
 #. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
-#: src/prefsdlg.cpp:255
+#: src/prefsdlg.cpp:249
 msgid "(requires Windows 8 or newer)"
 msgstr "(จำเป็นต้องใช้ Windows 8 หรือใหม่กว่า)"
 
-#: src/prefsdlg.cpp:358
+#: src/prefsdlg.cpp:352
 msgid "General"
 msgstr "ทั่วไป"
 
-#: src/prefsdlg.cpp:380
+#: src/prefsdlg.cpp:374
 msgid "Use translation memory"
 msgstr "ใช้หน่วยความจำการแปล"
 
-#: src/prefsdlg.cpp:390
+#: src/prefsdlg.cpp:384
 msgid "Manage…"
 msgstr "จัดการ…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
-#: src/prefsdlg.cpp:397
+#: src/prefsdlg.cpp:391
 msgid "When updating from sources"
 msgstr "เมื่ออัปเดตจากแหล่งข้อมูล"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
-#: src/prefsdlg.cpp:400
+#: src/prefsdlg.cpp:394
 msgid "fuzzy match within the file"
 msgstr "การจับคู่แบบ Fuzzy ภายในไฟล์"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
-#: src/prefsdlg.cpp:402
+#: src/prefsdlg.cpp:396
 msgid "pre-translate from TM"
 msgstr "แปลจากหน่วยความจำการแปลล่วงหน้า"
 
-#: src/prefsdlg.cpp:418
-msgid "Poedit can attempt to fill in new entries from only previous translations in the file or from your entire translation memory. Using the TM won’t be very effective if it’s near-empty, but it will get better as you add more translations to it."
-msgstr "Poedit สามารถพยายามเติมข้อมูลรายการใหม่จากในการแปลก่อนหน้าในไฟล์หรือจากหน่วยความจำการแปลทั้งหมดของคุณได้ การใช้หน่วยความจำการแปลจะไม่ค่อยมีประสิทธิภาพมากถ้าหน่วยความจำการแปลนั้นแทบจะว่างเปล่า แต่ถ้าหากคุณแปลมากขึ้น หน่วยความจำการแปลก็จะดีขึ้นเอง"
+#: src/prefsdlg.cpp:412
+msgid ""
+"Poedit can attempt to fill in new entries from only previous translations in "
+"the file or from your entire translation memory. Using the TM won’t be very "
+"effective if it’s near-empty, but it will get better as you add more "
+"translations to it."
+msgstr ""
+"Poedit "
+"สามารถพยายามเติมข้อมูลรายการใหม่จากในการแปลก่อนหน้าในไฟล์หรือจากหน่วยความจำการแปลทั้งหมดของคุณได้ "
+"การใช้หน่วยความจำการแปลจะไม่ค่อยมีประสิทธิภาพมากถ้าหน่วยความจำการแปลนั้นแทบจะว่างเปล่า "
+"แต่ถ้าหากคุณแปลมากขึ้น หน่วยความจำการแปลก็จะดีขึ้นเอง"
 
-#: src/prefsdlg.cpp:454
-msgid "Use suggestions from online collaborative TM"
-msgstr "ใช้คำแนะนำจากหน่วยความจำการแปลที่ใช้ร่วมกันออนไลน์"
-
-#: src/prefsdlg.cpp:469
-msgid "Poedit uses a large online translation memory that includes both contributed human translations and state-of-the-art machine translations."
-msgstr "Poedit ใช้หน่วยความจำการแปลออนไลน์ขนาดใหญ่ที่ประกอบด้วยการแปลที่ให้ข้อมูลโดยมนุษย์และการแปลด้วยเครื่องที่ทันสมัย"
-
-#: src/prefsdlg.cpp:472 src/sidebar_pro.cpp:698
-msgid "Contribute my translations to the online TM"
-msgstr "ช่วยนำการแปลของฉันไปที่หน่วยความจำการแปลออนไลน์"
-
-#: src/prefsdlg.cpp:473 src/sidebar_pro.cpp:699
-msgid "Keep my translations private"
-msgstr "ให้การแปลของฉันเป็นส่วนตัว"
-
-#: src/prefsdlg.cpp:474
-msgid "Ask me for each file individually"
-msgstr "ถามฉันสำหรับไฟล์แต่ละไฟล์"
-
-#: src/prefsdlg.cpp:492 src/sidebar_pro.cpp:159
-msgid "Change Settings…"
-msgstr "เปลี่ยนการตั้งค่า"
-
-#: src/prefsdlg.cpp:492 src/sidebar_pro.cpp:159
-msgid "Change settings…"
-msgstr "เปลี่ยนการตั้งค่า"
-
-#: src/prefsdlg.cpp:580
+#: src/prefsdlg.cpp:487
 msgid "Stored translations:"
 msgstr "การแปลที่เก็บไว้:"
 
-#: src/prefsdlg.cpp:581
+#: src/prefsdlg.cpp:488
 msgid "Database size on disk:"
 msgstr "ขนาดฐานข้อมูลบนดิสก์"
 
-#: src/prefsdlg.cpp:596
+#: src/prefsdlg.cpp:503
 msgid "Import Translation Files…"
 msgstr "นำเข้าไฟล์การแปล…"
 
-#: src/prefsdlg.cpp:596
+#: src/prefsdlg.cpp:503
 msgid "Import translation files…"
 msgstr "นำเข้าไฟล์การแปล…"
 
-#: src/prefsdlg.cpp:598
+#: src/prefsdlg.cpp:505
 msgid "Import From TMX…"
 msgstr "นำเข้าจาก TMX…"
 
-#: src/prefsdlg.cpp:598
+#: src/prefsdlg.cpp:505
 msgid "Import from TMX…"
 msgstr "นำเข้าจาก TMX…"
 
-#: src/prefsdlg.cpp:599
+#: src/prefsdlg.cpp:506
 msgid "Export To TMX…"
 msgstr "ส่งออกเป็น TMX…"
 
-#: src/prefsdlg.cpp:599
+#: src/prefsdlg.cpp:506
 msgid "Export to TMX…"
 msgstr "ส่งออกเป็น TMX…"
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
-#: src/prefsdlg.cpp:602 src/prefsdlg.cpp:770
+#: src/prefsdlg.cpp:509 src/prefsdlg.cpp:677
 msgid "Reset"
 msgstr "รีเซ็ต"
 
-#: src/prefsdlg.cpp:621
+#: src/prefsdlg.cpp:528
 msgid "Select translation files to import"
 msgstr "เลือกไฟล์การแปลที่จะนำเข้า"
 
-#: src/prefsdlg.cpp:654
+#: src/prefsdlg.cpp:561
 msgid "Select TMX files to import"
 msgstr "เลือกไฟล์ TMX ที่จะนำเข้า"
 
-#: src/prefsdlg.cpp:657 src/prefsdlg.cpp:733
+#: src/prefsdlg.cpp:564 src/prefsdlg.cpp:640
 msgid "TMX Files"
 msgstr "ไฟล์ TMX"
 
-#: src/prefsdlg.cpp:684
+#: src/prefsdlg.cpp:591
 msgid "Importing translations…"
 msgstr "กำลังนำเข้าการแปล…"
 
-#: src/prefsdlg.cpp:685
+#: src/prefsdlg.cpp:592
 msgid "Importing translation memory failed."
 msgstr ""
 
-#: src/prefsdlg.cpp:699
+#: src/prefsdlg.cpp:606
 #, c-format
 msgid "Importing from “%s”…"
 msgstr ""
 
 #. TRANSLATORS: %s is a (formatted) number here
-#: src/prefsdlg.cpp:717
+#: src/prefsdlg.cpp:624
 #, c-format
 msgid "%s translation was imported."
 msgid_plural "%s translations were imported."
 msgstr[0] ""
 
-#: src/prefsdlg.cpp:730
+#: src/prefsdlg.cpp:637
 msgid "Export as…"
 msgstr "ส่งออกเป็น…"
 
-#: src/prefsdlg.cpp:745
+#: src/prefsdlg.cpp:652
 msgid "Exporting translations…"
 msgstr "กำลังส่งออกการแปล…"
 
-#: src/prefsdlg.cpp:746
+#: src/prefsdlg.cpp:653
 #, c-format
 msgid "Exporting translation memory to “%s” failed."
 msgstr "ไม่สามารถส่งออกหน่วยความจำการแปลเป็น “%s”"
 
-#: src/prefsdlg.cpp:764
+#: src/prefsdlg.cpp:671
 msgid "Reset translation memory"
 msgstr "รีเซ็ตหน่วยความจำการแปล"
 
-#: src/prefsdlg.cpp:765
+#: src/prefsdlg.cpp:672
 msgid "Are you sure you want to reset the translation memory?"
 msgstr "คุณแน่ใจหรือว่าคุณต้องการรีเซ็ตหน่วยความจำการแปล"
 
-#: src/prefsdlg.cpp:766
-msgid "Resetting the translation memory will irrevocably delete all stored translations from it. You can’t undo this operation."
-msgstr "การรีเซ็ตหน่วยความจำการแปลจะลบการแปลที่เก็บไว้ออกอย่างถาวร คุณไม่สามารถยกเลิกการดำเนินการนี้ได้"
+#: src/prefsdlg.cpp:673
+msgid ""
+"Resetting the translation memory will irrevocably delete all stored "
+"translations from it. You can’t undo this operation."
+msgstr ""
+"การรีเซ็ตหน่วยความจำการแปลจะลบการแปลที่เก็บไว้ออกอย่างถาวร "
+"คุณไม่สามารถยกเลิกการดำเนินการนี้ได้"
 
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
-#: src/prefsdlg.cpp:808
+#: src/prefsdlg.cpp:708
 msgid "TM"
 msgstr "หน่วยความจำการแปล"
 
-#: src/prefsdlg.cpp:810 src/sidebar_terminology.cpp:638
+#: src/prefsdlg.cpp:710
 msgid "Translation Memory"
 msgstr "หน่วยความจำการแปล"
 
-#: src/prefsdlg.cpp:830
-msgid "Source code extractors are used to find translatable strings in the source code files and extract them so that they can be translated."
+#: src/prefsdlg.cpp:730
+msgid ""
+"Source code extractors are used to find translatable strings in the source "
+"code files and extract them so that they can be translated."
 msgstr "ตัวแยกซอร์สโค้ดใช้สำหรับค้นหาสตริงที่แปลได้ในไฟล์ซอร์สโค้ดและแยกสตริงออกมาเพื่อให้สามารถแปลได้"
 
-#: src/prefsdlg.cpp:843
+#: src/prefsdlg.cpp:741
 msgid "Custom Extractors:"
 msgstr "ตัวแยกแบบกำหนดเอง:"
 
-#: src/prefsdlg.cpp:843
+#: src/prefsdlg.cpp:741
 msgid "Custom extractors:"
 msgstr "ตัวแยกแบบกำหนดเอง:"
 
-#: src/prefsdlg.cpp:929
+#: src/prefsdlg.cpp:827
 msgid "GNU gettext"
 msgstr "GNU gettext"
 
-#: src/prefsdlg.cpp:935
-msgid "Supports all programming languages recognized by GNU gettext tools (PHP, C/C++, C#, Perl, Python, Java, JavaScript and others)."
-msgstr "รองรับภาษาเขียนโปรแกรมทั้งหมดที่รู้จักโดยเครื่องมือ GNU gettext (PHP, C/C++, C#, Perl, Python, Java, JavaScript และอื่นๆ)"
+#: src/prefsdlg.cpp:833
+msgid ""
+"Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
+"+, C#, Perl, Python, Java, JavaScript and others)."
+msgstr ""
+"รองรับภาษาเขียนโปรแกรมทั้งหมดที่รู้จักโดยเครื่องมือ GNU gettext (PHP, C/C++, C#, Perl, "
+"Python, Java, JavaScript และอื่นๆ)"
 
-#. TRANSLATORS: Templates for themes etc. - e.g. Twig or Volt templates
-#: src/prefsdlg.cpp:945
-msgid "Templates"
-msgstr "แม่แบบ"
-
-#: src/prefsdlg.cpp:946
-msgid "(Twig, Volt, Blade)"
-msgstr "(Twig, Volt, Blade)"
-
-#: src/prefsdlg.cpp:961
-msgid "Extracts translations from template files."
-msgstr "แยกสตริงจากไฟล์แม่แบบ"
-
-#: src/prefsdlg.cpp:964
-msgid "Enable"
-msgstr "เปิดใช้งาน"
-
-#: src/prefsdlg.cpp:1096
+#: src/prefsdlg.cpp:957
 msgid "Delete extractor"
 msgstr "ลบตัวแยก"
 
-#: src/prefsdlg.cpp:1097
+#: src/prefsdlg.cpp:958
 #, c-format
 msgid "Are you sure you want to delete the “%s” extractor?"
 msgstr "คุณแน่ใจหรือว่าคุณต้องการลบตัวแยก \"%s\""
 
-#: src/prefsdlg.cpp:1135
+#: src/prefsdlg.cpp:996
 msgid "Extractors"
 msgstr "ตัวแยก"
 
-#: src/prefsdlg.cpp:1193
+#: src/prefsdlg.cpp:1054
 msgid "Accounts"
 msgstr "บัญชี"
 
-#: src/prefsdlg.cpp:1213
+#: src/prefsdlg.cpp:1074
 msgid "Automatically check for updates"
 msgstr "ตรวจหาการอัพเดตโดยอัตโนมัติ"
 
-#: src/prefsdlg.cpp:1216
+#: src/prefsdlg.cpp:1077
 msgid "Include beta versions"
 msgstr "ประกอบด้วยเวอร์ชั่นเบต้า"
 
-#: src/prefsdlg.cpp:1219
-msgid "Beta versions contain the latest new features and improvements, but may be a bit less stable."
+#: src/prefsdlg.cpp:1080
+msgid ""
+"Beta versions contain the latest new features and improvements, but may be a "
+"bit less stable."
 msgstr "เวอร์ชั่นเบต้าประกอบด้วยคุณสมบัติและการปรับปรุงใหม่ล่าสุด แต่อาจเสถียรน้อยกว่า"
 
-#: src/prefsdlg.cpp:1248
+#: src/prefsdlg.cpp:1109
 msgid "Updates"
 msgstr "อัพเดต"
 
-#: src/prefsdlg.cpp:1266
-msgid "These settings affect internal formatting of PO files. Adjust them if you have specific requirements e.g. because of version control."
-msgstr "การตั้งค่าเหล่านี้มีผลต่อการจัดรูปแบบภายในของไฟล์ PO ปรับการตั้งค่าเหล่านี้ถ้าคุณมีความจำเป็นเฉพาะ อย่างเช่น เนื่องจากการควบคุมเวอร์ชั่น"
+#: src/prefsdlg.cpp:1127
+msgid ""
+"These settings affect internal formatting of PO files. Adjust them if you "
+"have specific requirements e.g. because of version control."
+msgstr ""
+"การตั้งค่าเหล่านี้มีผลต่อการจัดรูปแบบภายในของไฟล์ PO ปรับการตั้งค่าเหล่านี้ถ้าคุณมีความจำเป็นเฉพาะ "
+"อย่างเช่น เนื่องจากการควบคุมเวอร์ชั่น"
 
-#: src/prefsdlg.cpp:1270
+#: src/prefsdlg.cpp:1131
 msgid "Line endings:"
 msgstr "สิ้นสุดบรรทัด:"
 
-#: src/prefsdlg.cpp:1273
+#: src/prefsdlg.cpp:1134
 msgid "Unix (recommended)"
 msgstr "Unix (แนะนำ)"
 
-#: src/prefsdlg.cpp:1274
+#: src/prefsdlg.cpp:1135
 msgid "Windows"
 msgstr "Windows"
 
 #. TRANSLATORS: Followed by text control for entering number; wraps text at given width
-#: src/prefsdlg.cpp:1278
+#: src/prefsdlg.cpp:1139
 msgid "Wrap at:"
 msgstr "ตัดที่:"
 
-#: src/prefsdlg.cpp:1289
+#: src/prefsdlg.cpp:1150
 msgid "Preserve formatting of existing files"
 msgstr "รักษาการจัดรูปแบบของไฟล์ที่มีอยู่"
 
-#: src/prefsdlg.cpp:1341
+#: src/prefsdlg.cpp:1202
 msgid "Advanced"
 msgstr "ขั้นสูง"
 
-#: src/prefsdlg.cpp:1369
+#: src/prefsdlg.cpp:1230
 msgid "Settings"
 msgstr "การตั้งค่า"
 
-#: src/pretranslate.cpp:129
+#: src/pretranslate.cpp:97
 msgid "Preparing strings…"
 msgstr "กําลังเตรียมสตริง..."
 
-#: src/pretranslate.cpp:239
+#: src/pretranslate.cpp:165
 msgid "Pre-translating from translation memory…"
 msgstr "การแปลล่วงหน้าจากหน่วยความจําการแปล..."
 
-#: src/pretranslate.cpp:250 src/pretranslate.cpp:296
+#: src/pretranslate.cpp:176
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
 msgstr[0] "%u สตริงที่แปลล่วงหน้าแล้ว"
 
-#: src/pretranslate.cpp:259
-msgid "Uploading strings for cloud pre-translation…"
-msgstr "กำลังอัพโหลดสตริงสำหรับการแปลล่วงหน้าบนคลาวด์…"
-
-#: src/pretranslate.cpp:300 src/pretranslate.cpp:360
+#: src/pretranslate.cpp:194
 msgid "Pre-translating…"
 msgstr "กำลังแปลล่วงหน้า…"
 
-#: src/pretranslate.cpp:369
+#: src/pretranslate.cpp:203
 #, c-format
 msgid "%d entry was pre-translated."
 msgid_plural "%d entries were pre-translated."
 msgstr[0] "%d รายการได้ถูกแปลล่วงหน้าแล้ว"
 
-#: src/pretranslate.cpp:375
-msgid "The translations were marked as needing work, because they may be inaccurate. You should review them for correctness."
-msgstr "การแปลจะถูกทำเครื่องหมายว่าต้องการตรวจทาน เนื่องจากอาจไม่แม่นยำ คุณควรตรวจทานการแปลเหล่านี้อีกครั้งเพื่อความถูกต้อง"
+#: src/pretranslate.cpp:209
+msgid ""
+"The translations were marked as needing work, because they may be "
+"inaccurate. You should review them for correctness."
+msgstr ""
+"การแปลจะถูกทำเครื่องหมายว่าต้องการตรวจทาน เนื่องจากอาจไม่แม่นยำ "
+"คุณควรตรวจทานการแปลเหล่านี้อีกครั้งเพื่อความถูกต้อง"
 
-#: src/pretranslate.cpp:378
+#: src/pretranslate.cpp:212
 msgid "Exact matches from TM"
 msgstr ""
 
-#: src/pretranslate.cpp:379
+#: src/pretranslate.cpp:213
 msgid "Approximate matches from TM"
 msgstr ""
 
-#. TRANSLATORS: shown instead of number when user disabled this kind of pre-translation results
-#: src/pretranslate.cpp:386
-msgid "disabled"
-msgstr ""
-
-#: src/pretranslate.cpp:387
-msgid "Machine translation"
-msgstr ""
-
-#: src/pretranslate.cpp:392
+#: src/pretranslate.cpp:217
 msgid "No entries could be pre-translated."
 msgstr "ไม่มีรายการที่สามารถแปลล่วงหน้าได้"
 
-#: src/pretranslate.cpp:393
-msgid "The TM doesn’t contain any strings similar to the content of this file. It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually."
-msgstr "หน่วยความจำการแปลไม่ประกอบด้วยสตริงใดๆ ที่คล้ายกับเนื้อหาในไฟล์นี้ จะมีประสิทธิภาพสำหรับการแปลกึ่งอัตโนมัติหลังจาก Poedit เรียนรู้จากไฟล์ที่คุณแปลเองมากพอแล้วเท่านั้น"
+#: src/pretranslate.cpp:218
+msgid ""
+"The TM doesn’t contain any strings similar to the content of this file. It "
+"is only effective for semi-automatic translations after Poedit learns enough "
+"from files that you translated manually."
+msgstr ""
+"หน่วยความจำการแปลไม่ประกอบด้วยสตริงใดๆ ที่คล้ายกับเนื้อหาในไฟล์นี้ "
+"จะมีประสิทธิภาพสำหรับการแปลกึ่งอัตโนมัติหลังจาก Poedit "
+"เรียนรู้จากไฟล์ที่คุณแปลเองมากพอแล้วเท่านั้น"
 
-#: src/pretranslate.cpp:422
+#: src/pretranslate.cpp:247
 msgid "Cannot pre-translate without source text."
 msgstr "ไม่สามารถแปลล่วงหน้าโดยไม่มีข้อความต้นฉบับ"
 
@@ -2468,111 +1959,58 @@ msgstr "ไม่สามารถแปลล่วงหน้าโดยไ
 #. some users into thinking it's all that needs to be done (spoken from
 #. experience). "Pre-translate" nicely expresses that it's only the step done
 #. *before* actual translation.
-#: src/pretranslate.cpp:423 src/pretranslate.cpp:438 src/pretranslate.cpp:447
-#: src/pretranslate.cpp:493 src/pretranslate.cpp:620
-#: src/resources/toolbar.xrc:48 src/sidebar_pro.cpp:983
+#: src/pretranslate.cpp:248 src/pretranslate.cpp:263 src/pretranslate.cpp:272
+#: src/pretranslate.cpp:281 src/pretranslate.cpp:307
 msgid "Pre-translate"
 msgstr "แปลล่วงหน้า"
 
-#: src/pretranslate.cpp:427
-msgid "Pre-translation requires that source text is available. It doesn’t work if only IDs without the actual text are used."
-msgstr "การแปลล่วงหน้าจำเป็นต้องมีข้อความต้นฉบับให้พร้อมใช้งาน มันจะไม่ทำงานหากใช้เฉพาะ ID ที่ไม่มีข้อความจริงเท่านั้น"
+#: src/pretranslate.cpp:252
+msgid ""
+"Pre-translation requires that source text is available. It doesn’t work if "
+"only IDs without the actual text are used."
+msgstr ""
+"การแปลล่วงหน้าจำเป็นต้องมีข้อความต้นฉบับให้พร้อมใช้งาน มันจะไม่ทำงานหากใช้เฉพาะ ID "
+"ที่ไม่มีข้อความจริงเท่านั้น"
 
-#: src/pretranslate.cpp:437
+#: src/pretranslate.cpp:262
 msgid "Cannot pre-translate from unknown language."
 msgstr "ไม่สามารถแปลล่วงหน้าจากภาษาที่ไม่รู้จักได้"
 
-#: src/pretranslate.cpp:442
-msgid "Pre-translation requires that source text’s language is known. Poedit couldn’t detect it in this file."
+#: src/pretranslate.cpp:267
+msgid ""
+"Pre-translation requires that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
 msgstr "การแปลล่วงหน้าจำเป็นต้องทราบภาษาของข้อความต้นฉบับ Poedit ตรวจไม่พบในไฟล์นี้"
 
-#: src/pretranslate.cpp:452
-msgid "Use online suggestions"
-msgstr "ใช้คำแนะนำออนไลน์"
-
-#: src/pretranslate.cpp:453
-msgid "Try to fetch translations from the online TM as well. Notice that the translations will not be perfect and will still need to be corrected by a human translator."
-msgstr "พยายามดึงข้อมูลการแปลจากหน่วยความจำการแปลออนไลน์ โปรดสังเกตว่าการแปลอาจไม่สมบูรณ์และอาจจะต้องได้รับการแก้ไขโดยผู้แปลที่เป็นมนุษย์"
-
-#: src/pretranslate.cpp:480
+#: src/pretranslate.cpp:275
 msgid "Only fill in exact matches"
 msgstr "เติมข้อมูลลงในรายการที่ตรงกันเท่านั้น"
 
-#: src/pretranslate.cpp:483
-msgid "By default, inaccurate results are also included, but marked as needing work. Check this option to only include perfect matches."
-msgstr "ตามค่าเริ่มต้น ผลลัพธ์ที่ไม่ถูกต้องจะรวมอยู่ด้วย แต่ทำเครื่องหมายว่าต้องดำเนินการ เลือกตัวเลือกนี้เพื่อรวมเฉพาะการจับคู่ที่สมบูรณ์แบบเท่านั้น"
+#: src/pretranslate.cpp:276
+msgid ""
+"By default, inaccurate results are also included, but marked as needing "
+"work. Check this option to only include perfect matches."
+msgstr ""
+"ตามค่าเริ่มต้น ผลลัพธ์ที่ไม่ถูกต้องจะรวมอยู่ด้วย แต่ทำเครื่องหมายว่าต้องดำเนินการ "
+"เลือกตัวเลือกนี้เพื่อรวมเฉพาะการจับคู่ที่สมบูรณ์แบบเท่านั้น"
 
-#: src/pretranslate.cpp:485
-msgid "By default, inaccurate results and machine translation are also included, but marked as needing work. Check this option to only include perfect human translations."
-msgstr "ตามค่าเริ่มต้น ผลลัพธ์ที่ไม่ถูกต้องและการแปลด้วยเครื่องจะรวมอยู่ด้วย แต่ทำเครื่องหมายว่าต้องดำเนินการ เลือกตัวเลือกนี้เพื่อรวมเฉพาะการแปลโดยมนุษย์ที่สมบูรณ์แบบเท่านั้น"
-
-#: src/pretranslate.cpp:487
+#: src/pretranslate.cpp:277
 msgid "Don’t mark exact matches as needing work"
 msgstr "ไม่ต้องทำเครื่องหมายรายการที่ตรงกันว่าต้องการทำงาน"
 
-#: src/pretranslate.cpp:488
-msgid "Don’t mark machine translation as needing work"
-msgstr "อย่าทำเครื่องหมายการแปลด้วยคอมพิวเตอร์ว่าต้องการงาน"
+#: src/pretranslate.cpp:278
+msgid ""
+"Only enable if you trust the quality of your TM. By default, all matches "
+"from the TM are marked as needing work and should be reviewed before use."
+msgstr ""
+"เปิดใช้งานก็ต่อเมื่อคุณเชื่อถือคุณภาพของหน่วยความจำการแปลของคุณเท่านั้น โดยเริ่มต้น "
+"รายการที่ตรงกันจากหน่วยความจำการแปลจะถูกทำเครื่องหมายว่าต้องการตรวจทานและควรจะได้รับการตรวจทานก่อนจะนำไปใช้"
 
-#: src/pretranslate.cpp:490
-msgid "Only enable if you trust the quality of your TM. By default, all matches from the TM are marked as needing work and should be reviewed before use."
-msgstr "เปิดใช้งานก็ต่อเมื่อคุณเชื่อถือคุณภาพของหน่วยความจำการแปลของคุณเท่านั้น โดยเริ่มต้น รายการที่ตรงกันจากหน่วยความจำการแปลจะถูกทำเครื่องหมายว่าต้องการตรวจทานและควรจะได้รับการตรวจทานก่อนจะนำไปใช้"
-
-#: src/pretranslate.cpp:497
-msgid "Pre-translation automatically finds exact or fuzzy matches for untranslated strings in the translation memory and fills in their translations."
+#: src/pretranslate.cpp:283
+msgid ""
+"Pre-translation automatically finds exact or fuzzy matches for untranslated "
+"strings in the translation memory and fills in their translations."
 msgstr "การแปลล่วงหน้าจะค้นหารายการที่ตรงกับสตริงที่ยังไม่ได้แปลอย่างถูกต้องหรือคลุมเครือในหน่วยความจำการแปลและนำมาเติมข้อมูลลงในการแปลโดยอัตโนมัติ"
-
-#: src/pretranslate.cpp:499
-msgid "Pre-translation automatically searches existing translations and uses machine translation to fill in initial translations for strings that are not yet translated."
-msgstr "การแปลล่วงหน้าจะค้นหาคำแปลที่มีอยู่โดยอัตโนมัติและใช้การแปลด้วยคอมพิวเตอร์เพื่อกรอกคำแปลเบื้องต้นสำหรับสตริงที่ยังไม่ได้แปล"
-
-#: src/pretranslate.cpp:537
-msgid "Machine translation:"
-msgstr "เครื่องแปลภาษา:"
-
-#. TRANSLATORS: "Upgrade" as in upgrading from Pro to Pro+ version; "provider" is machine translation provider. This string needs to be as short as possible.
-#: src/pretranslate.cpp:549
-msgid "Upgrade for more providers"
-msgstr "อัปเกรดสำหรับผู้ให้บริการเพิ่มเติม"
-
-#. TRANSLATORS: Part of larger line of UI: "Machine translation: [e.g. Google] with tone of voice: [formal/informal/automatic]". If "tone of voice" sounds weird, you can use "formality". See https://support.deepl.com/hc/en-us/articles/4406432463762-About-the-formal-informal-feature for explanation of what tone of voice / formality is.
-#: src/pretranslate.cpp:560
-msgid "with tone of voice:"
-msgstr "ด้วยน้ำเสียง:"
-
-#. TRANSLATORS: one of possible choices for "tone of voice"
-#: src/pretranslate.cpp:566
-msgid "automatic"
-msgstr "อัตโนมัติ"
-
-#. TRANSLATORS: one of possible choices for "tone of voice"
-#: src/pretranslate.cpp:568
-msgid "formal"
-msgstr "ทางการ"
-
-#. TRANSLATORS: one of possible choices for "tone of voice"
-#: src/pretranslate.cpp:570
-msgid "informal"
-msgstr "ไม่เป็นทางการ"
-
-#: src/pretranslate.cpp:655 src/sidebar_pro.cpp:551
-msgid "Exceeded machine translation quota."
-msgstr "เกินโควต้าการแปลด้วยเครื่องแล้ว"
-
-#: src/pretranslate.cpp:664
-#, c-format
-msgid "Machine translation usage: %d / %d\n"
-"%s"
-msgstr "การใช้การแปลภาษาด้วยเครื่อง: %d / %d\n"
-"%s"
-
-#: src/pretranslate.cpp:664
-msgid "Quota is rolling monthly."
-msgstr "โควต้าทบยอดทุกเดือน"
-
-#: src/pretranslate.cpp:667 src/sidebar_pro.cpp:475
-msgid "Add machine translation credit"
-msgstr "เพิ่มเครดิตการแปลด้วยเครื่อง"
 
 #: src/progress_ui.cpp:172 src/wx_translatable_strings.h:151
 msgid "Error: "
@@ -2598,236 +2036,196 @@ msgstr[0] ""
 msgid "Cancelling…"
 msgstr "กำลังยกเลิก…"
 
-#. TRANSLATORS: This text is shown as a hint/advice. The %s→%s part is replaced with menu item pointer, "File→New WordPress Translation".
-#: src/propertiesdlg.cpp:92
-#, c-format
-msgid "Use %s→%s for full WordPress functionality."
-msgstr "ใช้ %s→%s สำหรับฟังก์ชั่น WordPress เต็มรูปแบบ"
-
-#: src/propertiesdlg.cpp:93 src/resources/menus.xrc:5
-#: src/resources/menus.xrc:384 src/wx_translatable_strings.h:104
-msgid "&File"
-msgstr "&ไฟล์"
-
-#: src/propertiesdlg.cpp:94 src/resources/menus.xrc:17
-#: src/resources/menus.xrc:396
-msgid "New WordPress Translation…"
-msgstr "การแปล WordPress ใหม่…"
-
-#: src/propertiesdlg.cpp:94 src/resources/menus.xrc:16
-#: src/resources/menus.xrc:395
-msgid "New WordPress translation…"
-msgstr "การแปล WordPress ใหม่…"
-
-#: src/propertiesdlg.cpp:366
+#: src/propertiesdlg.cpp:307
 msgid "Drag Folders or Files Here"
 msgstr "ลากโฟลเดอร์หรือไฟล์มาที่นี่"
 
-#: src/propertiesdlg.cpp:366
+#: src/propertiesdlg.cpp:307
 msgid "Drag folders or files here"
 msgstr "ลากโฟลเดอร์หรือไฟล์มาที่นี่"
 
-#: src/propertiesdlg.cpp:471
+#: src/propertiesdlg.cpp:411
 msgid "Add Folders…"
 msgstr "เพิ่มโฟลเดอร์…"
 
-#: src/propertiesdlg.cpp:471
+#: src/propertiesdlg.cpp:411
 msgid "Add folders…"
 msgstr "เพิ่มโฟลเดอร์…"
 
-#: src/propertiesdlg.cpp:472
+#: src/propertiesdlg.cpp:412
 msgid "Add Files…"
 msgstr "เพิ่มไฟล์…"
 
-#: src/propertiesdlg.cpp:472
+#: src/propertiesdlg.cpp:412
 msgid "Add files…"
 msgstr "เพิ่มไฟล์…"
 
-#: src/propertiesdlg.cpp:474
+#: src/propertiesdlg.cpp:414
 msgid "Add Wildcard…"
 msgstr "เพิ่มอักขระตัวแทน…"
 
-#: src/propertiesdlg.cpp:474
+#: src/propertiesdlg.cpp:414
 msgid "Add wildcard…"
 msgstr "เพิ่มอักขระตัวแทน…"
 
 #. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
-#: src/propertiesdlg.cpp:545
+#: src/propertiesdlg.cpp:485
 msgid "Reveal in Finder"
 msgstr "แสดงใน Finder"
 
 #. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
-#: src/propertiesdlg.cpp:548
+#: src/propertiesdlg.cpp:488
 msgid "Show in Explorer"
 msgstr "แสดงใน Explorer"
 
-#: src/propertiesdlg.cpp:550
+#: src/propertiesdlg.cpp:490
 msgid "Show in Folder"
 msgstr "แสดงในโฟลเดอร์"
 
-#: src/propertiesdlg.cpp:581
+#: src/propertiesdlg.cpp:521
 msgid "Paths"
 msgstr "เส้นทาง"
 
-#: src/propertiesdlg.cpp:601
+#: src/propertiesdlg.cpp:532
 msgid "Excluded paths"
 msgstr "เส้นทางที่คัดออก"
 
-#: src/propertiesdlg.cpp:619
+#: src/propertiesdlg.cpp:549
 msgid "Advanced extraction settings"
 msgstr "การตั้งค่าการแยกขั้นสูง"
 
-#: src/propertiesdlg.cpp:625
+#: src/propertiesdlg.cpp:555
 msgid "Extract notes for translators from:"
 msgstr "แยกบันทึกย่อสำหรับนักแปลจาก:"
 
-#: src/propertiesdlg.cpp:627
+#: src/propertiesdlg.cpp:557
 msgid "Comments prefixed with:"
 msgstr "คำแนะนำที่ขึ้นต้นด้วย:"
 
-#: src/propertiesdlg.cpp:636
+#: src/propertiesdlg.cpp:566
 msgid "All comments"
 msgstr "คำแนะนำทั้งหมด"
 
-#: src/propertiesdlg.cpp:639
+#: src/propertiesdlg.cpp:569
 msgid "Additional xgettext flags:"
 msgstr "ค่าสถานะ xgettext เพิ่มเติม:"
 
-#: src/propertiesdlg.cpp:779
+#: src/propertiesdlg.cpp:709
 msgid "Additional keywords"
 msgstr "คำสำคัญเพิ่มเติม"
 
-#: src/propertiesdlg.cpp:810
+#: src/propertiesdlg.cpp:740
 msgid "Name of the project the translation is for"
 msgstr "ชื่อโครงการแปล"
 
-#: src/propertiesdlg.cpp:811
+#: src/propertiesdlg.cpp:741
 msgid "Team name and email address or URL"
 msgstr "ชื่อทีมและที่อยู่อีเมลหรือ URL"
 
-#: src/propertiesdlg.cpp:812
+#: src/propertiesdlg.cpp:742
 msgid "e.g. nplurals=2; plural=(n > 1);"
 msgstr "เช่น nplurals=2; plural=(n > 1);"
 
-#: src/propertiesdlg.cpp:817
-msgid "Custom file extensions are being used."
-msgstr "กำลังใช้งานนามสกุลแฟ้มแบบกำหนดเอง"
-
-#: src/propertiesdlg.cpp:872
+#: src/propertiesdlg.cpp:795
 msgid "UTF-8 (recommended)"
 msgstr "UTF-8 (แนะนำ)"
 
-#: src/propertiesdlg.cpp:1055
+#: src/propertiesdlg.cpp:976
 msgid "Please save the file first. This section cannot be edited until then."
 msgstr "โปรดบันทึกไฟล์ก่อน จึงจะสามารถแก้ไขส่วนนี้ได้"
 
-#: src/propertiesdlg.cpp:1177
-msgid "File Extensions"
-msgstr "นามสกุลไฟล์"
-
-#: src/propertiesdlg.cpp:1189
-msgid "Extension or Wildcard"
-msgstr "นามสกุลหรืออักขระตัวแทน"
-
-#: src/propertiesdlg.cpp:1191
-msgid "Extractor"
-msgstr "ตัวแยก"
-
-#: src/propertiesdlg.cpp:1266
-msgid "(unknown)"
-msgstr "(ไม่ทราบ)"
-
-#: src/qa_checks.cpp:153
+#: src/qa_checks.cpp:63
 msgid "Placeholders correctness"
-msgstr "ข้อความนี้ไม่มีข้อมูลบริบท ข้อความที่ใช้ใน poedit.pot ตำแหน่งในไฟล์: 526\n"
+msgstr ""
+"ข้อความนี้ไม่มีข้อมูลบริบท ข้อความที่ใช้ใน poedit.pot ตำแหน่งในไฟล์: 526\n"
 "ไฟล์: App strings"
 
-#: src/qa_checks.cpp:208
+#: src/qa_checks.cpp:118
 #, c-format
 msgid "Placeholder “%s” is missing from translation."
 msgstr "ไม่มีตัวยึดตำแหน่ง “%s” จากการแปล"
 
-#: src/qa_checks.cpp:220
+#: src/qa_checks.cpp:130
 #, c-format
 msgid "Superfluous placeholder “%s” that isn’t in source text."
 msgstr "ตัวแทนฟุ่มเฟือย “%s” ที่ไม่ได้อยู่ในข้อความต้นฉบับ"
 
-#: src/qa_checks.cpp:256
+#: src/qa_checks.cpp:166
 msgid "Plural form translations"
 msgstr "การแปลรูปพหูพจน์"
 
-#: src/qa_checks.cpp:277
+#: src/qa_checks.cpp:187
 msgid "Not all plural forms are translated."
 msgstr "ไม่ได้แปลรูปแบบพหูพจน์ทั้งหมด"
 
-#: src/qa_checks.cpp:289
+#: src/qa_checks.cpp:199
 msgid "Inconsistent upper/lower case"
 msgstr "ตัวพิมพ์ใหญ่-เล็กไม่สม่ำเสมอกัน"
 
-#: src/qa_checks.cpp:305
+#: src/qa_checks.cpp:215
 msgid "The translation should start as a sentence."
 msgstr "การแปลควรเริ่มต้นด้วยประโยค"
 
-#: src/qa_checks.cpp:313
+#: src/qa_checks.cpp:223
 msgid "The translation should start with a lowercase character."
 msgstr "การแปลควรเริ่มต้นด้วยตัวอักษรตัวพิมพ์เล็ก"
 
-#: src/qa_checks.cpp:331
+#: src/qa_checks.cpp:241
 msgid "Inconsistent whitespace"
 msgstr "ช่องว่างไม่สม่ำเสมอกัน"
 
-#: src/qa_checks.cpp:345
+#: src/qa_checks.cpp:255
 msgid "The translation doesn’t start with a space."
 msgstr "การแปลไม่ได้เริ่มต้นด้วยช่องว่าง"
 
-#: src/qa_checks.cpp:351
+#: src/qa_checks.cpp:261
 msgid "The translation starts with a space, but the source text doesn’t."
 msgstr "การแปลเริ่มต้นด้วยช่องว่าง แต่ในข้อความต้นฉบับไม่ได้เริ่มต้นด้วยช่องว่าง"
 
-#: src/qa_checks.cpp:357
+#: src/qa_checks.cpp:267
 msgid "The translation is missing a newline at the end."
 msgstr "การแปลไม่มีการขึ้นบรรทัดใหม่ในตอนท้าย"
 
-#: src/qa_checks.cpp:363
+#: src/qa_checks.cpp:273
 msgid "The translation ends with a newline, but the source text doesn’t."
 msgstr "การแปลมีการขึ้นบรรทัดใหม่ในตอนท้าย แต่ในข้อความต้นฉบับไม่มีการขึ้นบรรทัดใหม่ในตอนท้าย"
 
-#: src/qa_checks.cpp:369
+#: src/qa_checks.cpp:279
 msgid "The translation is missing a space at the end."
 msgstr "การแปลไม่มีช่องว่างในตอนท้าย"
 
-#: src/qa_checks.cpp:375
+#: src/qa_checks.cpp:285
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "การแปลมีช่องว่างในตอนท้าย แต่ในข้อความต้นฉบับไม่มีช่องว่างในตอนท้าย"
 
-#: src/qa_checks.cpp:390
+#: src/qa_checks.cpp:300
 msgid "Punctuation checks"
 msgstr "ตรวจสอบเครื่องหมายวรรคตอน"
 
-#: src/qa_checks.cpp:455
+#: src/qa_checks.cpp:365
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr "การแปลควรสิ้นสุดด้วย \"%s\""
 
-#: src/qa_checks.cpp:467
+#: src/qa_checks.cpp:377
 #, c-format
 msgid "The translation should not end with “%s”."
 msgstr "การแปลไม่ควรสิ้นสุดด้วย \"%s\""
 
-#: src/qa_checks.cpp:488
+#: src/qa_checks.cpp:398
 #, c-format
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
 msgstr "การแปลสิ้นสุดด้วย \"%s\" แต่ในข้อความต้นฉบับสิ้นสุดด้วย \"%s\""
 
-#: src/recent_files.cpp:223
+#: src/recent_files.cpp:216
 msgid "Cloud"
 msgstr "คลาวด์"
 
-#: src/recent_files.cpp:404
+#: src/recent_files.cpp:397
 msgid "Clear Menu"
 msgstr "ล้างรายการ"
 
-#: src/recent_files.cpp:404
+#: src/recent_files.cpp:397
 msgid "Clear menu"
 msgstr "ล้างรายการ"
 
@@ -2863,426 +2261,382 @@ msgstr "เรียกดู"
 msgid "Add directory to the list"
 msgstr "เพิ่มตำแหน่งไปยังรายการ"
 
-#: src/resources/menus.xrc:8 src/resources/menus.xrc:387
+#: src/resources/manager.xrc:55 src/wx_translatable_strings.h:108
+msgid "OK"
+msgstr "ตกลง"
+
+#: src/resources/menus.xrc:5 src/resources/menus.xrc:343
+#: src/wx_translatable_strings.h:104
+msgid "&File"
+msgstr "&ไฟล์"
+
+#: src/resources/menus.xrc:8 src/resources/menus.xrc:346
 msgid "&New…"
 msgstr "&สร้างใหม่…"
 
-#: src/resources/menus.xrc:12 src/resources/menus.xrc:391
+#: src/resources/menus.xrc:12 src/resources/menus.xrc:350
 msgid "New from &POT/PO file…"
 msgstr "สร้างใหม่&จากไฟล์ POT/PO…"
 
-#: src/resources/menus.xrc:13 src/resources/menus.xrc:392
+#: src/resources/menus.xrc:13 src/resources/menus.xrc:351
 msgid "New From &POT/PO File…"
 msgstr "สร้างใหม่&จากไฟล์ POT/PO…"
 
-#: src/resources/menus.xrc:21 src/resources/menus.xrc:400
+#: src/resources/menus.xrc:17 src/resources/menus.xrc:355
 #: src/wx_translatable_strings.h:109
 msgid "&Open…"
 msgstr "&เปิด…"
 
-#: src/resources/menus.xrc:25 src/resources/menus.xrc:404
+#: src/resources/menus.xrc:21 src/resources/menus.xrc:359
 msgid "Open Recent"
 msgstr "เปิดล่าสุด"
 
-#: src/resources/menus.xrc:26 src/resources/menus.xrc:405
+#: src/resources/menus.xrc:22 src/resources/menus.xrc:360
 msgid "Open recent"
 msgstr "เปิดไฟล์ล่าสุด"
 
-#: src/resources/menus.xrc:29 src/resources/menus.xrc:408
+#: src/resources/menus.xrc:25 src/resources/menus.xrc:363
 msgid "Open cloud translation…"
 msgstr "เปิดการแปลบนคลาวด์"
 
-#: src/resources/menus.xrc:30 src/resources/menus.xrc:409
+#: src/resources/menus.xrc:26 src/resources/menus.xrc:364
 msgid "Open Cloud Translation…"
 msgstr "เปิดการแปลบนคลาวด์"
 
-#: src/resources/menus.xrc:34 src/resources/menus.xrc:413
+#: src/resources/menus.xrc:30 src/resources/menus.xrc:368
 msgid "&Start window"
 msgstr "หน้าต่างเมื่อเ&ริ่มทำงาน"
 
-#: src/resources/menus.xrc:35 src/resources/menus.xrc:414
+#: src/resources/menus.xrc:31 src/resources/menus.xrc:369
 msgid "&Start Window"
 msgstr "หน้าต่างเมื่อเ&ริ่มทำงาน"
 
-#: src/resources/menus.xrc:39 src/resources/menus.xrc:419
+#: src/resources/menus.xrc:35 src/resources/menus.xrc:374
 msgid "Catalogs &manager"
 msgstr "ตัวจัดการ&แค็ตตาล็อก"
 
-#: src/resources/menus.xrc:40 src/resources/menus.xrc:420
+#: src/resources/menus.xrc:36 src/resources/menus.xrc:375
 msgid "Catalogs &Manager"
 msgstr "ตัวจัดการ&แค็ตตาล็อก"
 
-#: src/resources/menus.xrc:44 src/resources/menus.xrc:424
+#: src/resources/menus.xrc:40 src/resources/menus.xrc:379
 #: src/wx_translatable_strings.h:96
 msgid "&Close"
 msgstr "&ปิด"
 
-#: src/resources/menus.xrc:48 src/wx_translatable_strings.h:115
+#: src/resources/menus.xrc:44 src/wx_translatable_strings.h:115
 msgid "&Save"
 msgstr "&บันทึก"
 
-#: src/resources/menus.xrc:52
+#: src/resources/menus.xrc:48
 msgid "Save &as…"
 msgstr "บันทึกเ&ป็น…"
 
-#: src/resources/menus.xrc:53
+#: src/resources/menus.xrc:49
 msgid "Save &As…"
 msgstr "บันทึกเ&ป็น…"
 
-#: src/resources/menus.xrc:58
+#: src/resources/menus.xrc:54
 msgid "Compile to MO…"
 msgstr "คอมไพล์เป็น MO…"
 
-#: src/resources/menus.xrc:62
+#: src/resources/menus.xrc:57
 msgid "E&xport to HTML…"
 msgstr "ส่ง&ออกเป็น HTML…"
 
-#: src/resources/menus.xrc:66
-msgid "Export to Excel…"
-msgstr "ส่งออกไปยัง Excel..."
-
-#: src/resources/menus.xrc:69
-msgid "Import from Excel…"
-msgstr "นำเข้าจาก Excle..."
-
-#: src/resources/menus.xrc:73 src/resources/menus.xrc:428
+#: src/resources/menus.xrc:62 src/resources/menus.xrc:383
 msgid "Check for updates…"
 msgstr "ตรวจหาการอัพเดต…"
 
-#: src/resources/menus.xrc:76 src/resources/menus.xrc:431
-msgid "&License…"
-msgstr "&ใบอนุญาต…"
-
-#: src/resources/menus.xrc:79 src/resources/menus.xrc:434
+#: src/resources/menus.xrc:65 src/resources/menus.xrc:386
 msgid "Settings…"
 msgstr "การตั้งค่า…"
 
-#: src/resources/menus.xrc:83 src/resources/menus.xrc:438
+#: src/resources/menus.xrc:69 src/resources/menus.xrc:390
 #: src/wx_translatable_strings.h:112
 msgid "&Preferences"
 msgstr "&การตั้งค่า"
 
-#: src/resources/menus.xrc:90 src/resources/menus.xrc:445
+#: src/resources/menus.xrc:76 src/resources/menus.xrc:397
 msgid "E&xit"
 msgstr "&ออก"
 
-#: src/resources/menus.xrc:91 src/resources/menus.xrc:446
+#: src/resources/menus.xrc:77 src/resources/menus.xrc:398
 #: src/wx_translatable_strings.h:103
 msgid "Quit"
 msgstr "ออก"
 
-#: src/resources/menus.xrc:118
+#: src/resources/menus.xrc:104
 msgid "Copy from singular"
 msgstr "คัดลอกจากเอกพจน์"
 
-#: src/resources/menus.xrc:119
+#: src/resources/menus.xrc:105
 msgid "Copy From Singular"
 msgstr "คัดลอกจากเอกพจน์"
 
-#: src/resources/menus.xrc:124
+#: src/resources/menus.xrc:110
 msgid "Translation needs &work"
 msgstr "ต้องการตรวจ&ทานการแปล"
 
-#: src/resources/menus.xrc:125
+#: src/resources/menus.xrc:111
 msgid "Translation Needs &Work"
 msgstr "ต้องการตรวจ&ทานการแปล"
 
-#: src/resources/menus.xrc:130
+#: src/resources/menus.xrc:116
 msgid "Edit &comment"
 msgstr "แก้ไขคำแ&นะนำ"
 
-#: src/resources/menus.xrc:131
+#: src/resources/menus.xrc:117
 msgid "Edit &Comment"
 msgstr "แก้ไขคำแ&นะนำ"
 
 #. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
-#: src/resources/menus.xrc:136 src/sidebar.cpp:651 src/sidebar_pro.cpp:219
+#: src/resources/menus.xrc:122 src/sidebar.cpp:537
 msgid "Suggestions"
 msgstr "คำแนะนำ"
 
-#: src/resources/menus.xrc:139 src/resources/menus.xrc:158
+#: src/resources/menus.xrc:125 src/resources/menus.xrc:144
 msgid "&Find…"
 msgstr "&ค้นหา…"
 
-#: src/resources/menus.xrc:144
+#: src/resources/menus.xrc:130
 msgid "Replace…"
 msgstr "แทนที่…"
 
-#: src/resources/menus.xrc:148
+#: src/resources/menus.xrc:134
 msgid "Find next"
 msgstr "ค้นหาถัดไป"
 
-#: src/resources/menus.xrc:152
+#: src/resources/menus.xrc:138
 msgid "Find previous"
 msgstr "ค้นหาก่อนหน้า"
 
-#: src/resources/menus.xrc:162
+#: src/resources/menus.xrc:148
 msgid "Find and Replace…"
 msgstr "ค้นหาและแทนที่…"
 
-#: src/resources/menus.xrc:166
+#: src/resources/menus.xrc:152
 msgid "Find Next"
 msgstr "ค้นหาถัดไป"
 
-#: src/resources/menus.xrc:170
+#: src/resources/menus.xrc:156
 msgid "Find Previous"
 msgstr "ค้นหาก่อนหน้า"
 
-#: src/resources/menus.xrc:179
+#: src/resources/menus.xrc:165
 msgid "Show string &ID"
 msgstr "แสดง &รหัสสตริง"
 
-#: src/resources/menus.xrc:180
+#: src/resources/menus.xrc:166
 msgid "Show String &ID"
 msgstr "แสดง &รหัสสตริง"
 
-#: src/resources/menus.xrc:184
+#: src/resources/menus.xrc:170
 msgid "Show warnings"
 msgstr "แสดงคำเตือน"
 
-#: src/resources/menus.xrc:185
+#: src/resources/menus.xrc:171
 msgid "Show Warnings"
 msgstr "แสดงคำเตือน"
 
-#: src/resources/menus.xrc:189
-msgid "Customize warnings…"
-msgstr "กำหนดคำเตือน..."
-
-#: src/resources/menus.xrc:190
-msgid "Customize Warnings…"
-msgstr "กำหนดคำเตือน..."
-
-#: src/resources/menus.xrc:194
+#: src/resources/menus.xrc:176
 msgid "Sort by &file order"
 msgstr "เรียงตาม &ลำดับไฟล์"
 
-#: src/resources/menus.xrc:195
+#: src/resources/menus.xrc:177
 msgid "Sort by &File Order"
 msgstr "เรียงตาม &ลำดับไฟล์"
 
-#: src/resources/menus.xrc:199
+#: src/resources/menus.xrc:181
 msgid "Sort by &source"
 msgstr "เรียงตาม &แหล่งข้อมูล"
 
-#: src/resources/menus.xrc:200
+#: src/resources/menus.xrc:182
 msgid "Sort by &Source"
 msgstr "เรียงตาม &แหล่งข้อมูล"
 
-#: src/resources/menus.xrc:204
+#: src/resources/menus.xrc:186
 msgid "Sort by &translation"
 msgstr "เรียงตาม &การแปล"
 
-#: src/resources/menus.xrc:205
+#: src/resources/menus.xrc:187
 msgid "Sort by &Translation"
 msgstr "เรียงตาม &การแปล"
 
-#: src/resources/menus.xrc:210
+#: src/resources/menus.xrc:192
 msgid "&Group by context"
 msgstr "&จัดกลุ่มตามบริบท"
 
-#: src/resources/menus.xrc:211
+#: src/resources/menus.xrc:193
 msgid "&Group By Context"
 msgstr "&จัดกลุ่มตามบริบท"
 
-#: src/resources/menus.xrc:215
+#: src/resources/menus.xrc:197
 msgid "Entries with errors first"
 msgstr "ขึ้นต้นด้วยรายการที่มีข้อผิดพลาดก่อน"
 
-#: src/resources/menus.xrc:216
+#: src/resources/menus.xrc:198
 msgid "Entries with Errors First"
 msgstr "ขึ้นต้นด้วยรายการที่มีข้อผิดพลาดก่อน"
 
-#: src/resources/menus.xrc:220
+#: src/resources/menus.xrc:202
 msgid "&Untranslated entries first"
 msgstr "&ขึ้นต้นด้วยรายการที่ยังไม่ได้แปลก่อน"
 
-#: src/resources/menus.xrc:221
+#: src/resources/menus.xrc:203
 msgid "&Untranslated Entries First"
 msgstr "&ขึ้นต้นด้วยรายการที่ยังไม่ได้แปลก่อน"
 
-#: src/resources/menus.xrc:226
-msgid "Show &suggestions tab"
-msgstr "แสดง &แท็บข้อเสนอแนะ"
-
-#: src/resources/menus.xrc:227
-msgid "Show &Suggestions Tab"
-msgstr "แสดง &แท็บข้อเสนอแนะ"
-
-#: src/resources/menus.xrc:231
-msgid "Show &terminology tab"
-msgstr "แสดง &แท็บอภิธานศัพท์"
-
-#: src/resources/menus.xrc:232
-msgid "Show &Terminology Tab"
-msgstr "แสดง &แท็บอภิธานศัพท์"
-
-#: src/resources/menus.xrc:236
+#: src/resources/menus.xrc:208
 msgid "&Show code occurrences"
 msgstr "&แสดงตำแหน่งที่พบในรหัส"
 
-#: src/resources/menus.xrc:237
+#: src/resources/menus.xrc:209
 msgid "&Show Code Occurrences"
 msgstr "&แสดงตำแหน่งที่พบในรหัส"
 
-#: src/resources/menus.xrc:241
+#: src/resources/menus.xrc:213
 msgid "Show sidebar"
 msgstr "แสดงแถบด้านข้าง"
 
-#: src/resources/menus.xrc:247
+#: src/resources/menus.xrc:219
 msgid "Show status bar"
 msgstr "แสดงแถบสถานะ"
 
-#: src/resources/menus.xrc:255 src/resources/menus.xrc:463
+#: src/resources/menus.xrc:227 src/resources/menus.xrc:415
 msgid "&Translation"
 msgstr "&การแปล"
 
-#: src/resources/menus.xrc:258 src/statistics.cpp:312 src/statistics.cpp:415
-#: src/statistics.cpp:427
-msgid "Source Text"
-msgstr "ข้อความต้นฉบับ"
-
-#: src/resources/menus.xrc:262
+#: src/resources/menus.xrc:230
 msgid "&Update from source code"
 msgstr "&อัพเดตจากซอร์สโค้ด"
 
-#: src/resources/menus.xrc:263
+#: src/resources/menus.xrc:231
 msgid "&Update from Source Code"
 msgstr "&อัพเดตจากซอร์สโค้ด"
 
-#: src/resources/menus.xrc:270
+#: src/resources/menus.xrc:238
 msgid "Sync with Crowdin"
 msgstr "ซิงค์กับ Crowdin"
 
-#: src/resources/menus.xrc:274 src/resources/menus.xrc:275
+#: src/resources/menus.xrc:242 src/resources/menus.xrc:243
 msgid "Pre-&translate…"
 msgstr "แปล&ล่วงหน้า…"
 
-#: src/resources/menus.xrc:279
+#: src/resources/menus.xrc:247
 msgid "&Validate translations"
 msgstr "&ตรวจสอบการแปล"
 
-#: src/resources/menus.xrc:280
+#: src/resources/menus.xrc:248
 msgid "&Validate Translations"
 msgstr "&ตรวจสอบการแปล"
 
-#: src/resources/menus.xrc:284
-msgid "&Statistics"
-msgstr "&สถิติ"
-
-#: src/resources/menus.xrc:289
+#: src/resources/menus.xrc:253
 msgid "Remove Same-as-Source Translations"
 msgstr "ลบการแปลที่เหมือนกับต้นฉบับ"
 
-#: src/resources/menus.xrc:292
+#: src/resources/menus.xrc:256
 msgid "&Purge deleted translations"
 msgstr "&ล้างข้อมูลการแปลที่ลบไปแล้ว"
 
-#: src/resources/menus.xrc:293
+#: src/resources/menus.xrc:257
 msgid "&Purge Deleted Translations"
 msgstr "&ล้างข้อมูลการแปลที่ลบไปแล้ว"
 
-#: src/resources/menus.xrc:297
+#: src/resources/menus.xrc:261
 msgid "&Properties…"
 msgstr "&คุณสมบัติ…"
 
-#: src/resources/menus.xrc:304 src/resources/menus.xrc:466
+#: src/resources/menus.xrc:268 src/resources/menus.xrc:418
 msgid "&Go"
 msgstr "&ไป"
 
-#: src/resources/menus.xrc:307
+#: src/resources/menus.xrc:271
 msgid "&Done and next"
 msgstr "&เสร็จสิ้นและถัดไป"
 
-#: src/resources/menus.xrc:308
+#: src/resources/menus.xrc:272
 msgid "&Done and Next"
 msgstr "&เสร็จสิ้นและถัดไป"
 
-#: src/resources/menus.xrc:314
+#: src/resources/menus.xrc:278
 msgid "Previously edited"
 msgstr "การแก้ไขก่อนหน้านี้"
 
-#: src/resources/menus.xrc:315
+#: src/resources/menus.xrc:279
 msgid "Previously Edited"
 msgstr "การแก้ไขก่อนหน้านี้"
 
-#: src/resources/menus.xrc:320
+#: src/resources/menus.xrc:284
 msgid "&Previous translation"
 msgstr "&การแปลก่อนหน้า"
 
-#: src/resources/menus.xrc:321
+#: src/resources/menus.xrc:285
 msgid "&Previous Translation"
 msgstr "&การแปลก่อนหน้า"
 
-#: src/resources/menus.xrc:325
+#: src/resources/menus.xrc:289
 msgid "&Next translation"
 msgstr "&การแปลถัดไป"
 
-#: src/resources/menus.xrc:326
+#: src/resources/menus.xrc:290
 msgid "&Next Translation"
 msgstr "&การแปลถัดไป"
 
-#: src/resources/menus.xrc:330
+#: src/resources/menus.xrc:294
 msgid "P&revious unfinished"
 msgstr "ที่ยังไม่เสร็จก่อน&หน้า"
 
-#: src/resources/menus.xrc:331
+#: src/resources/menus.xrc:295
 msgid "P&revious Unfinished"
 msgstr "ที่ยังไม่เสร็จก่อน&หน้า"
 
-#: src/resources/menus.xrc:335
+#: src/resources/menus.xrc:299
 msgid "Ne&xt unfinished"
 msgstr "ที่ยังไม่เสร็จถัดไ&ป"
 
-#: src/resources/menus.xrc:336
+#: src/resources/menus.xrc:300
 msgid "Ne&xt Unfinished"
 msgstr "ที่ยังไม่เสร็จถัดไ&ป"
 
-#: src/resources/menus.xrc:341
+#: src/resources/menus.xrc:305
 msgid "Previous plural form"
 msgstr "รูปแบบพหูพจน์ก่อนหน้า"
 
-#: src/resources/menus.xrc:342
+#: src/resources/menus.xrc:306
 msgid "Previous Plural Form"
 msgstr "รูปแบบพหูพจน์ก่อนหน้า"
 
-#: src/resources/menus.xrc:346
+#: src/resources/menus.xrc:310
 msgid "Next plural form"
 msgstr "รูปแบบพหูพจน์ถัดไป"
 
-#: src/resources/menus.xrc:347
+#: src/resources/menus.xrc:311
 msgid "Next Plural Form"
 msgstr "รูปแบบพหูพจน์ถัดไป"
 
-#: src/resources/menus.xrc:356 src/resources/menus.xrc:473
+#: src/resources/menus.xrc:320 src/resources/menus.xrc:425
 msgid "&Online help"
 msgstr "&ความช่วยเหลือออนไลน์"
 
-#: src/resources/menus.xrc:357 src/resources/menus.xrc:474
+#: src/resources/menus.xrc:321 src/resources/menus.xrc:426
 msgid "&Online Help"
 msgstr "&ความช่วยเหลือออนไลน์"
 
-#: src/resources/menus.xrc:363 src/resources/menus.xrc:480
+#: src/resources/menus.xrc:327 src/resources/menus.xrc:432
 msgid "&GNU gettext manual"
 msgstr "คู่มือ &GNU gettext"
 
-#: src/resources/menus.xrc:364 src/resources/menus.xrc:481
+#: src/resources/menus.xrc:328 src/resources/menus.xrc:433
 msgid "&GNU gettext Manual"
 msgstr "คู่มือ &GNU gettext"
 
-#: src/resources/menus.xrc:368 src/resources/menus.xrc:485
-msgid "Email &support…"
-msgstr "&การสนับสนุนทางอีเมล…"
-
-#: src/resources/menus.xrc:369 src/resources/menus.xrc:486
-msgid "Email &Support…"
-msgstr "&การสนับสนุนทางอีเมล…"
-
-#: src/resources/menus.xrc:373 src/resources/menus.xrc:490
+#: src/resources/menus.xrc:332 src/resources/menus.xrc:437
 msgid "&About Poedit"
 msgstr "&เกี่ยวกับ Poedit"
 
-#: src/resources/menus.xrc:374 src/resources/menus.xrc:375
-#: src/resources/menus.xrc:491 src/resources/menus.xrc:492
+#: src/resources/menus.xrc:333 src/resources/menus.xrc:334
+#: src/resources/menus.xrc:438 src/resources/menus.xrc:439
 msgid "&About"
 msgstr "&เกี่ยวกับ"
 
@@ -3303,11 +2657,13 @@ msgid "Command to extract translations:"
 msgstr "คำสั่งที่ใช้แยกการแปล:"
 
 #: src/resources/prefs.xrc:61
-msgid "This is the command used to launch the extractor.\n"
+msgid ""
+"This is the command used to launch the extractor.\n"
 "%o expands to the name of output file, %K to list\n"
 "of keywords, %F to list of input files,\n"
 "%C to charset flag (see below)."
-msgstr "นี่คือคำสั่งที่จะใช้เรียกใช้ตัวแยก\n"
+msgstr ""
+"นี่คือคำสั่งที่จะใช้เรียกใช้ตัวแยก\n"
 "%o ขยายชื่อไฟล์ขาออก %K ขยายรายการ\n"
 "คำสำคัญ %F ขยายไฟล์นำเข้า\n"
 "%C ขยายค่าสถานะชุดอักขระ (ดูด้านล่าง)"
@@ -3317,9 +2673,11 @@ msgid "An item in keywords list:"
 msgstr "รายการในรายการคำสำคัญ:"
 
 #: src/resources/prefs.xrc:84
-msgid "This will be attached to the command line once\n"
+msgid ""
+"This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
-msgstr "การดำเนินการนี้จะแนบไฟล์ไปยังคำสั่งหนึ่งครั้ง\n"
+msgstr ""
+"การดำเนินการนี้จะแนบไฟล์ไปยังคำสั่งหนึ่งครั้ง\n"
 "ต่อคำสำคัญที่ใช้แต่ละคำ %k จะขยายชื่อของคำสำคัญที่ใช้"
 
 #: src/resources/prefs.xrc:93
@@ -3328,9 +2686,11 @@ msgstr "รายการในรายการไฟล์นำเข้า
 
 #: src/resources/prefs.xrc:107
 #, c-format
-msgid "This will be attached to the command line once\n"
+msgid ""
+"This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
-msgstr "การดำเนินการนี้จะแนบไฟล์ไปยังบรรทัดคำสั่งหนึ่งครั้ง\n"
+msgstr ""
+"การดำเนินการนี้จะแนบไฟล์ไปยังบรรทัดคำสั่งหนึ่งครั้ง\n"
 "สำหรับไฟล์แต่ละไฟล์ %f จะขยายชื่อไฟล์"
 
 #: src/resources/prefs.xrc:116 src/resources/properties.xrc:124
@@ -3339,9 +2699,11 @@ msgstr "รหัสอักขระดั้งเดิม:"
 
 #: src/resources/prefs.xrc:130
 #, c-format
-msgid "This will be attached to the command line\n"
+msgid ""
+"This will be attached to the command line\n"
 "only if source code charset was given. %c expands to charset value."
-msgstr "การดำเนินการนี้จะแนบไฟล์ไปยังบรรทัดคำสั่ง\n"
+msgstr ""
+"การดำเนินการนี้จะแนบไฟล์ไปยังบรรทัดคำสั่ง\n"
 "เมื่อรหัสชุดอักขระถูกกำหนดให้เท่านั้น %c จะขยายค่าของชุดอักขระ"
 
 #: src/resources/properties.xrc:4 src/resources/properties.xrc:153
@@ -3404,480 +2766,137 @@ msgstr "แยกข้อความจากไฟล์ต้นฉบับ
 msgid "Base path:"
 msgstr "เส้นทางหลัก:"
 
-#: src/resources/properties.xrc:227
-msgid "Customize File Extensions…"
-msgstr "กำหนดนามสกุลไฟล์…"
-
-#: src/resources/properties.xrc:228
-msgid "Customize file extensions…"
-msgstr "กำหนดนามสกุลไฟล์…"
-
-#: src/resources/properties.xrc:241
+#: src/resources/properties.xrc:222
 msgid "Sources Keywords"
 msgstr "คำสำคัญของแหล่งที่มา"
 
-#: src/resources/properties.xrc:242
+#: src/resources/properties.xrc:223
 msgid "Sources keywords"
 msgstr "คำสำคัญของแหล่งที่มา"
 
-#: src/resources/properties.xrc:248
-msgid "Use these keywords (function names) to recognize translatable strings\n"
+#: src/resources/properties.xrc:229
+msgid ""
+"Use these keywords (function names) to recognize translatable strings\n"
 "in source files:"
-msgstr "ใช้คำสำคัญเหล่านี้ (ชื่อฟังก์ชั่น) เพื่อตรวจหาสตริงที่แปลได้\n"
+msgstr ""
+"ใช้คำสำคัญเหล่านี้ (ชื่อฟังก์ชั่น) เพื่อตรวจหาสตริงที่แปลได้\n"
 "ในไฟล์ต้นฉบับ:"
 
-#: src/resources/properties.xrc:264
+#: src/resources/properties.xrc:245
 msgid "Also use default keywords for supported languages"
 msgstr "ใช้คำสำคัญเริ่มต้นสำหรับภาษาที่รองรับด้วย"
 
-#: src/resources/properties.xrc:271
+#: src/resources/properties.xrc:252
 msgid "Learn about gettext keywords"
 msgstr "เรียนรู้เกี่ยวกับคำสำคัญ Gettext"
 
-#: src/resources/toolbar.xrc:13 src/resources/toolbar.xrc:17
+#: src/resources/toolbar.xrc:13 src/resources/toolbar.xrc:18
+msgid "Open"
+msgstr ""
+
+#: src/resources/toolbar.xrc:14 src/resources/toolbar.xrc:19
 msgid "Open file"
 msgstr "เปิดไฟล์"
 
-#: src/resources/toolbar.xrc:22 src/resources/toolbar.xrc:26
+#: src/resources/toolbar.xrc:25 src/resources/toolbar.xrc:30
 msgid "Save file"
 msgstr "บันทึกไฟล์"
 
-#: src/resources/toolbar.xrc:34
+#: src/resources/toolbar.xrc:38
 msgid "Validate"
 msgstr "ตรวจสอบ"
 
-#: src/resources/toolbar.xrc:35
+#: src/resources/toolbar.xrc:39
 msgid "Check for errors in the translation"
 msgstr "ตรวจสอบข้อผิดพลาดในการแปล"
 
-#: src/resources/toolbar.xrc:49
-msgid "Pre-translate strings that don’t have a translation yet"
-msgstr "แปลสตริงที่ยังไม่มีการแปลล่วงหน้า"
-
-#: src/resources/toolbar.xrc:57 src/wx/main_toolbar.cpp:136
+#: src/resources/toolbar.xrc:45 src/wx/main_toolbar.cpp:99
 msgid "Update from code"
 msgstr "อัพเดตจากโค้ด"
 
-#: src/resources/toolbar.xrc:58 src/wx/main_toolbar.cpp:136
+#: src/resources/toolbar.xrc:46 src/wx/main_toolbar.cpp:99
 msgid "Update from Code"
 msgstr "อัพเดตจากโค้ด"
 
-#: src/resources/toolbar.xrc:59 src/wx/main_toolbar.cpp:137
+#: src/resources/toolbar.xrc:47 src/wx/main_toolbar.cpp:100
 msgid "Update from source code"
 msgstr "อัพเดตจากซอร์สโค้ด"
 
-#: src/resources/toolbar.xrc:67
+#: src/resources/toolbar.xrc:55
 msgid "Sidebar"
 msgstr "แถบด้านข้าง"
 
-#: src/resources/toolbar.xrc:68
+#: src/resources/toolbar.xrc:56
 msgid "Show or hide the sidebar"
 msgstr "แสดงหรือซ่อนแถบด้านข้าง"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
-#: src/sidebar.cpp:139
+#: src/sidebar.cpp:134
 msgid "Previous source text"
 msgstr "ข้อความต้นฉบับก่อนหน้านี้"
 
-#: src/sidebar.cpp:142
-msgid "The old source text (before it changed during an update) that the now-inaccurate translation corresponds to."
-msgstr "ข้อความต้นฉบับ (ก่อนที่จะถูกเปลี่ยนระหว่างการอัพเดต) ที่เกี่ยวข้องกับการแปลที่ไม่ถูกต้องในขณะนี้"
+#: src/sidebar.cpp:137
+msgid ""
+"The old source text (before it changed during an update) that the now-"
+"inaccurate translation corresponds to."
+msgstr ""
+"ข้อความต้นฉบับ (ก่อนที่จะถูกเปลี่ยนระหว่างการอัพเดต) ที่เกี่ยวข้องกับการแปลที่ไม่ถูกต้องในขณะนี้"
 
-#: src/sidebar.cpp:168
+#: src/sidebar.cpp:163
 msgid "Notes for translators"
 msgstr "หมายเหตุสำหรับนักแปล"
 
-#: src/sidebar.cpp:201
+#: src/sidebar.cpp:196
 msgid "Comment"
 msgstr "ความคิดเห็น"
 
-#: src/sidebar.cpp:231 src/sidebar.cpp:250
+#: src/sidebar.cpp:226 src/sidebar.cpp:245
 msgid "Add comment"
 msgstr "เพิ่มคำแนะนำ"
 
-#: src/sidebar.cpp:233 src/sidebar.cpp:235 src/sidebar.cpp:253
+#: src/sidebar.cpp:228 src/sidebar.cpp:230 src/sidebar.cpp:248
 msgid "Add Comment"
 msgstr "เพิ่มคำแนะนำ"
 
-#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
-#: src/sidebar.cpp:436
-msgid "from your TM"
-msgstr "จากหน่วยความจำการแปลของคุณ"
-
-#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
-#: src/sidebar.cpp:441
-msgid "machine translation"
-msgstr "การแปลด้วยเครื่อง"
-
-#. TRANSLATORS: This is followed by a logo of e.g. Microsoft Translator, forming a sentence e.g. "translated by MS Translator"
-#: src/sidebar.cpp:449
-msgid "translated by"
-msgstr "แปลโดย"
-
-#. TRANSLATORS: Shown as hover tip near a suggestion to indicate where it comes from; keep short
-#: src/sidebar.cpp:456
-msgid "human translation"
-msgstr "การแปลด้วยมนุษย์"
-
-#: src/sidebar.cpp:592
+#: src/sidebar.cpp:484
 msgid "Delete From Translation Memory"
 msgstr "ลบออกจากหน่วยความจำการแปล"
 
-#: src/sidebar.cpp:592
+#: src/sidebar.cpp:484
 msgid "Delete from translation memory"
 msgstr "ลบออกจากหน่วยความจำการแปล"
 
-#: src/sidebar.cpp:593
-msgid "Report Bad Translation"
-msgstr "รายงานการแปลที่ไม่ถูกต้อง"
-
-#: src/sidebar.cpp:593
-msgid "Report bad translation"
-msgstr "รายงานการแปลที่ไม่ถูกต้อง"
-
-#: src/sidebar.cpp:652
+#: src/sidebar.cpp:539
 msgid "Translation suggestions"
 msgstr "คำแนะนำการแปล"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
-#: src/sidebar.cpp:695
+#: src/sidebar.cpp:580
 msgid "No matches found"
 msgstr "ไม่พบผลลัพธ์ที่ตรงกัน"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (macOS, Linux).
-#: src/sidebar.cpp:698
+#: src/sidebar.cpp:583
 msgid "No Matches Found"
 msgstr "ไม่พบผลลัพธ์ที่ตรงกัน"
 
-#: src/sidebar.cpp:734 src/sidebar_pro.cpp:325
+#: src/sidebar.cpp:623
 msgid "This string was found in Poedit’s translation memory."
 msgstr "สตริงนี้ถูกพบในหน่วยความจำการแปลของ Poedit"
 
-#: src/sidebar.cpp:984
-msgid "Translation suggestions require that source text is available. They don’t work if only IDs without the actual text are used."
-msgstr "คำแนะนำในการแปลจำเป็นต้องมีข้อความต้นฉบับให้พร้อมใช้งาน สิ่งเหล่านี้จะไม่ทำงานหากใช้เฉพาะ ID ที่ไม่มีข้อความจริงเท่านั้น"
+#: src/sidebar.cpp:877
+msgid ""
+"Translation suggestions require that source text is available. They don’t "
+"work if only IDs without the actual text are used."
+msgstr ""
+"คำแนะนำในการแปลจำเป็นต้องมีข้อความต้นฉบับให้พร้อมใช้งาน สิ่งเหล่านี้จะไม่ทำงานหากใช้เฉพาะ ID "
+"ที่ไม่มีข้อความจริงเท่านั้น"
 
-#: src/sidebar.cpp:989
-msgid "Translation suggestions require that source text’s language is known. Poedit couldn’t detect it in this file."
+#: src/sidebar.cpp:882
+msgid ""
+"Translation suggestions require that source text’s language is known. Poedit "
+"couldn’t detect it in this file."
 msgstr "คำแนะนำในการแปลจำเป็นต้องรู้ภาษาของข้อความต้นฉบับ Poedit ตรวจไม่พบในไฟล์นี้"
-
-#. TRANSLATORS: Tooltip explaining the Quality: label
-#: src/sidebar_pro.cpp:86
-msgid "Currently enabled quality level of online suggestions"
-msgstr "ระดับคุณภาพคำแนะนำออนไลน์ที่เปิดใช้งานในปัจจุบัน"
-
-#. TRANSLATORS: Quality level for the "Quality: %s" label; needs to be short
-#: src/sidebar_pro.cpp:121
-msgid "Premium"
-msgstr "พรีเมียม"
-
-#. TRANSLATORS: Quality level for the "Quality: %s" label; needs to be short
-#: src/sidebar_pro.cpp:126
-msgid "Standard"
-msgstr "มาตรฐาน"
-
-#. TRANSLATORS: This needs to be *short*, it is shown in the sidebar
-#. after "Translation suggestions". %s will be replaced by "Standard"
-#. or "Premium". "(Quality) level" or "tier" are synonyms for it.
-#: src/sidebar_pro.cpp:132
-#, c-format
-msgid "Quality: %s"
-msgstr "คุณภาพ: %s"
-
-#. TRANSLATORS: Label for the part where currently used translation engine is shown
-#: src/sidebar_pro.cpp:151
-msgid "Machine translation uses:"
-msgstr "การแปลด้วยเครื่อง:"
-
-#: src/sidebar_pro.cpp:227
-msgid "Terminology"
-msgstr "ศัพท์บัญญัติ"
-
-#: src/sidebar_pro.cpp:321
-msgid "This suggestion was contributed by another translator to the online TM."
-msgstr "คำแนะนำนี้ถูกให้โดยนักแปลคนอื่นๆ ไปยังหน่วยความจำการแปลออนไลน์"
-
-#: src/sidebar_pro.cpp:323
-msgid "This suggestion was machine-translated online."
-msgstr "คำแนะนำนี้ถูกแปลด้วยเครื่องออนไลน์"
-
-#: src/sidebar_pro.cpp:512
-#, c-format
-msgid "%d out of %d online suggestion left."
-msgid_plural "%d out of %d online suggestions left."
-msgstr[0] "เหลือ %d จาก %d คำแนะนำออนไลน์"
-
-#: src/sidebar_pro.cpp:517
-msgid "Remove this limitation"
-msgstr "เอาข้อจำกัดนี้ออก"
-
-#: src/sidebar_pro.cpp:521
-msgid "Online suggestions are limited to only 10 in the free version. Upgrade to Pro to remove this limitation."
-msgstr "คำแนะนำออนไลน์จะถูกจำกัดการใช้งานเพียง 10 ครั้งในเวอร์ชันฟรี อัพเกรดเป็นรุ่นโปรเพื่อเอาข้อจำกัดนี้ออก"
-
-#: src/sidebar_pro.cpp:523
-msgid "Unlock online suggestions"
-msgstr "ปลดล็อกคำแนะนำออนไลน์"
-
-#: src/sidebar_pro.cpp:547
-msgid "Exceeded online TM daily limit."
-msgstr "เกินขีดจำกัดหน่วยความจำการแปลออนไลน์ต่อวันแล้ว"
-
-#: src/sidebar_pro.cpp:580
-msgid "Connect to the Internet to get additional suggestions."
-msgstr "เชื่อมต่ออินเทอร์เน็ตเพื่อดูคำแนะนำเพิ่มเติม"
-
-#. TRANSLATORS: Label indicating that translations made in the current file are contributed to the online translation memory. Related to the "Contribute my translations to the online TM" string.
-#: src/sidebar_pro.cpp:655
-msgid "Contributing"
-msgstr "ร่วมให้ข้อมูล"
-
-#: src/sidebar_pro.cpp:656
-msgid "Your translations are contributed to the online translation memory as you make them. Thanks for making the suggestions better!"
-msgstr "คุณได้ร่วมให้ข้อมูลการแปลของคุณไปยังหน่วยความจำการแปลออนไลน์แล้ว ขอบคุณที่ช่วยทำให้คำแนะนำดีขึ้น!"
-
-#. TRANSLATORS: Label indicating that the current file
-#: src/sidebar_pro.cpp:662
-msgid "Private"
-msgstr "ส่วนตัว"
-
-#: src/sidebar_pro.cpp:663
-msgid "Translations from this file are not shared with the online translation memory."
-msgstr "การแปลจากไฟล์นี้จะไม่ถูกใช้ร่วมกับหน่วยความจำการแปลออนไลน์"
-
-#: src/sidebar_pro.cpp:688
-msgid "Privacy settings"
-msgstr "การตั้งค่าความเป็นส่วนตัว"
-
-#: src/sidebar_pro.cpp:694
-#, c-format
-msgid "While editing the file “%s”:"
-msgstr "ขณะแก้ไขไฟล์ “%s”:"
-
-#: src/sidebar_pro.cpp:756
-msgid "Not interested"
-msgstr "ไม่สนใจ"
-
-#: src/sidebar_pro.cpp:982
-msgid "Pre-translation"
-msgstr "การแปลล่วงหน้า"
-
-#: src/sidebar_pro.cpp:987
-msgid "Pre-translate all items at once and focus on making corrections, instead of translating them one by one."
-msgstr "แปลรายการทั้งหมดล่วงหน้าในครั้งเดียวและมุ่งเน้นไปที่การแก้ไข แทนที่จะแปลทีละรายการ"
-
-#: src/sidebar_pro.cpp:1101
-msgid "Stay Informed!"
-msgstr "ไม่พลาดข่าวสาร!"
-
-#: src/sidebar_pro.cpp:1102
-msgid "Subscribe"
-msgstr "ติดตาม"
-
-#: src/sidebar_pro.cpp:1106
-msgid "Sign up for Poedit newsletter and be the first to know about what’s new. I hate spam too, so expect only a few emails a year."
-msgstr "สมัครรับข้อมูลจดหมายข่าว Poedit และมาเป็นคนแรกที่จะรู้ว่ามีอะไรใหม่ เราเกลียดสแปมเหมือนกัน ดังนั้นโปรดอย่าใส่อีเมลมากเกินไปในหนึ่งปี"
-
-#: src/sidebar_pro.cpp:1117
-msgid "Email address"
-msgstr "ที่อยู่อีเมล"
-
-#: src/sidebar_pro.cpp:1140
-msgid "You’re signed up. Please check your email for a confirmation message."
-msgstr "คุณได้ทำการสมัครรับข้อมูลเรียบร้อยแล้ว โปรดตรวจสอบอีเมลของคุณสำหรับข้อความยืนยัน"
-
-#. TRANSLATORS: "Dictionaries" is the name of the application (see https://dictionaries.io), i.e. shouldn't be translated
-#: src/sidebar_pro.cpp:1210
-msgid "Dictionaries for Mac, Windows & Kindle"
-msgstr "พจนานุกรมสำหรับ Mac, Windows และ Kindle"
-
-#: src/sidebar_pro.cpp:1222
-msgid "Did you know I also made a dictionaries app for Mac, Windows and Kindle? It supports over 80 languages and is a great companion to Poedit."
-msgstr "คุณรู้ไหมว่าผมก็ทำแอปพจนานุกรมสำหรับ Mac, Windows และ Kindle ซึ่งรองรับกว่า 80 ภาษาและใช้กับ Poedit ได้ดีด้วย"
-
-#: src/sidebar_terminology.cpp:49
-msgid "Glossary Entry"
-msgstr "รายการอภิธานศัพท์"
-
-#: src/sidebar_terminology.cpp:55 src/sidebar_terminology.cpp:185
-msgid "Term"
-msgstr "ศัพท์"
-
-#: src/sidebar_terminology.cpp:60
-msgid "Additional description or notes"
-msgstr "คำอธิบายเพิ่มเติมหรือหมายเหตุ"
-
-#: src/sidebar_terminology.cpp:66 src/sidebar_terminology.cpp:187
-msgid "Notes"
-msgstr "หมายเหตุ"
-
-#: src/sidebar_terminology.cpp:128
-msgid "CSV Glossary Import"
-msgstr "การนำเข้าอภิธานศัพท์ CSV"
-
-#: src/sidebar_terminology.cpp:138
-msgid "Source language:"
-msgstr "ภาษาต้นฉบับ:"
-
-#: src/sidebar_terminology.cpp:142
-msgid "Translation language:"
-msgstr "ภาษาการแปล:"
-
-#: src/sidebar_terminology.cpp:149
-msgid "Import rules:"
-msgstr "กฎการนำเข้า:"
-
-#: src/sidebar_terminology.cpp:153
-msgid "Skip the first row"
-msgstr "ข้ามแถวแรก"
-
-#: src/sidebar_terminology.cpp:158
-msgid "Column separator:"
-msgstr "ตัวคั่นคอลัมน์:"
-
-#: src/sidebar_terminology.cpp:161
-msgid "Term column:"
-msgstr "คอลัมน์ความหมาย:"
-
-#: src/sidebar_terminology.cpp:164
-msgid "Definition column:"
-msgstr "คอลัมน์คำจำกัดความ:"
-
-#: src/sidebar_terminology.cpp:167
-msgid "Notes column:"
-msgstr "คอลัมน์หมายเหตุ:"
-
-#: src/sidebar_terminology.cpp:177 src/sidebar_terminology.cpp:261
-msgid "Preview of imported glossary data:"
-msgstr "ดูตัวอย่างข้อมูลอภิธานศัพท์ที่นำเข้า:"
-
-#. TRANSLATORS: %d is the number of entries in the preview, %s is the total number of entries in the file
-#: src/sidebar_terminology.cpp:257
-#, c-format
-msgid "Preview of imported glossary data (%d out of %s shown):"
-msgstr ""
-
-#: src/sidebar_terminology.cpp:396 src/wx_translatable_strings.h:102
-msgid "Edit"
-msgstr "แก้ไข"
-
-#: src/sidebar_terminology.cpp:496
-msgid "Word or phrase"
-msgstr "คำหรือวลี"
-
-#: src/sidebar_terminology.cpp:518
-msgid "Add entries to the glossary"
-msgstr "เพิ่มรายการลงในอภิธานศัพท์"
-
-#: src/sidebar_terminology.cpp:524
-msgid "Search previously made translations and glossaries to ensure consistency. Both the current file and your translation memory are consulted."
-msgstr "ค้นหาการแปลและอภิธานศัพท์ที่สร้างขึ้นเมื่อก่อนหน้านี้เพื่อตรวจสอบความสม่ำเสมอ ทั้งไฟล์ปัจจุบันและหน่วยความจำการแปลของคุณจะถูกตรวจสอบ"
-
-#: src/sidebar_terminology.cpp:536
-msgid "Unlock terminology search"
-msgstr "ปลดล็อกการค้นหาศัพท์บัญญัติ"
-
-#: src/sidebar_terminology.cpp:626
-msgid "Glossary"
-msgstr "อภิธานศัพท์"
-
-#: src/sidebar_terminology.cpp:632
-msgid "This File"
-msgstr "ไฟล์นี้"
-
-#: src/sidebar_terminology.cpp:696
-msgid "Add Glossary Entry…"
-msgstr "เพิ่มรายการอภิธานศัพท์..."
-
-#: src/sidebar_terminology.cpp:696
-msgid "Add glossary entry…"
-msgstr "เพิ่มรายการอภิธานศัพท์..."
-
-#: src/sidebar_terminology.cpp:697
-msgid "Import Glossary from CSV File…"
-msgstr "นำเข้าอภิธานศัพท์จากไฟล์ CSV..."
-
-#: src/sidebar_terminology.cpp:697
-msgid "Import glossary from CSV file…"
-msgstr "นำเข้าอภิธานศัพท์จากไฟล์ CSV..."
-
-#: src/sidebar_terminology.cpp:720
-msgid "Select CSV glossary file to import"
-msgstr "เลือกไฟล์อภิธานศัพท์ CVS ที่จะนำเข้า"
-
-#: src/sidebar_terminology.cpp:723
-msgid "CSV Files"
-msgstr "ไฟล์ CSV"
-
-#: src/sidebar_terminology.cpp:749
-msgid "Importing glossary"
-msgstr ""
-
-#. TRANSLATORS: %1$s is the number of terms, %2$s is the filename
-#: src/sidebar_terminology.cpp:760
-#, c-format
-msgid "Imported %1$s term from CSV file “%2$s” into the glossary."
-msgid_plural "Imported %1$s terms from CSV file “%2$s” into the glossary."
-msgstr[0] ""
-
-#: src/statistics.cpp:275 src/statistics.cpp:411 src/statistics.cpp:427
-msgid "Items"
-msgstr "รายการ"
-
-#: src/statistics.cpp:276 src/statistics.cpp:411 src/statistics.cpp:427
-msgid "Words"
-msgstr "คำ"
-
-#: src/statistics.cpp:277 src/statistics.cpp:411 src/statistics.cpp:427
-msgid "Characters"
-msgstr "ตัวอักษร"
-
-#: src/statistics.cpp:291 src/statistics.cpp:412
-msgid "Translated"
-msgstr "แปลแล้ว"
-
-#: src/statistics.cpp:296 src/statistics.cpp:335 src/statistics.cpp:413
-#: src/statistics.cpp:417
-msgctxt "column/row header"
-msgid "Needs work"
-msgstr "ต้องการตรวจทาน"
-
-#: src/statistics.cpp:301 src/statistics.cpp:414
-msgid "Translations with errors"
-msgstr "การแปลที่มีข้อผิดพลาด"
-
-#: src/statistics.cpp:328 src/statistics.cpp:416 src/statistics.cpp:428
-msgid "Strings in source language"
-msgstr "จำนวนสตริงในภาษาต้นฉบับ"
-
-#: src/statistics.cpp:340 src/statistics.cpp:418
-msgid "Not translated"
-msgstr "ไม่ได้แปล"
-
-#: src/statistics.cpp:351
-msgid "Include code and placeholders"
-msgstr "รวมรหัสและ placeholder"
-
-#: src/statistics.cpp:352
-msgid "If checked, word and character counts will also include placeholders, HTML markup and code."
-msgstr "หากเลือกตัวเลือกการนับจำนวนคำและตัวอักษรจะรวมถึง placeholder มาร์กอัป HTML และรหัสด้วย"
-
-#: src/statistics.cpp:362
-msgid "Characters are counted including spaces."
-msgstr "จำนวนตัวอักษรจะถูกนับ รวมถึงช่องว่างด้วย"
-
-#: src/statistics.cpp:368
-msgid "Copy to clipboard"
-msgstr "คัดลอกไปยังคลิปบอร์ด"
-
-#: src/statistics.cpp:370
-msgid "Copy to Clipboard"
-msgstr "คัดลอกไปยังคลิปบอร์ด"
-
-#: src/statistics.cpp:722
-#, c-format
-msgid "The file “%s” couldn’t be opened: %s"
-msgstr "ไฟล์ “%s” ไม่สามารถเปิดได้: %s"
 
 #: src/subprocess.cpp:219 src/subprocess.cpp:251
 #, c-format
@@ -3898,19 +2917,19 @@ msgstr "ฐานข้อมูลหน่วยความจำการแ
 msgid "Translation memory error: %s (%d)."
 msgstr "ข้อผิดพลาดหน่วยความจำการแปล: %s (%d)"
 
-#: src/uilang.cpp:233
+#: src/uilang.cpp:235
 msgid "(Use default language)"
 msgstr "(ใช้ภาษาเริ่มต้น)"
 
-#: src/uilang.cpp:244
+#: src/uilang.cpp:246
 msgid "Language selection"
 msgstr "การเลือกภาษา"
 
-#: src/uilang.cpp:244
+#: src/uilang.cpp:246
 msgid "Select your preferred language"
 msgstr "เลือกภาษาที่คุณต้องการ"
 
-#: src/uilang.cpp:261
+#: src/uilang.cpp:263
 msgid "You must restart Poedit for this change to take effect."
 msgstr "คุณต้องเริ่ม Poedit ใหม่เพื่อให้การเปลี่ยนแปลงมีผล"
 
@@ -3918,389 +2937,98 @@ msgstr "คุณต้องเริ่ม Poedit ใหม่เพื่อ�
 msgid "Cannot create temporary directory."
 msgstr "ไม่สามารถสร้างไดเรกทอรีชั่วคราว"
 
-#: src/welcomescreen.cpp:141
+#: src/welcomescreen.cpp:139
 msgid "There are no translations. That’s unusual."
 msgstr "ไม่มีการแปล นั่นผิดปกติ"
 
-#: src/welcomescreen.cpp:150
-msgid "Translatable entries aren’t added manually in the Gettext system, but are automatically extracted from source code. This way, they stay up to date and accurate. Translators typically use PO template files (POTs) prepared for them by the developer."
+#: src/welcomescreen.cpp:148
+msgid ""
+"Translatable entries aren’t added manually in the Gettext system, but are "
+"automatically extracted from source code. This way, they stay up to date and "
+"accurate. Translators typically use PO template files (POTs) prepared for "
+"them by the developer."
 msgstr ""
 
-#: src/welcomescreen.cpp:153
+#: src/welcomescreen.cpp:151
 msgid "Learn more about GNU gettext"
 msgstr ""
 
-#: src/welcomescreen.cpp:157
-msgid "The simplest way to fill this file with translations is to update it from a POT:"
+#: src/welcomescreen.cpp:155
+msgid ""
+"The simplest way to fill this file with translations is to update it from a "
+"POT:"
 msgstr "วิธีการเติมการแปลในไฟล์นี้ที่ง่ายที่สุดคือให้อัปเดตข้อมูลจากไฟล์ POT:"
 
-#: src/welcomescreen.cpp:162
+#: src/welcomescreen.cpp:160
 msgid "Update from POT"
 msgstr "อัพเดตจากไฟล์ POT"
 
-#: src/welcomescreen.cpp:163
+#: src/welcomescreen.cpp:161
 msgid "Take translatable strings from an existing POT template."
 msgstr "ดึงสตริงที่สามารถแปลได้จากแม่แบบ POT ที่มีอยู่"
 
-#: src/welcomescreen.cpp:167
-msgid "You can also extract translatable strings directly from the source code:"
+#: src/welcomescreen.cpp:165
+msgid ""
+"You can also extract translatable strings directly from the source code:"
 msgstr "นอกจากนี้ คุณยังสามารถแยกสตริงที่สามารถแปลได้โดยตรงจากซอร์สโค้ด:"
 
-#: src/welcomescreen.cpp:172
+#: src/welcomescreen.cpp:170
 msgid "Extract from sources"
 msgstr "แยกจากซอร์สโค้ด"
 
-#: src/welcomescreen.cpp:173
+#: src/welcomescreen.cpp:171
 msgid "Configure source code extraction in Properties."
 msgstr "กำหนดค่าการแยกซอร์สโค้ดในคุณสมบัติ"
 
-#: src/welcomescreen.cpp:272
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#: src/welcomescreen.cpp:263 src/wx_translatable_strings.h:46
+#, c-format
+msgid "Version %s"
+msgstr "รุ่น %s"
+
+#: src/welcomescreen.cpp:270
 msgid "Create new"
 msgstr "สร้างใหม่"
 
-#: src/welcomescreen.cpp:273
+#: src/welcomescreen.cpp:271
 msgid "Create new translation from POT template."
 msgstr "สร้างการแปลใหม่จากแม่แบบ POT"
 
-#: src/welcomescreen.cpp:278
+#: src/welcomescreen.cpp:276
 msgid "Browse files"
 msgstr "เรียกดูไฟล์"
 
-#: src/welcomescreen.cpp:279
+#: src/welcomescreen.cpp:277
 msgid "Open and edit translation files."
 msgstr "เปิดและแก้ไขไฟล์การแปล"
 
-#: src/welcomescreen.cpp:286
-msgid "Translate WordPress theme or plugin"
-msgstr "แปลธีมหรือปลั๊กอิน WordPress"
-
-#: src/welcomescreen.cpp:287
-msgid "Edit WordPress translations over FTP or locally."
-msgstr "แก้ไขการแปล WordPress ผ่านทาง FTP หรือจากภายในเครื่อง"
-
-#: src/welcomescreen.cpp:292
+#: src/welcomescreen.cpp:283
 msgid "Translate cloud project"
 msgstr "แปลโครงการคลาวด์"
 
-#: src/welcomescreen.cpp:293
+#: src/welcomescreen.cpp:284
 msgid "Collaborate with other people online."
 msgstr "ทำงานร่วมกับผู้อื่นทางออนไลน์"
 
-#: src/welcomescreen.cpp:316
+#: src/welcomescreen.cpp:303
 msgid "Recent files"
 msgstr "ไฟล์ล่าสุด"
 
-#: src/wordpress/wordpress.cpp:103 src/wordpress/wordpress.cpp:110
-#, c-format
-msgid "Failed to read file “%s”."
-msgstr "การอ่านไฟล์ \"%s\" ล้มเหลว"
-
-#: src/wordpress/wordpress.cpp:167
-#, c-format
-msgid "Confused by ambiguous values of “%s” in %s."
-msgstr "ค่าของ “%s“ ใน %s สับสน"
-
-#: src/wordpress/wordpress.cpp:296 src/wordpress/wordpress.cpp:546
-#: src/wordpress/wordpress.cpp:593
-#, c-format
-msgid "Couldn’t detect POs location for “%s”."
-msgstr "ไม่สามารถตรวจหาตำแหน่งไฟล์ PO สำหรับ \"%s\""
-
-#: src/wordpress/wordpress.cpp:672
-#, c-format
-msgid "The “%s” theme isn’t localization-ready."
-msgstr "ธีม \"%s\" ยังไม่พร้อมที่จะแปล"
-
-#: src/wordpress/wordpress.cpp:689
-#, c-format
-msgid "Couldn’t detect translation domain of the “%s” theme."
-msgstr "ไม่สามารถตรวจหาโดเมนการแปลของธีม \"%s\""
-
-#: src/wordpress/wordpress.cpp:716
-#, c-format
-msgid "Couldn't detect translation domain of the \"%s\" theme."
-msgstr "ไม่สามารถตรวจหาโดเมนการแปลของธีม \"%s\""
-
-#: src/wordpress/wordpress.cpp:771
-msgid "Confused: multiple main plugin files."
-msgstr "สับสน: มีไฟล์ปลั๊กอินหลักหลายรายการ"
-
-#: src/wordpress/wordpress.cpp:821
-#, c-format
-msgid "The “%s” plugin isn’t localization-ready."
-msgstr "ปลั๊กอิน \"%s\" ยังไม่พร้อมที่จะแปล"
-
-#: src/wordpress/wordpress.cpp:842 src/wordpress/wordpress.cpp:859
-#, c-format
-msgid "Couldn’t detect translation domain of the “%s” plugin."
-msgstr "ไม่สามารถตรวจหาโดเมนการแปลของปลั๊กอิน \"%s\""
-
-#: src/wordpress/wordpress.cpp:925
-msgid "Found neither WordPress theme nor plugin in the folder."
-msgstr "ไม่พบธีมหรือปลั๊กอินของ WordPress ในโฟลเดอร์"
-
-#: src/wordpress/wordpress.cpp:942
-#, c-format
-msgid "Translations folder (%s) doesn’t exist."
-msgstr "โฟลเดอร์การแปล (%s) ไม่มีอยู่"
-
-#: src/wordpress/wordpress.cpp:1200 src/wordpress/wordpress.cpp:1213
-msgid "Failed to compile translations for WordPress."
-msgstr ""
-
-#: src/wordpress/wordpress_gui.cpp:77
-msgid "<big>Drag and drop <b>theme or plugin folder</b> here</big>\n\n"
-"or use the “Choose folder” button"
-msgstr "<big>ลากและวาง<b>โฟลเดอร์ธีมหรือปลั๊กอิน</b> ที่นี่</big>\n\n"
-"หรือกดปุ่ม \"เลือกโฟลเดอร์\""
-
-#: src/wordpress/wordpress_gui.cpp:79
-msgid "<big>Drag and Drop <b>Theme or Plugin Folder</b> Here</big>\n\n"
-"or use the “Choose Folder” button"
-msgstr "<big>ลากและวาง<b>โฟลเดอร์ธีมหรือปลั๊กอิน</b> ที่นี่</big>\n\n"
-"หรือกดปุ่ม \"เลือกโฟลเดอร์\""
-
-#: src/wordpress/wordpress_gui.cpp:101
-#, c-format
-msgid "Folder “%s”"
-msgstr "โฟลเดอร์ \"%s\""
-
-#: src/wordpress/wordpress_gui.cpp:162
-msgid "Work With Files"
-msgstr "ทำงานกับไฟล์"
-
-#: src/wordpress/wordpress_gui.cpp:162
-msgid "Work with files"
-msgstr "ทำงานกับไฟล์"
-
-#: src/wordpress/wordpress_gui.cpp:164
-msgid "Connect to Server"
-msgstr "เชื่อมต่อกับเซิร์ฟเวอร์"
-
-#: src/wordpress/wordpress_gui.cpp:164
-msgid "Connect to server"
-msgstr "เชื่อมต่อกับเซิร์ฟเวอร์"
-
-#: src/wordpress/wordpress_gui.cpp:165
-msgid "On This Computer"
-msgstr "บนคอมพิวเตอร์นี้"
-
-#: src/wordpress/wordpress_gui.cpp:165
-msgid "On this computer"
-msgstr "บนคอมพิวเตอร์นี้"
-
-#: src/wordpress/wordpress_gui.cpp:168
-msgid "Continue"
-msgstr "ดำเนินการต่อ"
-
-#: src/wordpress/wordpress_gui.cpp:210
-msgid "Choose Folder…"
-msgstr "เลือกโฟลเดอร์…"
-
-#: src/wordpress/wordpress_gui.cpp:210
-msgid "Choose folder…"
-msgstr "เลือกโฟลเดอร์…"
-
-#: src/wordpress/wordpress_gui.cpp:217
-msgid "Create a new translation"
-msgstr "สร้างการแปลใหม่"
-
-#: src/wordpress/wordpress_gui.cpp:220
-msgid "Choose this if you want to translate the theme or plugin into your language."
-msgstr "เลือกตัวเลือกนี้หากคุณต้องการแปลธีมหรือปลั๊กอินเป็นภาษาของคุณ"
-
-#: src/wordpress/wordpress_gui.cpp:233
-msgid "Create a POT"
-msgstr "สร้างไฟล์ POT"
-
-#: src/wordpress/wordpress_gui.cpp:235
-msgid "This option is for theme and plugin developers. Poedit will create an empty template (POT) that translations can be based on."
-msgstr "ตัวเลือกนี้มีไว้สำหรับนักพัฒนาธีมและปลั๊กอิน Poedit จะสร้างแม่แบบเปล่า (ไฟล์ POT) ที่ใช้อ้างอิงการแปล"
-
-#: src/wordpress/wordpress_gui.cpp:248
-msgid "Select the folder with the WordPress theme or plugin"
-msgstr "เลือกโฟลเดอร์ที่มีธีมหรือปลั๊กอิน WordPress"
-
-#: src/wordpress/wordpress_gui.cpp:280
-msgid "Enter connection details for your WordPress server. Poedit will retrieve available themes and plugins from it and let you translate directly on the server."
-msgstr "ป้อนรายละเอียดการเชื่อมต่อสำหรับเซิร์ฟเวอร์ WordPress ของคุณ โดย Poedit จะดึงข้อมูลธีมและปลั๊กอินที่มีให้ใช้ และให้คุณแปลโดยตรงจากในเซิร์ฟเวอร์"
-
-#: src/wordpress/wordpress_gui.cpp:287
-msgid "Protocol:"
-msgstr "โปรโตคอล:"
-
-#: src/wordpress/wordpress_gui.cpp:288
-msgid "FTP (insecure)"
-msgstr "FTP (ไม่ปลอดภัย)"
-
-#: src/wordpress/wordpress_gui.cpp:288
-msgid "FTP with SSL"
-msgstr "FTP กับ SSL"
-
-#: src/wordpress/wordpress_gui.cpp:288
-msgid "SFTP"
-msgstr "SFTP"
-
-#: src/wordpress/wordpress_gui.cpp:293
-msgid "Choose a recent server"
-msgstr "เลือกเซิร์ฟเวอร์ล่าสุด"
-
-#: src/wordpress/wordpress_gui.cpp:302 src/wordpress/wordpress_gui.cpp:538
-msgid "Recent Servers"
-msgstr "เซิฟเวอร์ล่าสุด"
-
-#: src/wordpress/wordpress_gui.cpp:302 src/wordpress/wordpress_gui.cpp:538
-msgid "Recent servers"
-msgstr "เซิฟเวอร์ล่าสุด"
-
-#: src/wordpress/wordpress_gui.cpp:306
-msgid "Server:"
-msgstr "เซิร์ฟเวอร์:"
-
-#: src/wordpress/wordpress_gui.cpp:310
-msgid "Remote Path:"
-msgstr "เส้นทางระยะไกล:"
-
-#: src/wordpress/wordpress_gui.cpp:310
-msgid "Remote path:"
-msgstr "เส้นทางระยะไกล:"
-
-#: src/wordpress/wordpress_gui.cpp:312
-msgid "Detected automatically"
-msgstr "ตรวจหาโดยอัตโนมัติ"
-
-#: src/wordpress/wordpress_gui.cpp:315
-msgid "Port:"
-msgstr "พอร์ต:"
-
-#: src/wordpress/wordpress_gui.cpp:321
-msgid "Username:"
-msgstr "ชื่อผู้ใช้:"
-
-#: src/wordpress/wordpress_gui.cpp:325
-msgid "Password:"
-msgstr "รหัสผ่าน:"
-
-#: src/wordpress/wordpress_gui.cpp:332
-msgid "Remember my credentials"
-msgstr "จดจำข้อมูลประจำตัวของฉัน"
-
-#: src/wordpress/wordpress_gui.cpp:333
-msgid "Connect"
-msgstr "เชื่อมต่อ"
-
-#: src/wordpress/wordpress_gui.cpp:346
-msgid "Select the plugin or theme to translate:"
-msgstr "เลือกปลั๊กอินหรือธีมที่จะแปล:"
-
-#: src/wordpress/wordpress_gui.cpp:398
-msgid "Connecting to WordPress server…"
-msgstr "กำลังเชื่อมต่อกับเซิร์ฟเวอร์ WordPress…"
-
-#: src/wordpress/wordpress_gui.cpp:416
-#, c-format
-msgid "Theme: %s"
-msgstr "ธีม: %s"
-
-#: src/wordpress/wordpress_gui.cpp:419
-#, c-format
-msgid "Plugin: %s"
-msgstr "ปลั๊กอิน: %s"
-
-#: src/wordpress/wordpress_gui.cpp:534
-msgid "No Recent Servers"
-msgstr "ไม่มีเซิร์ฟเวอร์ล่าสุด"
-
-#: src/wordpress/wordpress_gui.cpp:534
-msgid "No recent servers"
-msgstr "ไม่มีเซิร์ฟเวอร์ล่าสุด"
-
-#: src/wordpress/wordpress_gui.cpp:552
-msgid "Clear Recent Servers"
-msgstr "ล้างเซิร์ฟเวอร์ล่าสุด"
-
-#: src/wordpress/wordpress_gui.cpp:552
-msgid "Clear recent servers"
-msgstr "ล้างเซิร์ฟเวอร์ล่าสุด"
-
-#: src/wordpress/wordpress_gui.cpp:825
-msgid "Failed to extract WordPress information."
-msgstr "การแยกข้อมูลของ WordPress ล้มเหลว"
-
-#: src/wordpress/wordpress_gui.cpp:826
-msgid "WordPress error"
-msgstr "ข้อผิดพลาดของ WordPress"
-
-#: src/wordpress/wordpress_gui.cpp:835
-#, c-format
-msgid "Poedit couldn’t understand the content of the folder you selected. This may be a problem with the plugin/theme or it may be Poedit being silly. The error is:\n\n"
-" • %s\n\n"
-"Please email help@poedit.net and we’ll sort it out."
-msgstr "Poedit ไม่เข้าใจในเนื้อหาของโฟลเดอร์ที่คุณเลือก ซึ่งอาจจะเป็นปัญหาของปลั๊กอิน/ธีมหรือ Poedit อาจจะไม่เข้าใจเอง หากเกิดข้อผิดพลาด:\n\n"
-" • %s\n\n"
-"กรุณาส่งอีเมลไปที่ help@poedit.net แล้วเราจะคัดออก"
-
-#. TRANSLATORS: This is a button that sends an email to support when clicked
-#: src/wordpress/wordpress_gui.cpp:841
-msgid "Email support"
-msgstr "อีเมลของฝ่ายสนับสนุน"
-
-#: src/wordpress/wordpress_gui.cpp:842
-msgid "View log"
-msgstr "ดูไฟล์บันทึก"
-
-#. TRANSLATORS: This is a button that sends an email to support when clicked
-#: src/wordpress/wordpress_gui.cpp:845
-msgid "Email Support"
-msgstr "อีเมลของฝ่ายสนับสนุน"
-
-#: src/wordpress/wordpress_gui.cpp:846
-msgid "View Log"
-msgstr "ดูไฟล์บันทึก"
-
-#: src/wordpress/wordpress_gui.cpp:857
-msgid "WordPress Errors Log"
-msgstr "ไฟล์บันทึกข้อผิดพลาดของ WordPress"
-
-#: src/wordpress/wordpress_gui.cpp:858
-msgid "Please email this log to help@poedit.net. Thank you!"
-msgstr "กรุณาส่งไฟล์บันทึกนี้ไปที่ help@poedit.net ขอบคุณ!"
-
-#: src/wordpress/wordpress_gui.cpp:938
-msgid "Analyzing WordPress server…"
-msgstr "กำลังวิเคราะห์เซิฟเวอร์ WordPress…"
-
-#: src/wordpress/wordpress_gui.cpp:959
-msgid "Downloading translation data…"
-msgstr "กำลังดาวน์โหลดข้อมูลการแปล..."
-
-#: src/wordpress/wordpress_gui.cpp:984
-msgid "Unpacking translation data…"
-msgstr "กำลังเลิกบรรจุข้อมูลการแปล..."
-
-#: src/wordpress/wordpress_gui.cpp:989
-msgid "Error unpacking downloaded WordPress data."
-msgstr "เกิดข้อผิดพลาดในการแยกข้อมูล WordPress ที่ดาวน์โหลด"
-
-#: src/wordpress/wordpress_gui.cpp:1014 src/wordpress/wordpress_gui.cpp:1029
-msgid "Analyzing WordPress code…"
-msgstr "กำลังวิเคราะห์โค้ด WordPress…"
-
-#: src/wordpress/wordpress_gui.cpp:1039
-msgid "WordPress translation file is ready, but there were some non-fatal issues with the corresponding source code."
-msgstr ""
-
-#: src/wx/main_toolbar.cpp:123
+#: src/wx/main_toolbar.cpp:86
 msgid "Sync"
 msgstr "ซิงค์"
 
-#: src/wx/main_toolbar.cpp:124
+#: src/wx/main_toolbar.cpp:87
 msgid "Synchronize the translation with Crowdin"
 msgstr "ซิงค์การแปลกับ Crowdin"
 
-#: src/wx/main_toolbar.cpp:170
-msgid "Upgrade to Poedit Pro to get additional features and support Poedit's development."
-msgstr "อัปเกรดเป็น Poedit Pro เพื่อรับคุณสมบัติเพิ่มเติมและสนับสนุนการพัฒนาของ Poedit"
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#: src/wx_translatable_strings.h:42
+#, c-format
+msgid "About %s"
+msgstr "เกี่ยวกับ %s"
 
 #. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
 #: src/wx_translatable_strings.h:49
@@ -4403,6 +3131,10 @@ msgstr "&ตัด"
 #: src/wx_translatable_strings.h:99
 msgid "Cut"
 msgstr "ตัด"
+
+#: src/wx_translatable_strings.h:102
+msgid "Edit"
+msgstr "แก้ไข"
 
 #: src/wx_translatable_strings.h:103
 msgid "&Quit"
@@ -4555,4 +3287,3 @@ msgstr "shift"
 #: src/wx_translatable_strings.h:152
 msgid "Warning: "
 msgstr ""
-

@@ -33,6 +33,7 @@
 #include <wx/event.h>
 #include <wx/panel.h>
 #include <wx/timer.h>
+#include <wx/weakref.h>
 
 #include "catalog.h"
 #include "language.h"
@@ -144,7 +145,7 @@ protected:
 
     wxWindow *m_suggestionsPanel;
     wxSizer *m_panelSizer;
-    wxMenu *m_suggestionsMenu;
+    wxWeakRef<wxMenu> m_suggestionsMenu;
 
     wxSizer *m_msgSizer;
     bool m_msgPresent;
@@ -159,7 +160,7 @@ protected:
     SuggestionsList m_suggestions;
     std::vector<SuggestionWidget*> m_suggestionsWidgets;
     wxWindow *m_suggestionsSeparator;
-    std::vector<wxMenuItem*> m_suggestionMenuItems;
+    std::vector<wxMenuItem*> m_suggestionsMenuItems;
     int m_pendingQueries;
     uint64_t m_latestQueryId;
 

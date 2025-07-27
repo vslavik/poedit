@@ -120,6 +120,10 @@ AccountsPanel::AccountsPanel(wxWindow *parent, int flags) : wxPanel(parent, wxID
 
 void AccountsPanel::InitializeAfterShown()
 {
+    // NB: IsDescendant() is used to cover generic wxDataViewMainWindow, which doesn't correctly
+    //     implement HasFocus() in older wx versions.
+    const bool hasFocus = this->IsDescendant(wxWindow::FindFocus());
+
     // select 1st available signed-in service if we can and hide the intro panel:
     if (m_list->GetSelectedRow() == wxNOT_FOUND)
     {
@@ -138,7 +142,9 @@ void AccountsPanel::InitializeAfterShown()
     // perform first-show initialization:
     for (auto& p: m_panels)
         p->InitializeAfterShown();
-    m_list->SetFocus();
+
+    if (hasFocus)
+        m_list->SetFocus();
 }
 
 
@@ -196,7 +202,9 @@ void AccountsPanel::OnSelectAccount(wxDataViewEvent& event)
         return;
     }
 
-    const bool listHasFocus = (wxWindow::FindFocus() == m_list);
+    // NB: IsDescendant() is used to cover generic wxDataViewMainWindow, which doesn't correctly
+    //     implement HasFocus() in older wx versions.
+    const bool listHasFocus = m_list->HasFocus() || m_list->IsDescendant(wxWindow::FindFocus());
 
     SelectAccount(index);
 

@@ -59,6 +59,7 @@ inline bool translated(ResType r) { return r >= ResType::Fuzzy; }
 
 struct Stats
 {
+    int input_strings_count = 0;
     int total = 0;
     int matched = 0;
     int exact = 0;
@@ -128,11 +129,15 @@ Stats PreTranslateCatalogImpl(CatalogPtr catalog, const T& range, PreTranslateOp
         return res.IsExactMatch() ? ResType::Exact : ResType::Fuzzy;
     };
 
+    Stats stats;
+
     std::vector<dispatch::future<ResType>> operations;
     for (auto dt: range)
     {
         if (dt->IsTranslated() && !dt->IsFuzzy())
             continue;
+
+        stats.input_strings_count++;
 
         operations.push_back(dispatch::async([=,&tm]() -> ResType
         {
@@ -164,7 +169,6 @@ Stats PreTranslateCatalogImpl(CatalogPtr catalog, const T& range, PreTranslateOp
     Progress progress((int)operations.size());
     progress.message(_(L"Pre-translating from translation memory…"));
 
-    Stats stats;
     for (auto& op: operations)
     {
         if (cancellation_token->is_cancelled())
@@ -215,7 +219,14 @@ void PreTranslateCatalog(wxWindow *window,
         else
         {
             bg.summary = _("No entries could be pre-translated.");
-            bg.details.emplace_back(_(L"The TM doesn’t contain any strings similar to the content of this file. It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually."), "");
+            if (stats.input_strings_count == 0)
+            {
+                bg.details.emplace_back(_("All strings were already translated."), "");
+            }
+            else
+            {
+                bg.details.emplace_back(_(L"The TM doesn’t contain any strings similar to the content of this file. It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually."), "");
+            }
         }
 
         return bg;

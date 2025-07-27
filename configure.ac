@@ -2,7 +2,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
 
-AC_INIT([poedit], [3.6.1], [help@poedit.net])
+AC_INIT([poedit], [3.6.3], [help@poedit.net])
 
 AC_CONFIG_AUX_DIR([admin])
 AC_CONFIG_MACRO_DIR([admin])
@@ -191,28 +191,13 @@ AC_COMPILE_IFELSE(
     ])],
     [
         AC_MSG_RESULT([yes])
-        gtkspell_packages="gtkspell3-3.0 gtk+-3.0"
     ],
     [
         AC_MSG_RESULT([no])
-        AC_MSG_CHECKING([if wxWidgets toolkit uses GTK+ 2])
-        AC_COMPILE_IFELSE(
-            [AC_LANG_PROGRAM([#include <wx/defs.h>], [
-                #ifndef __WXGTK20__
-                    #error "not GTK+ 2"
-                #endif
-            ])],
-            [
-                AC_MSG_RESULT([yes])
-                gtkspell_packages="gtkspell-2.0 gtk+-2.0 >= 2.20"
-            ],
-            [
-                AC_MSG_RESULT([no])
-                AC_MSG_ERROR([GTK+ build of wxWidgets is required])
-            ])
+        AC_MSG_ERROR([GTK3+ build of wxWidgets is required])
     ])
 
-PKG_CHECK_MODULES([GTKSPELL], [$gtkspell_packages],
+PKG_CHECK_MODULES([GTKSPELL], [gtkspell3-3.0 gtk+-3.0],
     [
         CXXFLAGS="$CXXFLAGS $GTKSPELL_CFLAGS"
         LIBS="$LIBS $GTKSPELL_LIBS"

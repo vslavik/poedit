@@ -36,6 +36,7 @@ dist_uiicons_DATA = \
 		CrowdinLogoDark.png \
 		LocalazyLogo.png \
 		DownvoteTemplate.png \
+		EmptyMultiSelectionTemplate.png \
 		ExtractorsGNUgettext.png \
 		ItemCommentTemplate.png \
 		SuggestionErrorTemplate.png \

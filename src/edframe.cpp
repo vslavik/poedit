@@ -737,11 +737,8 @@ void PoeditFrame::DestroyContentView()
 }
 
 
-bool PoeditFrame::Destroy()
+PoeditFrame::~PoeditFrame()
 {
-    // Perform all deinitialization in Destroy() instead of destructor to make sure
-    // the teardown is finished by the time wxApp::OnExit() is called.
-
     ms_instances.erase(this);
 
     // don't leave file references window as the only one open:
@@ -760,12 +757,9 @@ bool PoeditFrame::Destroy()
     // write all changes:
     cfg->Flush();
 
-    m_fileMonitor.reset();
     m_catalog.reset();
     m_pendingHumanEditedItem.reset();
     m_navigationHistory.clear();
-
-    return PoeditFrameBase::Destroy();
 }
 
 
