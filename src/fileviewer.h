@@ -73,7 +73,6 @@ private:
     wxButton *m_openInEditor;
     wxWebView *m_content;
     wxSizer *m_topBarSizer;
-    int m_selectedRefIndex;
 
     void OnChoice(wxCommandEvent &event);
     void OnEditFile(wxCommandEvent &event);

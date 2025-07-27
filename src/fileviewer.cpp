@@ -268,7 +268,6 @@ void FileViewer::ShowReferences(CatalogPtr catalog, CatalogItemPtr item, int def
         );
         for (auto& r: m_references)
             m_file->Append(bidi::platform_mark_direction(r));
-        m_selectedRefIndex = defaultReference;
         m_file->SetSelection(defaultReference);
 
         m_file->SetMinSize(wxDefaultSize);
@@ -397,8 +396,7 @@ void FileViewer::ShowError(const char *icon, const wxString& msg, const wxString
 
 void FileViewer::OnChoice(wxCommandEvent &event)
 {
-    m_selectedRefIndex = event.GetSelection();
-    SelectReference(m_references[m_selectedRefIndex]);
+    SelectReference(m_references[event.GetSelection()]);
 }
 
 void FileViewer::OnEditFile(wxCommandEvent&)
@@ -408,8 +406,7 @@ void FileViewer::OnEditFile(wxCommandEvent&)
         return;
 
     //  extract line number
-    wxString refItem = m_references[m_selectedRefIndex];
-    wxString lineNumberStr = refItem.AfterLast(':');
+      wxString lineNumberStr = bidi::strip_control_chars(m_file->GetStringSelection()).AfterLast(_T(':')).BeforeFirst(_T('('));
 
     //  extract editor command name
     wxFileType *fileType = wxTheMimeTypesManager->GetFileTypeFromExtension(filename.GetExt());
@@ -428,25 +425,31 @@ void FileViewer::OnEditFile(wxCommandEvent&)
     }
 }
 
-
 void FileViewer::EditorHelper(wxString command, wxString lineNumberStr, wxFileName filename)
 {
+    wxString terminalStarter;   //  To open an independent window for editor
+
+#if defined(__WXX11__) || defined(__WXGTK__)
+    terminalStarter = "x-terminal-emulator -e";
+#elif defined(__WXMSW__)
+    terminalStarter = "start";
+#elif defined(__WXOSX__)
+    terminalStarter = "open";
+#endif
+
     enum eNumEditor{
        Vim,
        //  Possible to add other editor(s)
        Others
     } editor = Others;;
-    if (command.EndsWith("vim ")) editor = Vim;
 
+    if (command.EndsWith("vim ")) {
+        editor = Vim;
+    }
+    
     switch (editor) {
         case Vim:
-            {
-                command += "-g ";  //  To make an indepedent window instance of Vi-like editor or the vim process stucks, not able to find tty for it.
-                command += wxString::Format("+%s", lineNumberStr);
-                command += ' ' + filename.GetFullPath();
-
-                wxExecute(command, wxEXEC_ASYNC);
-            }
+            wxExecute(wxString::Format("%s %s +%s %s", terminalStarter, command, lineNumberStr, filename.GetFullPath()), wxEXEC_ASYNC);
             break;
 
         case Others: //  intentionally
