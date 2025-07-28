@@ -369,7 +369,7 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
 
     wxLogTrace("poedit.crowdin", "Crowdin syncing file ...");
 
-    wxWindowPtr<CloudSyncProgressWindow> dlg(new CloudSyncProgressWindow(parent));
+    wxWindowPtr<CloudSyncProgressWindow> dlg(new CloudSyncProgressWindow(parent, catalog->GetCloudSync()));
 
     auto meta = CrowdinClient::Get().ExtractSyncMetadata(*catalog);
 
@@ -388,8 +388,6 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
         });
     };
 
-    dlg->Activity->Start(_(L"Uploading translations…"));
-
     // TODO: nicer API for this.
     // This must be done right after entering the modal loop (on non-OSX)
     dlg->CallAfter([=]{
@@ -400,7 +398,7 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
             auto outfile = tmpdir->CreateFileName("crowdin." + wxFileName(catalog->GetFileName()).GetExt());
 
             dispatch::on_main([=]{
-                dlg->Activity->Start(_(L"Downloading latest translations…"));
+                dlg->UpdateMessage(_(L"Downloading latest translations…"));
             });
 
             return CrowdinClient::Get().DownloadFile(outfile.ToStdWstring(), meta)
