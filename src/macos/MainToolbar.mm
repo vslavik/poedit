@@ -96,14 +96,14 @@
     {
         [tool setImage:[NSImage imageNamed:@"SyncTemplate"]];
         [tool setLabel:str::to_NS(_("Sync"))];
-        [tool setToolTip:str::to_NS(_("Synchronize the translation with Crowdin"))];
+        [tool setToolTip:str::to_NS(_("Synchronize translations with Crowdin"))];
     }
     else
     {
         [tool setImage:[NSImage imageNamed:@"UploadTemplate"]];
         [tool setLabel:str::to_NS(_("Upload"))];
         // TRANSLATORS: this is the tooltip for the "Upload" button in the toolbar, %s is hostname or service (Crowdin, ftp.foo.com etc.)
-        auto tooltip = wxString::Format(_("Upload the translation to %s"), dest->GetName());
+        auto tooltip = wxString::Format(_("Upload translations to %s"), dest->GetName());
         [tool setToolTip:str::to_NS(tooltip)];
     }
 }

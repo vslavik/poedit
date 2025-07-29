@@ -96,14 +96,14 @@ public:
         {
             icon = "sync";
             tool->SetLabel(_("Sync"));
-            m_tb->SetToolShortHelp(m_idSync, _("Synchronize the translation with Crowdin"));
+            m_tb->SetToolShortHelp(m_idSync, _("Synchronize translations with Crowdin"));
         }
         else
         {
             icon = "upload";
             tool->SetLabel(_("Upload"));
             // TRANSLATORS: this is the tooltip for the "Upload" button in the toolbar, %s is hostname or service (Crowdin, ftp.foo.com etc.)
-            auto tooltip = wxString::Format(_("Upload the translation to %s"), sync->GetName());
+            auto tooltip = wxString::Format(_("Upload translations to %s"), sync->GetName());
             m_tb->SetToolShortHelp(m_idSync, tooltip);
         }
 
