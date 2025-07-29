@@ -60,6 +60,7 @@ protected:
 #ifdef __WXMSW__
     wxPoint GetClientAreaOrigin() const override;
     void DoGetClientSize(int *width, int *height) const override;
+    void DoSetClientSize(int width, int height) override;
     WXLRESULT MSWWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM lParam) override;
     void OnPaintBackground(wxPaintEvent& event);
 

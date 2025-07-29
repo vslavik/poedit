@@ -109,6 +109,9 @@ ProgressWindow::ProgressWindow(wxWindow *parent, const wxString& title, dispatch
     m_infoSizer->Add(m_title, wxSizerFlags().Left().Border(wxBOTTOM, PX(3)));
     m_gauge = new wxGauge(this, wxID_ANY, PROGRESS_BAR_RANGE, wxDefaultPosition, wxSize(PX(380), -1), wxGA_SMOOTH);
     m_gauge->Pulse();
+#ifdef __WXMSW__
+    ::SendMessage(m_gauge->GetHandle(), PBM_SETMARQUEE, TRUE, 1); // make the pulsing faster
+#endif
     m_infoSizer->Add(m_gauge, wxSizerFlags().Expand());
     m_progressMessage = new SecondaryLabel(this, "");
     m_infoSizer->Add(m_progressMessage, wxSizerFlags().Left().Border(wxTOP, MSW_OR_OTHER(PX(2), 0)));

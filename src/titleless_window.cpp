@@ -234,6 +234,20 @@ void TitlelessWindowBase<T>::DoGetClientSize(int *width, int *height) const
 }
 
 template<typename T>
+void TitlelessWindowBase<T>::DoSetClientSize(int width, int height)
+{
+    if (m_isTitleless)
+    {
+        // I don't know anymore, but it is needed to properly size fitting windows.
+        // Without this, CloudSyncProgressWindow would be 1px too small and its static text cropped.
+        width += 2 * PX(1);
+        height += 2 * PX(1);
+    }
+
+    BaseClass::DoSetClientSize(width, height);
+}
+
+template<typename T>
 WXLRESULT TitlelessWindowBase<T>::MSWWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM lParam)
 {
     if (m_isTitleless)

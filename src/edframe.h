@@ -268,10 +268,13 @@ private:
         void OnUpdateFromSourcesUpdate(wxUpdateUIEvent& event);
         void OnUpdateFromPOT(wxCommandEvent& event);
         void OnUpdateFromPOTUpdate(wxUpdateUIEvent& event);
-        void OnUpdateFromCrowdin(wxCommandEvent& event);
-        void OnUpdateFromCrowdinUpdate(wxUpdateUIEvent& event);
         void OnUpdateSmart(wxCommandEvent& event);
         void OnUpdateSmartUpdate(wxUpdateUIEvent& event);
+
+        void CloudSyncWithCrowdin();
+        void CloudSyncUpload();
+        void OnCloudSync(wxCommandEvent& event);
+        void OnCloudSyncUpdate(wxUpdateUIEvent& event);
 
         void OnValidate(wxCommandEvent& event);
         void OnListSel(wxDataViewEvent& event);

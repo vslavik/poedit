@@ -28,17 +28,20 @@
 
 #include "catalog.h"
 #include "concurrency.h"
+#include "titleless_window.h"
 
 #include <wx/string.h>
 
 #if wxUSE_GUI
-    #include "customcontrols.h"
     #include "errors.h"
     #include "hidpi.h"
+    #include "utility.h"
 
     #include <wx/dialog.h>
+    #include <wx/gauge.h>
     #include <wx/msgdlg.h>
     #include <wx/sizer.h>
+    #include <wx/stattext.h>
     #include <wx/translation.h>
     #include <wx/windowptr.h>
 #endif
@@ -92,38 +95,44 @@ public:
 
 #if wxUSE_GUI
 
-class CloudSyncProgressWindow : public wxDialog
+class CloudSyncProgressWindow : public TitlelessDialog
 {
 public:
     CloudSyncProgressWindow(wxWindow *parent, const wxString& title = _("Syncing"))
-        : wxDialog(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, wxCAPTION | wxSYSTEM_MENU)
+        : TitlelessDialog(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE & ~wxCLOSE_BOX)
     {
+        m_message = new wxStaticText(this, wxID_ANY, title);
+        auto gauge = new wxGauge(this, wxID_ANY, 100, wxDefaultPosition, wxSize(-1, MACOS_OR_OTHER(PX(4), PX(6))), wxGA_SMOOTH);
+
         auto sizer = new wxBoxSizer(wxVERTICAL);
         sizer->SetMinSize(PX(300), -1);
-        Activity = new ActivityIndicator(this);
-        sizer->AddStretchSpacer();
-        sizer->Add(Activity, wxSizerFlags().Expand().Border(wxALL, PX(40)));
-        sizer->AddStretchSpacer();
+        sizer->AddSpacer(PX(20));
+        sizer->Add(m_message, wxSizerFlags().Center().Border(wxLEFT|wxRIGHT, PX(80)));
+        sizer->AddSpacer(PX(10));
+        sizer->Add(gauge, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, PX(40)));
+        sizer->AddSpacer(PX(30));
+
         SetSizerAndFit(sizer);
         CenterOnParent();
+
+        gauge->Pulse();
+#ifdef __WXMSW__
+        ::SendMessage(gauge->GetHandle(), PBM_SETMARQUEE, TRUE, 1); // make the pulsing faster
+#endif
     }
 
     CloudSyncProgressWindow(wxWindow *parent, std::shared_ptr<CloudSyncDestination> dest)
-        : CloudSyncProgressWindow(parent)
+          // TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+        : CloudSyncProgressWindow(parent, wxString::Format(_(L"Uploading translations to %s…"), dest->GetName()))
     {
-        // TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
-        auto label = wxString::Format(_(L"Uploading translations to %s…"), dest->GetName());
-
-        auto sz = Activity->GetTextExtent(label);
-        Activity->SetSize(wxSize(std::max(PX(300), PX(100) + sz.x), -1));
-
-        Activity->Start(label);
-
-        GetSizer()->SetSizeHints(this);
-        CenterOnParent();
     }
 
-    ActivityIndicator *Activity;
+    void UpdateMessage(const wxString& msg)
+    {
+        m_message->SetLabel(msg);
+        Layout();
+        Refresh();
+    }
 
     /// Show the window while performing background sync action. Show error if 
     static void RunSync(wxWindow *parent, std::shared_ptr<CloudSyncDestination> dest, CatalogPtr file)
@@ -172,6 +181,9 @@ public:
             err->ShowWindowModalThenDo([err](int){});
         }
     }
+
+private:
+    wxStaticText *m_message;
 };
 
 #endif // wxUSE_GUI

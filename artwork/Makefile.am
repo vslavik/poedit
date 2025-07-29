@@ -21,6 +21,7 @@ dist_uiiconssymbolic_DATA = \
 		linux/poedit-pretranslate-symbolic.svg \
 		linux/poedit-sync-symbolic.svg \
 		linux/poedit-update-symbolic.svg \
+		linux/poedit-upload-symbolic.svg \
 		linux/poedit-validate-symbolic.svg \
 		linux/poedit-sidebar-symbolic.svg
 
