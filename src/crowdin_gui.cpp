@@ -369,7 +369,7 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
 
     wxLogTrace("poedit.crowdin", "Crowdin syncing file ...");
 
-    wxWindowPtr<CloudSyncProgressWindow> dlg(new CloudSyncProgressWindow(parent, catalog->GetCloudSync()));
+    wxWindowPtr<CloudSyncProgressWindow> dlg(new CloudSyncProgressWindow(parent, wxString::Format(_(L"Uploading translations to %s…"), CrowdinClient::SERVICE_NAME)));
 
     auto meta = CrowdinClient::Get().ExtractSyncMetadata(*catalog);
 
