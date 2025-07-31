@@ -130,20 +130,14 @@ with open('build.ninja', 'w') as buildfile:
                                      # for over a year, so...
                                      # FIXME: replace CFLocale patches similarly
                                      'am_cv_func_iconv_works=yes',
-                                     # When running configure under Xcode,
-                                     # SIGALRM is ignored and this doesn't play
-                                     # nice with some of the (useless - gnulib)
-                                     # checks, resulting in hanging builds.
-                                     # See http://comments.gmane.org/gmane.comp.lib.gnulib.bugs/13841
-                                     # Let's sabotage the tests by stealing
-                                     # alarm() from them.
-                                     'CFLAGS="$cflags -Dalarm=alarm_disabled"',
+                                     'CFLAGS="$cflags"',
                                      'CXXFLAGS="$cxxflags"',
                                      'LDFLAGS="$ldflags"',
                                      'GSED=$sed',
                                      'YACC=$yacc',
                                      '--config-cache',
                                      '--with-libiconv-prefix=$SDKROOT/usr',
+                                     '--with-libxml2-prefix=$SDKROOT/usr',
                                      '--disable-static',
                                      '--disable-java',
                                      '--disable-csharp',
@@ -151,8 +145,6 @@ with open('build.ninja', 'w') as buildfile:
                                      '--disable-dependency-tracking',
                                      '--enable-silent-rules',
                                      '--enable-relocatable',
-                                     # Needed for the binaries to work on OS X 10.{7,8}:
-                                     '--with-included-libxml',
                                  ],
                                  build_commands=[
                                      # Prevent automake regeneration:

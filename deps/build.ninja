@@ -407,22 +407,21 @@ build $
       CC=$cc $
       CXX=$cxx $
       am_cv_func_iconv_works=yes $
-      CFLAGS="$cflags $
-      -Dalarm=alarm_disabled" $
+      CFLAGS="$cflags" $
       CXXFLAGS="$cxxflags" $
       LDFLAGS="$ldflags" $
       GSED=$sed $
       YACC=$yacc $
       --config-cache $
       --with-libiconv-prefix=$SDKROOT/usr $
+      --with-libxml2-prefix=$SDKROOT/usr $
       --disable-static $
       --disable-java $
       --disable-csharp $
       --disable-rpath $
       --disable-dependency-tracking $
       --enable-silent-rules $
-      --enable-relocatable $
-      --with-included-libxml
+      --enable-relocatable
   srcdir = $
       $top_srcdir/gettext
   destdir = $
