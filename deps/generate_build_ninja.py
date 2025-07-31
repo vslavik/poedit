@@ -128,8 +128,13 @@ with open('build.ninja', 'w') as buildfile:
                                      # other contexts are OK with this particular issue). And as this is a
                                      # runtime difference, we've been using "bad" iconv() implementation
                                      # for over a year, so...
-                                     # FIXME: replace CFLocale patches similarly
                                      'am_cv_func_iconv_works=yes',
+                                     # On macOS 10.15 Vista, mere use of CFLocale or CFPreferences from command line
+                                     # executables, as done by gettext tools, triggers UAC prompts if the hosting app
+                                     # happens to be in e.g. ~/Desktop or ~/Downloads. As we don't care for these
+                                     # capabilities in gettext tools anyway, just disable them as the lesser evil.
+                                     'gt_cv_func_CFPreferencesCopyAppValue=no',
+                                     'gt_cv_func_CFLocaleCopyPreferredLanguages=no',
                                      'CFLAGS="$cflags"',
                                      'CXXFLAGS="$cxxflags"',
                                      'LDFLAGS="$ldflags"',
