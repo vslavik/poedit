@@ -56,7 +56,7 @@ const char * const GETTEXT_EXTENSIONS[] = {
 
     "java",                                               // Java
 
-    "js",                                                 // JavaScript
+    "js", "jsx"                                           // JavaScript
 
     "jl",                                                 // librep
 
