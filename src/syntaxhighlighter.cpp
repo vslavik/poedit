@@ -243,6 +243,8 @@ const wchar_t* RE_PASCAL_FORMAT = LR"(%(\*:|\d*:)?-?(\*|\d+)?(\.\*|\.\d+)?[dDuUx
 // JavaScript format per https://www.gnu.org/software/gettext/manual/html_node/javascript_002dformat.html
 const wchar_t* RE_JAVASCRIPT_FORMAT = LR"(%[%csbdioOxXfj])";
 
+// Go format per https://pkg.go.dev/fmt
+const wchar_t* RE_GO_FORMAT = LR"(%[-+ #0]*(\d+|\*)?(\.(\d+|\*))?[vdoOxXbcqsptTeEfFgG%])";
 
 } // anonymous namespace
 
@@ -381,6 +383,11 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kin
         {
             static auto javascript_format = std::make_shared<RegexSyntaxHighlighter>(RE_JAVASCRIPT_FORMAT, TextKind::Placeholder);
             all->Add(javascript_format);
+        }
+        else if (fmt == "go")
+        {
+            static auto go_format = std::make_shared<RegexSyntaxHighlighter>(RE_GO_FORMAT, TextKind::Placeholder);
+            all->Add(go_format);
         }
         else if (fmt == "ph-dollars")
         {
