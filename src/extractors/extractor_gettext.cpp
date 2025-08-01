@@ -138,6 +138,19 @@ public:
             quote_arg(!sourceSpec.Charset.empty() ? sourceSpec.Charset : "UTF-8")
         );
 
+        if (check_gettext_version(0, 25))
+        {
+            // don't consider mtime of the temporary file passed to --files-from:
+            cmdline += wxString::Format(" --generated=%s", quote_arg(filelist.GetName()));
+        }
+
+        if (check_gettext_version(0, 24, 1))
+        {
+            // FIXME: This is temporary, to avoid the implied slowness. Should be amended with
+            //        calculating mtimes in parallel in Poedit itself.
+            cmdline += " --no-git";
+        }
+
         auto additional = GetAdditionalFlags();
         if (!additional.empty())
             cmdline += " " + additional;
