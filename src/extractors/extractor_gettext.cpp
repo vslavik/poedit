@@ -191,6 +191,11 @@ public:
         {
             RegisterExtension("rs"); // Rust
         }
+        if (check_gettext_version(0, 25))
+        {
+            RegisterExtension("ts"); // TypeScript
+            RegisterExtension("tsx"); // TypeScript JSX
+        }
     }
 
     wxString GetId() const override { return "gettext"; }
