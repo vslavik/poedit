@@ -193,6 +193,7 @@ public:
         }
         if (check_gettext_version(0, 25))
         {
+            RegisterExtension("d"); // D
             RegisterExtension("go"); // Go
             RegisterExtension("ts"); // TypeScript
             RegisterExtension("tsx"); // TypeScript JSX

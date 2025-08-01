@@ -246,6 +246,9 @@ const wchar_t* RE_JAVASCRIPT_FORMAT = LR"(%[%csbdioOxXfj])";
 // Go format per https://pkg.go.dev/fmt
 const wchar_t* RE_GO_FORMAT = LR"(%[-+ #0]*(\d+|\*)?(\.(\d+|\*))?[vdoOxXbcqsptTeEfFgG%])";
 
+// D format per https://dlang.org/library/std/format.html
+const wchar_t* RE_D_FORMAT = LR"(%(\d+\$)?[-+ #0=]*(\d+|\*)?(\.(\d+|\*))?([sdxXobfFeEgGaAc%]|\([^%]*(%[^%|)]*(%\|[^%)]*)?)%\)))";
+
 } // anonymous namespace
 
 
@@ -388,6 +391,11 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kin
         {
             static auto go_format = std::make_shared<RegexSyntaxHighlighter>(RE_GO_FORMAT, TextKind::Placeholder);
             all->Add(go_format);
+        }
+        else if (fmt == "d")
+        {
+            static auto d_format = std::make_shared<RegexSyntaxHighlighter>(RE_D_FORMAT, TextKind::Placeholder);
+            all->Add(d_format);
         }
         else if (fmt == "ph-dollars")
         {
