@@ -224,6 +224,7 @@ unsigned GetCountFromPluralFormsHeader(const Catalog::HeaderData& header)
 bool POCatalogParser::Parse()
 {
     static const wxString prefix_flags(wxS("#, "));
+    static const wxString prefix_flags_alt(wxS("#= "));
     static const wxString prefix_autocomments(wxS("#. "));
     static const wxString prefix_autocomments2(wxS("#.")); // account for empty auto comments
     static const wxString prefix_references(wxS("#: "));
@@ -249,26 +250,30 @@ bool POCatalogParser::Parse()
     unsigned mlinenum = 0;
 
     line = m_textFile->GetFirstLine();
-    if (line.empty()) line = ReadTextLine();
+    if (line.empty())
+        line = ReadTextLine();
 
     while (!line.empty())
     {
         // ignore empty special tags (except for extracted comments which we
         // DO want to preserve):
-        while (line.length() == 2 && *line.begin() == '#' && (line[1] == ',' || line[1] == ':' || line[1] == '|'))
+        while (line.length() == 2 && *line.begin() == '#' && (line[1] == ',' || line[1] == '=' || line[1] == ':' || line[1] == '|'))
             line = ReadTextLine();
 
         // flags:
-        // Can't we have more than one flag, now only the last is kept ...
-        if (ReadParam(line, prefix_flags, dummy))
+        if (ReadParam(line, prefix_flags, dummy) || ReadParam(line, prefix_flags_alt, dummy))
         {
+            // see https://lists.gnu.org/archive/html/bug-gettext/2025-06/msg00018.html for introduction of
+            // the #= alt form. We currently take the approach of converting #= to #, on write, as msgcat
+            // also does, but this is just the initial, interim implementation
             static wxString prefix_flags_partial(wxS(", "));
-            mflags = prefix_flags_partial + dummy;
+            mflags += prefix_flags_partial;
+            mflags += dummy;
             line = ReadTextLine();
         }
 
         // auto comments:
-        if (ReadParam(line, prefix_autocomments, dummy, /*preserveWhitespace=*/true) || ReadParam(line, prefix_autocomments2, dummy, /*preserveWhitespace=*/true))
+        else if (ReadParam(line, prefix_autocomments, dummy, /*preserveWhitespace=*/true) || ReadParam(line, prefix_autocomments2, dummy, /*preserveWhitespace=*/true))
         {
             mextractedcomments.Add(dummy);
             line = ReadTextLine();
@@ -986,6 +991,7 @@ void POCatalog::FixupCommonIssues()
     // In PHP use, strings with % (typically: 100%) get frequently mis-identified as php-format, because the
     // format string allows space, so e.g. "100% complete" has a valid "% c" format flag in it. Work around
     // this by removing the flag ourselves, as translators can rarely influence it:
+    // TODO: This shouldn't be much of an issue once gettext-0.26 gets wider adoption
     for (auto& i: items())
     {
         if (i->GetFormatFlag() == "php")
