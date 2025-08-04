@@ -4,7 +4,7 @@ include $
     build.vars.ninja
 rule download
   command = $curl $
-      -o $out $
+      -L -o $out $
       $url && $
       test $
       "$sha256" = $
@@ -20,7 +20,7 @@ build $
     $builddir/gettext-0.26.tar.xz: $
     download
   url = $
-      https://ftp.gnu.org/pub/gnu/gettext/gettext-0.26.tar.xz
+      https://ftpmirror.gnu.org/gnu/gettext/gettext-0.26.tar.xz
   sha256 = $
       d1fb86e260cfe7da6031f94d2e44c0da55903dbae0a2fa0fae78c91ae1b56f00
 rule gettext_build

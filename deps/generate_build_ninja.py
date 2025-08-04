@@ -102,14 +102,14 @@ with open('build.ninja', 'w') as buildfile:
     n.rule('download',
            description='Downloading $url...',
            pool='console',
-           command='$curl -o $out $url && test "$sha256" = `shasum -a256 $out | cut -f1 -d" "`')
+           command='$curl -L -o $out $url && test "$sha256" = `shasum -a256 $out | cut -f1 -d" "`')
 
     targets = []
 
     n.build(['$builddir/%s' % GETTEXT_TARBALL],
             'download',
             variables={
-                'url': 'https://ftp.gnu.org/pub/gnu/gettext/%s' % GETTEXT_TARBALL,
+                'url': 'https://ftpmirror.gnu.org/gnu/gettext/%s' % GETTEXT_TARBALL,
                 'sha256': GETTEXT_SHA256,
             })
 
