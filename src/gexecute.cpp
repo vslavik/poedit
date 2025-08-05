@@ -48,7 +48,7 @@
 namespace
 {
 
-#define GETTEXT_VERSION_NUM(x, y, z)  ((uint32_t)(((x)*1000*1000) + ((y)*1000) + (z)))
+#define GETTEXT_VERSION_NUM(x, y, z)  ((uint32_t)(((x)*100*100) + ((y)*100) + (z)))
 
 // Determine gettext version, return it in the form of XXXYYYZZZ number for version x.y.z
 uint32_t gettext_version()
@@ -69,6 +69,7 @@ uint32_t gettext_version()
                 const int y = std::stoi(m.str(3));
                 const int z = m[5].matched ? std::stoi(m.str(5)) : 0;
                 s_version = GETTEXT_VERSION_NUM(x, y, z);
+                wxLogTrace("poedit", "detected GNU gettext version %d.%d.%d (%06d)", x, y, z, (int)s_version);
             }
         }
     }

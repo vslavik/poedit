@@ -2239,7 +2239,6 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
         wxWindowUpdateLocker no_updates(this);
 #endif
         {
-            wxLogNull null;  // don't report non-item warnings
             // the file was just loaded, it is identical to in-memory content and we can pass `fileWithSameContent`
             cat->Validate(/*fileWithSameContent=*/cat->GetFileName());
         }
