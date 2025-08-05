@@ -5,9 +5,9 @@ from collections import OrderedDict
 from glob import glob
 from ninja_syntax import Writer
 
-GETTEXT_VERSION = "0.23.1"  # use of " important for Xcode build!
-GETTEXT_TARBALL = 'gettext-%s.tar.gz' % GETTEXT_VERSION
-GETTEXT_SHA256 = '52a578960fe308742367d75cd1dff8552c5797bd0beba7639e12bdcda28c0e49'
+GETTEXT_VERSION = "0.26"  # use of " important for Xcode build!
+GETTEXT_TARBALL = 'gettext-%s.tar.xz' % GETTEXT_VERSION
+GETTEXT_SHA256 = 'd1fb86e260cfe7da6031f94d2e44c0da55903dbae0a2fa0fae78c91ae1b56f00'
 
 _exclusion_list = [
     '.DS_Store',
@@ -102,14 +102,14 @@ with open('build.ninja', 'w') as buildfile:
     n.rule('download',
            description='Downloading $url...',
            pool='console',
-           command='$curl -o $out $url && test "$sha256" = `shasum -a256 $out | cut -f1 -d" "`')
+           command='$curl -L -o $out $url && test "$sha256" = `shasum -a256 $out | cut -f1 -d" "`')
 
     targets = []
 
     n.build(['$builddir/%s' % GETTEXT_TARBALL],
             'download',
             variables={
-                'url': 'https://ftp.gnu.org/pub/gnu/gettext/%s' % GETTEXT_TARBALL,
+                'url': 'https://ftpmirror.gnu.org/gnu/gettext/%s' % GETTEXT_TARBALL,
                 'sha256': GETTEXT_SHA256,
             })
 
@@ -128,22 +128,21 @@ with open('build.ninja', 'w') as buildfile:
                                      # other contexts are OK with this particular issue). And as this is a
                                      # runtime difference, we've been using "bad" iconv() implementation
                                      # for over a year, so...
-                                     # FIXME: replace CFLocale patches similarly
                                      'am_cv_func_iconv_works=yes',
-                                     # When running configure under Xcode,
-                                     # SIGALRM is ignored and this doesn't play
-                                     # nice with some of the (useless - gnulib)
-                                     # checks, resulting in hanging builds.
-                                     # See http://comments.gmane.org/gmane.comp.lib.gnulib.bugs/13841
-                                     # Let's sabotage the tests by stealing
-                                     # alarm() from them.
-                                     'CFLAGS="$cflags -Dalarm=alarm_disabled"',
+                                     # On macOS 10.15 Vista, mere use of CFLocale or CFPreferences from command line
+                                     # executables, as done by gettext tools, triggers UAC prompts if the hosting app
+                                     # happens to be in e.g. ~/Desktop or ~/Downloads. As we don't care for these
+                                     # capabilities in gettext tools anyway, just disable them as the lesser evil.
+                                     'gt_cv_func_CFPreferencesCopyAppValue=no',
+                                     'gt_cv_func_CFLocaleCopyPreferredLanguages=no',
+                                     'CFLAGS="$cflags"',
                                      'CXXFLAGS="$cxxflags"',
                                      'LDFLAGS="$ldflags"',
                                      'GSED=$sed',
                                      'YACC=$yacc',
                                      '--config-cache',
                                      '--with-libiconv-prefix=$SDKROOT/usr',
+                                     '--with-libxml2-prefix=$SDKROOT/usr',
                                      '--disable-static',
                                      '--disable-java',
                                      '--disable-csharp',
@@ -151,8 +150,6 @@ with open('build.ninja', 'w') as buildfile:
                                      '--disable-dependency-tracking',
                                      '--enable-silent-rules',
                                      '--enable-relocatable',
-                                     # Needed for the binaries to work on OS X 10.{7,8}:
-                                     '--with-included-libxml',
                                  ],
                                  build_commands=[
                                      # Prevent automake regeneration:

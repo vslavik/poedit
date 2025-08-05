@@ -4,7 +4,7 @@ include $
     build.vars.ninja
 rule download
   command = $curl $
-      -o $out $
+      -L -o $out $
       $url && $
       test $
       "$sha256" = $
@@ -17,12 +17,12 @@ rule download
       $url...
   pool = console
 build $
-    $builddir/gettext-0.23.1.tar.gz: $
+    $builddir/gettext-0.26.tar.xz: $
     download
   url = $
-      https://ftp.gnu.org/pub/gnu/gettext/gettext-0.23.1.tar.gz
+      https://ftpmirror.gnu.org/gnu/gettext/gettext-0.26.tar.xz
   sha256 = $
-      52a578960fe308742367d75cd1dff8552c5797bd0beba7639e12bdcda28c0e49
+      d1fb86e260cfe7da6031f94d2e44c0da55903dbae0a2fa0fae78c91ae1b56f00
 rule gettext_build
   command = echo $
       'note: ⋯  $
@@ -55,7 +55,7 @@ rule gettext_build
       && echo $
       'note: ⋯  $
       tar -x -f $
-      "$builddir/gettext-0.23.1.tar.gz" $
+      "$builddir/gettext-0.26.tar.xz" $
       -C $
       "$workdir" $
       --strip-components $
@@ -63,7 +63,7 @@ rule gettext_build
       tmp=`mktemp` $
       && tar -x $
       -f $
-      "$builddir/gettext-0.23.1.tar.gz" $
+      "$builddir/gettext-0.26.tar.xz" $
       -C $
       "$workdir" $
       --strip-components $
@@ -84,23 +84,6 @@ rule gettext_build
       "$workdir" $
       -p1 < $
       "$top_srcdir/gettext/gettext-smaller-build.patch" $
-      >$$tmp 2>&1 $
-      || (cat $
-      $$tmp ; $
-      exit 1) && $
-      rm -f $$tmp $
-      && echo $
-      'note: ⋯  $
-      patch -d $
-      "$workdir" $
-      -p1 < $
-      "$top_srcdir/gettext/gettext-macos-catalina-dont-touch-parent-dirs.patch"' $
-      && $
-      tmp=`mktemp` $
-      && patch -d $
-      "$workdir" $
-      -p1 < $
-      "$top_srcdir/gettext/gettext-macos-catalina-dont-touch-parent-dirs.patch" $
       >$$tmp 2>&1 $
       || (cat $
       $$tmp ; $
@@ -395,8 +378,7 @@ rule gettext_build
 build $
     $intdir/gettext.done: $
     gettext_build $
-    $builddir/gettext-0.23.1.tar.gz $
-    gettext/gettext-macos-catalina-dont-touch-parent-dirs.patch $
+    $builddir/gettext-0.26.tar.xz $
     gettext/gettext-smaller-build.patch
   name = gettext
   configure = $
@@ -407,22 +389,23 @@ build $
       CC=$cc $
       CXX=$cxx $
       am_cv_func_iconv_works=yes $
-      CFLAGS="$cflags $
-      -Dalarm=alarm_disabled" $
+      gt_cv_func_CFPreferencesCopyAppValue=no $
+      gt_cv_func_CFLocaleCopyPreferredLanguages=no $
+      CFLAGS="$cflags" $
       CXXFLAGS="$cxxflags" $
       LDFLAGS="$ldflags" $
       GSED=$sed $
       YACC=$yacc $
       --config-cache $
       --with-libiconv-prefix=$SDKROOT/usr $
+      --with-libxml2-prefix=$SDKROOT/usr $
       --disable-static $
       --disable-java $
       --disable-csharp $
       --disable-rpath $
       --disable-dependency-tracking $
       --enable-silent-rules $
-      --enable-relocatable $
-      --with-included-libxml
+      --enable-relocatable
   srcdir = $
       $top_srcdir/gettext
   destdir = $

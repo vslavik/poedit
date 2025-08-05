@@ -217,7 +217,7 @@ const wchar_t* RE_PHP_FORMAT = LR"(%(\d+\$)?[-+]{0,2}([ 0]|'.)?-?\d*(\..?\d+)?[%
 #define RE_C_FORMAT_BASE LR"(%(\d+\$)?[-+ #0]{0,5}(\d+|\*)?(\.(\d+|\*))?((hh|ll|[hljztL])?[%csdioxXufFeEaAgGnp]|<[A-Za-z0-9]+>))"
 const wchar_t* RE_C_FORMAT = RE_C_FORMAT_BASE;
 const wchar_t* RE_OBJC_FORMAT =  L"%@|" RE_C_FORMAT_BASE;
-const wchar_t* RE_CXX20_FORMAT = LR"((\{\{)|(\}\})|(\{[^}]*\}))";
+const wchar_t* RE_CXX20_OR_RUST_FORMAT = LR"((\{\{)|(\}\})|(\{[^}]*\}))";
 
 // Python and Perl-libintl braces format (also covered by common placeholders above)
 #define RE_BRACES LR"(\{[\w.-:,]+\})"
@@ -240,6 +240,14 @@ const wchar_t* RE_LUA_FORMAT = LR"(%[- 0]*\d*(\.\d+)?[sqdiouXxAaEefGgc])";
 // Pascal per https://www.freepascal.org/docs-html/rtl/sysutils/format.html
 const wchar_t* RE_PASCAL_FORMAT = LR"(%(\*:|\d*:)?-?(\*|\d+)?(\.\*|\.\d+)?[dDuUxXeEfFgGnNmMsSpP])";
 
+// JavaScript format per https://www.gnu.org/software/gettext/manual/html_node/javascript_002dformat.html
+const wchar_t* RE_JAVASCRIPT_FORMAT = LR"(%[%csbdioOxXfj])";
+
+// Go format per https://pkg.go.dev/fmt
+const wchar_t* RE_GO_FORMAT = LR"(%[-+ #0]*(\d+|\*)?(\.(\d+|\*))?[vdoOxXbcqsptTeEfFgG%])";
+
+// D format per https://dlang.org/library/std/format.html
+const wchar_t* RE_D_FORMAT = LR"(%(\d+\$)?[-+ #0=]*(\d+|\*)?(\.(\d+|\*))?([sdxXobfFeEgGaAc%]|\([^%]*(%[^%|)]*(%\|[^%)]*)?)%\)))";
 
 } // anonymous namespace
 
@@ -334,10 +342,10 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kin
             static auto c_format = std::make_shared<RegexSyntaxHighlighter>(RE_C_FORMAT, TextKind::Placeholder);
             all->Add(c_format);
         }
-        else if (fmt == "c++")
+        else if (fmt == "c++" || fmt == "rust")
         {
-            static auto cxx_format = std::make_shared<RegexSyntaxHighlighter>(RE_CXX20_FORMAT, TextKind::Placeholder);
-            all->Add(cxx_format);
+            static auto cxx_rust_format = std::make_shared<RegexSyntaxHighlighter>(RE_CXX20_OR_RUST_FORMAT, TextKind::Placeholder);
+            all->Add(cxx_rust_format);
         }
         else if (fmt == "python")
         {
@@ -373,6 +381,21 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kin
         {
             static auto pascal_format = std::make_shared<RegexSyntaxHighlighter>(RE_PASCAL_FORMAT, TextKind::Placeholder);
             all->Add(pascal_format);
+        }
+        else if (fmt == "javascript")
+        {
+            static auto javascript_format = std::make_shared<RegexSyntaxHighlighter>(RE_JAVASCRIPT_FORMAT, TextKind::Placeholder);
+            all->Add(javascript_format);
+        }
+        else if (fmt == "go")
+        {
+            static auto go_format = std::make_shared<RegexSyntaxHighlighter>(RE_GO_FORMAT, TextKind::Placeholder);
+            all->Add(go_format);
+        }
+        else if (fmt == "d")
+        {
+            static auto d_format = std::make_shared<RegexSyntaxHighlighter>(RE_D_FORMAT, TextKind::Placeholder);
+            all->Add(d_format);
         }
         else if (fmt == "ph-dollars")
         {

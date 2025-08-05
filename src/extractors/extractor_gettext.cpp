@@ -56,7 +56,7 @@ const char * const GETTEXT_EXTENSIONS[] = {
 
     "java",                                               // Java
 
-    "js",                                                 // JavaScript
+    "js", "jsx"                                           // JavaScript
 
     "jl",                                                 // librep
 
@@ -138,6 +138,19 @@ public:
             quote_arg(!sourceSpec.Charset.empty() ? sourceSpec.Charset : "UTF-8")
         );
 
+        if (check_gettext_version(0, 25))
+        {
+            // don't consider mtime of the temporary file passed to --files-from:
+            cmdline += wxString::Format(" --generated=%s", quote_arg(filelist.GetName()));
+        }
+
+        if (check_gettext_version(0, 24, 1))
+        {
+            // FIXME: This is temporary, to avoid the implied slowness. Should be amended with
+            //        calculating mtimes in parallel in Poedit itself.
+            cmdline += " --no-git";
+        }
+
         auto additional = GetAdditionalFlags();
         if (!additional.empty())
             cmdline += " " + additional;
@@ -186,6 +199,18 @@ public:
     {
         for (const char * const *e = GETTEXT_EXTENSIONS; *e != nullptr; e++)
             RegisterExtension(*e);
+
+        if (check_gettext_version(0, 24))
+        {
+            RegisterExtension("rs"); // Rust
+        }
+        if (check_gettext_version(0, 25))
+        {
+            RegisterExtension("d"); // D
+            RegisterExtension("go"); // Go
+            RegisterExtension("ts"); // TypeScript
+            RegisterExtension("tsx"); // TypeScript JSX
+        }
     }
 
     wxString GetId() const override { return "gettext"; }
