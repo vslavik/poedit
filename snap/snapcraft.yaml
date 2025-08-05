@@ -63,9 +63,45 @@ apps:
       - password-manager-service
 
 parts:
+  gettext:
+    source: https://ftpmirror.gnu.org/gnu/gettext/gettext-0.26.tar.xz
+    source-checksum: sha256/d1fb86e260cfe7da6031f94d2e44c0da55903dbae0a2fa0fae78c91ae1b56f00
+    source-type: tar
+
+    build-packages:
+      - build-essential
+      - libncurses-dev
+      - libxml2-dev
+      - bison
+      - m4
+
+    plugin: autotools
+    autotools-configure-parameters:
+      - --prefix=/
+      - --disable-static
+      - --enable-shared
+      - --enable-relocatable
+      - --with-included-gettext
+
+    stage:
+      - bin/*
+      - lib/*
+      - libexec/*
+      - share/*
+      - include/*
+
+    prime:
+      - bin/*
+      - lib/*
+      - -lib/*.la
+      - libexec/gettext/cldr-plurals
+      - share/gettext*/its/*
+      - share/locale/*
+
   poedit:
     after:
       - wxwidgets
+      - gettext
 
     source: .
 
@@ -79,7 +115,6 @@ parts:
       #- nlohmann-json-dev
 
       - automake
-      - gettext
       - libboost-all-dev
       - libcld2-dev
       - libcpprest-dev
@@ -101,7 +136,8 @@ parts:
         --with-wx-prefix="$CRAFT_STAGE" \
         CPPFLAGS="-DSNAPCRAFT -I${CRAFT_STAGE}/include -I${CRAFT_PART_INSTALL}/../build/deps/json/src" \
         LDFLAGS="-Wl,--copy-dt-needed-entries -L${CRAFT_STAGE}/lib" \
-        PKG_CONFIG_PATH="${CRAFT_STAGE}"/lib/pkgconfig
+        PKG_CONFIG_PATH="${CRAFT_STAGE}"/lib/pkgconfig \
+        PATH="${CRAFT_STAGE}/bin:$PATH"
       make -j4
       make prefix="${CRAFT_PART_INSTALL}" install-strip
 
@@ -112,7 +148,6 @@ parts:
         "${CRAFT_PART_INSTALL}"/share/applications/net.poedit*.desktop
 
     stage-packages:
-      - gettext
       - libcld2-0
       - libcpprest2.10
       - libgtkspell3-3-0
@@ -130,10 +165,12 @@ parts:
       - share/*
 
   wxwidgets:
+    after:
+      - gettext
+
     source: deps/wx
 
     build-packages:
-      - gettext
       - libexpat1-dev
       - libjpeg-dev
       - libpng-dev
@@ -159,7 +196,8 @@ parts:
         --enable-debug \
         --enable-webview \
         --with-cxx=14 \
-        --enable-stl
+        --enable-stl \
+        PATH="${CRAFT_STAGE}/bin:$PATH"
       make -j4
       make prefix="${CRAFT_PART_INSTALL}" install
 
