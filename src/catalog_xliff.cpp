@@ -44,12 +44,6 @@ using namespace pugi;
 namespace
 {
 
-// Flags required for correct parsing of XML files with no loss of information
-// FIXME: This includes parse_eol, which is undesirable: it converts files to Unix
-//        line endings on save. OTOH without it, we'd have to do the conversion
-//        manually both ways when extracting _and_ editing text.
-constexpr auto PUGI_PARSE_FLAGS = parse_full | parse_ws_pcdata | parse_fragment;
-
 // Skip over a tag, starting at its '<' with forward iterator or '>' with reverse;
 // return iterator right after the tag or end if malformed
 template<typename Iter>
@@ -73,13 +67,6 @@ inline Iter skip_over_tag(Iter begin, Iter end)
     return (i == end) ? end : ++i;
 }
 
-
-// does the node have any <elements> as children?
-inline bool has_child_elements(xml_node node)
-{
-    return node.find_child([](xml_node n){ return n.type() == node_element; });
-}
-
 inline bool is_self_closing(xml_node node)
 {
     return node.type() == node_element && !node.first_child();
@@ -98,61 +85,6 @@ std::string get_subtree_markup(xml_node node)
     for (auto c: node.children())
         c.print(s, "", format_raw);
     return s.str();
-}
-
-inline void remove_all_children(xml_node node)
-{
-    while (auto last = node.last_child())
-        node.remove_child(last);
-}
-
-inline xml_attribute attribute(xml_node node, const char *name)
-{
-    auto a = node.attribute(name);
-    return a ? a : node.append_attribute(name);
-}
-
-inline bool has_multiple_text_children(xml_node node)
-{
-    bool alreadyFoundOne = false;
-    for (auto child = node.first_child(); child; child = child.next_sibling())
-    {
-        if (child.type() == node_pcdata || child.type() == node_cdata)
-        {
-            if (alreadyFoundOne)
-                return true;
-            else
-                alreadyFoundOne = true;
-        }
-    }
-    return false;
-}
-
-inline std::string get_node_text(xml_node node)
-{
-    // xml_node::text() returns the first text child, but that's not enough,
-    // because some (weird) files in the wild mix text and CDATA content
-    if (has_multiple_text_children(node))
-    {
-        std::string s;
-        for (auto child = node.first_child(); child; child = child.next_sibling())
-            if (child.type() == node_pcdata || child.type() == node_cdata)
-                s.append(child.text().get());
-        return s;
-    }
-    else
-    {
-        return node.text().get();
-    }
-}
-
-inline void set_node_text(xml_node node, const std::string& text)
-{
-    // see get_node_text() for explanation
-    if (has_multiple_text_children(node))
-        remove_all_children(node);
-
-    node.text() = text.c_str();
 }
 
 inline std::string get_node_text_or_markup(xml_node node, bool isPlainText)
