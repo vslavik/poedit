@@ -29,6 +29,7 @@
 #include "catalog_xliff.h"
 #include "catalog_json.h"
 #include "catalog_xcloc.h"
+#include "catalog_resx.h"
 
 #include "configuration.h"
 #include "errors.h"
@@ -597,6 +598,8 @@ wxString MaskForType(Catalog::Type t)
         case Catalog::Type::JSON_FLUTTER:
             // TRANSLATORS: "Flutter" is proper noun, name of a developer tool
             return MaskForType("*.arb", _("Flutter Translation Files"));
+        case Catalog::Type::RESX:
+            return MaskForType("*.resx", _("RESX Resource Files"));
     }
     return ""; // silence stupid warning
 }
@@ -605,9 +608,9 @@ wxString MaskForType(Catalog::Type t)
 
 wxString Catalog::GetAllTypesFileMask()
 {
-    return MaskForType("*.po;*.pot;*.xlf;*.xliff;*.xcloc;*.json;*.arb", _("All Translation Files"), /*showExt=*/false) +
+    return MaskForType("*.po;*.pot;*.xlf;*.xliff;*.xcloc;*.json;*.arb;*.resx", _("All Translation Files"), /*showExt=*/false) +
         "|" +
-        GetTypesFileMask({ Type::PO, Type::POT, Type::XLIFF, Type::JSON, Type::JSON_FLUTTER, Type::XCLOC });
+        GetTypesFileMask({ Type::PO, Type::POT, Type::XLIFF, Type::JSON, Type::JSON_FLUTTER, Type::XCLOC, Type::RESX });
 }
 
 wxString Catalog::GetTypesFileMask(std::initializer_list<Type> types)
@@ -1133,7 +1136,8 @@ CatalogPtr Catalog::Create(Type type)
         case Type::XCLOC:
         case Type::JSON:
         case Type::JSON_FLUTTER:
-            wxFAIL_MSG("empty XLIFF/JSON creation not implemented");
+        case Type::RESX:
+            wxFAIL_MSG("empty XLIFF/JSON/RESX creation not implemented");
             return CatalogPtr();
     }
 
@@ -1164,6 +1168,10 @@ CatalogPtr Catalog::Create(const wxString& filename, int flags)
     {
         cat = XCLOCCatalog::Open(filename);
     }
+    else if (RESXCatalog::CanLoadFile(ext))
+    {
+        cat = RESXCatalog::Open(filename);
+    }
 
     if (!cat)
         BOOST_THROW_EXCEPTION(Exception(_("The file is in a format not recognized by Poedit.")));
@@ -1186,7 +1194,8 @@ bool Catalog::CanLoadFile(const wxString& extension_)
 
     return POCatalog::CanLoadFile(extension) ||
            XLIFFCatalog::CanLoadFile(extension) ||
-           JSONCatalog::CanLoadFile(extension);
+           JSONCatalog::CanLoadFile(extension) ||
+           RESXCatalog::CanLoadFile(extension);
 }
 
 
