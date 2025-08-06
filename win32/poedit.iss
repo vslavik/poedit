@@ -161,6 +161,12 @@ Root: "HKA"; Subkey: "Software\Classes\Poedit.ARB"; ValueType: string; ValueData
 Root: "HKA"; Subkey: "Software\Classes\Poedit.ARB"; ValueType: string; ValueName: "FriendlyTypeName"; ValueData: "@{app}\Poedit.exe,-227"; Flags: uninsdeletekey noerror
 Root: "HKA"; Subkey: "Software\Classes\Poedit.ARB\Shell\Open\Command"; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
 
+Root: "HKA"; Subkey: "Software\Classes\.resx"; ValueType: string; ValueName: "Content Type"; ValueData: "text/microsoft-resx"; Flags: noerror
+Root: "HKA"; Subkey: "Software\Classes\.resx\OpenWithProgids"; ValueType: string; ValueName: "Poedit.RESX"; ValueData: ""; Flags: uninsdeletevalue noerror
+Root: "HKA"; Subkey: "Software\Classes\Poedit.RESX"; ValueType: string; ValueData: "RESX Resource File"; Flags: uninsdeletekey noerror
+Root: "HKA"; Subkey: "Software\Classes\Poedit.RESX"; ValueType: string; ValueName: "FriendlyTypeName"; ValueData: "@{app}\Poedit.exe,-228"; Flags: uninsdeletekey noerror
+Root: "HKA"; Subkey: "Software\Classes\Poedit.RESX\Shell\Open\Command"; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
+
 ; URL protocol for poedit:// (various custom tasks such as OAuth)
 Root: "HKA"; Subkey: "Software\Classes\poedit"; ValueType: "string"; ValueData: "URL:Poedit Custom Protocol"; Flags: uninsdeletekey noerror
 Root: "HKA"; Subkey: "Software\Classes\poedit"; ValueType: "string"; ValueName: "URL Protocol"; ValueData: ""; Flags: uninsdeletekey noerror

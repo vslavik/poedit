@@ -340,7 +340,8 @@ class Catalog
             XLIFF,
             XCLOC,
             JSON,
-            JSON_FLUTTER
+            JSON_FLUTTER,
+            RESX
         };
 
         /// Capabilities of the file type
