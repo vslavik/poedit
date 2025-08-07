@@ -156,6 +156,7 @@ Root: "HKA"; Subkey: "Software\Classes\Poedit.JSON"; ValueType: string; ValueDat
 Root: "HKA"; Subkey: "Software\Classes\Poedit.JSON"; ValueType: string; ValueName: "FriendlyTypeName"; ValueData: "@{app}\Poedit.exe,-226"; Flags: uninsdeletekey noerror
 Root: "HKA"; Subkey: "Software\Classes\Poedit.JSON\Shell\Open\Command"; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
 
+Root: "HKA"; Subkey: "Software\Classes\.arb"; ValueType: string; ValueName: "Content Type"; ValueData: "application/x-arb"; Flags: noerror
 Root: "HKA"; Subkey: "Software\Classes\.arb\OpenWithProgids"; ValueType: string; ValueName: "Poedit.ARB"; ValueData: ""; Flags: uninsdeletevalue noerror
 Root: "HKA"; Subkey: "Software\Classes\Poedit.ARB"; ValueType: string; ValueData: "Flutter Translation"; Flags: uninsdeletekey noerror
 Root: "HKA"; Subkey: "Software\Classes\Poedit.ARB"; ValueType: string; ValueName: "FriendlyTypeName"; ValueData: "@{app}\Poedit.exe,-227"; Flags: uninsdeletekey noerror
