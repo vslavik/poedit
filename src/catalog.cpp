@@ -19,7 +19,7 @@
  *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- *  DEALINGS IN THE SOFTWARE. 
+ *  DEALINGS IN THE SOFTWARE.
  *
  */
 
@@ -30,6 +30,7 @@
 #include "catalog_json.h"
 #include "catalog_xcloc.h"
 #include "catalog_resx.h"
+#include "catalog_qt.h"
 
 #include "configuration.h"
 #include "errors.h"
@@ -600,6 +601,8 @@ wxString MaskForType(Catalog::Type t)
             return MaskForType("*.arb", _("Flutter Translation Files"));
         case Catalog::Type::RESX:
             return MaskForType("*.resx", _("RESX Resource Files"));
+        case Catalog::Type::QT_LINGUIST:
+            return MaskForType("*.ts", _("Qt Translation Files"));
     }
     return ""; // silence stupid warning
 }
@@ -608,9 +611,9 @@ wxString MaskForType(Catalog::Type t)
 
 wxString Catalog::GetAllTypesFileMask()
 {
-    return MaskForType("*.po;*.pot;*.xlf;*.xliff;*.xcloc;*.json;*.arb;*.resx", _("All Translation Files"), /*showExt=*/false) +
+    return MaskForType("*.po;*.pot;*.xlf;*.xliff;*.xcloc;*.json;*.arb;*.resx;*.ts", _("All Translation Files"), /*showExt=*/false) +
         "|" +
-        GetTypesFileMask({ Type::PO, Type::POT, Type::XLIFF, Type::JSON, Type::JSON_FLUTTER, Type::XCLOC, Type::RESX });
+        GetTypesFileMask({ Type::PO, Type::POT, Type::XLIFF, Type::JSON, Type::JSON_FLUTTER, Type::XCLOC, Type::RESX, Type::QT_LINGUIST });
 }
 
 wxString Catalog::GetTypesFileMask(std::initializer_list<Type> types)
@@ -1137,7 +1140,8 @@ CatalogPtr Catalog::Create(Type type)
         case Type::JSON:
         case Type::JSON_FLUTTER:
         case Type::RESX:
-            wxFAIL_MSG("empty XLIFF/JSON/RESX creation not implemented");
+        case Type::QT_LINGUIST:
+            wxFAIL_MSG("empty XLIFF/JSON/RESX/QT creation not implemented");
             return CatalogPtr();
     }
 
@@ -1172,6 +1176,10 @@ CatalogPtr Catalog::Create(const wxString& filename, int flags)
     {
         cat = RESXCatalog::Open(filename);
     }
+    else if (QtLinguistCatalog::CanLoadFile(ext))
+    {
+        cat = QtLinguistCatalog::Open(filename);
+    }
 
     if (!cat)
         BOOST_THROW_EXCEPTION(Exception(_("The file is in a format not recognized by Poedit.")));
@@ -1195,7 +1203,8 @@ bool Catalog::CanLoadFile(const wxString& extension_)
     return POCatalog::CanLoadFile(extension) ||
            XLIFFCatalog::CanLoadFile(extension) ||
            JSONCatalog::CanLoadFile(extension) ||
-           RESXCatalog::CanLoadFile(extension);
+           RESXCatalog::CanLoadFile(extension) ||
+           QtLinguistCatalog::CanLoadFile(extension);
 }
 
 

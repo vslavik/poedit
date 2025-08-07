@@ -341,7 +341,8 @@ class Catalog
             XCLOC,
             JSON,
             JSON_FLUTTER,
-            RESX
+            RESX,
+            QT_LINGUIST
         };
 
         /// Capabilities of the file type
