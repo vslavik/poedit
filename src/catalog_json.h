@@ -84,10 +84,6 @@ public:
     Language GetLanguage() const override { return m_language; }
     void SetLanguage(Language lang) override { m_language = lang; }
 
-    // FIXME: PO specific
-    bool HasDeletedItems() const override { return false;}
-    void RemoveDeletedItems() override {}
-
 protected:
     JSONCatalog(json_t&& doc) : Catalog(Type::JSON), m_doc(std::move(doc)) {}
 

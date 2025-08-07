@@ -97,9 +97,8 @@ public:
     Language GetLanguage() const override { return m_language; }
     void SetLanguage(Language lang) override;
 
-    // FIXME: Should be implemented for .ts too
-    bool HasDeletedItems() const override { return false;}
-    void RemoveDeletedItems() override {}
+    bool HasDeletedItems() const override { return m_hasDeletedItems; }
+    void RemoveDeletedItems() override;
 
     pugi::xml_node GetXMLRoot() const { return m_doc.child("TS"); }
 
@@ -115,7 +114,9 @@ protected:
 protected:
     std::mutex m_documentMutex;
     pugi::xml_document m_doc;
+
     Language m_language;
+    bool m_hasDeletedItems = false;
 
     friend class QtLinguistCatalogItem;
 };

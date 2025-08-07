@@ -53,6 +53,22 @@ inline xml_attribute attribute(xml_node node, const char *name)
     return a ? a : node.append_attribute(name);
 }
 
+/// Check if a node contains only whitespace text
+inline bool is_whitespace_only(xml_node node)
+{
+    if (!node || node.type() != node_pcdata)
+        return false;
+
+    const char* text = node.value();
+    while (*text)
+    {
+        if (!std::isspace(static_cast<unsigned char>(*text)))
+            return false;
+        text++;
+    }
+    return true;
+}
+
 
 /// Does the node have any <elements> as children?
 inline bool has_child_elements(xml_node node)

@@ -115,10 +115,6 @@ public:
     Language GetLanguage() const override { return m_language; }
     void SetLanguage(Language lang) override { m_language = lang; }
 
-    // FIXME: PO specific
-    bool HasDeletedItems() const override { return false;}
-    void RemoveDeletedItems() override {}
-
     pugi::xml_node GetXMLRoot() const { return m_doc.child("xliff"); }
     std::string GetXPathValue(const char* xpath) const;
 
