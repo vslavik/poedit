@@ -1500,6 +1500,7 @@ void PoeditFrame::EditCatalogProperties()
         case Catalog::Type::JSON:
         case Catalog::Type::JSON_FLUTTER:
         case Catalog::Type::RESX:
+        case Catalog::Type::QT_LINGUIST:
         {
             wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
             dlg->SetLang(m_catalog->GetLanguage());
