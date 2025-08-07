@@ -572,10 +572,10 @@ class Catalog
         bool UsesSymbolicIDsForSource() const { return m_sourceIsSymbolicID && !m_sideloaded; }
             
         /// Returns true if the catalog contains obsolete entries (~.*)
-        virtual bool HasDeletedItems() const = 0;
+        virtual bool HasDeletedItems() const { return false; }
 
         /// Removes all obsolete translations from the catalog
-        virtual void RemoveDeletedItems() = 0;
+        virtual void RemoveDeletedItems() {}
 
         /// Removes translations identical to the source text, returns true if any changes were made
         bool RemoveSameAsSourceTranslations();

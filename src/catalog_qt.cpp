@@ -280,7 +280,11 @@ void QtLinguistCatalog::ParseSubtree(int& id, pugi::xml_node root, [[maybe_unuse
 
         auto type = message.child("translation").attribute("type").value();
         if (strcmp(type, "vanished") == 0 || strcmp(type, "obsolete") == 0)
-            continue;  // skip deleted messages
+        {
+            m_hasDeletedItems = true;
+            // skip deleted messages
+            continue;
+        }
 
         m_items.push_back(std::make_shared<QtLinguistCatalogItem>(*this, ++id, message));
     }
@@ -329,4 +333,27 @@ void QtLinguistCatalog::SetLanguage(Language lang)
 {
     m_language = lang;
     attribute(GetXMLRoot(), "language") = lang.LanguageTag().c_str();
+}
+
+
+void QtLinguistCatalog::RemoveDeletedItems()
+{
+    std::lock_guard<std::mutex> lock(m_documentMutex);
+
+    const auto xpath_query = "//message[translation[@type='vanished' or @type='obsolete']]";
+    for (auto& x: m_doc.select_nodes(xpath_query))
+    {
+        auto node = x.node();
+        auto parent = x.parent();
+
+        auto sibling = node.previous_sibling();
+        if (sibling && pugi::is_whitespace_only(sibling))
+        {
+            parent.remove_child(sibling);
+        }
+
+        parent.remove_child(node);
+    }
+
+    m_hasDeletedItems = false;
 }
