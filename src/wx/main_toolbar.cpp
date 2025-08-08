@@ -128,7 +128,7 @@ private:
 
         AddTool(XRCID("menu_validate"), _("Validate"), "validate", _("Check for errors in the translation"));
 
-        AddTool(XRCID("menu_pretranslate"), _("Pre-translate"), "pretranslate", _("Pre-translate strings that don't have a translation yet"));
+        AddTool(XRCID("menu_pretranslate"), _("Pre-translate"), "pretranslate", _(L"Pre-translate strings that don’t have a translation yet"));
         AddTool(XRCID("toolbar_update"), MSW_OR_OTHER(_("Update from code"), _("Update from Code")), "update", _("Update from source code"));
         AddTool(XRCID("menu_cloud_sync"), _("Sync"), "sync", "");
 
