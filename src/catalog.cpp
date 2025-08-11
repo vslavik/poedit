@@ -558,6 +558,7 @@ int Catalog::FindItemIndexByLine(int lineno)
 bool Catalog::RemoveSameAsSourceTranslations()
 {
     bool changed = false;
+    const unsigned pluralFormsCount = GetPluralForms().nplurals();
 
     for (auto& i: m_items)
     {
@@ -566,7 +567,7 @@ bool Catalog::RemoveSameAsSourceTranslations()
             if (i->HasPlural())
             {
                 // we can only easily do this operation for languages that have singular+plural, skip everything else:
-                if (GetPluralFormsCount() != 2 || i->GetPluralString() != i->GetTranslation(1))
+                if (pluralFormsCount != 2 || i->GetPluralString() != i->GetTranslation(1))
                     continue;
             }
 
@@ -778,14 +779,11 @@ std::shared_ptr<SourceCodeSpec> Catalog::GetSourceCodeSpec() const
 }
 
 
-unsigned Catalog::GetPluralFormsCount() const
+unsigned Catalog::GetPluralFormsCountPresentInItems() const
 {
     unsigned count = 0;
-
-    for (auto& i: m_items)
-    {
+    for (const auto& i: m_items)
         count = std::max(count, i->GetPluralFormsCount());
-    }
 
     return count;
 }

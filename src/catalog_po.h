@@ -180,7 +180,8 @@ public:
     static bool CanLoadFile(const wxString& extension);
     wxString GetPreferredExtension() const override;
 
-    unsigned GetPluralFormsCount() const override;
+    PluralFormsExpr GetPluralForms() const override;
+
     void SetLanguage(Language lang) override;
 
     bool Save(const wxString& po_file, bool save_mo,

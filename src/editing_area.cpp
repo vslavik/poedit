@@ -763,9 +763,9 @@ void EditingArea::RecreatePluralTextCtrls(CatalogPtr catalog)
     m_pluralNotebook->DeleteAllPages();
     m_textTransSingularForm = NULL;
 
-    auto plurals = PluralFormsExpr(catalog->Header().GetHeader("Plural-Forms").utf8_string());
+    auto plurals = catalog->GetPluralForms();
+    int formsCount = plurals.nplurals();
 
-    int formsCount = catalog->GetPluralFormsCount();
     for (int form = 0; form < formsCount; form++)
     {
         // find example number that would use this plural form:
