@@ -234,7 +234,7 @@ private:
     std::shared_ptr<PluralFormsCalculator> calc() const;
 
     std::string m_expr;
-    int m_nplurals;
+    mutable int m_nplurals;
     bool m_calcCreated;
     std::shared_ptr<PluralFormsCalculator> m_calc;
 };
