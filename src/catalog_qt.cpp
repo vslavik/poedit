@@ -97,6 +97,14 @@ QtLinguistCatalogItem::QtLinguistCatalogItem(QtLinguistCatalog& owner, int itemI
             m_moreFlags = ", qt-format";
     }
 
+    auto numerus = node.attribute("numerus").value();
+    if (strcmp(numerus, "yes") == 0)
+    {
+        // In Qt translations, same string is used for singular and plural
+        // (necessitating English translation file); this also sets m_hasPlural
+        SetPluralString(m_string);
+    }
+
     auto oldsource = node.child("oldsource");
     if (oldsource)
     {
@@ -106,15 +114,29 @@ QtLinguistCatalogItem::QtLinguistCatalogItem(QtLinguistCatalog& owner, int itemI
     auto translation = node.child("translation");
     if (translation)
     {
-        auto trans_text = str::to_wx(get_node_text(translation));
-        m_translations.push_back(trans_text);
-        m_isTranslated = !trans_text.empty();
-
         auto type = translation.attribute("type").value();
-        if (m_isTranslated && strcmp(type, "unfinished") == 0)
+        bool isUnfinished = (strcmp(type, "unfinished") == 0);
+
+        if (HasPlural())
         {
-            m_isFuzzy = true;
+            m_isTranslated = true;
+
+            for (auto form: translation.children("numerusform"))
+            {
+                auto trans_text = str::to_wx(get_node_text(form));
+                m_translations.push_back(trans_text);
+                if (trans_text.empty())
+                    m_isTranslated = false;
+            }
         }
+        else
+        {
+            auto trans_text = str::to_wx(get_node_text(translation));
+            m_translations.push_back(trans_text);
+            m_isTranslated = !trans_text.empty();
+        }
+
+        m_isFuzzy = m_isTranslated && isUnfinished;
     }
     else
     {
@@ -191,7 +213,18 @@ void QtLinguistCatalogItem::UpdateInternalRepresentation()
         translation.remove_attribute("type");
     }
 
-    set_node_text(translation, str::to_utf8(GetTranslation()));
+    if (HasPlural())
+    {
+        remove_all_children(translation);
+        for (auto& t: m_translations)
+        {
+            translation.append_child("numerusform").text().set(str::to_utf8(t).c_str());
+        }
+    }
+    else
+    {
+        set_node_text(translation, str::to_utf8(GetTranslation()));
+    }
 
     if (HasComment())
     {
@@ -274,10 +307,6 @@ void QtLinguistCatalog::ParseSubtree(int& id, pugi::xml_node root, [[maybe_unuse
 
     for (auto message : root.children("message"))
     {
-        auto numerus = message.attribute("numerus").value();
-        if (strcmp(numerus, "yes") == 0)
-            continue;  // FIXME: not implemented yet
-
         auto type = message.child("translation").attribute("type").value();
         if (strcmp(type, "vanished") == 0 || strcmp(type, "obsolete") == 0)
         {
@@ -333,6 +362,24 @@ void QtLinguistCatalog::SetLanguage(Language lang)
 {
     m_language = lang;
     attribute(GetXMLRoot(), "language") = lang.LanguageTag().c_str();
+}
+
+
+PluralFormsExpr QtLinguistCatalog::GetPluralForms() const
+{
+    static const std::unordered_map<std::string, std::string> forms = {
+        #include "catalog_qt_plurals.h"
+    };
+
+    auto it = forms.find(m_language.LanguageTag());
+    if (it != forms.end())
+        return PluralFormsExpr(it->second);
+
+    it = forms.find(m_language.Lang());
+    if (it != forms.end())
+        return PluralFormsExpr(it->second);
+
+    return PluralFormsExpr::English();
 }
 
 

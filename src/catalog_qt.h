@@ -97,6 +97,8 @@ public:
     Language GetLanguage() const override { return m_language; }
     void SetLanguage(Language lang) override;
 
+    PluralFormsExpr GetPluralForms() const override;
+
     bool HasDeletedItems() const override { return m_hasDeletedItems; }
     void RemoveDeletedItems() override;
 
