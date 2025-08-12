@@ -803,12 +803,32 @@ int PluralFormsExpr::nplurals() const
 
 std::shared_ptr<PluralFormsCalculator> PluralFormsExpr::calc() const
 {
-    auto self = const_cast<PluralFormsExpr*>(this);
     if (m_calcCreated)
         return m_calc;
+
     if (!m_expr.empty())
-        self->m_calc = PluralFormsCalculator::make(m_expr.c_str());
-    self->m_calcCreated = true;
+    {
+        // There's typically only a few expressions used at runtime. Cache them to
+        // avoid unnecessary re-creation.
+        static std::unordered_map<std::string, std::shared_ptr<PluralFormsCalculator>> cache;
+        static std::mutex cacheMutex;
+
+        std::lock_guard<std::mutex> lock(cacheMutex);
+
+        auto it = cache.find(m_expr);
+        if (it != cache.end())
+        {
+            m_calc = it->second;
+        }
+        else
+        {
+            // Create new calculator and cache it
+            m_calc = PluralFormsCalculator::make(m_expr.c_str());
+            cache[m_expr] = m_calc;
+        }
+    }
+
+    m_calcCreated = true;
     return m_calc;
 }
 

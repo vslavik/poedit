@@ -235,8 +235,8 @@ private:
 
     std::string m_expr;
     mutable int m_nplurals;
-    bool m_calcCreated;
-    std::shared_ptr<PluralFormsCalculator> m_calc;
+    mutable bool m_calcCreated;
+    mutable std::shared_ptr<PluralFormsCalculator> m_calc;
 };
 
 #endif // Poedit_language_h
