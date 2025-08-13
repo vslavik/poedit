@@ -1499,6 +1499,7 @@ void PoeditFrame::EditCatalogProperties()
         case Catalog::Type::XCLOC:
         case Catalog::Type::JSON:
         case Catalog::Type::JSON_FLUTTER:
+        case Catalog::Type::RESX:
         {
             wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
             dlg->SetLang(m_catalog->GetLanguage());
@@ -2441,6 +2442,38 @@ void PoeditFrame::WarnAboutLanguageIssues()
 }
 
 
+namespace
+{
+
+wxFileName FindCandidateFileForSideloading(const wxFileName& thisFile, const wxString& wildcard)
+{
+    for (auto candidate: {"en", "en.default", "default", "", "en-US"})
+    {
+        auto w(wildcard);
+        if (*candidate)
+        {
+            w.Replace("*", candidate);
+        }
+        else
+        {
+            // special-case complete removal of language code, e.g. using foo.resx as base
+            // for foo.*.resx (this is common for RESX in particular)
+            w.Replace(".*.", ".");
+        }
+
+        wxFileName fnw(w);
+        if (fnw.FileExists() && fnw != thisFile)
+        {
+            return fnw;
+        }
+    }
+
+    return {};
+}
+
+} // anonymous namespace
+
+
 void PoeditFrame::OfferSideloadingSourceText()
 {
     if (!m_catalog->UsesSymbolicIDsForSource())
@@ -2452,19 +2485,7 @@ void PoeditFrame::OfferSideloadingSourceText()
         return;
 
     wxFileName fn(filename);
-    wxFileName ref;
-
-    for (auto candidate: {"en", "en.default", "default"})
-    {
-        auto w(wildcard);
-        w.Replace("*", candidate);
-        wxFileName fnw(w);
-        if (fnw.FileExists() && fnw != fn)
-        {
-            ref = fnw;
-            break;
-        }
-    }
+    wxFileName ref = FindCandidateFileForSideloading(fn, wildcard);
     if (!ref.IsOk())
         return;
 
