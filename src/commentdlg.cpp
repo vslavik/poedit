@@ -40,7 +40,7 @@ CommentDialog::CommentDialog(wxWindow *parent, const wxString& comment) : wxDial
 #endif
     m_text = XRCCTRL(*this, "comment", wxTextCtrl);
 
-    m_text->SetValue(RemoveStartHash(comment));
+    m_text->SetValue(RemoveStartHash(comment).Strip(wxString::both));
 
     if (comment.empty())
     {
@@ -60,7 +60,7 @@ CommentDialog::CommentDialog(wxWindow *parent, const wxString& comment) : wxDial
 wxString CommentDialog::GetComment() const
 {
     // Put the start hash back
-    return AddStartHash(m_text->GetValue());
+    return AddStartHash(m_text->GetValue().Strip(wxString::both));
 }
 
 BEGIN_EVENT_TABLE(CommentDialog, wxDialog)
