@@ -26,6 +26,7 @@ poedit_SOURCES = \
                  catalog.cpp catalog.h \
                  catalog_po.cpp catalog_po.h \
                  catalog_json.cpp catalog_json.h \
+                 catalog_qt.cpp catalog_qt.h catalog_qt_plurals.h \
                  catalog_resx.cpp catalog_resx.h \
                  catalog_xcloc.cpp catalog_xcloc.h \
                  catalog_xliff.cpp catalog_xliff.h \

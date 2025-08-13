@@ -341,7 +341,8 @@ class Catalog
             XCLOC,
             JSON,
             JSON_FLUTTER,
-            RESX
+            RESX,
+            QT_LINGUIST
         };
 
         /// Capabilities of the file type
@@ -553,10 +554,13 @@ class Catalog
         /// Gets catalog header (read-write access).
         HeaderData& Header() { return m_header; }
 
-        /// Returns plural forms count: taken from Plural-Forms header if
-        /// present, 0 otherwise (unless there are existing plural forms
-        /// translations in the file)
-        virtual unsigned GetPluralFormsCount() const;
+        /// Returns expression used to handle plural forms.
+        virtual PluralFormsExpr GetPluralForms() const { return PluralFormsExpr::English(); /* unsupported */ }
+
+        /// Returns plural forms as actually observed in entries in the file, which may,
+        /// in case of  slightly bad files, different from what GetPluralForms() declares.
+        /// It will be 0 in absence of plurals or if they aren't translated yet.
+        unsigned GetPluralFormsCountPresentInItems() const;
 
         /// Returns catalog's source language (may be invalid, but usually English).
         Language GetSourceLanguage() const { return m_sideloaded ? m_sideloaded->source_language : m_sourceLanguage; }
@@ -571,10 +575,10 @@ class Catalog
         bool UsesSymbolicIDsForSource() const { return m_sourceIsSymbolicID && !m_sideloaded; }
             
         /// Returns true if the catalog contains obsolete entries (~.*)
-        virtual bool HasDeletedItems() const = 0;
+        virtual bool HasDeletedItems() const { return false; }
 
         /// Removes all obsolete translations from the catalog
-        virtual void RemoveDeletedItems() = 0;
+        virtual void RemoveDeletedItems() {}
 
         /// Removes translations identical to the source text, returns true if any changes were made
         bool RemoveSameAsSourceTranslations();

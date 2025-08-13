@@ -19,12 +19,13 @@
  *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- *  DEALINGS IN THE SOFTWARE. 
+ *  DEALINGS IN THE SOFTWARE.
  *
  */
 
-#ifndef Poedit_catalog_resx_h
-#define Poedit_catalog_resx_h
+
+#ifndef Poedit_catalog_qt_h
+#define Poedit_catalog_qt_h
 
 #include "catalog.h"
 #include "errors.h"
@@ -35,57 +36,57 @@
 #include <vector>
 
 
-class RESXCatalog;
+class QtLinguistCatalog;
 
 
-class RESXException : public Exception
+class QtLinguistException : public Exception
 {
 public:
-    RESXException(const wxString& what) : Exception(what) {}
+    QtLinguistException(const wxString& what) : Exception(what) {}
 };
 
-class RESXReadException : public RESXException
+class QtLinguistReadException : public QtLinguistException
 {
 public:
-    RESXReadException(const wxString& what);
+    QtLinguistReadException(const wxString& what);
 };
 
 
-class RESXCatalogItem : public CatalogItem
+class QtLinguistCatalogItem : public CatalogItem
 {
 public:
-    RESXCatalogItem(RESXCatalog& owner, int id, pugi::xml_node node);
-    RESXCatalogItem(const CatalogItem&) = delete;
+    QtLinguistCatalogItem(QtLinguistCatalog& owner, int id, pugi::xml_node node);
+    QtLinguistCatalogItem(const CatalogItem&) = delete;
 
     wxString GetRawSymbolicId() const override { return m_symbolicId; }
-    wxArrayString GetReferences() const override { return wxArrayString(); }
+    wxArrayString GetReferences() const override;
 
 protected:
     void UpdateInternalRepresentation() override;
 
     struct document_lock : public std::lock_guard<std::mutex>
     {
-        document_lock(RESXCatalogItem *parent);
+        document_lock(QtLinguistCatalogItem *parent);
     };
 
 protected:
-    RESXCatalog& m_owner;
+    QtLinguistCatalog& m_owner;
     pugi::xml_node m_node;
     wxString m_symbolicId;
 };
 
 
-class RESXCatalog : public Catalog
+class QtLinguistCatalog : public Catalog
 {
 public:
-    ~RESXCatalog() {}
+    ~QtLinguistCatalog() {}
 
     bool HasCapability(Cap cap) const override;
 
     static bool CanLoadFile(const wxString& extension);
-    wxString GetPreferredExtension() const override { return "resx"; }
+    wxString GetPreferredExtension() const override { return "ts"; }
 
-    static std::shared_ptr<RESXCatalog> Open(const wxString& filename);
+    static std::shared_ptr<QtLinguistCatalog> Open(const wxString& filename);
 
     bool Save(const wxString& filename, bool save_mo,
               ValidationResults& validation_results,
@@ -96,22 +97,30 @@ public:
     Language GetLanguage() const override { return m_language; }
     void SetLanguage(Language lang) override;
 
-    pugi::xml_node GetXMLRoot() const { return m_doc.child("root"); }
+    PluralFormsExpr GetPluralForms() const override;
+
+    bool HasDeletedItems() const override { return m_hasDeletedItems; }
+    void RemoveDeletedItems() override;
+
+    pugi::xml_node GetXMLRoot() const { return m_doc.child("TS"); }
 
 protected:
-    RESXCatalog(pugi::xml_document&& doc) : Catalog(Type::RESX), m_doc(std::move(doc))
+    QtLinguistCatalog(pugi::xml_document&& doc) : Catalog(Type::QT_LINGUIST), m_doc(std::move(doc))
     {
-        m_sourceIsSymbolicID = true;
+        m_sourceIsSymbolicID = false;
     }
 
     void Parse(pugi::xml_node root);
+    void ParseSubtree(int& id, pugi::xml_node root, const wxString& context);
 
 protected:
     std::mutex m_documentMutex;
     pugi::xml_document m_doc;
-    Language m_language;
 
-    friend class RESXCatalogItem;
+    Language m_language;
+    bool m_hasDeletedItems = false;
+
+    friend class QtLinguistCatalogItem;
 };
 
-#endif // Poedit_catalog_resx_h
+#endif // Poedit_catalog_qt_h

@@ -189,31 +189,6 @@ wxTextFileType GetDesiredCRLFFormat(wxTextFileType existingCRLF)
     }
 }
 
-
-unsigned GetCountFromPluralFormsHeader(const Catalog::HeaderData& header)
-{
-    if ( header.HasHeader("Plural-Forms") )
-    {
-        // e.g. "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ?
-        //       0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-
-        wxString form = header.GetHeader("Plural-Forms");
-        form = form.BeforeFirst(_T(';'));
-        if (form.BeforeFirst(_T('=')) == "nplurals")
-        {
-            wxString vals = form.AfterFirst('=');
-            if (vals == "INTEGER") // POT default
-                return 2;
-            long val;
-            if (vals.ToLong(&val))
-                return (unsigned)val;
-        }
-    }
-
-    // fallback value for plural forms count should be 2, as in English:
-    return 2;
-}
-
 } // anonymous namespace
 
 
@@ -1491,7 +1466,7 @@ bool POCatalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
     SaveMultiLines(f, pohdr);
     f.AddLine(wxEmptyString);
 
-    auto pluralsCount = GetPluralFormsCount();
+    auto pluralsCount = std::max((int)GetPluralFormsCountPresentInItems(), GetPluralForms().nplurals());
 
     for (auto& data_: m_items)
     {
@@ -1595,26 +1570,30 @@ void POCatalog::SetLanguage(Language lang)
         m_header.SetHeaderNotEmpty("Plural-Forms", lang.DefaultPluralFormsExpr().str());
 }
 
-unsigned POCatalog::GetPluralFormsCount() const
+PluralFormsExpr POCatalog::GetPluralForms() const
 {
-    return std::max(GetCountFromPluralFormsHeader(m_header), Catalog::GetPluralFormsCount());
+    if (!m_header.HasHeader("Plural-Forms"))
+        return PluralFormsExpr::English();
+
+    auto hdr = m_header.GetHeader("Plural-Forms");
+    if (hdr.Contains("INTEGER"))
+    {
+        // header has POT default value, assume English because that's all we can do
+        return PluralFormsExpr::English();
+    }
+
+    return PluralFormsExpr(str::to_utf8(hdr));
 }
 
 bool POCatalog::HasWrongPluralFormsCount() const
 {
-    unsigned count = 0;
-
-    for (auto& i: m_items)
-    {
-        count = std::max(count, i->GetPluralFormsCount());
-    }
-
+    unsigned count = GetPluralFormsCountPresentInItems();
     if ( count == 0 )
         return false; // nothing translated, so we can't tell
 
     // if 'count' is less than the count from header, it may simply mean there
     // are untranslated strings
-    if ( count > GetCountFromPluralFormsHeader(m_header) )
+    if ( count > GetPluralForms().nplurals() )
         return true;
 
     return false;

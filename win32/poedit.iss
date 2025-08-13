@@ -168,6 +168,11 @@ Root: "HKA"; Subkey: "Software\Classes\Poedit.RESX"; ValueType: string; ValueDat
 Root: "HKA"; Subkey: "Software\Classes\Poedit.RESX"; ValueType: string; ValueName: "FriendlyTypeName"; ValueData: "@{app}\Poedit.exe,-228"; Flags: uninsdeletekey noerror
 Root: "HKA"; Subkey: "Software\Classes\Poedit.RESX\Shell\Open\Command"; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
 
+Root: "HKA"; Subkey: "Software\Classes\.ts\OpenWithProgids"; ValueType: string; ValueName: "Poedit.QT"; ValueData: ""; Flags: uninsdeletevalue noerror
+Root: "HKA"; Subkey: "Software\Classes\Poedit.QT"; ValueType: string; ValueData: "Qt Translation"; Flags: uninsdeletekey noerror
+Root: "HKA"; Subkey: "Software\Classes\Poedit.QT"; ValueType: string; ValueName: "FriendlyTypeName"; ValueData: "@{app}\Poedit.exe,-229"; Flags: uninsdeletekey noerror
+Root: "HKA"; Subkey: "Software\Classes\Poedit.QT\Shell\Open\Command"; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
+
 ; URL protocol for poedit:// (various custom tasks such as OAuth)
 Root: "HKA"; Subkey: "Software\Classes\poedit"; ValueType: "string"; ValueData: "URL:Poedit Custom Protocol"; Flags: uninsdeletekey noerror
 Root: "HKA"; Subkey: "Software\Classes\poedit"; ValueType: "string"; ValueName: "URL Protocol"; ValueData: ""; Flags: uninsdeletekey noerror
