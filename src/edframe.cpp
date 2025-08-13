@@ -2897,7 +2897,7 @@ void PoeditFrame::OnRemoveSameAsSourceTranslations(wxCommandEvent&)
     const wxString title =
         _("Remove same-as-source translations");
     const wxString main =
-        _("Do you want to remove all translations that are idential to the source text?");
+        _("Do you want to remove all translations that are identical to the source text?");
     const wxString details = _("This action will delete any translations that match the source text exactly. This cannot be undone.");
 
     wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog(this, main, title, wxYES_NO | wxICON_QUESTION));
