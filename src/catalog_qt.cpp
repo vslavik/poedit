@@ -283,8 +283,8 @@ void QtLinguistCatalog::Parse(pugi::xml_node root)
 {
     // See https://doc.qt.io/qt-6/linguist-ts-file-format.html for format spec
 
-    m_sourceLanguage = Language::FromLanguageTag(root.attribute("sourcelanguage").value());
-    m_language = Language::FromLanguageTag(root.attribute("language").value());
+    m_sourceLanguage = Language::TryParseWithValidation(root.attribute("sourcelanguage").value());
+    m_language = Language::TryParseWithValidation(root.attribute("language").value());
 
     int id = 0;
 
@@ -361,7 +361,7 @@ std::string QtLinguistCatalog::SaveToBuffer()
 void QtLinguistCatalog::SetLanguage(Language lang)
 {
     m_language = lang;
-    attribute(GetXMLRoot(), "language") = lang.LanguageTag().c_str();
+    attribute(GetXMLRoot(), "language") = lang.Code().c_str();
 }
 
 

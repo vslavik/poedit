@@ -140,6 +140,8 @@ public:
         valid ISO 639/3166 codes.
      */
     static Language TryParseWithValidation(const std::wstring& s);
+    static Language TryParseWithValidation(const std::string& s)
+        { return TryParseWithValidation(std::wstring(s.begin(), s.end())); }
 
     /**
         Returns language object corresponding to given BCP 47 tag.
