@@ -300,11 +300,11 @@ wxString PoeditApp::GetAppBuildNumber() const
 #elif defined(__WXMSW__)
     auto exe = wxStandardPaths::Get().GetExecutablePath();
     DWORD unusedHandle;
-    DWORD fiSize = GetFileVersionInfoSize(exe.wx_str(), &unusedHandle);
+    DWORD fiSize = GetFileVersionInfoSize(exe.wc_str(), &unusedHandle);
     if (fiSize == 0)
         return "";
     wxCharBuffer fi(fiSize);
-    if (!GetFileVersionInfo(exe.wx_str(), unusedHandle, fiSize, fi.data()))
+    if (!GetFileVersionInfo(exe.wc_str(), unusedHandle, fiSize, fi.data()))
         return "";
     void *ver;
     UINT sizeInfo;
