@@ -764,9 +764,9 @@ void EditingArea::RecreatePluralTextCtrls(CatalogPtr catalog)
     m_textTransSingularForm = NULL;
 
     auto plurals = catalog->GetPluralForms();
-    int formsCount = plurals.nplurals();
+    unsigned formsCount = plurals.nplurals();
 
-    for (int form = 0; form < formsCount; form++)
+    for (unsigned form = 0; form < formsCount; form++)
     {
         // find example number that would use this plural form:
         static const int maxExamplesCnt = 5;

@@ -1466,7 +1466,7 @@ bool POCatalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
     SaveMultiLines(f, pohdr);
     f.AddLine(wxEmptyString);
 
-    auto pluralsCount = std::max((int)GetPluralFormsCountPresentInItems(), GetPluralForms().nplurals());
+    auto pluralsCount = std::max(GetPluralFormsCountPresentInItems(), GetPluralForms().nplurals());
 
     for (auto& data_: m_items)
     {

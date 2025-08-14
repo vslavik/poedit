@@ -106,7 +106,7 @@ public:
     PluralFormsExpr DefaultPluralFormsExpr() const;
 
     /// Count of plural forms for this language
-    int nplurals() const;
+    unsigned nplurals() const;
 
     /// Returns language's text writing direction
     TextDirection Direction() const { return m_direction; }
@@ -228,9 +228,9 @@ public:
     bool operator!=(const PluralFormsExpr& other) const { return !(*this == other); }
     explicit operator bool() const { return !m_expr.empty() && calc() != nullptr; }
 
-    int nplurals() const;
+    unsigned nplurals() const;
 
-    int evaluate_for_n(int n) const;
+    unsigned evaluate_for_n(int n) const;
 
 private:
     std::shared_ptr<PluralFormsCalculator> calc() const;

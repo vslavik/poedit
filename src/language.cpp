@@ -563,7 +563,7 @@ PluralFormsExpr Language::DefaultPluralFormsExpr() const
 }
 
 
-int Language::nplurals() const
+unsigned Language::nplurals() const
 {
     return DefaultPluralFormsExpr().nplurals();
 }
@@ -776,7 +776,7 @@ PluralFormsExpr::~PluralFormsExpr()
 {
 }
 
-int PluralFormsExpr::nplurals() const
+unsigned PluralFormsExpr::nplurals() const
 {
     if (m_nplurals != -1)
         return m_nplurals;
@@ -863,10 +863,10 @@ bool PluralFormsExpr::operator==(const PluralFormsExpr& other) const
     return true;
 }
 
-int PluralFormsExpr::evaluate_for_n(int n) const
+unsigned PluralFormsExpr::evaluate_for_n(int n) const
 {
     auto c = calc();
-    return c ? c->evaluate(n) : 0;
+    return c ? (unsigned)c->evaluate(n) : 0;
 }
 
 PluralFormsExpr PluralFormsExpr::English()
