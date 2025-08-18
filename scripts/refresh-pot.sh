@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-POEDIT_VERSION="3.6.3"
+POEDIT_VERSION="3.7"
 
 [ -n "${WXRC}" ] || WXRC=wxrc
 
