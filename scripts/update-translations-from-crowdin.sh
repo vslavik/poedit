@@ -72,6 +72,7 @@ fixup_windows_rc_files()
         stripped=`basename "$i" .rc | cut -d- -f2 | tr [a-z] [A-Z]`
         lang=`echo $stripped | cut -d_ -f1`
         lang="${lang/KAZAKH/KAZAK}"
+        lang="${lang/UYGHUR/UIGHUR}"
         sublang=`echo $stripped | cut -s -d_ -f2`
         if [ "$lang" = "BOSNIAN" ] ; then
             sublang="BOSNIA_HERZEGOVINA_LATIN"
