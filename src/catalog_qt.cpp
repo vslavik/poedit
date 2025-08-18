@@ -338,7 +338,7 @@ bool QtLinguistCatalog::Save(const wxString& filename, bool /*save_mo*/,
 
     if (!tempfile.Commit())
     {
-        wxLogError(_(L"Couldn't save file %s."), filename.c_str());
+        wxLogError(_(L"Couldn’t save file %s."), filename.c_str());
         return false;
     }
 
