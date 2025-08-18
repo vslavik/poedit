@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2025-05-16 18:17+0200\n"
-"PO-Revision-Date: 2025-04-05 10:16\n"
+"POT-Creation-Date: 2025-08-18 18:46+0200\n"
+"PO-Revision-Date: 2025-08-14 10:17\n"
 "Last-Translator: \n"
 "Language-Team: Malay\n"
 "Language: ms_MY\n"
@@ -11,6 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.6\n"
 "X-Crowdin-Project: poedit\n"
 "X-Crowdin-Project-ID: 53425\n"
 "X-Crowdin-Language: ms\n"
@@ -98,11 +99,11 @@ msgstr "Gagal memuatkan fail dengan terjemahan yang diekstrak."
 msgid "In: %s"
 msgstr "Dalam: %s"
 
-#: src/cat_update.cpp:290 src/edframe.cpp:1606
+#: src/cat_update.cpp:290 src/edframe.cpp:1608
 msgid "Source code not available."
 msgstr "Kod sumber tidak tersedia."
 
-#: src/cat_update.cpp:291 src/edframe.cpp:1610
+#: src/cat_update.cpp:291 src/edframe.cpp:1612
 msgid ""
 "Translations couldn’t be updated from the source code, because no code was "
 "found in the location specified in the file’s Properties."
@@ -145,7 +146,7 @@ msgid "Failed to extract strings from source code."
 msgstr ""
 
 #: src/cat_update.cpp:346 src/edapp.cpp:1103 src/edframe.cpp:929
-#: src/edframe.cpp:2477
+#: src/edframe.cpp:2527
 #, c-format
 msgid "The file “%s” couldn’t be opened."
 msgstr "Fail \"%s\" gagal dibuka."
@@ -195,41 +196,49 @@ msgstr ""
 msgid "View details…"
 msgstr ""
 
-#: src/catalog.cpp:125
+#: src/catalog.cpp:127
 #, c-format
 msgid "Malformed header: “%s”"
 msgstr "Pengepala cacat: “%s”"
 
-#: src/catalog.cpp:588
+#: src/catalog.cpp:591
 msgid "PO Translation Files"
 msgstr "Fail Terjemahan PO"
 
-#: src/catalog.cpp:590
+#: src/catalog.cpp:593
 msgid "POT Translation Templates"
 msgstr "Templat Terjemahan POT"
 
-#: src/catalog.cpp:592
+#: src/catalog.cpp:595
 msgid "XLIFF Translation Files"
 msgstr "Fail Terjemahan XLIFF"
 
-#: src/catalog.cpp:594
+#: src/catalog.cpp:597
 msgid "Xcode Localization Catalog"
 msgstr ""
 
-#: src/catalog.cpp:596
+#: src/catalog.cpp:599
 msgid "JSON Translation Files"
 msgstr "Fail Terjemahan JSON"
 
 #. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
-#: src/catalog.cpp:599
+#: src/catalog.cpp:602
 msgid "Flutter Translation Files"
 msgstr "Fail Terjemahan Flutter"
 
-#: src/catalog.cpp:608
+#: src/catalog.cpp:604
+msgid "RESX Resource Files"
+msgstr ""
+
+#: src/catalog.cpp:606
+msgid "Qt Translation Files"
+msgstr ""
+
+#: src/catalog.cpp:615
 msgid "All Translation Files"
 msgstr "Semua Fail Terjemahan"
 
-#: src/catalog.cpp:1169
+#: src/catalog.cpp:1183
 msgid "The file is in a format not recognized by Poedit."
 msgstr "Fail ini dalam format yang tidak dikenal pasti oleh Poedit."
 
@@ -245,7 +254,8 @@ msgstr ""
 msgid "Reading file content failed with the following error: %s"
 msgstr "Gagal membaca kandungan fail dengan ralat berikut: %s"
 
-#: src/catalog_json.cpp:151 src/catalog_po.cpp:1162 src/catalog_xliff.cpp:556
+#: src/catalog_json.cpp:151 src/catalog_po.cpp:1143 src/catalog_qt.cpp:329
+#: src/catalog_resx.cpp:198 src/catalog_xliff.cpp:488
 #, c-format
 msgid ""
 "File “%s” is read-only and cannot be saved.\n"
@@ -254,10 +264,11 @@ msgstr ""
 "Fail \"%s\" adalah baca-sahaja dan tidak boleh disimpan.\n"
 "Sila simpan ia dengan nama berbeza."
 
-#: src/catalog_json.cpp:165 src/catalog_po.cpp:1198 src/catalog_po.cpp:1280
-#: src/catalog_po.cpp:1354 src/catalog_po.cpp:1363 src/catalog_po.cpp:1420
-#: src/catalog_po.cpp:1451 src/catalog_po.cpp:1645 src/catalog_xliff.cpp:567
-#: src/edframe.cpp:1317 src/prefsdlg.cpp:664
+#: src/catalog_json.cpp:165 src/catalog_po.cpp:1179 src/catalog_po.cpp:1261
+#: src/catalog_po.cpp:1335 src/catalog_po.cpp:1344 src/catalog_po.cpp:1401
+#: src/catalog_po.cpp:1432 src/catalog_po.cpp:1630 src/catalog_qt.cpp:341
+#: src/catalog_resx.cpp:209 src/catalog_xliff.cpp:499 src/edframe.cpp:1317
+#: src/prefsdlg.cpp:664
 #, c-format
 msgid "Couldn’t save file %s."
 msgstr "Tidak dapat menyimpan fail %s."
@@ -277,21 +288,21 @@ msgstr[0] "Baris %i bagi fail \"%s\" tidak dimuatkan dengan baik."
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "Baris %d bagi fail \"%s\" telah rosak (data %s tidak sah)."
 
-#: src/catalog_po.cpp:356
+#: src/catalog_po.cpp:336
 msgid "Broken PO file: singular form msgstr used together with msgid_plural"
 msgstr ""
 "Fail PO rosak: msgstr bentuk tunggal digunakan bersama dengan msgid_plural"
 
-#: src/catalog_po.cpp:408
+#: src/catalog_po.cpp:388
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr "Fail katalog rosak: msgstr bentuk jamak digunakan tanpa msgid_plural"
 
-#: src/catalog_po.cpp:930 src/catalog_po.cpp:944 src/catalog_po.cpp:957
-#: src/catalog_po.cpp:969
+#: src/catalog_po.cpp:910 src/catalog_po.cpp:924 src/catalog_po.cpp:937
+#: src/catalog_po.cpp:949
 msgid "Couldn’t load the file, it is probably damaged."
 msgstr "Tidak dapat memuatkan fail, ia berkemungkinan telah rosak."
 
-#: src/catalog_po.cpp:949
+#: src/catalog_po.cpp:929
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
@@ -299,14 +310,14 @@ msgstr ""
 "Terdapat ralat ketika memuat fail. Hasilnya, beberapa data mungkin hilang "
 "atau rosak."
 
-#: src/catalog_po.cpp:1289
+#: src/catalog_po.cpp:1270
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
 msgstr ""
 "Terdapat satu masalah ketika memformat fail secara elok (tetapi telah "
 "disimpan dengan baik)."
 
-#: src/catalog_po.cpp:1568
+#: src/catalog_po.cpp:1549
 #, c-format
 msgid ""
 "The file couldn’t be saved in “%s” charset as specified in translation "
@@ -320,14 +331,28 @@ msgstr ""
 "Ia sebaliknya disimpan dalam UTF-8 dan tetapan telah diubah suai dengan "
 "sewajarnya."
 
-#: src/catalog_po.cpp:1570 src/edframe.cpp:2740
+#: src/catalog_po.cpp:1551 src/edframe.cpp:2790
 msgid "Error saving file"
 msgstr "Ralat menyimpan fail"
 
-#: src/catalog_po.cpp:1721
+#: src/catalog_po.cpp:1706
 #, c-format
 msgid "“%s” is not a valid POT file."
 msgstr "\"%s\" bukanlah fail POT yang sah."
+
+#: src/catalog_qt.cpp:70
+#, c-format
+msgid "Error while loading Qt translation file: %s"
+msgstr ""
+
+#: src/catalog_qt.cpp:273 src/catalog_resx.cpp:83 src/catalog_resx.cpp:159
+msgid "The file is malformed."
+msgstr ""
+
+#: src/catalog_resx.cpp:66
+#, c-format
+msgid "Error while loading RESX file: %s"
+msgstr ""
 
 #: src/catalog_xcloc.cpp:85 src/catalog_xcloc.cpp:88
 msgid "Unexpectedly missing content in the XCLOC file."
@@ -337,18 +362,18 @@ msgstr ""
 msgid "Saving in a different location is not supported for XCLOC files."
 msgstr ""
 
-#: src/catalog_xliff.cpp:473
+#: src/catalog_xliff.cpp:405
 #, c-format
 msgid "Error while loading XLIFF file: %s"
 msgstr "Ralat ketika memuatkan fail XLIFF: %s"
 
-#: src/catalog_xliff.cpp:518
+#: src/catalog_xliff.cpp:450
 #, c-format
 msgid "unsupported version (%s)"
 msgstr "versi tidak disokong (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
-#: src/catalog_xliff.cpp:679 src/catalog_xliff.cpp:866
+#: src/catalog_xliff.cpp:611 src/catalog_xliff.cpp:798
 msgid "Broken markup in translation string."
 msgstr "Penanda rosak dalam rentetan terjemahan."
 
@@ -402,7 +427,7 @@ msgstr "Daftar masuk ke akaun awan"
 msgid "No translation projects listed in your account."
 msgstr "Tiada projek terjemahan tersenarai dalam akaun anda."
 
-#: src/cloud_accounts_ui.cpp:636 src/crowdin_gui.cpp:339
+#: src/cloud_accounts_ui.cpp:636 src/crowdin_gui.cpp:401
 msgid "Downloading latest translations…"
 msgstr "Memuat turun terjemahan terkini…"
 
@@ -412,23 +437,23 @@ msgstr "Memuat turun terjemahan terkini…"
 msgid "Sign in to %s"
 msgstr "Daftar masuk ke %s"
 
-#: src/cloud_sync.h:98
+#: src/cloud_sync.h:101
 msgid "Syncing"
 msgstr "Menyegerak"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
-#: src/cloud_sync.h:115
+#: src/cloud_sync.h:126 src/crowdin_gui.cpp:372
 #, c-format
 msgid "Uploading translations to %s…"
 msgstr "Muat naik terjemahan ke %s…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
-#: src/cloud_sync.h:167
+#: src/cloud_sync.h:176
 #, c-format
 msgid "Uploading translations to %s failed."
 msgstr "Muat naik terjemahan ke %s gagal."
 
-#: src/cloud_sync.h:168
+#: src/cloud_sync.h:177
 msgid "Syncing error"
 msgstr "Ralat menyegerak"
 
@@ -453,56 +478,56 @@ msgstr ""
 msgid "Downloading translations is disabled in this project."
 msgstr "Memuat turun terjemahan dilumpuhkan dalam projek ini."
 
-#: src/crowdin_gui.cpp:90 src/localazy_gui.cpp:101
+#: src/crowdin_gui.cpp:71
+msgid "Recommended"
+msgstr ""
+
+#: src/crowdin_gui.cpp:154 src/localazy_gui.cpp:101
 msgid "Sign In"
 msgstr "Daftar Masuk"
 
-#: src/crowdin_gui.cpp:90 src/localazy_gui.cpp:101
+#: src/crowdin_gui.cpp:154 src/localazy_gui.cpp:101
 msgid "Sign in"
 msgstr "Daftar masuk"
 
-#: src/crowdin_gui.cpp:92 src/localazy_gui.cpp:103
+#: src/crowdin_gui.cpp:156 src/localazy_gui.cpp:103
 msgid "Sign Out"
 msgstr "Daftar Keluar"
 
-#: src/crowdin_gui.cpp:92 src/localazy_gui.cpp:103
+#: src/crowdin_gui.cpp:156 src/localazy_gui.cpp:103
 msgid "Sign out"
 msgstr "Daftar keluar"
 
-#: src/crowdin_gui.cpp:99
+#: src/crowdin_gui.cpp:163
 msgid "Learn more about Crowdin"
 msgstr "Ketahui lebih lanjut berkenaan Crowdin"
 
-#: src/crowdin_gui.cpp:126
+#: src/crowdin_gui.cpp:190
 msgid ""
 "Crowdin is an online translation management platform and collaborative "
 "translation tool. We use Crowdin ourselves to translate Poedit into many "
 "languages, and we love it."
 msgstr ""
 
-#: src/crowdin_gui.cpp:190 src/localazy_gui.cpp:202
+#: src/crowdin_gui.cpp:254 src/localazy_gui.cpp:202
 msgid "Waiting for authentication…"
 msgstr "Menunggu pengesahihan…"
 
-#: src/crowdin_gui.cpp:191 src/localazy_gui.cpp:203
+#: src/crowdin_gui.cpp:255 src/localazy_gui.cpp:203
 msgid "Updating user information…"
 msgstr "Mengemas kini maklumat pengguna…"
 
-#: src/crowdin_gui.cpp:298
+#: src/crowdin_gui.cpp:362
 msgid "Sign in to Crowdin"
 msgstr "Daftar masuk ke Crowdin"
 
-#: src/crowdin_gui.cpp:318
+#: src/crowdin_gui.cpp:382
 msgid "Syncing with Crowdin failed."
 msgstr "Penyegerakan dengan Crowdin gagal."
 
-#: src/crowdin_gui.cpp:319
+#: src/crowdin_gui.cpp:383
 msgid "Crowdin error"
 msgstr "Ralat Crowdin"
-
-#: src/crowdin_gui.cpp:327
-msgid "Uploading translations…"
-msgstr "Memuat naik terjemahan…"
 
 #: src/customcontrols.cpp:282 src/wx_translatable_strings.h:98
 msgid "&Copy"
@@ -558,8 +583,8 @@ msgstr "Pengecualian tidak dikendalikan berlaku: %s"
 msgid "Select translation template"
 msgstr "Pilih templat terjemahan"
 
-#: src/edapp.cpp:1104 src/edframe.cpp:930 src/edframe.cpp:2295
-#: src/edframe.cpp:2478
+#: src/edapp.cpp:1104 src/edframe.cpp:930 src/edframe.cpp:2325
+#: src/edframe.cpp:2528
 msgid "Invalid file"
 msgstr "Fail tidak sah"
 
@@ -639,8 +664,7 @@ msgstr "Simpan perubahan"
 msgid "Your changes will be lost if you don’t save them."
 msgstr "Perubahan anda akan hilang jika anda tidak menyimpannya."
 
-#: src/edframe.cpp:1079 src/edframe.cpp:1139 src/resources/toolbar.xrc:24
-#: src/resources/toolbar.xrc:29 src/wx_translatable_strings.h:115
+#: src/edframe.cpp:1079 src/edframe.cpp:1139 src/wx_translatable_strings.h:115
 msgid "Save"
 msgstr "Simpan"
 
@@ -695,7 +719,7 @@ msgstr "Fail HTML"
 msgid "Exporting to HTML"
 msgstr ""
 
-#: src/edframe.cpp:1607
+#: src/edframe.cpp:1609
 msgid "Updating failed"
 msgstr "Mengemas kini gagal"
 
@@ -703,25 +727,35 @@ msgstr "Mengemas kini gagal"
 msgid "Open reference file"
 msgstr ""
 
-#: src/edframe.cpp:1708 src/resources/menus.xrc:235
+#: src/edframe.cpp:1708 src/resources/menus.xrc:238
 msgid "Update from &POT File…"
 msgstr "Kemas Kini dari Fail &POT…"
 
-#: src/edframe.cpp:1708 src/resources/menus.xrc:234
+#: src/edframe.cpp:1708 src/resources/menus.xrc:237
 msgid "Update from &POT file…"
 msgstr "Kemas kini dari fail &POT…"
 
-#: src/edframe.cpp:1834
+#: src/edframe.cpp:1790 src/resources/menus.xrc:53
+msgid "Sync with Crowdin"
+msgstr "Segerak dengan Crowdin"
+
+#. TRANSLATORS: this is the menu action to upload to server/cloud; %s is hostname or service (Crowdin, ftp.foo.com etc.)
+#: src/edframe.cpp:1795
+#, c-format
+msgid "Upload to %s"
+msgstr ""
+
+#: src/edframe.cpp:1865
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "%d isu berkaitan terjemahan ditemui."
 
-#: src/edframe.cpp:1839 src/edframe.cpp:1885
+#: src/edframe.cpp:1870 src/edframe.cpp:1916
 msgid "Validation results"
 msgstr "Keputusan pengesahan"
 
-#: src/edframe.cpp:1842
+#: src/edframe.cpp:1873
 msgid ""
 "Entries with errors were marked in red in the list. Details of the error "
 "will be shown when you select such an entry."
@@ -729,11 +763,11 @@ msgstr ""
 "Masukan dengan ralat bertanda merah dalam senarai. Perincian ralat akan "
 "ditunjukkan ketika anda memilih masukan sebegitu."
 
-#: src/edframe.cpp:1851
+#: src/edframe.cpp:1882
 msgid "The file was saved safely."
 msgstr "Fail telah disimpan secara selamat."
 
-#: src/edframe.cpp:1854
+#: src/edframe.cpp:1885
 msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
@@ -741,7 +775,7 @@ msgstr ""
 "Fail telah disimpan secara selamat dan dikompil dalam format MO, tetapi ia "
 "berkemungkinan tidak berfungsi dengan baik."
 
-#: src/edframe.cpp:1857
+#: src/edframe.cpp:1888
 msgid ""
 "The file was saved safely, but it cannot be compiled into the MO format and "
 "used."
@@ -749,7 +783,7 @@ msgstr ""
 "Fail telah disimpan dengan selamat, tetapi ia tidak dapat dikompil dengan "
 "format MO dan digunakan."
 
-#: src/edframe.cpp:1866
+#: src/edframe.cpp:1897
 msgid ""
 "The file was compiled into the MO format, but it will probably not work "
 "correctly."
@@ -757,15 +791,15 @@ msgstr ""
 "Fail telah dikompil dalam format MO, tetapi ia berkemungkinan tidak "
 "berfungsi dengan baik."
 
-#: src/edframe.cpp:1870
+#: src/edframe.cpp:1901
 msgid "The file cannot be compiled into the MO format and used."
 msgstr "Fail tidak dapat dikompil dalam format MO dan boleh digunakan."
 
-#: src/edframe.cpp:1884
+#: src/edframe.cpp:1915
 msgid "No problems with the translation found."
 msgstr "Tiada masalah berkaitan terjemahan ditemui."
 
-#: src/edframe.cpp:1894
+#: src/edframe.cpp:1925
 #, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
 msgid_plural ""
@@ -773,18 +807,18 @@ msgid_plural ""
 msgstr[0] ""
 "Terjemahan sedia digunakan, tetapi %d masukan belum diterjemah lagi."
 
-#: src/edframe.cpp:1899
+#: src/edframe.cpp:1930
 msgid "The translation is ready for use."
 msgstr "Terjemahan sedia digunakan."
 
-#: src/edframe.cpp:2294
+#: src/edframe.cpp:2324
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr ""
 "Poedit secara automatik dapat tetapkan kandungan tidak sah dalam fail "
 "\"% s\"."
 
-#: src/edframe.cpp:2299
+#: src/edframe.cpp:2329
 msgid ""
 "The file contained duplicate items, which is not allowed in PO files and "
 "would prevent the file from being used. Poedit fixed the issue, but you "
@@ -796,20 +830,20 @@ msgstr ""
 "menilai semula terjemahan mana-mana item bertanda sebagai perlu semak dan "
 "membetulkan item jika perlu."
 
-#: src/edframe.cpp:2315
+#: src/edframe.cpp:2345
 msgid "Language of the translation isn’t set."
 msgstr "Bahasa terjemahan tidak ditetapkan."
 
-#: src/edframe.cpp:2317
+#: src/edframe.cpp:2347
 msgid "Set Language"
 msgstr "Tetapkan Bahasa"
 
-#: src/edframe.cpp:2317
+#: src/edframe.cpp:2347
 msgid "Set language"
 msgstr "Tetapkan bahasa "
 
 #. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-#: src/edframe.cpp:2320 src/edframe.cpp:2336
+#: src/edframe.cpp:2350 src/edframe.cpp:2366
 msgid ""
 "Suggestions are not available if the translation language is not set "
 "correctly. Other features, such as plural forms, may be affected as well."
@@ -817,19 +851,19 @@ msgstr ""
 "Cadangan tidak tersedia jika bahasa terjemahan tidak ditetapkan dengan baik. "
 "Fitur-fitur lain, seperti bentuk majmuk, mungkin terjejas juga."
 
-#: src/edframe.cpp:2334
+#: src/edframe.cpp:2364
 msgid "Language of the translation is the same as source language."
 msgstr "Bahasa terjemahan adalah sama dengan bahasa sumber."
 
-#: src/edframe.cpp:2337
+#: src/edframe.cpp:2367
 msgid "Fix Language"
 msgstr "Baiki Bahasa"
 
-#: src/edframe.cpp:2337
+#: src/edframe.cpp:2367
 msgid "Fix language"
 msgstr "Baiki bahasa"
 
-#: src/edframe.cpp:2354
+#: src/edframe.cpp:2384
 msgid ""
 "This file has entries with plural forms, but doesn’t have Plural-Forms "
 "header configured."
@@ -837,7 +871,7 @@ msgstr ""
 "Fail ini mempunyai masukan-masukan berbentuk jamak, tetapi tiada pengepala "
 "Bentuk-Jamak dikonfigurkan."
 
-#: src/edframe.cpp:2358
+#: src/edframe.cpp:2388
 msgid ""
 "Entries in this file have different plural forms count from what the file’s "
 "Plural-Forms header says"
@@ -845,42 +879,42 @@ msgstr ""
 "Masukan dalam fail ini mempunyai bentuk jamak yang berbeza dengan yang "
 "disebut dalam pengepala Bentuk-Jamak"
 
-#: src/edframe.cpp:2367
+#: src/edframe.cpp:2397
 msgid "Required header Plural-Forms is missing."
 msgstr "Pengepala Bentuk-Jamak yang diperlukan telah hilang."
 
-#: src/edframe.cpp:2371
+#: src/edframe.cpp:2401
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "Rakat sintaks dalam pengepala Bentuk-Jamak (\"%s\")."
 
-#: src/edframe.cpp:2383
+#: src/edframe.cpp:2413
 msgid "Fix the Header"
 msgstr "Baiki Pengepala"
 
-#: src/edframe.cpp:2383
+#: src/edframe.cpp:2413
 msgid "Fix the header"
 msgstr "Baiki pengepala"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: src/edframe.cpp:2401
+#: src/edframe.cpp:2431
 #, c-format
 msgid "Plural forms expression used by the file is unusual for %s."
 msgstr ""
 "Ungkapan bentuk jamak yang digunakan oleh fail adalah tidak sesuai untuk %s."
 
 #. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
-#: src/edframe.cpp:2406
+#: src/edframe.cpp:2436
 msgid "Review"
 msgstr "Kaji semula"
 
-#: src/edframe.cpp:2450
+#: src/edframe.cpp:2500
 msgid "Would you like to use English for source text?"
 msgstr "Adakah anda mahu menggunakan Bahasa Inggeris untuk teks sumber?"
 
-#: src/edframe.cpp:2452
+#: src/edframe.cpp:2502
 #, c-format
 msgid ""
 "This file uses string IDs instead of source text. Poedit can load English "
@@ -890,61 +924,61 @@ msgstr ""
 "memuatkan teks Bahasa Inggeris daripada fail “%s” untuk anda."
 
 #. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
-#: src/edframe.cpp:2454
+#: src/edframe.cpp:2504
 msgid "Load English"
 msgstr "Muatkan Bahasa Inggeris"
 
-#: src/edframe.cpp:2555 src/export_html.cpp:103
+#: src/edframe.cpp:2605 src/export_html.cpp:103
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
 msgstr "Sudah terjemah: %d dari %d (%d %%)"
 
-#: src/edframe.cpp:2559 src/export_html.cpp:105
+#: src/edframe.cpp:2609 src/export_html.cpp:105
 #, c-format
 msgid "Remaining: %d"
 msgstr "Berbaki: %d"
 
-#: src/edframe.cpp:2564
+#: src/edframe.cpp:2614
 #, c-format
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "%d ralat"
 
-#: src/edframe.cpp:2569 src/export_html.cpp:117
+#: src/edframe.cpp:2619 src/export_html.cpp:117
 #, c-format
 msgid "%d entry"
 msgid_plural "%d entries"
 msgstr[0] "%d masukan"
 
-#: src/edframe.cpp:2598
+#: src/edframe.cpp:2648
 msgid " (unsaved)"
 msgstr " (tidak disimpan)"
 
-#: src/edframe.cpp:2639
+#: src/edframe.cpp:2689
 msgid " (modified)"
 msgstr " (diubah suai)"
 
-#: src/edframe.cpp:2707 src/edframe.cpp:2711
+#: src/edframe.cpp:2757 src/edframe.cpp:2761
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "Gagal mengemas kini ingatan terjemahan: %s"
 
-#: src/edframe.cpp:2739
+#: src/edframe.cpp:2789
 #, c-format
 msgid "The file “%s” couldn’t be saved."
 msgstr ""
 
-#: src/edframe.cpp:2849 src/resources/menus.xrc:252
+#: src/edframe.cpp:2899 src/resources/menus.xrc:252
 msgid "Remove same-as-source translations"
 msgstr "Buang terjemahan yang sama dengan sumber"
 
-#: src/edframe.cpp:2851
+#: src/edframe.cpp:2901
 msgid ""
-"Do you want to remove all translations that are idential to the source text?"
+"Do you want to remove all translations that are identical to the source text?"
 msgstr ""
 "Adakah anda mahu membuang semua terjemahan yang serupa dengan teks sumber?"
 
-#: src/edframe.cpp:2852
+#: src/edframe.cpp:2902
 msgid ""
 "This action will delete any translations that match the source text exactly. "
 "This cannot be undone."
@@ -952,23 +986,23 @@ msgstr ""
 "Tindakan ini akan menghapuskan sebarang terjemahan yang serupa dengan teks "
 "sumber. Ini tidak boleh dibatalkan."
 
-#: src/edframe.cpp:2856 src/edframe.cpp:2883
+#: src/edframe.cpp:2906 src/edframe.cpp:2933
 msgid "Keep"
 msgstr "Kekalkan"
 
-#: src/edframe.cpp:2856
+#: src/edframe.cpp:2906
 msgid "Remove"
 msgstr "Buang"
 
-#: src/edframe.cpp:2875
+#: src/edframe.cpp:2925
 msgid "Purge deleted translations"
 msgstr "Singkir terjemahan terpadam"
 
-#: src/edframe.cpp:2877
+#: src/edframe.cpp:2927
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr "Anda mahu membuang semua terjemahan yang tidak digunakan lagi?"
 
-#: src/edframe.cpp:2879
+#: src/edframe.cpp:2929
 msgid ""
 "If you continue with purging, all translations marked as deleted will be "
 "permanently removed. You will have to translate them again if they are added "
@@ -978,66 +1012,66 @@ msgstr ""
 "kekal dibuang. Anda akan menterjemahkannya sekali lagi jika ia ditambah pada "
 "masa akan datang."
 
-#: src/edframe.cpp:2883
+#: src/edframe.cpp:2933
 msgid "Purge"
 msgstr "Singkir"
 
-#: src/edframe.cpp:2940 src/resources/menus.xrc:99
+#: src/edframe.cpp:2990 src/resources/menus.xrc:102
 msgid "Copy from source text"
 msgstr "Salin dari sumber teks"
 
-#: src/edframe.cpp:2942 src/resources/menus.xrc:100
+#: src/edframe.cpp:2992 src/resources/menus.xrc:103
 msgid "Copy from Source Text"
 msgstr "Salin dari Sumber Teks"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
-#: src/edframe.cpp:2944 src/edframe.cpp:2951 src/edframe.cpp:2959
+#: src/edframe.cpp:2994 src/edframe.cpp:3001 src/edframe.cpp:3009
 #: src/sidebar.cpp:360 src/sidebar.cpp:727 src/sidebar.cpp:752
 #: src/sidebar.cpp:754 src/wx_translatable_strings.h:123
 msgctxt "keyboard key"
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
-#: src/edframe.cpp:2947 src/resources/menus.xrc:94
+#: src/edframe.cpp:2997 src/resources/menus.xrc:97
 msgid "Clear translation"
 msgstr "Kosongkan terjemahan"
 
-#: src/edframe.cpp:2949 src/resources/menus.xrc:95
+#: src/edframe.cpp:2999 src/resources/menus.xrc:98
 msgid "Clear Translation"
 msgstr "Kosongkan Terjemahan"
 
-#: src/edframe.cpp:2954 src/resources/comment.xrc:4 src/sidebar.cpp:246
+#: src/edframe.cpp:3004 src/resources/comment.xrc:4 src/sidebar.cpp:246
 msgid "Edit comment"
 msgstr "Sunting ulasan"
 
-#: src/edframe.cpp:2956 src/sidebar.cpp:249
+#: src/edframe.cpp:3006 src/sidebar.cpp:249
 msgid "Edit Comment"
 msgstr "Sunting Ulasan"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
-#: src/edframe.cpp:2967 src/fileviewer.cpp:100
+#: src/edframe.cpp:3017 src/fileviewer.cpp:100
 msgid "Code Occurrences"
 msgstr "Kemunculan Kod"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
-#: src/edframe.cpp:2967
+#: src/edframe.cpp:3017
 msgid "Code occurrences"
 msgstr "Kemunculan kod"
 
-#: src/edframe.cpp:3191
+#: src/edframe.cpp:3241
 msgid "Hide Sidebar"
 msgstr "Sembunyi Palang sisi"
 
-#: src/edframe.cpp:3193 src/resources/menus.xrc:214
+#: src/edframe.cpp:3243 src/resources/menus.xrc:217
 msgid "Show Sidebar"
 msgstr "Tunjuk Palang Sisi"
 
-#: src/edframe.cpp:3224
+#: src/edframe.cpp:3274
 msgid "Hide Status Bar"
 msgstr "Sembunyi Palang Status"
 
-#: src/edframe.cpp:3226 src/resources/menus.xrc:220
+#: src/edframe.cpp:3276 src/resources/menus.xrc:223
 msgid "Show Status Bar"
 msgstr "Tunjuk Palang Status"
 
@@ -1049,28 +1083,28 @@ msgstr "Panjang rentetan dalam aksara: terjemahan | sumber"
 msgid "String length in characters"
 msgstr "Panjang rentetan dalam aksara"
 
-#: src/editing_area.cpp:404 src/editing_area.cpp:715 src/edlistctrl.cpp:663
+#: src/editing_area.cpp:404 src/editing_area.cpp:748 src/edlistctrl.cpp:663
 #: src/edlistctrl.cpp:717 src/export_html.cpp:143
 msgid "Source text"
 msgstr "Teks sumber"
 
-#: src/editing_area.cpp:426 src/editing_area.cpp:781 src/editing_area.cpp:797
+#: src/editing_area.cpp:426 src/editing_area.cpp:814 src/editing_area.cpp:830
 msgid "Singular"
 msgstr "Tunggal"
 
-#: src/editing_area.cpp:431 src/editing_area.cpp:802
+#: src/editing_area.cpp:431 src/editing_area.cpp:835
 msgid "Plural"
 msgstr "Jamak"
 
-#: src/editing_area.cpp:477
+#: src/editing_area.cpp:487
 msgid "Translation"
 msgstr "Terjemahan"
 
-#: src/editing_area.cpp:486
+#: src/editing_area.cpp:496
 msgid "Pre-translated"
 msgstr "Pra-terjemah"
 
-#: src/editing_area.cpp:509
+#: src/editing_area.cpp:519
 msgid "Needs Work"
 msgstr "Perlu Semak"
 
@@ -1082,11 +1116,11 @@ msgstr "Perlu Semak"
 #. "needs review" implies that somebody else should review the string after
 #. I am done with it (i.e. consider it good), while "needs work" implies I
 #. need to return to it and finish the translation.
-#: src/editing_area.cpp:509
+#: src/editing_area.cpp:519
 msgid "Needs work"
 msgstr "Perlu semak"
 
-#: src/editing_area.cpp:566
+#: src/editing_area.cpp:576
 msgid ""
 "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
@@ -1094,68 +1128,72 @@ msgstr ""
 "Fail POT hanyalah templat yang mengandungi sebarang terjemahan di dalamnya.\n"
 "Untuk membuat satu terjemahan, cipta satu fail PO baharu berdasarkan templat."
 
-#: src/editing_area.cpp:573
+#: src/editing_area.cpp:583
 msgid "Create new translation"
 msgstr "Cipta terjemahan baru"
 
-#: src/editing_area.cpp:574
+#: src/editing_area.cpp:584
 msgid "Make a new translation from this POT file."
 msgstr "Buat satu terjemahan baharu menerusi fail POT ini."
 
+#: src/editing_area.cpp:616
+msgid "Use the Edit menu to perform bulk actions on selected strings."
+msgstr ""
+
 #. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
-#: src/editing_area.cpp:713 src/edlistctrl.cpp:711 src/export_html.cpp:137
+#: src/editing_area.cpp:746 src/edlistctrl.cpp:711 src/export_html.cpp:137
 msgid "Source text ID"
 msgstr "ID teks sumber"
 
-#: src/editing_area.cpp:768
+#: src/editing_area.cpp:801
 msgid "Everything"
 msgstr "Kesemuanya"
 
-#: src/editing_area.cpp:773
+#: src/editing_area.cpp:806
 #, c-format
 msgid "Form %i"
 msgstr "Bentuk %i"
 
-#: src/editing_area.cpp:775
+#: src/editing_area.cpp:808
 #, c-format
 msgid "Form %i (unused)"
 msgstr "Bentuk %i (tidak digunakan)"
 
-#: src/editing_area.cpp:786
+#: src/editing_area.cpp:819
 msgid "Zero"
 msgstr "Sifar"
 
-#: src/editing_area.cpp:788
+#: src/editing_area.cpp:821
 msgid "One"
 msgstr "Satu"
 
-#: src/editing_area.cpp:790
+#: src/editing_area.cpp:823
 msgid "Two"
 msgstr "Dua"
 
-#: src/editing_area.cpp:804
+#: src/editing_area.cpp:837
 msgid "Other"
 msgstr "Lain-lain"
 
 #. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
-#: src/editing_area.cpp:988
+#: src/editing_area.cpp:1013
 #, c-format
 msgid "String context: %s"
 msgstr "Konteks rentetan: %s"
 
 #. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
-#: src/editing_area.cpp:995
+#: src/editing_area.cpp:1020
 #, c-format
 msgid "String identifier: %s"
 msgstr "Pengecam rentetan: %s"
 
-#: src/editing_area.cpp:1003
+#: src/editing_area.cpp:1028
 #, c-format
 msgid "%s Format"
 msgstr "Format %s"
 
 #. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
-#: src/editing_area.cpp:1003
+#: src/editing_area.cpp:1028
 #, c-format
 msgid "%s format"
 msgstr "format %s"
@@ -1199,7 +1237,7 @@ msgstr "Buka dalam Penyunting"
 msgid "Open in editor"
 msgstr "Buka dalam penyunting"
 
-#: src/fileviewer.cpp:256
+#: src/fileviewer.cpp:259
 msgid ""
 "No information about this string’s occurrences in the source code is "
 "provided in the file."
@@ -1207,21 +1245,21 @@ msgstr ""
 "Tiada maklumat berkenaan kemunculan rentetan ini dalam kod sumber yang "
 "disediakan di dalam fail."
 
-#: src/fileviewer.cpp:256
+#: src/fileviewer.cpp:259
 msgid "No usage information"
 msgstr "Tiada maklumat penggunaan"
 
-#: src/fileviewer.cpp:262
+#: src/fileviewer.cpp:265
 #, c-format
 msgid "%d code occurrence"
 msgid_plural "%d code occurrences"
 msgstr[0] "%d kod kemunculan"
 
-#: src/fileviewer.cpp:282
+#: src/fileviewer.cpp:285
 msgid "Source code not found"
 msgstr "Kod sumber tidak ditemui"
 
-#: src/fileviewer.cpp:283
+#: src/fileviewer.cpp:286
 msgid ""
 "Poedit cannot show source code where the string is used, because the file is "
 "either not available in the referenced location or it is a symbolic "
@@ -1231,17 +1269,17 @@ msgstr ""
 "digunakan, kerana fail sama ada tidak tersedia dalam lokasi rujukan atau ia "
 "hanyalah rujukan simbolik yang tidak menuju ke fail yang sebenar."
 
-#: src/fileviewer.cpp:297
+#: src/fileviewer.cpp:300
 msgid "File cannot be opened"
 msgstr "Fail tidak dapat dibuka"
 
-#: src/fileviewer.cpp:298
+#: src/fileviewer.cpp:301
 #, c-format
 msgid "Poedit was unable to open the “%s” file."
 msgstr "Poedit tidak dapat membuka fail \"%s\"."
 
 #: src/findframe.cpp:83 src/findframe.cpp:101 src/findframe.cpp:300
-#: src/resources/menus.xrc:142
+#: src/resources/menus.xrc:145
 msgid "Find"
 msgstr "Cari"
 
@@ -1306,11 +1344,11 @@ msgstr "Rentetan dicari"
 msgid "Replacement string"
 msgstr "Rentetan gantian"
 
-#: src/gexecute.cpp:131 src/gexecute.cpp:146 src/gexecute.cpp:170
+#: src/gexecute.cpp:132 src/gexecute.cpp:153 src/gexecute.cpp:202
 msgid "warning: "
 msgstr ""
 
-#: src/gexecute.cpp:171
+#: src/gexecute.cpp:203
 msgid "error: "
 msgstr ""
 
@@ -1468,7 +1506,7 @@ msgstr "Pengurus Katalog"
 msgid "&Preferences…"
 msgstr "&Keutamaan…"
 
-#: src/menus.cpp:167 src/resources/menus.xrc:81 src/resources/menus.xrc:402
+#: src/menus.cpp:167 src/resources/menus.xrc:84 src/resources/menus.xrc:402
 #: src/wx_translatable_strings.h:102
 msgid "&Edit"
 msgstr "&Sunting"
@@ -1569,7 +1607,7 @@ msgstr "Mula Bercakap"
 msgid "Stop Speaking"
 msgstr "Henti Bercakap"
 
-#: src/menus.cpp:243 src/resources/menus.xrc:163 src/resources/menus.xrc:412
+#: src/menus.cpp:243 src/resources/menus.xrc:166 src/resources/menus.xrc:412
 msgid "&View"
 msgstr "&Lihat"
 
@@ -1934,31 +1972,31 @@ msgstr "Lanjutan"
 msgid "Settings"
 msgstr "Tetapan"
 
-#: src/pretranslate.cpp:97
+#: src/pretranslate.cpp:98
 msgid "Preparing strings…"
 msgstr "Menyediakan rentetan…"
 
-#: src/pretranslate.cpp:165
+#: src/pretranslate.cpp:170
 msgid "Pre-translating from translation memory…"
 msgstr "Membuat pra-terjemahan daripada ingatan terjemahan…"
 
-#: src/pretranslate.cpp:176
+#: src/pretranslate.cpp:180
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
 msgstr[0] "Pra-terjemah %u rentetan"
 
-#: src/pretranslate.cpp:194
+#: src/pretranslate.cpp:198
 msgid "Pre-translating…"
 msgstr "Pra-menterjemah…"
 
-#: src/pretranslate.cpp:203
+#: src/pretranslate.cpp:207
 #, c-format
 msgid "%d entry was pre-translated."
 msgid_plural "%d entries were pre-translated."
 msgstr[0] "%d masukan telah dipra-terjemah."
 
-#: src/pretranslate.cpp:209
+#: src/pretranslate.cpp:213
 msgid ""
 "The translations were marked as needing work, because they may be "
 "inaccurate. You should review them for correctness."
@@ -1966,19 +2004,23 @@ msgstr ""
 "Terjemahan telah ditandakan sebagai perlu semak, kerana ia mungkin tidak "
 "tepat. Anda patut menilai semula untuk pembetulan."
 
-#: src/pretranslate.cpp:212
+#: src/pretranslate.cpp:216
 msgid "Exact matches from TM"
 msgstr ""
 
-#: src/pretranslate.cpp:213
+#: src/pretranslate.cpp:217
 msgid "Approximate matches from TM"
 msgstr ""
 
-#: src/pretranslate.cpp:217
+#: src/pretranslate.cpp:221
 msgid "No entries could be pre-translated."
 msgstr "Tiada masukan boleh dipra-terjemah."
 
-#: src/pretranslate.cpp:218
+#: src/pretranslate.cpp:224
+msgid "All strings were already translated."
+msgstr ""
+
+#: src/pretranslate.cpp:228
 msgid ""
 "The TM doesn’t contain any strings similar to the content of this file. It "
 "is only effective for semi-automatic translations after Poedit learns enough "
@@ -1988,7 +2030,7 @@ msgstr ""
 "Ianya hanya berkesan untuk terjemahan separa-automatik selepas Poedit "
 "belajar secukupnya dari fail yang diterjemah secara manual."
 
-#: src/pretranslate.cpp:247
+#: src/pretranslate.cpp:258
 msgid "Cannot pre-translate without source text."
 msgstr "Tidak boleh praterjemah tanpa teks sumber."
 
@@ -2002,12 +2044,13 @@ msgstr "Tidak boleh praterjemah tanpa teks sumber."
 #. some users into thinking it's all that needs to be done (spoken from
 #. experience). "Pre-translate" nicely expresses that it's only the step done
 #. *before* actual translation.
-#: src/pretranslate.cpp:248 src/pretranslate.cpp:263 src/pretranslate.cpp:272
-#: src/pretranslate.cpp:281 src/pretranslate.cpp:307
+#: src/pretranslate.cpp:259 src/pretranslate.cpp:274 src/pretranslate.cpp:283
+#: src/pretranslate.cpp:292 src/pretranslate.cpp:318
+#: src/wx/main_toolbar.cpp:131
 msgid "Pre-translate"
 msgstr "Pra-terjemah"
 
-#: src/pretranslate.cpp:252
+#: src/pretranslate.cpp:263
 msgid ""
 "Pre-translation requires that source text is available. It doesn’t work if "
 "only IDs without the actual text are used."
@@ -2015,11 +2058,11 @@ msgstr ""
 "Praterjemahan memerlukan teks sumber tersedia. Ia tidak berfungsi jika hanya "
 "ID tanpa teks sebenar digunakan."
 
-#: src/pretranslate.cpp:262
+#: src/pretranslate.cpp:273
 msgid "Cannot pre-translate from unknown language."
 msgstr "Tidak dapat pra-terjemah bahasa yang tidak diketahui."
 
-#: src/pretranslate.cpp:267
+#: src/pretranslate.cpp:278
 msgid ""
 "Pre-translation requires that source text’s language is known. Poedit "
 "couldn’t detect it in this file."
@@ -2027,11 +2070,11 @@ msgstr ""
 "Pra-terjemahan memerlukan teks bahasa sumber yang diketahui terlebih dahulu. "
 "Poedit tidak dapat mengesanya di dalam fail ini."
 
-#: src/pretranslate.cpp:275
+#: src/pretranslate.cpp:286
 msgid "Only fill in exact matches"
 msgstr "Hanya isi padanan tepat"
 
-#: src/pretranslate.cpp:276
+#: src/pretranslate.cpp:287
 msgid ""
 "By default, inaccurate results are also included, but marked as needing "
 "work. Check this option to only include perfect matches."
@@ -2040,11 +2083,11 @@ msgstr ""
 "ditanda sebagai perlu disemak. Tandakan pilihan ini untuk menyertakan "
 "padanan yang tepat sahaja."
 
-#: src/pretranslate.cpp:277
+#: src/pretranslate.cpp:288
 msgid "Don’t mark exact matches as needing work"
 msgstr "Jangan tanda padanan tepat sebagai perlu semak"
 
-#: src/pretranslate.cpp:278
+#: src/pretranslate.cpp:289
 msgid ""
 "Only enable if you trust the quality of your TM. By default, all matches "
 "from the TM are marked as needing work and should be reviewed before use."
@@ -2053,7 +2096,7 @@ msgstr ""
 "padanan dari TM bertanda sebagai perlu semak dan patut dinilai semula "
 "sebelum digunakan."
 
-#: src/pretranslate.cpp:283
+#: src/pretranslate.cpp:294
 msgid ""
 "Pre-translation automatically finds exact or fuzzy matches for untranslated "
 "strings in the translation memory and fills in their translations."
@@ -2062,27 +2105,27 @@ msgstr ""
 "rentetan belum terjemah dalam ingatan terjemahan dan mengisi dalam "
 "terjemahannya."
 
-#: src/progress_ui.cpp:172 src/wx_translatable_strings.h:151
+#: src/progress_ui.cpp:175 src/wx_translatable_strings.h:151
 msgid "Error: "
 msgstr ""
 
-#: src/progress_ui.cpp:176
+#: src/progress_ui.cpp:179
 #, c-format
 msgid "%d error occurred:"
 msgid_plural "%d errors occurred:"
 msgstr[0] ""
 
-#: src/progress_ui.cpp:284
+#: src/progress_ui.cpp:287
 msgid "An error occurred."
 msgstr ""
 
-#: src/progress_ui.cpp:290
+#: src/progress_ui.cpp:293
 #, c-format
 msgid "%d error occurred."
 msgid_plural "%d errors occurred."
 msgstr[0] ""
 
-#: src/progress_ui.cpp:437
+#: src/progress_ui.cpp:440
 msgid "Cancelling…"
 msgstr "Membatalkan…"
 
@@ -2388,188 +2431,184 @@ msgstr "Simpan seb&agai…"
 msgid "Save &As…"
 msgstr "Simpan Seb&agai…"
 
-#: src/resources/menus.xrc:54
+#: src/resources/menus.xrc:57
 msgid "Compile to MO…"
 msgstr "Kompil ke MO…"
 
-#: src/resources/menus.xrc:57
+#: src/resources/menus.xrc:60
 msgid "E&xport to HTML…"
 msgstr "E&ksport ke HTML…"
 
-#: src/resources/menus.xrc:62 src/resources/menus.xrc:383
+#: src/resources/menus.xrc:65 src/resources/menus.xrc:383
 msgid "Check for updates…"
 msgstr "Periksa kemas kini…"
 
-#: src/resources/menus.xrc:65 src/resources/menus.xrc:386
+#: src/resources/menus.xrc:68 src/resources/menus.xrc:386
 msgid "Settings…"
 msgstr "Tetapan…"
 
-#: src/resources/menus.xrc:69 src/resources/menus.xrc:390
+#: src/resources/menus.xrc:72 src/resources/menus.xrc:390
 #: src/wx_translatable_strings.h:112
 msgid "&Preferences"
 msgstr "&Keutamaan"
 
-#: src/resources/menus.xrc:76 src/resources/menus.xrc:397
+#: src/resources/menus.xrc:79 src/resources/menus.xrc:397
 msgid "E&xit"
 msgstr "K&eluar"
 
-#: src/resources/menus.xrc:77 src/resources/menus.xrc:398
+#: src/resources/menus.xrc:80 src/resources/menus.xrc:398
 #: src/wx_translatable_strings.h:103
 msgid "Quit"
 msgstr "Keluar"
 
-#: src/resources/menus.xrc:104
+#: src/resources/menus.xrc:107
 msgid "Copy from singular"
 msgstr "Salin daripada tunggal"
 
-#: src/resources/menus.xrc:105
+#: src/resources/menus.xrc:108
 msgid "Copy From Singular"
 msgstr "Salin Dari Tunggal"
 
-#: src/resources/menus.xrc:110
+#: src/resources/menus.xrc:113
 msgid "Translation needs &work"
 msgstr "Terjemahan perlu di&semak"
 
-#: src/resources/menus.xrc:111
+#: src/resources/menus.xrc:114
 msgid "Translation Needs &Work"
 msgstr "Terjemahan Perlu Di&semak"
 
-#: src/resources/menus.xrc:116
+#: src/resources/menus.xrc:119
 msgid "Edit &comment"
 msgstr "Sunting &ulasan"
 
-#: src/resources/menus.xrc:117
+#: src/resources/menus.xrc:120
 msgid "Edit &Comment"
 msgstr "Sunting &Ulasan"
 
 #. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
-#: src/resources/menus.xrc:122 src/sidebar.cpp:537
+#: src/resources/menus.xrc:125 src/sidebar.cpp:537
 msgid "Suggestions"
 msgstr "Cadangan"
 
-#: src/resources/menus.xrc:125 src/resources/menus.xrc:144
+#: src/resources/menus.xrc:128 src/resources/menus.xrc:147
 msgid "&Find…"
 msgstr "&Cari…"
 
-#: src/resources/menus.xrc:130
+#: src/resources/menus.xrc:133
 msgid "Replace…"
 msgstr "Ganti…"
 
-#: src/resources/menus.xrc:134
+#: src/resources/menus.xrc:137
 msgid "Find next"
 msgstr "Cari berikutnya"
 
-#: src/resources/menus.xrc:138
+#: src/resources/menus.xrc:141
 msgid "Find previous"
 msgstr "Cari terdahulu"
 
-#: src/resources/menus.xrc:148
+#: src/resources/menus.xrc:151
 msgid "Find and Replace…"
 msgstr "Cari dan Ganti…"
 
-#: src/resources/menus.xrc:152
+#: src/resources/menus.xrc:155
 msgid "Find Next"
 msgstr "Cari Berikutnya"
 
-#: src/resources/menus.xrc:156
+#: src/resources/menus.xrc:159
 msgid "Find Previous"
 msgstr "Cari Terdahulu"
 
-#: src/resources/menus.xrc:165
+#: src/resources/menus.xrc:168
 msgid "Show string &ID"
 msgstr "Tunjuk &ID rentetan"
 
-#: src/resources/menus.xrc:166
+#: src/resources/menus.xrc:169
 msgid "Show String &ID"
 msgstr "Tunjuk &ID Rentetan"
 
-#: src/resources/menus.xrc:170
+#: src/resources/menus.xrc:173
 msgid "Show warnings"
 msgstr "Tunjuk amaran"
 
-#: src/resources/menus.xrc:171
+#: src/resources/menus.xrc:174
 msgid "Show Warnings"
 msgstr "Tunjuk Amaran"
 
-#: src/resources/menus.xrc:176
+#: src/resources/menus.xrc:179
 msgid "Sort by &file order"
 msgstr "Isih mengikut tertib &fail"
 
-#: src/resources/menus.xrc:177
+#: src/resources/menus.xrc:180
 msgid "Sort by &File Order"
 msgstr "Isih mengikut Tertib &Fail"
 
-#: src/resources/menus.xrc:181
+#: src/resources/menus.xrc:184
 msgid "Sort by &source"
 msgstr "Isih mengikut &sumber"
 
-#: src/resources/menus.xrc:182
+#: src/resources/menus.xrc:185
 msgid "Sort by &Source"
 msgstr "Isih mengikut &Sumber"
 
-#: src/resources/menus.xrc:186
+#: src/resources/menus.xrc:189
 msgid "Sort by &translation"
 msgstr "Isih mengikut &terjemahan"
 
-#: src/resources/menus.xrc:187
+#: src/resources/menus.xrc:190
 msgid "Sort by &Translation"
 msgstr "Isih mengikut &Terjemahan"
 
-#: src/resources/menus.xrc:192
+#: src/resources/menus.xrc:195
 msgid "&Group by context"
 msgstr "&Kumpul mengikut konteks"
 
-#: src/resources/menus.xrc:193
+#: src/resources/menus.xrc:196
 msgid "&Group By Context"
 msgstr "&Kumpul Mengikut Konteks"
 
-#: src/resources/menus.xrc:197
+#: src/resources/menus.xrc:200
 msgid "Entries with errors first"
 msgstr "Masukan dengan ralat dahulu"
 
-#: src/resources/menus.xrc:198
+#: src/resources/menus.xrc:201
 msgid "Entries with Errors First"
 msgstr "Masukan dengan Ralat Dahulu"
 
-#: src/resources/menus.xrc:202
+#: src/resources/menus.xrc:205
 msgid "&Untranslated entries first"
 msgstr "&Masukan belum terjemah dahulu"
 
-#: src/resources/menus.xrc:203
+#: src/resources/menus.xrc:206
 msgid "&Untranslated Entries First"
 msgstr "&Masukan Belum Terjemah Dahulu"
 
-#: src/resources/menus.xrc:208
+#: src/resources/menus.xrc:211
 msgid "&Show code occurrences"
 msgstr "T&unjuk kemunculan kod"
 
-#: src/resources/menus.xrc:209
+#: src/resources/menus.xrc:212
 msgid "&Show Code Occurrences"
 msgstr "T&unjuk Kemunculan Kod"
 
-#: src/resources/menus.xrc:213
+#: src/resources/menus.xrc:216
 msgid "Show sidebar"
 msgstr "Tunjuk palang sisi"
 
-#: src/resources/menus.xrc:219
+#: src/resources/menus.xrc:222
 msgid "Show status bar"
 msgstr "Tunjuk palang status"
 
-#: src/resources/menus.xrc:227 src/resources/menus.xrc:415
+#: src/resources/menus.xrc:230 src/resources/menus.xrc:415
 msgid "&Translation"
 msgstr "&Terjemahan"
 
-#: src/resources/menus.xrc:230
+#: src/resources/menus.xrc:233
 msgid "&Update from source code"
 msgstr "&Kemas kini dari kod sumber"
 
-#: src/resources/menus.xrc:231
+#: src/resources/menus.xrc:234
 msgid "&Update from Source Code"
 msgstr "&Kemas kini dari Kod Sumber"
-
-#: src/resources/menus.xrc:238
-msgid "Sync with Crowdin"
-msgstr "Segerak dengan Crowdin"
 
 #: src/resources/menus.xrc:242 src/resources/menus.xrc:243
 msgid "Pre-&translate…"
@@ -2843,46 +2882,6 @@ msgstr "Guna juga kata kunci lalai untuk bahasa tersokong"
 msgid "Learn about gettext keywords"
 msgstr "Ketahui berkenaan kata kunci gettext"
 
-#: src/resources/toolbar.xrc:13 src/resources/toolbar.xrc:18
-msgid "Open"
-msgstr ""
-
-#: src/resources/toolbar.xrc:14 src/resources/toolbar.xrc:19
-msgid "Open file"
-msgstr "Buka fail"
-
-#: src/resources/toolbar.xrc:25 src/resources/toolbar.xrc:30
-msgid "Save file"
-msgstr "Simpan fail"
-
-#: src/resources/toolbar.xrc:38
-msgid "Validate"
-msgstr "Sahkan"
-
-#: src/resources/toolbar.xrc:39
-msgid "Check for errors in the translation"
-msgstr "Periksa kesalahan dalam terjemahan"
-
-#: src/resources/toolbar.xrc:45 src/wx/main_toolbar.cpp:99
-msgid "Update from code"
-msgstr "Kemas kini dari kod"
-
-#: src/resources/toolbar.xrc:46 src/wx/main_toolbar.cpp:99
-msgid "Update from Code"
-msgstr "Kemas Kini dari Kod"
-
-#: src/resources/toolbar.xrc:47 src/wx/main_toolbar.cpp:100
-msgid "Update from source code"
-msgstr "Kemas kini dari kod sumber"
-
-#: src/resources/toolbar.xrc:55
-msgid "Sidebar"
-msgstr "Palang sisi"
-
-#: src/resources/toolbar.xrc:56
-msgid "Show or hide the sidebar"
-msgstr "Tunjuk atau sembunyi palang sisi"
-
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
 #: src/sidebar.cpp:134
 msgid "Previous source text"
@@ -3074,13 +3073,59 @@ msgstr "Bekerjasama dengan orang lain secara dalam talian."
 msgid "Recent files"
 msgstr "Fail baru-baru ini"
 
-#: src/wx/main_toolbar.cpp:86
+#: src/wx/main_toolbar.cpp:98 src/wx/main_toolbar.cpp:133
 msgid "Sync"
 msgstr "Segerak"
 
-#: src/wx/main_toolbar.cpp:87
-msgid "Synchronize the translation with Crowdin"
-msgstr "Segerak terjemahan dengan Crowdin"
+#: src/wx/main_toolbar.cpp:99
+msgid "Synchronize translations with Crowdin"
+msgstr ""
+
+#: src/wx/main_toolbar.cpp:104
+msgid "Upload"
+msgstr ""
+
+#. TRANSLATORS: this is the tooltip for the "Upload" button in the toolbar, %s is hostname or service (Crowdin, ftp.foo.com etc.)
+#: src/wx/main_toolbar.cpp:106
+#, c-format
+msgid "Upload translations to %s"
+msgstr ""
+
+#: src/wx/main_toolbar.cpp:124
+msgid "Open file"
+msgstr "Buka fail"
+
+#: src/wx/main_toolbar.cpp:125
+msgid "Save file"
+msgstr "Simpan fail"
+
+#: src/wx/main_toolbar.cpp:129
+msgid "Check for errors in the translation"
+msgstr "Periksa kesalahan dalam terjemahan"
+
+#: src/wx/main_toolbar.cpp:129
+msgid "Validate"
+msgstr "Sahkan"
+
+#: src/wx/main_toolbar.cpp:131
+msgid "Pre-translate strings that don’t have a translation yet"
+msgstr "Pra-terjemah rentetan belum diterjemah lagi"
+
+#: src/wx/main_toolbar.cpp:132
+msgid "Update from Code"
+msgstr "Kemas Kini dari Kod"
+
+#: src/wx/main_toolbar.cpp:132
+msgid "Update from code"
+msgstr "Kemas kini dari kod"
+
+#: src/wx/main_toolbar.cpp:132
+msgid "Update from source code"
+msgstr "Kemas kini dari kod sumber"
+
+#: src/wx/main_toolbar.cpp:137
+msgid "Show or hide the sidebar"
+msgstr "Tunjuk atau sembunyi palang sisi"
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")

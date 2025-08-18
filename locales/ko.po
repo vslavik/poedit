@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2025-05-16 18:17+0200\n"
-"PO-Revision-Date: 2025-04-08 10:16\n"
+"POT-Creation-Date: 2025-08-18 18:46+0200\n"
+"PO-Revision-Date: 2025-08-14 10:17\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -11,6 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.6\n"
 "X-Crowdin-Project: poedit\n"
 "X-Crowdin-Project-ID: 53425\n"
 "X-Crowdin-Language: ko\n"
@@ -31,7 +32,7 @@ msgstr "다시 표시하지 않음"
 
 #: src/cat_update.cpp:99
 msgid "Update Summary"
-msgstr "변경 사항 요약"
+msgstr "업데이트 요약"
 
 #. TRANSLATORS: Title of window showing summary (added/removed strings, issues) of updating translations from sources or POT file
 #: src/cat_update.cpp:99
@@ -45,7 +46,7 @@ msgstr "닫기"
 
 #: src/cat_update.cpp:161
 msgid "Issues"
-msgstr "문제"
+msgstr "이슈"
 
 #. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
 #: src/cat_update.cpp:164 src/cloud_accounts_ui.cpp:266 src/manager.cpp:377
@@ -56,12 +57,12 @@ msgstr "파일"
 #. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
 #: src/cat_update.cpp:166
 msgid "Line"
-msgstr "선"
+msgstr "라인"
 
 #. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
 #: src/cat_update.cpp:168
 msgid "Issue"
-msgstr "문제"
+msgstr "이슈"
 
 #: src/cat_update.cpp:182 src/cat_update.cpp:184
 msgid "New Strings"
@@ -87,39 +88,39 @@ msgstr "소스 파일 수집 중…"
 #, c-format
 msgid "Extracting translatable strings from %s file…"
 msgid_plural "Extracting translatable strings from %s files…"
-msgstr[0] "%s 파일에서 번역 가능 문자열 가져오는 중…"
+msgstr[0] "%s 파일에서 번역 가능한 문자열을 추출하는 중…"
 
 #: src/cat_update.cpp:259 src/cat_update.cpp:395
 msgid "Failed to load file with extracted translations."
-msgstr "추출한 번역이 들어있는 파일 불러오기에 실패했습니다."
+msgstr "추출된 번역이 포함된 파일을 로드하는 데 실패했습니다."
 
 #: src/cat_update.cpp:283
 #, c-format
 msgid "In: %s"
 msgstr "파일 위치: %s"
 
-#: src/cat_update.cpp:290 src/edframe.cpp:1606
+#: src/cat_update.cpp:290 src/edframe.cpp:1608
 msgid "Source code not available."
-msgstr "소스 코드가 없습니다."
+msgstr "소스 코드를 사용할 수 없습니다."
 
-#: src/cat_update.cpp:291 src/edframe.cpp:1610
+#: src/cat_update.cpp:291 src/edframe.cpp:1612
 msgid ""
 "Translations couldn’t be updated from the source code, because no code was "
 "found in the location specified in the file’s Properties."
 msgstr ""
-"파일 속성에서 지정한 위치에 코드가 없어, 소스 코드에서 번역 항목을 새로 가져"
-"올 수 없습니다."
+"파일의 속성에 지정된 위치에서 코드를 찾을 수 없기 때문에 소스 코드에서 번역"
+"을 업데이트할 수 없습니다."
 
 #: src/cat_update.cpp:295
 msgid "Permission denied."
-msgstr "권한을 거부했습니다."
+msgstr "권한이 없습니다."
 
 #: src/cat_update.cpp:296
 msgid ""
 "You don’t have permission to read source code files from the location "
 "specified in the file’s Properties."
 msgstr ""
-"파일 속성의 지정 위치에서 소스 코드 파일을 불러올 수 있는 권한이 없습니다."
+"파일의 속성에 지정된 위치에서 소스 코드 파일을 읽을 수 있는 권한이 없습니다."
 
 #. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
 #: src/cat_update.cpp:301
@@ -127,8 +128,8 @@ msgid ""
 "If you previously denied access to your files, you can allow it in System "
 "Settings > Privacy & Security > Files & Folders."
 msgstr ""
-"이전에 파일 접근을 거부했다면, 시스템 설정 > 개인정보 및 보안 > 파일 및 폴더 "
-"에서 허용할 수 있습니다."
+"이전에 파일 접근을 거부했다면, 시스템 설정 > 개인정보 보호 및 보안 > 파일 및 "
+"폴더에서 파일 접근을 허용할 수 있습니다."
 
 #. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
 #: src/cat_update.cpp:306
@@ -136,41 +137,41 @@ msgid ""
 "If you previously denied access to your files, you can allow it in System "
 "Preferences > Security & Privacy > Privacy > Files & Folders."
 msgstr ""
-"파일 접근 권한을 예전에 거부했던 적이 있었다면, 시스템 설정 > 보안 및 개인정"
-"보 > 개인정보 > 파일 및 폴더에서 허용할 수 있습니다."
+"이전에 파일 접근을 거부한 경우, 시스템 환경설정 > 보안 및 개인정보 > 개인정"
+"보 > 파일 및 폴더에서 파일 접근을 허용할 수 있습니다."
 
 #: src/cat_update.cpp:312
 msgid "Failed to extract strings from source code."
-msgstr "소스 코드의 문자열 추출에 실패했습니다."
+msgstr "소스 코드에서 문자열을 추출하지 못했습니다."
 
 #: src/cat_update.cpp:346 src/edapp.cpp:1103 src/edframe.cpp:929
-#: src/edframe.cpp:2477
+#: src/edframe.cpp:2527
 #, c-format
 msgid "The file “%s” couldn’t be opened."
-msgstr "\"%s\" 파일을 열 수 없습니다."
+msgstr "파일 \"%s\"를 열 수 없습니다."
 
 #: src/cat_update.cpp:364
 msgid "Updating translations"
-msgstr "번역 업데이트 중"
+msgstr "번역 업데이트"
 
 #: src/cat_update.cpp:384
 msgid "Determining differences…"
-msgstr "차이점 비교 중…"
+msgstr "차이점 확인…"
 
 #: src/cat_update.cpp:392 src/cat_update.cpp:445
 msgid "Merging differences…"
-msgstr "차이점 병합 중…"
+msgstr "차이점 병합…"
 
 #: src/cat_update.cpp:405
 msgid ""
 "Translation file is already up to date, no changes to strings were made."
-msgstr "번역 파일이 이미 최신 상태이며, 문자열에 변경 사항이 없습니다."
+msgstr "번역 파일이 이미 최신 상태입니다. 문자열은 변경되지 않았습니다."
 
 #: src/cat_update.cpp:411
 #, c-format
 msgid "Translation file was updated with %s change."
 msgid_plural "Translation file was updated with %s changes."
-msgstr[0] "번역 파일에 바뀐 내용이 %s건 있습니다."
+msgstr[0] "번역 파일이 %s개 변경으로 업데이트되었습니다."
 
 #: src/cat_update.cpp:414
 msgid "New strings to translate:"
@@ -178,86 +179,96 @@ msgstr "번역할 새 문자열:"
 
 #: src/cat_update.cpp:415
 msgid "Removed strings (no longer used):"
-msgstr "제거된 문자열 (더 이상 쓰이지 않음):"
+msgstr "제거된 문자열 (더 이상 사용되지 않음):"
 
 #: src/cat_update.cpp:503
 #, c-format
 msgid "%d issue with the source strings was detected."
 msgid_plural "%d issues with the source strings were detected."
-msgstr[0] "원본 문자열에서 문제 %d건을 탐지했습니다."
+msgstr[0] "소스 문자열에 %d개 이슈가 감지되었습니다."
 
 #: src/cat_update.cpp:530
 msgid "View Details…"
-msgstr "세부정보 보기…"
+msgstr "세부 정보 보기…"
 
 #: src/cat_update.cpp:530
 msgid "View details…"
-msgstr "세부정보 보기…"
+msgstr "세부 정보 보기…"
 
-#: src/catalog.cpp:125
+#: src/catalog.cpp:127
 #, c-format
 msgid "Malformed header: “%s”"
 msgstr "잘못된 헤더: “%s”"
 
-#: src/catalog.cpp:588
+#: src/catalog.cpp:591
 msgid "PO Translation Files"
 msgstr "PO 번역 파일"
 
-#: src/catalog.cpp:590
+#: src/catalog.cpp:593
 msgid "POT Translation Templates"
-msgstr "POT 번역 양식"
+msgstr "POT 번역 템플릿"
 
-#: src/catalog.cpp:592
+#: src/catalog.cpp:595
 msgid "XLIFF Translation Files"
 msgstr "XLIFF 번역 파일"
 
-#: src/catalog.cpp:594
+#: src/catalog.cpp:597
 msgid "Xcode Localization Catalog"
 msgstr "Xcode 현지화 카탈로그"
 
-#: src/catalog.cpp:596
+#: src/catalog.cpp:599
 msgid "JSON Translation Files"
 msgstr "JSON 번역 파일"
 
 #. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
-#: src/catalog.cpp:599
+#: src/catalog.cpp:602
 msgid "Flutter Translation Files"
 msgstr "플루터 번역 파일"
 
-#: src/catalog.cpp:608
+#: src/catalog.cpp:604
+msgid "RESX Resource Files"
+msgstr "RESX 리소스 파일"
+
+#: src/catalog.cpp:606
+msgid "Qt Translation Files"
+msgstr "Qt 번역 파일"
+
+#: src/catalog.cpp:615
 msgid "All Translation Files"
 msgstr "모든 번역 파일"
 
-#: src/catalog.cpp:1169
+#: src/catalog.cpp:1183
 msgid "The file is in a format not recognized by Poedit."
-msgstr "Poedit에서 인식할 수 없는 파일 형식입니다."
+msgstr "파일이 Poedit에서 인식되지 않는 형식입니다."
 
 #: src/catalog_json.cpp:91
 msgid ""
 "This JSON file isn’t a translations file and cannot be edited in Poedit."
-msgstr "이 JSON 파일은 번역 파일이 아니므로 Poedit에서 편집할 수 없습니다."
+msgstr "이 JSON 파일은 번역 파일이 아니며 Poedit에서 편집할 수 없습니다."
 
 #: src/catalog_json.cpp:140
 #, c-format
 msgid "Reading file content failed with the following error: %s"
-msgstr "다음 오류로 인해 파일 내용 읽기에 실패했습니다: %s"
+msgstr "파일 내용 읽기에 실패하고 다음 오류가 발생했습니다: %s"
 
-#: src/catalog_json.cpp:151 src/catalog_po.cpp:1162 src/catalog_xliff.cpp:556
+#: src/catalog_json.cpp:151 src/catalog_po.cpp:1143 src/catalog_qt.cpp:329
+#: src/catalog_resx.cpp:198 src/catalog_xliff.cpp:488
 #, c-format
 msgid ""
 "File “%s” is read-only and cannot be saved.\n"
 "Please save it under different name."
 msgstr ""
-"“%s” 파일은 읽기 전용이며 저장할 수 없습니다.\n"
-"다른 이름으로 저장하세요."
+"파일 \"%s\"는 읽기 전용이므로 저장할 수 없습니다.\n"
+"다른 이름으로 저장해 주세요."
 
-#: src/catalog_json.cpp:165 src/catalog_po.cpp:1198 src/catalog_po.cpp:1280
-#: src/catalog_po.cpp:1354 src/catalog_po.cpp:1363 src/catalog_po.cpp:1420
-#: src/catalog_po.cpp:1451 src/catalog_po.cpp:1645 src/catalog_xliff.cpp:567
-#: src/edframe.cpp:1317 src/prefsdlg.cpp:664
+#: src/catalog_json.cpp:165 src/catalog_po.cpp:1179 src/catalog_po.cpp:1261
+#: src/catalog_po.cpp:1335 src/catalog_po.cpp:1344 src/catalog_po.cpp:1401
+#: src/catalog_po.cpp:1432 src/catalog_po.cpp:1630 src/catalog_qt.cpp:341
+#: src/catalog_resx.cpp:209 src/catalog_xliff.cpp:499 src/edframe.cpp:1317
+#: src/prefsdlg.cpp:664
 #, c-format
 msgid "Couldn’t save file %s."
-msgstr "%s 파일을 저장할 수 없습니다."
+msgstr "파일 %s을(를) 저장할 수 없습니다."
 
 #: src/catalog_json.cpp:503
 msgid "Screenshots:"
@@ -267,42 +278,41 @@ msgstr "스크린샷:"
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
-msgstr[0] "“%2$s” 파일의 %1$i번째 줄을 제대로 불러오지 못했습니다."
+msgstr[0] "%i 번째 줄을 파일 \"%s\"에서 올바르게 로드되지 않았습니다."
 
 #: src/catalog_po.cpp:149
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
-msgstr ""
-"“%2$s” 파일의 %1$d번째 줄이 손상되었습니다 (올바르지 않은 %3$s 데이터)."
+msgstr "%d개 줄이 파일 \"%s\"에서 손상되었습니다 (유효한 %s 데이터가 아님)."
 
-#: src/catalog_po.cpp:356
+#: src/catalog_po.cpp:336
 msgid "Broken PO file: singular form msgstr used together with msgid_plural"
-msgstr "PO 파일 오류: msgid_plural을 사용한 단수 형식의 msgstr"
+msgstr "손상된 PO 파일: 단수형 msgstr이 msgid_plural과 함께 사용되었습니다"
 
-#: src/catalog_po.cpp:408
+#: src/catalog_po.cpp:388
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
-msgstr "PO 파일 오류: msgid_plural 없이 사용한 복수 형식의 msgstr"
+msgstr "손상된 PO 파일: 복수형 msgstr이 msgid_plural 없이 사용되었습니다"
 
-#: src/catalog_po.cpp:930 src/catalog_po.cpp:944 src/catalog_po.cpp:957
-#: src/catalog_po.cpp:969
-msgid "Couldn’t load the file, it is probably damaged."
-msgstr "파일을 불러오지 못했습니다. 손상되었을 수 있습니다."
-
+#: src/catalog_po.cpp:910 src/catalog_po.cpp:924 src/catalog_po.cpp:937
 #: src/catalog_po.cpp:949
+msgid "Couldn’t load the file, it is probably damaged."
+msgstr "파일을 로드할 수 없습니다. 아마도 손상되었을 것입니다."
+
+#: src/catalog_po.cpp:929
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
-"파일을 불러올 때 오류가 있었습니다. 데이터 일부가 빠지거나 깨졌을 수도 있습니"
-"다."
+"파일을 로드하는 동안 오류가 발생했습니다. 그 결과 일부 데이터가 누락되었거나 "
+"손상되었을 수 있습니다."
 
-#: src/catalog_po.cpp:1289
+#: src/catalog_po.cpp:1270
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
 msgstr ""
-"파일 구조를 다듬는 중 문제가 발생했습니다(하지만 문제 없이 저장했습니다)."
+"파일 형식을 올바르게 지정하는 데 문제가 있었지만 정상적으로 저장되었습니다."
 
-#: src/catalog_po.cpp:1568
+#: src/catalog_po.cpp:1549
 #, c-format
 msgid ""
 "The file couldn’t be saved in “%s” charset as specified in translation "
@@ -310,53 +320,67 @@ msgid ""
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"이 파일은 번역 설정에서 지정한 “%s” 문자 집합으로 저장할 수 없습니다.\n"
+"번역 설정에 명시된 대로 파일을 \"%s\" 문자 집합에 저장할 수 없습니다.\n"
 "\n"
-"대신 UTF-8로 저장했으며 이에 따라 설정 값도 수정했습니다."
+"대신 UTF-8에 저장되었고, 그에 따라 설정이 수정되었습니다."
 
-#: src/catalog_po.cpp:1570 src/edframe.cpp:2740
+#: src/catalog_po.cpp:1551 src/edframe.cpp:2790
 msgid "Error saving file"
 msgstr "파일 저장 오류"
 
-#: src/catalog_po.cpp:1721
+#: src/catalog_po.cpp:1706
 #, c-format
 msgid "“%s” is not a valid POT file."
-msgstr "“%s” 파일은 정상적인 POT 파일이 아닙니다."
+msgstr "\"%s\"는 유효한 POT 파일이 아닙니다."
+
+#: src/catalog_qt.cpp:70
+#, c-format
+msgid "Error while loading Qt translation file: %s"
+msgstr "Qt 번역파일 로딩중 오류: %s"
+
+#: src/catalog_qt.cpp:273 src/catalog_resx.cpp:83 src/catalog_resx.cpp:159
+msgid "The file is malformed."
+msgstr "이 파일의 형식이 잘못됨."
+
+#: src/catalog_resx.cpp:66
+#, c-format
+msgid "Error while loading RESX file: %s"
+msgstr "RESX 파일을 로드하는 중 오류 발생: %s"
 
 #: src/catalog_xcloc.cpp:85 src/catalog_xcloc.cpp:88
 msgid "Unexpectedly missing content in the XCLOC file."
-msgstr "XCLOC 파일에서 예상치 못한 콘텐츠가 누락되었습니다."
+msgstr "예기치 않게 XCLOC 파일에 내용이 누락되었습니다."
 
 #: src/catalog_xcloc.cpp:99
 msgid "Saving in a different location is not supported for XCLOC files."
-msgstr "XCLOC 파일은 다른 위치로의 저장을 지원하지 않습니다."
+msgstr "다른 위치에 저장하는 것은 XCLOC 파일에서 지원되지 않습니다."
 
-#: src/catalog_xliff.cpp:473
+#: src/catalog_xliff.cpp:405
 #, c-format
 msgid "Error while loading XLIFF file: %s"
-msgstr "XLIFF 파일 불러오기 오류: %s"
+msgstr "XLIFF 파일을 로드하는 중 오류 발생: %s"
 
-#: src/catalog_xliff.cpp:518
+#: src/catalog_xliff.cpp:450
 #, c-format
 msgid "unsupported version (%s)"
 msgstr "지원하지 않는 버전 (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
-#: src/catalog_xliff.cpp:679 src/catalog_xliff.cpp:866
+#: src/catalog_xliff.cpp:611 src/catalog_xliff.cpp:798
 msgid "Broken markup in translation string."
-msgstr "번역 문자열의 마크업이 깨졌습니다."
+msgstr "번역 문자열에서 마크업이 깨졌습니다."
 
 #: src/cloud_accounts_ui.cpp:81
 msgid ""
 "Connect Poedit with supported cloud localization platforms to seamlessly "
 "sync translations managed on them."
 msgstr ""
-"poedit에서 지원하는 클라우드 기반 지역화 플랫폼에서 관리하는 번역을 감쪽같이 "
-"동기화하려면 플랫폼에 연결합니다."
+"Poedit을 지원되는 클라우드 현지화 플랫폼과 연결하여 해당 플랫폼에서 관리되는 "
+"번역을 원활하게 동기화할 수 있습니다."
 
 #: src/cloud_accounts_ui.cpp:84 src/welcomescreen.cpp:286
 msgid "How does cloud sync work?"
-msgstr "클라우드 동작을 어떻게 처리할까요?"
+msgstr "클라우드 동기화는 어떻게 작동하나요?"
 
 #: src/cloud_accounts_ui.cpp:91
 msgid "Account"
@@ -394,11 +418,11 @@ msgstr "클라우드 계정에 로그인합니다"
 
 #: src/cloud_accounts_ui.cpp:527
 msgid "No translation projects listed in your account."
-msgstr "이 계정에 번역 프로젝트가 없습니다."
+msgstr "계정에 번역 프로젝트가 나열되어 있지 않습니다."
 
-#: src/cloud_accounts_ui.cpp:636 src/crowdin_gui.cpp:339
+#: src/cloud_accounts_ui.cpp:636 src/crowdin_gui.cpp:401
 msgid "Downloading latest translations…"
-msgstr "최신 번역 다운로드 중…"
+msgstr "최신 번역을 다운로드하는 중…"
 
 #. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
 #: src/cloud_accounts_ui.cpp:732
@@ -406,23 +430,23 @@ msgstr "최신 번역 다운로드 중…"
 msgid "Sign in to %s"
 msgstr "%s에 로그인"
 
-#: src/cloud_sync.h:98
+#: src/cloud_sync.h:101
 msgid "Syncing"
 msgstr "동기화 중"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
-#: src/cloud_sync.h:115
+#: src/cloud_sync.h:126 src/crowdin_gui.cpp:372
 #, c-format
 msgid "Uploading translations to %s…"
-msgstr "%s에 번역 업로드중…"
+msgstr "번역을 %s에 업로드하는 중…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
-#: src/cloud_sync.h:167
+#: src/cloud_sync.h:176
 #, c-format
 msgid "Uploading translations to %s failed."
-msgstr "%s(으)로의 번역 업로드에 실패했습니다."
+msgstr "번역을 %s에 업로드하지 못했습니다."
 
-#: src/cloud_sync.h:168
+#: src/cloud_sync.h:177
 msgid "Syncing error"
 msgstr "동기화 오류"
 
@@ -432,73 +456,73 @@ msgstr "추가"
 
 #: src/crowdin_client.cpp:143
 msgid "Unknown Crowdin error."
-msgstr "알 수 없는 Crowdin 오류."
+msgstr "알 수 없는 Crowdin 오류입니다."
 
 #: src/crowdin_client.cpp:153
 msgid "Not authorized, please sign in again."
-msgstr "인증하지 않았습니다. 다시 로그인하십시오."
+msgstr "권한이 없습니다. 다시 로그인하세요."
 
 #. TRANSLATORS: Crowdin has string-based and file-based project kinds (see https://support.crowdin.com/creating-project/#file-based-project)
 #: src/crowdin_client.cpp:342
 msgid "String-based Crowdin projects are not supported."
-msgstr "문자열 기반 크라우드인 프로젝트를 지원하지 않습니다."
+msgstr "문자열 기반 Crowdin인 프로젝트는 지원되지 않습니다."
 
 #: src/crowdin_client.cpp:346
 msgid "Downloading translations is disabled in this project."
-msgstr "이 프로젝트에서는 번역을 다운로드할 수 없습니다."
+msgstr "이 프로젝트에서는 번역 다운로드가 비활성화되어 있습니다."
 
-#: src/crowdin_gui.cpp:90 src/localazy_gui.cpp:101
+#: src/crowdin_gui.cpp:71
+msgid "Recommended"
+msgstr "추천됨"
+
+#: src/crowdin_gui.cpp:154 src/localazy_gui.cpp:101
 msgid "Sign In"
 msgstr "로그인"
 
-#: src/crowdin_gui.cpp:90 src/localazy_gui.cpp:101
+#: src/crowdin_gui.cpp:154 src/localazy_gui.cpp:101
 msgid "Sign in"
 msgstr "로그인"
 
-#: src/crowdin_gui.cpp:92 src/localazy_gui.cpp:103
+#: src/crowdin_gui.cpp:156 src/localazy_gui.cpp:103
 msgid "Sign Out"
 msgstr "로그아웃"
 
-#: src/crowdin_gui.cpp:92 src/localazy_gui.cpp:103
+#: src/crowdin_gui.cpp:156 src/localazy_gui.cpp:103
 msgid "Sign out"
 msgstr "로그아웃"
 
-#: src/crowdin_gui.cpp:99
+#: src/crowdin_gui.cpp:163
 msgid "Learn more about Crowdin"
 msgstr "Crowdin 더 알아보기"
 
-#: src/crowdin_gui.cpp:126
+#: src/crowdin_gui.cpp:190
 msgid ""
 "Crowdin is an online translation management platform and collaborative "
 "translation tool. We use Crowdin ourselves to translate Poedit into many "
 "languages, and we love it."
 msgstr ""
-"크라우드인은 온라인 번역 관리 플랫폼이며 협업 번역 도구입니다. Poedit 번역의 "
-"다국어 번역에 크라우드인을 활용하며, 이 방식을 좋아합니다."
+"Crowdin은 온라인 번역 관리 플랫폼이자 협업 번역 도구입니다. 저희는 Crowdin을 "
+"사용하여 Poedit을 여러 언어로 번역하고 있으며, 이를 매우 좋아합니다."
 
-#: src/crowdin_gui.cpp:190 src/localazy_gui.cpp:202
+#: src/crowdin_gui.cpp:254 src/localazy_gui.cpp:202
 msgid "Waiting for authentication…"
-msgstr "인증 대기 중…"
+msgstr "인증을 기다리는 중…"
 
-#: src/crowdin_gui.cpp:191 src/localazy_gui.cpp:203
+#: src/crowdin_gui.cpp:255 src/localazy_gui.cpp:203
 msgid "Updating user information…"
 msgstr "사용자 정보 업데이트 중…"
 
-#: src/crowdin_gui.cpp:298
+#: src/crowdin_gui.cpp:362
 msgid "Sign in to Crowdin"
 msgstr "Crowdin에 로그인"
 
-#: src/crowdin_gui.cpp:318
+#: src/crowdin_gui.cpp:382
 msgid "Syncing with Crowdin failed."
 msgstr "Crowdin과 동기화에 실패했습니다."
 
-#: src/crowdin_gui.cpp:319
+#: src/crowdin_gui.cpp:383
 msgid "Crowdin error"
 msgstr "Crowdin 오류"
-
-#: src/crowdin_gui.cpp:327
-msgid "Uploading translations…"
-msgstr "번역 업데이트 중…"
 
 #: src/customcontrols.cpp:282 src/wx_translatable_strings.h:98
 msgid "&Copy"
@@ -519,19 +543,18 @@ msgstr "MO 파일은 Poedit에서 직접 편집할 수 없습니다."
 
 #: src/edapp.cpp:733
 msgid "Error opening file"
-msgstr "파일 여는 중 오류"
+msgstr "파일 열기 오류"
 
 #: src/edapp.cpp:735
 msgid ""
 "Please open and edit the corresponding PO file instead. When you save it, "
 "the MO file will be updated as well."
 msgstr ""
-"대신 관련 PO 파일을 열어 편집하십시오. 저장하면, 마찬가지로 MO 파일도 업데이"
-"트합니다."
+"대신 해당 PO 파일을 열고 편집해 주세요. 저장하면 MO 파일도 업데이트됩니다."
 
 #: src/edapp.cpp:776
 msgid "don’t delete temporary files (for debugging)"
-msgstr "임시 파일 삭제 안함 (디버깅용)"
+msgstr "임시 파일 삭제하지 않음 (디버깅용)"
 
 #: src/edapp.cpp:778
 msgid "handle a poedit:// URI"
@@ -539,23 +562,23 @@ msgstr "poedit:// URI 처리"
 
 #: src/edapp.cpp:780
 msgid "go to item at given line number"
-msgstr "입력한 줄 수에 해당되는 항목으로 이동"
+msgstr "주어진 줄 번호의 항목으로 이동"
 
 #: src/edapp.cpp:803
 msgid "Failed to communicate with Poedit process."
-msgstr "Poedit 프로세스와의 통신에 실패했습니다."
+msgstr "Poedit 프로세스와 통신에 실패했습니다."
 
 #: src/edapp.cpp:916 src/edapp.cpp:921
 #, c-format
 msgid "Unhandled exception occurred: %s"
-msgstr "처리하지 못한 오류 발생: %s"
+msgstr "처리되지 않은 예외 발생: %s"
 
 #: src/edapp.cpp:1073
 msgid "Select translation template"
-msgstr "번역 양식 선택"
+msgstr "번역 템플릿 선택"
 
-#: src/edapp.cpp:1104 src/edframe.cpp:930 src/edframe.cpp:2295
-#: src/edframe.cpp:2478
+#: src/edapp.cpp:1104 src/edframe.cpp:930 src/edframe.cpp:2325
+#: src/edframe.cpp:2528
 msgid "Invalid file"
 msgstr "잘못된 파일"
 
@@ -635,8 +658,7 @@ msgstr "바뀐 내용 저장"
 msgid "Your changes will be lost if you don’t save them."
 msgstr "저장하지 않으면 바뀐 내용을 잃어버립니다."
 
-#: src/edframe.cpp:1079 src/edframe.cpp:1139 src/resources/toolbar.xrc:24
-#: src/resources/toolbar.xrc:29 src/wx_translatable_strings.h:115
+#: src/edframe.cpp:1079 src/edframe.cpp:1139 src/wx_translatable_strings.h:115
 msgid "Save"
 msgstr "저장"
 
@@ -690,7 +712,7 @@ msgstr "HTML 파일"
 msgid "Exporting to HTML"
 msgstr "HTML로 내보내는 중"
 
-#: src/edframe.cpp:1607
+#: src/edframe.cpp:1609
 msgid "Updating failed"
 msgstr "업데이트 실패"
 
@@ -698,25 +720,35 @@ msgstr "업데이트 실패"
 msgid "Open reference file"
 msgstr "참조 파일 열기"
 
-#: src/edframe.cpp:1708 src/resources/menus.xrc:235
+#: src/edframe.cpp:1708 src/resources/menus.xrc:238
 msgid "Update from &POT File…"
 msgstr "POT 파일에서 업데이트(&P)…"
 
-#: src/edframe.cpp:1708 src/resources/menus.xrc:234
+#: src/edframe.cpp:1708 src/resources/menus.xrc:237
 msgid "Update from &POT file…"
 msgstr "POT 파일에서 업데이트(&P)…"
 
-#: src/edframe.cpp:1834
+#: src/edframe.cpp:1790 src/resources/menus.xrc:53
+msgid "Sync with Crowdin"
+msgstr "Crowdin 동기화"
+
+#. TRANSLATORS: this is the menu action to upload to server/cloud; %s is hostname or service (Crowdin, ftp.foo.com etc.)
+#: src/edframe.cpp:1795
+#, c-format
+msgid "Upload to %s"
+msgstr "%s 로 업로딩"
+
+#: src/edframe.cpp:1865
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "번역에서 문제 %d개를 찾았습니다."
 
-#: src/edframe.cpp:1839 src/edframe.cpp:1885
+#: src/edframe.cpp:1870 src/edframe.cpp:1916
 msgid "Validation results"
 msgstr "검증 결과"
 
-#: src/edframe.cpp:1842
+#: src/edframe.cpp:1873
 msgid ""
 "Entries with errors were marked in red in the list. Details of the error "
 "will be shown when you select such an entry."
@@ -724,11 +756,11 @@ msgstr ""
 "오류가 있는 항목은 붉은색으로 표시했습니다. 자세한 오류 내용은 각각의 항목을 "
 "선택했을 때 나타납니다."
 
-#: src/edframe.cpp:1851
+#: src/edframe.cpp:1882
 msgid "The file was saved safely."
 msgstr "파일을 안전하게 저장했습니다."
 
-#: src/edframe.cpp:1854
+#: src/edframe.cpp:1885
 msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
@@ -736,136 +768,136 @@ msgstr ""
 "파일을 안전하게 저장하고 MO 형식으로 컴파일했지만 올바르게 작동하지 않을 수 "
 "있습니다."
 
-#: src/edframe.cpp:1857
+#: src/edframe.cpp:1888
 msgid ""
 "The file was saved safely, but it cannot be compiled into the MO format and "
 "used."
 msgstr "파일을 안전하게 저장했지만 MO 형식으로 컴파일할 수 없었습니다."
 
-#: src/edframe.cpp:1866
+#: src/edframe.cpp:1897
 msgid ""
 "The file was compiled into the MO format, but it will probably not work "
 "correctly."
 msgstr "MO 형식으로 파일을 컴파일했지만 올바르게 작동하지 않을 수 있습니다."
 
-#: src/edframe.cpp:1870
+#: src/edframe.cpp:1901
 msgid "The file cannot be compiled into the MO format and used."
 msgstr "MO 파일로 컴파일할 수 없습니다."
 
-#: src/edframe.cpp:1884
+#: src/edframe.cpp:1915
 msgid "No problems with the translation found."
 msgstr "번역에 문제가 없습니다."
 
-#: src/edframe.cpp:1894
+#: src/edframe.cpp:1925
 #, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
 msgid_plural ""
 "The translation is ready for use, but %d entries are not translated yet."
 msgstr[0] "번역을 사용할 준비가 되지만, 아직 항목 %d개를 번역하지 않았습니다."
 
-#: src/edframe.cpp:1899
+#: src/edframe.cpp:1930
 msgid "The translation is ready for use."
 msgstr "번역을 사용할 준비가 되었습니다."
 
-#: src/edframe.cpp:2294
+#: src/edframe.cpp:2324
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr "Poedit가 “%s” 파일의 잘못된 내용을 자동으로 수정했습니다."
 
-#: src/edframe.cpp:2299
+#: src/edframe.cpp:2329
 msgid ""
 "The file contained duplicate items, which is not allowed in PO files and "
 "would prevent the file from being used. Poedit fixed the issue, but you "
 "should review translations of any items marked as needing work and correct "
 "them if necessary."
 msgstr ""
-"PO 파일에서 허용하지 않는 중복 항목이 있어 파일 활용을 막았습니다. Poedit에"
-"서 문제를 해결했지만 필요한 경우 작업할 항목을 표시해둔 부분의 번역을 검토해"
-"야합니다."
+"파일에 중복 항목이 포함되어 있었는데, 이는 PO 파일에서 허용되지 않으며 파일"
+"을 사용할 수 없게 합니다. Poedit에서 이 문제를 해결했지만, 작업이 필요하다고 "
+"표시된 항목의 번역을 검토하고 필요한 경우 수정해야 합니다."
 
-#: src/edframe.cpp:2315
+#: src/edframe.cpp:2345
 msgid "Language of the translation isn’t set."
 msgstr "번역 언어를 설정하지 않았습니다."
 
-#: src/edframe.cpp:2317
+#: src/edframe.cpp:2347
 msgid "Set Language"
 msgstr "언어 설정"
 
-#: src/edframe.cpp:2317
+#: src/edframe.cpp:2347
 msgid "Set language"
 msgstr "언어 설정"
 
 #. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-#: src/edframe.cpp:2320 src/edframe.cpp:2336
+#: src/edframe.cpp:2350 src/edframe.cpp:2366
 msgid ""
 "Suggestions are not available if the translation language is not set "
 "correctly. Other features, such as plural forms, may be affected as well."
 msgstr ""
-"번역 언어를 올바르게 선택하지 않으면 제안 기능을 사용할 수 없습니다. 서수 형"
-"식 같은 기능도 마찬가지로 영향을 받을 수 있습니다."
+"번역 언어를 올바르게 설정하지 않으면 제안 기능을 사용할 수 없습니다. 복수형 "
+"형식 같은 기능도 영향을 받을 수 있습니다."
 
-#: src/edframe.cpp:2334
+#: src/edframe.cpp:2364
 msgid "Language of the translation is the same as source language."
 msgstr "번역 언어가 원본 언어와 같습니다."
 
-#: src/edframe.cpp:2337
+#: src/edframe.cpp:2367
 msgid "Fix Language"
 msgstr "언어 수정"
 
-#: src/edframe.cpp:2337
+#: src/edframe.cpp:2367
 msgid "Fix language"
 msgstr "언어 수정"
 
-#: src/edframe.cpp:2354
+#: src/edframe.cpp:2384
 msgid ""
 "This file has entries with plural forms, but doesn’t have Plural-Forms "
 "header configured."
 msgstr ""
-"이 파일에는 서수 형식 항목이 들어있으나 서수 형식 헤더를 구성하지 않았습니다."
+"이 파일에는 복수형 형식 항목이 들어있으나 복수형 형식 헤더를 구성하지 않았습"
+"니다."
 
-#: src/edframe.cpp:2358
+#: src/edframe.cpp:2388
 msgid ""
 "Entries in this file have different plural forms count from what the file’s "
 "Plural-Forms header says"
 msgstr ""
-"이 파일의 항목은 파일의 Plural-Forms 헤더에 명시한 서수 형식 카운트와 다른 값"
-"을 가지고 있습니다."
+"이 파일의 항목은 파일의 복수형 헤더에 표시된 것과 다른 복수형 개수를 가집니다"
 
-#: src/edframe.cpp:2367
+#: src/edframe.cpp:2397
 msgid "Required header Plural-Forms is missing."
 msgstr "필요한 Plural-Forms 헤더가 빠졌습니다."
 
-#: src/edframe.cpp:2371
+#: src/edframe.cpp:2401
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "Plural-Forms 헤더(\"%s\")에 문법 오류."
 
-#: src/edframe.cpp:2383
+#: src/edframe.cpp:2413
 msgid "Fix the Header"
 msgstr "헤더 수정"
 
-#: src/edframe.cpp:2383
+#: src/edframe.cpp:2413
 msgid "Fix the header"
 msgstr "헤더 수정"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: src/edframe.cpp:2401
+#: src/edframe.cpp:2431
 #, c-format
 msgid "Plural forms expression used by the file is unusual for %s."
 msgstr "파일에서 사용하는 %s 언어의 서수 형식 표현이 잘못되었습니다."
 
 #. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
-#: src/edframe.cpp:2406
+#: src/edframe.cpp:2436
 msgid "Review"
 msgstr "검토"
 
-#: src/edframe.cpp:2450
+#: src/edframe.cpp:2500
 msgid "Would you like to use English for source text?"
 msgstr "영어를 원문 언어로 사용하시겠습니까?"
 
-#: src/edframe.cpp:2452
+#: src/edframe.cpp:2502
 #, c-format
 msgid ""
 "This file uses string IDs instead of source text. Poedit can load English "
@@ -875,60 +907,60 @@ msgstr ""
 "어 텍스트를 불러올 수 있습니다."
 
 #. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
-#: src/edframe.cpp:2454
+#: src/edframe.cpp:2504
 msgid "Load English"
 msgstr "영어 불러오기"
 
-#: src/edframe.cpp:2555 src/export_html.cpp:103
+#: src/edframe.cpp:2605 src/export_html.cpp:103
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
 msgstr "번역함: 문장 %2$d개 중 %1$d개 (%3$d%%)"
 
-#: src/edframe.cpp:2559 src/export_html.cpp:105
+#: src/edframe.cpp:2609 src/export_html.cpp:105
 #, c-format
 msgid "Remaining: %d"
 msgstr "남음: %d개"
 
-#: src/edframe.cpp:2564
+#: src/edframe.cpp:2614
 #, c-format
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "오류 %d개"
 
-#: src/edframe.cpp:2569 src/export_html.cpp:117
+#: src/edframe.cpp:2619 src/export_html.cpp:117
 #, c-format
 msgid "%d entry"
 msgid_plural "%d entries"
 msgstr[0] "항목 %d개"
 
-#: src/edframe.cpp:2598
+#: src/edframe.cpp:2648
 msgid " (unsaved)"
 msgstr " (저장하지 않음)"
 
-#: src/edframe.cpp:2639
+#: src/edframe.cpp:2689
 msgid " (modified)"
 msgstr " (수정함)"
 
-#: src/edframe.cpp:2707 src/edframe.cpp:2711
+#: src/edframe.cpp:2757 src/edframe.cpp:2761
 #, c-format
 msgid "Failed to update translation memory: %s"
-msgstr "번역 기억 장소 업데이트에 실패했습니다: %s"
+msgstr "번역 메모리 업데이트에 실패했습니다: %s"
 
-#: src/edframe.cpp:2739
+#: src/edframe.cpp:2789
 #, c-format
 msgid "The file “%s” couldn’t be saved."
 msgstr "\"%s\" 파일을 저장할 수 없습니다."
 
-#: src/edframe.cpp:2849 src/resources/menus.xrc:252
+#: src/edframe.cpp:2899 src/resources/menus.xrc:252
 msgid "Remove same-as-source translations"
 msgstr "원본과 동일한 번역 제거"
 
-#: src/edframe.cpp:2851
+#: src/edframe.cpp:2901
 msgid ""
-"Do you want to remove all translations that are idential to the source text?"
+"Do you want to remove all translations that are identical to the source text?"
 msgstr "원본 문자열과 동일한 모든 번역을 제거할까요?"
 
-#: src/edframe.cpp:2852
+#: src/edframe.cpp:2902
 msgid ""
 "This action will delete any translations that match the source text exactly. "
 "This cannot be undone."
@@ -936,23 +968,23 @@ msgstr ""
 "이 동작은 원본 문자열과 정확히 일치하는 번역을 모두 삭제합니다. 되돌릴 수 없"
 "습니다."
 
-#: src/edframe.cpp:2856 src/edframe.cpp:2883
+#: src/edframe.cpp:2906 src/edframe.cpp:2933
 msgid "Keep"
 msgstr "그대로 유지"
 
-#: src/edframe.cpp:2856
+#: src/edframe.cpp:2906
 msgid "Remove"
 msgstr "제거"
 
-#: src/edframe.cpp:2875
+#: src/edframe.cpp:2925
 msgid "Purge deleted translations"
 msgstr "삭제한 번역을 완전히 제거"
 
-#: src/edframe.cpp:2877
+#: src/edframe.cpp:2927
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr "더 이상 사용하지 않는 모든 번역을 제거하시겠습니까?"
 
-#: src/edframe.cpp:2879
+#: src/edframe.cpp:2929
 msgid ""
 "If you continue with purging, all translations marked as deleted will be "
 "permanently removed. You will have to translate them again if they are added "
@@ -961,66 +993,66 @@ msgstr ""
 "계속 제거를 진행하면 삭제 표시한 모든 번역을 완전히 제거합니다. 다음에 다시 "
 "추가하면 다시 번역해야 합니다."
 
-#: src/edframe.cpp:2883
+#: src/edframe.cpp:2933
 msgid "Purge"
 msgstr "제거"
 
-#: src/edframe.cpp:2940 src/resources/menus.xrc:99
+#: src/edframe.cpp:2990 src/resources/menus.xrc:102
 msgid "Copy from source text"
 msgstr "원본 텍스트 복사"
 
-#: src/edframe.cpp:2942 src/resources/menus.xrc:100
+#: src/edframe.cpp:2992 src/resources/menus.xrc:103
 msgid "Copy from Source Text"
 msgstr "원본 텍스트 복사"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
-#: src/edframe.cpp:2944 src/edframe.cpp:2951 src/edframe.cpp:2959
+#: src/edframe.cpp:2994 src/edframe.cpp:3001 src/edframe.cpp:3009
 #: src/sidebar.cpp:360 src/sidebar.cpp:727 src/sidebar.cpp:752
 #: src/sidebar.cpp:754 src/wx_translatable_strings.h:123
 msgctxt "keyboard key"
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
-#: src/edframe.cpp:2947 src/resources/menus.xrc:94
+#: src/edframe.cpp:2997 src/resources/menus.xrc:97
 msgid "Clear translation"
 msgstr "번역 지우기"
 
-#: src/edframe.cpp:2949 src/resources/menus.xrc:95
+#: src/edframe.cpp:2999 src/resources/menus.xrc:98
 msgid "Clear Translation"
 msgstr "번역 지우기"
 
-#: src/edframe.cpp:2954 src/resources/comment.xrc:4 src/sidebar.cpp:246
+#: src/edframe.cpp:3004 src/resources/comment.xrc:4 src/sidebar.cpp:246
 msgid "Edit comment"
 msgstr "주석 편집"
 
-#: src/edframe.cpp:2956 src/sidebar.cpp:249
+#: src/edframe.cpp:3006 src/sidebar.cpp:249
 msgid "Edit Comment"
 msgstr "주석 편집"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
-#: src/edframe.cpp:2967 src/fileviewer.cpp:100
+#: src/edframe.cpp:3017 src/fileviewer.cpp:100
 msgid "Code Occurrences"
 msgstr "코드 출현 횟수"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
-#: src/edframe.cpp:2967
+#: src/edframe.cpp:3017
 msgid "Code occurrences"
 msgstr "코드 출현 횟수"
 
-#: src/edframe.cpp:3191
+#: src/edframe.cpp:3241
 msgid "Hide Sidebar"
 msgstr "가장자리 창 숨김"
 
-#: src/edframe.cpp:3193 src/resources/menus.xrc:214
+#: src/edframe.cpp:3243 src/resources/menus.xrc:217
 msgid "Show Sidebar"
 msgstr "가장자리 창 표시"
 
-#: src/edframe.cpp:3224
+#: src/edframe.cpp:3274
 msgid "Hide Status Bar"
 msgstr "상태 표시줄 숨기기"
 
-#: src/edframe.cpp:3226 src/resources/menus.xrc:220
+#: src/edframe.cpp:3276 src/resources/menus.xrc:223
 msgid "Show Status Bar"
 msgstr "상태 표시줄 표시"
 
@@ -1032,28 +1064,28 @@ msgstr "문자 단위 문자열 길이: 번역 | 원본"
 msgid "String length in characters"
 msgstr "문자 단위 문자열 길이"
 
-#: src/editing_area.cpp:404 src/editing_area.cpp:715 src/edlistctrl.cpp:663
+#: src/editing_area.cpp:404 src/editing_area.cpp:748 src/edlistctrl.cpp:663
 #: src/edlistctrl.cpp:717 src/export_html.cpp:143
 msgid "Source text"
 msgstr "원본 텍스트"
 
-#: src/editing_area.cpp:426 src/editing_area.cpp:781 src/editing_area.cpp:797
+#: src/editing_area.cpp:426 src/editing_area.cpp:814 src/editing_area.cpp:830
 msgid "Singular"
 msgstr "단수"
 
-#: src/editing_area.cpp:431 src/editing_area.cpp:802
+#: src/editing_area.cpp:431 src/editing_area.cpp:835
 msgid "Plural"
 msgstr "복수"
 
-#: src/editing_area.cpp:477
+#: src/editing_area.cpp:487
 msgid "Translation"
 msgstr "번역"
 
-#: src/editing_area.cpp:486
+#: src/editing_area.cpp:496
 msgid "Pre-translated"
 msgstr "사전 번역함"
 
-#: src/editing_area.cpp:509
+#: src/editing_area.cpp:519
 msgid "Needs Work"
 msgstr "작업 필요"
 
@@ -1065,80 +1097,85 @@ msgstr "작업 필요"
 #. "needs review" implies that somebody else should review the string after
 #. I am done with it (i.e. consider it good), while "needs work" implies I
 #. need to return to it and finish the translation.
-#: src/editing_area.cpp:509
+#: src/editing_area.cpp:519
 msgid "Needs work"
 msgstr "작업 필요"
 
-#: src/editing_area.cpp:566
+#: src/editing_area.cpp:576
 msgid ""
 "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
 msgstr ""
-"POT 파일은 양식일 뿐이며 어떤 번역 내용도 들어있지 않습니다.\n"
-"번역하려면 이 양식을 기반으로 새 PO 파일을 만드십시오."
+"POT 파일은 템플릿일 뿐이며 어떤 번역 내용도 들어있지 않습니다.\n"
+"번역하려면 이 템플릿을 기반으로 새 PO 파일을 만드십시오."
 
-#: src/editing_area.cpp:573
+#: src/editing_area.cpp:583
 msgid "Create new translation"
 msgstr "새 번역 만들기"
 
-#: src/editing_area.cpp:574
+#: src/editing_area.cpp:584
 msgid "Make a new translation from this POT file."
 msgstr "이 POT 파일로 새 번역을 작성합니다."
 
+#: src/editing_area.cpp:616
+msgid "Use the Edit menu to perform bulk actions on selected strings."
+msgstr ""
+"편집 메뉴를 사용하여 선택된 문자열에 대해 대량 작업을 수행할 수 있습니다."
+
 #. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
-#: src/editing_area.cpp:713 src/edlistctrl.cpp:711 src/export_html.cpp:137
+#: src/editing_area.cpp:746 src/edlistctrl.cpp:711 src/export_html.cpp:137
 msgid "Source text ID"
 msgstr "원문 ID"
 
-#: src/editing_area.cpp:768
+#: src/editing_area.cpp:801
 msgid "Everything"
 msgstr "모두"
 
-#: src/editing_area.cpp:773
+#: src/editing_area.cpp:806
 #, c-format
 msgid "Form %i"
 msgstr "%i번 양식"
 
-#: src/editing_area.cpp:775
+#: src/editing_area.cpp:808
 #, c-format
 msgid "Form %i (unused)"
 msgstr "양식 %i (미사용)"
 
-#: src/editing_area.cpp:786
+#: src/editing_area.cpp:819
 msgid "Zero"
 msgstr "영"
 
-#: src/editing_area.cpp:788
+#: src/editing_area.cpp:821
 msgid "One"
 msgstr "하나"
 
-#: src/editing_area.cpp:790
+#: src/editing_area.cpp:823
 msgid "Two"
 msgstr "둘"
 
-#: src/editing_area.cpp:804
+#: src/editing_area.cpp:837
 msgid "Other"
 msgstr "기타"
 
 #. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
-#: src/editing_area.cpp:988
+#: src/editing_area.cpp:1013
 #, c-format
 msgid "String context: %s"
 msgstr "문자열 문맥: %s"
 
 #. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
-#: src/editing_area.cpp:995
+#: src/editing_area.cpp:1020
 #, c-format
 msgid "String identifier: %s"
 msgstr "문자열 ID: %s"
 
-#: src/editing_area.cpp:1003
+#: src/editing_area.cpp:1028
 #, c-format
 msgid "%s Format"
 msgstr "%s 형식"
 
 #. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
-#: src/editing_area.cpp:1003
+#: src/editing_area.cpp:1028
 #, c-format
 msgid "%s format"
 msgstr "%s 형식"
@@ -1182,46 +1219,47 @@ msgstr "편집기에서 열기"
 msgid "Open in editor"
 msgstr "편집기에서 열기"
 
-#: src/fileviewer.cpp:256
+#: src/fileviewer.cpp:259
 msgid ""
 "No information about this string’s occurrences in the source code is "
 "provided in the file."
 msgstr "이 파일에 언급한 소스 코드에서 문자열 출현 정보가 없습니다."
 
-#: src/fileviewer.cpp:256
+#: src/fileviewer.cpp:259
 msgid "No usage information"
 msgstr "사용 정보 없음"
 
-#: src/fileviewer.cpp:262
+#: src/fileviewer.cpp:265
 #, c-format
 msgid "%d code occurrence"
 msgid_plural "%d code occurrences"
 msgstr[0] "코드 %d회 나타남"
 
-#: src/fileviewer.cpp:282
+#: src/fileviewer.cpp:285
 msgid "Source code not found"
 msgstr "소스 코드가 없습니다"
 
-#: src/fileviewer.cpp:283
+#: src/fileviewer.cpp:286
 msgid ""
 "Poedit cannot show source code where the string is used, because the file is "
 "either not available in the referenced location or it is a symbolic "
 "reference that doesn’t point to a real file."
 msgstr ""
-"poedit에서는 문자열을 활용하는 참조 위치에 파일이 없거나 실제 파일이 아닌 심"
-"볼릭 참조여서 소스 코드를 나타낼 수 없습니다."
+"Poedit은 문자열이 사용되는 소스 코드를 표시할 수 없습니다. 왜냐하면 파일이 참"
+"조된 위치에서 사용할 수 없거나 실제 파일을 가리키지 않는 심볼릭 참조이기 때문"
+"입니다."
 
-#: src/fileviewer.cpp:297
+#: src/fileviewer.cpp:300
 msgid "File cannot be opened"
 msgstr "파일을 열 수 없습니다"
 
-#: src/fileviewer.cpp:298
+#: src/fileviewer.cpp:301
 #, c-format
 msgid "Poedit was unable to open the “%s” file."
-msgstr "poedit에서 “%s” 파일을 열 수 없습니다."
+msgstr "Poedit에서 \"%s\" 파일을 열 수 없습니다."
 
 #: src/findframe.cpp:83 src/findframe.cpp:101 src/findframe.cpp:300
-#: src/resources/menus.xrc:142
+#: src/resources/menus.xrc:145
 msgid "Find"
 msgstr "찾기"
 
@@ -1286,11 +1324,11 @@ msgstr "찾을 문자열"
 msgid "Replacement string"
 msgstr "바꿀 문자열"
 
-#: src/gexecute.cpp:131 src/gexecute.cpp:146 src/gexecute.cpp:170
+#: src/gexecute.cpp:132 src/gexecute.cpp:153 src/gexecute.cpp:202
 msgid "warning: "
 msgstr "경고: "
 
-#: src/gexecute.cpp:171
+#: src/gexecute.cpp:203
 msgid "error: "
 msgstr "오류: "
 
@@ -1417,7 +1455,7 @@ msgstr "프로젝트 삭제"
 
 #: src/manager.cpp:543
 msgid "Deleting the project will not delete any translation files."
-msgstr "프로젝트 삭제 동작은 번역 파일을 삭제하지는 않습니다"
+msgstr "프로젝트를 삭제해도 번역 파일은 삭제되지 않습니다."
 
 #: src/manager.cpp:571
 msgid "Confirmation"
@@ -1445,9 +1483,9 @@ msgstr "카탈로그 관리자"
 
 #: src/menus.cpp:152
 msgid "&Preferences…"
-msgstr "기본 설정(&P)..."
+msgstr "환경설정(&P)…"
 
-#: src/menus.cpp:167 src/resources/menus.xrc:81 src/resources/menus.xrc:402
+#: src/menus.cpp:167 src/resources/menus.xrc:84 src/resources/menus.xrc:402
 #: src/wx_translatable_strings.h:102
 msgid "&Edit"
 msgstr "편집(&E)"
@@ -1548,7 +1586,7 @@ msgstr "말하기 시작"
 msgid "Stop Speaking"
 msgstr "말하기 중지"
 
-#: src/menus.cpp:243 src/resources/menus.xrc:163 src/resources/menus.xrc:412
+#: src/menus.cpp:243 src/resources/menus.xrc:166 src/resources/menus.xrc:412
 msgid "&View"
 msgstr "보기(&V)"
 
@@ -1565,7 +1603,7 @@ msgstr "도구 모음 사용자 지정…"
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
 #: src/menus.cpp:255
 msgid "Enter Full Screen"
-msgstr "전체 화면상태 진입"
+msgstr "전체 화면 진입"
 
 #: src/menus.cpp:262 src/menus.cpp:293 src/resources/menus.xrc:316
 #: src/resources/menus.xrc:421
@@ -1582,11 +1620,11 @@ msgstr "확대"
 
 #: src/menus.cpp:266 src/welcomescreen.cpp:220 src/welcomescreen.cpp:260
 msgid "Welcome to Poedit"
-msgstr "Poedit에 잘 오셨습니다"
+msgstr "Poedit에 오신 것을 환영합니다"
 
 #: src/menus.cpp:271
 msgid "Bring All to Front"
-msgstr "모두 앞으로"
+msgstr "모두 앞으로 가져오기"
 
 #: src/prefsdlg.cpp:172
 msgid "Information about the translator"
@@ -1598,7 +1636,7 @@ msgstr "이름:"
 
 #: src/prefsdlg.cpp:182
 msgid "Your Name"
-msgstr "이름"
+msgstr "당신의 이름"
 
 #: src/prefsdlg.cpp:184
 msgid "Email:"
@@ -1606,7 +1644,7 @@ msgstr "이메일:"
 
 #: src/prefsdlg.cpp:187
 msgid "you@example.com"
-msgstr "gdhong@website.co.kr"
+msgstr "you@example.com"
 
 #: src/prefsdlg.cpp:190
 msgid ""
@@ -1643,19 +1681,19 @@ msgstr ""
 
 #: src/prefsdlg.cpp:219
 msgid "Appearance"
-msgstr "모양새"
+msgstr "모양"
 
 #: src/prefsdlg.cpp:226
 msgid "Use custom list font:"
-msgstr "목록에 사용자 지정 글꼴 사용:"
+msgstr "사용자 지정 목록 글꼴 사용:"
 
 #: src/prefsdlg.cpp:229
 msgid "Use custom text fields font:"
-msgstr "텍스트 입력 창에 사용자 지정 글꼴 사용:"
+msgstr "사용자 지정 텍스트 필드 글꼴 사용:"
 
 #: src/prefsdlg.cpp:239
 msgid "Change UI language"
-msgstr "사용자 언어 바꾸기"
+msgstr "UI 언어 변경"
 
 #. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
 #: src/prefsdlg.cpp:249
@@ -1668,7 +1706,7 @@ msgstr "일반"
 
 #: src/prefsdlg.cpp:374
 msgid "Use translation memory"
-msgstr "번역 기억 장소 사용"
+msgstr "번역 메모리 사용"
 
 #: src/prefsdlg.cpp:384
 msgid "Manage…"
@@ -1677,17 +1715,17 @@ msgstr "관리…"
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
 #: src/prefsdlg.cpp:391
 msgid "When updating from sources"
-msgstr "원본 업데이트 방식"
+msgstr "소스에서 업데이트할 때"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
 #: src/prefsdlg.cpp:394
 msgid "fuzzy match within the file"
-msgstr "파일내 퍼지 일치"
+msgstr "파일 내에서 퍼지 일치"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
 #: src/prefsdlg.cpp:396
 msgid "pre-translate from TM"
-msgstr "번역 기억 장소의 사전 번역"
+msgstr "TM에서 사전 번역"
 
 #: src/prefsdlg.cpp:412
 msgid ""
@@ -1696,10 +1734,9 @@ msgid ""
 "effective if it’s near-empty, but it will get better as you add more "
 "translations to it."
 msgstr ""
-"Poedit은 해당 파일의 이전 번역만을 활용하거나 보유한 번역 기억 장소 전체를 활"
-"용하여 새 항목 채우기를 시도할 수 있습니다. 번역 기억 장소가 거의 비어 있을 "
-"경우 효율적이지는 않지만, 번역을 더 많이 저장하면 좋은 결과를 얻을 수 있습니"
-"다."
+"Poedit은 해당 파일의 이전 번역만을 활용하거나 보유한 번역 메모리 전체를 활용"
+"하여 새 항목 채우기를 시도할 수 있습니다. 번역 메모리가 거의 비어 있을 경우 "
+"효율적이지는 않지만, 번역을 더 많이 저장하면 좋은 결과를 얻을 수 있습니다."
 
 #: src/prefsdlg.cpp:487
 msgid "Stored translations:"
@@ -1736,15 +1773,15 @@ msgstr "TMX로 내보내기…"
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
 #: src/prefsdlg.cpp:509 src/prefsdlg.cpp:677
 msgid "Reset"
-msgstr "초기화"
+msgstr "재설정"
 
 #: src/prefsdlg.cpp:528
 msgid "Select translation files to import"
-msgstr "가져올 번역 파일을 선택하세요"
+msgstr "가져올 번역 파일 선택"
 
 #: src/prefsdlg.cpp:561
 msgid "Select TMX files to import"
-msgstr "가져올 TMX 파일을 선택하세요"
+msgstr "가져올 TMX 파일 선택"
 
 #: src/prefsdlg.cpp:564 src/prefsdlg.cpp:640
 msgid "TMX Files"
@@ -1752,11 +1789,11 @@ msgstr "TMX 파일"
 
 #: src/prefsdlg.cpp:591
 msgid "Importing translations…"
-msgstr "번역 가져오는 중…"
+msgstr "번역을 가져오는 중…"
 
 #: src/prefsdlg.cpp:592
 msgid "Importing translation memory failed."
-msgstr "번역 기억 장소 가져오기에 실패했습니다."
+msgstr "번역 메모리 가져오기에 실패했습니다."
 
 #: src/prefsdlg.cpp:606
 #, c-format
@@ -1785,30 +1822,30 @@ msgstr "\"%s\" TM 내보내기에 실패했습니다."
 
 #: src/prefsdlg.cpp:671
 msgid "Reset translation memory"
-msgstr "번역 기억장소 초기화"
+msgstr "번역 메모리 초기화"
 
 #: src/prefsdlg.cpp:672
 msgid "Are you sure you want to reset the translation memory?"
-msgstr "번역 기억 장소를 초기화하시겠습니까?"
+msgstr "번역 메모리를 초기화하시겠습니까?"
 
 #: src/prefsdlg.cpp:673
 msgid ""
 "Resetting the translation memory will irrevocably delete all stored "
 "translations from it. You can’t undo this operation."
 msgstr ""
-"번역 기억장소를 초기화하면 저장한 모든 번역을 완전히 삭제합니다. 이 동작은 취"
-"소할 수 없습니다."
+"번역 메모리를 초기화하면 저장한 모든 번역을 완전히 삭제합니다. 이 동작은 취소"
+"할 수 없습니다."
 
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
 #: src/prefsdlg.cpp:708
 msgid "TM"
-msgstr "번역 기억 장소"
+msgstr "번역 메모리"
 
 #: src/prefsdlg.cpp:710
 msgid "Translation Memory"
-msgstr "번역 기억 장소(TM)"
+msgstr "번역 메모리"
 
 #: src/prefsdlg.cpp:730
 msgid ""
@@ -1910,31 +1947,31 @@ msgstr "고급"
 msgid "Settings"
 msgstr "설정"
 
-#: src/pretranslate.cpp:97
+#: src/pretranslate.cpp:98
 msgid "Preparing strings…"
 msgstr "문자열 준비 중…"
 
-#: src/pretranslate.cpp:165
+#: src/pretranslate.cpp:170
 msgid "Pre-translating from translation memory…"
-msgstr "번역 기억 장소에서 번역 미리 가져오는 중…"
+msgstr "번역 메모리에서 번역 미리 가져오는 중…"
 
-#: src/pretranslate.cpp:176
+#: src/pretranslate.cpp:180
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
 msgstr[0] "사전 번역한 문자열 %u개"
 
-#: src/pretranslate.cpp:194
+#: src/pretranslate.cpp:198
 msgid "Pre-translating…"
 msgstr "사전 번역 중…"
 
-#: src/pretranslate.cpp:203
+#: src/pretranslate.cpp:207
 #, c-format
 msgid "%d entry was pre-translated."
 msgid_plural "%d entries were pre-translated."
 msgstr[0] "항목 %d개를 사전 번역했습니다."
 
-#: src/pretranslate.cpp:209
+#: src/pretranslate.cpp:213
 msgid ""
 "The translations were marked as needing work, because they may be "
 "inaccurate. You should review them for correctness."
@@ -1942,19 +1979,23 @@ msgstr ""
 "부정확할지도 모르는 번역을 '작업 필요'로 표시했습니다. 정확성 여부를 검토하시"
 "는 것이 좋습니다."
 
-#: src/pretranslate.cpp:212
+#: src/pretranslate.cpp:216
 msgid "Exact matches from TM"
 msgstr "번역 기억 장소와 완전 일치"
 
-#: src/pretranslate.cpp:213
+#: src/pretranslate.cpp:217
 msgid "Approximate matches from TM"
 msgstr "번역 기억 장소와 유사 일치"
 
-#: src/pretranslate.cpp:217
+#: src/pretranslate.cpp:221
 msgid "No entries could be pre-translated."
 msgstr "사전 번역할 수 있는 항목이 없습니다."
 
-#: src/pretranslate.cpp:218
+#: src/pretranslate.cpp:224
+msgid "All strings were already translated."
+msgstr "모든 문자열이 이미 번역되었습니다."
+
+#: src/pretranslate.cpp:228
 msgid ""
 "The TM doesn’t contain any strings similar to the content of this file. It "
 "is only effective for semi-automatic translations after Poedit learns enough "
@@ -1964,7 +2005,7 @@ msgstr ""
 "는 직접 번역한 파일의 내용을 충분히 학습한 후에야 반자동 번역의 결과가 제대"
 "로 나옵니다."
 
-#: src/pretranslate.cpp:247
+#: src/pretranslate.cpp:258
 msgid "Cannot pre-translate without source text."
 msgstr "원문 없이는 사전 번역을 진행할 수 없습니다."
 
@@ -1978,12 +2019,13 @@ msgstr "원문 없이는 사전 번역을 진행할 수 없습니다."
 #. some users into thinking it's all that needs to be done (spoken from
 #. experience). "Pre-translate" nicely expresses that it's only the step done
 #. *before* actual translation.
-#: src/pretranslate.cpp:248 src/pretranslate.cpp:263 src/pretranslate.cpp:272
-#: src/pretranslate.cpp:281 src/pretranslate.cpp:307
+#: src/pretranslate.cpp:259 src/pretranslate.cpp:274 src/pretranslate.cpp:283
+#: src/pretranslate.cpp:292 src/pretranslate.cpp:318
+#: src/wx/main_toolbar.cpp:131
 msgid "Pre-translate"
 msgstr "사전 번역"
 
-#: src/pretranslate.cpp:252
+#: src/pretranslate.cpp:263
 msgid ""
 "Pre-translation requires that source text is available. It doesn’t work if "
 "only IDs without the actual text are used."
@@ -1991,11 +2033,11 @@ msgstr ""
 "원문이 주어져야 사전 번역 기능을 이용할 수 있습니다. 실제 텍스트가 아닌 ID만 "
 "있는 경우 작업을 실행할 수 없습니다."
 
-#: src/pretranslate.cpp:262
+#: src/pretranslate.cpp:273
 msgid "Cannot pre-translate from unknown language."
 msgstr "알 수 없는 언어를 사전 번역할 수 없습니다."
 
-#: src/pretranslate.cpp:267
+#: src/pretranslate.cpp:278
 msgid ""
 "Pre-translation requires that source text’s language is known. Poedit "
 "couldn’t detect it in this file."
@@ -2003,11 +2045,11 @@ msgstr ""
 "사전 번역 작업시 원본 내용의 언어를 알아야 합니다. Poedit에서 이 파일의 언어"
 "를 확인하지 못했습니다."
 
-#: src/pretranslate.cpp:275
+#: src/pretranslate.cpp:286
 msgid "Only fill in exact matches"
 msgstr "정확하게 일치하는 내용만 채우기"
 
-#: src/pretranslate.cpp:276
+#: src/pretranslate.cpp:287
 msgid ""
 "By default, inaccurate results are also included, but marked as needing "
 "work. Check this option to only include perfect matches."
@@ -2015,11 +2057,11 @@ msgstr ""
 "기본적으로, 부정확한 결과도 들어있을 수 있지만, 해당 부분은 작업이 필요한 상"
 "태로 표시합니다. 완전히 일치하는 결과를 넣을 경우에만 이 옵션을 표시하세요."
 
-#: src/pretranslate.cpp:277
+#: src/pretranslate.cpp:288
 msgid "Don’t mark exact matches as needing work"
 msgstr "정확하게 일치하는 내용은 작업 필요로 표시하지 않기"
 
-#: src/pretranslate.cpp:278
+#: src/pretranslate.cpp:289
 msgid ""
 "Only enable if you trust the quality of your TM. By default, all matches "
 "from the TM are marked as needing work and should be reviewed before use."
@@ -2028,35 +2070,35 @@ msgstr ""
 "로 표시하여 활용 전에 검토해야 합니다. 번역 기억 장소 품질을 신뢰하는 경우에"
 "만 이 설정을 켜세요."
 
-#: src/pretranslate.cpp:283
+#: src/pretranslate.cpp:294
 msgid ""
 "Pre-translation automatically finds exact or fuzzy matches for untranslated "
 "strings in the translation memory and fills in their translations."
 msgstr ""
-"사전 번역은 번역 기억 장소에서 번역하지 않은 문자열과 정확한 항목 또는 모호"
-"한 항목과 일치하는 번역을 자동으로 찾아 번역 내용을 채웁니다."
+"사전 번역은 번역 메모리에서 번역하지 않은 문자열과 정확한 항목 또는 모호한 항"
+"목과 일치하는 번역을 자동으로 찾아 번역 내용을 채웁니다."
 
-#: src/progress_ui.cpp:172 src/wx_translatable_strings.h:151
+#: src/progress_ui.cpp:175 src/wx_translatable_strings.h:151
 msgid "Error: "
 msgstr "오류: "
 
-#: src/progress_ui.cpp:176
+#: src/progress_ui.cpp:179
 #, c-format
 msgid "%d error occurred:"
 msgid_plural "%d errors occurred:"
 msgstr[0] "오류 %d건이 나타났습니다:"
 
-#: src/progress_ui.cpp:284
+#: src/progress_ui.cpp:287
 msgid "An error occurred."
 msgstr "오류가 나타났습니다."
 
-#: src/progress_ui.cpp:290
+#: src/progress_ui.cpp:293
 #, c-format
 msgid "%d error occurred."
 msgid_plural "%d errors occurred."
 msgstr[0] "오류 %d건이 나타났습니다."
 
-#: src/progress_ui.cpp:437
+#: src/progress_ui.cpp:440
 msgid "Cancelling…"
 msgstr "취소 중…"
 
@@ -2132,7 +2174,7 @@ msgstr "모든 주석"
 
 #: src/propertiesdlg.cpp:569
 msgid "Additional xgettext flags:"
-msgstr "xgettext 추가 플래그:"
+msgstr "추가 xgettext 플래그:"
 
 #: src/propertiesdlg.cpp:709
 msgid "Additional keywords"
@@ -2140,11 +2182,11 @@ msgstr "추가 키워드"
 
 #: src/propertiesdlg.cpp:740
 msgid "Name of the project the translation is for"
-msgstr "번역 프로젝트 이름"
+msgstr "번역 대상 프로젝트 이름"
 
 #: src/propertiesdlg.cpp:741
 msgid "Team name and email address or URL"
-msgstr "팀 이름과 이메일 주소 또는 URL"
+msgstr "팀 이름 및 이메일 주소 또는 URL"
 
 #: src/propertiesdlg.cpp:742
 msgid "e.g. nplurals=2; plural=(n > 1);"
@@ -2152,7 +2194,7 @@ msgstr "예: nplurals=2; plural=(n > 1);"
 
 #: src/propertiesdlg.cpp:795
 msgid "UTF-8 (recommended)"
-msgstr "UTF-8 (추천)"
+msgstr "UTF-8 (권장)"
 
 #: src/propertiesdlg.cpp:976
 msgid "Please save the file first. This section cannot be edited until then."
@@ -2179,7 +2221,7 @@ msgstr "복수 형식 번역"
 
 #: src/qa_checks.cpp:187
 msgid "Not all plural forms are translated."
-msgstr "모든 서수 형식이 번역되지 않았습니다."
+msgstr "모든 복수형 형식이 번역되지 않았습니다."
 
 #: src/qa_checks.cpp:199
 msgid "Inconsistent upper/lower case"
@@ -2299,11 +2341,11 @@ msgstr "새로 만들기(&N)…"
 
 #: src/resources/menus.xrc:12 src/resources/menus.xrc:350
 msgid "New from &POT/PO file…"
-msgstr "POT/PO 파일로 새로 만들기(&P)..."
+msgstr "POT/PO 파일로 새로 만들기(&P)…"
 
 #: src/resources/menus.xrc:13 src/resources/menus.xrc:351
 msgid "New From &POT/PO File…"
-msgstr "POT/PO 파일로 새로 만들기(&P)..."
+msgstr "POT/PO 파일로 새로 만들기(&P)…"
 
 #: src/resources/menus.xrc:17 src/resources/menus.xrc:355
 #: src/wx_translatable_strings.h:109
@@ -2359,188 +2401,184 @@ msgstr "다른 이름으로 저장(&A)…"
 msgid "Save &As…"
 msgstr "다른 이름으로 저장(&A)…"
 
-#: src/resources/menus.xrc:54
+#: src/resources/menus.xrc:57
 msgid "Compile to MO…"
 msgstr "MO로 컴파일…"
 
-#: src/resources/menus.xrc:57
+#: src/resources/menus.xrc:60
 msgid "E&xport to HTML…"
 msgstr "HTML로 내보내기(&X)…"
 
-#: src/resources/menus.xrc:62 src/resources/menus.xrc:383
+#: src/resources/menus.xrc:65 src/resources/menus.xrc:383
 msgid "Check for updates…"
 msgstr "업데이트 확인…"
 
-#: src/resources/menus.xrc:65 src/resources/menus.xrc:386
+#: src/resources/menus.xrc:68 src/resources/menus.xrc:386
 msgid "Settings…"
 msgstr "설정…"
 
-#: src/resources/menus.xrc:69 src/resources/menus.xrc:390
+#: src/resources/menus.xrc:72 src/resources/menus.xrc:390
 #: src/wx_translatable_strings.h:112
 msgid "&Preferences"
-msgstr "기본 설정(&P)"
+msgstr "환경설정(&P)"
 
-#: src/resources/menus.xrc:76 src/resources/menus.xrc:397
+#: src/resources/menus.xrc:79 src/resources/menus.xrc:397
 msgid "E&xit"
 msgstr "나가기(&X)"
 
-#: src/resources/menus.xrc:77 src/resources/menus.xrc:398
+#: src/resources/menus.xrc:80 src/resources/menus.xrc:398
 #: src/wx_translatable_strings.h:103
 msgid "Quit"
 msgstr "끝내기"
 
-#: src/resources/menus.xrc:104
+#: src/resources/menus.xrc:107
 msgid "Copy from singular"
 msgstr "단수 표현 복사"
 
-#: src/resources/menus.xrc:105
+#: src/resources/menus.xrc:108
 msgid "Copy From Singular"
 msgstr "단수 표현 복사"
 
-#: src/resources/menus.xrc:110
+#: src/resources/menus.xrc:113
 msgid "Translation needs &work"
 msgstr "작업이 필요한 번역(&W)"
 
-#: src/resources/menus.xrc:111
+#: src/resources/menus.xrc:114
 msgid "Translation Needs &Work"
 msgstr "작업이 필요한 번역(&W)"
 
-#: src/resources/menus.xrc:116
+#: src/resources/menus.xrc:119
 msgid "Edit &comment"
 msgstr "주석 편집(&C)"
 
-#: src/resources/menus.xrc:117
+#: src/resources/menus.xrc:120
 msgid "Edit &Comment"
 msgstr "주석 편집(&C)"
 
 #. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
-#: src/resources/menus.xrc:122 src/sidebar.cpp:537
+#: src/resources/menus.xrc:125 src/sidebar.cpp:537
 msgid "Suggestions"
 msgstr "제안"
 
-#: src/resources/menus.xrc:125 src/resources/menus.xrc:144
+#: src/resources/menus.xrc:128 src/resources/menus.xrc:147
 msgid "&Find…"
 msgstr "찾기(&F)…"
 
-#: src/resources/menus.xrc:130
+#: src/resources/menus.xrc:133
 msgid "Replace…"
 msgstr "바꾸기…"
 
-#: src/resources/menus.xrc:134
+#: src/resources/menus.xrc:137
 msgid "Find next"
 msgstr "다음 찾기"
 
-#: src/resources/menus.xrc:138
+#: src/resources/menus.xrc:141
 msgid "Find previous"
 msgstr "이전 찾기"
 
-#: src/resources/menus.xrc:148
+#: src/resources/menus.xrc:151
 msgid "Find and Replace…"
 msgstr "찾고 바꾸기…"
 
-#: src/resources/menus.xrc:152
+#: src/resources/menus.xrc:155
 msgid "Find Next"
 msgstr "다음 찾기"
 
-#: src/resources/menus.xrc:156
+#: src/resources/menus.xrc:159
 msgid "Find Previous"
 msgstr "이전 찾기"
 
-#: src/resources/menus.xrc:165
+#: src/resources/menus.xrc:168
 msgid "Show string &ID"
 msgstr "문자열 ID 표시(&I)"
 
-#: src/resources/menus.xrc:166
+#: src/resources/menus.xrc:169
 msgid "Show String &ID"
 msgstr "문자열 ID 표시(&I)"
 
-#: src/resources/menus.xrc:170
+#: src/resources/menus.xrc:173
 msgid "Show warnings"
 msgstr "경고 표시"
 
-#: src/resources/menus.xrc:171
+#: src/resources/menus.xrc:174
 msgid "Show Warnings"
 msgstr "경고 표시"
 
-#: src/resources/menus.xrc:176
+#: src/resources/menus.xrc:179
 msgid "Sort by &file order"
 msgstr "파일순 정렬(&F)"
 
-#: src/resources/menus.xrc:177
+#: src/resources/menus.xrc:180
 msgid "Sort by &File Order"
 msgstr "파일순 정렬(&F)"
 
-#: src/resources/menus.xrc:181
+#: src/resources/menus.xrc:184
 msgid "Sort by &source"
 msgstr "원본순 정렬(&S)"
 
-#: src/resources/menus.xrc:182
+#: src/resources/menus.xrc:185
 msgid "Sort by &Source"
 msgstr "원본순 정렬(&S)"
 
-#: src/resources/menus.xrc:186
+#: src/resources/menus.xrc:189
 msgid "Sort by &translation"
 msgstr "번역순 정렬(&T)"
 
-#: src/resources/menus.xrc:187
+#: src/resources/menus.xrc:190
 msgid "Sort by &Translation"
 msgstr "번역순 정렬(&T)"
 
-#: src/resources/menus.xrc:192
+#: src/resources/menus.xrc:195
 msgid "&Group by context"
 msgstr "상태별 모음(&G)"
 
-#: src/resources/menus.xrc:193
+#: src/resources/menus.xrc:196
 msgid "&Group By Context"
 msgstr "상태별 모음(&G)"
 
-#: src/resources/menus.xrc:197
+#: src/resources/menus.xrc:200
 msgid "Entries with errors first"
-msgstr "오류 항목을 우선 표시"
+msgstr "오류가 있는 항목 먼저"
 
-#: src/resources/menus.xrc:198
+#: src/resources/menus.xrc:201
 msgid "Entries with Errors First"
-msgstr "오류 항목을 우선 표시"
+msgstr "오류가 있는 항목 먼저"
 
-#: src/resources/menus.xrc:202
+#: src/resources/menus.xrc:205
 msgid "&Untranslated entries first"
-msgstr "번역하지 않은 항목 먼저(&U)"
+msgstr "번역되지 않은 항목 먼저(&U)"
 
-#: src/resources/menus.xrc:203
+#: src/resources/menus.xrc:206
 msgid "&Untranslated Entries First"
-msgstr "번역하지 않은 항목 먼저(&U)"
+msgstr "번역되지 않은 항목 먼저(&U)"
 
-#: src/resources/menus.xrc:208
+#: src/resources/menus.xrc:211
 msgid "&Show code occurrences"
-msgstr "코드 출현 횟수 표시(&S)"
+msgstr "코드 발생 표시(&S)"
 
-#: src/resources/menus.xrc:209
+#: src/resources/menus.xrc:212
 msgid "&Show Code Occurrences"
-msgstr "코드 출현 횟수 표시(&S)"
+msgstr "코드 발생 표시(&S)"
 
-#: src/resources/menus.xrc:213
+#: src/resources/menus.xrc:216
 msgid "Show sidebar"
-msgstr "가장자리 표시줄 표시"
+msgstr "사이드바 표시"
 
-#: src/resources/menus.xrc:219
+#: src/resources/menus.xrc:222
 msgid "Show status bar"
 msgstr "상태 표시줄 표시"
 
-#: src/resources/menus.xrc:227 src/resources/menus.xrc:415
+#: src/resources/menus.xrc:230 src/resources/menus.xrc:415
 msgid "&Translation"
 msgstr "번역(&T)"
 
-#: src/resources/menus.xrc:230
+#: src/resources/menus.xrc:233
 msgid "&Update from source code"
 msgstr "소스 코드에서 업데이트(&U)"
 
-#: src/resources/menus.xrc:231
+#: src/resources/menus.xrc:234
 msgid "&Update from Source Code"
 msgstr "소스 코드에서 업데이트(&U)"
-
-#: src/resources/menus.xrc:238
-msgid "Sync with Crowdin"
-msgstr "Crowdin 동기화"
 
 #: src/resources/menus.xrc:242 src/resources/menus.xrc:243
 msgid "Pre-&translate…"
@@ -2624,7 +2662,7 @@ msgstr "다음 미완료(&X)"
 
 #: src/resources/menus.xrc:305
 msgid "Previous plural form"
-msgstr "이전 복수 형태"
+msgstr "이전 복수형"
 
 #: src/resources/menus.xrc:306
 msgid "Previous Plural Form"
@@ -2632,11 +2670,11 @@ msgstr "이전 복수 형태"
 
 #: src/resources/menus.xrc:310
 msgid "Next plural form"
-msgstr "다음 복수 형태"
+msgstr "다음 복수형"
 
 #: src/resources/menus.xrc:311
 msgid "Next Plural Form"
-msgstr "다음 복수 형태"
+msgstr "다음 복수형"
 
 #: src/resources/menus.xrc:320 src/resources/menus.xrc:425
 msgid "&Online help"
@@ -2726,8 +2764,8 @@ msgid ""
 "This will be attached to the command line\n"
 "only if source code charset was given. %c expands to charset value."
 msgstr ""
-"소스 코드 문자 집합을 지정했을 경우에만\n"
-"명령줄에 붙일 수 있습니다. %c는 문자 집합을 의미합니다."
+"소스 코드 문자 집합이 지정된 경우에만\n"
+"명령줄에 첨부됩니다. %c는 문자 집합 값으로 확장됩니다."
 
 #: src/resources/properties.xrc:4 src/resources/properties.xrc:153
 msgid "Translation Properties"
@@ -2735,7 +2773,7 @@ msgstr "번역 속성"
 
 #: src/resources/properties.xrc:19
 msgid "Project name and version:"
-msgstr "프로젝트 이름과 버전:"
+msgstr "프로젝트 이름 및 버전:"
 
 #: src/resources/properties.xrc:34
 msgid "Language team:"
@@ -2743,7 +2781,7 @@ msgstr "언어 팀:"
 
 #: src/resources/properties.xrc:66
 msgid "Plural forms:"
-msgstr "복수 형태:"
+msgstr "복수형:"
 
 #: src/resources/properties.xrc:73
 msgid "Use default rules for this language"
@@ -2751,11 +2789,11 @@ msgstr "이 언어에 기본 규칙 사용"
 
 #: src/resources/properties.xrc:82
 msgid "Use custom expression"
-msgstr "사용자 정의 표현식 사용"
+msgstr "사용자 지정 표현식 사용"
 
 #: src/resources/properties.xrc:98
 msgid "Learn about plural forms"
-msgstr "서수 형식 알아보기"
+msgstr "복수형에 대해 알아보기"
 
 #: src/resources/properties.xrc:112
 msgid "Charset:"
@@ -2763,11 +2801,11 @@ msgstr "문자 집합:"
 
 #: src/resources/properties.xrc:138
 msgid "Advanced Extraction Settings…"
-msgstr "고급 확장 프로그램 설정…"
+msgstr "고급 추출 설정…"
 
 #: src/resources/properties.xrc:139
 msgid "Advanced extraction settings…"
-msgstr "고급 확장 프로그램 설정…"
+msgstr "고급 추출 설정…"
 
 #: src/resources/properties.xrc:154
 msgid "Translation properties"
@@ -2807,51 +2845,11 @@ msgstr ""
 
 #: src/resources/properties.xrc:245
 msgid "Also use default keywords for supported languages"
-msgstr "지원되는 언어의 기본 키워드 또한 사용"
+msgstr "지원되는 언어에 기본 키워드도 사용합니다"
 
 #: src/resources/properties.xrc:252
 msgid "Learn about gettext keywords"
 msgstr "gettext 키워드에 대해 알아보기"
-
-#: src/resources/toolbar.xrc:13 src/resources/toolbar.xrc:18
-msgid "Open"
-msgstr ""
-
-#: src/resources/toolbar.xrc:14 src/resources/toolbar.xrc:19
-msgid "Open file"
-msgstr "파일 열기"
-
-#: src/resources/toolbar.xrc:25 src/resources/toolbar.xrc:30
-msgid "Save file"
-msgstr "파일 저장"
-
-#: src/resources/toolbar.xrc:38
-msgid "Validate"
-msgstr "검증하기"
-
-#: src/resources/toolbar.xrc:39
-msgid "Check for errors in the translation"
-msgstr "번역 오류 검사"
-
-#: src/resources/toolbar.xrc:45 src/wx/main_toolbar.cpp:99
-msgid "Update from code"
-msgstr "코드에서 업데이트"
-
-#: src/resources/toolbar.xrc:46 src/wx/main_toolbar.cpp:99
-msgid "Update from Code"
-msgstr "코드에서 업데이트"
-
-#: src/resources/toolbar.xrc:47 src/wx/main_toolbar.cpp:100
-msgid "Update from source code"
-msgstr "소스 코드에서 업데이트"
-
-#: src/resources/toolbar.xrc:55
-msgid "Sidebar"
-msgstr "가장자리 창"
-
-#: src/resources/toolbar.xrc:56
-msgid "Show or hide the sidebar"
-msgstr "가장자리 창을 표시하거나 숨깁니다"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
 #: src/sidebar.cpp:134
@@ -2863,15 +2861,15 @@ msgid ""
 "The old source text (before it changed during an update) that the now-"
 "inaccurate translation corresponds to."
 msgstr ""
-"부정확한 번역을 채워둔, 업데이트하여 바뀌기 전의 오래된 원본 텍스트입니다."
+"이전 원본 텍스트 (업데이트 중 변경되기 전)는 현재 부정확한 번역에 해당합니다."
 
 #: src/sidebar.cpp:163
 msgid "Notes for translators"
-msgstr "번역 참고"
+msgstr "번역가를 위한 참고"
 
 #: src/sidebar.cpp:196
 msgid "Comment"
-msgstr "참고 설명"
+msgstr "주석"
 
 #: src/sidebar.cpp:226 src/sidebar.cpp:245
 msgid "Add comment"
@@ -2883,11 +2881,11 @@ msgstr "주석 추가"
 
 #: src/sidebar.cpp:484
 msgid "Delete From Translation Memory"
-msgstr "TM에서 삭제"
+msgstr "번역 메모리에서 삭제"
 
 #: src/sidebar.cpp:484
 msgid "Delete from translation memory"
-msgstr "TM에서 삭제"
+msgstr "번역 메모리에서 삭제"
 
 #: src/sidebar.cpp:539
 msgid "Translation suggestions"
@@ -2905,23 +2903,23 @@ msgstr "일치하는 결과 없음"
 
 #: src/sidebar.cpp:623
 msgid "This string was found in Poedit’s translation memory."
-msgstr "이 문자열은 Poedit의 번역 기억 장소에 있습니다."
+msgstr "이 문자열은 Poedit의 번역 메모리에서 발견되었습니다."
 
 #: src/sidebar.cpp:877
 msgid ""
 "Translation suggestions require that source text is available. They don’t "
 "work if only IDs without the actual text are used."
 msgstr ""
-"원문이 주어져야 번역 제안 기능을 이용할 수 있습니다. 실제 텍스트가 아닌 ID만 "
-"있는 경우 작업을 실행할 수 없습니다."
+"번역 제안은 원본 텍스트를 사용할 수 있어야 합니다. 실제 텍스트가 없는 ID만 사"
+"용하면 작동하지 않습니다."
 
 #: src/sidebar.cpp:882
 msgid ""
 "Translation suggestions require that source text’s language is known. Poedit "
 "couldn’t detect it in this file."
 msgstr ""
-"번역 제안 기능에서 원본 내용의 언어를 알아야 합니다. Poedit에서 이 파일의 언"
-"어를 확인하지 못했습니다."
+"번역 제안에는 원본 텍스트의 언어가 알려져 있어야 합니다. Poedit에서 이 파일"
+"을 감지할 수 없습니다."
 
 #: src/subprocess.cpp:219 src/subprocess.cpp:251
 #, c-format
@@ -2935,12 +2933,12 @@ msgstr "TMX 파일이 잘못되었습니다."
 #: src/tm/transmem.cpp:87
 #, c-format
 msgid "Translation memory database is corrupted: %s (%d)."
-msgstr "TM 데이터베이스가 손상되었습니다: %s(%d)."
+msgstr "번역 메모리 데이터베이스가 손상되었습니다: %s (%d)."
 
 #: src/tm/transmem.cpp:90
 #, c-format
 msgid "Translation memory error: %s (%d)."
-msgstr "TM 오류: %s (%d)."
+msgstr "번역 메모리 오류: %s (%d)."
 
 #: src/uilang.cpp:235
 msgid "(Use default language)"
@@ -2956,15 +2954,15 @@ msgstr "선호하는 언어 선택"
 
 #: src/uilang.cpp:263
 msgid "You must restart Poedit for this change to take effect."
-msgstr "바뀐 내용을 반영하려면 Poedit을 다시 시작해야 합니다."
+msgstr "이 변경 사항을 적용하려면 Poedit을 다시 시작해야 합니다."
 
 #: src/utility.cpp:143 src/utility.cpp:153
 msgid "Cannot create temporary directory."
-msgstr "임시 디렉터리를 만들 수 없습니다."
+msgstr "임시 디렉토리를 만들 수 없습니다."
 
 #: src/welcomescreen.cpp:139
 msgid "There are no translations. That’s unusual."
-msgstr "번역이 없습니다. 흔한 일은 아니네요."
+msgstr "번역이 없습니다. 그건 드문 일입니다."
 
 #: src/welcomescreen.cpp:148
 msgid ""
@@ -2973,9 +2971,9 @@ msgid ""
 "accurate. Translators typically use PO template files (POTs) prepared for "
 "them by the developer."
 msgstr ""
-"번역 가능한 항목은 Gettext 시스템에서 별도로 추가하지 않는 대신 소스코드에서 "
-"자동으로 추출합니다. 이 방법으로 최신 버전으로 정확하게 유지할 수 있습니다. "
-"번역자들은 보통 개발자들이 준비한 PO 양식 파일(POT)를 사용합니다."
+"번역 가능한 항목은 Gettext 시스템에서 수동으로 추가되지 않고 소스 코드에서 자"
+"동으로 추출됩니다. 이렇게 하면 최신 상태와 정확성을 유지할 수 있습니다. 번역"
+"가는 일반적으로 개발자가 준비한 PO 템플릿 파일 (POT)을 사용합니다."
 
 #: src/welcomescreen.cpp:151
 msgid "Learn more about GNU gettext"
@@ -2986,28 +2984,28 @@ msgid ""
 "The simplest way to fill this file with translations is to update it from a "
 "POT:"
 msgstr ""
-"이 파일의 번역을 채우는 가장 간단한 방법은 POT에서 업데이트하는 방법입니다:"
+"이 파일을 번역으로 채우는 가장 간단한 방법은 POT에서 업데이트하는 것입니다:"
 
 #: src/welcomescreen.cpp:160
 msgid "Update from POT"
-msgstr "POT 파일로 업데이트"
+msgstr "POT에서 업데이트"
 
 #: src/welcomescreen.cpp:161
 msgid "Take translatable strings from an existing POT template."
-msgstr "기존 POT 양식에서 번역할 수 있는 문자열을 가져옵니다."
+msgstr "기존 POT 템플릿에서 번역 가능한 문자열을 가져옵니다."
 
 #: src/welcomescreen.cpp:165
 msgid ""
 "You can also extract translatable strings directly from the source code:"
-msgstr "소스 코드에서 직접 번역 가능 문자열을 가져올 수도 있습니다:"
+msgstr "소스 코드에서 직접 번역 가능한 문자열을 추출할 수도 있습니다:"
 
 #: src/welcomescreen.cpp:170
 msgid "Extract from sources"
-msgstr "소스에서 가져오기"
+msgstr "소스에서 추출"
 
 #: src/welcomescreen.cpp:171
 msgid "Configure source code extraction in Properties."
-msgstr "속성에서 소스 코드 추출을 설정합니다."
+msgstr "속성에서 소스 코드 추출을 구성합니다."
 
 #. TRANSLATORS: This is version information in about dialog, "%s" will be
 #. version number when used
@@ -3022,7 +3020,7 @@ msgstr "새로 만들기"
 
 #: src/welcomescreen.cpp:271
 msgid "Create new translation from POT template."
-msgstr "POT 양식에서 새 번역을 만듭니다."
+msgstr "POT 템플릿에서 새 번역을 만듭니다."
 
 #: src/welcomescreen.cpp:276
 msgid "Browse files"
@@ -3030,7 +3028,7 @@ msgstr "파일 찾아보기"
 
 #: src/welcomescreen.cpp:277
 msgid "Open and edit translation files."
-msgstr "번역 파일을 열어 편집합니다."
+msgstr "번역 파일을 열고 편집합니다."
 
 #: src/welcomescreen.cpp:283
 msgid "Translate cloud project"
@@ -3038,19 +3036,65 @@ msgstr "클라우드 프로젝트 번역"
 
 #: src/welcomescreen.cpp:284
 msgid "Collaborate with other people online."
-msgstr "다른 번역가와 온라인에서 공동 번역을 진행합니다."
+msgstr "온라인에서 다른 사람들과 협업하세요."
 
 #: src/welcomescreen.cpp:303
 msgid "Recent files"
 msgstr "최근 파일"
 
-#: src/wx/main_toolbar.cpp:86
+#: src/wx/main_toolbar.cpp:98 src/wx/main_toolbar.cpp:133
 msgid "Sync"
 msgstr "동기화"
 
-#: src/wx/main_toolbar.cpp:87
-msgid "Synchronize the translation with Crowdin"
+#: src/wx/main_toolbar.cpp:99
+msgid "Synchronize translations with Crowdin"
 msgstr "Crowdin과 번역 동기화"
+
+#: src/wx/main_toolbar.cpp:104
+msgid "Upload"
+msgstr "업로드"
+
+#. TRANSLATORS: this is the tooltip for the "Upload" button in the toolbar, %s is hostname or service (Crowdin, ftp.foo.com etc.)
+#: src/wx/main_toolbar.cpp:106
+#, c-format
+msgid "Upload translations to %s"
+msgstr "번역을 %s에 업로드하는 중"
+
+#: src/wx/main_toolbar.cpp:124
+msgid "Open file"
+msgstr "파일 열기"
+
+#: src/wx/main_toolbar.cpp:125
+msgid "Save file"
+msgstr "파일 저장"
+
+#: src/wx/main_toolbar.cpp:129
+msgid "Check for errors in the translation"
+msgstr "번역에 오류가 있는지 확인합니다"
+
+#: src/wx/main_toolbar.cpp:129
+msgid "Validate"
+msgstr "검증하기"
+
+#: src/wx/main_toolbar.cpp:131
+msgid "Pre-translate strings that don’t have a translation yet"
+msgstr "아직 번역하지 않은 사전 번역 문자열"
+
+#: src/wx/main_toolbar.cpp:132
+msgid "Update from Code"
+msgstr "코드에서 업데이트"
+
+#: src/wx/main_toolbar.cpp:132
+msgid "Update from code"
+msgstr "코드에서 업데이트"
+
+#: src/wx/main_toolbar.cpp:132
+msgid "Update from source code"
+msgstr "원본 코드에서 업데이트"
+
+#: src/wx/main_toolbar.cpp:137
+msgid "Show or hide the sidebar"
+msgstr "사이드바 표시 또는 숨기기"
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
@@ -3063,7 +3107,7 @@ msgstr "%s 정보"
 #: src/wx_translatable_strings.h:49
 #, c-format
 msgid "%s Preferences"
-msgstr "%s 설정"
+msgstr "%s 환경설정"
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
@@ -3090,7 +3134,7 @@ msgstr "%s 숨기기"
 #: src/wx_translatable_strings.h:68
 msgctxt "macOS menu item"
 msgid "Hide Others"
-msgstr "다른 항목 숨기기"
+msgstr "기타 숨기기"
 
 #. TRANSLATORS: macOS item in app menu
 #: src/wx_translatable_strings.h:70
@@ -3103,23 +3147,23 @@ msgstr "모두 표시"
 #, c-format
 msgctxt "macOS menu item"
 msgid "Quit %s"
-msgstr "%s 끝내기"
+msgstr "%s 종료"
 
 #. TRANSLATORS: macOS item in app menu
 #: src/wx_translatable_strings.h:74
 msgid "Preferences…"
-msgstr "설정…"
+msgstr "환경설정…"
 
 #. TRANSLATORS: macOS item in app menu
 #: src/wx_translatable_strings.h:76
 msgid "Preferences..."
-msgstr "설정…"
+msgstr "환경설정..."
 
 #. TRANSLATORS: macOS item in app menu
 #: src/wx_translatable_strings.h:78
 msgctxt "macOS menu item"
 msgid "Preferences..."
-msgstr "기본 설정..."
+msgstr "환경설정..."
 
 #: src/wx_translatable_strings.h:92
 msgid "&Apply"
@@ -3179,15 +3223,15 @@ msgstr "새로 만들기(&N)"
 
 #: src/wx_translatable_strings.h:106
 msgid "New"
-msgstr "새 파일"
+msgstr "새로 만들기"
 
 #: src/wx_translatable_strings.h:107
 msgid "&No"
-msgstr "아니요(&N)"
+msgstr "아니오(&N)"
 
 #: src/wx_translatable_strings.h:107
 msgid "No"
-msgstr "아니요"
+msgstr "아니오"
 
 #: src/wx_translatable_strings.h:108
 msgid "&OK"
@@ -3215,7 +3259,7 @@ msgstr "붙여넣기"
 
 #: src/wx_translatable_strings.h:112
 msgid "Preferences"
-msgstr "설정"
+msgstr "환경설정"
 
 #: src/wx_translatable_strings.h:113
 msgid "&Redo"
