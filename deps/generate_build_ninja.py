@@ -102,7 +102,7 @@ with open('build.ninja', 'w') as buildfile:
     n.rule('download',
            description='Downloading $url...',
            pool='console',
-           command='$curl -L -o $out $url && test "$sha256" = `shasum -a256 $out | cut -f1 -d" "`')
+           command='curl -L -o $out $url && test "$sha256" = `shasum -a256 $out | cut -f1 -d" "`')
 
     targets = []
 
@@ -138,8 +138,6 @@ with open('build.ninja', 'w') as buildfile:
                                      'CFLAGS="$cflags"',
                                      'CXXFLAGS="$cxxflags"',
                                      'LDFLAGS="$ldflags"',
-                                     'GSED=$sed',
-                                     'YACC=$yacc',
                                      '--config-cache',
                                      '--with-libiconv-prefix=$SDKROOT/usr',
                                      '--with-libxml2-prefix=$SDKROOT/usr',
@@ -160,8 +158,6 @@ with open('build.ninja', 'w') as buildfile:
                                      'touch `find . -name *.1`',
                                      'touch `find . -name *.3`',
                                      'find . -name *.html -exec touch {} \\;',
-                                     # Prevent running moopp tool that requires GNU sed and refused to be configured to use gsed:
-                                     'touch `find . -name *stream*.[ch]*`',
                                      # Prevent running msgfmt:
                                      'touch `find . -name *.gmo`',
                                  ] + default_build_commands + [
