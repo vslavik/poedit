@@ -56,6 +56,14 @@
       />
   </Target>
 
+  <Target Name="Clean">
+    <MSBuild
+      Projects="..\Poedit.sln"
+      Properties="Configuration=$(Configuration)"
+      Targets="Clean"
+      />
+  </Target>
+  
   <Target Name="UninstHelper" Inputs="uninst-helper.c" Outputs="uninst-helper.dll">
     <!-- the helper needs to be compiled as 32bit: -->
     <PropertyGroup>
