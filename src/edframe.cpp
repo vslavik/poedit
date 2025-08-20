@@ -1759,6 +1759,7 @@ void PoeditFrame::CloudSyncWithCrowdin()
 
 void PoeditFrame::CloudSyncUpload()
 {
+    wxCHECK_RET(m_catalog->GetCloudSync(), "no cloud sync destination");
     CloudSyncProgressWindow::RunSync(this, m_catalog->GetCloudSync(), m_catalog);
 }
 
