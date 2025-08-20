@@ -1794,10 +1794,6 @@ void PoeditFrame::OnCloudSyncUpdate(wxUpdateUIEvent& event)
         // TRANSLATORS: this is the menu action to upload to server/cloud; %s is hostname or service (Crowdin, ftp.foo.com etc.)
         event.SetText(wxString::Format(_("Upload to %s"), sync->GetName()));
     }
-
-    event.Enable(m_catalog &&
-                 m_catalog->HasCapability(Catalog::Cap::Translations) &&
-                 (CanSyncWithCrowdin(m_catalog) || m_catalog->GetCloudSync() != nullptr));
 }
 
 #endif // HAVE_HTTP_CLIENT
