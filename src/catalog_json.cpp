@@ -111,6 +111,7 @@ bool JSONCatalog::HasCapability(Catalog::Cap cap) const
 
 bool JSONCatalog::CanLoadFile(const wxString& extension)
 {
+    // This is static, for all types created by JSONCatalog::Open(), so has to cover Flutter ARB too:
     return extension == "json" || extension == "arb";
 }
 
@@ -291,7 +292,9 @@ protected:
 class FlutterCatalog : public JSONCatalog
 {
 public:
-    using JSONCatalog::JSONCatalog;
+    FlutterCatalog(json_t&& doc) : JSONCatalog(std::move(doc), Type::JSON_FLUTTER) {}
+
+    wxString GetPreferredExtension() const override { return "arb"; }
 
     static bool SupportsFile(const json_t& doc, const std::string& extension)
     {

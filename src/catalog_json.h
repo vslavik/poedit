@@ -85,7 +85,7 @@ public:
     void SetLanguage(Language lang) override { m_language = lang; }
 
 protected:
-    JSONCatalog(json_t&& doc) : Catalog(Type::JSON), m_doc(std::move(doc)) {}
+    JSONCatalog(json_t&& doc, Type type = Type::JSON) : Catalog(type), m_doc(std::move(doc)) {}
 
     virtual void Parse() = 0;
 
