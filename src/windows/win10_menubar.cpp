@@ -100,8 +100,12 @@ void Windows10MenubarMixin::MenuWindow::Create(wxWindow *parent)
         wxGetInstance(),
         NULL
     );
+
     SendMessage(m_mctrlHandle, TB_SETEXTENDEDSTYLE, 0, TBSTYLE_EX_HIDECLIPPEDBUTTONS);
     SendMessage(m_mctrlHandle, CCM_SETNOTIFYWINDOW, (WPARAM)parent->GetHWND(), 0);
+
+    // use slightly larger padding than default (HiDPI unaware):
+    SendMessage(m_mctrlHandle, TB_SETPADDING, 0, MAKELONG(PX(10), 6));
 
     m_mctrlWin = new mCtrlWrapper(this, m_mctrlHandle);
 
