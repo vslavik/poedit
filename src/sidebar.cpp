@@ -965,7 +965,6 @@ Sidebar::Sidebar(wxWindow *parent, wxMenu *suggestionsMenu)
     SetDoubleBuffered(true);
 #endif
 
-    Bind(wxEVT_PAINT, &Sidebar::OnPaint, this);
 #ifdef __WXOSX__
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
@@ -1083,14 +1082,4 @@ void Sidebar::SetUpperHeight(int size)
 void Sidebar::DoEnable(bool)
 {
     RefreshContent();
-}
-
-void Sidebar::OnPaint(wxPaintEvent&)
-{
-    wxPaintDC dc(this);
-
-#ifdef __WXOSX__
-    dc.SetPen(ColorScheme::Get(Color::ToolbarSeparator));
-    dc.DrawLine(0, 0, dc.GetSize().x - 1, 0);
-#endif
 }

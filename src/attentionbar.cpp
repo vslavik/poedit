@@ -149,12 +149,12 @@ void AttentionBar::OnPaint(wxPaintEvent&)
 {
     wxPaintDC dc(this);
 
-    auto bg = GetBackgroundColour().ChangeLightness(80);
+    auto bg = GetBackgroundColour().ChangeLightness(90);
     dc.SetBrush(bg);
     dc.SetPen(bg);
 
     wxRect rect(GetSize());
-    dc.DrawRectangle(0, rect.height - MACOS_OR_OTHER(0, PX(1)), rect.width, PX(1));
+    dc.DrawRectangle(0, rect.height - PX(1), rect.width, PX(1));
 }
 
 
