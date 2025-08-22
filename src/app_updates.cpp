@@ -29,6 +29,7 @@
 
 #include "edapp.h"
 #include "edframe.h"
+#include "concurrency.h"
 
 #include <wx/menu.h>
 
@@ -203,13 +204,17 @@ private:
     // WinSparkle callbacks:
     static int WinSparkle_CanShutdown()
     {
-        return !PoeditFrame::AnyWindowIsModified();
+        wxASSERT( !wxThread::IsMain() );
+
+        return dispatch::on_main([]() {
+            return !PoeditFrame::AnyWindowIsModified();
+        }).get();
     }
 
     static void WinSparkle_Shutdown()
     {
-        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, wxID_EXIT);
-        wxGetApp().AddPendingEvent(evt);
+        auto evt = new wxCommandEvent(wxEVT_COMMAND_MENU_SELECTED, wxID_EXIT);
+        wxGetApp().QueueEvent(evt);
     }
 };
 
