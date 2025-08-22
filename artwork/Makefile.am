@@ -9,6 +9,7 @@ appiconsscalabledir=$(iconsdir)/scalable/apps
 
 uiiconsdir=$(datadir)/poedit/icons
 uiiconssymbolicdir=$(uiiconsdir)/hicolor/scalable/actions
+uiiconssymbolicyarudir=$(uiiconsdir)/Yaru/scalable/actions
 
 dist_appicons16_DATA = linux/appicon/16x16/apps/net.poedit.Poedit.png
 dist_appicons24_DATA = linux/appicon/24x24/apps/net.poedit.Poedit.png
@@ -24,6 +25,14 @@ dist_uiiconssymbolic_DATA = \
 		linux/poedit-upload-symbolic.svg \
 		linux/poedit-validate-symbolic.svg \
 		linux/poedit-sidebar-symbolic.svg
+
+dist_uiiconssymbolicyaru_DATA = \
+		linux/yaru/poedit-pretranslate-symbolic.svg \
+		linux/yaru/poedit-sync-symbolic.svg \
+		linux/yaru/poedit-update-symbolic.svg \
+		linux/yaru/poedit-upload-symbolic.svg \
+		linux/yaru/poedit-validate-symbolic.svg \
+		linux/yaru/poedit-sidebar-symbolic.svg
 
 dist_uiicons_DATA = \
 		AccountCrowdin.png \
