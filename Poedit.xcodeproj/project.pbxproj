@@ -84,7 +84,6 @@
 		B240FFC719C6F1A600777AFE /* suggestions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B240FFC619C6F1A600777AFE /* suggestions.cpp */; };
 		B24ACD5F16F6201F00399242 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B24ACD5E16F6201F00399242 /* Cocoa.framework */; };
 		B24ACD6916F6201F00399242 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B24ACD6716F6201F00399242 /* InfoPlist.strings */; };
-		B24ACD8416F6263900399242 /* Poedit.iconset in Resources */ = {isa = PBXBuildFile; fileRef = B24ACD8316F6263900399242 /* Poedit.iconset */; };
 		B24D19691E84503B00C6DD8D /* StatusWarning.png in Resources */ = {isa = PBXBuildFile; fileRef = B24D19671E84503B00C6DD8D /* StatusWarning.png */; };
 		B24D196A1E84503B00C6DD8D /* StatusWarning@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B24D19681E84503B00C6DD8D /* StatusWarning@2x.png */; };
 		B24F271F2BA8718700311C6D /* libboost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B25080672BA8715A000FDF1F /* libboost.a */; };
@@ -450,7 +449,6 @@
 		B24ACD6616F6201F00399242 /* Poedit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Poedit-Info.plist"; path = "macos/Poedit-Info.plist"; sourceTree = "<group>"; };
 		B24ACD6816F6201F00399242 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B24ACD6C16F6201F00399242 /* Poedit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Poedit-Prefix.pch"; path = "src/Poedit-Prefix.pch"; sourceTree = "<group>"; };
-		B24ACD8316F6263900399242 /* Poedit.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = Poedit.iconset; path = macos/Poedit.iconset; sourceTree = "<group>"; };
 		B24C81551B3C1260006CD3D4 /* tg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tg; path = tg.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B24C81561B3C1262006CD3D4 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B24C81571B3C1267006CD3D4 /* tg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tg; path = tg.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1142,7 +1140,6 @@
 			isa = PBXGroup;
 			children = (
 				B23149D22AC5CB4B00B42587 /* Assets.xcassets */,
-				B24ACD8316F6263900399242 /* Poedit.iconset */,
 				B2B5A3632A4B31870045FC33 /* AccountCrowdin.png */,
 				B2B5A3622A4B31870045FC33 /* AccountCrowdin@2x.png */,
 				B20D903E2A4C664D002B1BD2 /* AccountLocalazy.png */,
@@ -1413,7 +1410,6 @@
 			files = (
 				B2D52B871DE88A3D00E27B35 /* SuggestionPerfectMatch@2x.png in Resources */,
 				B24ACD6916F6201F00399242 /* InfoPlist.strings in Resources */,
-				B24ACD8416F6263900399242 /* Poedit.iconset in Resources */,
 				B24D19691E84503B00C6DD8D /* StatusWarning.png in Resources */,
 				B267EAFE1E045959005541E7 /* StatusError@2x.png in Resources */,
 				B23149D32AC5CB4B00B42587 /* Assets.xcassets in Resources */,
@@ -2414,6 +2410,11 @@
 		B24ACD7C16F6201F00399242 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = Poedit;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				ASSETCATALOG_NOTICES = NO;
+				ASSETCATALOG_OTHER_FLAGS = "--enable-icon-stack-fallback-generation=disabled";
+				ASSETCATALOG_WARNINGS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -2431,6 +2432,11 @@
 		B24ACD7D16F6201F00399242 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = Poedit;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				ASSETCATALOG_NOTICES = NO;
+				ASSETCATALOG_OTHER_FLAGS = "--enable-icon-stack-fallback-generation=disabled";
+				ASSETCATALOG_WARNINGS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
