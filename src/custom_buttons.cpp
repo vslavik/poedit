@@ -154,7 +154,6 @@ ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& s
 
 @property NSColor* onColor;
 @property NSColor* labelOffColor;
-@property BOOL isDarkMode;
 @property SwitchButton *parent;
 @property (nonatomic) double animationPosition;
 
@@ -190,12 +189,14 @@ ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& s
 - (void)drawRect:(NSRect)dirtyRect
 {
     #pragma unused(dirtyRect)
+
+    BOOL isDarkMode = [self.effectiveAppearance.name isEqualToString:NSAppearanceNameDarkAqua];
     [StyleKit drawSwitchButtonWithFrame:self.bounds
                                 onColor:self.onColor
                           labelOffColor:self.labelOffColor
                                   label:self.title
                          togglePosition:self.animationPosition
-                             isDarkMode:self.isDarkMode];
+                             isDarkMode:isDarkMode];
 }
 
 - (void)setAnimationPosition:(double)animationPosition
@@ -248,11 +249,10 @@ public:
 
     NSView *View() const { return m_view; }
 
-    void SetColors(const wxColour& on, const wxColour& offLabel, bool isDarkMode)
+    void SetColors(const wxColour& on, const wxColour& offLabel)
     {
         m_view.onColor = on.OSXGetNSColor();
         m_view.labelOffColor = offLabel.OSXGetNSColor();
-        m_view.isDarkMode = isDarkMode;
     }
 
     void SetValue(bool value)
@@ -283,7 +283,7 @@ SwitchButton::~SwitchButton()
 
 void SwitchButton::SetColors(const wxColour& on, const wxColour& offLabel)
 {
-    m_impl->SetColors(on, offLabel, ColorScheme::GetWindowMode(this) == ColorScheme::Dark);
+    m_impl->SetColors(on, offLabel);
 }
 
 void SwitchButton::SetValue(bool value)
