@@ -186,6 +186,7 @@
 		B2DAD7101AD198B800DCB398 /* gexecute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CC416F629D30018AF7E /* gexecute.cpp */; };
 		B2DAD7111AD198C000DCB398 /* export_html.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CE216F629D30018AF7E /* export_html.cpp */; };
 		B2DAD7121AD198DE00DCB398 /* language.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22C5F0817DDC67400ECAFD1 /* language.cpp */; };
+		B2DF3D4D2E9917F5007C2BCE /* SwitchButtonNative.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DF3D4C2E9917F5007C2BCE /* SwitchButtonNative.swift */; };
 		B2DFCCFB19B5FD15003DFAD0 /* sidebar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2DFCCF919B5FD15003DFAD0 /* sidebar.cpp */; };
 		B2E02A361CB812C500D18F5C /* unicode_helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2E02A341CB812C500D18F5C /* unicode_helpers.cpp */; };
 		B2E11F121A2C66FB00E4E42C /* text_control.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2E11F101A2C66FB00E4E42C /* text_control.cpp */; };
@@ -643,6 +644,7 @@
 		B2DA79822090D3D900E52251 /* pugixml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pugixml.h; sourceTree = "<group>"; };
 		B2DA79832090F9DC00E52251 /* tmx_io.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tmx_io.cpp; path = tm/tmx_io.cpp; sourceTree = "<group>"; };
 		B2DA79842090F9DC00E52251 /* tmx_io.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tmx_io.h; path = tm/tmx_io.h; sourceTree = "<group>"; };
+		B2DF3D4C2E9917F5007C2BCE /* SwitchButtonNative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SwitchButtonNative.swift; path = macos/SwitchButtonNative.swift; sourceTree = "<group>"; };
 		B2DFCCF919B5FD15003DFAD0 /* sidebar.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = sidebar.cpp; sourceTree = "<group>"; };
 		B2DFCCFA19B5FD15003DFAD0 /* sidebar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sidebar.h; sourceTree = "<group>"; };
 		B2E02A341CB812C500D18F5C /* unicode_helpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = unicode_helpers.cpp; sourceTree = "<group>"; };
@@ -1101,6 +1103,7 @@
 				B2D52B8A1DEC76B000E27B35 /* StyleKit.m */,
 				461EEBC744AC3699343B973E /* MainToolbar.xib */,
 				CE7FDF345D6043DCDCCD296D /* MainToolbar.mm */,
+				B2DF3D4C2E9917F5007C2BCE /* SwitchButtonNative.swift */,
 			);
 			name = Native;
 			sourceTree = "<group>";
@@ -1784,6 +1787,7 @@
 				B280E84D1A92776D009F4A98 /* http_client_macos.mm in Sources */,
 				B2BCE2E72A44B112005CA5A7 /* cloud_accounts_ui.cpp in Sources */,
 				B22C5F0A17DDC67400ECAFD1 /* language.cpp in Sources */,
+				B2DF3D4D2E9917F5007C2BCE /* SwitchButtonNative.swift in Sources */,
 				B2E2184C199A76B100EA2784 /* syntaxhighlighter.cpp in Sources */,
 				B26E2C8625A24541008D6DF1 /* menus.cpp in Sources */,
 				B2377A202159179B0085E9C4 /* catalog_xliff.cpp in Sources */,
@@ -2410,6 +2414,7 @@
 		B24ACD7C16F6201F00399242 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -2420,6 +2425,8 @@
 				POEDIT_FEATURES = "HAVE_CLD2 HAVE_HTTP_CLIENT";
 				PRODUCT_BUNDLE_IDENTIFIER = net.poedit.Poedit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2427,6 +2434,7 @@
 		B24ACD7D16F6201F00399242 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -2437,6 +2445,7 @@
 				POEDIT_FEATURES = "HAVE_CLD2 HAVE_HTTP_CLIENT";
 				PRODUCT_BUNDLE_IDENTIFIER = net.poedit.Poedit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 6.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

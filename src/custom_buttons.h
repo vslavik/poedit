@@ -85,11 +85,13 @@ public:
     void SetValue(bool value);
     bool GetValue() const;
 
-    void SendToggleEvent();
+    void SendToggleEvent(bool value);
 
 private:
-    class impl;
-    std::unique_ptr<impl> m_impl;
+    class Impl;
+    class ImplLegacy;
+    class ImplSwiftUI;
+    std::unique_ptr<Impl> m_impl;
 };
 
 

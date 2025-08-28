@@ -50,6 +50,8 @@
 #import <AppKit/AppKit.h>
 #import <QuartzCore/QuartzCore.h>
 
+#import "Poedit-Swift.h"
+
 #include "StyleKit.h"
 
 // ---------------------------------------------------------------------
@@ -291,35 +293,48 @@ ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& s
         self.animator.animationPosition = target;
     }];
 
-    _parent->SendToggleEvent();
+    _parent->SendToggleEvent(self.state == NSControlStateValueOn);
 }
 
 @end
 
 
-class SwitchButton::impl
+class SwitchButton::Impl
 {
 public:
-    impl(SwitchButton *parent, const wxString& label)
+    Impl() {}
+    virtual ~Impl() {}
+
+    virtual NSView *View() const = 0;
+    virtual void SetColors(const wxColour& on, const wxColour& offLabel) = 0;
+    virtual void SetValue(bool value) = 0;
+    virtual bool GetValue() const = 0;
+};
+
+
+class SwitchButton::ImplLegacy : public SwitchButton::Impl
+{
+public:
+    ImplLegacy(SwitchButton *parent, const wxString& label)
     {
         m_view = [[POSwitchButton alloc] initWithLabel:str::to_NS(label)];
         m_view.parent = parent;
     }
 
-    NSView *View() const { return m_view; }
+    NSView *View() const override { return m_view; }
 
-    void SetColors(const wxColour& on, const wxColour& offLabel)
+    void SetColors(const wxColour& on, const wxColour& offLabel) override
     {
         m_view.onColor = on.OSXGetNSColor();
         m_view.labelOffColor = offLabel.OSXGetNSColor();
     }
 
-    void SetValue(bool value)
+    void SetValue(bool value) override
     {
         m_view.state = value ? NSControlStateValueOn : NSControlStateValueOff;
     }
 
-    bool GetValue() const
+    bool GetValue() const override
     {
         return m_view.state == NSControlStateValueOn;
     }
@@ -329,9 +344,47 @@ private:
 };
 
 
+class API_AVAILABLE(macos(13.0)) SwitchButton::ImplSwiftUI : public SwitchButton::Impl
+{
+public:
+    ImplSwiftUI(SwitchButton *parent, const wxString& label)
+    {
+        m_view = [[SwitchButtonNative alloc] initWithLabel:str::to_NS(label)];
+        m_view.onToggle = ^(BOOL value)
+        {
+            parent->SendToggleEvent(value);
+        };
+    }
+
+    NSView *View() const override { return m_view; }
+
+    void SetColors(const wxColour& on, [[maybe_unused]] const wxColour& offLabel) override
+    {
+        m_view.tintColor = on.OSXGetNSColor();
+    }
+
+    void SetValue(bool value) override
+    {
+        m_view.on = value;
+    }
+
+    bool GetValue() const override
+    {
+        return m_view.on;
+    }
+
+private:
+    SwitchButtonNative *m_view;
+};
+
+
 SwitchButton::SwitchButton(wxWindow *parent, wxWindowID winid, const wxString& label)
 {
-    m_impl.reset(new impl(this, label));
+    // macOS 13 should suffice, but play it safe and only use the new impl on known-good version:
+    if (@available(macos 15.0, *))
+        m_impl.reset(new ImplSwiftUI(this, label));
+    else
+        m_impl.reset(new ImplLegacy(this, label));
 
     wxNativeWindow::Create(parent, winid, m_impl->View());
 }
@@ -355,10 +408,10 @@ bool SwitchButton::GetValue() const
     return m_impl->GetValue();
 }
 
-void SwitchButton::SendToggleEvent()
+void SwitchButton::SendToggleEvent(bool value)
 {
     wxCommandEvent event(wxEVT_TOGGLEBUTTON, m_windowId);
-    event.SetInt(GetValue());
+    event.SetInt((int)value);
     event.SetEventObject(this);
     ProcessWindowEvent(event);
 }
