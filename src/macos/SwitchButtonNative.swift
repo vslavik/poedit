@@ -33,6 +33,10 @@ import SwiftUI
 @available(macOS 13.0, *)
 final class ToggleState: ObservableObject {
     @Published var isOn: Bool = false
+    // TODO: This doesn't really need to be part of state, should be set once (to a named color
+    //       that has light/dark variants) in constructor, like label is. Requires removing the
+    //       SwitchButton::SetColors() API first, though.
+    @Published var tint: Color = .accentColor
 }
 
 @available(macOS 13.0, *)
@@ -40,7 +44,6 @@ private struct ToggleWrapper: View {
     @ObservedObject var state: ToggleState
     var onToggle: ((Bool) -> Void)?
 
-    var tint: Color
     var label: String = ""
 
     @Environment(\.controlActiveState) private var controlActiveState
@@ -49,7 +52,7 @@ private struct ToggleWrapper: View {
         Toggle(isOn: $state.isOn) {
             Text(label)
                 .font(.system(size: NSFont.smallSystemFontSize, weight: .semibold))
-                .foregroundStyle(state.isOn && controlActiveState != .inactive ? tint : .secondary)
+                .foregroundStyle(state.isOn && controlActiveState != .inactive ? state.tint : .secondary)
                 .onTapGesture {
                     state.isOn.toggle()
                 }
@@ -57,7 +60,7 @@ private struct ToggleWrapper: View {
         .contentShape(Rectangle())
         .toggleStyle(.switch)
         .controlSize(.mini)
-        .tint(tint)
+        .tint(state.tint)
         .animation(.default, value: state.isOn) // smooth label color change
         .onChange(of: state.isOn) { value in
             onToggle?(value)
@@ -72,6 +75,7 @@ public final class SwitchButtonNative: NSControl {
     private var hostingView: NSHostingView<ToggleWrapper>!
     private let state = ToggleState()
 
+    private var labelText: String = ""
     private var lastSetValue: Bool = false
 
     /// Nice Obj-C alias: `-on` / `-setOn:`
@@ -80,8 +84,10 @@ public final class SwitchButtonNative: NSControl {
         set { self.lastSetValue = newValue; state.isOn = newValue }
     }
 
-    public var tintColor: NSColor? { didSet { updateRoot() } }
-    public var labelText: String = "" { didSet { updateRoot() } }
+    public var tintColor: NSColor? {
+        get { return NSColor(state.tint) }
+        set { state.tint = newValue.map(Color.init(nsColor:)) ?? .accentColor }
+    }
 
     public var onToggle: ((Bool) -> Void)?
 
@@ -118,14 +124,8 @@ public final class SwitchButtonNative: NSControl {
                     self.onToggle?(value)
                 }
             },
-            tint: tintColor.map(Color.init(nsColor:)) ?? .accentColor,
             label: labelText
         )
-    }
-
-    private func updateRoot() {
-        hostingView.rootView = makeRoot()
-        invalidateIntrinsicContentSize()
     }
 
     public override var intrinsicContentSize: NSSize { hostingView.intrinsicContentSize }
