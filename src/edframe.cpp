@@ -3009,17 +3009,12 @@ wxMenu *PoeditFrame::CreatePopupMenu(int item)
         menu->AppendSeparator();
         // TRANSLATORS: Meaning occurrences of the string in source code
         wxMenuItem *it1 = new wxMenuItem(menu, wxID_ANY, MSW_OR_OTHER(_("Code occurrences"), _("Code Occurrences")));
-#ifdef __WXMSW__
-        it1->SetFont(it1->GetFont().Bold());
-        menu->Append(it1);
-#else
         menu->Append(it1);
         it1->Enable(false);
-#endif
 
         int count = std::min((int)refs.GetCount(), WinID::ListContextReferencesEnd - WinID::ListContextReferencesStart);
         for (int i = 0; i < count; i++)
-            menu->Append(WinID::ListContextReferencesStart + i, "    " + refs[i]);
+            menu->Append(WinID::ListContextReferencesStart + i, refs[i]);
     }
 
     return menu;
