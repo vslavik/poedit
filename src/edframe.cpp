@@ -3008,9 +3008,7 @@ wxMenu *PoeditFrame::CreatePopupMenu(int item)
     {
         menu->AppendSeparator();
         // TRANSLATORS: Meaning occurrences of the string in source code
-        wxMenuItem *it1 = new wxMenuItem(menu, wxID_ANY, MSW_OR_OTHER(_("Code occurrences"), _("Code Occurrences")));
-        menu->Append(it1);
-        it1->Enable(false);
+        AppendMenuSectionHeader(menu, MSW_OR_OTHER(_("Code occurrences"), _("Code Occurrences")));
 
         int count = std::min((int)refs.GetCount(), WinID::ListContextReferencesEnd - WinID::ListContextReferencesStart);
         for (int i = 0; i < count; i++)

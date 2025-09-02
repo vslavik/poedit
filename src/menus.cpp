@@ -301,3 +301,22 @@ void MenusManager::FixupMenusForMacIfNeeded()
 }
 
 #endif // __WXOSX__
+
+
+void AppendMenuSectionHeader(wxMenu *menu, const wxString& title)
+{
+#ifdef __WXOSX__
+    if (@available(macOS 14.0, *))
+    {
+        NSMenu *native = menu->GetHMenu();
+        NSMenuItem *header = [NSMenuItem sectionHeaderWithTitle:str::to_NS(title)];
+        [native addItem:header];
+    }
+    else
+#endif // __WXOSX__
+    {
+        wxMenuItem *item = new wxMenuItem(menu, wxID_ANY, title);
+        menu->Append(item);
+        item->Enable(false);
+    }
+}

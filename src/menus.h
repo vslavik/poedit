@@ -39,7 +39,6 @@ enum class Menu
     WelcomeWindow
 };
 
-
 /**
     Management of various menus in Poedit.
 
@@ -67,5 +66,12 @@ private:
     std::unique_ptr<NativeMacData> m_nativeMacData;
 #endif // __WXOSX__
 };
+
+
+// Various menu-related helpers:
+
+void AppendMenuSectionHeader(wxMenu *menu, const wxString& title);
+inline void AppendMenuSectionHeader(wxMenu& menu, const wxString& title)
+    { AppendMenuSectionHeader(&menu, title); }
 
 #endif // Poedit_menus_h
