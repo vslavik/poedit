@@ -33,6 +33,7 @@
 #include "configuration.h"
 #include "errors.h"
 #include "hidpi.h"
+#include "menus.h"
 #include "static_ids.h"
 #include "utility.h"
 #include "unicode_helpers.h"
@@ -481,7 +482,10 @@ private:
 #ifdef __WXOSX__
         [menu.GetHMenu() setFont:[NSFont systemFontOfSize:13]];
 #endif
-        menu.Append(idDelete, MSW_OR_OTHER(_("Delete from translation memory"), _("Delete From Translation Memory")));
+
+        auto itemDelete = menu.Append(idDelete, MSW_OR_OTHER(_("Delete from translation memory"), _("Delete From Translation Memory")));
+        SetMacMenuIcon(itemDelete, "xmark.circle");
+
         menu.Bind(wxEVT_MENU, [sidebar,suggestion](wxCommandEvent&)
         {
             SuggestionsProvider::Delete(suggestion);
