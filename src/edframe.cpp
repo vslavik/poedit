@@ -2285,7 +2285,7 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
         SetupCloudSyncIfShouldBeDoneAutomatically(m_catalog);
     }
 
-    m_toolbar->EnableCloudSync(m_catalog->GetCloudSync(), CanSyncWithCrowdin(m_catalog));
+    UpdateCloudSyncUI(CanSyncWithCrowdin(m_catalog));
 #endif
 
     FixDuplicatesIfPresent();
@@ -2688,7 +2688,6 @@ void PoeditFrame::UpdateTitle()
 }
 
 
-
 void PoeditFrame::UpdateMenu()
 {
     wxMenuBar *menubar = GetMenuBar();
@@ -2723,6 +2722,24 @@ void PoeditFrame::UpdateMenu()
     menubar->Enable(XRCID("menu_remove_same_as_source"), editable);
     menubar->Enable(XRCID("menu_purge_deleted"),
                     editable && m_catalog->HasDeletedItems());
+}
+
+
+void PoeditFrame::UpdateCloudSyncUI(bool isCrowdin)
+{
+#ifdef HAVE_HTTP_CLIENT
+    if (!m_catalog)
+        return;
+
+    auto sync = m_catalog->GetCloudSync();
+    m_toolbar->EnableCloudSync(sync, isCrowdin);
+
+#ifdef __WXOSX__
+    const auto symbol = (isCrowdin || !sync) ? "poedit.sync" : "poedit.upload";
+    SetMacMenuIcon(GetMenuBar(), XRCID("menu_cloud_sync"), symbol);
+#endif
+
+#endif
 }
 
 
@@ -2979,30 +2996,26 @@ wxMenu *PoeditFrame::CreatePopupMenu(int item)
     const wxArrayString& refs = (*m_catalog)[item]->GetReferences();
     wxMenu *menu = new wxMenu;
 
-    menu->Append(XRCID("menu_copy_from_src"),
-                 #ifdef __WXMSW__
-                 wxString(_("Copy from source text"))
-                 #else
-                 wxString(_("Copy from Source Text"))
-                 #endif
-                   + "\t" + wxGETTEXT_IN_CONTEXT("keyboard key", "Ctrl+") + "B");
-    menu->Append(XRCID("menu_clear"),
-                 #ifdef __WXMSW__
-                 wxString(_("Clear translation"))
-                 #else
-                 wxString(_("Clear Translation"))
-                 #endif
-                   + "\t" + wxGETTEXT_IN_CONTEXT("keyboard key", "Ctrl+") + "K");
-   menu->Append(XRCID("menu_comment"),
-                 #ifdef __WXMSW__
-                 wxString(_("Edit comment"))
-                 #else
-                 wxString(_("Edit Comment"))
-                 #endif
-                 #ifndef __WXOSX__
-                   + "\t" + wxGETTEXT_IN_CONTEXT("keyboard key", "Ctrl+") + "M"
-                 #endif
-                 );
+    auto itemCopy = menu->Append(XRCID("menu_copy_from_src"),
+                                 wxString::Format("%s\t%s",
+                                                  MSW_OR_OTHER(_("Copy from source text"), _("Copy from Source Text")),
+                                                  wxGETTEXT_IN_CONTEXT("keyboard key", "Ctrl+") + "B")
+                                 );
+    SetMacMenuIcon(itemCopy, "document.on.document");
+
+    auto itemClear = menu->Append(XRCID("menu_clear"),
+                                  wxString::Format("%s\t%s",
+                                                   MSW_OR_OTHER(_("Clear translation"), _("Clear Translation")),
+                                                   wxGETTEXT_IN_CONTEXT("keyboard key", "Ctrl+") + "K")
+                                  );
+    SetMacMenuIcon(itemClear, "delete.backward");
+
+    auto itemComment = menu->Append(XRCID("menu_comment"),
+                                    wxString::Format("%s\t%s",
+                                                     MSW_OR_OTHER(_("Edit comment"), _("Edit Comment")),
+                                                     wxGETTEXT_IN_CONTEXT("keyboard key", "Ctrl+") + "M")
+                                    );
+    SetMacMenuIcon(itemComment, "bubble");
 
     if ( !refs.empty() )
     {

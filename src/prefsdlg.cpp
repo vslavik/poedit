@@ -65,6 +65,7 @@
 #include "configuration.h"
 #include "crowdin_gui.h"
 #include "hidpi.h"
+#include "menus.h"
 #include "tm/transmem.h"
 #include "tm/tmx_io.h"
 #include "uilang.h"
@@ -499,13 +500,18 @@ private:
 #ifdef __WXOSX__
         [menu.GetHMenu() setFont:[NSFont systemFontOfSize:13]];
 #endif
-        menu.Append(idLearn, MSW_OR_OTHER(_(L"Import translation files…"), _(L"Import Translation Files…")));
+        auto itemLearn = menu.Append(idLearn, MSW_OR_OTHER(_(L"Import translation files…"), _(L"Import Translation Files…")));
         menu.AppendSeparator();
-        menu.Append(idImportTMX, MSW_OR_OTHER(_(L"Import from TMX…"), _(L"Import From TMX…")));
-        menu.Append(idExportTMX, MSW_OR_OTHER(_(L"Export to TMX…"), _(L"Export To TMX…")));
+        auto itemImport = menu.Append(idImportTMX, MSW_OR_OTHER(_(L"Import from TMX…"), _(L"Import From TMX…")));
+        auto itemExport = menu.Append(idExportTMX, MSW_OR_OTHER(_(L"Export to TMX…"), _(L"Export To TMX…")));
         menu.AppendSeparator();
         // TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
-        menu.Append(idReset, _("Reset"));
+        auto itemReset = menu.Append(idReset, _("Reset"));
+        
+        SetMacMenuIcon(itemLearn, "document.on.document");
+        SetMacMenuIcon(itemImport, "arrow.down.document");
+        SetMacMenuIcon(itemExport, "arrow.up.document");
+        SetMacMenuIcon(itemReset, "trash");
 
         menu.Bind(wxEVT_MENU, &TMPageWindow::OnImportIntoTM, this, idLearn);
         menu.Bind(wxEVT_MENU, &TMPageWindow::OnImportTMX, this, idImportTMX);

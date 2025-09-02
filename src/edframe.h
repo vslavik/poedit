@@ -223,6 +223,7 @@ class PoeditFrame : public PoeditFrameBase
         void UpdateTitle();
         /// Updates menu -- disables and enables items.
         void UpdateMenu();
+        void UpdateCloudSyncUI(bool isCrowdin);
 
         // Called when catalog's language possibly changed
         void UpdateTextLanguage();

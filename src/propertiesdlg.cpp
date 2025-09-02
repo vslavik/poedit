@@ -57,6 +57,7 @@
 #include "customcontrols.h"
 #include "hidpi.h"
 #include "language.h"
+#include "menus.h"
 #include "str_helpers.h"
 #include "unicode_helpers.h"
 #include "utility.h"
@@ -407,10 +408,15 @@ protected:
 #ifdef __WXOSX__
         [menu->GetHMenu() setFont:[NSFont systemFontOfSize:13]];
 #endif
-        menu->Append(idFolder, MSW_OR_OTHER(_(L"Add folders…"), _(L"Add Folders…")));
-        menu->Append(idFile, MSW_OR_OTHER(_(L"Add files…"), _(L"Add Files…")));
+        auto itemFolder = menu->Append(idFolder, MSW_OR_OTHER(_(L"Add folders…"), _(L"Add Folders…")));
+        SetMacMenuIcon(itemFolder, "folder.badge.plus");
+        auto itemFile = menu->Append(idFile, MSW_OR_OTHER(_(L"Add files…"), _(L"Add Files…")));
+        SetMacMenuIcon(itemFile, "document.badge.plus");
         if (AllowWildcards())
-            menu->Append(idWild, MSW_OR_OTHER(_(L"Add wildcard…"), _(L"Add Wildcard…")));
+        {
+            auto itemWild = menu->Append(idWild, MSW_OR_OTHER(_(L"Add wildcard…"), _(L"Add Wildcard…")));
+            SetMacMenuIcon(itemWild, "asterisk");
+        }
 
         menu->Bind(wxEVT_MENU, [=](wxCommandEvent&){
             wxDirDialog dlg(this,
@@ -486,6 +492,8 @@ protected:
             _("Show in Folder")
 #endif
             );
+        SetMacMenuIcon(menuItem, "finder");
+        
         if (!wxFileExists(file) && !wxDirExists(file))
             menuItem->Enable(false);
         menu.Bind(wxEVT_MENU, [=](wxCommandEvent&){ ShowInFolder(file); }, idShowInFolder);
