@@ -94,12 +94,12 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     #pragma unused(dirtyRect)
-    NSColor *bg = self.window.backgroundColor;
+    NSColor *bg = NSColor.clearColor;
     if (self.mouseHover)
     {
-        NSColor *highlight = [bg colorWithSystemEffect:NSColorSystemEffectRollover];
+        NSColor *highlight = [self.window.backgroundColor colorWithSystemEffect:NSColorSystemEffectRollover];
         // use only lighter version of the highlight by blending with the background
-        bg = [bg blendedColorWithFraction:0.2 ofColor:highlight];
+        bg = [highlight colorWithAlphaComponent:0.2];
     }
     [StyleKit drawActionButtonWithFrame:self.bounds
                             buttonColor:bg
