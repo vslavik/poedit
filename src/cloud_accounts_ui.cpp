@@ -254,12 +254,9 @@ public:
         SetRowHeight(PX(36));
         SetMinSize(wxSize(PX(500), PX(200)));
     #ifdef __WXOSX__
-        if (@available(macOS 11.0, *))
-        {
-            NSScrollView *scrollView = (NSScrollView*)GetHandle();
-            NSTableView *tableView = (NSTableView*)[scrollView documentView];
-            tableView.style = NSTableViewStyleFullWidth;
-        }
+        NSScrollView *scrollView = (NSScrollView*)GetHandle();
+        NSTableView *tableView = (NSTableView*)[scrollView documentView];
+        tableView.style = NSTableViewStyleFullWidth;
     #endif
 
         auto renderer = new MultilineTextRenderer();

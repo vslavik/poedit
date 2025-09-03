@@ -92,8 +92,7 @@ LocalazyLoginPanel::LocalazyLoginPanel(wxWindow *parent, int flags)
     m_projects = new wxDataViewListCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(-1, PX(100)), /*wxDV_NO_HEADER |*/ MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN));
 #ifdef __WXOSX__
     [((NSTableView*)[((NSScrollView*)m_projects->GetHandle()) documentView]) setIntercellSpacing:NSMakeSize(0.0, 0.0)];
-    if (@available(macOS 11.0, *))
-        ((NSTableView*)[((NSScrollView*)m_projects->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
+    ((NSTableView*)[((NSScrollView*)m_projects->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
 #endif
     sizer->Add(m_projects, wxSizerFlags(1).Expand().Border(wxBOTTOM, PX(16)));
     m_projects->AppendIconTextColumn(_("Projects"));

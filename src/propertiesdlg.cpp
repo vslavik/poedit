@@ -271,8 +271,7 @@ public:
         sizer->Add(m_list, wxSizerFlags(1).Expand().BORDER_WIN(wxLEFT, 1));
 
 #if defined(__WXOSX__)
-        if (@available(macOS 11.0, *))
-            ((NSTableView*)[((NSScrollView*)m_list->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
+        ((NSTableView*)[((NSScrollView*)m_list->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
         auto add = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("NSAddTemplate"), wxDefaultPosition, wxSize(18, 18), wxBORDER_SIMPLE);
         auto remove = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("NSRemoveTemplate"), wxDefaultPosition, wxSize(18,18), wxBORDER_SIMPLE);
 #elif defined(__WXMSW__)
@@ -448,10 +447,7 @@ protected:
 
         auto win = dynamic_cast<wxButton*>(e.GetEventObject());
 #ifdef __WXOSX__
-        if (@available(macOS 11.0, *))
-            win->PopupMenu(menu, -4, 24);
-        else
-            win->PopupMenu(menu, -1, 24);
+        win->PopupMenu(menu, -4, 24);
 #else
         win->PopupMenu(menu, 0, win->GetSize().y);
 #endif

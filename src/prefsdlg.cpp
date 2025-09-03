@@ -752,8 +752,7 @@ public:
         m_list->SetMinSize(wxSize(PX(400),PX(200)));
 #ifdef __WXOSX__
         m_list->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-        if (@available(macOS 11.0, *))
-            ((NSTableView*)[((NSScrollView*)m_list->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
+        ((NSTableView*)[((NSScrollView*)m_list->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
 #endif
         listSizer->Add(m_list, wxSizerFlags(1).Expand().Border(wxLEFT|wxRIGHT, PX(5)));
 

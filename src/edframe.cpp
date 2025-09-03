@@ -2666,18 +2666,15 @@ void PoeditFrame::UpdateTitle()
     }
 
 #ifdef __WXOSX__
-    if (@available(macOS 11.0, *))
-    {
-        NSWindow *win = GetWXWindow();
-        win.subtitle = subtitle.empty() ? @"" : str::to_NS(subtitle);
-    }
-    else
-#endif // __WXOSX__
+    NSWindow *win = GetWXWindow();
+    win.subtitle = subtitle.empty() ? @"" : str::to_NS(subtitle);
+#else
     if (!subtitle.empty())
     {
         title << MACOS_OR_OTHER(L" — ", L" • ");
         title << subtitle;
     }
+#endif // !__WXOSX__
 
     m_fileNamePartOfTitle = title;
 

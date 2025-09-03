@@ -553,8 +553,7 @@ RecentFilesCtrl::RecentFilesCtrl(wxWindow *parent)
     NSTableView *tableView = (NSTableView*)[scrollView documentView];
     scrollView.automaticallyAdjustsContentInsets = NO;
     tableView.selectionHighlightStyle = NSTableViewSelectionHighlightStyleSourceList;
-    if (@available(macOS 11.0, *))
-        tableView.style = NSTableViewStyleSourceList;
+    tableView.style = NSTableViewStyleSourceList;
 
     SetRowHeight(GetDefaultRowHeight());
 #else // !__WXOSX__

@@ -332,21 +332,14 @@ LearnMoreLink::LearnMoreLink(wxWindow *parent, const wxString& url, wxString lab
 #ifdef __WXOSX__
         wxColour normal, hover;
         NSView *view = GetHandle();
-        if (@available(macOS 11.0, *))
-        {
-            // FIXME: This is workaround for wx always overriding appearance to the app-wide system one when
-            //        accessing wxColour components or creating CGColor -- as happens in generic rendering code
-            //        (see wxOSXEffectiveAppearanceSetter)
-            [view.effectiveAppearance performAsCurrentDrawingAppearance: [&]{
-                normal = wxColour(wxCFRetain([NSColor.linkColor CGColor]));
-                hover = wxColour(wxCFRetain([[NSColor.linkColor colorWithSystemEffect:NSColorSystemEffectRollover] CGColor]));
-            }];
-        }
-        else
-        {
-            normal = wxColour(NSColor.linkColor);
-            hover = wxColour([NSColor.linkColor colorWithSystemEffect:NSColorSystemEffectRollover]);
-        }
+        // FIXME: This is workaround for wx always overriding appearance to the app-wide system one when
+        //        accessing wxColour components or creating CGColor -- as happens in generic rendering code
+        //        (see wxOSXEffectiveAppearanceSetter)
+        [view.effectiveAppearance performAsCurrentDrawingAppearance: [&]{
+            normal = wxColour(wxCFRetain([NSColor.linkColor CGColor]));
+            hover = wxColour(wxCFRetain([[NSColor.linkColor colorWithSystemEffect:NSColorSystemEffectRollover] CGColor]));
+        }];
+
         SetNormalColour(normal);
         SetVisitedColour(normal);
         SetHoverColour(hover);
@@ -666,9 +659,8 @@ IconAndSubtitleListCtrl::IconAndSubtitleListCtrl(wxWindow *parent, const wxStrin
 #ifdef __WXOSX__
     NSScrollView *scrollView = (NSScrollView*)GetHandle();
     NSTableView *tableView = (NSTableView*)[scrollView documentView];
-    [tableView setIntercellSpacing:NSMakeSize(0.0, 0.0)];
-    if (@available(macOS 11.0, *))
-        tableView.style = NSTableViewStyleFullWidth;
+    tableView.intercellSpacing = NSMakeSize(0.0, 0.0);
+    tableView.style = NSTableViewStyleFullWidth;
 
     const int icon_column_width = PX(32 + 12);
 #else // !__WXOSX__
