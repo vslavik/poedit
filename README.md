@@ -106,7 +106,7 @@ Poedit is released under [the MIT license](COPYING) and you're free to do
 whatever you want with it and its source code (well, almost :-) -- see the
 license text).
 
-See the `COPYING` file for details on the program's licensing and the `icons/README` file for details on the icons.
+See the `COPYING` file for details on the program's licensing.
 
 Windows and macOS versions contain GNU gettext binaries. They are distributed
 under the GNU General Public License and their source code is available from

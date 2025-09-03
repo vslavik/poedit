@@ -52,6 +52,10 @@
 #include <wx/xrc/xmlres.h>
 #include <wx/numformatter.h>
 
+#ifdef __WXOSX__
+    #include <wx/private/bmpbndl.h>
+#endif
+
 #include "app_updates.h"
 #include "edapp.h"
 #include "edframe.h"
@@ -73,23 +77,18 @@
 #include "customcontrols.h"
 #include "unicode_helpers.h"
 
-
-// Handling of different page icons
-#ifdef __WXOSX__
-inline wxBitmap MacPageIcon(const char *macos10, const char *macos11)
-{
-    (void)macos11;
-    if (@available(macOS 11.0, *))
-        return wxBitmap([NSImage imageWithSystemSymbolName:str::to_NS(macos11) accessibilityDescription:nil]);
-    else
-        return wxArtProvider::GetBitmap(macos10);
-}
-#else
-inline wxBitmap MacPageIcon(const char*, const char*) { return wxNullBitmap; }
-#endif
-
 namespace
 {
+
+#ifdef __WXOSX__
+inline wxBitmapBundle MacPageIcon(const char *symbol)
+{
+    return wxOSXMakeBundleFromImage([NSImage imageWithSystemSymbolName:str::to_NS(symbol) accessibilityDescription:nil]);
+}
+#else
+inline wxBitmap MacPageIcon(const char*) { return wxNullBitmap; }
+#endif
+
 
 class PrefsPanel : public WindowWith2DSizingConstraints<wxPanel>
 {
@@ -350,7 +349,7 @@ class GeneralPage : public wxPreferencesPage
 {
 public:
     wxString GetName() const override { return _("General"); }
-    wxBitmap GetLargeIcon() const override { return MacPageIcon("Prefs-General", "gearshape"); }
+    wxBitmapBundle GetIcon() const override { return MacPageIcon("gearshape"); }
     wxWindow *CreateWindow(wxWindow *parent) override { return new GeneralPageWindow(parent); }
 };
 
@@ -710,7 +709,7 @@ public:
         return _("Translation Memory");
 #endif
     }
-    wxBitmap GetLargeIcon() const override { return MacPageIcon("Prefs-TM", "internaldrive"); }
+    wxBitmapBundle GetIcon() const override { return MacPageIcon("internaldrive"); }
     wxWindow *CreateWindow(wxWindow *parent) override { return new TMPageWindow(parent); }
 };
 
@@ -993,7 +992,7 @@ class ExtractorsPage : public wxPreferencesPage
 {
 public:
     wxString GetName() const override { return _("Extractors"); }
-    wxBitmap GetLargeIcon() const override { return MacPageIcon("Prefs-Extractors", "doc.text.viewfinder"); }
+    wxBitmapBundle GetIcon() const override { return MacPageIcon("doc.text.viewfinder"); }
     wxWindow *CreateWindow(wxWindow *parent) override { return new ExtractorsPageWindow(parent); }
 };
 
@@ -1051,7 +1050,7 @@ class AccountsPage : public wxPreferencesPage
 {
 public:
     wxString GetName() const override { return _("Accounts"); }
-    wxBitmap GetLargeIcon() const override { return MacPageIcon("Prefs-Accounts", "at"); }
+    wxBitmapBundle GetIcon() const override { return MacPageIcon("at"); }
     wxWindow *CreateWindow(wxWindow *parent) override { return new AccountsPageWindow(parent); }
 };
 #endif // HAVE_HTTP_CLIENT
@@ -1106,7 +1105,7 @@ class UpdatesPage : public wxPreferencesPage
 {
 public:
     wxString GetName() const override { return _("Updates"); }
-    wxBitmap GetLargeIcon() const override { return MacPageIcon("Prefs-Updates", "arrow.down.circle"); }
+    wxBitmapBundle GetIcon() const override { return MacPageIcon("arrow.down.circle"); }
     wxWindow *CreateWindow(wxWindow *parent) override { return new UpdatesPageWindow(parent); }
 };
 #endif // HAS_UPDATES_CHECK
@@ -1199,7 +1198,7 @@ class AdvancedPage : public wxStockPreferencesPage
 public:
     AdvancedPage() : wxStockPreferencesPage(Kind_Advanced) {}
     wxString GetName() const override { return _("Advanced"); }
-    wxBitmap GetLargeIcon() const override { return MacPageIcon("Prefs-Advanced", "gearshape.2"); }
+    wxBitmapBundle GetIcon() const override { return MacPageIcon("gearshape.2"); }
     wxWindow *CreateWindow(wxWindow *parent) override { return new AdvancedPageWindow(parent); }
 };
 
