@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 90;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -12,8 +12,6 @@
 			buildConfigurationList = B27115F9170830A800B936D5 /* Build configuration list for PBXAggregateTarget "deps.gettext" */;
 			buildPhases = (
 				B2C129D921C6CBAF004364B2 /* Ninja Build */,
-			);
-			dependencies = (
 			);
 			name = deps.gettext;
 			productName = deps.gettext;
@@ -269,47 +267,39 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		B23D1F72181446EF00E6B212 /* Copy Auxiliary Binaries */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 6;
+			dstSubfolder = Executables;
 			files = (
 			);
 			name = "Copy Auxiliary Binaries";
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B2B7D470170DD91C00ED0AFE /* Copy Gettext bundle and extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 13;
+			dstSubfolder = PlugIns;
 			files = (
 				B2B7D472170DD93E00ED0AFE /* GettextTools.bundle in Copy Gettext bundle and extensions */,
 				F9A6A70A2A290ADC67FF625D /* QuicklookPreview.appex in Copy Gettext bundle and extensions */,
 				4C5A07AB3F036AF03E13D7B1 /* QuicklookThumbnails.appex in Copy Gettext bundle and extensions */,
 			);
 			name = "Copy Gettext bundle and extensions";
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B2CE6D2A1AD0096C007E6863 /* Copy Quicklook plugin */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
 			dstPath = Contents/Library/QuickLook;
-			dstSubfolderSpec = 1;
+			dstSubfolder = Wrapper;
 			files = (
 				B2CE6D2B1AD00A0E007E6863 /* PoeditQuicklook.qlgenerator in Copy Quicklook plugin */,
 			);
 			name = "Copy Quicklook plugin";
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B2E836D81709EB0700F31559 /* Copy Private Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 10;
+			dstSubfolder = Frameworks;
 			files = (
 			);
 			name = "Copy Private Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -718,7 +708,6 @@
 /* Begin PBXFrameworksBuildPhase section */
 		963A403DFB7DD147AE37A668 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				4CE77399F2643B317B7428BB /* libwx_osx_base_static.a in Frameworks */,
 				32DA069EB285429687FE9593 /* libcld2.a in Frameworks */,
@@ -726,28 +715,22 @@
 				1AAE1B99A5E39A45F95A7E2C /* Quartz.framework in Frameworks */,
 				485D22B7D4F845A01E137564 /* UniformTypeIdentifiers.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B008951B4375F373CF5C9F8A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				8A905D6EA68B5E7AB51E2ADE /* QuickLookThumbnailing.framework in Frameworks */,
 				080D4EBEC110DFD5DE99914C /* Quartz.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B248B2DB170D765100EBA58E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				B2F287C0170DCC63004C1F41 /* CoreFoundation.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B24ACD5816F6201F00399242 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				B28DF74F2B8625C6008B1948 /* Sparkle in Frameworks */,
 				B228A1531AD94FF6006B0BBC /* libwx_osx_base_static.a in Frameworks */,
@@ -767,17 +750,14 @@
 				B2E91E3E2AC73DCA0042EF10 /* libexpat.tbd in Frameworks */,
 				B2CAC13B2BBEE95900707D8D /* libicucore.tbd in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B2CE6D161ACFCD95007E6863 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				B2B7E81A1AD94194007FC4EB /* libwx_osx_base_static.a in Frameworks */,
 				B216A14E1AD9426500F2898C /* libcld2.a in Frameworks */,
 				B2CAC13C2BBEE96300707D8D /* libicucore.tbd in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -1288,8 +1268,6 @@
 			);
 			buildRules = (
 			);
-			dependencies = (
-			);
 			name = QuicklookThumbnails;
 			productName = QuicklookThumbnails;
 			productReference = 2E49B156226EE8BCE26F9F19 /* QuicklookThumbnails.appex */;
@@ -1312,7 +1290,6 @@
 				};
 			};
 			buildConfigurationList = B24ACD5616F6201F00399242 /* Build configuration list for PBXProject "Poedit" */;
-			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -1375,6 +1352,7 @@
 			packageReferences = (
 				B28DF74D2B8625C6008B1948 /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
+			preferredProjectObjectVersion = 90;
 			productRefGroup = B24ACD5C16F6201F00399242 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1392,21 +1370,16 @@
 /* Begin PBXResourcesBuildPhase section */
 		53D69517C2AE3774ECC6F703 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		97A8BA72B3D5C29B2259CE14 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B24ACD5916F6201F00399242 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				B2D52B871DE88A3D00E27B35 /* SuggestionPerfectMatch@2x.png in Resources */,
 				B24ACD6916F6201F00399242 /* InfoPlist.strings in Resources */,
@@ -1455,106 +1428,95 @@
 				B25DB35D1E3E5102006D7228 /* ExtractorsGNUgettext.png in Resources */,
 				B20D903F2A4C664D002B1BD2 /* AccountLocalazy@2x.png in Resources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B2CE6D181ACFCD95007E6863 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		1F75370E7D76220D09E8681C /* Fixup & codesign Sparkle.framework */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"$(TARGET_BUILD_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Sparkle.framework",
 			);
 			name = "Fixup & codesign Sparkle.framework";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(TARGET_BUILD_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Sparkle.framework",
 				"$(DERIVED_FILE_DIR)/codesign.sparkle.done",
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rm -rf \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"/Sparkle.framework/XPCServices \\\n       \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"/Sparkle.framework/Versions/*/XPCServices\nscripts/macos-sign-bundle.sh \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sparkle.framework\"\n\ntouch ${DERIVED_FILE_DIR}/codesign.sparkle.done\n";
+			shellScript = (
+				"rm -rf \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"/Sparkle.framework/XPCServices \\",
+				"       \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"/Sparkle.framework/Versions/*/XPCServices",
+				"scripts/macos-sign-bundle.sh \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sparkle.framework\"",
+				"",
+				"touch ${DERIVED_FILE_DIR}/codesign.sparkle.done",
+				"",
+			);
 		};
 		B25CC3CE2BC8247900BED2FD /* Copy PO Translations */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
 			dependencyFile = "$(DERIVED_FILES_DIR)/copy-translations.d";
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
 			name = "Copy PO Translations";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/copy-translations.done",
 				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)",
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = "/bin/sh -e";
-			shellScript = "export PATH=\"${DEPS_BUILD_DIR}/gettext/bin:$PATH\"\necho \"${DERIVED_FILES_DIR}/copy-translations.done : \" \"${SRCROOT}\"/locales/*.po* \"${SRCROOT}/macos/copy-translations.sh\" >${DERIVED_FILES_DIR}/copy-translations.d\nmacos/copy-translations.sh quicklook \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ntouch \"${DERIVED_FILE_DIR}/copy-translations.done\"\n";
+			shellScript = (
+				"export PATH=\"${DEPS_BUILD_DIR}/gettext/bin:$PATH\"",
+				"echo \"${DERIVED_FILES_DIR}/copy-translations.done : \" \"${SRCROOT}\"/locales/*.po* \"${SRCROOT}/macos/copy-translations.sh\" >${DERIVED_FILES_DIR}/copy-translations.d",
+				"macos/copy-translations.sh quicklook \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"",
+				"touch \"${DERIVED_FILE_DIR}/copy-translations.done\"",
+				"",
+			);
 		};
 		B2C129D921C6CBAF004364B2 /* Ninja Build */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
 			name = "Ninja Build";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd deps && ./build_deps.sh gettext\n";
+			shellScript = (
+				"cd deps && ./build_deps.sh gettext",
+				"",
+			);
 		};
 		B2C49AB62C95D72200EA47BD /* Set CFBundleVersion from git */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
 				"$(SRCROOT)/.git",
 			);
 			name = "Set CFBundleVersion from git";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
 				"$(DERIVED_FILE_DIR)/.updated.info.plist",
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "APP_INFO_PLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\nDSYM_INFO_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\nBUILD_NUMBER=`git rev-list HEAD --count`\nif [ -f \"$APP_INFO_PLIST\" ] ; then\n    oldversion=`/usr/libexec/PlistBuddy -c \"Print :CFBundleVersion\" \"$APP_INFO_PLIST\"`\nfi\n\nif [ \"$BUILD_NUMBER\" != \"$oldversion\" ] ; then\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$APP_INFO_PLIST\"\n    if [ -f \"$DSYM_INFO_PLIST\" ] ; then\n        /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$DSYM_INFO_PLIST\"\n    fi\n    touch ${DERIVED_FILE_DIR}/.updated.info.plist\nfi\n";
+			shellScript = (
+				"APP_INFO_PLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"",
+				"DSYM_INFO_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"",
+				"",
+				"BUILD_NUMBER=`git rev-list HEAD --count`",
+				"if [ -f \"$APP_INFO_PLIST\" ] ; then",
+				"    oldversion=`/usr/libexec/PlistBuddy -c \"Print :CFBundleVersion\" \"$APP_INFO_PLIST\"`",
+				"fi",
+				"",
+				"if [ \"$BUILD_NUMBER\" != \"$oldversion\" ] ; then",
+				"    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$APP_INFO_PLIST\"",
+				"    if [ -f \"$DSYM_INFO_PLIST\" ] ; then",
+				"        /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$DSYM_INFO_PLIST\"",
+				"    fi",
+				"    touch ${DERIVED_FILE_DIR}/.updated.info.plist",
+				"fi",
+				"",
+			);
 		};
 		B2CC62E117DB7E2D0097461B /* Set CFBundleVersion from git */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
 			inputPaths = (
 				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
 				"$(SRCROOT)/.git",
@@ -1564,17 +1526,28 @@
 				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
 				"$(DERIVED_FILE_DIR)/.updated.info.plist",
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "APP_INFO_PLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\nDSYM_INFO_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\nBUILD_NUMBER=`git rev-list HEAD --count`\nif [ -f \"$APP_INFO_PLIST\" ] ; then\n    oldversion=`/usr/libexec/PlistBuddy -c \"Print :CFBundleVersion\" \"$APP_INFO_PLIST\"`\nfi\n\nif [ \"$BUILD_NUMBER\" != \"$oldversion\" ] ; then\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$APP_INFO_PLIST\"\n    if [ -f \"$DSYM_INFO_PLIST\" ] ; then\n        /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$DSYM_INFO_PLIST\"\n    fi\n    touch ${DERIVED_FILE_DIR}/.updated.info.plist\nfi\n";
+			shellScript = (
+				"APP_INFO_PLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"",
+				"DSYM_INFO_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"",
+				"",
+				"BUILD_NUMBER=`git rev-list HEAD --count`",
+				"if [ -f \"$APP_INFO_PLIST\" ] ; then",
+				"    oldversion=`/usr/libexec/PlistBuddy -c \"Print :CFBundleVersion\" \"$APP_INFO_PLIST\"`",
+				"fi",
+				"",
+				"if [ \"$BUILD_NUMBER\" != \"$oldversion\" ] ; then",
+				"    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$APP_INFO_PLIST\"",
+				"    if [ -f \"$DSYM_INFO_PLIST\" ] ; then",
+				"        /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$DSYM_INFO_PLIST\"",
+				"    fi",
+				"    touch ${DERIVED_FILE_DIR}/.updated.info.plist",
+				"fi",
+				"",
+			);
 		};
 		B2CC62E217DB7F670097461B /* Set bundle versions from deps/gettext */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
 			);
@@ -1583,15 +1556,16 @@
 				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
 				"$(DERIVED_FILE_DIR)/.updated.info.plist",
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "VERSION_NUMBER=`sed -n 's/GETTEXT_VERSION = \"\\([0-9.]*\\)\".*/\\1/p' deps/generate_build_ninja.py`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n";
+			shellScript = (
+				"VERSION_NUMBER=`sed -n 's/GETTEXT_VERSION = \"\\([0-9.]*\\)\".*/\\1/p' deps/generate_build_ninja.py`",
+				"/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"",
+				"/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"",
+				"",
+			);
 		};
 		B2CE6D291AD008F6007E6863 /* Set CFBundleVersion from git */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
 			inputPaths = (
 				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
 				"$(SRCROOT)/.git",
@@ -1601,132 +1575,155 @@
 				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
 				"$(DERIVED_FILE_DIR)/.updated.info.plist",
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "APP_INFO_PLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\nDSYM_INFO_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\nBUILD_NUMBER=`git rev-list HEAD --count`\nif [ -f \"$APP_INFO_PLIST\" ] ; then\n    oldversion=`/usr/libexec/PlistBuddy -c \"Print :CFBundleVersion\" \"$APP_INFO_PLIST\"`\nfi\n\nif [ \"$BUILD_NUMBER\" != \"$oldversion\" ] ; then\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$APP_INFO_PLIST\"\n    if [ -f \"$DSYM_INFO_PLIST\" ] ; then\n        /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$DSYM_INFO_PLIST\"\n    fi\n    touch ${DERIVED_FILE_DIR}/.updated.info.plist\nfi\n";
+			shellScript = (
+				"APP_INFO_PLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"",
+				"DSYM_INFO_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"",
+				"",
+				"BUILD_NUMBER=`git rev-list HEAD --count`",
+				"if [ -f \"$APP_INFO_PLIST\" ] ; then",
+				"    oldversion=`/usr/libexec/PlistBuddy -c \"Print :CFBundleVersion\" \"$APP_INFO_PLIST\"`",
+				"fi",
+				"",
+				"if [ \"$BUILD_NUMBER\" != \"$oldversion\" ] ; then",
+				"    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$APP_INFO_PLIST\"",
+				"    if [ -f \"$DSYM_INFO_PLIST\" ] ; then",
+				"        /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$DSYM_INFO_PLIST\"",
+				"    fi",
+				"    touch ${DERIVED_FILE_DIR}/.updated.info.plist",
+				"fi",
+				"",
+			);
 		};
 		B2D0B1102BFCFEF400527A5A /* Codesign Gettext bundle */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"$(TARGET_BUILD_DIR)/$(PLUGINS_FOLDER_PATH)/GettextTools.bundle",
 			);
 			name = "Codesign Gettext bundle";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(TARGET_BUILD_DIR)/$(PLUGINS_FOLDER_PATH)/GettextTools.bundle",
 				"$(DERIVED_FILE_DIR)/codesign.gettext.done",
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = "/bin/sh -e";
-			shellScript = "scripts/macos-sign-bundle.sh \"${TARGET_BUILD_DIR}/${PLUGINS_FOLDER_PATH}/GettextTools.bundle\"\n";
+			shellScript = (
+				"scripts/macos-sign-bundle.sh \"${TARGET_BUILD_DIR}/${PLUGINS_FOLDER_PATH}/GettextTools.bundle\"",
+				"",
+			);
 		};
 		B2E83707170C96DB00F31559 /* Copy PO Translations */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
 			dependencyFile = "$(DERIVED_FILES_DIR)/copy-translations.d";
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
 			name = "Copy PO Translations";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/copy-translations.done",
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = "/bin/sh -e";
-			shellScript = "export PATH=\"${DEPS_BUILD_DIR}/gettext/bin:$PATH\"\necho \"${DERIVED_FILES_DIR}/copy-translations.done : \" \"${SRCROOT}\"/locales/*.po* \"${SRCROOT}\"/deps/wx/locale/*.po \"${SRCROOT}/macos/copy-translations.sh\" >${DERIVED_FILES_DIR}/copy-translations.d\nmacos/copy-translations.sh app \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ntouch \"${DERIVED_FILE_DIR}/copy-translations.done\"\n";
+			shellScript = (
+				"export PATH=\"${DEPS_BUILD_DIR}/gettext/bin:$PATH\"",
+				"echo \"${DERIVED_FILES_DIR}/copy-translations.done : \" \"${SRCROOT}\"/locales/*.po* \"${SRCROOT}\"/deps/wx/locale/*.po \"${SRCROOT}/macos/copy-translations.sh\" >${DERIVED_FILES_DIR}/copy-translations.d",
+				"macos/copy-translations.sh app \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"",
+				"touch \"${DERIVED_FILE_DIR}/copy-translations.done\"",
+				"",
+			);
 		};
 		B2F287C6170DCF06004C1F41 /* Copy Gettext binaries, data files & translations */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
 			dependencyFile = "$(DERIVED_FILES_DIR)/copy-binaries.d";
-			files = (
-			);
-			inputPaths = (
-			);
 			name = "Copy Gettext binaries, data files & translations";
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/copy-binaries.done",
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gettext\"\n\nfor i in ${GETTEXT_BINARIES}; do\n  cp -a ${DEPS_BUILD_DIR}/gettext/bin/$i \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\ndone\ncp -a ${DEPS_BUILD_DIR}/gettext/lib/lib*.*.dylib \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"\n\nrm -rf \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"/*\ncp -a ${DEPS_BUILD_DIR}/gettext/share/gettext-* \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\ncp -a ${DEPS_BUILD_DIR}/gettext/share/gettext/styles \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gettext/\"\ncp -a ${DEPS_BUILD_DIR}/gettext/share/locale \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\n\n(cd \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\" && rm -f locale && ln -s ../../Resources/locale .)\n(cd \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\" && rm -f gettext* && ln -s ../../Resources/gettext* .)\n\necho \"${DERIVED_FILE_DIR}/copy-binaries.done\" \" : \" ${DEPS_BUILD_DIR}/gettext/bin/* ${DEPS_BUILD_DIR}/gettext/lib/lib*.*.dylib >${DERIVED_FILE_DIR}/copy-binaries.d\ntouch \"${DERIVED_FILE_DIR}/copy-binaries.done\"\n";
+			shellScript = (
+				"mkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"",
+				"mkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"",
+				"mkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\"",
+				"mkdir -p \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gettext\"",
+				"",
+				"for i in ${GETTEXT_BINARIES}; do",
+				"  cp -a ${DEPS_BUILD_DIR}/gettext/bin/$i \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"",
+				"done",
+				"cp -a ${DEPS_BUILD_DIR}/gettext/lib/lib*.*.dylib \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"",
+				"",
+				"rm -rf \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"/*",
+				"cp -a ${DEPS_BUILD_DIR}/gettext/share/gettext-* \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"",
+				"cp -a ${DEPS_BUILD_DIR}/gettext/share/gettext/styles \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gettext/\"",
+				"cp -a ${DEPS_BUILD_DIR}/gettext/share/locale \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"",
+				"",
+				"(cd \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\" && rm -f locale && ln -s ../../Resources/locale .)",
+				"(cd \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\" && rm -f gettext* && ln -s ../../Resources/gettext* .)",
+				"",
+				"echo \"${DERIVED_FILE_DIR}/copy-binaries.done\" \" : \" ${DEPS_BUILD_DIR}/gettext/bin/* ${DEPS_BUILD_DIR}/gettext/lib/lib*.*.dylib >${DERIVED_FILE_DIR}/copy-binaries.d",
+				"touch \"${DERIVED_FILE_DIR}/copy-binaries.done\"",
+				"",
+			);
 		};
 		B606314D22A00F2ADAF38FD8 /* Copy PO Translations */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
 			dependencyFile = "$(DERIVED_FILES_DIR)/copy-translations.d";
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
 			name = "Copy PO Translations";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/copy-translations.done",
 				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)",
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = "/bin/sh -e";
-			shellScript = "export PATH=\"${DEPS_BUILD_DIR}/gettext/bin:$PATH\"\necho \"${DERIVED_FILES_DIR}/copy-translations.done : \" \"${SRCROOT}\"/locales/*.po* \"${SRCROOT}/macos/copy-translations.sh\" >${DERIVED_FILES_DIR}/copy-translations.d\nmacos/copy-translations.sh quicklook \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ntouch \"${DERIVED_FILE_DIR}/copy-translations.done\"\n";
+			shellScript = (
+				"export PATH=\"${DEPS_BUILD_DIR}/gettext/bin:$PATH\"",
+				"echo \"${DERIVED_FILES_DIR}/copy-translations.done : \" \"${SRCROOT}\"/locales/*.po* \"${SRCROOT}/macos/copy-translations.sh\" >${DERIVED_FILES_DIR}/copy-translations.d",
+				"macos/copy-translations.sh quicklook \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"",
+				"touch \"${DERIVED_FILE_DIR}/copy-translations.done\"",
+				"",
+			);
 		};
 		D8204AEBDE4347A0ED2B890E /* Set CFBundleVersion from git */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
 				"$(SRCROOT)/.git",
 			);
 			name = "Set CFBundleVersion from git";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
 				"$(DERIVED_FILE_DIR)/.updated.info.plist",
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "APP_INFO_PLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\nDSYM_INFO_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\nBUILD_NUMBER=`git rev-list HEAD --count`\nif [ -f \"$APP_INFO_PLIST\" ] ; then\n    oldversion=`/usr/libexec/PlistBuddy -c \"Print :CFBundleVersion\" \"$APP_INFO_PLIST\"`\nfi\n\nif [ \"$BUILD_NUMBER\" != \"$oldversion\" ] ; then\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$APP_INFO_PLIST\"\n    if [ -f \"$DSYM_INFO_PLIST\" ] ; then\n        /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$DSYM_INFO_PLIST\"\n    fi\n    touch ${DERIVED_FILE_DIR}/.updated.info.plist\nfi\n";
+			shellScript = (
+				"APP_INFO_PLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"",
+				"DSYM_INFO_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"",
+				"",
+				"BUILD_NUMBER=`git rev-list HEAD --count`",
+				"if [ -f \"$APP_INFO_PLIST\" ] ; then",
+				"    oldversion=`/usr/libexec/PlistBuddy -c \"Print :CFBundleVersion\" \"$APP_INFO_PLIST\"`",
+				"fi",
+				"",
+				"if [ \"$BUILD_NUMBER\" != \"$oldversion\" ] ; then",
+				"    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$APP_INFO_PLIST\"",
+				"    if [ -f \"$DSYM_INFO_PLIST\" ] ; then",
+				"        /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$DSYM_INFO_PLIST\"",
+				"    fi",
+				"    touch ${DERIVED_FILE_DIR}/.updated.info.plist",
+				"fi",
+				"",
+			);
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6A02D1ECC157C1A6F035E595 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				CE84DDEAB7912A33832B960D /* ThumbnailProvider.m in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B248B2DA170D765100EBA58E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				B20960F319928C8500A2EB13 /* GettextToolsDummy.c in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B24ACD5716F6201F00399242 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				B2D52B8C1DEC76B000E27B35 /* StyleKit.m in Sources */,
 				B2D52B8F1DEC785700E27B35 /* custom_buttons.cpp in Sources */,
@@ -1800,11 +1797,9 @@
 				80FBB464B5B4DC5E6B59B25C /* cat_operations.cpp in Sources */,
 				0C1409B0135C562587776FC7 /* MainToolbar.mm in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B2CE6D151ACFCD95007E6863 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				B2BC21812E43B929009A221D /* catalog_qt.cpp in Sources */,
 				B2DAD7111AD198C000DCB398 /* export_html.cpp in Sources */,
@@ -1824,11 +1819,9 @@
 				B2CE6D231ACFCD95007E6863 /* qlgenerator_main.c in Sources */,
 				3ED13FB94DB971D259E1FEE0 /* catalog_xcloc.cpp in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		DEA9FF0BD700EF47B8146DFE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				8816DADE560039E7FAD57F46 /* export_html.cpp in Sources */,
 				1738CDEBA8D15ACA98654A3E /* language.cpp in Sources */,
@@ -1847,7 +1840,6 @@
 				B2BC21822E43B929009A221D /* catalog_qt.cpp in Sources */,
 				70FEA36B68430750C1326C6F /* catalog_xcloc.cpp in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
@@ -2083,7 +2075,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		273FF8AF70478AA6D68CE3F4 /* Debug */ = {
+		273FF8AF70478AA6D68CE3F4 /* Debug configuration for PBXNativeTarget "QuicklookPreview" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -2123,7 +2115,7 @@
 			};
 			name = Debug;
 		};
-		3EAAAFA7C7FBCC4F814A30B4 /* Release */ = {
+		3EAAAFA7C7FBCC4F814A30B4 /* Release configuration for PBXNativeTarget "QuicklookThumbnails" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -2164,7 +2156,7 @@
 			};
 			name = Release;
 		};
-		41DA4EA11D6DE0191E382C08 /* Release */ = {
+		41DA4EA11D6DE0191E382C08 /* Release configuration for PBXNativeTarget "QuicklookPreview" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -2204,7 +2196,7 @@
 			};
 			name = Release;
 		};
-		B248B2E8170D765100EBA58E /* Debug */ = {
+		B248B2E8170D765100EBA58E /* Debug configuration for PBXNativeTarget "GettextTools" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -2232,7 +2224,7 @@
 			};
 			name = Debug;
 		};
-		B248B2E9170D765100EBA58E /* Release */ = {
+		B248B2E9170D765100EBA58E /* Release configuration for PBXNativeTarget "GettextTools" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -2256,7 +2248,7 @@
 			};
 			name = Release;
 		};
-		B24ACD7916F6201F00399242 /* Debug */ = {
+		B24ACD7916F6201F00399242 /* Debug configuration for PBXProject "Poedit" */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B2FD1DD72BA8B8450024BA78 /* poedit.xcconfig */;
 			buildSettings = {
@@ -2332,7 +2324,7 @@
 			};
 			name = Debug;
 		};
-		B24ACD7A16F6201F00399242 /* Release */ = {
+		B24ACD7A16F6201F00399242 /* Release configuration for PBXProject "Poedit" */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B2FD1DD72BA8B8450024BA78 /* poedit.xcconfig */;
 			buildSettings = {
@@ -2407,7 +2399,7 @@
 			};
 			name = Release;
 		};
-		B24ACD7C16F6201F00399242 /* Debug */ = {
+		B24ACD7C16F6201F00399242 /* Debug configuration for PBXNativeTarget "Poedit" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -2424,7 +2416,7 @@
 			};
 			name = Debug;
 		};
-		B24ACD7D16F6201F00399242 /* Release */ = {
+		B24ACD7D16F6201F00399242 /* Release configuration for PBXNativeTarget "Poedit" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -2441,7 +2433,7 @@
 			};
 			name = Release;
 		};
-		B27115FA170830A800B936D5 /* Debug */ = {
+		B27115FA170830A800B936D5 /* Debug configuration for PBXAggregateTarget "deps.gettext" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -2456,7 +2448,7 @@
 			};
 			name = Debug;
 		};
-		B27115FB170830A800B936D5 /* Release */ = {
+		B27115FB170830A800B936D5 /* Release configuration for PBXAggregateTarget "deps.gettext" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -2468,7 +2460,7 @@
 			};
 			name = Release;
 		};
-		B2CE6D241ACFCD95007E6863 /* Debug */ = {
+		B2CE6D241ACFCD95007E6863 /* Debug configuration for PBXNativeTarget "QuicklookLegacy" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
@@ -2499,7 +2491,7 @@
 			};
 			name = Debug;
 		};
-		B2CE6D251ACFCD95007E6863 /* Release */ = {
+		B2CE6D251ACFCD95007E6863 /* Release configuration for PBXNativeTarget "QuicklookLegacy" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
@@ -2532,7 +2524,7 @@
 			};
 			name = Release;
 		};
-		F1E6110E3CBE838B5D616623 /* Debug */ = {
+		F1E6110E3CBE838B5D616623 /* Debug configuration for PBXNativeTarget "QuicklookThumbnails" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -2583,64 +2575,57 @@
 		02FB158B5E4E02C2DA688924 /* Build configuration list for PBXNativeTarget "QuicklookThumbnails" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F1E6110E3CBE838B5D616623 /* Debug */,
-				3EAAAFA7C7FBCC4F814A30B4 /* Release */,
+				F1E6110E3CBE838B5D616623 /* Debug configuration for PBXNativeTarget "QuicklookThumbnails" */,
+				3EAAAFA7C7FBCC4F814A30B4 /* Release configuration for PBXNativeTarget "QuicklookThumbnails" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		19BB25B67AF9F2A124441A5B /* Build configuration list for PBXNativeTarget "QuicklookPreview" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				273FF8AF70478AA6D68CE3F4 /* Debug */,
-				41DA4EA11D6DE0191E382C08 /* Release */,
+				273FF8AF70478AA6D68CE3F4 /* Debug configuration for PBXNativeTarget "QuicklookPreview" */,
+				41DA4EA11D6DE0191E382C08 /* Release configuration for PBXNativeTarget "QuicklookPreview" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		B248B2EA170D765100EBA58E /* Build configuration list for PBXNativeTarget "GettextTools" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B248B2E8170D765100EBA58E /* Debug */,
-				B248B2E9170D765100EBA58E /* Release */,
+				B248B2E8170D765100EBA58E /* Debug configuration for PBXNativeTarget "GettextTools" */,
+				B248B2E9170D765100EBA58E /* Release configuration for PBXNativeTarget "GettextTools" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		B24ACD5616F6201F00399242 /* Build configuration list for PBXProject "Poedit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B24ACD7916F6201F00399242 /* Debug */,
-				B24ACD7A16F6201F00399242 /* Release */,
+				B24ACD7916F6201F00399242 /* Debug configuration for PBXProject "Poedit" */,
+				B24ACD7A16F6201F00399242 /* Release configuration for PBXProject "Poedit" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		B24ACD7B16F6201F00399242 /* Build configuration list for PBXNativeTarget "Poedit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B24ACD7C16F6201F00399242 /* Debug */,
-				B24ACD7D16F6201F00399242 /* Release */,
+				B24ACD7C16F6201F00399242 /* Debug configuration for PBXNativeTarget "Poedit" */,
+				B24ACD7D16F6201F00399242 /* Release configuration for PBXNativeTarget "Poedit" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		B27115F9170830A800B936D5 /* Build configuration list for PBXAggregateTarget "deps.gettext" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B27115FA170830A800B936D5 /* Debug */,
-				B27115FB170830A800B936D5 /* Release */,
+				B27115FA170830A800B936D5 /* Debug configuration for PBXAggregateTarget "deps.gettext" */,
+				B27115FB170830A800B936D5 /* Release configuration for PBXAggregateTarget "deps.gettext" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		B2CE6D261ACFCD95007E6863 /* Build configuration list for PBXNativeTarget "QuicklookLegacy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B2CE6D241ACFCD95007E6863 /* Debug */,
-				B2CE6D251ACFCD95007E6863 /* Release */,
+				B2CE6D241ACFCD95007E6863 /* Debug configuration for PBXNativeTarget "QuicklookLegacy" */,
+				B2CE6D251ACFCD95007E6863 /* Release configuration for PBXNativeTarget "QuicklookLegacy" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */

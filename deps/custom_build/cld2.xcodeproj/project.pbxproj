@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 90;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -132,12 +132,10 @@
 /* Begin PBXHeadersBuildPhase section */
 		B2083CD21A87BD1A00150BBF /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				B2083CDE1A87BE1300150BBF /* compact_lang_det.h in Headers */,
 				B2083CE11A87BF0A00150BBF /* encodings.h in Headers */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
@@ -151,8 +149,6 @@
 			);
 			buildRules = (
 			);
-			dependencies = (
-			);
 			name = cld2;
 			productName = cld2;
 			productReference = B2083CD41A87BD1A00150BBF /* libcld2.a */;
@@ -165,7 +161,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1630;
+				LastUpgradeCheck = 1640;
 				ORGANIZATIONNAME = "Vaclav Slavik";
 				TargetAttributes = {
 					B2083CD31A87BD1A00150BBF = {
@@ -174,7 +170,6 @@
 				};
 			};
 			buildConfigurationList = B2083CCF1A87BD1A00150BBF /* Build configuration list for PBXProject "cld2" */;
-			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -182,6 +177,7 @@
 				Base,
 			);
 			mainGroup = B2083CCB1A87BD1A00150BBF;
+			preferredProjectObjectVersion = 90;
 			productRefGroup = B2083CD51A87BD1A00150BBF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -194,7 +190,6 @@
 /* Begin PBXSourcesBuildPhase section */
 		B2083CD01A87BD1A00150BBF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				B2083CE41A87BF8800150BBF /* cldutil_shared.cc in Sources */,
 				B2083CFE1A87BFE300150BBF /* offsetmap.cc in Sources */,
@@ -221,12 +216,11 @@
 				B2083D0D1A87C03600150BBF /* cld2_generated_cjk_compatible.cc in Sources */,
 				B2083CFB1A87BFE300150BBF /* generated_ulscript.cc in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		B2083CD61A87BD1A00150BBF /* Debug */ = {
+		B2083CD61A87BD1A00150BBF /* Debug configuration for PBXProject "cld2" */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B228A1551AD95B9A006B0BBC /* third_party.xcconfig */;
 			buildSettings = {
@@ -277,7 +271,7 @@
 			};
 			name = Debug;
 		};
-		B2083CD71A87BD1A00150BBF /* Release */ = {
+		B2083CD71A87BD1A00150BBF /* Release configuration for PBXProject "cld2" */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B228A1551AD95B9A006B0BBC /* third_party.xcconfig */;
 			buildSettings = {
@@ -323,7 +317,7 @@
 			};
 			name = Release;
 		};
-		B2083CD91A87BD1A00150BBF /* Debug */ = {
+		B2083CD91A87BD1A00150BBF /* Debug configuration for PBXNativeTarget "cld2" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -333,7 +327,7 @@
 			};
 			name = Debug;
 		};
-		B2083CDA1A87BD1A00150BBF /* Release */ = {
+		B2083CDA1A87BD1A00150BBF /* Release configuration for PBXNativeTarget "cld2" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -349,19 +343,17 @@
 		B2083CCF1A87BD1A00150BBF /* Build configuration list for PBXProject "cld2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B2083CD61A87BD1A00150BBF /* Debug */,
-				B2083CD71A87BD1A00150BBF /* Release */,
+				B2083CD61A87BD1A00150BBF /* Debug configuration for PBXProject "cld2" */,
+				B2083CD71A87BD1A00150BBF /* Release configuration for PBXProject "cld2" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		B2083CD81A87BD1A00150BBF /* Build configuration list for PBXNativeTarget "cld2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B2083CD91A87BD1A00150BBF /* Debug */,
-				B2083CDA1A87BD1A00150BBF /* Release */,
+				B2083CD91A87BD1A00150BBF /* Debug configuration for PBXNativeTarget "cld2" */,
+				B2083CDA1A87BD1A00150BBF /* Release configuration for PBXNativeTarget "cld2" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
