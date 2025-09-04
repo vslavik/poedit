@@ -67,11 +67,26 @@ class PseudoToolbarButton : public wxButton
 public:
     PseudoToolbarButton(wxWindow *parent, wxString bitmap, const wxString& label)
     {
+#if defined(__WXOSX__)
+        (void)label;
+        if (bitmap == "poedit-update")
+            bitmap = "UpdateTemplate";
+        else if (bitmap == "stats")
+            bitmap = "StatsTemplate";
+        wxButton::Create(parent, wxID_ANY, "", wxDefaultPosition, wxSize(35, 28), wxBU_EXACTFIT);
+        auto native = (NSButton*)GetHandle();
+        native.image = [NSImage imageNamed:str::to_NS(bitmap)];
+        native.imagePosition = NSImageOnly;
+        native.bezelStyle = NSBezelStyleTexturedRounded;
+        native.buttonType = NSButtonTypeMomentaryPushIn;
+        native.showsBorderOnlyWhileMouseInside = YES;
+#else
     #ifdef __WXGTK3__
         bitmap += "-symbolic";
     #endif
         wxButton::Create(parent, wxID_ANY, label, wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
         SetBitmap(wxArtProvider::GetBitmap(bitmap, wxART_TOOLBAR));
+#endif
     }
 };
 
