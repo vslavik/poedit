@@ -145,7 +145,7 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
     auto loginInfoContainer = new wxBoxSizer(wxVERTICAL);
     loginInfoContainer->SetMinSize(-1, PX(50));
     loginInfoContainer->AddStretchSpacer();
-    loginInfoContainer->Add(m_loginInfo, wxSizerFlags().Center());
+    loginInfoContainer->Add(m_loginInfo, wxSizerFlags().Expand());
     loginInfoContainer->AddStretchSpacer();
 
     sizer->Add(loginInfoContainer, wxSizerFlags().Expand().ReserveSpaceEvenIfHidden().Border(wxTOP|wxBOTTOM, PX(16)));
@@ -254,8 +254,9 @@ void CrowdinLoginPanel::CreateLoginInfoControls(State state)
                       ? _(L"Waiting for authentication…")
                       : _(L"Updating user information…");
             m_activity = new ActivityIndicator(this, ActivityIndicator::Centered);
-            sizer->Add(m_activity, wxSizerFlags().Expand());
-            m_activity->Start(text);
+            sizer->Add(m_activity, wxSizerFlags(1).Center());
+            // delay so that the window is sized properly:
+            m_activity->CallAfter([=]{ m_activity->Start(text); });
             break;
         }
 

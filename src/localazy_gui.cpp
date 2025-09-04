@@ -202,10 +202,9 @@ void LocalazyLoginPanel::CreateLoginInfoControls(State state)
                       ? _(L"Waiting for authentication…")
                       : _(L"Updating user information…");
             m_activity = new ActivityIndicator(this, ActivityIndicator::Centered);
-            sizer->AddStretchSpacer();
-            sizer->Add(m_activity, wxSizerFlags().Expand());
-            sizer->AddStretchSpacer();
-            m_activity->Start(text);
+            sizer->Add(m_activity, wxSizerFlags(1).Center());
+            // delay so that the window is sized properly:
+            m_activity->CallAfter([=]{ m_activity->Start(text); });
             break;
         }
 
