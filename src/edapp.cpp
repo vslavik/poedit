@@ -532,8 +532,6 @@ int PoeditApp::OnExit()
 
     dispatch::cleanup();
 
-    u_cleanup();
-
     return wxApp::OnExit();
 }
 

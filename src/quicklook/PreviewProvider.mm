@@ -51,9 +51,6 @@ namespace
 
 void initialize_extension()
 {
-    UErrorCode err = U_ZERO_ERROR;
-    u_init(&err);
-
     wxInitialize();
 
     auto resources = str::to_wx(NSBundle.mainBundle.resourcePath);
@@ -65,13 +62,14 @@ void initialize_extension()
 
     wxString bestTrans = trans->GetBestTranslation("poedit-quicklook");
     Language uiLang = Language::TryParse(bestTrans.ToStdWstring());
+
+    UErrorCode err = U_ZERO_ERROR;
     uloc_setDefault(uiLang.IcuLocaleName().c_str(), &err);
 }
 
 void cleanup_extension()
 {
     wxUninitialize();
-    u_cleanup();
 }
 
 NSData *create_html_preview(const wxString& filename)
