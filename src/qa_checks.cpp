@@ -218,12 +218,13 @@ public:
 
         if (u_islower(source[0]) && u_isupper(translation[0]))
         {
-            if (m_lang != "de")
+            if (m_lang != "de" && source != "translator-credits")
             {
                 item->SetIssue(CatalogItem::Issue::Warning, _("The translation should start with a lowercase character."));
                 return true;
             }
-            // else: German nouns start uppercased, this would cause too many false positives
+            // Suppress warning for German, because nouns start uppercased and this would cause too many false positives.
+            // Also suppress for 'translator-credits', which is conventionally filled with proper names (starting uppercase), not translated text.
         }
 
         return false;
