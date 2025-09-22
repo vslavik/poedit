@@ -165,7 +165,7 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
     auto buttons = new wxBoxSizer(wxHORIZONTAL);
     sizer->Add(buttons, wxSizerFlags().Expand().Border(wxBOTTOM, 1));
     buttons->Add(learnMore, wxSizerFlags().Center());
-    buttons->AddSpacer(PX(60));
+    buttons->AddSpacer(PX(6));
     buttons->AddStretchSpacer();
     buttons->Add(m_signIn, wxSizerFlags());
     buttons->Add(m_signOut, wxSizerFlags());
