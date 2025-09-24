@@ -213,7 +213,7 @@ public:
         explainFocus.Replace("Ctrl", "Cmd");
 #endif
         sizer->AddSpacer(PX(5));
-        sizer->Add(new ExplanationLabel(this, explainFocus), wxSizerFlags().Expand().Border(wxLEFT, PX(ExplanationLabel::CHECKBOX_INDENT)));
+        sizer->Add(new ExplanationLabel(this, explainFocus), wxSizerFlags().Expand().Border(wxLEFT, UnderCheckboxIndent()));
 
         sizer->AddSpacer(PX(10));
         sizer->Add(new HeadingLabel(this, _("Appearance")));
@@ -411,11 +411,11 @@ public:
 
         auto explainTxt = _(L"Poedit can attempt to fill in new entries from only previous translations in the file or from your entire translation memory. Using the TM won’t be very effective if it’s near-empty, but it will get better as you add more translations to it.");
         auto explain = new ExplanationLabel(this, explainTxt);
-        sizer->Add(explain, wxSizerFlags().Expand().Border(wxLEFT, PX(ExplanationLabel::CHECKBOX_INDENT)));
+        sizer->Add(explain, wxSizerFlags().Expand().Border(wxLEFT, UnderCheckboxIndent()));
 
         auto learnMore = new LearnMoreLink(this, "https://poedit.net/trac/wiki/Doc/TranslationMemory");
         sizer->AddSpacer(PX(3));
-        sizer->Add(learnMore, wxSizerFlags().Border(wxLEFT, PX(ExplanationLabel::CHECKBOX_INDENT)));
+        sizer->Add(learnMore, wxSizerFlags().Border(wxLEFT, UnderCheckboxIndent()));
         sizer->AddSpacer(PX(10));
 
 #ifdef __WXOSX__
@@ -1082,7 +1082,7 @@ public:
         sizer->Add(m_beta, wxSizerFlags().Expand().PXBorder(wxBOTTOM));
 
         sizer->Add(new ExplanationLabel(this, _("Beta versions contain the latest new features and improvements, but may be a bit less stable.")),
-                   wxSizerFlags().Expand().Border(wxLEFT, PX(ExplanationLabel::CHECKBOX_INDENT)));
+                   wxSizerFlags().Expand().Border(wxLEFT, UnderCheckboxIndent()));
         sizer->AddSpacer(PX(5));
 
         if (wxPreferencesEditor::ShouldApplyChangesImmediately())

@@ -34,6 +34,7 @@
 
 #if wxUSE_GUI
     #include <wx/toplevel.h>
+    #include "hidpi.h"
 #endif
 
 
@@ -61,14 +62,33 @@
     #define BORDER_MACOS(dir, n) Border(dir, 0)
 #endif
 
+inline int AboveChoicePadding()
+{
 #ifdef __WXOSX__
-    inline int AboveChoicePadding()
-    {
+    if (__builtin_available(macOS 26.0, *))
+        return 0;
+    else
         return 2;
-    }
 #else
-    #define AboveChoicePadding()  0
+    return 0;
 #endif
+}
+
+inline int UnderCheckboxIndent()
+{
+#if defined(__WXOSX__)
+    if (__builtin_available(macOS 26.0, *))
+        return 22;
+    else
+        return 20;
+#elif defined(__WXMSW__)
+    return PX(17);
+#elif defined(__WXGTK__)
+    return PX(25);
+#else
+    #error "Implement UnderCheckboxIndent() for your platform"
+#endif
+}
 
 
 // ----------------------------------------------------------------------
