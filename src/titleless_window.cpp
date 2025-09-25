@@ -37,6 +37,10 @@
     #pragma comment(lib, "Dwmapi.lib")
 #endif
 
+#ifdef __WXOSX__
+    #include <wx/private/bmpbndl.h>
+#endif
+
 
 namespace
 {
@@ -118,11 +122,22 @@ class CloseButton : public wxBitmapButton
 public:
     CloseButton(wxWindow* parent, wxWindowID id)
     {
-        wxBitmap normal([NSImage imageNamed:@"CloseButtonTemplate"]);
-        wxBitmap hover([NSImage imageNamed:@"CloseButtonHoverTemplate"]);
-        wxBitmapButton::Create(parent, id, normal, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
-        SetBitmapHover(hover);
-    }
+        auto image = wxOSXMakeBundleFromImage([NSImage imageWithSystemSymbolName:@"xmark.circle.fill" accessibilityDescription:nil]);
+        wxBitmapButton::Create(parent, id, image, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
+
+        NSButton *native = (NSButton*)GetHandle();
+        native.contentTintColor = NSColor.tertiaryLabelColor;
+
+        Bind(wxEVT_ENTER_WINDOW, [=](wxMouseEvent& e){
+            native.contentTintColor = NSColor.secondaryLabelColor;
+            e.Skip();
+        });
+
+        Bind(wxEVT_LEAVE_WINDOW, [=](wxMouseEvent& e){
+            native.contentTintColor = NSColor.tertiaryLabelColor;
+            e.Skip();
+        });
+    } 
 };
 
 #endif // __WXOSX__
@@ -304,7 +319,7 @@ bool TitlelessWindowBase<T>::Layout()
     if (m_closeButton)
     {
 #ifdef __WXOSX__
-        m_closeButton->Move(4, 4);
+        m_closeButton->Move(8, 8);
 #else
         auto size = this->GetClientSize();
         m_closeButton->Move(size.x - m_closeButton->GetSize().x, 0);
