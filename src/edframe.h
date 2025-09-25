@@ -219,6 +219,7 @@ class PoeditFrame : public PoeditFrameBase
 
         /// Updates statistics in statusbar.
         void UpdateStatusBar();
+        void InitStatusBar();
         /// Updates frame title.
         void UpdateTitle();
         /// Updates menu -- disables and enables items.

@@ -499,7 +499,7 @@ PoeditFrame::PoeditFrame() :
     GetMenuBar()->Check(XRCID("menu_warnings"), Config::ShowWarnings());
 
     if (wxConfigBase::Get()->ReadBool("/statusbar_shown", true))
-        CreateStatusBar(1, wxST_SIZEGRIP);
+        InitStatusBar();
 
     m_contentWrappingSizer = new wxBoxSizer(wxVERTICAL);
     SetSizer(m_contentWrappingSizer);
@@ -2586,6 +2586,22 @@ void PoeditFrame::NotifyCatalogChanged(const CatalogPtr& cat)
 }
 
 
+void PoeditFrame::InitStatusBar()
+{
+    // We create a status bar with 3 fields, 2 of which are dummy and used
+    // only to center the text:
+    // 0 - left padding
+    // 1 - actual text
+    // 2 - right padding
+    auto bar = CreateStatusBar(3, wxST_SIZEGRIP);
+    const int styles[3] = {wxSB_FLAT, wxSB_FLAT, wxSB_FLAT};
+    bar->SetStatusStyles(3, styles);
+
+#ifdef __WXMSW__
+    bar->SetMinHeight(bar->GetCharHeight() + PX(1));
+#endif
+}
+
 void PoeditFrame::UpdateStatusBar()
 {
     auto bar = GetStatusBar();
@@ -2616,7 +2632,11 @@ void PoeditFrame::UpdateStatusBar()
             text.Printf(wxPLURAL("%d entry", "%d entries", all), all);
         }
 
-        bar->SetStatusText(text);
+        bar->SetStatusText(text, 1);
+
+        auto width = bar->GetTextExtent(text).x + PX(8);
+        int fields[3] = {-1, width, -1};
+        bar->SetStatusWidths(3, fields);
     }
 }
 
@@ -3253,7 +3273,7 @@ void PoeditFrame::OnShowHideStatusbar(wxCommandEvent&)
 
     if (toShow)
     {
-        CreateStatusBar(1, wxST_SIZEGRIP);
+        InitStatusBar();
         UpdateStatusBar();
     }
     else
