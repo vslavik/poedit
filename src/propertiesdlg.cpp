@@ -739,6 +739,14 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
     wxXmlResource::Get()->AttachUnknownControl("keywords", m_keywords);
     wxXmlResource::Get()->AttachUnknownControl("paths", m_paths);
     wxXmlResource::Get()->AttachUnknownControl("excluded_paths", m_excludedPaths);
+    
+#if defined(__WXOSX__)
+    NSButton *open_basepath =(NSButton*)XRCCTRL(*this, "open_basepath", wxBitmapButton)->GetHandle();
+    open_basepath.bezelStyle = NSBezelStyleTexturedRounded;
+    open_basepath.showsBorderOnlyWhileMouseInside = YES;
+#elif defined(__WXMSW__)
+    XRCCTRL(*this, "open_basepath", wxBitmapButton)->SetMinSize(wxSize(PX(20), -1));
+#endif
 
     // Controls setup:
     m_project->SetHint(_("Name of the project the translation is for"));
