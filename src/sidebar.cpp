@@ -93,7 +93,7 @@ SidebarBlock::SidebarBlock(Sidebar *parent, const wxString& label, int flags)
         if (!(flags & NoUpperMargin))
         {
             m_sizer->Add(new SidebarSeparator(parent),
-                         wxSizerFlags().Expand().Border(wxBOTTOM|wxLEFT|wxRIGHT, PX(5)));
+                         wxSizerFlags().Expand().Border(wxBOTTOM|wxLEFT|wxRIGHT, PX(6)));
         }
         m_headerSizer = new wxBoxSizer(wxHORIZONTAL);
         m_headerSizer->Add(new HeadingLabel(parent, label), wxSizerFlags().Center());
