@@ -74,9 +74,9 @@ public:
 #endif
 
         auto sizer = new wxBoxSizer(wxHORIZONTAL);
-        sizer->AddSpacer(PX(4));
+        sizer->AddSpacer(PX(6));
         sizer->Add(label, wxSizerFlags(1).Center().Border(wxALL, PX(2)));
-        sizer->AddSpacer(PX(4));
+        sizer->AddSpacer(PX(6));
         SetSizer(sizer);
 
         Bind(wxEVT_PAINT, [=](wxPaintEvent&)
@@ -89,7 +89,12 @@ public:
             auto rect = GetClientRect();
             if (!rect.IsEmpty())
             {
-                gc->DrawRoundedRectangle(rect.x, rect.y, rect.width, rect.height, PX(2));
+                int radius = PX(4);
+#ifdef __WXOSX__
+                if (@available(macOS 26, *))
+                    radius = rect.height / 2;
+#endif
+                gc->DrawRoundedRectangle(rect.x, rect.y, rect.width, rect.height, radius);
             }
         });
 
