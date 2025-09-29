@@ -28,15 +28,6 @@
 #include <wx/artprov.h>
 #include <wx/settings.h>
 
-#ifdef __WXGTK__
-    #include <pango/pango.h>
-    #if PANGO_VERSION_CHECK(1,38,0)
-        #define SUPPORTS_BGALPHA
-    #endif
-#else
-    #define SUPPORTS_BGALPHA
-#endif
-
 
 namespace
 {
@@ -132,10 +123,8 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
         case Color::ItemContextBgHighlighted:
             #if defined(__WXMSW__)
             return sRGB(255, 255, 255, 0.50);
-            #elif defined(SUPPORTS_BGALPHA)
-            return sRGB(255, 255, 255, 0.35);
             #else
-            return DoGet(Color::ItemContextBg, mode);
+            return sRGB(255, 255, 255, 0.35);
             #endif
 
         // Tags:
