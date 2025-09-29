@@ -123,7 +123,7 @@ MergeSummaryDialog::MergeSummaryDialog(wxWindow *parent)
     panel->SetSizer(sizer);
 
     m_notebook = SegmentedNotebook::Create(panel, SegmentStyle::SidebarPanels);
-    sizer->Add(m_notebook, wxSizerFlags(1).Expand().Border(wxTOP, PX(1)));
+    sizer->Add(m_notebook, wxSizerFlags(1).Expand().Border(wxTOP, PX(4)));
 
     auto buttons = CreateButtonSizer(wxOK);
     auto ok = static_cast<wxButton*>(FindWindow(wxID_OK));
