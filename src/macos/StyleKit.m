@@ -203,9 +203,9 @@
 
 
     //// Text Drawing
-    NSRect textRect = NSMakeRect(NSMinX(frame) + 14, NSMinY(frame) + floor((NSHeight(frame) - 12) * 0.50000 + 0.5), NSWidth(frame) - 27, 12);
+    NSRect textRect = NSMakeRect(NSMinX(group2) + 14, NSMinY(group2) + floor((NSHeight(group2) - 12) * 0.50000 + 0.5), NSWidth(group2) - 27, 12);
     NSMutableParagraphStyle* textStyle = [NSMutableParagraphStyle new];
-    textStyle.alignment = NSTextAlignmentLeft;
+    textStyle.alignment = NSTextAlignmentCenter;
 
     NSDictionary* textFontAttributes = @{NSFontAttributeName: [NSFont systemFontOfSize: NSFont.smallSystemFontSize], NSForegroundColorAttributeName: NSColor.blackColor, NSParagraphStyleAttributeName: textStyle};
 
