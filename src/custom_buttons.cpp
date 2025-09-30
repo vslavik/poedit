@@ -351,9 +351,12 @@ bool ActionButton::MSWOnDraw(WXDRAWITEMSTRUCT* wxdis)
 
     if (highlighted)
     {
-        dc.SetPen(*wxTRANSPARENT_PEN);
-        dc.SetBrush(GetBackgroundColour().ChangeLightness(95));
-        dc.DrawRectangle(rect);
+        wxScopedPtr<wxGraphicsContext> gc(wxGraphicsContext::Create(dc));
+
+        gc->EnableOffset(false);
+        gc->SetPen(*wxTRANSPARENT_PEN);
+        gc->SetBrush(GetBackgroundColour().ChangeLightness(95));
+        gc->DrawRoundedRectangle(rect.x, rect.y, rect.width, rect.height, PX(3));
     }
 
     auto bmp = GetBitmap();

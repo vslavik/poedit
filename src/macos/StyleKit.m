@@ -232,6 +232,10 @@
 
 + (void)drawActionButtonWithFrame: (NSRect)frame buttonColor: (NSColor*)buttonColor hasIcon: (BOOL)hasIcon label: (NSString*)label description: (NSString*)description
 {
+    CGFloat radius = 5;
+    if (@available(macOS 26, *))
+        radius = frame.size.height / 2;
+    
     //// Color Declarations
     NSColor* osSecondaryLabelColor = [NSColor secondaryLabelColor]; // manually modified
     NSColor* osLabelColor = [NSColor labelColor]; // manually modified
@@ -240,7 +244,7 @@
     CGFloat textPosition = hasIcon ? 58 : 18;
 
     //// Rectangle Drawing
-    NSBezierPath* rectanglePath = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(NSMinX(frame) + 2, NSMinY(frame) + 2, NSWidth(frame) - 4, NSHeight(frame) - 4) xRadius: 5 yRadius: 5];
+    NSBezierPath* rectanglePath = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(NSMinX(frame) + 2, NSMinY(frame) + 2, NSWidth(frame) - 4, NSHeight(frame) - 4) xRadius: radius yRadius: radius];
     [buttonColor setFill];
     [rectanglePath fill];
 
