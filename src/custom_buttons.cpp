@@ -639,7 +639,7 @@ wxAccStatus SwitchButton::accessible::GetState(int childId, long* state)
 {
     NSSize size = self.attributedTitle.size;
     size.width += 28;
-    size.height = 24;
+    size.height = 26;
     [self setFrameSize:size];
 }
 

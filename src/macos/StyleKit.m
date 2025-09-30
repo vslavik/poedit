@@ -140,6 +140,10 @@
 
 + (void)drawTranslucentButtonWithFrame: (NSRect)frame label: (NSString*)label pressed: (BOOL)pressed
 {
+    CGFloat radius = 4;
+    if (@available(macOS 26, *))
+        radius = 6.5;
+        
     //// General Declarations
     CGContextRef context = NSGraphicsContext.currentContext.CGContext;
 
@@ -150,10 +154,18 @@
     NSColor* strokeColor2 = [NSColor colorWithCalibratedRed: 0 green: 0 blue: 0 alpha: 0.071];
 
     //// Shadow Declarations
-    NSShadow* translucentButtonShadow = [[NSShadow alloc] init];
-    [translucentButtonShadow setShadowColor: [NSColor.blackColor colorWithAlphaComponent: 0.25]];
-    [translucentButtonShadow setShadowOffset: NSMakeSize(0.1, -0.6)];
-    [translucentButtonShadow setShadowBlurRadius: 1];
+    NSShadow* translucentButtonShadow = nil;
+    if (@available(macOS 26, *))
+    {
+        // no shadows
+    }
+    else
+    {
+        translucentButtonShadow = [NSShadow new];
+        [translucentButtonShadow setShadowColor: [NSColor.blackColor colorWithAlphaComponent: 0.25]];
+        [translucentButtonShadow setShadowOffset: NSMakeSize(0.1, -0.6)];
+        [translucentButtonShadow setShadowBlurRadius: 1];
+    }
 
     //// Variable Declarations
     NSColor* translucentButtonColor = pressed ? pressedTranslucent : white;
@@ -173,9 +185,10 @@
 
 
             //// Rectangle Drawing
-            NSBezierPath* rectanglePath = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(NSMinX(group2) + floor(NSWidth(group2) * 0.00000 + 0.5), NSMinY(group2) + floor(NSHeight(group2) * 0.00000 + 0.5), floor(NSWidth(group2) * 1.00000) - floor(NSWidth(group2) * 0.00000 + 0.5) + 0.5, floor(NSHeight(group2) * 1.00000) - floor(NSHeight(group2) * 0.00000 + 0.5) + 0.5) xRadius: 4 yRadius: 4];
+            NSBezierPath* rectanglePath = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(NSMinX(group2) + floor(NSWidth(group2) * 0.00000 + 0.5), NSMinY(group2) + floor(NSHeight(group2) * 0.00000 + 0.5), floor(NSWidth(group2) * 1.00000) - floor(NSWidth(group2) * 0.00000 + 0.5) + 0.5, floor(NSHeight(group2) * 1.00000) - floor(NSHeight(group2) * 0.00000 + 0.5) + 0.5) xRadius: radius yRadius: radius];
             [NSGraphicsContext saveGraphicsState];
-            [translucentButtonShadow set];
+            if (translucentButtonShadow)
+                [translucentButtonShadow set];
             [translucentButtonColor setFill];
             [rectanglePath fill];
             [NSGraphicsContext restoreGraphicsState];
@@ -183,7 +196,7 @@
 
 
             //// Rectangle 2 Drawing
-            NSBezierPath* rectangle2Path = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(NSMinX(group2) + floor(NSWidth(group2) * 0.00000 + 0.5), NSMinY(group2) + floor(NSHeight(group2) * 0.00000 + 0.5), floor(NSWidth(group2) * 1.00000) - floor(NSWidth(group2) * 0.00000 + 0.5) + 0.5, floor(NSHeight(group2) * 1.00000) - floor(NSHeight(group2) * 0.00000 + 0.5) + 0.5) xRadius: 4 yRadius: 4];
+            NSBezierPath* rectangle2Path = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(NSMinX(group2) + floor(NSWidth(group2) * 0.00000 + 0.5), NSMinY(group2) + floor(NSHeight(group2) * 0.00000 + 0.5), floor(NSWidth(group2) * 1.00000) - floor(NSWidth(group2) * 0.00000 + 0.5) + 0.5, floor(NSHeight(group2) * 1.00000) - floor(NSHeight(group2) * 0.00000 + 0.5) + 0.5) xRadius: radius yRadius: radius];
             [strokeColor setStroke];
             [rectangle2Path setLineWidth: 0.5];
             [rectangle2Path stroke];
@@ -195,7 +208,7 @@
 
 
         //// Rectangle 3 Drawing
-        NSBezierPath* rectangle3Path = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(NSMinX(group2) + floor(NSWidth(group2) * 0.00000 + 0.5), NSMinY(group2) + floor(NSHeight(group2) * 0.00000 + 0.5), floor(NSWidth(group2) * 1.00000) - floor(NSWidth(group2) * 0.00000 + 0.5) + 0.5, floor(NSHeight(group2) * 1.00000) - floor(NSHeight(group2) * 0.00000 + 0.5) + 0.5) xRadius: 4 yRadius: 4];
+        NSBezierPath* rectangle3Path = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(NSMinX(group2) + floor(NSWidth(group2) * 0.00000 + 0.5), NSMinY(group2) + floor(NSHeight(group2) * 0.00000 + 0.5), floor(NSWidth(group2) * 1.00000) - floor(NSWidth(group2) * 0.00000 + 0.5) + 0.5, floor(NSHeight(group2) * 1.00000) - floor(NSHeight(group2) * 0.00000 + 0.5) + 0.5) xRadius: radius yRadius: radius];
         [strokeColor2 setStroke];
         [rectangle3Path setLineWidth: 0.5];
         [rectangle3Path stroke];
@@ -203,7 +216,7 @@
 
 
     //// Text Drawing
-    NSRect textRect = NSMakeRect(NSMinX(group2) + 14, NSMinY(group2) + floor((NSHeight(group2) - 12) * 0.50000 + 0.5), NSWidth(group2) - 27, 12);
+    NSRect textRect = NSMakeRect(NSMinX(group2) + 14, NSMinY(group2) + floor((NSHeight(group2) - 13) * 0.50000 + 0.5), NSWidth(group2) - 27, 13);
     NSMutableParagraphStyle* textStyle = [NSMutableParagraphStyle new];
     textStyle.alignment = NSTextAlignmentCenter;
 
