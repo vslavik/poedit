@@ -60,6 +60,8 @@ private struct ToggleWrapper: View {
         .contentShape(Rectangle())
         .toggleStyle(.switch)
         .controlSize(.mini)
+        // FIXME: This does not work anymore in macOS 26!
+        //        See https://developer.apple.com/forums/thread/802100
         .tint(state.tint)
         .animation(.default, value: state.isOn) // smooth label color change
         .onChange(of: state.isOn) { value in
