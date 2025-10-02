@@ -169,6 +169,7 @@ ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& s
         self.title = label;
         self.bezelStyle = NSBezelStyleSmallSquare;
         self.buttonType = NSButtonTypeOnOff;
+        self.bordered = NO;
         self.font = [NSFont boldSystemFontOfSize:[NSFont smallSystemFontSize]];
         self.animationPosition = 0.0;
         self.onColor = [NSColor colorWithCalibratedRed:0.302 green:0.847 blue:0.396 alpha:1.0];
@@ -181,8 +182,8 @@ ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& s
 {
     [super sizeToFit];
     NSSize size = self.frame.size;
-    size.width += 40;
-    size.height += 2;
+    size.width += 32 + 8;
+    size.height = 18;
     [self setFrameSize:size];
 }
 
@@ -190,13 +191,71 @@ ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& s
 {
     #pragma unused(dirtyRect)
 
+    // Input parameters:
+    CGFloat t = fmin(fmax(self.animationPosition, 0.0), 1.0); // 0..1
+
     BOOL isDarkMode = [self.effectiveAppearance.name isEqualToString:NSAppearanceNameDarkAqua];
-    [StyleKit drawSwitchButtonWithFrame:self.bounds
-                                onColor:self.onColor
-                          labelOffColor:self.labelOffColor
-                                  label:self.title
-                         togglePosition:self.animationPosition
-                             isDarkMode:isDarkMode];
+    BOOL isToggledOn = t > 0.5;
+
+    // Geometry:
+    CGFloat trackW = 32;
+    CGFloat trackH = 18;
+    CGFloat knobInset = 1.3; // NB: native is 1.0, but this looks a bit better with our color
+    CGFloat knobD = trackH - 2.0 * knobInset;
+    CGFloat radius = trackH * 0.5;
+
+    // Layout: label on the left, switch on the right
+    NSRect track = NSMakeRect(NSMaxX(self.bounds) - trackW,
+                              NSMidY(self.bounds) - trackH / 2,
+                              trackW, trackH);
+    NSRect labelRect = self.bounds;
+    labelRect.size.width = NSMinX(track) - 8.0; // 8pt gap before the switch
+
+    // Colors:
+    NSColor *offTrack = NSColor.quaternaryLabelColor;
+    NSColor *trackColor = isToggledOn ? self.onColor : offTrack;
+    NSColor *trackStroke = isDarkMode? [NSColor colorWithWhite:1 alpha:0.15] : [NSColor colorWithWhite:0 alpha:0.05];
+
+    NSColor *knobFill = isDarkMode ? [NSColor colorWithWhite:0.79 alpha:1.0] : NSColor.whiteColor;
+    NSColor *knobStroke = [NSColor colorWithWhite:0 alpha:(isDarkMode ? 0.3 : 0.05)];
+
+    NSColor *textColor = isToggledOn ? self.onColor : self.labelOffColor;
+
+    NSShadow *shadow = [[NSShadow alloc] init];
+    shadow.shadowOffset = NSMakeSize(1, -1);
+    shadow.shadowBlurRadius = 1.0;
+    shadow.shadowColor = [NSColor colorWithWhite:0 alpha:0.05];
+
+    // Track (pill)
+    NSBezierPath *pill = [NSBezierPath bezierPathWithRoundedRect:track xRadius:radius yRadius:radius];
+    [trackColor setFill];
+    [pill fill];
+    [trackStroke setStroke];
+    pill.lineWidth = 1.0;
+    [pill stroke];
+
+    // Knob position: lerp between left and right
+    CGFloat x0 = NSMinX(track) + knobInset;
+    CGFloat x1 = NSMaxX(track) - knobInset - knobD;
+    CGFloat kx = x0 + (x1 - x0) * t;
+    NSRect knob = NSMakeRect(kx, NSMidY(track) - knobD * 0.5, knobD, knobD);
+
+    NSBezierPath *knobPath = [NSBezierPath bezierPathWithOvalInRect:knob];
+    [knobFill setFill];
+    [NSGraphicsContext saveGraphicsState];
+    [shadow set];
+    [knobPath fill];
+    [NSGraphicsContext restoreGraphicsState];
+    [knobStroke setStroke];
+    knobPath.lineWidth = 1.0;
+    [knobPath stroke];
+
+    // Label (right-aligned to the space before the switch)
+    NSDictionary *attrs = @{
+        NSFontAttributeName: [NSFont boldSystemFontOfSize:NSFont.smallSystemFontSize],
+        NSForegroundColorAttributeName: textColor,
+    };
+    [self.title drawAtPoint:NSMakePoint(0, 2) withAttributes:attrs];
 }
 
 - (void)setAnimationPosition:(double)animationPosition
@@ -228,7 +287,7 @@ ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& s
 
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
     {
-        context.duration = 0.1;
+        context.duration = 0.2;
         self.animator.animationPosition = target;
     }];
 
