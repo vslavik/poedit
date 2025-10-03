@@ -473,8 +473,8 @@ void SwitchButton::OnMouseClick(wxMouseEvent& e)
 wxSize SwitchButton::DoGetBestSize() const
 {
     auto size = wxToggleButton::DoGetBestSize();
-    size.x += PX(44);
-    size.y = PX(20);
+    size.x += PX(42);
+    size.y = PX(22);
     return size;
 }
 
@@ -512,17 +512,17 @@ bool SwitchButton::MSWOnDraw(WXDRAWITEMSTRUCT *wxdis)
         gc->SetPen(wxPen(m_clrOffLabel, PX(2)));
     }
 
-    wxRect switchRect(rect.GetRight() - PX(44), 0, PX(44), wxMin(PX(20), rect.GetHeight()));
+    wxRect switchRect(rect.GetRight() - PX(42), 0, PX(42), wxMin(PX(22), rect.GetHeight()));
     switchRect.CenterIn(rect, wxVERTICAL);
     switchRect.Deflate(PX(2));
 
-    double radius = switchRect.height / 2.0;
-    gc->DrawRoundedRectangle(switchRect.x, switchRect.y, switchRect.width, switchRect.height, radius);
+    double radius = (switchRect.height - 1) / 2.0;
+    gc->DrawRoundedRectangle(switchRect.x + 0.5, switchRect.y + 0.5, switchRect.width - 1, switchRect.height - 1, radius);
 
     if (toggled)
     {
-        gc->SetPen(GetBackgroundColour());
-        gc->SetBrush(GetBackgroundColour());
+        gc->SetPen(*wxWHITE);
+        gc->SetBrush(*wxWHITE);
     }
     else
     {
