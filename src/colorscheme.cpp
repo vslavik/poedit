@@ -94,13 +94,17 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
 
         case Color::ListControlBg:
             #ifdef __WXOSX__
+            if (@available(macOS 26, *))
+            {
+                // list rendering is same as the rest of the window, best is to not change the color at all
+                return wxNullColour;
+            }
             if (mode == Dark)
             {
                 // FIXME: In dark mode, listbox color is special and requires NSBox to be rendered correctly;
                 //        this is just passable approximation
                 return wxColour([NSColor underPageBackgroundColor]);
             }
-            else
             #endif
             return wxSystemSettings::GetColour(wxSYS_COLOUR_LISTBOX);
 
