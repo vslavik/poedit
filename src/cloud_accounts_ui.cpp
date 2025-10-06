@@ -88,10 +88,12 @@ AccountsPanel::AccountsPanel(wxWindow *parent, int flags) : wxPanel(parent, wxID
     wxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
     topsizer->Add(sizer, wxSizerFlags(1).Expand());
 
-    m_list = new IconAndSubtitleListCtrl(this, _("Account"), MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN));
+    m_list = new IconAndSubtitleListCtrl(this, _("Account"), BORDER_LIST);
     sizer->Add(m_list, wxSizerFlags().Expand().Border(wxRIGHT, PX(10)));
 
-    m_panelsBook = new wxSimplebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN));
+    m_panelsBook = new wxSimplebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | BORDER_LISTLIKE);
+    SetupListlikeBorder(m_panelsBook);
+
     ColorScheme::SetupWindowColors(m_panelsBook, [=]
     {
         m_panelsBook->SetBackgroundColour(ColorScheme::Get(Color::ListControlBg));
@@ -248,8 +250,7 @@ public:
     using FileInfo = CloudAccountClient::ProjectFile;
 
     CloudFileList(wxWindow *parent)
-        : wxDataViewListCtrl(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
-                             wxDV_NO_HEADER | MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN))
+        : wxDataViewListCtrl(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDV_NO_HEADER | BORDER_LIST)
     {
         SetRowHeight(PX(36));
         SetMinSize(wxSize(PX(500), PX(200)));

@@ -35,12 +35,15 @@
 #if wxUSE_GUI
     #include <wx/toplevel.h>
     #include "hidpi.h"
+    #include "colorscheme.h"
 #endif
 
 
 // ----------------------------------------------------------------------
 // Misc platform differences
 // ----------------------------------------------------------------------
+
+#if wxUSE_GUI
 
 #ifdef __WXMSW__
     #define MSW_OR_OTHER(msw, other) msw
@@ -60,6 +63,34 @@
 #else
     #define BORDER_WIN(dir, n) Border(dir, n)
     #define BORDER_MACOS(dir, n) Border(dir, 0)
+#endif
+
+#ifdef __WXOSX__
+    #define BORDER_LIST         wxBORDER_DEFAULT
+    #define BORDER_LISTLIKE     wxBORDER_NONE
+    #ifdef __OBJC__
+    inline void SetupListlikeBorder(wxWindow *w)
+    {
+        ColorScheme::SetupWindowColors(w, [=]
+        {
+            NSView *view = (NSView*)w->GetHandle();
+            [view.effectiveAppearance performAsCurrentDrawingAppearance: [&]{
+                view.wantsLayer = YES;
+                view.layer.borderColor = NSColor.separatorColor.CGColor;
+                view.layer.borderWidth = 1.0;
+            }];
+        });
+    }
+    #endif
+#else
+    #ifdef __WXMSW__
+        #define BORDER_LIST     wxBORDER_THEME
+        #define BORDER_LISTLIKE wxBORDER_SIMPLE
+    #else
+        #define BORDER_LIST     wxBORDER_SUNKEN
+        #define BORDER_LISTLIKE wxBORDER_SUNKEN
+    #endif
+    inline void SetupListlikeBorder(wxWindow*) {}
 #endif
 
 inline int AboveChoicePadding()
@@ -89,6 +120,8 @@ inline int UnderCheckboxIndent()
     #error "Implement UnderCheckboxIndent() for your platform"
 #endif
 }
+
+#endif // wxUSE_GUI
 
 
 // ----------------------------------------------------------------------

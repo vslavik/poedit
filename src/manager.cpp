@@ -131,7 +131,7 @@ ManagerFrame::ManagerFrame() :
     auto sidebarSizer = new wxBoxSizer(wxVERTICAL);
     topsizer->Add(sidebarSizer, wxSizerFlags().Expand().Border(wxALL, PX(10)));
 
-    m_listPrj = new wxListBox(panel, wxID_ANY, wxDefaultPosition, wxSize(PX(200), -1), 0, nullptr, MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN));
+    m_listPrj = new wxListBox(panel, wxID_ANY, wxDefaultPosition, wxSize(PX(200), -1), 0, nullptr, BORDER_LIST);
 #ifdef __WXOSX__
     ((NSTableView*)[((NSScrollView*)m_listPrj->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
 #endif
@@ -445,6 +445,7 @@ void ManagerFrame::EditProject(int id, TFunctor completionHandler)
     wxWindowPtr<ProjectDlg> dlg(new ProjectDlg);
     wxXmlResource::Get()->LoadDialog(dlg.get(), this, "manager_prj_dlg");
     wxEditableListBox *prj_dirs = new wxEditableListBox(dlg.get(), XRCID("prj_dirs"), _("Directories:"));
+    SetupListlikeBorder(prj_dirs);
     wxXmlResource::Get()->AttachUnknownControl("prj_dirs", prj_dirs);
 
     XRCCTRL(*dlg, "prj_name", wxTextCtrl)->SetValue(cfg->Read(key + "Name"));

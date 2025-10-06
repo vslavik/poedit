@@ -735,8 +735,8 @@ public:
         sizer->Add(new ExplanationLabel(this, _("Source code extractors are used to find translatable strings in the source code files and extract them so that they can be translated.")),
                    wxSizerFlags().Expand().PXDoubleBorder(wxBOTTOM));
 
-        // FIXME: Neither wxBORDER_ flag produces correct results on macOS or Windows, would need to paint manually
-        auto listPanel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN));
+        auto listPanel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | BORDER_LISTLIKE);
+        SetupListlikeBorder(listPanel);
 
         auto listSizer = new wxBoxSizer(wxVERTICAL);
         listPanel->SetSizer(listSizer);

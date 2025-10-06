@@ -108,7 +108,8 @@ MergeSummaryDialog::MergeSummaryDialog(wxWindow *parent)
     auto topsizer = new wxBoxSizer(wxVERTICAL);
     SetSizer(topsizer);
 
-    auto panel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN));
+    auto panel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | BORDER_LISTLIKE);
+    SetupListlikeBorder(panel);
 
     ColorScheme::SetupWindowColors(panel, [=]
     {

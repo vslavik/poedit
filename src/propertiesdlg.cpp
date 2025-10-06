@@ -711,6 +711,7 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
     auto page_keywords = XRCCTRL(*this, "page_keywords", wxWindow);
 
     m_keywords = new wxEditableListBox(page_keywords, -1, _("Additional keywords"));
+    SetupListlikeBorder(m_keywords);
     m_defaultKeywords = XRCCTRL(*this, "default_keywords", wxCheckBox);
 
     m_pathsData.reset(new PathsData);
