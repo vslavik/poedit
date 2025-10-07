@@ -113,26 +113,27 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
             return sRGB(225, 77, 49);
         case Color::ErrorText:
             return *wxRED;
+
         case Color::ItemContextFg:
-            return mode == Dark ? sRGB(180, 222, 254) : sRGB(70, 109, 137);
+            return DoGet(Color::TagContextFg, mode);
         case Color::ItemContextBg:
-            if (mode == Dark)
-                return sRGB(67, 94, 147, 0.6);
-            else
-                return sRGB(217, 232, 242);
+            {
+                auto c = DoGet(Color::TagContextBg, mode);
+                return wxColour(c.Red(), c.Green(), c.Blue(), c.Alpha() * 0.4);
+            }
         case Color::ItemContextBgHighlighted:
             #if defined(__WXMSW__)
-            return sRGB(255, 255, 255, 0.50);
+            return sRGB(255, 255, 255, 0.5);
             #else
-            return sRGB(255, 255, 255, 0.35);
+            return sRGB(255, 255, 255, 0.2);
             #endif
 
         // Tags:
 
         case Color::TagContextFg:
-            return DoGet(Color::ItemContextFg, mode);
+            return mode == Dark ? sRGB(180, 222, 254) : sRGB(70, 109, 137);
         case Color::TagContextBg:
-            return DoGet(Color::ItemContextBg, mode);
+            return mode == Dark ? sRGB(67, 94, 147, 0.6) : sRGB(217, 232, 242);
         case Color::TagSecondaryBg:
             return mode == Dark ? sRGB(255, 255, 255, 0.5) : sRGB(0, 0, 0, 0.10);
         case Color::TagErrorLineBg:
