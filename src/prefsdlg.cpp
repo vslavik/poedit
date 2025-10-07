@@ -76,6 +76,7 @@
 #include "str_helpers.h"
 #include "utility.h"
 #include "customcontrols.h"
+#include "layout_helpers.h"
 #include "unicode_helpers.h"
 
 namespace

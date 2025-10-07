@@ -31,6 +31,7 @@
 #include "progress_ui.h"
 #include "str_helpers.h"
 #include "tm/transmem.h"
+#include "layout_helpers.h"
 #include "utility.h"
 
 #include <wx/button.h>

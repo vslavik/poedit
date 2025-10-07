@@ -30,6 +30,7 @@
 		28141065966B0C035B855080 /* unicode_helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2E02A341CB812C500D18F5C /* unicode_helpers.cpp */; };
 		32DA069EB285429687FE9593 /* libcld2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2083D121A87D17D00150BBF /* libcld2.a */; };
 		3ED13FB94DB971D259E1FEE0 /* catalog_xcloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BA775F29C57EB5164B2B792 /* catalog_xcloc.cpp */; };
+		3F4B67D91AD57C28FAE1531E /* layout_helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2241A28E05DC663462EE36F4 /* layout_helpers.cpp */; };
 		43518E06F21ED7EB8D754F2B /* progress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD4B1152DADD677FDAE5D5AB /* progress.cpp */; };
 		485D22B7D4F845A01E137564 /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A60B0E72939BB1B6692FAD8 /* UniformTypeIdentifiers.framework */; };
 		49C128E5C885E14E7D3748EE /* errors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B273818B2BD5027E005F24DA /* errors.cpp */; };
@@ -322,6 +323,7 @@
 		1A56755064DA87E1BCD83DBE /* PreviewProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreviewProvider.h; sourceTree = "<group>"; };
 		1B820D7A8F7B4D98FC69B3B5 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = macos/nib/th.lproj/MainToolbar.strings; sourceTree = "<group>"; };
 		1DE48B40AD905169AD6FFC60 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = macos/nib/en.lproj/MainToolbar.strings; sourceTree = "<group>"; };
+		2241A28E05DC663462EE36F4 /* layout_helpers.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = layout_helpers.cpp; sourceTree = "<group>"; };
 		239AE8E1B5AF41A0B1630C4B /* co */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = co; path = macos/nib/co.lproj/MainToolbar.strings; sourceTree = "<group>"; };
 		25AE60286C09F7B1457509B6 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = macos/nib/id.lproj/MainToolbar.strings; sourceTree = "<group>"; };
 		25CB18996F0A8FA0316F3239 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = macos/nib/it.lproj/MainToolbar.strings; sourceTree = "<group>"; };
@@ -694,6 +696,7 @@
 		CE7FDF345D6043DCDCCD296D /* MainToolbar.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = MainToolbar.mm; path = macos/MainToolbar.mm; sourceTree = "<group>"; };
 		CFA973FC5BE997B483F0A7A5 /* uilang.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uilang.h; sourceTree = "<group>"; };
 		D14AA697CB724401A9A17420 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = macos/nib/et.lproj/MainToolbar.strings; sourceTree = "<group>"; };
+		DC4652614515FE3A9BC28919 /* layout_helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = layout_helpers.h; sourceTree = "<group>"; };
 		E0937E38B99BE877A5DFA83D /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = macos/nib/hu.lproj/MainToolbar.strings; sourceTree = "<group>"; };
 		E117A7C10E61C891086E56CD /* kab */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kab; path = macos/nib/kab.lproj/MainToolbar.strings; sourceTree = "<group>"; };
 		E4C2A4C943959E8220417BD1 /* QuickLookThumbnailing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLookThumbnailing.framework; path = System/Library/Frameworks/QuickLookThumbnailing.framework; sourceTree = SDKROOT; };
@@ -919,6 +922,8 @@
 				42A5059AF0EA6425563FCB12 /* progress.h */,
 				9B0077CCD746D870A816B2E0 /* progress_ui.cpp */,
 				BDB55C9B2CE9CDB35F31D6FA /* progress_ui.h */,
+				2241A28E05DC663462EE36F4 /* layout_helpers.cpp */,
+				DC4652614515FE3A9BC28919 /* layout_helpers.h */,
 			);
 			name = GUI;
 			path = src;
@@ -1781,6 +1786,7 @@
 				7A7175DB2942BF59C950E93F /* subprocess.cpp in Sources */,
 				80FBB464B5B4DC5E6B59B25C /* cat_operations.cpp in Sources */,
 				0C1409B0135C562587776FC7 /* MainToolbar.mm in Sources */,
+				3F4B67D91AD57C28FAE1531E /* layout_helpers.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

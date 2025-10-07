@@ -93,34 +93,6 @@
     inline void SetupListlikeBorder(wxWindow*) {}
 #endif
 
-inline int AboveChoicePadding()
-{
-#ifdef __WXOSX__
-    if (__builtin_available(macOS 26.0, *))
-        return 0;
-    else
-        return 2;
-#else
-    return 0;
-#endif
-}
-
-inline int UnderCheckboxIndent()
-{
-#if defined(__WXOSX__)
-    if (__builtin_available(macOS 26.0, *))
-        return 22;
-    else
-        return 20;
-#elif defined(__WXMSW__)
-    return PX(17);
-#elif defined(__WXGTK__)
-    return PX(25);
-#else
-    #error "Implement UnderCheckboxIndent() for your platform"
-#endif
-}
-
 #endif // wxUSE_GUI
 
 

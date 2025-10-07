@@ -57,6 +57,7 @@ poedit_SOURCES = \
                  language.cpp language.h \
                  language_impl_legacy.h language_impl_plurals.h \
                  languagectrl.cpp languagectrl.h \
+                 layout_helpers.cpp layout_helpers.h \
                  logcapture.h \
                  main_toolbar.h wx/main_toolbar.cpp \
                  manager.h manager.cpp \
