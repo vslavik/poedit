@@ -28,6 +28,8 @@
 
 #include "hidpi.h"
 
+#include <wx/button.h>
+#include <wx/dialog.h>
 #include <wx/sizer.h>
 
 
@@ -106,4 +108,63 @@ protected:
     // Sizer to put the content into, inside the padding.
     wxBoxSizer *m_contentSizer = nullptr;
 };
+
+
+/**
+    Common dialog for Poedit.
+
+    Constructor of derived class must call PostInit().
+ */
+class StandardDialog : public StandardLayout<wxDialog>
+{
+protected:
+    StandardDialog(wxWindow *parent, const wxString& title, int style = wxDEFAULT_DIALOG_STYLE)
+        : StandardLayout<wxDialog>(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, style)
+    {
+    }
+
+    // Helper for creating standard buttons in dialogs
+    class Buttons
+    {
+    private:
+        Buttons(StandardDialog *parent, wxStdDialogButtonSizer *sizer, long flags);
+
+    public:
+        Buttons& Add(wxButton *button);
+
+        Buttons& Add(wxWindowID buttonId)
+        {
+            Add(new wxButton(m_parent, buttonId));
+            return *this;
+        }
+
+
+        ~Buttons() { m_parent->RealizeButtons(); }
+
+        Buttons(const Buttons&) = delete;
+        Buttons& operator=(const Buttons&) = delete;
+
+    private:
+        wxStdDialogButtonSizer *m_sizer;
+        StandardDialog *m_parent;
+
+        friend class StandardDialog;
+    };
+
+    /**
+        Create sizer with specified buttons.
+
+        @a flags is OR-combination of wxOK, wxCANCEL etc. No buttons are created if 0.
+     */
+    Buttons CreateButtons(long flags = 0);
+
+private:
+    void RealizeButtons();
+
+protected:
+    wxStdDialogButtonSizer *m_buttonsSizer = nullptr;
+
+    friend class Buttons;
+};
+
 #endif // Poedit_layout_helpers_h
