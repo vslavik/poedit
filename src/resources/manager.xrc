@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resource xmlns="http://www.wxwidgets.org/wxxrc" version="2.5.3.0">
-  <object class="wxDialog" name="manager_prj_dlg">
-    <title>Edit project</title>
+  <object class="wxPanel" name="manager_prj_dlg">
     <object class="wxBoxSizer">
       <orient>wxVERTICAL</orient>
       <object class="sizeritem">
         <object class="wxStaticText">
           <label>Project name:</label>
         </object>
-        <border>5d</border>
-        <flag>wxLEFT|wxRIGHT|wxTOP</flag>
       </object>
       <object class="spacer">
         <size>-1,2d</size>
@@ -18,8 +15,7 @@
         <object class="wxTextCtrl" name="prj_name">
           <focused>1</focused>
         </object>
-        <flag>wxEXPAND|wxLEFT|wxRIGHT</flag>
-        <border>5d</border>
+        <flag>wxEXPAND</flag>
       </object>
       <object class="spacer">
         <size>-1,8d</size>
@@ -27,7 +23,7 @@
       <object class="sizeritem">
         <object class="unknown" name="prj_dirs"/>
         <option>1</option>
-        <flag>wxEXPAND|wxLEFT|wxRIGHT</flag>
+        <flag>wxEXPAND|wxBOTTOM</flag>
         <border>5d</border>
         <minsize>200,100d</minsize>
       </object>
@@ -40,33 +36,13 @@
           <variant platform="mac">small</variant>
           <tooltip>Add directory to the list</tooltip>
         </object>
-        <flag>wxRIGHT|wxBOTTOM|wxALIGN_RIGHT</flag>
-        <border>5d</border>
+        <flag>wxALIGN_RIGHT|wxRIGHT</flag>
+        <border>1</border>
       </object>
       <object class="sizeritem">
         <object class="wxStaticLine"/>
-        <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
+        <flag>wxEXPAND|wxTOP</flag>
         <border>5d</border>
-      </object>
-      <object class="sizeritem">
-        <object class="wxBoxSizer">
-          <object class="sizeritem">
-            <object class="wxButton" name="wxID_OK">
-              <label>OK</label>
-              <default>1</default>
-            </object>
-            <border>5d</border>
-            <flag>wxLEFT|wxRIGHT|wxBOTTOM</flag>
-          </object>
-          <object class="sizeritem">
-            <object class="wxButton" name="wxID_CANCEL">
-              <label>Cancel</label>
-            </object>
-            <flag>wxRIGHT|wxBOTTOM</flag>
-            <border>5d</border>
-          </object>
-        </object>
-        <flag>wxALIGN_RIGHT</flag>
       </object>
     </object>
   </object>

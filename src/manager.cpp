@@ -55,6 +55,7 @@
 #include "edframe.h"
 #include "hidpi.h"
 #include "menus.h"
+#include "layout_helpers.h"
 #include "progress_ui.h"
 #include "utility.h"
 
@@ -411,11 +412,24 @@ void ManagerFrame::UpdateListCat(int id)
 }
 
 
-class ProjectDlg : public wxDialog
+class ProjectDlg : public StandardDialog
 {
-    protected:
-        DECLARE_EVENT_TABLE()
-        void OnBrowse(wxCommandEvent& event);
+public:
+    ProjectDlg(wxWindow *parent) : StandardDialog(parent, _("Edit project"))
+    {
+        auto sizer = ContentSizer();
+
+        auto panel = wxXmlResource::Get()->LoadPanel(this, "manager_prj_dlg");
+        sizer->Add(panel, wxSizerFlags(1).Expand());
+
+        CreateButtons(wxOK | wxCANCEL);
+
+        FitSizer();
+    }
+
+protected:
+    DECLARE_EVENT_TABLE()
+    void OnBrowse(wxCommandEvent& event);
 };
 
 BEGIN_EVENT_TABLE(ProjectDlg, wxDialog)
@@ -442,8 +456,7 @@ void ManagerFrame::EditProject(int id, TFunctor completionHandler)
     wxString key;
     key.Printf("Manager/project_%i/", id);
 
-    wxWindowPtr<ProjectDlg> dlg(new ProjectDlg);
-    wxXmlResource::Get()->LoadDialog(dlg.get(), this, "manager_prj_dlg");
+    wxWindowPtr<ProjectDlg> dlg(new ProjectDlg(this));
     wxEditableListBox *prj_dirs = new wxEditableListBox(dlg.get(), XRCID("prj_dirs"), _("Directories:"));
     SetupListlikeBorder(prj_dirs);
     wxXmlResource::Get()->AttachUnknownControl("prj_dirs", prj_dirs);

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resource xmlns="http://www.wxwidgets.org/wxxrc" version="2.5.3.0">
-  <object class="wxDialog" name="edit_extractor">
-    <title>Extractor setup</title>
+  <object class="wxPanel" name="edit_extractor">
     <variant platform="mac">small</variant>
     <object class="wxBoxSizer">
       <minsize>300,-1d</minsize>
@@ -35,8 +34,7 @@
             <border>5d</border>
           </object>
         </object>
-        <border>5d</border>
-        <flag>wxEXPAND|wxLEFT|wxRIGHT|wxTOP</flag>
+        <flag>wxEXPAND</flag>
       </object>
       <object class="sizeritem">
         <object class="wxStaticBoxSizer">
@@ -136,26 +134,7 @@
           </object>
         </object>
         <border>5d</border>
-        <flag>wxEXPAND|wxLEFT|wxRIGHT|wxTOP</flag>
-      </object>
-      <object class="sizeritem">
-        <object class="wxStdDialogButtonSizer">
-          <object class="button">
-            <object class="wxButton" name="wxID_OK">
-              <variant platform="mac">normal</variant>
-              <default>1</default>
-            </object>
-          </object>
-          <object class="button">
-            <object class="wxButton" name="wxID_CANCEL">
-              <variant platform="mac">normal</variant>
-            </object>
-          </object>
-        </object>
-        <flag platform="mac">wxALIGN_RIGHT</flag>
-        <flag platform="win">wxALIGN_RIGHT|wxALL</flag>
-        <flag platform="unix">wxALIGN_RIGHT|wxTOP|wxBOTTOM</flag>
-        <border>5d</border>
+        <flag>wxEXPAND|wxTOP</flag>
       </object>
     </object>
   </object>

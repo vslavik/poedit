@@ -850,11 +850,27 @@ public:
     }
 
 private:
+    class ExtractorEditDialog : public StandardDialog
+    {
+    public:
+        ExtractorEditDialog(wxWindow *parent) : StandardDialog(parent, _("Extractor setup"))
+        {
+            auto sizer = ContentSizer();
+
+            auto panel = wxXmlResource::Get()->LoadPanel(this, "edit_extractor");
+            sizer->Add(panel, wxSizerFlags(1).Expand());
+
+            CreateButtons(wxOK | wxCANCEL);
+
+            FitSizer();
+        }
+    };
+
     /// Called to launch dialog for editing parser properties.
     template<typename TFunctor>
     void EditExtractor(int num, TFunctor completionHandler)
     {
-        wxWindowPtr<wxDialog> dlg(wxXmlResource::Get()->LoadDialog(this, "edit_extractor"));
+        wxWindowPtr<ExtractorEditDialog> dlg(new ExtractorEditDialog(this));
         dlg->Centre();
 
         auto extractor_language = XRCCTRL(*dlg, "extractor_language", wxTextCtrl);

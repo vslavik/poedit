@@ -30,6 +30,7 @@
 #include <wx/dialog.h>
 
 #include "language.h"
+#include "layout_helpers.h"
 
 /// Control for editing languages nicely
 class LanguageCtrl : public wxComboBox
@@ -71,7 +72,7 @@ private:
 
 
 /// A dialog for choosing language for a (new) catalog.
-class LanguageDialog : public wxDialog
+class LanguageDialog : public StandardDialog
 {
 public:
     LanguageDialog(wxWindow *parent);
