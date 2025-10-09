@@ -58,6 +58,8 @@ public:
     void BeginUndoGrouping();
     void EndUndoGrouping();
     void SaveSnapshot();
+
+    void *GetGtkTextView() const;
 #endif
 
 #ifdef __WXMSW__

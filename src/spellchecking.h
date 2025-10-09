@@ -32,9 +32,10 @@
     #include <wx/platinfo.h>
 #endif
 
-#include <wx/textctrl.h>
-
 #include "language.h"
+
+class CustomizedTextCtrl;
+
 
 inline bool IsSpellcheckingAvailable()
 {
@@ -52,11 +53,11 @@ bool SetSpellcheckerLang(const wxString& lang);
 
 // Does any initialization needed to be able to use spellchecker with the control later.
 #ifdef __WXMSW__
-void PrepareTextCtrlForSpellchecker(wxTextCtrl *text);
+void PrepareTextCtrlForSpellchecker(CustomizedTextCtrl *text);
 #endif
 
 // Init given text control to do (or not) spellchecking for given language
-bool InitTextCtrlSpellchecker(wxTextCtrl *text, bool enable, const Language& lang);
+bool InitTextCtrlSpellchecker(CustomizedTextCtrl *text, bool enable, const Language& lang);
 
 #ifndef __WXMSW__
 // Show help about how to add more dictionaries for spellchecking.
