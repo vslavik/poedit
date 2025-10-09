@@ -92,11 +92,11 @@ inline wxBitmap MacPageIcon(const char*) { return wxNullBitmap; }
 #endif
 
 
-class PrefsPanel : public WindowWith2DSizingConstraints<wxPanel>
+class PrefsPanel : public WindowWith2DSizingConstraints<StandardLayout<wxPanel>>
 {
 public:
     PrefsPanel(wxWindow *parent)
-        : WindowWith2DSizingConstraints<wxPanel>(parent), m_suppressDataTransfer(0)
+        : WindowWith2DSizingConstraints<StandardLayout<wxPanel>>(parent), m_suppressDataTransfer(0)
     {
 #ifdef __WXOSX__
         // Refresh the content of prefs panels when re-opening it.
@@ -163,12 +163,8 @@ class GeneralPageWindow : public PrefsPanel
 public:
     GeneralPageWindow(wxWindow *parent) : PrefsPanel(parent)
     {
-        wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->SetMinSize(PX(400), -1);
-
-        wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->Add(sizer, wxSizerFlags(1).Expand().PXDoubleBorderAll());
-        SetSizer(topsizer);
+        auto sizer = ContentSizer();
+        sizer->SetMinSize(PX(400), -1);
 
         sizer->Add(new HeadingLabel(this, _("Information about the translator")));
         sizer->AddSpacer(PX(10));
@@ -362,16 +358,11 @@ class TMPageWindow : public PrefsPanel
 public:
     TMPageWindow(wxWindow *parent) : PrefsPanel(parent)
     {
-        wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
+        auto sizer = ContentSizer();
 #ifdef __WXOSX__
-        topsizer->SetMinSize(PX(430), -1); // for macOS look
+        sizer->SetMinSize(PX(430), -1); // for macOS look
 #endif
 
-        wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->Add(sizer, wxSizerFlags(1).Expand().PXDoubleBorderAll());
-        SetSizer(topsizer);
-
-        sizer->AddSpacer(PX(5));
         m_useTM = new wxCheckBox(this, wxID_ANY, _("Use translation memory"));
         sizer->Add(m_useTM, wxSizerFlags().Expand());
 
@@ -417,7 +408,6 @@ public:
         auto learnMore = new LearnMoreLink(this, "https://poedit.net/trac/wiki/Doc/TranslationMemory");
         sizer->AddSpacer(PX(3));
         sizer->Add(learnMore, wxSizerFlags().Border(wxLEFT, UnderCheckboxIndent()));
-        sizer->AddSpacer(PX(10));
 
 #ifdef __WXOSX__
         m_stats->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
@@ -727,11 +717,7 @@ class ExtractorsPageWindow : public PrefsPanel
 public:
     ExtractorsPageWindow(wxWindow *parent) : PrefsPanel(parent)
     {
-        wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
-
-        wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->Add(sizer, wxSizerFlags(1).Expand().PXDoubleBorderAll());
-        SetSizer(topsizer);
+        auto sizer = ContentSizer();
 
         sizer->Add(new ExplanationLabel(this, _("Source code extractors are used to find translatable strings in the source code files and extract them so that they can be translated.")),
                    wxSizerFlags().Expand().PXDoubleBorder(wxBOTTOM));
@@ -1011,11 +997,10 @@ class AccountsPageWindow : public PrefsPanel
 public:
     AccountsPageWindow(wxWindow *parent) : PrefsPanel(parent)
     {
-        wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-        SetSizer(sizer);
+        auto sizer = ContentSizer();
 
         m_accounts = new AccountsPanel(this);
-        sizer->Add(m_accounts, wxSizerFlags(1).Expand().PXDoubleBorderAll());
+        sizer->Add(m_accounts, wxSizerFlags(1).Expand());
 
     #ifdef __WXOSX__
         // This window was possibly created on demand (pre-macOS 11), possibly
@@ -1069,12 +1054,8 @@ class UpdatesPageWindow : public PrefsPanel
 public:
     UpdatesPageWindow(wxWindow *parent) : PrefsPanel(parent)
     {
-        wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->SetMinSize(PX(400), -1); // for macOS look, wouldn't fit the toolbar otherwise
-
-        wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->Add(sizer, wxSizerFlags().Expand().PXDoubleBorderAll());
-        SetSizer(topsizer);
+        auto sizer = ContentSizer();
+        sizer->SetMinSize(PX(400), -1); // for macOS look, wouldn't fit the toolbar otherwise
 
         m_updates = new wxCheckBox(this, wxID_ANY, _("Automatically check for updates"));
         sizer->Add(m_updates, wxSizerFlags().Expand().PXBorder(wxTOP|wxBOTTOM));
@@ -1084,7 +1065,6 @@ public:
 
         sizer->Add(new ExplanationLabel(this, _("Beta versions contain the latest new features and improvements, but may be a bit less stable.")),
                    wxSizerFlags().Expand().Border(wxLEFT, UnderCheckboxIndent()));
-        sizer->AddSpacer(PX(5));
 
         if (wxPreferencesEditor::ShouldApplyChangesImmediately())
             Bind(wxEVT_CHECKBOX, [=](wxCommandEvent&){ TransferDataFromWindow(); });
@@ -1123,11 +1103,7 @@ class AdvancedPageWindow : public PrefsPanel
 public:
     AdvancedPageWindow(wxWindow *parent) : PrefsPanel(parent)
     {
-        wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
-
-        wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->Add(sizer, wxSizerFlags(1).Expand().PXDoubleBorderAll());
-        SetSizer(topsizer);
+        auto sizer = ContentSizer();
 
         sizer->Add(new ExplanationLabel(this, _("These settings affect internal formatting of PO files. Adjust them if you have specific requirements e.g. because of version control.")), wxSizerFlags().Expand().PXBorder(wxBOTTOM));
 

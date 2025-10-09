@@ -26,6 +26,11 @@
 #ifndef Poedit_layout_helpers_h
 #define Poedit_layout_helpers_h
 
+#include "hidpi.h"
+
+#include <wx/sizer.h>
+
+
 inline int AboveChoicePadding()
 {
 #ifdef __WXOSX__
@@ -55,4 +60,50 @@ inline int UnderCheckboxIndent()
 }
 
 
+// Padding constants
+
+#if defined(__WXOSX__)
+    #define PADDING_OUTER          PX(20)
+#elif defined(__WXGTK__)
+    #define PADDING_OUTER          PX(12)
+#else
+    #define PADDING_OUTER          PX(12)
+#endif
+
+
+// Base class for windows that needs to use layout helpers.
+template<typename Base>
+class StandardLayout : public Base
+{
+protected:
+    // generic forwarding ctor that adds initialization
+    template <typename... Args>
+    StandardLayout(Args&&... args) : Base(std::forward<Args>(args)...)
+    {
+        InitLayout();
+    }
+
+    wxBoxSizer *TopSizer() { return m_topSizer; }
+    wxBoxSizer *ContentSizer() { return m_contentSizer; }
+
+    void InitLayout()
+    {
+        m_topSizer = new wxBoxSizer(wxVERTICAL);
+        m_contentSizer = new wxBoxSizer(wxVERTICAL);
+
+        m_topSizer->Add(m_contentSizer, wxSizerFlags(1).Expand().Border(wxALL, PADDING_OUTER));
+        this->SetSizer(m_topSizer);
+    }
+
+    void FitSizer()
+    {
+        this->SetSizerAndFit(m_topSizer);
+    }
+
+protected:
+    // Outer sizer set for the entire window, with standard padding.
+    wxBoxSizer *m_topSizer = nullptr;
+    // Sizer to put the content into, inside the padding.
+    wxBoxSizer *m_contentSizer = nullptr;
+};
 #endif // Poedit_layout_helpers_h
