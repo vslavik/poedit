@@ -80,7 +80,7 @@
         [backgroundCopyPath curveToPoint: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 8) controlPoint1: NSMakePoint(NSMinX(toggle) + 3.12, NSMinY(toggle) + 16) controlPoint2: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 12.42)];
         [backgroundCopyPath lineToPoint: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 8)];
         [backgroundCopyPath closePath];
-        [backgroundCopyPath setWindingRule: NSEvenOddWindingRule];
+        [backgroundCopyPath setWindingRule: NSWindingRuleEvenOdd];
         [backgroundCopyPath addClip];
 
 
@@ -96,7 +96,7 @@
         [backgroundPath curveToPoint: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 8) controlPoint1: NSMakePoint(NSMinX(toggle) + 3.12, NSMinY(toggle) + 16) controlPoint2: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 12.42)];
         [backgroundPath lineToPoint: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 8)];
         [backgroundPath closePath];
-        [backgroundPath setWindingRule: NSEvenOddWindingRule];
+        [backgroundPath setWindingRule: NSWindingRuleEvenOdd];
         [backgroundColor setFill];
         [backgroundPath fill];
         [toggleStrokeColor setStroke];

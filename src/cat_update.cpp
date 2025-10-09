@@ -72,8 +72,7 @@ public:
     {
         SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #ifdef __WXOSX__
-        if (@available(macOS 11.0, *))
-            ((NSTableView*)[((NSScrollView*)GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
+        ((NSTableView*)[((NSScrollView*)GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
 #endif
     }
 };
@@ -300,7 +299,7 @@ InterimResults ExtractPOTFromSourcesWithExplanatoryErrors(CatalogPtr catalog)
                     // TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
                     explain += "\n\n" + _("If you previously denied access to your files, you can allow it in System Settings > Privacy & Security > Files & Folders.");
                 }
-                else if (@available(macOS 10.15, *))
+                else
                 {
                     // TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
                     explain += "\n\n" + _("If you previously denied access to your files, you can allow it in System Preferences > Security & Privacy > Privacy > Files & Folders.");

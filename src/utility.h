@@ -64,10 +64,7 @@
 #ifdef __WXOSX__
     inline int AboveChoicePadding()
     {
-        if (__builtin_available(macOS 11.0, *))
-            return 2;
-        else
-            return 0;
+        return 2;
     }
 #else
     #define AboveChoicePadding()  0

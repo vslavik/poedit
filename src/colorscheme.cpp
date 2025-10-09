@@ -159,10 +159,10 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
 
         case Color::SidebarBackground:
             #ifdef __WXOSX__
-            if (@available(macOS 11.0, *))
-                return mode == Dark ? sRGB(46, 47, 50) : sRGB(240, 240, 240); // same as EditingThickSeparator
-            #endif
+            return mode == Dark ? sRGB(46, 47, 50) : sRGB(240, 240, 240); // same as EditingThickSeparator
+            #else
             return mode == Dark ? sRGB(45, 42, 41) : "#edf0f4";
+            #endif
 
         case Color::EditingBackground:
             #ifdef __WXOSX__

@@ -46,7 +46,7 @@
 @end
 
 
-@interface POToolbarController : NSObject<NSToolbarDelegate> {
+@interface POToolbarController : NSObject<NSToolbarDelegate, NSToolbarItemValidation> {
     wxFrame *m_parent;
     int id_validate, id_pretranslate, id_update, id_sync, id_sidebar;
 }
