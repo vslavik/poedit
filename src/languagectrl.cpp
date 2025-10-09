@@ -240,26 +240,6 @@ LanguageDialog::LanguageDialog(wxWindow *parent)
     CenterOnParent();
 
     m_language->SetFocus();
-
-#ifdef __WXOSX__
-    // Workaround wx bug: http://trac.wxwidgets.org/ticket/9521
-    m_language->SelectAll();
-
-    // Workaround broken Enter handling:
-    Bind(wxEVT_CHAR_HOOK, [=](wxKeyEvent& e){
-        if (e.GetKeyCode() == WXK_RETURN)
-        {
-            auto button = GetDefaultItem();
-            wxCommandEvent event(wxEVT_BUTTON, button->GetId());
-            event.SetEventObject(button);
-            button->ProcessWindowEvent(event);
-        }
-        else
-        {
-            e.Skip();
-        }
-    });
-#endif // __WXOSX__
 }
 
 bool LanguageDialog::Validate()
