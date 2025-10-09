@@ -23,38 +23,56 @@
  *
  */
 
-#include <wx/xrc/xmlres.h>
+#include "commentdlg.h"
+
 #include <wx/config.h>
 #include <wx/textctrl.h>
 #include <wx/tokenzr.h>
+#include <wx/sizer.h>
+#include <wx/stattext.h>
+#include <wx/button.h>
 
-#include "catalog.h"
-#include "commentdlg.h"
+#include "layout_helpers.h"
 
 
-CommentDialog::CommentDialog(wxWindow *parent, const wxString& comment) : wxDialog()
+CommentDialog::CommentDialog(wxWindow *parent, const wxString& comment)
+    : StandardDialog(parent, _("Edit comment"), wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
-    wxXmlResource::Get()->LoadDialog(this, parent, "comment_dlg");
-#ifndef __WXOSX__
-    CenterOnParent();
-#endif
-    m_text = XRCCTRL(*this, "comment", wxTextCtrl);
+    auto sizer = ContentSizer();
+
+    auto label = new wxStaticText(this, wxID_ANY, _("Comment:"));
+    sizer->Add(label, wxSizerFlags().Left().Border(wxBOTTOM, PX(6)));
+
+    m_text = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(PX(400), PX(160)), wxTE_MULTILINE);
+    sizer->Add(m_text, wxSizerFlags(1).Expand());
+
+    auto okButton = new wxButton(this, wxID_OK, _("Update"));
+    auto deleteButton = new wxButton(this, wxID_DELETE);
+    deleteButton->SetToolTip(_("Delete the comment"));
+
+    CreateButtons()
+        .Add(okButton)
+        .Add(deleteButton)
+        .Add(wxID_CANCEL);
 
     m_text->SetValue(RemoveStartHash(comment).Strip(wxString::both));
+    m_text->SetFocus();
 
     if (comment.empty())
     {
-        XRCCTRL(*this, "delete", wxWindow)->Disable();
-        FindWindow(wxID_OK)->SetLabel(_("Add"));
+        deleteButton->Disable();
+        okButton->SetLabel(_("Add"));
     }
-    // else: button is labeled "Update" in XRC
+    // else: button is labeled "Update"
 
-    wxAcceleratorEntry entries[] = {
-        { wxACCEL_CMD, WXK_RETURN, wxID_OK },
-        { wxACCEL_CMD, WXK_NUMPAD_ENTER, wxID_OK }
-    };
-    wxAcceleratorTable accel(WXSIZEOF(entries), entries);
-    SetAcceleratorTable(accel);
+    // Bind events instead of using event table
+    deleteButton->Bind(wxEVT_BUTTON, &CommentDialog::OnDelete, this);
+
+    FitSizer();
+
+#ifndef __WXOSX__
+    CenterOnParent();
+#endif
 }
 
 wxString CommentDialog::GetComment() const
@@ -62,10 +80,6 @@ wxString CommentDialog::GetComment() const
     // Put the start hash back
     return AddStartHash(m_text->GetValue().Strip(wxString::both));
 }
-
-BEGIN_EVENT_TABLE(CommentDialog, wxDialog)
-   EVT_BUTTON(XRCID("delete"), CommentDialog::OnDelete)
-END_EVENT_TABLE()
 
 void CommentDialog::OnDelete(wxCommandEvent&)
 {

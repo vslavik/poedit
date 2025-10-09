@@ -23,18 +23,22 @@
  *
  */
 
-#ifndef _COMMENTDLG_H_
-#define _COMMENTDLG_H_
+#ifndef Poedit_commentdlg_h
+#define Poedit_commentdlg_h
 
 #include <wx/dialog.h>
+
+#include "layout_helpers.h"
+
 class WXDLLIMPEXP_FWD_CORE wxTextCtrl;
+class WXDLLIMPEXP_FWD_CORE wxButton;
 
 /** CommentDialog is a very simple dialog that lets the user edit
     catalog comments. Comment consists of one or more lines that
     begin with the '#' character. The user is presented with more
     user friendly representation with '#' removed. 
  */
-class CommentDialog : public wxDialog
+class CommentDialog : public StandardDialog
 {
     public:
         /// Returns the given comment without the leading "# "
@@ -53,11 +57,10 @@ class CommentDialog : public wxDialog
         wxString GetComment() const;
 
     private:
-        wxTextCtrl *m_text;
+        wxTextCtrl *m_text = nullptr;
 
         void OnDelete(wxCommandEvent& event);
-        DECLARE_EVENT_TABLE()
 };
 
 
-#endif // _FINDFRAME_H_
+#endif // Poedit_commentdlg_h

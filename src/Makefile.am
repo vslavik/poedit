@@ -92,7 +92,6 @@ poedit_LDADD = $(WX_LIBS) $(LUCENE_LIBS) $(CLD2_LIBS) $(PUGIXML_LIBS) $(ACCOUNTS
                $(BOOST_LDFLAGS) $(BOOST_THREAD_LIB) $(BOOST_SYSTEM_LIB)
 
 XRC_RESOURCES = \
-        $(srcdir)/resources/comment.xrc \
         $(srcdir)/resources/manager.xrc \
         $(srcdir)/resources/menus.xrc \
         $(srcdir)/resources/prefs.xrc \
