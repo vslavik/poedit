@@ -34,12 +34,16 @@
 
 #if wxUSE_GUI
     #include <wx/toplevel.h>
+    #include "hidpi.h"
+    #include "colorscheme.h"
 #endif
 
 
 // ----------------------------------------------------------------------
 // Misc platform differences
 // ----------------------------------------------------------------------
+
+#if wxUSE_GUI
 
 #ifdef __WXMSW__
     #define MSW_OR_OTHER(msw, other) msw
@@ -62,13 +66,34 @@
 #endif
 
 #ifdef __WXOSX__
-    inline int AboveChoicePadding()
+    #define BORDER_LIST         wxBORDER_DEFAULT
+    #define BORDER_LISTLIKE     wxBORDER_NONE
+    #ifdef __OBJC__
+    inline void SetupListlikeBorder(wxWindow *w)
     {
-        return 2;
+        ColorScheme::SetupWindowColors(w, [=]
+        {
+            NSView *view = (NSView*)w->GetHandle();
+            [view.effectiveAppearance performAsCurrentDrawingAppearance: [&]{
+                view.wantsLayer = YES;
+                view.layer.borderColor = NSColor.separatorColor.CGColor;
+                view.layer.borderWidth = 1.0;
+            }];
+        });
     }
+    #endif
 #else
-    #define AboveChoicePadding()  0
+    #ifdef __WXMSW__
+        #define BORDER_LIST     wxBORDER_THEME
+        #define BORDER_LISTLIKE wxBORDER_SIMPLE
+    #else
+        #define BORDER_LIST     wxBORDER_SUNKEN
+        #define BORDER_LISTLIKE wxBORDER_SUNKEN
+    #endif
+    inline void SetupListlikeBorder(wxWindow*) {}
 #endif
+
+#endif // wxUSE_GUI
 
 
 // ----------------------------------------------------------------------

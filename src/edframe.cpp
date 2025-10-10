@@ -499,7 +499,7 @@ PoeditFrame::PoeditFrame() :
     GetMenuBar()->Check(XRCID("menu_warnings"), Config::ShowWarnings());
 
     if (wxConfigBase::Get()->ReadBool("/statusbar_shown", true))
-        CreateStatusBar(1, wxST_SIZEGRIP);
+        InitStatusBar();
 
     m_contentWrappingSizer = new wxBoxSizer(wxVERTICAL);
     SetSizer(m_contentWrappingSizer);
@@ -2285,7 +2285,7 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
         SetupCloudSyncIfShouldBeDoneAutomatically(m_catalog);
     }
 
-    m_toolbar->EnableCloudSync(m_catalog->GetCloudSync(), CanSyncWithCrowdin(m_catalog));
+    UpdateCloudSyncUI(CanSyncWithCrowdin(m_catalog));
 #endif
 
     FixDuplicatesIfPresent();
@@ -2586,6 +2586,22 @@ void PoeditFrame::NotifyCatalogChanged(const CatalogPtr& cat)
 }
 
 
+void PoeditFrame::InitStatusBar()
+{
+    // We create a status bar with 3 fields, 2 of which are dummy and used
+    // only to center the text:
+    // 0 - left padding
+    // 1 - actual text
+    // 2 - right padding
+    auto bar = CreateStatusBar(3, wxST_SIZEGRIP);
+    const int styles[3] = {wxSB_FLAT, wxSB_FLAT, wxSB_FLAT};
+    bar->SetStatusStyles(3, styles);
+
+#ifdef __WXMSW__
+    bar->SetMinHeight(bar->GetCharHeight() + PX(1));
+#endif
+}
+
 void PoeditFrame::UpdateStatusBar()
 {
     auto bar = GetStatusBar();
@@ -2616,7 +2632,11 @@ void PoeditFrame::UpdateStatusBar()
             text.Printf(wxPLURAL("%d entry", "%d entries", all), all);
         }
 
-        bar->SetStatusText(text);
+        bar->SetStatusText(text, 1);
+
+        auto width = bar->GetTextExtent(text).x + PX(8);
+        int fields[3] = {-1, width, -1};
+        bar->SetStatusWidths(3, fields);
     }
 }
 
@@ -2688,7 +2708,6 @@ void PoeditFrame::UpdateTitle()
 }
 
 
-
 void PoeditFrame::UpdateMenu()
 {
     wxMenuBar *menubar = GetMenuBar();
@@ -2723,6 +2742,24 @@ void PoeditFrame::UpdateMenu()
     menubar->Enable(XRCID("menu_remove_same_as_source"), editable);
     menubar->Enable(XRCID("menu_purge_deleted"),
                     editable && m_catalog->HasDeletedItems());
+}
+
+
+void PoeditFrame::UpdateCloudSyncUI(bool isCrowdin)
+{
+#ifdef HAVE_HTTP_CLIENT
+    if (!m_catalog)
+        return;
+
+    auto sync = m_catalog->GetCloudSync();
+    m_toolbar->EnableCloudSync(sync, isCrowdin);
+
+#ifdef __WXOSX__
+    const auto symbol = (isCrowdin || !sync) ? "poedit.sync" : "poedit.upload";
+    SetMacMenuIcon(GetMenuBar(), XRCID("menu_cloud_sync"), symbol);
+#endif
+
+#endif
 }
 
 
@@ -2979,47 +3016,36 @@ wxMenu *PoeditFrame::CreatePopupMenu(int item)
     const wxArrayString& refs = (*m_catalog)[item]->GetReferences();
     wxMenu *menu = new wxMenu;
 
-    menu->Append(XRCID("menu_copy_from_src"),
-                 #ifdef __WXMSW__
-                 wxString(_("Copy from source text"))
-                 #else
-                 wxString(_("Copy from Source Text"))
-                 #endif
-                   + "\t" + wxGETTEXT_IN_CONTEXT("keyboard key", "Ctrl+") + "B");
-    menu->Append(XRCID("menu_clear"),
-                 #ifdef __WXMSW__
-                 wxString(_("Clear translation"))
-                 #else
-                 wxString(_("Clear Translation"))
-                 #endif
-                   + "\t" + wxGETTEXT_IN_CONTEXT("keyboard key", "Ctrl+") + "K");
-   menu->Append(XRCID("menu_comment"),
-                 #ifdef __WXMSW__
-                 wxString(_("Edit comment"))
-                 #else
-                 wxString(_("Edit Comment"))
-                 #endif
-                 #ifndef __WXOSX__
-                   + "\t" + wxGETTEXT_IN_CONTEXT("keyboard key", "Ctrl+") + "M"
-                 #endif
-                 );
+    auto itemCopy = menu->Append(XRCID("menu_copy_from_src"),
+                                 wxString::Format("%s\t%s",
+                                                  MSW_OR_OTHER(_("Copy from source text"), _("Copy from Source Text")),
+                                                  wxGETTEXT_IN_CONTEXT("keyboard key", "Ctrl+") + "B")
+                                 );
+    SetMacMenuIcon(itemCopy, "document.on.document");
+
+    auto itemClear = menu->Append(XRCID("menu_clear"),
+                                  wxString::Format("%s\t%s",
+                                                   MSW_OR_OTHER(_("Clear translation"), _("Clear Translation")),
+                                                   wxGETTEXT_IN_CONTEXT("keyboard key", "Ctrl+") + "K")
+                                  );
+    SetMacMenuIcon(itemClear, "delete.backward");
+
+    auto itemComment = menu->Append(XRCID("menu_comment"),
+                                    wxString::Format("%s\t%s",
+                                                     MSW_OR_OTHER(_("Edit comment"), _("Edit Comment")),
+                                                     wxGETTEXT_IN_CONTEXT("keyboard key", "Ctrl+") + "M")
+                                    );
+    SetMacMenuIcon(itemComment, "bubble");
 
     if ( !refs.empty() )
     {
         menu->AppendSeparator();
         // TRANSLATORS: Meaning occurrences of the string in source code
-        wxMenuItem *it1 = new wxMenuItem(menu, wxID_ANY, MSW_OR_OTHER(_("Code occurrences"), _("Code Occurrences")));
-#ifdef __WXMSW__
-        it1->SetFont(it1->GetFont().Bold());
-        menu->Append(it1);
-#else
-        menu->Append(it1);
-        it1->Enable(false);
-#endif
+        AppendMenuSectionHeader(menu, MSW_OR_OTHER(_("Code occurrences"), _("Code Occurrences")));
 
         int count = std::min((int)refs.GetCount(), WinID::ListContextReferencesEnd - WinID::ListContextReferencesStart);
         for (int i = 0; i < count; i++)
-            menu->Append(WinID::ListContextReferencesStart + i, "    " + refs[i]);
+            menu->Append(WinID::ListContextReferencesStart + i, refs[i]);
     }
 
     return menu;
@@ -3247,7 +3273,7 @@ void PoeditFrame::OnShowHideStatusbar(wxCommandEvent&)
 
     if (toShow)
     {
-        CreateStatusBar(1, wxST_SIZEGRIP);
+        InitStatusBar();
         UpdateStatusBar();
     }
     else

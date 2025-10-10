@@ -105,7 +105,7 @@ AttentionBar::AttentionBar(wxWindow *parent)
     auto buttonsAndCheckboxSizer = new wxBoxSizer(wxVERTICAL);
     sizer->Add(buttonsAndCheckboxSizer, wxSizerFlags().Center().Border(wxTOP, PX(1)));
     buttonsAndCheckboxSizer->Add(allButtonsSizer, wxSizerFlags().Expand());
-    buttonsAndCheckboxSizer->Add(m_checkbox, wxSizerFlags().Left().Border(wxTOP, MACOS_OR_OTHER(PX(2), PX(4))));
+    buttonsAndCheckboxSizer->Add(m_checkbox, wxSizerFlags().Left().Border(wxTOP, PX(4)));
     allButtonsSizer->Add(m_buttons);
     allButtonsSizer->AddStretchSpacer();
     allButtonsSizer->AddSpacer(SMALL_BORDER);
@@ -213,6 +213,9 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
     m_explanation->SetAndWrapLabel(msg.m_explanation);
     m_explanation->GetContainingSizer()->Show(m_explanation, !msg.m_explanation.empty());
     m_checkbox->SetLabel(msg.m_checkbox);
+#ifdef __WXOSX__
+    m_checkbox->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
     m_checkbox->GetContainingSizer()->Show(m_checkbox, !msg.m_checkbox.empty());
 
     m_buttons->Clear(true/*delete_windows*/);

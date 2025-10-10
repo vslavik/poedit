@@ -33,6 +33,7 @@
 #include "configuration.h"
 #include "errors.h"
 #include "hidpi.h"
+#include "menus.h"
 #include "static_ids.h"
 #include "utility.h"
 #include "unicode_helpers.h"
@@ -92,7 +93,7 @@ SidebarBlock::SidebarBlock(Sidebar *parent, const wxString& label, int flags)
         if (!(flags & NoUpperMargin))
         {
             m_sizer->Add(new SidebarSeparator(parent),
-                         wxSizerFlags().Expand().Border(wxBOTTOM|wxLEFT|wxRIGHT, PX(5)));
+                         wxSizerFlags().Expand().Border(wxBOTTOM|wxLEFT|wxRIGHT, PX(6)));
         }
         m_headerSizer = new wxBoxSizer(wxHORIZONTAL);
         m_headerSizer->Add(new HeadingLabel(parent, label), wxSizerFlags().Center());
@@ -481,7 +482,10 @@ private:
 #ifdef __WXOSX__
         [menu.GetHMenu() setFont:[NSFont systemFontOfSize:13]];
 #endif
-        menu.Append(idDelete, MSW_OR_OTHER(_("Delete from translation memory"), _("Delete From Translation Memory")));
+
+        auto itemDelete = menu.Append(idDelete, MSW_OR_OTHER(_("Delete from translation memory"), _("Delete From Translation Memory")));
+        SetMacMenuIcon(itemDelete, "xmark.circle");
+
         menu.Bind(wxEVT_MENU, [sidebar,suggestion](wxCommandEvent&)
         {
             SuggestionsProvider::Delete(suggestion);

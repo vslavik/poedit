@@ -32,6 +32,7 @@
 #include "edapp.h"
 #include "http_client.h"
 #include "languagectrl.h"
+#include "layout_helpers.h"
 #include "str_helpers.h"
 #include "unicode_helpers.h"
 #include "utility.h"
@@ -88,10 +89,12 @@ AccountsPanel::AccountsPanel(wxWindow *parent, int flags) : wxPanel(parent, wxID
     wxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
     topsizer->Add(sizer, wxSizerFlags(1).Expand());
 
-    m_list = new IconAndSubtitleListCtrl(this, _("Account"), MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN));
+    m_list = new IconAndSubtitleListCtrl(this, _("Account"), BORDER_LIST);
     sizer->Add(m_list, wxSizerFlags().Expand().Border(wxRIGHT, PX(10)));
 
-    m_panelsBook = new wxSimplebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN));
+    m_panelsBook = new wxSimplebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | BORDER_LISTLIKE);
+    SetupListlikeBorder(m_panelsBook);
+
     ColorScheme::SetupWindowColors(m_panelsBook, [=]
     {
         m_panelsBook->SetBackgroundColour(ColorScheme::Get(Color::ListControlBg));
@@ -248,8 +251,7 @@ public:
     using FileInfo = CloudAccountClient::ProjectFile;
 
     CloudFileList(wxWindow *parent)
-        : wxDataViewListCtrl(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
-                             wxDV_NO_HEADER | MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN))
+        : wxDataViewListCtrl(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDV_NO_HEADER | BORDER_LIST)
     {
         SetRowHeight(PX(36));
         SetMinSize(wxSize(PX(500), PX(200)));
@@ -347,17 +349,16 @@ private:
 };
 
 
-class CloudOpenDialog : public wxDialog
+class CloudOpenDialog : public StandardDialog
 {
 public:
-    CloudOpenDialog(wxWindow *parent) : wxDialog(parent, wxID_ANY, _("Open cloud translation"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+    CloudOpenDialog(wxWindow *parent) : StandardDialog(parent, _("Open cloud translation"), wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
     {
-        auto topsizer = new wxBoxSizer(wxVERTICAL);
+        auto topsizer = ContentSizer();
         topsizer->SetMinSize(PX(400), -1);
 
         auto loginSizer = new wxBoxSizer(wxHORIZONTAL);
-        topsizer->AddSpacer(PX(8));
-        topsizer->Add(loginSizer, wxSizerFlags().Right().PXDoubleBorder(wxLEFT|wxRIGHT));
+        topsizer->Add(loginSizer, wxSizerFlags().Right().PXDoubleBorder(wxLEFT));
         m_loginImage = new AvatarIcon(this, wxSize(PX(24), PX(24)));
         m_loginText = new SecondaryLabel(this, "");
         loginSizer->Add(m_loginImage, wxSizerFlags().ReserveSpaceEvenIfHidden().Center());
@@ -369,7 +370,7 @@ public:
 
         auto pickers = new wxFlexGridSizer(2, wxSize(PX(5),PX(6)));
         pickers->AddGrowableCol(1);
-        topsizer->Add(pickers, wxSizerFlags().Expand().PXDoubleBorderAll());
+        topsizer->Add(pickers, wxSizerFlags().Expand().Border(wxTOP, PX(6)));
 
         pickers->Add(new wxStaticText(this, wxID_ANY, _("Project:")), wxSizerFlags().CenterVertical().Right());
         m_project = new wxChoice(this, wxID_ANY);
@@ -379,24 +380,18 @@ public:
         m_language = new wxChoice(this, wxID_ANY);
         pickers->Add(m_language, wxSizerFlags().Expand().CenterVertical());
 
-        m_files = new CloudFileList(this);
-        topsizer->Add(m_files, wxSizerFlags(1).Expand().PXDoubleBorderAll());
-
         m_activity = new ActivityIndicator(this);
-        topsizer->Add(m_activity, wxSizerFlags().Expand().PXDoubleBorder(wxLEFT|wxRIGHT));
-        topsizer->AddSpacer(MSW_OR_OTHER(PX(4), PX(2)));
+        topsizer->Add(m_activity, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(8)));
 
-        auto buttons = CreateButtonSizer(wxOK | wxCANCEL);
-        auto ok = static_cast<wxButton*>(FindWindow(wxID_OK));
-        ok->SetDefault();
-    #ifdef __WXOSX__
-        topsizer->Add(buttons, wxSizerFlags().Expand());
-    #else
-        topsizer->Add(buttons, wxSizerFlags().Expand().PXBorderAll());
-        topsizer->AddSpacer(PX(5));
-    #endif
+        m_files = new CloudFileList(this);
+        topsizer->Add(m_files, wxSizerFlags(1).Expand());
 
-        SetSizerAndFit(topsizer);
+        wxButton *ok = nullptr;
+        CreateButtons()
+            .Add(ok = new wxButton(this, wxID_OK))
+            .Add(wxID_CANCEL);
+
+        FitSizer();
 
         m_project->Bind(wxEVT_CHOICE, [=](wxCommandEvent&){ OnProjectSelected(); });
         ok->Bind(wxEVT_UPDATE_UI, &CloudOpenDialog::OnUpdateOK, this);

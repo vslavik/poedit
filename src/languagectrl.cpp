@@ -205,29 +205,21 @@ wxSize LanguageCtrl::DoGetBestSize() const
 
 
 LanguageDialog::LanguageDialog(wxWindow *parent)
-    : wxDialog(parent, wxID_ANY, _("Translation Language")),
+    : StandardDialog(parent, _("Translation Language")),
       m_validatedLang(-1)
 {
     auto lang = GetLastChosen();
 
-    auto sizer = new wxBoxSizer(wxVERTICAL);
+    auto sizer = ContentSizer();
 
     auto label = new wxStaticText(this, wxID_ANY, _("Language of the translation:"));
     m_language = new LanguageCtrl(this, wxID_ANY, lang);
     m_language->SetMinSize(wxSize(PX(300),-1));
-    auto buttons = CreateButtonSizer(wxOK | wxCANCEL);
 
-#ifdef __WXOSX__
-    sizer->AddSpacer(PX(10));
-    sizer->Add(label, wxSizerFlags().PXBorderAll());
-    sizer->Add(m_language, wxSizerFlags().Expand().PXDoubleBorder(wxLEFT|wxRIGHT));
-    sizer->Add(buttons, wxSizerFlags().Expand());
-#else
-    sizer->AddSpacer(PX(10));
-    sizer->Add(label, wxSizerFlags().PXDoubleBorder(wxLEFT|wxRIGHT));
-    sizer->Add(m_language, wxSizerFlags().Expand().PXDoubleBorder(wxLEFT|wxRIGHT));
-    sizer->Add(buttons, wxSizerFlags().Expand().PXBorderAll());
-#endif
+    CreateButtons(wxOK | wxCANCEL);
+
+    sizer->Add(label, wxSizerFlags().Border(wxBOTTOM, PX(4)));
+    sizer->Add(m_language, wxSizerFlags().Expand());
 
     m_language->Bind(wxEVT_TEXT,     [=](wxCommandEvent& e){ m_validatedLang = -1; e.Skip(); });
     m_language->Bind(wxEVT_COMBOBOX, [=](wxCommandEvent& e){ m_validatedLang = -1; e.Skip(); });
@@ -236,7 +228,7 @@ LanguageDialog::LanguageDialog(wxWindow *parent)
         [=](wxUpdateUIEvent& e){ e.Enable(Validate()); },
         wxID_OK);
 
-    SetSizerAndFit(sizer);
+    FitSizer();
     CenterOnParent();
 
     m_language->SetFocus();

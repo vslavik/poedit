@@ -108,7 +108,8 @@ MergeSummaryDialog::MergeSummaryDialog(wxWindow *parent)
     auto topsizer = new wxBoxSizer(wxVERTICAL);
     SetSizer(topsizer);
 
-    auto panel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN));
+    auto panel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | BORDER_LISTLIKE);
+    SetupListlikeBorder(panel);
 
     ColorScheme::SetupWindowColors(panel, [=]
     {
@@ -123,7 +124,7 @@ MergeSummaryDialog::MergeSummaryDialog(wxWindow *parent)
     panel->SetSizer(sizer);
 
     m_notebook = SegmentedNotebook::Create(panel, SegmentStyle::SidebarPanels);
-    sizer->Add(m_notebook, wxSizerFlags(1).Expand().Border(wxTOP, PX(1)));
+    sizer->Add(m_notebook, wxSizerFlags(1).Expand().Border(wxTOP, PX(4)));
 
     auto buttons = CreateButtonSizer(wxOK);
     auto ok = static_cast<wxButton*>(FindWindow(wxID_OK));

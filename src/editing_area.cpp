@@ -195,11 +195,9 @@ public:
 #endif
 
         auto sizer = new wxBoxSizer(wxHORIZONTAL);
+        sizer->AddSpacer(PX(4));
         sizer->Add(m_label, wxSizerFlags(1).Center().Border(wxALL, PX(2)));
-#ifdef __WXMSW__
-        sizer->InsertSpacer(0, PX(2));
-        sizer->AddSpacer(PX(2));
-#endif
+        sizer->AddSpacer(PX(4));
         SetSizer(sizer);
 
         Bind(wxEVT_PAINT, &TagLabel::OnPaint, this);
@@ -241,7 +239,7 @@ public:
 #ifdef __WXMSW__
                 ColorScheme::SetupWindowColors(m_icon, [=]{ m_icon->SetBackgroundColour(m_bg); });
 #endif
-                sizer->Insert(0, m_icon, wxSizerFlags().Center().Border(wxLEFT, PX(2)));
+                sizer->Insert(1, m_icon, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
             }
             m_icon->SetBitmap(icon);
             sizer->Show(m_icon);
@@ -292,7 +290,12 @@ protected:
         auto rect = GetClientRect();
         if (!rect.IsEmpty())
         {
-            gc->DrawRoundedRectangle(rect.x, rect.y, rect.width, rect.height, PX(2));
+            int radius = PX(3);
+#ifdef __WXOSX__
+            if (@available(macOS 26, *))
+                radius = PX(6);
+#endif
+            gc->DrawRoundedRectangle(rect.x, rect.y, rect.width, rect.height, radius);
         }
     }
 
@@ -414,12 +417,12 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
 
     auto sourceLineSizer = new ShrinkableBoxSizer(wxHORIZONTAL);
     sourceLineSizer->Add(m_labelSource, wxSizerFlags().Center());
-    sourceLineSizer->AddSpacer(PX(4));
+    sourceLineSizer->AddSpacer(PX(5));
     sourceLineSizer->Add(m_tagIdOrContext, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
     sourceLineSizer->Add(m_tagFormat, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
     sourceLineSizer->AddStretchSpacer(1);
     sourceLineSizer->Add(m_charCounter, wxSizerFlags().Center());
-    sourceLineSizer->AddSpacer(PX(4));
+    sourceLineSizer->AddSpacer(PX(5));
     sourceLineSizer->SetShrinkableWindow(m_tagIdOrContext);
     sourceLineSizer->SetMinSize(-1, m_tagIdOrContext->GetBestSize().y);
 
@@ -437,18 +440,17 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
     SetSizer(rootSizer);
 
 #if defined(__WXMSW__)
-    rootSizer->AddSpacer(PX(4) - 4); // account for fixed 4px sash above
+    rootSizer->AddSpacer(PX(5) - 4); // account for fixed 4px sash above
 #elif defined(__WXOSX__)
-    rootSizer->AddSpacer(PX(2));
+    rootSizer->AddSpacer(PX(3));
 #endif
 
     m_controlsSizer = new wxBoxSizer(wxVERTICAL);
 
     m_controlsSizer->Add(sourceLineSizer, wxSizerFlags().Expand().Border(wxLEFT, PX(5)));
-    m_controlsSizer->AddSpacer(PX(6));
+    m_controlsSizer->AddSpacer(PX(7));
 
     auto origTextSizer = new wxBoxSizer(wxVERTICAL);
-    origTextSizer->AddSpacer(PX(4));
     origTextSizer->Add(m_labelSingular, wxSizerFlags().Border(wxLEFT, PX(5)));
     origTextSizer->Add(m_textOrig, wxSizerFlags(1).Expand());
     origTextSizer->Add(m_labelPlural, wxSizerFlags().Border(wxLEFT, PX(5)));
@@ -497,7 +499,7 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
 
     auto transLineSizer = new ShrinkableBoxSizer(wxHORIZONTAL);
     transLineSizer->Add(m_labelTrans, wxSizerFlags().Center());
-    transLineSizer->AddSpacer(PX(4));
+    transLineSizer->AddSpacer(PX(6));
     transLineSizer->Add(m_issueLine, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
     transLineSizer->SetShrinkableWindow(m_issueLine);
 
@@ -520,8 +522,8 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
 #ifdef __WXOSX__
     m_fuzzy->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
-    transLineSizer->Add(m_fuzzy, wxSizerFlags().Center().Border(wxTOP, MSW_OR_OTHER(IsHiDPI() ? PX(1) : 0, 0)));
-    transLineSizer->AddSpacer(PX(4));
+    transLineSizer->Add(m_fuzzy, wxSizerFlags().Center());
+    transLineSizer->AddSpacer(PX(5));
 
     m_textTrans = new TranslationTextCtrl(this, wxID_ANY);
 
@@ -530,9 +532,9 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
 
     m_pluralNotebook = SegmentedNotebook::Create(this, SegmentStyle::SmallInline);
 
-    sizer->AddSpacer(PX(6));
+    sizer->AddSpacer(PX(7));
     sizer->Add(transLineSizer, wxSizerFlags().Expand().Border(wxLEFT, PX(5)));
-    sizer->AddSpacer(PX(6));
+    sizer->AddSpacer(PX(7));
     sizer->Add(m_textTrans, wxSizerFlags(1).Expand());
     sizer->Add(m_pluralNotebook, wxSizerFlags(1).Expand());
 
@@ -656,8 +658,8 @@ void EditingArea::OnPaint(wxPaintEvent&)
     if (!m_isSingleSelection)
         return;
 
-    const int paddingTop = MACOS_OR_OTHER(dc.GetContentScaleFactor() > 1.0 ? PX(5) : PX(6), PX(6));
-    const int paddingBottom = PX(5);
+    const int paddingTop = PX(7);
+    const int paddingBottom = PX(6);
 
     auto bg = ColorScheme::Get(Color::EditingThickSeparator);
     dc.SetPen(bg);

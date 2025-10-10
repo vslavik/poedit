@@ -57,6 +57,8 @@
 #include "customcontrols.h"
 #include "hidpi.h"
 #include "language.h"
+#include "layout_helpers.h"
+#include "menus.h"
 #include "str_helpers.h"
 #include "unicode_helpers.h"
 #include "utility.h"
@@ -407,10 +409,15 @@ protected:
 #ifdef __WXOSX__
         [menu->GetHMenu() setFont:[NSFont systemFontOfSize:13]];
 #endif
-        menu->Append(idFolder, MSW_OR_OTHER(_(L"Add folders…"), _(L"Add Folders…")));
-        menu->Append(idFile, MSW_OR_OTHER(_(L"Add files…"), _(L"Add Files…")));
+        auto itemFolder = menu->Append(idFolder, MSW_OR_OTHER(_(L"Add folders…"), _(L"Add Folders…")));
+        SetMacMenuIcon(itemFolder, "folder.badge.plus");
+        auto itemFile = menu->Append(idFile, MSW_OR_OTHER(_(L"Add files…"), _(L"Add Files…")));
+        SetMacMenuIcon(itemFile, "document.badge.plus");
         if (AllowWildcards())
-            menu->Append(idWild, MSW_OR_OTHER(_(L"Add wildcard…"), _(L"Add Wildcard…")));
+        {
+            auto itemWild = menu->Append(idWild, MSW_OR_OTHER(_(L"Add wildcard…"), _(L"Add Wildcard…")));
+            SetMacMenuIcon(itemWild, "asterisk");
+        }
 
         menu->Bind(wxEVT_MENU, [=](wxCommandEvent&){
             wxDirDialog dlg(this,
@@ -486,6 +493,8 @@ protected:
             _("Show in Folder")
 #endif
             );
+        SetMacMenuIcon(menuItem, "finder");
+        
         if (!wxFileExists(file) && !wxDirExists(file))
             menuItem->Enable(false);
         menu.Bind(wxEVT_MENU, [=](wxCommandEvent&){ ShowInFolder(file); }, idShowInFolder);
@@ -539,14 +548,12 @@ struct PropertiesDialog::GettextSettings
     wxString XgettextFlags;
 };
 
-class PropertiesDialog::GettextSettingsDialog : public wxDialog
+class PropertiesDialog::GettextSettingsDialog : public StandardDialog
 {
 public:
-    GettextSettingsDialog(wxWindow *parent) : wxDialog(parent, wxID_ANY, _("Advanced extraction settings"))
+    GettextSettingsDialog(wxWindow *parent) : StandardDialog(parent, _("Advanced extraction settings"))
     {
-        auto outer = new wxBoxSizer(wxVERTICAL);
-        auto sizer = new wxBoxSizer(wxVERTICAL);
-        outer->Add(sizer, wxSizerFlags(1).Expand().Border(wxALL, PX(15)));
+        auto sizer = ContentSizer();
 
         sizer->Add(new wxStaticText(this, wxID_ANY, _("Extract notes for translators from:")));
         sizer->AddSpacer(PX(4));
@@ -569,18 +576,13 @@ public:
 #endif
         sizer->Add(m_flags, wxSizerFlags().Expand().Border(wxTOP, PX(5)));
 
-        auto buttons = CreateButtonSizer(wxOK | wxCANCEL);
-#ifdef __WXOSX__
-        outer->Add(buttons, wxSizerFlags().Expand());
-#else
-        outer->Add(buttons, wxSizerFlags().Expand().PXDoubleBorder(wxLEFT|wxRIGHT|wxBOTTOM));
-#endif
+        CreateButtons(wxOK | wxCANCEL);
 
         m_commentsPrefix->Bind(
             wxEVT_UPDATE_UI,
             [=](wxUpdateUIEvent& e){ e.Enable(m_commentsPrefixed->GetValue()); });
 
-        SetSizerAndFit(outer);
+        FitSizer();
         CenterOnParent();
     }
 
@@ -661,7 +663,8 @@ private:
 
 
 PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileExistsOnDisk, int initialPage)
-    : m_validatedPlural(-1), m_validatedLang(-1)
+    : StandardDialog(parent, _("Translation Properties"), wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER),
+      m_validatedPlural(-1), m_validatedLang(-1)
 {
     auto po = std::dynamic_pointer_cast<POCatalog>(cat);
     wxASSERT(po);
@@ -669,7 +672,19 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
     m_hasLang = cat->HasCapability(Catalog::Cap::LanguageSetting);
     m_hasPlurals = m_hasLang && (po->HasPluralItems() || po->Header().HasHeader("Plural-Forms"));
 
-    wxXmlResource::Get()->LoadDialog(this, parent, "properties");
+
+    auto sizer = ContentSizer();
+    auto notebook = new wxNotebook(this, wxID_ANY);
+    sizer->Add(notebook, wxSizerFlags(1).Expand());
+
+    auto page_common = wxXmlResource::Get()->LoadPanel(notebook, "page_common");
+    notebook->AddPage(page_common, MSW_OR_OTHER(_("Translation properties"), _("Translation Properties")));
+
+    auto page_paths = wxXmlResource::Get()->LoadPanel(notebook, "page_paths");
+    notebook->AddPage(page_paths, MSW_OR_OTHER(_("Sources paths"), _("Sources Paths")));
+
+    auto page_keywords = wxXmlResource::Get()->LoadPanel(notebook, "page_keywords");
+    notebook->AddPage(page_keywords, MSW_OR_OTHER(_("Sources keywords"), _("Sources Keywords")));
 
     m_gettextSettings.reset(new GettextSettings);
 
@@ -699,10 +714,9 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
     }
 
     // my custom controls:
-    auto page_paths = XRCCTRL(*this, "page_paths", wxWindow);
-    auto page_keywords = XRCCTRL(*this, "page_keywords", wxWindow);
 
     m_keywords = new wxEditableListBox(page_keywords, -1, _("Additional keywords"));
+    SetupListlikeBorder(m_keywords);
     m_defaultKeywords = XRCCTRL(*this, "default_keywords", wxCheckBox);
 
     m_pathsData.reset(new PathsData);
@@ -731,20 +745,31 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
     wxXmlResource::Get()->AttachUnknownControl("keywords", m_keywords);
     wxXmlResource::Get()->AttachUnknownControl("paths", m_paths);
     wxXmlResource::Get()->AttachUnknownControl("excluded_paths", m_excludedPaths);
+    
+#if defined(__WXOSX__)
+    NSButton *open_basepath =(NSButton*)XRCCTRL(*this, "open_basepath", wxBitmapButton)->GetHandle();
+    open_basepath.bezelStyle = NSBezelStyleTexturedRounded;
+    open_basepath.showsBorderOnlyWhileMouseInside = YES;
+#elif defined(__WXMSW__)
+    XRCCTRL(*this, "open_basepath", wxBitmapButton)->SetMinSize(wxSize(PX(20), -1));
+#endif
 
     // Controls setup:
     m_project->SetHint(_("Name of the project the translation is for"));
     m_team->SetHint(_("Team name and email address or URL"));
     m_pluralFormsExpr->SetHint(_("e.g. nplurals=2; plural=(n > 1);"));
 
+    CreateButtons(wxOK | wxCANCEL);
+
+    FitSizer();
     Layout();
     GetSizer()->SetSizeHints(this);
+    CenterOnParent();
 
     if (!fileExistsOnDisk)
         DisableSourcesControls();
 
-    auto nb = XRCCTRL(*this, "properties_notebook", wxNotebook);
-    nb->SetSelection(initialPage);
+    notebook->SetSelection(initialPage);
 
     m_language->Bind(wxEVT_TEXT, &PropertiesDialog::OnLanguageChanged, this);
     m_language->Bind(wxEVT_COMBOBOX, &PropertiesDialog::OnLanguageChanged, this);

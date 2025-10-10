@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resource xmlns="http://www.wxwidgets.org/wxxrc" version="2.5.3.0">
-  <object class="wxDialog" name="properties">
-    <title>Translation Properties</title>
-    <centered>1</centered>
-    <style>wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER</style>
-    <object class="wxBoxSizer">
-      <orient>wxVERTICAL</orient>
-      <object class="sizeritem">
-        <object class="wxNotebook" name="properties_notebook">
-          <object class="notebookpage">
-            <object class="wxPanel">
+            <object class="wxPanel" name="page_common">
               <style>wxTAB_TRAVERSAL</style>
               <object class="wxFlexGridSizer">
                 <growablecols>1</growablecols>
@@ -150,12 +141,7 @@
                 </object>
               </object>
             </object>
-            <label platform="unix|mac">Translation Properties</label>
-            <label platform="win">Translation properties</label>
-          </object>
-          <object class="notebookpage">
-            <label platform="unix|mac">Sources Paths</label>
-            <label platform="win">Sources paths</label>
+
             <object class="wxPanel" name="page_paths">
               <object class="wxBoxSizer">
                 <orient>wxVERTICAL</orient>
@@ -187,9 +173,7 @@
                     </object>
                     <object class="sizeritem">
                       <object class="wxBitmapButton" name="open_basepath">
-                        <style>wxNO_BORDER</style>
-                        <variant>small</variant>
-                        <bitmap platform="mac"  stock_id="NSFollowLinkFreestandingTemplate"/>
+                        <bitmap platform="mac"  stock_id="folder"/>
                         <bitmap platform="unix" stock_id="folder-open@symbolic"/>
                         <bitmap platform="win"  stock_id="follow-link"/>
                       </object>
@@ -217,10 +201,7 @@
                 </object>
               </object>
             </object>
-          </object>
-          <object class="notebookpage">
-            <label platform="unix|mac">Sources Keywords</label>
-            <label platform="win">Sources keywords</label>
+
             <object class="wxPanel" name="page_keywords">
               <object class="wxBoxSizer">
                 <orient>wxVERTICAL</orient>
@@ -259,31 +240,4 @@
                 </object>
               </object>
             </object>
-          </object>
-        </object>
-        <option>1</option>
-        <flag>wxEXPAND|wxTOP|wxLEFT|wxRIGHT</flag>
-        <border>5d</border>
-      </object>
-      <object class="sizeritem">
-        <object class="wxStdDialogButtonSizer">
-          <object class="button">
-            <object class="wxButton" name="wxID_OK">
-              <variant platform="mac">normal</variant>
-              <default>1</default>
-            </object>
-          </object>
-          <object class="button">
-            <object class="wxButton" name="wxID_CANCEL">
-              <variant platform="mac">normal</variant>
-            </object>
-          </object>
-        </object>
-        <flag platform="mac">wxALIGN_RIGHT</flag>
-        <flag platform="win">wxALIGN_RIGHT|wxALL</flag>
-        <flag platform="unix">wxALIGN_RIGHT|wxTOP|wxBOTTOM</flag>
-        <border>5d</border>
-      </object>
-    </object>
-  </object>
 </resource>

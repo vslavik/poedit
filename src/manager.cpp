@@ -55,6 +55,7 @@
 #include "edframe.h"
 #include "hidpi.h"
 #include "menus.h"
+#include "layout_helpers.h"
 #include "progress_ui.h"
 #include "utility.h"
 
@@ -131,7 +132,7 @@ ManagerFrame::ManagerFrame() :
     auto sidebarSizer = new wxBoxSizer(wxVERTICAL);
     topsizer->Add(sidebarSizer, wxSizerFlags().Expand().Border(wxALL, PX(10)));
 
-    m_listPrj = new wxListBox(panel, wxID_ANY, wxDefaultPosition, wxSize(PX(200), -1), 0, nullptr, MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN));
+    m_listPrj = new wxListBox(panel, wxID_ANY, wxDefaultPosition, wxSize(PX(200), -1), 0, nullptr, BORDER_LIST);
 #ifdef __WXOSX__
     ((NSTableView*)[((NSScrollView*)m_listPrj->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
 #endif
@@ -411,11 +412,24 @@ void ManagerFrame::UpdateListCat(int id)
 }
 
 
-class ProjectDlg : public wxDialog
+class ProjectDlg : public StandardDialog
 {
-    protected:
-        DECLARE_EVENT_TABLE()
-        void OnBrowse(wxCommandEvent& event);
+public:
+    ProjectDlg(wxWindow *parent) : StandardDialog(parent, _("Edit project"))
+    {
+        auto sizer = ContentSizer();
+
+        auto panel = wxXmlResource::Get()->LoadPanel(this, "manager_prj_dlg");
+        sizer->Add(panel, wxSizerFlags(1).Expand());
+
+        CreateButtons(wxOK | wxCANCEL);
+
+        FitSizer();
+    }
+
+protected:
+    DECLARE_EVENT_TABLE()
+    void OnBrowse(wxCommandEvent& event);
 };
 
 BEGIN_EVENT_TABLE(ProjectDlg, wxDialog)
@@ -442,9 +456,9 @@ void ManagerFrame::EditProject(int id, TFunctor completionHandler)
     wxString key;
     key.Printf("Manager/project_%i/", id);
 
-    wxWindowPtr<ProjectDlg> dlg(new ProjectDlg);
-    wxXmlResource::Get()->LoadDialog(dlg.get(), this, "manager_prj_dlg");
+    wxWindowPtr<ProjectDlg> dlg(new ProjectDlg(this));
     wxEditableListBox *prj_dirs = new wxEditableListBox(dlg.get(), XRCID("prj_dirs"), _("Directories:"));
+    SetupListlikeBorder(prj_dirs);
     wxXmlResource::Get()->AttachUnknownControl("prj_dirs", prj_dirs);
 
     XRCCTRL(*dlg, "prj_name", wxTextCtrl)->SetValue(cfg->Read(key + "Name"));

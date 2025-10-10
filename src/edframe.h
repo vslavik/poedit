@@ -219,10 +219,12 @@ class PoeditFrame : public PoeditFrameBase
 
         /// Updates statistics in statusbar.
         void UpdateStatusBar();
+        void InitStatusBar();
         /// Updates frame title.
         void UpdateTitle();
         /// Updates menu -- disables and enables items.
         void UpdateMenu();
+        void UpdateCloudSyncUI(bool isCrowdin);
 
         // Called when catalog's language possibly changed
         void UpdateTextLanguage();

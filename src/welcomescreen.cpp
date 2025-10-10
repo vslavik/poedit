@@ -221,13 +221,22 @@ WelcomeWindow::WelcomeWindow()
                         wxDefaultPosition, wxDefaultSize,
                         wxSYSTEM_MENU | wxCLOSE_BOX | wxCAPTION | wxCLIP_CHILDREN)
 {
-    ColorScheme::SetupWindowColors(this, [=]
+#ifdef __WXOSX__
+    if (@available(macOS 26.0, *))
     {
-        if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
-            SetBackgroundColour(*wxWHITE);
-        else
-            SetBackgroundColour(GetDefaultAttributes().colBg);
-    });
+        // use standard background
+    }
+    else
+#endif
+    {
+        ColorScheme::SetupWindowColors(this, [=]
+                                       {
+            if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
+                SetBackgroundColour(*wxWHITE);
+            else
+                SetBackgroundColour(GetDefaultAttributes().colBg);
+        });
+    }
 
 #ifdef __WXOSX__
     NSWindow *wnd = (NSWindow*)GetWXWindow();

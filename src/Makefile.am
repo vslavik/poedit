@@ -57,6 +57,7 @@ poedit_SOURCES = \
                  language.cpp language.h \
                  language_impl_legacy.h language_impl_plurals.h \
                  languagectrl.cpp languagectrl.h \
+                 layout_helpers.cpp layout_helpers.h \
                  logcapture.h \
                  main_toolbar.h wx/main_toolbar.cpp \
                  manager.h manager.cpp \
@@ -91,7 +92,6 @@ poedit_LDADD = $(WX_LIBS) $(LUCENE_LIBS) $(CLD2_LIBS) $(PUGIXML_LIBS) $(ACCOUNTS
                $(BOOST_LDFLAGS) $(BOOST_THREAD_LIB) $(BOOST_SYSTEM_LIB)
 
 XRC_RESOURCES = \
-        $(srcdir)/resources/comment.xrc \
         $(srcdir)/resources/manager.xrc \
         $(srcdir)/resources/menus.xrc \
         $(srcdir)/resources/prefs.xrc \

@@ -136,14 +136,6 @@ class ExplanationLabel : public AutoWrappingText
 public:
     ExplanationLabel(wxWindow *parent, const wxString& label);
 
-#if defined(__WXOSX__)
-    static const int CHECKBOX_INDENT = 21;
-#elif defined(__WXMSW__)
-    static const int CHECKBOX_INDENT = 17;
-#elif defined(__WXGTK__)
-    static const int CHECKBOX_INDENT = 25;
-#endif
-
     static wxColour GetTextColor() { return ColorScheme::Get(Color::SecondaryLabel); }
 };
 

@@ -56,8 +56,6 @@ class SegmentedNotebook::TabsIface
 public:
     virtual ~TabsIface() {}
 
-    virtual wxSizer *GetExtensibleArea() const = 0;
-
     virtual void InsertPage(size_t n, const wxString& label) = 0;
     virtual void RemovePage(size_t n) = 0;
     virtual void RemoveAllPages() = 0;
@@ -103,6 +101,7 @@ public:
         switch (style)
         {
             case SegmentStyle::SmallInline:
+            case SegmentStyle::SidebarPanels:
                 m_control.segmentStyle = NSSegmentStyleRoundRect;
                 SetWindowVariant(wxWINDOW_VARIANT_SMALL);
                 break;
@@ -110,13 +109,8 @@ public:
                 m_control.segmentStyle = NSSegmentStyleTexturedRounded;
                 SetWindowVariant(wxWINDOW_VARIANT_LARGE);
                 break;
-            case SegmentStyle::SidebarPanels:
-                wxFAIL_MSG("this style can't be used with NSSegmentedControl");
-                break;
         }
     }
-
-    wxSizer *GetExtensibleArea() const override { return nullptr; }
 
     void InsertPage(size_t n, const wxString& label) override
     {
@@ -259,7 +253,7 @@ public:
         Bind(wxEVT_PAINT, &ButtonTabs::OnPaint, this);
     }
 
-    wxSizer *GetExtensibleArea() const override { return m_wrappingSizer; }
+    wxSizer *GetExtensibleArea() const { return m_wrappingSizer; }
 
     void OnPaint(wxPaintEvent&)
     {
@@ -393,27 +387,29 @@ SegmentedNotebookBase *SegmentedNotebook::Create(wxWindow* parent, SegmentStyle 
 SegmentedNotebook::SegmentedNotebook(wxWindow *parent, SegmentStyle style)
     : wxSimplebook(parent, wxID_ANY)
 {
-    switch (style)
-    {
-        case SegmentStyle::SmallInline:
-        case SegmentStyle::LargeFullWidth:
 #ifdef __WXOSX__
-        {
-            auto tabs = new SegmentedControlTabs(this, style);
-            m_bookctrl = tabs;
-            m_tabs = tabs;
-            break;
-        }
-#endif
-        case SegmentStyle::SidebarPanels:
-        {
-            auto tabs = new ButtonTabs(this, style);
-            m_bookctrl = tabs;
-            m_tabs = tabs;
-            break;
-        }
-    }
+    // sidebar panels should only use segmented control on >= macOS 26:
+    bool useSegmentedControl = (style != SegmentStyle::SidebarPanels);
+    if (@available(macOS 26.0, *))
+        useSegmentedControl = true;
 
+    if (useSegmentedControl)
+    {
+        auto tabs = new SegmentedControlTabs(this, style);
+        m_bookctrl = tabs;
+        m_tabs = tabs;
+    }
+#endif // __WXOSX__
+
+    // buttons-based control for older macOS or for other platforms:
+    if (!m_tabs)
+    {
+        auto tabs = new ButtonTabs(this, style);
+        m_bookctrl = tabs;
+        m_tabs = tabs;
+        m_tabsExtensibleArea = tabs->GetExtensibleArea();
+    }
+    
     wxSizer* sizer = new wxBoxSizer(wxVERTICAL);
     m_controlSizer = new wxBoxSizer(wxHORIZONTAL);
     m_controlSizer->Add(m_bookctrl, wxSizerFlags(1).Expand());
@@ -422,8 +418,23 @@ SegmentedNotebook::SegmentedNotebook(wxWindow *parent, SegmentStyle style)
         case SegmentStyle::SmallInline:
             sizer->Add(m_controlSizer, wxSizerFlags().Left().Border(wxLEFT, 4));
             break;
-        case SegmentStyle::LargeFullWidth:
+
         case SegmentStyle::SidebarPanels:
+#ifdef __WXOSX__
+            if (useSegmentedControl)
+            {
+                sizer->Add(m_controlSizer, wxSizerFlags().Center());
+                m_tabsExtensibleArea = m_controlSizer;
+                SetInternalBorder(PX(4));
+            }
+            else
+#endif
+            {
+                sizer->Add(m_controlSizer, wxSizerFlags().Expand());
+            }
+            break;
+
+        case SegmentStyle::LargeFullWidth:
             sizer->Add(m_controlSizer, wxSizerFlags().Expand());
             break;
     }
@@ -442,11 +453,6 @@ bool SegmentedNotebook::SetBackgroundColour(const wxColour& clr)
         return false;
     m_tabs->UpdateBackgroundColour();
     return true;
-}
-
-wxSizer *SegmentedNotebook::GetTabsExtensibleArea() const
-{
-    return m_tabs->GetExtensibleArea();
 }
 
 int SegmentedNotebook::ChangeSelection(size_t page)

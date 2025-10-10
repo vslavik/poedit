@@ -31,6 +31,7 @@
 #include "progress_ui.h"
 #include "str_helpers.h"
 #include "tm/transmem.h"
+#include "layout_helpers.h"
 #include "utility.h"
 
 #include <wx/button.h>
@@ -296,10 +297,10 @@ void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list, CatalogPtr catal
 
     sizer->Add(onlyExact, wxSizerFlags().PXBorder(wxTOP));
     sizer->AddSpacer(PX(1));
-    sizer->Add(onlyExactE, wxSizerFlags().Expand().Border(wxLEFT, PX(ExplanationLabel::CHECKBOX_INDENT)));
+    sizer->Add(onlyExactE, wxSizerFlags().Expand().Border(wxLEFT, UnderCheckboxIndent()));
     sizer->Add(noFuzzy, wxSizerFlags().PXDoubleBorder(wxTOP));
     sizer->AddSpacer(PX(1));
-    sizer->Add(noFuzzyE, wxSizerFlags().Expand().Border(wxLEFT, PX(ExplanationLabel::CHECKBOX_INDENT)));
+    sizer->Add(noFuzzyE, wxSizerFlags().Expand().Border(wxLEFT, UnderCheckboxIndent()));
 
     topsizer->Add(sizer, wxSizerFlags(1).Expand().Border(wxALL, MACOS_OR_OTHER(PX(20), PX(10))));
 

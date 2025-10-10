@@ -225,6 +225,44 @@ wxString pretty_print_path(wxFileName f)
     return path;
 }
 
+
+#ifdef __WXOSX__
+
+NSView *find_subview_of_class(NSView *root, Class cls)
+{
+    if (!root || !cls)
+        return nil;
+
+    for (NSView *sub in root.subviews)
+    {
+        if ([sub class] == cls)
+            return sub;
+
+        NSView *found = find_subview_of_class(sub, cls);
+        if (found)
+            return found;
+    }
+
+    return nil;
+}
+
+// Fix rendering artifact where macOS Tahoe attempts to do extending-behind-toolbar
+// glass appearance tricks even though the window has no toolbar and the titlebar
+// is hidden. Inspecting the view hierarchy, there's apparently a private
+// NSScrollPocket view injected that is responsible for it. Fortunately, it can be
+// hidden. See: https://developer.apple.com/forums/thread/798392?page=1#856013022
+void fixup_liquid_ass_breakage(NSView *root)
+{
+    if (@available(macOS 26.0, *))
+    {
+        NSView *pocket = find_subview_of_class(root, NSClassFromString(@"NSScrollPocket"));
+        if (pocket)
+            pocket.hidden = YES;
+    }
+}
+
+#endif // __WXOSX__
+
 } // anonymous namespace
 
 
@@ -556,6 +594,9 @@ RecentFilesCtrl::RecentFilesCtrl(wxWindow *parent)
     tableView.style = NSTableViewStyleSourceList;
 
     SetRowHeight(GetDefaultRowHeight());
+
+    fixup_liquid_ass_breakage(scrollView);
+
 #else // !__WXOSX__
     ColorScheme::SetupWindowColors(this, [=]
     {

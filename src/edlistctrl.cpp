@@ -412,7 +412,7 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
                 #else
                     #define MARKUP(x) x
                 #endif
-                    orig.Printf(MARKUP("<span bgcolor=\"%s\" color=\"%s\"> %s </span> %s"),
+                    orig.Printf(MARKUP("<span bgcolor=\"%s\" color=\"%s\"> %s | </span> %s"),
                         m_clrContextBg, m_clrContextFg,
                         EscapeMarkup(d->GetContext()), EscapeMarkup(orig_str));
                 }
