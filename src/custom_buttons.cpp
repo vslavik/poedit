@@ -154,7 +154,6 @@ ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& s
 
 @property NSColor* onColor;
 @property NSColor* labelOffColor;
-@property BOOL isDarkMode;
 @property SwitchButton *parent;
 @property (nonatomic) double animationPosition;
 
@@ -170,6 +169,7 @@ ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& s
         self.title = label;
         self.bezelStyle = NSBezelStyleSmallSquare;
         self.buttonType = NSButtonTypeOnOff;
+        self.bordered = NO;
         self.font = [NSFont boldSystemFontOfSize:[NSFont smallSystemFontSize]];
         self.animationPosition = 0.0;
         self.onColor = [NSColor colorWithCalibratedRed:0.302 green:0.847 blue:0.396 alpha:1.0];
@@ -178,24 +178,139 @@ ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& s
     return self;
 }
 
+- (void)viewWillMoveToWindow:(NSWindow *)newWindow {
+    NSNotificationCenter *nc = NSNotificationCenter.defaultCenter;
+    if (self.window)
+    {
+        [nc removeObserver:self name:NSWindowDidBecomeKeyNotification object:self.window];
+        [nc removeObserver:self name:NSWindowDidResignKeyNotification object:self.window];
+    }
+    if (newWindow)
+    {
+        [nc addObserver:self selector:@selector(onIsKeyWindowChanged:) name:NSWindowDidBecomeKeyNotification object:newWindow];
+        [nc addObserver:self selector:@selector(onIsKeyWindowChanged:) name:NSWindowDidResignKeyNotification object:newWindow];
+    }
+    [super viewWillMoveToWindow:newWindow];
+}
+
+- (void)onIsKeyWindowChanged:(NSNotification *)n
+{
+    #pragma unused(n)
+    [self setNeedsDisplay:YES];
+}
+
 - (void)sizeToFit
 {
     [super sizeToFit];
     NSSize size = self.frame.size;
-    size.width += 40;
-    size.height += 2;
+    size.width += 32 + 8;
+    if (@available(macOS 26, *))
+        size.width += 4;
+    size.height = 18;
     [self setFrameSize:size];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
 {
     #pragma unused(dirtyRect)
-    [StyleKit drawSwitchButtonWithFrame:self.bounds
-                                onColor:self.onColor
-                          labelOffColor:self.labelOffColor
-                                  label:self.title
-                         togglePosition:self.animationPosition
-                             isDarkMode:self.isDarkMode];
+
+    // Input parameters:
+    CGFloat t = fmin(fmax(self.animationPosition, 0.0), 1.0); // 0..1
+
+    BOOL isDarkMode = [self.effectiveAppearance.name isEqualToString:NSAppearanceNameDarkAqua];
+    BOOL isToggledOn = t > 0.5;
+    BOOL isInKeyWindow = self.window.isKeyWindow;
+    BOOL isLiquidGlass = NO;
+    if (@available(macOS 26, *))
+        isLiquidGlass = YES;
+
+    // Geometry:
+    CGFloat trackW = 32;
+    CGFloat trackH = 18;
+    CGFloat knobInset = 1.3; // NB: native is 1.0, but this looks a bit better with our color
+    CGFloat knobExtraW = 0;
+
+    if (isLiquidGlass)
+    {
+        // Unlike on previous versions, much not native NSSwitch, but its SwiftUI version, because
+        // it is more widely used in the OS and NSSwitch feels a bit too large there.
+        trackW = 36;
+        trackH = 16;
+        knobInset = 1.5; // native
+        knobExtraW = 8.0;
+    }
+
+    CGFloat knobD_y = trackH - 2.0 * knobInset;
+    CGFloat knobD_x = knobD_y + knobExtraW;
+    CGFloat radius = trackH / 2.0;
+
+    // Layout: label on the left, switch on the right
+    NSRect track = NSMakeRect(NSMaxX(self.bounds) - trackW,
+                              NSMidY(self.bounds) - trackH / 2,
+                              trackW, trackH);
+    NSRect labelRect = self.bounds;
+    labelRect.size.width = NSMinX(track) - 8.0; // 8pt gap before the switch
+
+    // Colors:
+    NSColor *offTrack = NSColor.quaternaryLabelColor;
+    NSColor *onColor = self.onColor;
+    if (!isInKeyWindow)
+        onColor = NSColor.tertiaryLabelColor;
+
+    NSColor *trackColor = isToggledOn ? onColor : offTrack;
+    NSColor *trackStroke = isDarkMode? [NSColor colorWithWhite:1 alpha:0.15] : [NSColor colorWithWhite:0 alpha:0.05];
+
+    NSColor *knobFill = nil;
+    if (isLiquidGlass)
+        knobFill = isDarkMode ? [NSColor colorWithWhite:1.0 alpha:0.9] : NSColor.whiteColor;
+    else
+        knobFill = isDarkMode ? [NSColor colorWithWhite:0.79 alpha:1.0] : NSColor.whiteColor;
+
+    NSColor *knobStroke = [NSColor colorWithWhite:0 alpha:(isDarkMode ? 0.2 : 0.05)];
+
+    NSColor *textColor = (isToggledOn && isInKeyWindow) ? onColor : self.labelOffColor;
+
+    NSShadow *shadow = [[NSShadow alloc] init];
+    shadow.shadowOffset = NSMakeSize(1, -1);
+    shadow.shadowBlurRadius = 1.0;
+    shadow.shadowColor = [NSColor colorWithWhite:0 alpha:isDarkMode ? 0.2 : 0.05];
+
+    // Track (pill)
+    NSBezierPath *pill = [NSBezierPath bezierPathWithRoundedRect:track xRadius:radius yRadius:radius];
+    [trackColor setFill];
+    [pill fill];
+    if (!isLiquidGlass)
+    {
+        [trackStroke setStroke];
+        pill.lineWidth = 1.0;
+        [pill stroke];
+    }
+
+    // Knob position: lerp between left and right
+    CGFloat x0 = NSMinX(track) + knobInset;
+    CGFloat x1 = NSMaxX(track) - knobInset - knobD_x;
+    CGFloat kx = x0 + (x1 - x0) * t;
+    NSRect knob = NSMakeRect(kx, NSMidY(track) - knobD_y * 0.5, knobD_x, knobD_y);
+
+    NSBezierPath *knobPath = [NSBezierPath bezierPathWithRoundedRect:knob xRadius:knobD_y/2 yRadius:knobD_y/2];
+    [knobFill setFill];
+    [NSGraphicsContext saveGraphicsState];
+    [shadow set];
+    [knobPath fill];
+    [NSGraphicsContext restoreGraphicsState];
+    if (!isLiquidGlass)
+    {
+        [knobStroke setStroke];
+        knobPath.lineWidth = 1.0;
+        [knobPath stroke];
+    }
+
+    // Label (right-aligned to the space before the switch)
+    NSDictionary *attrs = @{
+        NSFontAttributeName: [NSFont boldSystemFontOfSize:NSFont.smallSystemFontSize],
+        NSForegroundColorAttributeName: textColor,
+    };
+    [self.title drawAtPoint:NSMakePoint(0, 2) withAttributes:attrs];
 }
 
 - (void)setAnimationPosition:(double)animationPosition
@@ -227,7 +342,7 @@ ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& s
 
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
     {
-        context.duration = 0.1;
+        context.duration = 0.2;
         self.animator.animationPosition = target;
     }];
 
@@ -248,11 +363,10 @@ public:
 
     NSView *View() const { return m_view; }
 
-    void SetColors(const wxColour& on, const wxColour& offLabel, bool isDarkMode)
+    void SetColors(const wxColour& on, const wxColour& offLabel)
     {
         m_view.onColor = on.OSXGetNSColor();
         m_view.labelOffColor = offLabel.OSXGetNSColor();
-        m_view.isDarkMode = isDarkMode;
     }
 
     void SetValue(bool value)
@@ -283,7 +397,7 @@ SwitchButton::~SwitchButton()
 
 void SwitchButton::SetColors(const wxColour& on, const wxColour& offLabel)
 {
-    m_impl->SetColors(on, offLabel, ColorScheme::GetWindowMode(this) == ColorScheme::Dark);
+    m_impl->SetColors(on, offLabel);
 }
 
 void SwitchButton::SetValue(bool value)
