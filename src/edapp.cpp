@@ -1331,7 +1331,7 @@ void PoeditApp::OnHelp(wxCommandEvent&)
 
 void PoeditApp::OnGettextManual(wxCommandEvent&)
 {
-    wxLaunchDefaultBrowser("http://www.gnu.org/software/gettext/manual/html_node/");
+    wxLaunchDefaultBrowser("https://www.gnu.org/software/gettext/manual/html_node/");
 }
 
 
