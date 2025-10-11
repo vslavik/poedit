@@ -73,6 +73,7 @@ public:
         SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #ifdef __WXOSX__
         ((NSTableView*)[((NSScrollView*)GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
+        SetRowHeight(PX(20));
 #endif
     }
 };
@@ -167,13 +168,22 @@ void MergeSummaryDialog::TransferTo(const MergeStats& r)
         // TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
         list->AppendTextColumn(_("Issue"), wxDATAVIEW_CELL_INERT, wxCOL_WIDTH_AUTOSIZE);
 
+        // Issues may be multiline, and variable-height row support in wxDVC leaves a lot to be desired
+        // (e.g. doesn't work with native columns, or on Mac), so we do something close enough manually.
+        int height = list->GetCharHeight();
+    
         for (auto& i: r.errors.items)
         {
+            const int lines = (int)std::count(i.text.begin(), i.text.end(), '\n') + 1;
+            const wxString firstLine = i.text.BeforeFirst('\n');
+            height = std::max(height, lines * list->GetTextExtent(firstLine).y);
+
             if (i.has_location())
                 list->AppendItem(variant_vector({i.file, wxString::Format("%d", i.line), i.text}));
             else
                 list->AppendItem(variant_vector({"", "", i.text}));
         }
+        list->SetRowHeight(height + PX(8));
     }
 
     if (!r.added.empty())
