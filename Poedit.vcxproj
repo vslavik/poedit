@@ -344,7 +344,7 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="Poedit.targets" />
     <Import Project="packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets" Condition="Exists('packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets')" />
-    <Import Project="packages\WinSparkle.0.9.1\build\native\WinSparkle.targets" Condition="Exists('packages\WinSparkle.0.9.1\build\native\WinSparkle.targets')" />
+    <Import Project="packages\WinSparkle.0.9.2\build\native\WinSparkle.targets" Condition="Exists('packages\WinSparkle.0.9.2\build\native\WinSparkle.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -353,6 +353,6 @@
     <Error Condition="!Exists('packages\Tools.InnoSetup.6.4.2\build\Tools.InnoSetup.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Tools.InnoSetup.6.4.2\build\Tools.InnoSetup.props'))" />
     <Error Condition="!Exists('packages\Gettext.Tools.0.26.0\build\Gettext.Tools.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Gettext.Tools.0.26.0\build\Gettext.Tools.props'))" />
     <Error Condition="!Exists('packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets'))" />
-    <Error Condition="!Exists('packages\WinSparkle.0.9.1\build\native\WinSparkle.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\WinSparkle.0.9.1\build\native\WinSparkle.targets'))" />
+    <Error Condition="!Exists('packages\WinSparkle.0.9.2\build\native\WinSparkle.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\WinSparkle.0.9.2\build\native\WinSparkle.targets'))" />
   </Target>
 </Project>
