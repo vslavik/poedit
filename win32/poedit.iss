@@ -32,7 +32,7 @@
 
 #include "../" + BINDIR + "/git_build_number.h"
 
-#define VERSION          "3.7"
+#define VERSION          "3.8"
 #define VERSION_WIN      VERSION + "." + Str(POEDIT_GIT_BUILD_NUMBER)
 
 #define APP_ID           "{68EB2C37-083A-4303-B5D8-41FA67E50B8F}"
