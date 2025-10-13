@@ -83,6 +83,9 @@ WizardStyle=modern
 AppPublisherURL=https://poedit.net/
 DisableProgramGroupPage=true
 
+RestartApplications=yes
+CloseApplications=yes
+
 #ifdef SIGNTOOL
 SignTool={#SIGNTOOL}
 SignedUninstaller=yes

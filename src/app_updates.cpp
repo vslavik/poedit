@@ -213,8 +213,13 @@ private:
 
     static void WinSparkle_Shutdown()
     {
-        auto evt = new wxCommandEvent(wxEVT_COMMAND_MENU_SELECTED, wxID_EXIT);
-        wxGetApp().QueueEvent(evt);
+        // Register for Application Restart so that Restart Manager (used by Inno Setup)
+        // can restart Poedit after it closes us during installation.
+        // Use empty command line ("") and avoid restarts after crash/hang/reboot.
+        RegisterApplicationRestart(L"", RESTART_NO_CRASH | RESTART_NO_HANG | RESTART_NO_REBOOT);
+
+        // Do NOT shut down here! The installer will close us via Restart Manager and
+        // restart after installation completes.
     }
 };
 
