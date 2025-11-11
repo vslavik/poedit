@@ -850,6 +850,8 @@ void PoeditListCtrl::CatalogChanged(const CatalogPtr& catalog)
 
     if (sizeOrCatalogChanged && GetItemCount() > 0)
         CallAfter([=]{ SelectAndFocus(0); });
+
+    Refresh();
 }
 
 
