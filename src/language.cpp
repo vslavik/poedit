@@ -663,37 +663,38 @@ Language Language::TryGuessFromFilename(const wxString& filename, wxString *wild
     auto dirs = fn.GetDirs();
     if (!dirs.empty())
     {
-        size_t i = dirs.size() - 1;
-        if (dirs[i].IsSameAs("LC_MESSAGES", /*caseSensitive=*/false))
+        for (size_t i = dirs.size() - 1; i > 0; --i)
         {
-            if (i == 0)
-                return Language(); // failed to match
-            --i;
-        }
-        wxString rest, wmatch;
-        if (dirs[i].EndsWith(".lproj", &rest))
-        {
-            auto l = rest.ToStdWstring();
-            if (Language::IsPlausibleCode(l))
-                lang = Language::TryParseWithValidation(l);
-            wmatch = "*.lproj";
-        }
-        else
-        {
-            auto l = dirs[i].ToStdWstring();
-            if (Language::IsPlausibleCode(l))
-                lang = Language::TryParseWithValidation(l);
-            wmatch = "*";
-        }
-        if (lang.IsValid())
-        {
-            if (wildcard)
+            if (dirs[i].IsSameAs("LC_MESSAGES", /*caseSensitive=*/false))
             {
-                fn.RemoveDir(i);
-                fn.InsertDir(i, wmatch);
-                *wildcard = fn.GetFullPath();
+                // common setup in gettext world: $lang/LC_MESSAGES/file.mo
+                continue;
             }
-            return lang;
+            wxString rest, wmatch;
+            if (dirs[i].EndsWith(".lproj", &rest))
+            {
+                auto l = rest.ToStdWstring();
+                if (Language::IsPlausibleCode(l))
+                    lang = Language::TryParseWithValidation(l);
+                wmatch = "*.lproj";
+            }
+            else
+            {
+                auto l = dirs[i].ToStdWstring();
+                if (Language::IsPlausibleCode(l))
+                    lang = Language::TryParseWithValidation(l);
+                wmatch = "*";
+            }
+            if (lang.IsValid())
+            {
+                if (wildcard)
+                {
+                    fn.RemoveDir(i);
+                    fn.InsertDir(i, wmatch);
+                    *wildcard = fn.GetFullPath();
+                }
+                return lang;
+            }
         }
     }
 
