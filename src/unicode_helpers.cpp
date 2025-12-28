@@ -102,6 +102,17 @@ wxString strip_pointless_control_chars(const wxString& text, TextDirection dir)
     if (text.empty())
         return text;
 
+#ifdef __WXOSX__
+    if (dir == TextDirection::RTL && text.find('\n') != wxString::npos &&
+        text.find(L"\u202c\n\u202b") != wxString::npos)
+    {
+        // AppKit just loves to end each line with PDF and start with RLE on the next one
+        wxString s(text);
+        s.Replace(L"\u202c\n\u202b", L"\n");
+        return strip_pointless_control_chars(s, dir);
+    }
+#endif
+
     const wchar_t first = *text.begin();
     const wchar_t last = *text.rbegin();
 
