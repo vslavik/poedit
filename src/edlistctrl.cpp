@@ -650,7 +650,7 @@ void PoeditListCtrl::CreateColumns()
     m_colID = m_colIcon = m_colSource = m_colTrans = nullptr;
 
 #if defined(__WXMSW__)
-    int iconWidth = wxArtProvider::GetBitmap("StatusError").GetSize().x + 6 /*wxDVC internal padding*/;
+    int iconWidth = wxArtProvider::GetBitmap("StatusError").GetSize().x + FromDIP(6) /*wxDVC internal padding*/;
 #else
     int iconWidth = PX(16);
 #endif
