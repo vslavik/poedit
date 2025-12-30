@@ -96,7 +96,7 @@ void TryNormalize(std::wstring& s)
     }
 }
 
-bool IsISOLanguage(const std::string& s)
+bool IsValidLanguage(const std::string& s)
 {
     const char *test = s.c_str();
     for (const char * const* i = uloc_getISOLanguages(); *i != nullptr; ++i)
@@ -107,7 +107,7 @@ bool IsISOLanguage(const std::string& s)
     return false;
 }
 
-bool IsISOCountry(const std::string& s)
+bool IsValidRegion(const std::string& s)
 {
     const char *test = s.c_str();
     for (const char * const* i = uloc_getISOCountries(); *i != nullptr; ++i)
@@ -115,6 +115,11 @@ bool IsISOCountry(const std::string& s)
         if (strcmp(test, *i) == 0)
             return true;
     }
+
+    // accept UN M.49 codes for Latin America (used in practice) and World+Europe (extremely rarely used)
+    if (s == "419" || s == "001" || s == "015")
+        return true;
+
     return false;
 }
 
@@ -436,11 +441,11 @@ Language Language::TryParseWithValidation(const std::wstring& s)
     if (!lang.IsValid())
         return Language(); // invalid
 
-    if (!IsISOLanguage(lang.Lang()))
+    if (!IsValidLanguage(lang.Lang()))
         return Language(); // invalid
 
     auto country = lang.Country();
-    if (!country.empty() && !IsISOCountry(country))
+    if (!country.empty() && !IsValidRegion(country))
         return Language(); // invalid
 
     return lang;
