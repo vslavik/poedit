@@ -343,6 +343,8 @@ private:
 
         void UpdateEditingUIAfterChange();
 
+        Catalog::ValidationResults ValidateCurrentFile();
+
         template<typename TFunctor>
         void ReportValidationErrors(Catalog::ValidationResults validation,
                                     Catalog::CompilationStatus mo_compilation_status,

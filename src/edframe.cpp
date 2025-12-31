@@ -1823,9 +1823,7 @@ void PoeditFrame::OnValidate(wxCommandEvent&)
     try
     {
         wxBusyCursor bcur;
-        auto results = m_catalog->Validate();
-        if (m_list && m_list->sortOrder().errorsFirst)
-            m_list->Sort();
+        auto results = ValidateCurrentFile();
         ReportValidationErrors(results,
                                /*mo_compilation_failed=*/Catalog::CompilationStatus::NotDone,
                                /*from_save=*/false, /*other_file_saved=*/false, []{});
@@ -1834,6 +1832,22 @@ void PoeditFrame::OnValidate(wxCommandEvent&)
     {
         wxLogError("%s", e.What());
     }
+}
+
+
+Catalog::ValidationResults PoeditFrame::ValidateCurrentFile()
+{
+    if (!m_catalog)
+        return {};
+
+    auto results = m_catalog->Validate();
+
+    if (m_list && m_list->sortOrder().errorsFirst)
+        m_list->Sort();
+    else
+        m_list->RefreshAllItems();
+
+    return results;
 }
 
 
@@ -2059,14 +2073,7 @@ void PoeditFrame::OnToggleWarnings(wxCommandEvent& e)
     Config::ShowWarnings(enable);
 
     // refresh display of items in the window:
-    if (m_catalog)
-    {
-        m_catalog->Validate();
-        if (m_list && m_list->sortOrder().errorsFirst)
-            m_list->Sort();
-        else
-            m_list->RefreshAllItems();
-    }
+    ValidateCurrentFile();
 }
 
 void PoeditFrame::OnCopyFromSingular(wxCommandEvent&)
@@ -2514,6 +2521,7 @@ void PoeditFrame::SideloadSourceTextFromFile(const wxFileName& fn)
         m_catalog->SideloadSourceDataFromReferenceFile(refcat);
         UpdateEditingUIAfterChange();
         NotifyCatalogChanged(m_catalog);
+        ValidateCurrentFile();
     }
     catch (...)
     {
