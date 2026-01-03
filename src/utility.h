@@ -27,6 +27,7 @@
 #define Poedit_utility_h
 
 #include <map>
+#include <vector>
 
 #include <wx/arrstr.h>
 #include <wx/filename.h>
@@ -216,6 +217,39 @@ inline wxString MaskForType(const char *extensions, const wxString& description,
         return wxString::Format("%s|%s", description, extensions);
 }
 
+/// A helper class to calculate a display diff of strings
+class Diff
+{
+public:
+    /// Constructs a Diff object with a edit sequence from a string
+    /// @arg from to the string @arg to
+    Diff(const wxString& from, const wxString& to);
+
+    /// A type of element in the shortest edit sequence
+    enum class Action {
+        Common,  ///< symbols are the same
+        Add,     ///< symbols were added
+        Delete   ///< symbols were removed
+    };
+
+    /// An element from the shortest edit sequence
+    typedef std::pair<Action, wxString> sequenceElement;
+    /// A type to represent a shortest edit sequence i.e. the sequence of
+    /// substrings with an action (add remove, don't change) attached to them
+    typedef std::vector<sequenceElement> sequence;
+
+    /// @returns the shortest edit sequence in a form suitable for interpretation
+    const sequence& getSes() { return ses; };
+
+    /// @returns the diff ready to be displayed as a markup
+    /// @arg addColor    a background color for a string being added
+    /// @arg deleteColor a background color for a string being removed
+    wxString getMarkup(const wxString& addColor=wxString("lightgreen"),
+                       const wxString& deleteColor=wxString("pink"));
+
+private:
+    sequence ses;
+};
 
 #if wxUSE_GUI && defined(__WXMSW__)
 bool IsRunningUnderScreenReader();
@@ -288,7 +322,6 @@ public:
     wxString m_filenameTmp;
     wxString m_filenameFinal;
 };
-
 
 #ifdef __WXMSW__
 /// Return filename safe for passing to CLI tools (gettext).
