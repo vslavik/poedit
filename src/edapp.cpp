@@ -1326,12 +1326,12 @@ void PoeditApp::OnPreferences(wxCommandEvent&)
 
 void PoeditApp::OnHelp(wxCommandEvent&)
 {
-    OpenPoeditWeb("/trac/wiki/Doc");
+    OpenPoeditWeb("/help/index");
 }
 
 void PoeditApp::OnGettextManual(wxCommandEvent&)
 {
-    wxLaunchDefaultBrowser("https://www.gnu.org/software/gettext/manual/html_node/");
+    OpenPoeditWeb("/help/gnu-gettext");
 }
 
 

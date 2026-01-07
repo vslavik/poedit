@@ -124,12 +124,11 @@ bool InitTextCtrlSpellchecker(CustomizedTextCtrl *text, bool enable, const Langu
 void ShowSpellcheckerHelp()
 {
 #if defined(__WXOSX__)
-    #define SPELL_HELP_PAGE   "SpellcheckerMac"
+    wxGetApp().OpenPoeditWeb("/help/spellchecking-mac");
 #elif defined(__UNIX__)
-    #define SPELL_HELP_PAGE   "SpellcheckerLinux"
+    wxGetApp().OpenPoeditWeb("/help/spellchecking-linux");
 #else
     #error "missing spellchecker instructions for platform"
 #endif
-    wxGetApp().OpenPoeditWeb("/trac/wiki/Doc/" SPELL_HELP_PAGE);
 }
 #endif // !__WXMSW__

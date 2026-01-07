@@ -405,7 +405,7 @@ public:
         auto explain = new ExplanationLabel(this, explainTxt);
         sizer->Add(explain, wxSizerFlags().Expand().Border(wxLEFT, UnderCheckboxIndent()));
 
-        auto learnMore = new LearnMoreLink(this, "https://poedit.net/trac/wiki/Doc/TranslationMemory");
+        auto learnMore = new LearnMoreLink(this, "https://poedit.net/help/translation-memory");
         sizer->AddSpacer(PX(3));
         sizer->Add(learnMore, wxSizerFlags().Border(wxLEFT, UnderCheckboxIndent()));
 
