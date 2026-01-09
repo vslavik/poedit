@@ -165,6 +165,18 @@ public:
 };
 
 
+class HelpButton
+#ifdef __WXOSX__
+    : public wxButton
+#else
+    : public LearnMoreLink
+#endif
+{
+public:
+    HelpButton(wxWindow *parent, const wxString& helpPage);
+};
+
+
 /// Indicator of background activity, using spinners where appropriate.
 class ActivityIndicator : public wxWindow
 {

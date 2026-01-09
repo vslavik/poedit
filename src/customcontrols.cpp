@@ -25,6 +25,7 @@
 
 #include "customcontrols.h"
 
+#include "edapp.h"
 #include "concurrency.h"
 #include "errors.h"
 #include "hidpi.h"
@@ -369,6 +370,19 @@ bool LearnMoreLinkXmlHandler::CanHandle(wxXmlNode *node)
 {
     return IsOfClass(node, "LearnMoreLink");
 }
+
+
+#ifdef __WXOSX__
+HelpButton::HelpButton(wxWindow *parent, const wxString& helpPage) : wxButton(parent, wxID_HELP)
+{
+    Bind(wxEVT_BUTTON, [=](wxCommandEvent&){ wxGetApp().OpenPoeditWeb(helpPage); });
+}
+#else
+HelpButton::HelpButton(wxWindow *parent, const wxString& helpPage) : LearnMoreLink(parent, "", _("Help"))
+{
+    Bind(wxEVT_HYPERLINK, [=](wxHyperlinkEvent&){ wxGetApp().OpenPoeditWeb(helpPage); });
+}
+#endif
 
 
 ActivityIndicator::ActivityIndicator(wxWindow *parent, int flags)

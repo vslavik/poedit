@@ -318,11 +318,17 @@ void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list, CatalogPtr catal
     // *before* actual translation.
     ok->SetLabel(_("Pre-translate"));
     ok->SetDefault();
+
+    auto allbuttons = new wxBoxSizer(wxHORIZONTAL);
+    allbuttons->Add(new HelpButton(dlg.get(), "/help/pretranslation"), wxSizerFlags().Center().Border(wxLEFT, PX(10)));
+    allbuttons->AddStretchSpacer();
+    allbuttons->Add(buttons, wxSizerFlags().Center());
+
 #ifdef __WXOSX__
-    topsizer->Add(buttons, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT|wxBOTTOM, PX(10)));
+    topsizer->Add(allbuttons, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT|wxBOTTOM, PX(10)));
 #else
-    topsizer->AddSpacer(PX(5));
-    topsizer->Add(buttons, wxSizerFlags().Expand().Border(wxRIGHT, PX(12)));
+    topsizer->AddSpacer(PX(10));
+    topsizer->Add(allbuttons, wxSizerFlags().Expand().Border(wxRIGHT, PX(12)));
     topsizer->AddSpacer(PX(12));
 #endif
 
