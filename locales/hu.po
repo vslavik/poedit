@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2025-10-14 13:45+0200\n"
-"PO-Revision-Date: 2025-10-12 10:18\n"
+"POT-Creation-Date: 2026-01-13 12:12+0100\n"
+"PO-Revision-Date: 2025-12-28 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -99,11 +99,11 @@ msgstr "Nem sikerült betölteni a fájlt kibontott fordításokkal."
 msgid "In: %s"
 msgstr "Ebben: %s"
 
-#: src/cat_update.cpp:300 src/edframe.cpp:1608
+#: src/cat_update.cpp:300 src/edframe.cpp:1607
 msgid "Source code not available."
 msgstr "Nem áll rendelkezésre forráskód."
 
-#: src/cat_update.cpp:301 src/edframe.cpp:1612
+#: src/cat_update.cpp:301 src/edframe.cpp:1611
 msgid ""
 "Translations couldn’t be updated from the source code, because no code was "
 "found in the location specified in the file’s Properties."
@@ -147,8 +147,8 @@ msgstr ""
 msgid "Failed to extract strings from source code."
 msgstr "Nem sikerült a karakterláncok kinyerése a forráskódból."
 
-#: src/cat_update.cpp:356 src/edapp.cpp:1101 src/edframe.cpp:929
-#: src/edframe.cpp:2524
+#: src/cat_update.cpp:356 src/edapp.cpp:1101 src/edframe.cpp:928
+#: src/edframe.cpp:2531
 #, c-format
 msgid "The file “%s” couldn’t be opened."
 msgstr "A(z) „%s” fájl nem nyitható meg."
@@ -269,7 +269,7 @@ msgstr ""
 #: src/catalog_json.cpp:166 src/catalog_po.cpp:1179 src/catalog_po.cpp:1261
 #: src/catalog_po.cpp:1335 src/catalog_po.cpp:1344 src/catalog_po.cpp:1401
 #: src/catalog_po.cpp:1432 src/catalog_po.cpp:1630 src/catalog_qt.cpp:341
-#: src/catalog_resx.cpp:209 src/catalog_xliff.cpp:499 src/edframe.cpp:1317
+#: src/catalog_resx.cpp:209 src/catalog_xliff.cpp:499 src/edframe.cpp:1316
 #: src/prefsdlg.cpp:660
 #, c-format
 msgid "Couldn’t save file %s."
@@ -334,7 +334,7 @@ msgstr ""
 "Ehelyett a mentés UTF-8 kódolással történt, és a beállítás ennek megfelelően "
 "módosult."
 
-#: src/catalog_po.cpp:1551 src/edframe.cpp:2821
+#: src/catalog_po.cpp:1551 src/edframe.cpp:2828
 msgid "Error saving file"
 msgstr "Hiba a fájl mentése során"
 
@@ -460,7 +460,7 @@ msgstr "Nem sikerült a fordítások feltöltése ide: %s."
 msgid "Syncing error"
 msgstr "Szinkronizálási hiba"
 
-#: src/commentdlg.cpp:39 src/edframe.cpp:3035 src/sidebar.cpp:247
+#: src/commentdlg.cpp:39 src/edframe.cpp:3042 src/sidebar.cpp:247
 msgid "Edit comment"
 msgstr "Megjegyzés szerkesztése"
 
@@ -551,13 +551,17 @@ msgstr "Nem sikerült szinkronizálni a Crowdinnel."
 msgid "Crowdin error"
 msgstr "Crowdin hiba"
 
-#: src/customcontrols.cpp:282 src/wx_translatable_strings.h:98
+#: src/customcontrols.cpp:283 src/wx_translatable_strings.h:98
 msgid "&Copy"
 msgstr "&Másolás"
 
-#: src/customcontrols.cpp:326
+#: src/customcontrols.cpp:327
 msgid "Learn more"
 msgstr "További információk"
+
+#: src/customcontrols.cpp:381 src/wx_translatable_strings.h:105
+msgid "Help"
+msgstr "Súgó"
 
 #: src/edapp.cpp:453 src/resources/menus.xrc:336 src/resources/menus.xrc:441
 #: src/wx_translatable_strings.h:105
@@ -605,8 +609,8 @@ msgstr "Nem kezelt kivétel történt: %s"
 msgid "Select translation template"
 msgstr "Fordítási sablon kiválasztása"
 
-#: src/edapp.cpp:1102 src/edframe.cpp:930 src/edframe.cpp:2322
-#: src/edframe.cpp:2525
+#: src/edapp.cpp:1102 src/edframe.cpp:929 src/edframe.cpp:2328
+#: src/edframe.cpp:2532
 msgid "Invalid file"
 msgstr "Érvénytelen fájl"
 
@@ -639,27 +643,27 @@ msgstr "Poedit"
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: src/edframe.cpp:867
+#: src/edframe.cpp:866
 #, c-format
 msgid ""
 "Spellchecking is disabled, because the dictionary for %s isn’t installed."
 msgstr ""
 "Helyesírás-ellenőrzés le van tiltva, mert a(z) %s szótár nincs telepítve."
 
-#: src/edframe.cpp:871
+#: src/edframe.cpp:870
 msgid "Install"
 msgstr "Telepítés"
 
-#: src/edframe.cpp:963 src/edframe.cpp:1138
+#: src/edframe.cpp:962 src/edframe.cpp:1137
 #, c-format
 msgid "The file “%s” has been changed by another application."
 msgstr "“%s” fájlt egy másik alkalmazás megváltoztatta."
 
-#: src/edframe.cpp:964 src/edframe.cpp:968
+#: src/edframe.cpp:963 src/edframe.cpp:967
 msgid "Reload file"
 msgstr "Fájl újratöltése"
 
-#: src/edframe.cpp:967
+#: src/edframe.cpp:966
 msgid ""
 "Do you want to reload the file from disk? Your unsaved edits in Poedit will "
 "be lost if you do."
@@ -667,118 +671,118 @@ msgstr ""
 "Újra szeretné tölteni a fájlt a lemezről? Ha betölti, a Poedit programban "
 "elmentett módosításai elvesznek."
 
-#: src/edframe.cpp:968
+#: src/edframe.cpp:967
 msgid "Ignore"
 msgstr "Mellőzés"
 
-#: src/edframe.cpp:968
+#: src/edframe.cpp:967
 msgid "Reload File"
 msgstr "Fájl újratöltése"
 
-#: src/edframe.cpp:1072
+#: src/edframe.cpp:1071
 msgid "The file has been modified. Do you want to save changes?"
 msgstr "A fájl megváltozott. Szeretné menteni a változásokat?"
 
-#: src/edframe.cpp:1073
+#: src/edframe.cpp:1072
 msgid "Save changes"
 msgstr "Változások mentése"
 
-#: src/edframe.cpp:1076
+#: src/edframe.cpp:1075
 msgid "Your changes will be lost if you don’t save them."
 msgstr "A változtatások elvesznek, ha nem menti azokat."
 
-#: src/edframe.cpp:1079 src/edframe.cpp:1139 src/wx_translatable_strings.h:115
+#: src/edframe.cpp:1078 src/edframe.cpp:1138 src/wx_translatable_strings.h:115
 msgid "Save"
 msgstr "Mentés"
 
-#: src/edframe.cpp:1081
+#: src/edframe.cpp:1080
 msgid "Do&n’t save"
 msgstr "Ni&ncs mentés"
 
-#: src/edframe.cpp:1083
+#: src/edframe.cpp:1082
 msgid "Don’t Save"
 msgstr "Nincs mentés"
 
-#: src/edframe.cpp:1142
+#: src/edframe.cpp:1141
 msgid "The changes made by the other application will be lost if you save."
 msgstr ""
 "A más alkalmazás által végrehajtott módosítások elvesznek, ha menti a fájlt."
 
-#: src/edframe.cpp:1143 src/prefsdlg.cpp:673 src/prefsdlg.cpp:971
+#: src/edframe.cpp:1142 src/prefsdlg.cpp:673 src/prefsdlg.cpp:971
 #: src/wx_translatable_strings.h:94
 msgid "Cancel"
 msgstr "Mégse"
 
-#: src/edframe.cpp:1143
+#: src/edframe.cpp:1142
 msgid "Save Anyway"
 msgstr "Mentés mindenképp"
 
-#: src/edframe.cpp:1143
+#: src/edframe.cpp:1142
 msgid "Save anyway"
 msgstr "Mentés mindenképp"
 
-#: src/edframe.cpp:1196
+#: src/edframe.cpp:1195
 msgid "Save as…"
 msgstr "Mentés másként…"
 
-#: src/edframe.cpp:1245
+#: src/edframe.cpp:1244
 msgid "Compile to…"
 msgstr "Lefordítás…"
 
-#: src/edframe.cpp:1248
+#: src/edframe.cpp:1247
 msgid "Compiled Translation Files"
 msgstr "Lefordított fordítási fájlok"
 
-#: src/edframe.cpp:1289
+#: src/edframe.cpp:1288
 msgid "Export to HTML…"
 msgstr "Exportálás HTML fájlba…"
 
-#: src/edframe.cpp:1292
+#: src/edframe.cpp:1291
 msgid "HTML Files"
 msgstr "HTML fájlok"
 
-#: src/edframe.cpp:1307
+#: src/edframe.cpp:1306
 msgid "Exporting to HTML"
 msgstr "Exportálás HTML fájlba"
 
-#: src/edframe.cpp:1609
+#: src/edframe.cpp:1608
 msgid "Updating failed"
 msgstr "Sikertelen frissítés"
 
-#: src/edframe.cpp:1674
+#: src/edframe.cpp:1673
 msgid "Open reference file"
 msgstr "Referencia fájl megnyitása"
 
-#: src/edframe.cpp:1708 src/resources/menus.xrc:238
+#: src/edframe.cpp:1707 src/resources/menus.xrc:238
 msgid "Update from &POT File…"
 msgstr "Frissítés &POT fájlból…"
 
-#: src/edframe.cpp:1708 src/resources/menus.xrc:237
+#: src/edframe.cpp:1707 src/resources/menus.xrc:237
 msgid "Update from &POT file…"
 msgstr "Frissítés &POT fájlból…"
 
-#: src/edframe.cpp:1791 src/resources/menus.xrc:53
+#: src/edframe.cpp:1790 src/resources/menus.xrc:53
 msgid "Sync with Crowdin"
 msgstr "Szinkronizáció a Crowdinnel"
 
 #. TRANSLATORS: this is the menu action to upload to server/cloud; %s is hostname or service (Crowdin, ftp.foo.com etc.)
-#: src/edframe.cpp:1796
+#: src/edframe.cpp:1795
 #, c-format
 msgid "Upload to %s"
 msgstr "Feltöltés ide: %s"
 
-#: src/edframe.cpp:1862
+#: src/edframe.cpp:1875
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "%d probléma van a fordítással."
 msgstr[1] "%d probléma van a fordítással."
 
-#: src/edframe.cpp:1867 src/edframe.cpp:1913
+#: src/edframe.cpp:1880 src/edframe.cpp:1926
 msgid "Validation results"
 msgstr "Érvényesítés eredménye"
 
-#: src/edframe.cpp:1870
+#: src/edframe.cpp:1883
 msgid ""
 "Entries with errors were marked in red in the list. Details of the error "
 "will be shown when you select such an entry."
@@ -786,11 +790,11 @@ msgstr ""
 "A hibás bejegyzések pirossal meg lettek jelölve a listában. A hiba részletei "
 "megjelennek, ha egy ilyen bejegyzést választ ki."
 
-#: src/edframe.cpp:1879
+#: src/edframe.cpp:1892
 msgid "The file was saved safely."
 msgstr "A fájl biztonságosan el lett mentve"
 
-#: src/edframe.cpp:1882
+#: src/edframe.cpp:1895
 msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
@@ -798,14 +802,14 @@ msgstr ""
 "A fájl biztonságosan el lett mentve, de lehetséges, hogy nem fog megfelelően "
 "működni."
 
-#: src/edframe.cpp:1885
+#: src/edframe.cpp:1898
 msgid ""
 "The file was saved safely, but it cannot be compiled into the MO format and "
 "used."
 msgstr ""
 "A fájl mentése sikerült, de nem lehet MO formátumúra fordítani és használni."
 
-#: src/edframe.cpp:1894
+#: src/edframe.cpp:1907
 msgid ""
 "The file was compiled into the MO format, but it will probably not work "
 "correctly."
@@ -813,15 +817,15 @@ msgstr ""
 "A fájl át lett fordítva MO formátumra, de lehetséges, hogy nem fog "
 "megfelelően működni."
 
-#: src/edframe.cpp:1898
+#: src/edframe.cpp:1911
 msgid "The file cannot be compiled into the MO format and used."
 msgstr "A fájlt nem lehet MO formátumra fordítani és használni."
 
-#: src/edframe.cpp:1912
+#: src/edframe.cpp:1925
 msgid "No problems with the translation found."
 msgstr "A fordítással nincsenek problémák."
 
-#: src/edframe.cpp:1922
+#: src/edframe.cpp:1935
 #, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
 msgid_plural ""
@@ -829,18 +833,18 @@ msgid_plural ""
 msgstr[0] "A fordítás használatra kész, de %d bejegyzés még nincs lefordítva."
 msgstr[1] "A fordítás használatra kész, de %d bejegyzés még nincs lefordítva."
 
-#: src/edframe.cpp:1927
+#: src/edframe.cpp:1940
 msgid "The translation is ready for use."
 msgstr "A fordítás használatra kész."
 
-#: src/edframe.cpp:2321
+#: src/edframe.cpp:2327
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr ""
 "A Poedit automatikusan kijavította a(z) „%s” fájlban lévő érvénytelen "
 "tartalmat."
 
-#: src/edframe.cpp:2326
+#: src/edframe.cpp:2332
 msgid ""
 "The file contained duplicate items, which is not allowed in PO files and "
 "would prevent the file from being used. Poedit fixed the issue, but you "
@@ -852,20 +856,20 @@ msgstr ""
 "ezt a problémát, de minden bizonytalannak jelölt fordítási bejegyzés "
 "felülvizsgálata és esetleges javítása szükséges."
 
-#: src/edframe.cpp:2342
+#: src/edframe.cpp:2348
 msgid "Language of the translation isn’t set."
 msgstr "A fordítás nyelve nincs beállítva."
 
-#: src/edframe.cpp:2344
+#: src/edframe.cpp:2350
 msgid "Set Language"
 msgstr "Nyelv kiválasztása"
 
-#: src/edframe.cpp:2344
+#: src/edframe.cpp:2350
 msgid "Set language"
 msgstr "Válasszon nyelvet"
 
 #. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-#: src/edframe.cpp:2347 src/edframe.cpp:2363
+#: src/edframe.cpp:2353 src/edframe.cpp:2369
 msgid ""
 "Suggestions are not available if the translation language is not set "
 "correctly. Other features, such as plural forms, may be affected as well."
@@ -873,19 +877,19 @@ msgstr ""
 "A javaslatok nem érhetőek el, ha a fordítás nyelve nincs pontosan beállítva. "
 "Ez más funkciókra, például a többes számú alakokra is hatással lehet."
 
-#: src/edframe.cpp:2361
+#: src/edframe.cpp:2367
 msgid "Language of the translation is the same as source language."
 msgstr "A fordítás nyelve megegyezik a forrásnyelvvel."
 
-#: src/edframe.cpp:2364
+#: src/edframe.cpp:2370
 msgid "Fix Language"
 msgstr "Nyelv kijavítása"
 
-#: src/edframe.cpp:2364
+#: src/edframe.cpp:2370
 msgid "Fix language"
 msgstr "Nyelv kijavítása"
 
-#: src/edframe.cpp:2381
+#: src/edframe.cpp:2387
 msgid ""
 "This file has entries with plural forms, but doesn’t have Plural-Forms "
 "header configured."
@@ -893,7 +897,7 @@ msgstr ""
 "Ebben a fájlban többes számú bejegyzések vannak, de nincs Plural-Forms "
 "fejléc beállítva."
 
-#: src/edframe.cpp:2385
+#: src/edframe.cpp:2391
 msgid ""
 "Entries in this file have different plural forms count from what the file’s "
 "Plural-Forms header says"
@@ -901,42 +905,42 @@ msgstr ""
 "A fájlban lévő egyes bejegyzéseknek eltérő darabszámú többes számuk van, "
 "mint amit a katalógus Plural-Forms fejléce mond"
 
-#: src/edframe.cpp:2394
+#: src/edframe.cpp:2400
 msgid "Required header Plural-Forms is missing."
 msgstr "A szükséges Plural-Forms fejléc hiányzik."
 
-#: src/edframe.cpp:2398
+#: src/edframe.cpp:2404
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "Szintaktikai hiba a Plural-Forms fejlécben („%s”)."
 
-#: src/edframe.cpp:2410
+#: src/edframe.cpp:2416
 msgid "Fix the Header"
 msgstr "Fejléc javítása"
 
-#: src/edframe.cpp:2410
+#: src/edframe.cpp:2416
 msgid "Fix the header"
 msgstr "Fejléc javítása"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: src/edframe.cpp:2428
+#: src/edframe.cpp:2434
 #, c-format
 msgid "Plural forms expression used by the file is unusual for %s."
 msgstr ""
 "A fájl által használt többes szám kifejezés a %s nyelvhez nem használatos."
 
 #. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
-#: src/edframe.cpp:2433
+#: src/edframe.cpp:2439
 msgid "Review"
 msgstr "Felülvizsgálat"
 
-#: src/edframe.cpp:2497
+#: src/edframe.cpp:2503
 msgid "Would you like to use English for source text?"
 msgstr "Szeretné az angolt használni forrásszövegként?"
 
-#: src/edframe.cpp:2499
+#: src/edframe.cpp:2505
 #, c-format
 msgid ""
 "This file uses string IDs instead of source text. Poedit can load English "
@@ -946,64 +950,64 @@ msgstr ""
 "tudja tölteni az angol szövegeket a következő fájlból: „%s”."
 
 #. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
-#: src/edframe.cpp:2501
+#: src/edframe.cpp:2507
 msgid "Load English"
 msgstr "Angol betöltése"
 
-#: src/edframe.cpp:2618 src/export_html.cpp:103
+#: src/edframe.cpp:2625 src/export_html.cpp:103
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
 msgstr "Lefordítva: %d/%d (%d%%)"
 
-#: src/edframe.cpp:2622 src/export_html.cpp:105
+#: src/edframe.cpp:2629 src/export_html.cpp:105
 #, c-format
 msgid "Remaining: %d"
 msgstr "Maradt: %d"
 
-#: src/edframe.cpp:2627
+#: src/edframe.cpp:2634
 #, c-format
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "%d hiba"
 msgstr[1] "%d hiba"
 
-#: src/edframe.cpp:2632 src/export_html.cpp:117
+#: src/edframe.cpp:2639 src/export_html.cpp:117
 #, c-format
 msgid "%d entry"
 msgid_plural "%d entries"
 msgstr[0] "%d bejegyzés"
 msgstr[1] "%d bejegyzés"
 
-#: src/edframe.cpp:2665
+#: src/edframe.cpp:2672
 msgid " (unsaved)"
 msgstr " (nincs mentve)"
 
-#: src/edframe.cpp:2703
+#: src/edframe.cpp:2710
 msgid " (modified)"
 msgstr " (módosítva)"
 
-#: src/edframe.cpp:2788 src/edframe.cpp:2792
+#: src/edframe.cpp:2795 src/edframe.cpp:2799
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "Nem sikerült frissíteni a fordítási memóriát: %s"
 
-#: src/edframe.cpp:2820
+#: src/edframe.cpp:2827
 #, c-format
 msgid "The file “%s” couldn’t be saved."
 msgstr "„%s” fájlt nem lehetett elmenteni."
 
-#: src/edframe.cpp:2930 src/resources/menus.xrc:252
+#: src/edframe.cpp:2937 src/resources/menus.xrc:252
 msgid "Remove same-as-source translations"
 msgstr "A forrással azonos fordítások eltávolítása"
 
-#: src/edframe.cpp:2932
+#: src/edframe.cpp:2939
 msgid ""
 "Do you want to remove all translations that are identical to the source text?"
 msgstr ""
 "El szeretné távolítani az összes olyan fordítást, amely azonos a "
 "forrásszöveggel?"
 
-#: src/edframe.cpp:2933
+#: src/edframe.cpp:2940
 msgid ""
 "This action will delete any translations that match the source text exactly. "
 "This cannot be undone."
@@ -1011,23 +1015,23 @@ msgstr ""
 "Ez a művelet törli a forrásszövegnek pontosan megfelelő fordításokat. Ezt "
 "nem lehet visszavonni."
 
-#: src/edframe.cpp:2937 src/edframe.cpp:2964
+#: src/edframe.cpp:2944 src/edframe.cpp:2971
 msgid "Keep"
 msgstr "Megtartás"
 
-#: src/edframe.cpp:2937
+#: src/edframe.cpp:2944
 msgid "Remove"
 msgstr "Eltávolítás"
 
-#: src/edframe.cpp:2956
+#: src/edframe.cpp:2963
 msgid "Purge deleted translations"
 msgstr "Törölt fordítások tisztítása"
 
-#: src/edframe.cpp:2958
+#: src/edframe.cpp:2965
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr "Tényleg törölni szeretné a már nem használt fordításokat?"
 
-#: src/edframe.cpp:2960
+#: src/edframe.cpp:2967
 msgid ""
 "If you continue with purging, all translations marked as deleted will be "
 "permanently removed. You will have to translate them again if they are added "
@@ -1037,62 +1041,62 @@ msgstr ""
 "eltávolításra kerülnek. Újra kell fordítania őket, ha ezek a jövőben újra "
 "hozzá lesznek adva."
 
-#: src/edframe.cpp:2964
+#: src/edframe.cpp:2971
 msgid "Purge"
 msgstr "Tisztítás"
 
-#: src/edframe.cpp:3021 src/resources/menus.xrc:103
+#: src/edframe.cpp:3028 src/resources/menus.xrc:103
 msgid "Copy from Source Text"
 msgstr "Másolás a forrásszövegből"
 
-#: src/edframe.cpp:3021 src/resources/menus.xrc:102
+#: src/edframe.cpp:3028 src/resources/menus.xrc:102
 msgid "Copy from source text"
 msgstr "Másolás a forrásszövegből"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
-#: src/edframe.cpp:3022 src/edframe.cpp:3029 src/edframe.cpp:3036
+#: src/edframe.cpp:3029 src/edframe.cpp:3036 src/edframe.cpp:3043
 #: src/sidebar.cpp:361 src/sidebar.cpp:731 src/sidebar.cpp:756
 #: src/sidebar.cpp:758 src/wx_translatable_strings.h:123
 msgctxt "keyboard key"
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
-#: src/edframe.cpp:3028 src/resources/menus.xrc:98
+#: src/edframe.cpp:3035 src/resources/menus.xrc:98
 msgid "Clear Translation"
 msgstr "Fordítás törlése"
 
-#: src/edframe.cpp:3028 src/resources/menus.xrc:97
+#: src/edframe.cpp:3035 src/resources/menus.xrc:97
 msgid "Clear translation"
 msgstr "Fordítás törlése"
 
-#: src/edframe.cpp:3035 src/sidebar.cpp:250
+#: src/edframe.cpp:3042 src/sidebar.cpp:250
 msgid "Edit Comment"
 msgstr "Megjegyzés szerkesztése"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
-#: src/edframe.cpp:3044 src/fileviewer.cpp:100
+#: src/edframe.cpp:3051 src/fileviewer.cpp:100
 msgid "Code Occurrences"
 msgstr "Kód előfordulásai"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
-#: src/edframe.cpp:3044
+#: src/edframe.cpp:3051
 msgid "Code occurrences"
 msgstr "Kód előfordulásai"
 
-#: src/edframe.cpp:3261
+#: src/edframe.cpp:3268
 msgid "Hide Sidebar"
 msgstr "Oldalsáv elrejtése"
 
-#: src/edframe.cpp:3263 src/resources/menus.xrc:217
+#: src/edframe.cpp:3270 src/resources/menus.xrc:217
 msgid "Show Sidebar"
 msgstr "Oldalsáv megjelenítése"
 
-#: src/edframe.cpp:3294
+#: src/edframe.cpp:3301
 msgid "Hide Status Bar"
 msgstr "Állapotsor elrejtése"
 
-#: src/edframe.cpp:3296 src/resources/menus.xrc:223
+#: src/edframe.cpp:3303 src/resources/menus.xrc:223
 msgid "Show Status Bar"
 msgstr "Állapotsor megjelenítése"
 
@@ -3255,10 +3259,6 @@ msgstr "Szerkesztés"
 #: src/wx_translatable_strings.h:103
 msgid "&Quit"
 msgstr "&Kilépés"
-
-#: src/wx_translatable_strings.h:105
-msgid "Help"
-msgstr "Súgó"
 
 #: src/wx_translatable_strings.h:106
 msgid "&New"
