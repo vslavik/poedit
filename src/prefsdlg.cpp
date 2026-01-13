@@ -497,12 +497,12 @@ private:
         auto itemExport = menu.Append(idExportTMX, MSW_OR_OTHER(_(L"Export to TMX…"), _(L"Export To TMX…")));
         menu.AppendSeparator();
         // TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
-        auto itemReset = menu.Append(idReset, _("Reset"));
-        
+        auto itemEraseDB = menu.Append(idReset, MSW_OR_OTHER(_(L"Erase database…"), _(L"Erase Database…")));
+
         SetMacMenuIcon(itemLearn, "document.on.document");
         SetMacMenuIcon(itemImport, "arrow.down.document");
         SetMacMenuIcon(itemExport, "arrow.up.document");
-        SetMacMenuIcon(itemReset, "trash");
+        SetMacMenuIcon(itemEraseDB, "trash");
 
         menu.Bind(wxEVT_MENU, &TMPageWindow::OnImportIntoTM, this, idLearn);
         menu.Bind(wxEVT_MENU, &TMPageWindow::OnImportTMX, this, idImportTMX);
