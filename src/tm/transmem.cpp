@@ -364,7 +364,15 @@ std::wstring get_text_field(DocumentPtr doc, const std::wstring& field)
 
 void postprocess_results(SuggestionsList& results)
 {
+    results.erase
+    (
+        std::remove_if(results.begin(), results.end(),
+                       [](const auto& r) { return r.score < 0.3; }),
+        results.end()
+    );
+
     std::stable_sort(results.begin(), results.end());
+
     if (results.size() > MAX_RESULTS)
         results.resize(MAX_RESULTS);
 }
@@ -399,18 +407,18 @@ void PerformSearchWithBlock(IndexSearcherPtr searcher,
         }
         else
         {
-            if (score == 1.0)
-            {
-                score = 0.95; // can't score non-exact thing as 100%:
+            // Penalize large length mismatch using ratio; goes to ~0 for tiny-vs-huge
+            double len1 = sa.exactSourceText.size();
+            double len2 = src.size();
 
-                // Check against too small queries having perfect hit in a large stored text.
-                // Do this by penalizing too large difference in lengths of the source strings.
-                double len1 = sa.exactSourceText.size();
-                double len2 = src.size();
-                score *= 1.0 - 0.4 * (std::abs(len1 - len2) / std::max(len1, len2));
-            }
+            // Reject obvious mismatches:
+            if (std::max(len1, len2) > 3.0 * std::min(len1, len2))
+                continue;
 
-            score *= scoreScaling;
+            double lr = std::log(std::max(len1, len2) / std::min(len1, len2)); // >= 0
+            const auto penalty = std::exp(-2.0 * lr * lr);
+
+            score *= std::min(penalty, 0.95) * scoreScaling;
         }
 
         callback(doc, score);
@@ -481,7 +489,7 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& srclang,
         // Then, if no matches were found, permit being a bit sloppy:
         phraseQ->setSlop(1);
         sa.query = phraseQ;
-        PerformSearch(searcher.ptr(), sa, results, QUALITY_THRESHOLD, /*scoreScaling=*/0.9);
+        PerformSearch(searcher.ptr(), sa, results, QUALITY_THRESHOLD, /*scoreScaling=*/0.8);
 
         if (!results.empty())
             return results;
@@ -492,7 +500,7 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& srclang,
         sa.query = boolQ;
         PerformSearchWithBlock
         (
-            searcher.ptr(), sa, QUALITY_THRESHOLD, /*scoreScaling=*/0.8,
+            searcher.ptr(), sa, QUALITY_THRESHOLD, /*scoreScaling=*/0.7,
             [=,&results](DocumentPtr doc, double score)
             {
                 auto s = get_text_field(doc, sourceField);
