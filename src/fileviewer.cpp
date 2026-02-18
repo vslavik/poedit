@@ -236,6 +236,11 @@ wxFileName FileViewer::GetFilename(wxString ref) const
             }
         }
     }
+    else if ( filename.FileExists() )
+    {
+        // existing absolute filename
+        return filename;
+    }
 
     return wxFileName(); // invalid
 }
