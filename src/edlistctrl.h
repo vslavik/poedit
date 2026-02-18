@@ -110,10 +110,10 @@ class PoeditListCtrl : public wxDataViewCtrl
             return ListItemToCatalogItem(GetCurrentItem());
         }
 
-        std::vector<CatalogItemPtr> GetSelectedCatalogItems() const
+        CatalogItemArray GetSelectedCatalogItems() const
         {
             auto catalog = m_model->m_catalog;
-            std::vector<CatalogItemPtr> s;
+            CatalogItemArray s;
             for (auto i: GetSelectedCatalogItemIndexes())
                 s.push_back((*catalog)[i]);
             return s;

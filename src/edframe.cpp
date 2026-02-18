@@ -79,7 +79,7 @@
 #include "commentdlg.h"
 #include "main_toolbar.h"
 #include "manager.h"
-#include "pretranslate.h"
+#include "pretranslate_ui.h"
 #include "attentionbar.h"
 #include "utility.h"
 #include "languagectrl.h"
