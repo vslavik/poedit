@@ -42,6 +42,7 @@
 #include <wx/numformatter.h>
 #include <wx/sizer.h>
 #include <wx/windowptr.h>
+#include <wx/stopwatch.h>
 
 
 namespace
@@ -84,6 +85,8 @@ struct Stats
 template<typename T>
 Stats PreTranslateCatalogImpl(CatalogPtr catalog, const T& range, PreTranslateOptions options, dispatch::cancellation_token_ptr cancellation_token)
 {
+    wxStopWatch sw;
+
     if (range.empty())
         return {};
 
@@ -183,6 +186,7 @@ Stats PreTranslateCatalogImpl(CatalogPtr catalog, const T& range, PreTranslateOp
         progress.increment();
     }
 
+    wxLogTrace("poedit", "Pre-translation completed in %ld ms", sw.Time());
     return stats;
 }
 
