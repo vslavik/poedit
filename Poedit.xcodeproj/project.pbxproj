@@ -197,6 +197,7 @@
 		B2F287C0170DCC63004C1F41 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B248B2DF170D765100EBA58E /* CoreFoundation.framework */; };
 		B2F3C2912B891644008E0593 /* app_updates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F3C28F2B891644008E0593 /* app_updates.cpp */; };
 		B2FE296B1AC85FFF005588E4 /* keytar_mac.cc in Sources */ = {isa = PBXBuildFile; fileRef = B2FE29691AC85FFF005588E4 /* keytar_mac.cc */; };
+		B8E98168860C06B0F4D3D1C8 /* pretranslate_ui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A45BD39DED9301D1BDBB8 /* pretranslate_ui.cpp */; };
 		BF1EDE1EB234996AAD0D9164 /* catalog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CAC16F629D30018AF7E /* catalog.cpp */; };
 		CE84DDEAB7912A33832B960D /* ThumbnailProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E3E2780DE9804824D0B5FF4 /* ThumbnailProvider.m */; };
 		F9A6A70A2A290ADC67FF625D /* QuicklookPreview.appex in Copy Gettext bundle and extensions */ = {isa = PBXBuildFile; fileRef = F99D32BE79516DF3871487AD /* QuicklookPreview.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -332,10 +333,12 @@
 		2E49B156226EE8BCE26F9F19 /* QuicklookThumbnails.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = QuicklookThumbnails.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		34FA28979129DBB07074526F /* hy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hy; path = macos/nib/hy.lproj/MainToolbar.strings; sourceTree = "<group>"; };
 		37C153480C38B76B9F26CB04 /* af */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = af; path = macos/nib/af.lproj/MainToolbar.strings; sourceTree = "<group>"; };
+		3C4A45BD39DED9301D1BDBB8 /* pretranslate_ui.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pretranslate_ui.cpp; sourceTree = "<group>"; };
 		3E062ED24D3E4BA3F60921BB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = macos/nib/es.lproj/MainToolbar.strings; sourceTree = "<group>"; };
 		4007B79994B0C47EB483F8D1 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = macos/nib/nl.lproj/MainToolbar.strings; sourceTree = "<group>"; };
 		4087DD55F226A5FACE92E939 /* sr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sr; path = macos/nib/sr.lproj/MainToolbar.strings; sourceTree = "<group>"; };
 		40F053E7BEFB8D605E64EEBD /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "macos/nib/en-GB.lproj/MainToolbar.strings"; sourceTree = "<group>"; };
+		422204F8CE8AF5BAD89D1E7D /* pretranslate_ui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pretranslate_ui.h; sourceTree = "<group>"; };
 		42A5059AF0EA6425563FCB12 /* progress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = progress.h; sourceTree = "<group>"; };
 		4483FC30798043AF01DCDD15 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = macos/nib/uz.lproj/MainToolbar.strings; sourceTree = "<group>"; };
 		44BA22CA76913ABABC364255 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = macos/nib/ko.lproj/MainToolbar.strings; sourceTree = "<group>"; };
@@ -924,6 +927,8 @@
 				2241A28E05DC663462EE36F4 /* layout_helpers.cpp */,
 				DC4652614515FE3A9BC28919 /* layout_helpers.h */,
 				52E75B6286F2003BAE62A12F /* wx_translatable_strings.h */,
+				3C4A45BD39DED9301D1BDBB8 /* pretranslate_ui.cpp */,
+				422204F8CE8AF5BAD89D1E7D /* pretranslate_ui.h */,
 			);
 			name = GUI;
 			path = src;
@@ -1785,6 +1790,7 @@
 				80FBB464B5B4DC5E6B59B25C /* cat_operations.cpp in Sources */,
 				0C1409B0135C562587776FC7 /* MainToolbar.mm in Sources */,
 				3F4B67D91AD57C28FAE1531E /* layout_helpers.cpp in Sources */,
+				B8E98168860C06B0F4D3D1C8 /* pretranslate_ui.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

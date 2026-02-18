@@ -64,7 +64,7 @@ poedit_SOURCES = \
                  menus.h menus.cpp \
                  pluralforms/pl_evaluate.cpp pluralforms/pl_evaluate.h \
                  prefsdlg.cpp prefsdlg.h \
-                 pretranslate.cpp pretranslate.h \
+                 pretranslate.cpp pretranslate.h pretranslate_ui.cpp pretranslate_ui.h \
                  progress.h progress_ui.h progress.cpp progress_ui.cpp \
                  propertiesdlg.cpp propertiesdlg.h \
                  qa_checks.cpp qa_checks.h \

@@ -27,9 +27,7 @@
 #define Poedit_pretranslate_h
 
 #include "catalog.h"
-#include "edlistctrl.h"
-
-#include <wx/window.h>
+#include "concurrency.h"
 
 #include <functional>
 
@@ -51,30 +49,49 @@ struct PreTranslateOptions
     int flags;
 };
 
-/**
-    Pre-translate all items in the catalog.
-    
-    If not nullptr, report # of pre-translated items in @a matchesCount
+// semi-private namespace for pretranslate_ui.*:
+namespace pretranslate
+{
 
-    Returns number of pre-translated (i.e. changed) items.
- */
-void PreTranslateCatalogAuto(wxWindow *window,
-                             CatalogPtr catalog,
-                             const PreTranslateOptions& options,
-                             std::function<void()> onChangesMade);
+enum class ResType
+{
+    None = 0,  // no matches
+    Rejected,  // found matches, but rejected by settings
+    Fuzzy,     // approximate match
+    Exact      // exact match
+};
 
-/**
-    Show UI for choosing pre-translation choices, then proceed with
-    pre-translation unless cancelled (in which case false is returned).
+inline bool translated(ResType r) { return r >= ResType::Fuzzy; }
 
-    @param parent   Parent window
-    @param list     List to take selection from
-    @param catalog  Catalog to translate
 
-    Returns true if any changes were made.
- */
-void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list,
-                        CatalogPtr catalog,
-                        std::function<void()> onChangesMade);
+struct Stats
+{
+    int input_strings_count = 0;
+    int total = 0;
+    int matched = 0;
+    int exact = 0;
+    int fuzzy = 0;
+    int errors = 0;
+
+    explicit operator bool() const { return matched > 0; }
+
+    void add(ResType r)
+    {
+        total++;
+        if (translated(r))
+            matched++;
+        if (r == ResType::Exact)
+            exact++;
+        else if (r == ResType::Fuzzy)
+            fuzzy++;
+    }
+};
+
+Stats PreTranslateCatalog(CatalogPtr catalog,
+                          const CatalogItemArray& range,
+                          PreTranslateOptions options,
+                          dispatch::cancellation_token_ptr cancellation_token);
+
+} // namespace pretranslate
 
 #endif // Poedit_pretranslate_h
