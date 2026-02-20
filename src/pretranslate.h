@@ -29,7 +29,10 @@
 #include "catalog.h"
 #include "concurrency.h"
 
+#include <atomic>
 #include <functional>
+#include <memory>
+
 
 
 /// Flags for pre-translation functions
@@ -66,14 +69,20 @@ inline bool translated(ResType r) { return r >= ResType::Fuzzy; }
 
 struct Stats
 {
-    int input_strings_count = 0;
-    int total = 0;
-    int matched = 0;
-    int exact = 0;
-    int fuzzy = 0;
-    int errors = 0;
+    std::atomic<int> input_strings_count = 0;
+    std::atomic<int> input_strings_processed = 0;
+    std::atomic<int> total = 0;
+    std::atomic<int> matched = 0;
+    std::atomic<int> exact = 0;
+    std::atomic<int> fuzzy = 0;
+    std::atomic<int> errors = 0;
 
     explicit operator bool() const { return matched > 0; }
+
+    void inc_processed(int delta = 1)
+    {
+        input_strings_processed.fetch_add(delta, std::memory_order_relaxed);
+    }
 
     void add(ResType r)
     {
@@ -87,10 +96,11 @@ struct Stats
     }
 };
 
-Stats PreTranslateCatalog(CatalogPtr catalog,
-                          const CatalogItemArray& range,
-                          PreTranslateOptions options,
-                          dispatch::cancellation_token_ptr cancellation_token);
+std::shared_ptr<Stats>
+PreTranslateCatalog(CatalogPtr catalog,
+                    const CatalogItemArray& range,
+                    PreTranslateOptions options,
+                    dispatch::cancellation_token_ptr cancellation_token);
 
 } // namespace pretranslate
 

@@ -68,6 +68,9 @@ public:
 
     void set(int count)
     {
+        if (count == m_completedCount)
+            return;
+
         m_completedCount = count;
         notify_changed();
     }

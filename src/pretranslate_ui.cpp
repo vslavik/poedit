@@ -70,27 +70,28 @@ void PreTranslateCatalog(wxWindow *window,
     progress->RunTaskThenDo([=]()
     {
         auto stats = pretranslate::PreTranslateCatalog(catalog, range, options, cancellation);
-        *changesMade = stats.matched > 0;
+        *changesMade = stats->matched > 0;
 
         BackgroundTaskResult bg;
-        if (stats.matched || stats.errors)
+        if (stats->matched || stats->errors)
         {
+            int matched = stats->matched;
             bg.summary = wxString::Format(wxPLURAL("%d entry was pre-translated.",
                                                    "%d entries were pre-translated.",
-                                                   stats.matched), stats.matched);
+                                                   matched), matched);
 
-            if (stats.exact < stats.matched || !(options.flags & PreTranslate_ExactNotFuzzy))
+            if (stats->exact < stats->matched || !(options.flags & PreTranslate_ExactNotFuzzy))
             {
                 bg.details.emplace_back(_("The translations were marked as needing work, because they may be inaccurate. You should review them for correctness."), "");
             }
 
-            bg.details.emplace_back(_("Exact matches from TM"), wxNumberFormatter::ToString((long)stats.exact));
-            bg.details.emplace_back(_("Approximate matches from TM"), wxNumberFormatter::ToString((long)stats.fuzzy));
+            bg.details.emplace_back(_("Exact matches from TM"), wxNumberFormatter::ToString((long)stats->exact));
+            bg.details.emplace_back(_("Approximate matches from TM"), wxNumberFormatter::ToString((long)stats->fuzzy));
         }
         else
         {
             bg.summary = _("No entries could be pre-translated.");
-            if (stats.input_strings_count == 0)
+            if (stats->input_strings_count == 0)
             {
                 bg.details.emplace_back(_("All strings were already translated."), "");
             }
