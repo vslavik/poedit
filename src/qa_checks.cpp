@@ -46,7 +46,7 @@ namespace QA
     m(QA::CaseMismatch);            \
     m(QA::WhitespaceMismatch);      \
     m(QA::PunctuationMismatch);     \
-    m(QA::LengthDifference);        \
+    m(QA::LengthMismatch);          \
     /* end */
 
 
@@ -508,12 +508,12 @@ private:
 };
 
 
-class LengthDifference : public QACheck
+class LengthMismatch : public QACheck
 {
 public:
     QA_METADATA("length", _("Length difference"))
 
-    LengthDifference(Language /*lang*/) {}
+    LengthMismatch(Language /*lang*/) {}
 
     bool CheckString(CatalogItemPtr item, const wxString& source, const wxString& translation) override
     {
