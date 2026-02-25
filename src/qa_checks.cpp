@@ -46,6 +46,7 @@ namespace QA
     m(QA::CaseMismatch);            \
     m(QA::WhitespaceMismatch);      \
     m(QA::PunctuationMismatch);     \
+    m(QA::LengthDifference);        \
     /* end */
 
 
@@ -504,6 +505,38 @@ private:
     }
 
     std::string m_lang;
+};
+
+
+class LengthDifference : public QACheck
+{
+public:
+    QA_METADATA("length", _("Length difference"))
+
+    LengthDifference(Language /*lang*/) {}
+
+    bool CheckString(CatalogItemPtr item, const wxString& source, const wxString& translation) override
+    {
+        const auto sourceLength = source.length();
+        const auto translationLength = translation.length();
+
+        if (sourceLength < 50 && translationLength < 50)
+            return false;
+
+        if (sourceLength >= translationLength * 3)
+        {
+            item->SetIssue(CatalogItem::Issue::Warning, _(L"The translation is much shorter than the source text."));
+            return true;
+        }
+
+        if (translationLength >= sourceLength * 3)
+        {
+            item->SetIssue(CatalogItem::Issue::Warning, _(L"The translation is much longer than the source text."));
+            return true;
+        }
+
+        return false;
+    }
 };
 
 
