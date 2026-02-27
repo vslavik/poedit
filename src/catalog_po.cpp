@@ -1246,7 +1246,7 @@ bool POCatalog::Save(const wxString& po_file, bool save_mo,
                 finalFile.Write(outputCrlf, conv);
         }
 
-        if (!TempOutputFileFor::ReplaceFile(po_file_temp2, po_file))
+        if (msgcat_ok && !TempOutputFileFor::ReplaceFile(po_file_temp2, po_file))
             msgcat_ok = false;
     }
 
