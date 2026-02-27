@@ -265,7 +265,7 @@ TempOutputFileFor::TempOutputFileFor(const wxString& filename) : m_filenameFinal
 #else
             base += name.substr(0, 5);
 #endif
-            m_filenameTmp = base + "tmp" + random + ext;
+            m_filenameTmp = base + random + "_tmp" + ext;
         }
 
         if (!wxFileExists(m_filenameTmp))
