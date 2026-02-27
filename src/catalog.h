@@ -175,6 +175,11 @@ class CatalogItem
         /// Like GetFormatFlags(), but only for internal uses (e.g. fileformat-specific highlighting)
         virtual std::string GetInternalFormatFlag() const { return std::string(); }
 
+        /// Returns maximum allowed length in characters (0 if not specified)
+        virtual int GetMaxLength() const { return 0; }
+        /// Returns minimum allowed length in characters (0 if not specified)
+        virtual int GetMinLength() const { return 0; }
+
         /// Gets value of fuzzy flag.
         bool IsFuzzy() const { return m_isFuzzy; }
         /// Gets value of translated flag.

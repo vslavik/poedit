@@ -34,6 +34,7 @@
 
 #include <boost/algorithm/string.hpp>
 
+#include <charconv>
 #include <memory>
 #include <set>
 #include <sstream>
@@ -580,6 +581,13 @@ public:
                 m_extractedComments.push_back("");
             m_extractedComments.push_back(str::to_wx(noteText));
         }
+
+        // Parse maxwidth/minwidth constraints per XLIFF 1.2 spec
+        // https://docs.oasis-open.org/xliff/v1.2/os/xliff-core.html#maxwidth
+        // Default size-unit per spec is "pixel", but we only support "char" and "percent"
+        const std::string sizeUnit = node.attribute("size-unit").value();
+        ParseLengthConstraint(node.attribute("maxwidth").value(), sizeUnit, m_string.length(), &m_maxLength);
+        ParseLengthConstraint(node.attribute("minwidth").value(), sizeUnit, m_string.length(), &m_minLength);
     }
 
     void UpdateInternalRepresentation() override
@@ -652,6 +660,33 @@ public:
         }
         return refs;
     }
+
+    int GetMaxLength() const override { return m_maxLength; }
+    int GetMinLength() const override { return m_minLength; }
+
+private:
+    static void ParseLengthConstraint(const char* value, const std::string& sizeUnit, size_t sourceLength, int *outLength)
+    {
+        // Parse length constraint from XLIFF 1.2 maxwidth/minwidth attributes
+        // Supports "char" size-unit and "percent" (relative to source length)
+        *outLength = 0;
+        if (!value || !*value)
+            return;
+
+        int num = 0;
+        auto result = std::from_chars(value, value + std::strlen(value), num);
+        if (result.ec != std::errc() || num <= 0)
+            return;
+
+        if (sizeUnit == "char")
+            *outLength = num;
+        else if (sizeUnit == "percent")
+            *outLength = (int)sourceLength * num / 100;
+        // else: unsupported unit
+    }
+
+    int m_maxLength = 0;
+    int m_minLength = 0;
 };
 
 

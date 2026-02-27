@@ -540,6 +540,25 @@ public:
         const int sourceLength = (int)source.length();
         const int translationLength = (int)translation.length();
 
+        // Check XLIFF 1.2 maxwidth/minwidth constraints:
+        const int maxLength = item->GetMaxLength();
+        const int minLength = item->GetMinLength();
+
+        if (maxLength && translationLength > maxLength)
+        {
+            item->SetIssue(CatalogItem::Issue::Warning,
+                          wxString::Format(_(L"The translation exceeds maximum length (%d characters)."), maxLength));
+            return true;
+        }
+
+        if (minLength && translationLength < minLength)
+        {
+            item->SetIssue(CatalogItem::Issue::Warning,
+                          wxString::Format(_(L"The translation is below minimum length (%d characters)."), minLength));
+            return true;
+        }
+
+        // Additional heuristic-based length checks:
         if (sourceLength < 50 && translationLength < 50)
             return false;
 
