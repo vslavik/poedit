@@ -212,14 +212,18 @@ public:
         // as checking just the 1st letter would lead to false positives (consider e.g. "MSP430 built-in"):
         if (u_isupper(source[0]) && u_islower(source[1]) && u_islower(translation[0]))
         {
+            if (IsFirstWordPreservedInTranslation(source, translation))
+                return false;
             item->SetIssue(CatalogItem::Issue::Warning, _("The translation should start as a sentence."));
             return true;
         }
 
-        if (u_islower(source[0]) && u_isupper(translation[0]))
+        if (u_islower(source[0]) && u_islower(source[1]) && u_isupper(translation[0]))
         {
             if (m_lang != "de")
             {
+                if (IsFirstWordPreservedInTranslation(source, translation))
+                    return false;
                 item->SetIssue(CatalogItem::Issue::Warning, _("The translation should start with a lowercase character."));
                 return true;
             }
@@ -227,6 +231,22 @@ public:
         }
 
         return false;
+    }
+
+private:
+    // Check if the first word from source appears anywhere in translation.
+    // This helps avoid false positives when the sentence starts with a proper name
+    // that gets preserved in translation (e.g., "iCal Export" -> "Exportar iCal",
+    // "reCAPTCHA verification" -> "vérification reCAPTCHA", etc.
+    bool IsFirstWordPreservedInTranslation(const wxString& source, const wxString& translation)
+    {
+        auto spacePos = source.find_first_of(L" \t\n\r");
+        wxString firstWord = (spacePos == wxString::npos) ? source : source.substr(0, spacePos);
+
+        if (firstWord.empty())
+            return false;
+        
+        return translation.Find(firstWord) != wxNOT_FOUND;
     }
 
 private:
