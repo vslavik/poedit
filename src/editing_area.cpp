@@ -967,6 +967,9 @@ void EditingArea::CopyFromSingular()
 
 void EditingArea::UpdateToTextCtrl(CatalogItemPtr item, int flags)
 {
+    if (!m_isSingleSelection)
+        return;  // don't update anything when per-item UI is hidden
+
     if (!(flags & DontTouchText))
     {
         auto syntax = SyntaxHighlighter::ForItem(*item);
