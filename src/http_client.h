@@ -175,8 +175,9 @@ public:
     /// Connection flags for the client.
     enum flags
     {
-        // currently no flags are used
-        default_flags = 0
+        default_flags = 0,
+        /// The host supports Content-Encoding: gzip; client will use it with post() requests
+        use_gzip_request_body = 1
     };
 
     using headers = std::vector<std::pair<std::string, std::string>>;
@@ -235,6 +236,14 @@ public:
 
     static std::string url_encode(const std::string& s, int flags = 0);
     static std::string url_encode(const std::wstring& s, int flags = 0);
+
+    /**
+        Compress body data using gzip compression.
+        
+        @param body The body data to compress
+        @return The compressed body
+     */
+    static std::string gzip_compress_body(const std::string& body);
 
 protected:
     /**

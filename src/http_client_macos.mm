@@ -32,8 +32,8 @@
 class http_client::impl
 {
 public:
-    impl(http_client& owner, const std::string& url_prefix, int /*flags*/)
-        : m_owner(owner), m_authHeader(nil)
+    impl(http_client& owner, const std::string& url_prefix, int flags)
+        : m_owner(owner), m_authHeader(nil), m_flags(flags)
     {
         int majorVersion, minorVersion, patchVersion;
         NSOperatingSystemVersion macos = [[NSProcessInfo processInfo] operatingSystemVersion];
@@ -130,8 +130,15 @@ public:
         auto promise = std::make_shared<dispatch::promise<json>>();
 
         auto request = build_request(@"POST", url, hdrs);
-        auto body = body_data.body();
         [request setValue:str::to_NS(body_data.content_type()) forHTTPHeaderField:@"Content-Type"];
+        
+        auto body = body_data.body();
+        if ((m_flags & http_client::use_gzip_request_body) && body.size() > 256)
+        {
+            body = http_client::gzip_compress_body(body);
+            [request setValue:@"gzip" forHTTPHeaderField:@"Content-Encoding"];
+        }
+
         [request setValue:[NSString stringWithFormat:@"%lu", body.size()] forHTTPHeaderField:@"Content-Length"];
         [request setHTTPBody:[NSData dataWithBytes:body.data() length:body.size()]];
 
@@ -224,6 +231,7 @@ private:
     NSURLSession *m_session;
     NSURL *m_baseURL;
     NSString *m_authHeader;
+    int m_flags;
 };
 
 

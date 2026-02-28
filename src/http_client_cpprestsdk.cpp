@@ -128,6 +128,7 @@ class http_client::impl
 public:
     impl(http_client& owner, const std::string& url_prefix, int flags)
         : m_owner(owner),
+          m_flags(flags),
           m_native(sanitize_url(url_prefix, flags), get_client_config())
     {
         #define make_wide_str(x) make_wide_str_(x)
@@ -208,6 +209,12 @@ public:
         auto req = build_request(http::methods::POST, url, hdrs);
 
         auto body = data.body();
+        if ((m_flags & http_client::use_gzip_request_body) && body.size() > 256)
+        {
+            body = http_client::gzip_compress_body(body);
+            req.headers().add(http::header_names::content_encoding, _XPLATSTR("gzip"));
+        }
+
         req.set_body(body, data.content_type());
         req.headers().set_content_length(body.size());
 
@@ -327,6 +334,7 @@ private:
 #endif
 
     http_client& m_owner;
+    int m_flags;
     http::client::http_client m_native;
     std::wstring m_userAgent;
     std::wstring m_auth;

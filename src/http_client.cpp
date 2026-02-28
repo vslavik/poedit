@@ -32,6 +32,10 @@
 #include <sstream>
 
 #include <boost/algorithm/string.hpp>
+#include <boost/iostreams/copy.hpp>
+#include <boost/iostreams/device/back_inserter.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
+#include <boost/iostreams/filtering_stream.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/uuid/uuid_generators.hpp>
@@ -184,4 +188,17 @@ std::string http_client::url_encode(const std::string& s, int flags)
 std::string http_client::url_encode(const std::wstring& s, int flags)
 {
     return url_encode(str::to_utf8(s), flags);
+}
+
+std::string http_client::gzip_compress_body(const std::string& body)
+{
+    namespace io = boost::iostreams;
+
+    std::string compressed;
+    io::filtering_ostream out;
+    out.push(io::gzip_compressor(io::gzip_params(io::gzip::best_compression)));
+    out.push(io::back_inserter(compressed));
+    io::copy(io::array_source(body.data(), body.size()), out);
+
+    return compressed;
 }
