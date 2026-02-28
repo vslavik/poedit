@@ -553,14 +553,17 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent, wxWindowID id, bool dispIDs)
     UpdateHeaderAttrs();
 
 #ifdef __WXMSW__
-    GetMainWindow()->Bind(wxEVT_MENU, [=](wxCommandEvent&) {
-        SelectAll();
-        wxDataViewEvent le(wxEVT_DATAVIEW_SELECTION_CHANGED, this, GetSelection());
-        ProcessWindowEvent(le); 
-    }, wxID_SELECTALL);
-    GetMainWindow()->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e) {
-        e.Enable(GetItemCount() > 0);
-    }, wxID_SELECTALL);
+    for (wxWindow *w : { (wxWindow*)this, (wxWindow*)GetMainWindow() })
+    {
+        w->Bind(wxEVT_MENU, [=](wxCommandEvent&) {
+            SelectAll();
+            wxDataViewEvent le(wxEVT_DATAVIEW_SELECTION_CHANGED, this, GetSelection());
+            ProcessWindowEvent(le);
+            }, wxID_SELECTALL);
+        w->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e) {
+            e.Enable(GetItemCount() > 0);
+            }, wxID_SELECTALL);
+    }
 #endif
 
     Bind(wxEVT_SIZE, &PoeditListCtrl::OnSize, this);
