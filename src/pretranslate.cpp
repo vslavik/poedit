@@ -30,6 +30,7 @@
 #include "progress.h"
 #include "str_helpers.h"
 #include "tm/transmem.h"
+#include "qa_checks.h"
 
 #include <wx/stopwatch.h>
 
@@ -68,7 +69,8 @@ struct JobMetadata
 class Worker
 {
 public:
-    Worker(const JobMetadata& meta) : m_metadata(meta), m_completed(false) {}
+    Worker(const JobMetadata& meta, std::shared_ptr<QAChecker> checker)
+        : m_metadata(meta), m_checker(checker), m_completed(false) {}
     virtual ~Worker() {}
 
     /// Add another item for processing
@@ -147,6 +149,9 @@ protected:
         }
         dt->SetFuzzy(isFuzzy);
 
+        if (m_checker)
+            m_checker->Check(dt);
+
         return res.IsExactMatch() ? ResType::Exact : ResType::Fuzzy;
     }
 
@@ -164,6 +169,7 @@ protected:
 
 protected:
     JobMetadata m_metadata;
+    std::shared_ptr<QAChecker> m_checker;
 
     mutable std::mutex m_mutex;
     std::deque<CatalogItemPtr> m_queue;
@@ -174,8 +180,8 @@ protected:
 class LocalDBWorker : public Worker
 {
 public:
-    LocalDBWorker(const JobMetadata& meta)
-        : Worker(meta), m_tm(TranslationMemory::Get())
+    LocalDBWorker(const JobMetadata& meta, std::shared_ptr<QAChecker> checker)
+        : Worker(meta, checker), m_tm(TranslationMemory::Get())
     {
         const auto nthreads = std::clamp(std::thread::hardware_concurrency(), 4u, 16u);
         for (unsigned i = 0; i < nthreads; ++i)
@@ -309,7 +315,9 @@ std::shared_ptr<Stats> PreTranslateCatalog(CatalogPtr catalog,
     metadata.nplurals = metadata.lang.nplurals();
     metadata.options = options;
 
-    auto worker_local = use_local_tm ? std::make_unique<LocalDBWorker>(metadata) : nullptr;
+    auto qa_checker = QAChecker::GetFor(*catalog);
+
+    auto worker_local = use_local_tm ? std::make_unique<LocalDBWorker>(metadata, qa_checker) : nullptr;
 
     if (worker_local)
         worker_local->stats = stats;
