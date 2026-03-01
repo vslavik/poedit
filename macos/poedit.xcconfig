@@ -6,6 +6,9 @@ HEADER_SEARCH_PATHS = deps/icu/macos $(inherited)
 BOOST = "$(SRCROOT)/deps/boost"
 #include "deps/boost/boost.xcconfig"
 
+GCC_C_LANGUAGE_STANDARD = c11
+CLANG_CXX_LANGUAGE_STANDARD = c++20
+
 CODE_SIGN_IDENTITY = -
 
 #include? "poedit.user.xcconfig"
