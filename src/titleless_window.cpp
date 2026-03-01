@@ -174,13 +174,13 @@ TitlelessWindowBase<T>::TitlelessWindowBase(wxWindow* parent,
     m_isTitleless = ShouldRemoveChrome();
     if (m_isTitleless)
     {
-        auto handle = GetHwnd();
+        auto handle = GetHwndOf(this);
 
         static MARGINS margins = { PX(1), PX(1), PX(1), PX(1) };
         DwmExtendFrameIntoClientArea(handle, &margins);
 
-        SetBackgroundStyle(wxBG_STYLE_PAINT);
-        Bind(wxEVT_PAINT, &TitlelessWindowBase::OnPaintBackground, this);
+        this->SetBackgroundStyle(wxBG_STYLE_PAINT);
+        this->Bind(wxEVT_PAINT, &TitlelessWindowBase::OnPaintBackground, this);
 
         if (style & wxCLOSE_BOX)
             m_closeButton = new CloseButton(this, wxID_CLOSE);
@@ -236,7 +236,7 @@ void TitlelessWindowBase<T>::DoGetClientSize(int *width, int *height) const
 {
     if (m_isTitleless)
     {
-        auto size = GetSize();
+        auto size = this->GetSize();
         if (width)
             *width = size.x - 2 * PX(1);
         if (height)
@@ -299,12 +299,12 @@ void TitlelessWindowBase<T>::OnPaintBackground(wxPaintEvent&)
     // doesn't work for the top side, unfortunately, so here we are.
     dc.SetPen(*wxTRANSPARENT_PEN);
 
-    wxRect rect(wxPoint(0, 0), GetSize());
+    wxRect rect(wxPoint(0, 0), this->GetSize());
     dc.SetBrush(*wxBLACK);
     dc.DrawRectangle(rect);
 
     rect.Deflate(PX(1));
-    dc.SetBrush(GetBackgroundColour());
+    dc.SetBrush(this->GetBackgroundColour());
     dc.DrawRectangle(rect);
 }
 #endif // __WXMSW__

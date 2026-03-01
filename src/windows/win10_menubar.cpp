@@ -256,7 +256,7 @@ void WithWindows10Menubar<T>::PositionToolBar()
     GetMenuWindow()->SetSize(PX(2), y, width, mch, wxSIZE_NO_ADJUSTMENTS);
     y += mch;
 
-    wxToolBar *toolbar = GetToolBar();
+    wxToolBar *toolbar = this->GetToolBar();
     if (toolbar && toolbar->IsShown())
     {
         int tbh = toolbar->GetSize().y;
@@ -286,7 +286,7 @@ WXLRESULT WithWindows10Menubar<T>::MSWWindowProc(WXUINT message, WXWPARAM wParam
         // event for that... if there's a normal menu). We need to refresh menus before accelerators
         // are used so that e.g. disabled state is accurately updated.
         if (message == WM_COMMAND && HIWORD(wParam) == 1/*accel*/)
-            GetMenuBar()->UpdateMenus();
+            this->GetMenuBar()->UpdateMenus();
     }
 
     return BaseClass::MSWWindowProc(message, wParam, lParam);
@@ -297,7 +297,7 @@ void WithWindows10Menubar<T>::InternalSetMenuBar()
 {
     if (IsCustomMenuUsed())
     {
-        GetMenuWindow()->SetHMENU(m_hMenu);
+        GetMenuWindow()->SetHMENU(this->m_hMenu);
     }
     else
     {
