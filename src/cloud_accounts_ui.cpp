@@ -95,7 +95,7 @@ AccountsPanel::AccountsPanel(wxWindow *parent, int flags) : wxPanel(parent, wxID
     m_panelsBook = new wxSimplebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | BORDER_LISTLIKE);
     SetupListlikeBorder(m_panelsBook);
 
-    ColorScheme::SetupWindowColors(m_panelsBook, [=]
+    ColorScheme::SetupWindowColors(m_panelsBook, [=, this]
     {
         m_panelsBook->SetBackgroundColour(ColorScheme::Get(Color::ListControlBg));
     });
@@ -159,7 +159,7 @@ void AccountsPanel::AddAccount(const wxString& name, const wxString& iconId, Acc
 
     m_list->AppendFormattedItem(wxArtProvider::GetBitmap(iconId), name, " ... ");
 
-    panel->NotifyContentChanged = [=]{
+    panel->NotifyContentChanged = [=, this]{
         wxString desc = panel->IsSignedIn() ? panel->GetLoginName() : _("(not signed in)");
         m_list->UpdateFormattedItem(pos, name, desc);
         // select 1st available signed-in service if we can and hide the intro panel:
@@ -170,7 +170,7 @@ void AccountsPanel::AddAccount(const wxString& name, const wxString& iconId, Acc
             NotifyContentChanged();
     };
 
-    panel->NotifyShouldBeRaised = [=]{
+    panel->NotifyShouldBeRaised = [=, this]{
         if (!m_list->IsShown())
         {
             m_list->GetContainingSizer()->Show(m_list);
@@ -265,7 +265,7 @@ public:
         auto column = new wxDataViewColumn(_("File"), renderer, 0, -1, wxALIGN_NOT, wxDATAVIEW_COL_RESIZABLE);
         AppendColumn(column, "string");
 
-        ColorScheme::SetupWindowColors(this, [=]{ RefreshFileList(); });
+        ColorScheme::SetupWindowColors(this, [this]{ RefreshFileList(); });
     }
 
     void ClearFiles()
@@ -393,7 +393,7 @@ public:
 
         FitSizer();
 
-        m_project->Bind(wxEVT_CHOICE, [=](wxCommandEvent&){ OnProjectSelected(); });
+        m_project->Bind(wxEVT_CHOICE, [this](wxCommandEvent&){ OnProjectSelected(); });
         ok->Bind(wxEVT_UPDATE_UI, &CloudOpenDialog::OnUpdateOK, this);
         ok->Bind(wxEVT_BUTTON, &CloudOpenDialog::OnOK, this);
         manageLink->Bind(wxEVT_HYPERLINK, &CloudOpenDialog::OnManageAccounts, this);
@@ -442,7 +442,7 @@ private:
         m_loginAccountShown = account;
 
         account->GetUserInfo()
-        .then_on_window(this, [=](CloudAccountClient::UserInfo u)
+        .then_on_window(this, [=, this](CloudAccountClient::UserInfo u)
         {
             if (account != m_loginAccountShown)
                 return;  // user changed selection since invocation, there's another pending async call
@@ -461,7 +461,7 @@ private:
             else
             {
                 http_client::download_from_anywhere(u.avatarUrl)
-                .then_on_window(this, [=](downloaded_file f)
+                .then_on_window(this, [=, this](downloaded_file f)
                 {
                     m_loginImage->LoadIcon(f.filename());
                     m_loginImage->Show();
@@ -554,10 +554,10 @@ private:
             EnableAllChoices(false);
             m_files->ClearFiles();
             account->GetProjectDetails(m_currentProject)
-                .then_on_window(this, [=](CloudAccountClient::ProjectDetails prj){
+                .then_on_window(this, [=, this](CloudAccountClient::ProjectDetails prj){
                     this->OnFetchedProjectInfo(prj);
                 })
-                .catch_all([=](dispatch::exception_ptr e){
+                .catch_all([=, this](dispatch::exception_ptr e){
                     m_activity->HandleError(e);
                     EnableAllChoices(true);
                 });
@@ -629,7 +629,7 @@ private:
 
         auto outfile = std::make_shared<TempOutputFileFor>(OutLocalFilename);
         AccountFor(m_currentProject)->DownloadFile(str::to_wstring(outfile->FileName()), m_currentProject, cloudFile, cloudLang)
-            .then_on_window(this, [=]{
+            .then_on_window(this, [=, this]{
                 outfile->Commit();
                 AcceptAndClose();
             })
@@ -638,7 +638,7 @@ private:
 
     void OnManageAccounts(wxHyperlinkEvent&)
     {
-        ManageAccounts<CloudEditLoginDialog<AccountsPanel>>([=](bool /*ok*/) {
+        ManageAccounts<CloudEditLoginDialog<AccountsPanel>>([this](bool /*ok*/) {
             LoadFromCloud(nullptr);
         });
     }

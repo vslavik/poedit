@@ -278,12 +278,12 @@ SelectableAutoWrappingText::SelectableAutoWrappingText(wxWindow *parent, wxWindo
 #else
     // at least allow copying
     static wxWindowIDRef idCopy = NewControlId();
-    Bind(wxEVT_CONTEXT_MENU, [=](wxContextMenuEvent&){
+    Bind(wxEVT_CONTEXT_MENU, [=, this](wxContextMenuEvent&){
         wxMenu menu;
         menu.Append(idCopy, _("&Copy"));
         PopupMenu(&menu);
     });
-    Bind(wxEVT_MENU, [=](wxCommandEvent&){
+    Bind(wxEVT_MENU, [=, this](wxCommandEvent&){
         wxClipboardLocker lock;
         wxClipboard::Get()->SetData(new wxTextDataObject(m_text));
     }, idCopy);
@@ -298,7 +298,7 @@ ExplanationLabel::ExplanationLabel(wxWindow *parent, const wxString& label)
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
 #ifndef __WXGTK__
-    ColorScheme::SetupWindowColors(this, [=]
+    ColorScheme::SetupWindowColors(this, [this]
     {
         SetForegroundColour(GetTextColor());
     });
@@ -313,7 +313,7 @@ SecondaryLabel::SecondaryLabel(wxWindow *parent, const wxString& label)
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
 #ifndef __WXGTK__
-    ColorScheme::SetupWindowColors(this, [=]
+    ColorScheme::SetupWindowColors(this, [this]
     {
         SetForegroundColour(GetTextColor());
     });
@@ -328,7 +328,7 @@ LearnMoreLink::LearnMoreLink(wxWindow *parent, const wxString& url, wxString lab
 
     wxHyperlinkCtrl::Create(parent, winid, label, url);
 
-    ColorScheme::SetupWindowColors(this, [=]
+    ColorScheme::SetupWindowColors(this, [this]
     {
 #ifdef __WXOSX__
         wxColour normal, hover;
@@ -496,7 +496,7 @@ ImageButton::ImageButton(wxWindow *parent, const wxString& bitmapName)
     // refresh template icons on theme change (macOS handles automatically):
     if (bitmapName.ends_with("Template"))
     {
-        ColorScheme::SetupWindowColors(this, [=]
+        ColorScheme::SetupWindowColors(this, [=, this]
         {
             SetBitmap(wxArtProvider::GetBitmap(m_bitmapName));
         });
@@ -514,7 +514,7 @@ StaticBitmap::StaticBitmap(wxWindow *parent, const wxString& bitmapName)
     // refresh template icons on theme change (macOS handles automatically):
     if (bitmapName.ends_with("Template"))
     {
-        ColorScheme::SetupWindowColors(this, [=]
+        ColorScheme::SetupWindowColors(this, [=, this]
         {
             SetBitmap(wxArtProvider::GetBitmap(m_bitmapName));
         });
@@ -689,7 +689,7 @@ IconAndSubtitleListCtrl::IconAndSubtitleListCtrl(wxWindow *parent, const wxStrin
     AppendColumn(column, "string");
 
 #ifndef __WXGTK__
-    ColorScheme::SetupWindowColors(this, [=]{ OnColorChange(); });
+    ColorScheme::SetupWindowColors(this, [this]{ OnColorChange(); });
 #endif
 }
 

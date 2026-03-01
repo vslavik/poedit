@@ -88,12 +88,12 @@ public:
 
     void Fit() override
     {
-        IterateUntilConvergence([=]{ this->SetSize(this->GetBestSize()); });
+        IterateUntilConvergence([this]{ this->SetSize(this->GetBestSize()); });
     }
 
     bool Layout() override
     {
-        IterateUntilConvergence([=]{ Base::Layout(); });
+        IterateUntilConvergence([this]{ Base::Layout(); });
         return true;
     }
 

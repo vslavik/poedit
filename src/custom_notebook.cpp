@@ -325,7 +325,7 @@ public:
 
         m_buttonsSizer->Add(button, flags);
 
-        button->Bind(wxEVT_TOGGLEBUTTON, [=](wxCommandEvent& e)
+        button->Bind(wxEVT_TOGGLEBUTTON, [=, this](wxCommandEvent& e)
         {
             if (e.IsChecked())
             {
@@ -440,7 +440,7 @@ SegmentedNotebook::SegmentedNotebook(wxWindow *parent, SegmentStyle style)
     }
     SetSizer(sizer);
 
-    Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, [=](wxBookCtrlEvent& e)
+    Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, [this](wxBookCtrlEvent& e)
     {
         m_tabs->ChangeSelection(e.GetSelection());
         e.Skip();

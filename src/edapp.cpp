@@ -158,14 +158,14 @@ private:
             wxString payload;
             if (data == "Activate")
             {
-                dispatch::on_main([=] {
+                dispatch::on_main([=, this] {
                     m_app->OpenNewFile();
                 });
                 return true;
             }
             if (data.StartsWith("OpenURI:", &payload))
             {
-                dispatch::on_main([=] {
+                dispatch::on_main([=, this] {
                     m_app->HandleCustomURI(payload);
                 });
                 return true;
@@ -176,7 +176,7 @@ private:
                 payload.BeforeFirst(':').ToLong(&lineno);
                 wxArrayString a;
                 a.push_back(payload.AfterFirst(':'));
-                dispatch::on_main([=] {
+                dispatch::on_main([=, this] {
                     m_app->OpenFiles(a, lineno);
                 });
                 return true;
@@ -883,11 +883,11 @@ void PoeditApp::HandleCustomURI(const wxString& uri)
     if (LocalazyClient::IsAuthCallback(uri_utf8))
     {
         LocalazyClient::Get().HandleAuthCallback(uri_utf8)
-            .then_on_main([=](std::shared_ptr<LocalazyClient::ProjectInfo> projectToOpen){
+            .then_on_main([=, this](std::shared_ptr<LocalazyClient::ProjectInfo> projectToOpen){
                 if (projectToOpen)
                 {
                     // this shows UI, so do it after OnInit() initialization:
-                    CallAfter([=]{
+                    CallAfter([=, this]{
                         OpenCloudTranslation(projectToOpen);
                     });
                 }

@@ -104,7 +104,7 @@ public:
     {
         m_extraDraggableSpace = 0;
 
-        ColorScheme::SetupWindowColors(this, [=]
+        ColorScheme::SetupWindowColors(this, [=, this]
         {
 #ifdef __WXOSX__
             SetBackgroundColour(ColorScheme::Get(color));
@@ -127,7 +127,7 @@ public:
     {
         m_extraDraggableSpace = extraDraggableSpace;
 
-        win->Bind(wxEVT_LEFT_DOWN, [=](wxMouseEvent& event)
+        win->Bind(wxEVT_LEFT_DOWN, [=, this](wxMouseEvent& event)
         {
             event.Skip();
             if (!this->IsWithinExtraDraggableSpace(event))
@@ -139,7 +139,7 @@ public:
             event.SetPosition(p);
         });
 
-        auto motionHandler = [=](wxMouseEvent& event)
+        auto motionHandler = [=, this](wxMouseEvent& event)
         {
             event.Skip();
             if (!event.Leaving() && this->IsWithinExtraDraggableSpace(event))
@@ -626,7 +626,7 @@ wxWindow* PoeditFrame::CreateContentViewPO(Content type)
                         );
     m_editingArea->UpdateEditingUIForCatalog(m_catalog);
 
-    m_editingArea->OnUpdatedFromTextCtrl = [=](CatalogItemPtr item, bool statsChanged){
+    m_editingArea->OnUpdatedFromTextCtrl = [=, this](CatalogItemPtr item, bool statsChanged){
         OnUpdatedFromTextCtrl(item, statsChanged);
     };
 
@@ -666,7 +666,7 @@ wxWindow* PoeditFrame::CreateContentViewPO(Content type)
 
     // Call splitter splitting later, when the window is laid out, otherwise
     // the sizes would get truncated immediately:
-    CallAfter([=]{
+    CallAfter([=, this]{
         // This is a hack -- windows are not maximized immediately and so we can't
         // set correct sash position in ctor (unmaximized window may be too small
         // for sash position when maximized -- see bug #2120600)
@@ -902,7 +902,7 @@ void PoeditFrame::OnCloseCmd(wxCommandEvent&)
 
 void PoeditFrame::OpenFile(const wxString& filename, int lineno)
 {
-    DoIfCanDiscardCurrentDoc([=]{
+    DoIfCanDiscardCurrentDoc([=, this]{
         auto cat = PreOpenFileWithErrorsUI(filename, this);
         if (cat)
             DoOpenFile(cat, lineno);
@@ -942,7 +942,7 @@ void PoeditFrame::DoOpenFile(CatalogPtr cat, int lineno)
 
     // HACK: make sure this is called *after* the delayed call in PoeditListCtrl::CatalogChanged
     if (m_list)
-        m_list->CallAfter([=]{ PlaceInitialFocus(lineno); });
+        m_list->CallAfter([=, this]{ PlaceInitialFocus(lineno); });
 }
 
 
@@ -1021,7 +1021,7 @@ void PoeditFrame::DoIfCanDiscardCurrentDoc(const TFunctor1& completionHandler, c
 
         if (retval == wxID_YES)
         {
-            auto doSaveFile = [=](const wxString& fn){
+            auto doSaveFile = [=, this](const wxString& fn){
                 WriteCatalog(fn, [=](bool saved){
                     if (saved)
                         completionHandler();
@@ -1096,7 +1096,7 @@ void PoeditFrame::OnCloseWindow(wxCloseEvent& event)
         // If it turns out that the window can be closed, the completion handler
         // will do it:
         event.Veto();
-        DoIfCanDiscardCurrentDoc([=]{
+        DoIfCanDiscardCurrentDoc([=, this]{
             Destroy();
         });
 #else // !__WXOSX__
@@ -1105,7 +1105,7 @@ void PoeditFrame::OnCloseWindow(wxCloseEvent& event)
         // only works because on non-OSX platforms the question dialog is
         // modal and the code below called immediately.
         event.Veto();
-        DoIfCanDiscardCurrentDoc([=, &event]{
+        DoIfCanDiscardCurrentDoc([=, this, &event]{
             event.Veto(false);
             Destroy();
         });
@@ -1217,7 +1217,7 @@ void PoeditFrame::DoSaveAs(const wxString& filename)
 
 void PoeditFrame::OnSaveAs(wxCommandEvent&)
 {
-    GetSaveAsFilenameThenDo(m_catalog, [=](const wxString& fn){
+    GetSaveAsFilenameThenDo(m_catalog, [=, this](const wxString& fn){
         DoSaveAs(fn);
     });
 }
@@ -1247,7 +1247,7 @@ void PoeditFrame::OnCompileMO(wxCommandEvent&)
                          wxString::Format("%s (*.mo)|*.mo", _("Compiled Translation Files")),
                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT));
 
-    dlg->ShowWindowModalThenDo([=](int retcode){
+    dlg->ShowWindowModalThenDo([=, this](int retcode){
         if (retcode != wxID_OK)
             return;
 
@@ -1263,7 +1263,7 @@ void PoeditFrame::OnCompileMO(wxCommandEvent&)
             // Note: this may show window-modal window and because we may
             //       be called from such window too, run this in the next
             //       event loop iteration. FIXME: should be fixed in wx
-            CallAfter([=]{
+            CallAfter([=, this]{
                 ReportValidationErrors(validation_results, compilation_status, /*from_save=*/true, /*other_file_saved=*/false, []{});
             });
         }
@@ -1291,7 +1291,7 @@ void PoeditFrame::OnExportToHTML(wxCommandEvent&)
                          MaskForType("*.html", _("HTML Files")),
                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT));
 
-    dlg->ShowWindowModalThenDo([=](int retcode){
+    dlg->ShowWindowModalThenDo([=, this](int retcode){
         if (retcode != wxID_OK)
             return;
 
@@ -1304,7 +1304,7 @@ void PoeditFrame::OnExportToHTML(wxCommandEvent&)
 void PoeditFrame::ExportCatalogToHTML(const wxString& filename)
 {
     wxWindowPtr<ProgressWindow> progress(new ProgressWindow(this, _("Exporting to HTML")));
-    progress->RunTaskThenDo([=]()
+    progress->RunTaskThenDo([=, this]()
     {
         TempOutputFileFor tempfile(filename);
         std::ofstream f;
@@ -1322,9 +1322,9 @@ void PoeditFrame::ExportCatalogToHTML(const wxString& filename)
 
 void PoeditFrame::OnTranslationFromThisPot(wxCommandEvent&)
 {
-    DoIfCanDiscardCurrentDoc([=]{
+    DoIfCanDiscardCurrentDoc([=, this]{
         wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
-        dlg->ShowWindowModalThenDo([=](int retcode){
+        dlg->ShowWindowModalThenDo([=, this](int retcode){
             if (retcode != wxID_OK)
                 return;
             auto cat = std::dynamic_pointer_cast<POCatalog>(m_catalog);
@@ -1356,7 +1356,7 @@ void PoeditFrame::NewFromPOT(POCatalogPtr pot, Language language)
     UpdateStatusBar();
     UpdateTextLanguage();
 
-    auto setLanguageFunc = [=](Language lang)
+    auto setLanguageFunc = [=, this](Language lang)
     {
         if (lang.IsValid())
         {
@@ -1395,7 +1395,7 @@ void PoeditFrame::NewFromPOT(POCatalogPtr pot, Language language)
         // Choose the language:
         wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
 
-        dlg->ShowWindowModalThenDo([=](int retcode){
+        dlg->ShowWindowModalThenDo([=, this](int retcode){
             if (retcode == wxID_OK)
                 setLanguageFunc(dlg->GetLang());
             else
@@ -1473,7 +1473,7 @@ void PoeditFrame::EditCatalogProperties()
 
             const Language prevLang = m_catalog->GetLanguage();
             dlg->TransferTo(m_catalog);
-            dlg->ShowWindowModalThenDo([=](int retcode){
+            dlg->ShowWindowModalThenDo([=, this](int retcode){
                 if (retcode != wxID_OK)
                     return;
 
@@ -1503,7 +1503,7 @@ void PoeditFrame::EditCatalogProperties()
         {
             wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
             dlg->SetLang(m_catalog->GetLanguage());
-            dlg->ShowWindowModalThenDo([=](int retcode){
+            dlg->ShowWindowModalThenDo([=, this](int retcode){
                 if (retcode != wxID_OK)
                     return;
 
@@ -1532,7 +1532,7 @@ void PoeditFrame::EditCatalogPropertiesAndUpdateFromSources()
 
     const Language prevLang = m_catalog->GetLanguage();
     dlg->TransferTo(m_catalog);
-    dlg->ShowWindowModalThenDo([=](int retcode){
+    dlg->ShowWindowModalThenDo([=, this](int retcode){
         if (retcode == wxID_OK)
         {
             dlg->TransferFrom(m_catalog);
@@ -1621,7 +1621,7 @@ void PoeditFrame::UpdateCatalog(const wxString& pot_file)
         bg_work = PerformUpdateFromReferenceWithUI(this, m_catalog, pot_file);
     }
 
-    bg_work.then_on_main([this,locker](CatalogPtr updated_catalog)
+    bg_work.then_on_main([this, locker](CatalogPtr updated_catalog)
     {
         if (!updated_catalog)
             return;
@@ -1635,7 +1635,7 @@ void PoeditFrame::UpdateCatalog(const wxString& pot_file)
 
         if (Config::UseTM() && Config::MergeBehavior() == Merge_UseTM)
         {
-            PreTranslateCatalogAuto(this, m_catalog, PreTranslateOptions(PreTranslate_OnlyGoodQuality), [=]
+            PreTranslateCatalogAuto(this, m_catalog, PreTranslateOptions(PreTranslate_OnlyGoodQuality), [this]
             {
                 RefreshControls();
             });
@@ -1647,7 +1647,7 @@ void PoeditFrame::UpdateCatalog(const wxString& pot_file)
 
 void PoeditFrame::OnUpdateFromSources(wxCommandEvent&)
 {
-    DoIfCanDiscardCurrentDoc([=]{
+    DoIfCanDiscardCurrentDoc([this]{
         UpdateCatalog();
     });
 }
@@ -1659,7 +1659,7 @@ void PoeditFrame::OnUpdateFromSourcesUpdate(wxUpdateUIEvent& event)
 
 void PoeditFrame::OnUpdateFromPOT(wxCommandEvent&)
 {
-    DoIfCanDiscardCurrentDoc([=]{
+    DoIfCanDiscardCurrentDoc([=, this]{
         wxString path = wxPathOnly(GetFileName());
         if (path.empty())
             path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
@@ -1738,7 +1738,7 @@ void PoeditFrame::CloudSyncWithCrowdin()
         WriteCatalog(GetFileName());
     }
 
-    CrowdinSyncFile(this, m_catalog, [=](std::shared_ptr<Catalog> cat)
+    CrowdinSyncFile(this, m_catalog, [=, this](std::shared_ptr<Catalog> cat)
     {
         // preserve any syncing-on-save setup:
         auto cloudsync = m_catalog->GetCloudSync();
@@ -2348,7 +2348,7 @@ void PoeditFrame::WarnAboutLanguageIssues()
                 _(L"Language of the translation isn’t set.")
             );
         msg.AddAction(MSW_OR_OTHER(_("Set language"), _("Set Language")),
-                      [=]{ EditCatalogProperties(); });
+                      [this]{ EditCatalogProperties(); });
         // TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
         msg.SetExplanation(_("Suggestions are not available if the translation language is not set correctly. Other features, such as plural forms, may be affected as well."));
         m_attentionBar->ShowMessage(msg);
@@ -2368,7 +2368,7 @@ void PoeditFrame::WarnAboutLanguageIssues()
             );
         msg.SetExplanation(_("Suggestions are not available if the translation language is not set correctly. Other features, such as plural forms, may be affected as well."));
         msg.AddAction(MSW_OR_OTHER(_("Fix language"), _("Fix Language")),
-                      [=]{ EditCatalogProperties(); });
+                      [this]{ EditCatalogProperties(); });
         if (lang != srclang)
             msg.AddDontShowAgain(); // possible that Poedit misjudged the intent
 
@@ -2414,7 +2414,7 @@ void PoeditFrame::WarnAboutLanguageIssues()
                     err
                 );
             msg.AddAction(MSW_OR_OTHER(_("Fix the header"), _("Fix the Header")),
-                          [=]{ EditCatalogProperties(); });
+                          [this]{ EditCatalogProperties(); });
 
             m_attentionBar->ShowMessage(msg);
         }
@@ -2436,7 +2436,7 @@ void PoeditFrame::WarnAboutLanguageIssues()
                         )
                     );
                 // TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
-                msg.AddAction(_("Review"), [=]{ EditCatalogProperties(); });
+                msg.AddAction(_("Review"), [this]{ EditCatalogProperties(); });
                 msg.AddDontShowAgain();
 
                 m_attentionBar->ShowMessage(msg);
@@ -2504,7 +2504,7 @@ void PoeditFrame::OfferSideloadingSourceText()
         );
     msg.SetExplanation(wxString::Format(_(L"This file uses string IDs instead of source text. Poedit can load English texts from the “%s” file for you."), displayRef.GetFullPath()));
     // TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
-    msg.AddAction(_("Load English"),[=]{
+    msg.AddAction(_("Load English"),[=, this]{
         SideloadSourceTextFromFile(ref);
     });
 
@@ -2870,7 +2870,7 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
         // Note: this may show window-modal window and because we may
         //       be called from such window too, run this in the next
         //       event loop iteration.
-        CallAfter([=]{
+        CallAfter([=, this]{
             ReportValidationErrors(validation_results, mo_compilation_status, /*from_save=*/true, /*other_file_saved=*/true, [=]{
                 completionHandler(true);
             });
@@ -2901,7 +2901,7 @@ void PoeditFrame::OnEditComment(wxCommandEvent& event)
 
     wxWindowPtr<CommentDialog> dlg(new CommentDialog(parent, firstItem->GetComment()));
 
-    dlg->ShowWindowModalThenDo([=](int retcode){
+    dlg->ShowWindowModalThenDo([=, this](int retcode){
         if (retcode == wxID_OK)
         {
             m_modified = true;
@@ -3004,7 +3004,7 @@ void PoeditFrame::OnSuggestion(wxCommandEvent& event)
 
 void PoeditFrame::OnPreTranslateAll(wxCommandEvent&)
 {
-    PreTranslateWithUI(this, m_list, m_catalog,[=]{
+    PreTranslateWithUI(this, m_list, m_catalog,[=, this]{
         if (!m_modified)
         {
             m_modified = true;

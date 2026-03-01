@@ -79,7 +79,7 @@ public:
         sizer->AddSpacer(PX(6));
         SetSizer(sizer);
 
-        Bind(wxEVT_PAINT, [=](wxPaintEvent&)
+        Bind(wxEVT_PAINT, [=, this](wxPaintEvent&)
         {
             wxPaintDC dc(this);
             std::unique_ptr<wxGraphicsContext> gc(wxGraphicsContext::Create(dc));
@@ -98,7 +98,7 @@ public:
             }
         });
 
-        ColorScheme::SetupWindowColors(this, [=]
+        ColorScheme::SetupWindowColors(this, [=, this]
         {
             auto fg = ColorScheme::GetBlendedOn(Color::TagWarningLineFg, this, Color::TagWarningLineBg);
             m_bg = ColorScheme::GetBlendedOn(Color::TagWarningLineBg, this);
@@ -135,7 +135,7 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
 
     auto logo = new StaticBitmap(this, GetServiceLogo());
     logo->SetCursor(wxCURSOR_HAND);
-    logo->Bind(wxEVT_LEFT_UP, [this](wxMouseEvent&){ wxLaunchDefaultBrowser(GetServiceLearnMoreURL()); });
+    logo->Bind(wxEVT_LEFT_UP, [=, this](wxMouseEvent&){ wxLaunchDefaultBrowser(GetServiceLearnMoreURL()); });
 
     auto logosizer = new wxBoxSizer(wxHORIZONTAL);
     logosizer->Add(logo, wxSizerFlags().Center());
@@ -261,7 +261,7 @@ void CrowdinLoginPanel::CreateLoginInfoControls(State state)
             m_activity = new ActivityIndicator(this, ActivityIndicator::Centered);
             sizer->Add(m_activity, wxSizerFlags(1).Center());
             // delay so that the window is sized properly:
-            m_activity->CallAfter([=]{ m_activity->Start(text); });
+            m_activity->CallAfter([=, this]{ m_activity->Start(text); });
             break;
         }
 
@@ -308,7 +308,7 @@ void CrowdinLoginPanel::UpdateUserInfo()
     ChangeState(State::UpdatingInfo);
 
     CrowdinClient::Get().GetUserInfo()
-        .then_on_window(this, [=](CrowdinClient::UserInfo u) {
+        .then_on_window(this, [=, this](CrowdinClient::UserInfo u) {
             m_userName = u.name;
             m_userLogin = u.login;
             m_userAvatar = u.avatarUrl;

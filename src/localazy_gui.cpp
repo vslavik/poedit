@@ -203,7 +203,7 @@ void LocalazyLoginPanel::CreateLoginInfoControls(State state)
             m_activity = new ActivityIndicator(this, ActivityIndicator::Centered);
             sizer->Add(m_activity, wxSizerFlags(1).Center());
             // delay so that the window is sized properly:
-            m_activity->CallAfter([=]{ m_activity->Start(text); });
+            m_activity->CallAfter([=, this]{ m_activity->Start(text); });
             break;
         }
 
@@ -260,7 +260,7 @@ void LocalazyLoginPanel::UpdateUserInfo()
     ChangeState(State::UpdatingInfo);
 
     LocalazyClient::Get().GetUserInfo()
-        .then_on_window(this, [=](LocalazyClient::UserInfo u) {
+        .then_on_window(this, [=, this](LocalazyClient::UserInfo u) {
             m_userName = u.name;
             m_userLogin = u.login;
             m_userAvatar = u.avatarUrl;
@@ -269,7 +269,7 @@ void LocalazyLoginPanel::UpdateUserInfo()
         .catch_all(m_activity->HandleError);
 
     LocalazyClient::Get().GetUserProjects()
-        .then_on_window(m_projects, [=](std::vector<LocalazyClient::ProjectInfo> projects){
+        .then_on_window(m_projects, [=, this](std::vector<LocalazyClient::ProjectInfo> projects){
             m_projects->DeleteAllItems();
         #ifdef __WXOSX__
             auto dummyIcon = wxArtProvider::GetIcon("AccountLocalazy");
@@ -289,7 +289,7 @@ void LocalazyLoginPanel::UpdateUserInfo()
                 if (!p.avatarUrl.empty())
                 {
                     http_client::download_from_anywhere(p.avatarUrl)
-                    .then_on_window(m_projects, [=](downloaded_file f)
+                    .then_on_window(m_projects, [=, this](downloaded_file f)
                     {
                         wxBitmap bitmap;
                     #ifdef __WXOSX__

@@ -372,7 +372,7 @@ public:
 
         RebuildMenu(menu);
 
-        menu->Bind(wxEVT_MENU, [=](wxCommandEvent& e)
+        menu->Bind(wxEVT_MENU, [=, this](wxCommandEvent& e)
         {
             auto f = GetRecentFiles()[e.GetId() - wxID_FILE1].GetFullPath();
             if (!wxFileExists(f))
@@ -388,7 +388,7 @@ public:
         },
         wxID_FILE1, wxID_FILE9);
 
-        menu->Bind(wxEVT_MENU, [=](wxCommandEvent&)
+        menu->Bind(wxEVT_MENU, [this](wxCommandEvent&)
         {
             ClearHistory();
         },
@@ -440,7 +440,7 @@ protected:
     void UpdateAfterChange()
     {
         // Update all menus with visible history:
-        m_menus.for_all([=](wxMenu *menu){ RebuildMenu(menu); });
+        m_menus.for_all([this](wxMenu *menu){ RebuildMenu(menu); });
 
         // Save the changes to persistent storage:
         wxConfigBase *cfg = wxConfig::Get();
@@ -598,7 +598,7 @@ RecentFilesCtrl::RecentFilesCtrl(wxWindow *parent)
     fixup_liquid_ass_breakage(scrollView);
 
 #else // !__WXOSX__
-    ColorScheme::SetupWindowColors(this, [=]
+    ColorScheme::SetupWindowColors(this, [=, this]
     {
         SetBackgroundColour(ColorScheme::Get(Color::SidebarBackground));
     });
@@ -608,7 +608,7 @@ RecentFilesCtrl::RecentFilesCtrl(wxWindow *parent)
 
     Bind(wxEVT_DATAVIEW_ITEM_ACTIVATED, &RecentFilesCtrl::OnActivate, this);
 
-    wxGetTopLevelParent(parent)->Bind(wxEVT_SHOW, [=](wxShowEvent& e){
+    wxGetTopLevelParent(parent)->Bind(wxEVT_SHOW, [this](wxShowEvent& e){
         e.Skip();
         RefreshContent();
     });

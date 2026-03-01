@@ -533,7 +533,7 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent, wxWindowID id, bool dispIDs)
 
     m_model.reset(new Model(m_appTextDir));
 
-    ColorScheme::SetupWindowColors(this, [=]
+    ColorScheme::SetupWindowColors(this, [=, this]
     {
         auto visualMode = ColorScheme::GetWindowMode(this);
         m_model->SetVisualMode(visualMode);
@@ -555,12 +555,12 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent, wxWindowID id, bool dispIDs)
 #ifdef __WXMSW__
     for (wxWindow *w : { (wxWindow*)this, (wxWindow*)GetMainWindow() })
     {
-        w->Bind(wxEVT_MENU, [=](wxCommandEvent&) {
+        w->Bind(wxEVT_MENU, [=, this](wxCommandEvent&) {
             SelectAll();
             wxDataViewEvent le(wxEVT_DATAVIEW_SELECTION_CHANGED, this, GetSelection());
             ProcessWindowEvent(le);
             }, wxID_SELECTALL);
-        w->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e) {
+        w->Bind(wxEVT_UPDATE_UI, [=, this](wxUpdateUIEvent& e) {
             e.Enable(GetItemCount() > 0);
             }, wxID_SELECTALL);
     }
@@ -684,7 +684,7 @@ void PoeditListCtrl::CreateColumns()
         m_colSource->SetAlignment(wxALIGN_RIGHT);
 #endif
 
-    ColorScheme::SetupWindowColors(this, [=]
+    ColorScheme::SetupWindowColors(this, [=, this]
     {
     #if !defined(__WXMSW__) && !defined(__WXOSX__)
         if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
@@ -767,7 +767,7 @@ void PoeditListCtrl::UpdateColumns()
 
 #ifdef __WXGTK__
     // wxGTK has delayed sizing computation, apparently
-    CallAfter([=]{
+    CallAfter([this]{
         FixIdColumnSize();
         SizeColumns();
     });
@@ -852,7 +852,7 @@ void PoeditListCtrl::CatalogChanged(const CatalogPtr& catalog)
     UpdateColumns();
 
     if (sizeOrCatalogChanged && GetItemCount() > 0)
-        CallAfter([=]{ SelectAndFocus(0); });
+        CallAfter([this]{ SelectAndFocus(0); });
 
     Refresh();
 }

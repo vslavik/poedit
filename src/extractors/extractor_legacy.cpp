@@ -77,7 +77,7 @@ void LegacyExtractorsDB::Read(wxConfigBase *cfg)
 {
     Data.clear();
 
-    DoReadLegacyExtractors(cfg, [=](wxConfigBase *c, wxString name)
+    DoReadLegacyExtractors(cfg, [=, this](wxConfigBase *c, wxString name)
     {
         if (!c->ReadBool("DontUseIn20", false))
             Data.push_back(LoadExtractorSpec(name, c));

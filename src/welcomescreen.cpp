@@ -104,7 +104,7 @@ public:
 
 WelcomeScreenBase::WelcomeScreenBase(wxWindow *parent) : wxPanel(parent, wxID_ANY)
 {
-    ColorScheme::SetupWindowColors(this, [=]
+    ColorScheme::SetupWindowColors(this, [=, this]
     {
         switch (ColorScheme::GetWindowMode(this))
         {
@@ -118,7 +118,7 @@ WelcomeScreenBase::WelcomeScreenBase(wxWindow *parent) : wxPanel(parent, wxID_AN
     });
 
     // Translate all button events to wxEVT_MENU and send them to the frame.
-    Bind(wxEVT_BUTTON, [=](wxCommandEvent& e){
+    Bind(wxEVT_BUTTON, [=, this](wxCommandEvent& e){
         wxCommandEvent event(wxEVT_MENU, e.GetId());
         event.SetEventObject(this);
         GetParent()->GetEventHandler()->AddPendingEvent(event);
@@ -229,7 +229,7 @@ WelcomeWindow::WelcomeWindow()
     else
 #endif
     {
-        ColorScheme::SetupWindowColors(this, [=]
+        ColorScheme::SetupWindowColors(this, [=, this]
                                        {
             if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
                 SetBackgroundColour(*wxWHITE);

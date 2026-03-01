@@ -295,11 +295,11 @@ public:
         SetDropTarget(new DropTarget(this));
 
         add->Bind(wxEVT_BUTTON, &PathsList::OnAddMenu, this);
-        remove->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){
+        remove->Bind(wxEVT_UPDATE_UI, [=, this](wxUpdateUIEvent& e){
             wxArrayInt dummy;
             e.Enable(m_list->GetSelections(dummy) > 0);
         });
-        remove->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){
+        remove->Bind(wxEVT_BUTTON, [=, this](wxCommandEvent&){
             wxArrayInt s;
             m_list->GetSelections(s);
             Remove(s);
@@ -419,7 +419,7 @@ protected:
             SetMacMenuIcon(itemWild, "asterisk");
         }
 
-        menu->Bind(wxEVT_MENU, [=](wxCommandEvent&){
+        menu->Bind(wxEVT_MENU, [=, this](wxCommandEvent&){
             wxDirDialog dlg(this,
                             MACOS_OR_OTHER("", _("Select directory")),
                             m_data->basepath,
@@ -429,7 +429,7 @@ protected:
         },
         idFolder);
 
-        menu->Bind(wxEVT_MENU, [=](wxCommandEvent&){
+        menu->Bind(wxEVT_MENU, [=, this](wxCommandEvent&){
             wxFileDialog dlg(this,
                              "",
                              m_data->basepath,
@@ -444,7 +444,7 @@ protected:
         },
         idFile);
 
-        menu->Bind(wxEVT_MENU, [=](wxCommandEvent&){
+        menu->Bind(wxEVT_MENU, [=, this](wxCommandEvent&){
             wxTextEntryDialog dlg(this, "", "");
             if (dlg.ShowModal() != wxID_OK)
                 return;
@@ -497,7 +497,7 @@ protected:
         
         if (!wxFileExists(file) && !wxDirExists(file))
             menuItem->Enable(false);
-        menu.Bind(wxEVT_MENU, [=](wxCommandEvent&){ ShowInFolder(file); }, idShowInFolder);
+        menu.Bind(wxEVT_MENU, [=, this](wxCommandEvent&){ ShowInFolder(file); }, idShowInFolder);
         PopupMenu(&menu);
     }
 
@@ -580,7 +580,7 @@ public:
 
         m_commentsPrefix->Bind(
             wxEVT_UPDATE_UI,
-            [=](wxUpdateUIEvent& e){ e.Enable(m_commentsPrefixed->GetValue()); });
+            [this](wxUpdateUIEvent& e){ e.Enable(m_commentsPrefixed->GetValue()); });
 
         FitSizer();
         CenterOnParent();
@@ -723,7 +723,7 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
     m_basePath = new BasePathCtrl(page_paths);
     m_paths = new SourcePathsList(page_paths, m_pathsData);
     m_excludedPaths = new ExcludedPathsList(page_paths, m_pathsData);
-    m_pathsData->RefreshView = [=]{
+    m_pathsData->RefreshView = [=, this]{
         m_basePath->SetPath(m_pathsData->basepath);
         m_paths->UpdateFromData();
         m_excludedPaths->UpdateFromData();
@@ -778,9 +778,9 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
     {
         m_pluralFormsDefault->Bind(wxEVT_RADIOBUTTON, &PropertiesDialog::OnPluralFormsDefault, this);
         m_pluralFormsExpr->Bind(wxEVT_UPDATE_UI,
-                                [=](wxUpdateUIEvent& e){ e.Enable(m_pluralFormsCustom->GetValue()); });
+                                [this](wxUpdateUIEvent& e){ e.Enable(m_pluralFormsCustom->GetValue()); });
         m_pluralFormsExpr->Bind(wxEVT_TEXT,
-                                [=](wxCommandEvent& e){ m_validatedPlural = -1; e.Skip(); });
+                                [this](wxCommandEvent& e){ m_validatedPlural = -1; e.Skip(); });
     }
     else
     {
@@ -791,14 +791,14 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
     }
 
     Bind(wxEVT_UPDATE_UI,
-        [=](wxUpdateUIEvent& e){ e.Enable(Validate()); },
+        [this](wxUpdateUIEvent& e){ e.Enable(Validate()); },
         wxID_OK);
-    CallAfter([=]{
+    CallAfter([this]{
         m_project->SetFocus();
     });
 
     auto openBasepath = XRCCTRL(*this, "open_basepath", wxBitmapButton);
-    openBasepath->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){
+    openBasepath->Bind(wxEVT_BUTTON, [this](wxCommandEvent&){
         wxLaunchDefaultApplication(m_pathsData->basepath);
     });
 

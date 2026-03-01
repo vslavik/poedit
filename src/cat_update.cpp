@@ -112,7 +112,7 @@ MergeSummaryDialog::MergeSummaryDialog(wxWindow *parent)
     auto panel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | BORDER_LISTLIKE);
     SetupListlikeBorder(panel);
 
-    ColorScheme::SetupWindowColors(panel, [=]
+    ColorScheme::SetupWindowColors(panel, [=, this]
     {
         if (ColorScheme::GetWindowMode(panel) == ColorScheme::Light)
             panel->SetBackgroundColour(*wxWHITE);
@@ -541,7 +541,7 @@ void MergeProgressWindow::AddViewDetails(const MergeStats& r)
     sizer->Insert(0, button);
     sizer->InsertStretchSpacer(1);
 
-    button->Bind(wxEVT_BUTTON, [=](wxCommandEvent&)
+    button->Bind(wxEVT_BUTTON, [=, this](wxCommandEvent&)
     {
         auto dlg = new MergeSummaryDialog(this);
         dlg->TransferTo(r);

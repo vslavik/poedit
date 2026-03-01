@@ -101,12 +101,12 @@ public:
 #ifdef __WXOSX__
         // Refresh the content of prefs panels when re-opening it.
         // TODO: Use proper config settings notifications or user defaults bindings instead
-        parent->Bind(wxEVT_ACTIVATE, [=](wxActivateEvent& e){
+        parent->Bind(wxEVT_ACTIVATE, [=, this](wxActivateEvent& e){
             e.Skip();
             if (e.GetActive())
                 TransferDataToWindow();
         });
-        Bind(wxEVT_SHOW, [=](wxShowEvent& e){
+        Bind(wxEVT_SHOW, [=, this](wxShowEvent& e){
             e.Skip();
             if (e.IsShown())
                 TransferDataToWindow();
@@ -251,8 +251,8 @@ public:
 
         if (wxPreferencesEditor::ShouldApplyChangesImmediately())
         {
-            Bind(wxEVT_CHECKBOX, [=](wxCommandEvent&){ TransferDataFromWindow(); });
-            Bind(wxEVT_TEXT, [=](wxCommandEvent&){ TransferDataFromWindow(); });
+            Bind(wxEVT_CHECKBOX, [this](wxCommandEvent&){ TransferDataFromWindow(); });
+            Bind(wxEVT_TEXT, [this](wxCommandEvent&){ TransferDataFromWindow(); });
 
             // Some settings directly affect the UI, so need a more expensive handler:
             m_useFontList->Bind(wxEVT_CHECKBOX, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this);
@@ -263,8 +263,8 @@ public:
         }
 
         // handle UI updates:
-        m_fontList->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable(m_useFontList->GetValue()); });
-        m_fontText->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable(m_useFontText->GetValue()); });
+        m_fontList->Bind(wxEVT_UPDATE_UI, [this](wxUpdateUIEvent& e){ e.Enable(m_useFontList->GetValue()); });
+        m_fontText->Bind(wxEVT_UPDATE_UI, [this](wxUpdateUIEvent& e){ e.Enable(m_useFontText->GetValue()); });
 
 #if NEED_CHOOSELANG_UI
         m_uiLanguage->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){ ChangeUILanguage(); });
@@ -414,7 +414,7 @@ public:
         manage->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
 
-        m_mergeBehavior->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable(m_mergeUse->GetValue() == true); });
+        m_mergeBehavior->Bind(wxEVT_UPDATE_UI, [this](wxUpdateUIEvent& e){ e.Enable(m_mergeUse->GetValue() == true); });
 
         m_stats->Bind(wxEVT_UPDATE_UI, &TMPageWindow::OnUpdateUI, this);
         manage->Bind(wxEVT_UPDATE_UI, &TMPageWindow::OnUpdateUI, this);
@@ -425,8 +425,8 @@ public:
 
         if (wxPreferencesEditor::ShouldApplyChangesImmediately())
         {
-            m_mergeUse->Bind(wxEVT_CHECKBOX, [=](wxCommandEvent&){ TransferDataFromWindow(); });
-            m_mergeBehavior->Bind(wxEVT_CHOICE, [=](wxCommandEvent&){ TransferDataFromWindow(); });
+            m_mergeUse->Bind(wxEVT_CHECKBOX, [this](wxCommandEvent&){ TransferDataFromWindow(); });
+            m_mergeBehavior->Bind(wxEVT_CHOICE, [this](wxCommandEvent&){ TransferDataFromWindow(); });
             // Some settings directly affect the UI, so need a more expensive handler:
             m_useTM->Bind(wxEVT_CHECKBOX, &TMPageWindow::TransferDataFromWindowAndUpdateUI, this);
         }
@@ -782,7 +782,7 @@ public:
         sizer->AddSpacer(PX(1));
         sizer->Add(buttonSizer, wxSizerFlags().BORDER_MACOS(wxLEFT, PX(1)));
 
-        ColorScheme::SetupWindowColors(this, [=]
+        ColorScheme::SetupWindowColors(this, [=, this]
         {
             customExLabel->SetForegroundColour(ExplanationLabel::GetTextColor());
 
@@ -802,9 +802,9 @@ public:
         m_list->Bind(wxEVT_CHECKLISTBOX, &ExtractorsPageWindow::OnEnableExtractor, this);
         m_list->Bind(wxEVT_LISTBOX_DCLICK, &ExtractorsPageWindow::OnEditExtractor, this);
 
-        m_edit->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e) { e.Enable(m_list->GetSelection() != wxNOT_FOUND); });
-        m_delete->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e) { e.Enable(m_list->GetSelection() != wxNOT_FOUND); });
-        customExLabel->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e) { e.Show(m_list->GetCount() > 0); });
+        m_edit->Bind(wxEVT_UPDATE_UI, [this](wxUpdateUIEvent& e) { e.Enable(m_list->GetSelection() != wxNOT_FOUND); });
+        m_delete->Bind(wxEVT_UPDATE_UI, [this](wxUpdateUIEvent& e) { e.Enable(m_list->GetSelection() != wxNOT_FOUND); });
+        customExLabel->Bind(wxEVT_UPDATE_UI, [this](wxUpdateUIEvent& e) { e.Show(m_list->GetCount() > 0); });
     }
 
     void CreateBuiltinExtractorsUI(wxWindow *panel, wxSizer *topsizer)
@@ -904,7 +904,7 @@ private:
         );
 
         m_suppressDataTransfer++;
-        dlg->ShowWindowModalThenDo([=](int retcode){
+        dlg->ShowWindowModalThenDo([=, this](int retcode){
             m_suppressDataTransfer--;
             (void)dlg; // force use
             if (retcode == wxID_OK)
@@ -930,7 +930,7 @@ private:
         m_extractors.Data.push_back(info);
         auto index = m_list->Append(wxEmptyString);
         m_list->Check(index);
-        EditExtractor(index, [=](bool added){
+        EditExtractor(index, [=, this](bool added){
             if (added)
             {
                 m_edit->Enable(true);
@@ -951,7 +951,7 @@ private:
 
     void OnEditExtractor(wxCommandEvent&)
     {
-        EditExtractor(m_list->GetSelection(), [=](bool changed){
+        EditExtractor(m_list->GetSelection(), [=, this](bool changed){
             if (changed && wxPreferencesEditor::ShouldApplyChangesImmediately())
                 TransferDataFromWindow();
         });
@@ -1021,9 +1021,9 @@ public:
     #ifdef __WXOSX__
         // This window was possibly created on demand (pre-macOS 11), possibly
         // hidden. Initialize as soon as it is shown:
-        Bind(wxEVT_SHOW, [=](wxShowEvent& e){
+        Bind(wxEVT_SHOW, [this](wxShowEvent& e){
             if (e.IsShown())
-                CallAfter([=]{ m_accounts->InitializeAfterShown(); });
+                CallAfter([this]{ m_accounts->InitializeAfterShown(); });
         });
     #else
         // On other platforms, notebook pages are all created at once. Don't do
@@ -1033,10 +1033,10 @@ public:
         auto notebook = dynamic_cast<wxNotebook*>(parent);
         if (notebook)
         {
-            notebook->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, [=](wxBookCtrlEvent& e){
+            notebook->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, [=, this](wxBookCtrlEvent& e){
                 e.Skip();
                 if (notebook->GetPage(e.GetSelection()) == this)
-                    CallAfter([=]{ m_accounts->InitializeAfterShown(); });
+                    CallAfter([this]{ m_accounts->InitializeAfterShown(); });
             });
         }
     #endif
@@ -1083,7 +1083,7 @@ public:
                    wxSizerFlags().Expand().Border(wxLEFT, UnderCheckboxIndent()));
 
         if (wxPreferencesEditor::ShouldApplyChangesImmediately())
-            Bind(wxEVT_CHECKBOX, [=](wxCommandEvent&){ TransferDataFromWindow(); });
+            Bind(wxEVT_CHECKBOX, [this](wxCommandEvent&){ TransferDataFromWindow(); });
     }
 
     void InitValues(const wxConfigBase&) override
@@ -1151,13 +1151,13 @@ public:
 
         if (wxPreferencesEditor::ShouldApplyChangesImmediately())
         {
-            Bind(wxEVT_CHECKBOX, [=](wxCommandEvent&){ TransferDataFromWindow(); });
-            Bind(wxEVT_CHOICE, [=](wxCommandEvent&){ TransferDataFromWindow(); });
-            Bind(wxEVT_TEXT, [=](wxCommandEvent&){ TransferDataFromWindow(); });
+            Bind(wxEVT_CHECKBOX, [this](wxCommandEvent&){ TransferDataFromWindow(); });
+            Bind(wxEVT_CHOICE, [this](wxCommandEvent&){ TransferDataFromWindow(); });
+            Bind(wxEVT_TEXT, [this](wxCommandEvent&){ TransferDataFromWindow(); });
         }
 
         // handle UI updates:
-        m_wrapWidth->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable(m_wrap->GetValue()); });
+        m_wrapWidth->Bind(wxEVT_UPDATE_UI, [this](wxUpdateUIEvent& e){ e.Enable(m_wrap->GetValue()); });
     }
 
     void InitValues(const wxConfigBase& cfg) override

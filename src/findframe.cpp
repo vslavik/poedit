@@ -223,12 +223,12 @@ FindFrame::FindFrame(PoeditFrame *owner,
 #endif
 
     OnModeChanged();
-    m_mode->Bind(wxEVT_CHOICE, [=](wxCommandEvent&){ OnModeChanged(); });
+    m_mode->Bind(wxEVT_CHOICE, [this](wxCommandEvent&){ OnModeChanged(); });
 
     m_btnReplace->Bind(wxEVT_BUTTON, &FindFrame::OnReplace, this);
     m_btnReplaceAll->Bind(wxEVT_BUTTON, &FindFrame::OnReplaceAll, this);
-    m_btnReplace->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable((bool)m_lastItem); });
-    m_btnReplaceAll->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable(!ms_text.empty()); });
+    m_btnReplace->Bind(wxEVT_UPDATE_UI, [this](wxUpdateUIEvent& e){ e.Enable((bool)m_lastItem); });
+    m_btnReplaceAll->Bind(wxEVT_UPDATE_UI, [this](wxUpdateUIEvent& e){ e.Enable(!ms_text.empty()); });
 
     // SetHint() needs to be called *after* binding any event handlers, for
     // compatibility with its generic implementation:

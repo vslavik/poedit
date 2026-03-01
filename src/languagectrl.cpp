@@ -167,7 +167,7 @@ void LanguageCtrl::Init(Language lang)
     if (lang.IsValid())
         SetValue(lang.FormatForRoundtrip());
 
-    Bind(wxEVT_KILL_FOCUS, [=](wxFocusEvent&){ NormalizeValue(); });
+    Bind(wxEVT_KILL_FOCUS, [this](wxFocusEvent&){ NormalizeValue(); });
 }
 
 void LanguageCtrl::SetLang(const Language& lang)
@@ -221,11 +221,11 @@ LanguageDialog::LanguageDialog(wxWindow *parent)
     sizer->Add(label, wxSizerFlags().Border(wxBOTTOM, PX(4)));
     sizer->Add(m_language, wxSizerFlags().Expand());
 
-    m_language->Bind(wxEVT_TEXT,     [=](wxCommandEvent& e){ m_validatedLang = -1; e.Skip(); });
-    m_language->Bind(wxEVT_COMBOBOX, [=](wxCommandEvent& e){ m_validatedLang = -1; e.Skip(); });
+    m_language->Bind(wxEVT_TEXT,     [this](wxCommandEvent& e){ m_validatedLang = -1; e.Skip(); });
+    m_language->Bind(wxEVT_COMBOBOX, [this](wxCommandEvent& e){ m_validatedLang = -1; e.Skip(); });
 
     Bind(wxEVT_UPDATE_UI,
-        [=](wxUpdateUIEvent& e){ e.Enable(Validate()); },
+        [this](wxUpdateUIEvent& e){ e.Enable(Validate()); },
         wxID_OK);
 
     FitSizer();

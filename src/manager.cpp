@@ -205,7 +205,7 @@ ManagerFrame::ManagerFrame() :
     list->Add(wxArtProvider::GetBitmap("poedit-status-cat-ok"));
     m_listCat->AssignImageList(list, wxIMAGE_LIST_SMALL);
 
-    ColorScheme::SetupWindowColors(this, [=]
+    ColorScheme::SetupWindowColors(this, [=, this]
     {
         wxColour col;
         if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
@@ -235,7 +235,7 @@ ManagerFrame::ManagerFrame() :
     m_listCat->Bind(wxEVT_LIST_ITEM_ACTIVATED, &ManagerFrame::OnOpenCatalog, this);
     btn_new->Bind(wxEVT_BUTTON, &ManagerFrame::OnNewProject, this);
     btn_delete->Bind(wxEVT_BUTTON, &ManagerFrame::OnDeleteProject, this);
-    btn_delete->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e) { e.Enable(m_listPrj->GetSelection() != wxNOT_FOUND); });
+    btn_delete->Bind(wxEVT_UPDATE_UI, [this](wxUpdateUIEvent& e) { e.Enable(m_listPrj->GetSelection() != wxNOT_FOUND); });
     btn_edit->Bind(wxEVT_BUTTON, &ManagerFrame::OnEditProject, this);
     btn_update->Bind(wxEVT_BUTTON, &ManagerFrame::OnUpdateProject, this);
 }
@@ -472,7 +472,7 @@ void ManagerFrame::EditProject(int id, TFunctor completionHandler)
         prj_dirs->SetStrings(adirs);
     }
 
-    dlg->ShowWindowModalThenDo([=](int retcode){
+    dlg->ShowWindowModalThenDo([=, this](int retcode){
         if (retcode == wxID_OK)
         {
             wxString dirs;
@@ -530,7 +530,7 @@ void ManagerFrame::OnNewProject(wxCommandEvent&)
         {
             m_listPrj->Append(_("<unnamed>"), (void*)(wxIntPtr)i);
             m_curPrj = i;
-            EditProject(i, [=](bool added){
+            EditProject(i, [=, this](bool added){
                 if (added)
                 {
                     if (i == max)
@@ -605,7 +605,7 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent&)
 
         auto cancellation = std::make_shared<dispatch::cancellation_token>();
         wxWindowPtr<ProgressWindow> progress(new ProgressWindow(this, _("Updating project catalogs"), cancellation));
-        progress->RunTaskThenDo([=]()
+        progress->RunTaskThenDo([=, this]()
         {
             Progress progress((int)m_catalogs.GetCount());
 
@@ -627,7 +627,7 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent&)
                 }
              }
         },
-        [=]()
+        [=, this]()
         {
             UpdateListCat();
         });

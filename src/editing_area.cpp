@@ -204,7 +204,7 @@ public:
 
         SetColor(fg, bg);
 
-        ColorScheme::SetupWindowColors(this, [=]
+        ColorScheme::SetupWindowColors(this, [=, this]
         {
         #ifdef __WXMSW__
             SetBackgroundColour(ColorScheme::Get(Color::EditingThickSeparator));
@@ -470,7 +470,7 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
 
     SetupTextCtrlSizes();
 
-    ColorScheme::SetupWindowColors(this, [=]
+    ColorScheme::SetupWindowColors(this, [=, this]
     {
         SetBackgroundColour(ColorScheme::Get(Color::EditingBackground));
     #ifdef __WXMSW__
@@ -540,7 +540,7 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
 
     ShowPluralFormUI(false);
 
-    ColorScheme::SetupWindowColors(this, [=]
+    ColorScheme::SetupWindowColors(this, [=, this]
     {
         m_fuzzy->SetColors(ColorScheme::Get(Color::FuzzySwitch), ColorScheme::Get(Color::FuzzySwitchInactive));
     #ifdef __WXMSW__
@@ -550,9 +550,9 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
     #endif
     });
 
-    m_textTrans->Bind(wxEVT_TEXT, [=](wxCommandEvent& e){ e.Skip(); UpdateFromTextCtrl(); });
+    m_textTrans->Bind(wxEVT_TEXT, [this](wxCommandEvent& e){ e.Skip(); UpdateFromTextCtrl(); });
 
-    m_fuzzy->Bind(wxEVT_TOGGLEBUTTON, [=](wxCommandEvent& e){
+    m_fuzzy->Bind(wxEVT_TOGGLEBUTTON, [=, this](wxCommandEvent& e){
         // The user explicitly changed fuzzy status (e.g. to on). Normally, if the
         // user edits an entry, it's fuzzy flag is cleared, but if the user sets
         // fuzzy on to indicate the translation is problematic and then continues
@@ -563,7 +563,7 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
         e.Skip();
     });
 
-    m_pluralNotebook->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, [=](wxBookCtrlEvent& e){
+    m_pluralNotebook->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, [=, this](wxBookCtrlEvent& e){
         e.Skip();
         UpdateCharCounter(m_associatedList->GetCurrentCatalogItem());
     });
@@ -846,7 +846,7 @@ void EditingArea::RecreatePluralTextCtrls(CatalogPtr catalog)
 #ifndef __WXOSX__
         txt->SetFont(m_textTrans->GetFont());
 #endif
-        txt->Bind(wxEVT_TEXT, [=](wxCommandEvent& e){ e.Skip(); UpdateFromTextCtrl(); });
+        txt->Bind(wxEVT_TEXT, [this](wxCommandEvent& e){ e.Skip(); UpdateFromTextCtrl(); });
         m_textTransPlural.push_back(txt);
         m_pluralNotebook->AddPage(txt, desc);
 

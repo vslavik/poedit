@@ -101,7 +101,7 @@ FileViewer::FileViewer(wxWindow*)
 {
     SetName("fileviewer");
 
-    ColorScheme::SetupWindowColors(this, [=]
+    ColorScheme::SetupWindowColors(this, [=, this]
     {
         // match CSS background color:
         if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
@@ -174,7 +174,7 @@ FileViewer::FileViewer(wxWindow*)
     wxAcceleratorTable accel(WXSIZEOF(entries), entries);
     SetAcceleratorTable(accel);
 
-    Bind(wxEVT_MENU, [=](wxCommandEvent&){ Destroy(); }, wxID_CLOSE);
+    Bind(wxEVT_MENU, [this](wxCommandEvent&){ Destroy(); }, wxID_CLOSE);
 #endif
 }
 

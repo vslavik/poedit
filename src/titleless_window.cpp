@@ -193,7 +193,7 @@ TitlelessWindowBase<T>::TitlelessWindowBase(wxWindow* parent,
 #endif
 
     if (m_closeButton)
-        m_closeButton->Bind(wxEVT_BUTTON, [=](wxCommandEvent&) { this->Close(); });
+        m_closeButton->Bind(wxEVT_BUTTON, [this](wxCommandEvent&) { this->Close(); });
 }
 
 #ifdef __WXMSW__

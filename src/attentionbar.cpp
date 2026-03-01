@@ -120,7 +120,7 @@ AttentionBar::AttentionBar(wxWindow *parent)
     // the bar should be initially hidden
     Show(false);
 
-    ColorScheme::SetupWindowColors(this, [=]
+    ColorScheme::SetupWindowColors(this, [=, this]
     {
         UpdateBgColor();
 

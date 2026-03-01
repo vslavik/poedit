@@ -157,7 +157,7 @@ public:
 
         m_panel->InitializeAfterShown();
 
-        m_panel->NotifyShouldBeRaised = [=]{
+        m_panel->NotifyShouldBeRaised = [this]{
             Raise();
         };
     }
@@ -181,7 +181,7 @@ class CloudLoginDialog : public CloudEditLoginDialog<T>
 public:
     CloudLoginDialog(wxWindow *parent, const wxString& title) : CloudEditLoginDialog<T>(parent, title)
     {
-        this->m_panel->NotifyContentChanged = [=]{
+        this->m_panel->NotifyContentChanged = [this]{
             if (this->m_panel->IsSignedIn())
             {
                 this->Raise();

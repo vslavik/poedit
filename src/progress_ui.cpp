@@ -320,7 +320,7 @@ void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
         e.Skip();
     });
 
-    auto bg = dispatch::async([=, task = std::move(task)]
+    auto bg = dispatch::async([=, this, task=std::move(task)]
     {
         CapturingThreadLogger logger(loggedErrors);
         Progress progress(1, *m_progress, 1);
@@ -335,7 +335,7 @@ void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
 
         return task();
     })
-    .then_on_main([=](BackgroundTaskResult result)
+    .then_on_main([=, this](BackgroundTaskResult result)
     {
         bool summaryShown = result ? ShowSummary(result, *loggedErrors) : false;
         if (summaryShown)
@@ -350,18 +350,18 @@ void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
                 EndModal(wxID_OK);
         }
     })
-    .catch_ex<dispatch::cancellation_exception>([=](auto&)
+    .catch_ex<dispatch::cancellation_exception>([=, this](auto&)
     {
         EndModal(wxID_CANCEL);
     })
-    .catch_ex<BackgroundTaskException>([=](auto& e)
+    .catch_ex<BackgroundTaskException>([=, this](auto& e)
     {
         SetErrorMessage(e.What());
         if (!e.Details().empty())
             loggedErrors->push_back(e.Details());
         EndModal(wxID_CANCEL);
     })
-    .catch_all([=](dispatch::exception_ptr e)
+    .catch_all([=, this](dispatch::exception_ptr e)
     {
         loggedErrors->push_back(DescribeException(e));
         EndModal(wxID_CANCEL);
@@ -386,7 +386,7 @@ void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
     }
     else
     {
-        ShowWindowModalThenDo([=, completionHandler = std::move(completionHandler)](int retcode)
+        ShowWindowModalThenDo([=, this, completionHandler=std::move(completionHandler)](int retcode)
         {
             detach();
             m_progress.reset();
@@ -412,7 +412,7 @@ void ProgressWindow::DoRunTask(std::function<BackgroundTaskResult()>&& task,
 
 void ProgressWindow::update_message(const wxString& text)
 {
-    dispatch::on_main([=]
+    dispatch::on_main([=, this]
     {
         m_progressMessage->SetLabel(text);
     });
@@ -421,7 +421,7 @@ void ProgressWindow::update_message(const wxString& text)
 
 void ProgressWindow::update_progress(double completedFraction)
 {
-    dispatch::on_main([=]
+    dispatch::on_main([=, this]
     {
         auto value = std::min((int)std::lround(completedFraction * PROGRESS_BAR_RANGE), PROGRESS_BAR_RANGE);
         m_gauge->SetValue(value);

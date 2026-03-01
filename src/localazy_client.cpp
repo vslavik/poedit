@@ -231,7 +231,7 @@ dispatch::future<std::shared_ptr<LocalazyClient::ProjectInfo>> LocalazyClient::H
 
     return
     ExchangeTemporaryToken(tempToken)
-    .then_on_main([=](ProjectInfo prjInfo){
+    .then_on_main([=, this](ProjectInfo prjInfo){
         if (m_authCallback)
         {
             m_authCallback->set_value();

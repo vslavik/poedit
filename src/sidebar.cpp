@@ -316,7 +316,7 @@ public:
 
         SetSizerAndFit(top);
 
-        ColorScheme::SetupWindowColors(this, [=]
+        ColorScheme::SetupWindowColors(this, [=, this]
         {
             // setup mouse hover highlighting:
             auto bg = parent->GetBackgroundColour();
@@ -408,7 +408,7 @@ private:
         #else
             SetWindowVariant(wxWINDOW_VARIANT_SMALL);
         #endif
-            ColorScheme::SetupWindowColors(this, [=]
+            ColorScheme::SetupWindowColors(this, [=, this]
             {
                 SetForegroundColour(ExplanationLabel::GetTextColor());
             });
@@ -591,7 +591,7 @@ void SuggestionsSidebarBlock::InitControls()
 #ifdef __WXMSW__
     m_iGotNothing->SetFont(m_iGotNothing->GetFont().Larger());
 #endif
-    ColorScheme::SetupWindowColors(m_iGotNothing, [=]
+    ColorScheme::SetupWindowColors(m_iGotNothing, [=, this]
     {
         m_suggestionsPanel->SetBackgroundColour(m_parent->GetBackgroundColour());
         m_iGotNothing->SetForegroundColour(ExplanationLabel::GetTextColor().ChangeLightness(150));
@@ -960,7 +960,7 @@ Sidebar::Sidebar(wxWindow *parent, wxMenu *suggestionsMenu)
       m_catalog(nullptr),
       m_selectedItem(nullptr)
 {
-    ColorScheme::SetupWindowColors(this, [=]
+    ColorScheme::SetupWindowColors(this, [=, this]
     {
         SetBackgroundColour(ColorScheme::Get(Color::SidebarBackground));
     });

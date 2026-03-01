@@ -160,7 +160,7 @@ public:
 
         return
         m_native.request(req)
-        .then([=](http::http_response response)
+        .then([=, this](http::http_response response)
         {
             handle_error(response);
             return ::json::parse(response.extract_utf8string().get());
@@ -175,14 +175,14 @@ public:
 
         return
         m_native.request(req)
-        .then([=](http::http_response response)
+        .then([=, this](http::http_response response)
         {
             handle_error(response);
 
             std::string etag;
             auto i_etag = response.headers().find(http::header_names::etag);
             if (i_etag != response.headers().end())
-				etag = str::to_utf8(i_etag->second);
+                etag = str::to_utf8(i_etag->second);
 
             downloaded_file file(extract_attachment_filename(req, response), etag);
 
@@ -220,7 +220,7 @@ public:
 
         return
         m_native.request(req)
-        .then([=](http::http_response response)
+        .then([=, this](http::http_response response)
         {
             handle_error(response);
             return ::json::parse(response.extract_utf8string().get());

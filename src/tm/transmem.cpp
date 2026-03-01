@@ -501,7 +501,7 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& srclang,
         PerformSearchWithBlock
         (
             searcher.ptr(), sa, QUALITY_THRESHOLD, /*scoreScaling=*/0.7,
-            [=,&results](DocumentPtr doc, double score)
+            [=, this, &results](DocumentPtr doc, double score)
             {
                 auto s = get_text_field(doc, sourceField);
                 auto t = get_text_field(doc, L"trans");

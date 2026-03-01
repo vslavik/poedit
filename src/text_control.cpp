@@ -604,13 +604,13 @@ public:
 AnyTranslatableTextCtrl::AnyTranslatableTextCtrl(wxWindow *parent, wxWindowID winid, int style)
    : CustomizedTextCtrl(parent, winid, style)
 {
-    ColorScheme::SetupWindowColors(this, [=]
+    ColorScheme::SetupWindowColors(this, [=, this]
     {
         m_attrs.reset(new Attributes(this));
         HighlightText();
     });
 
-    Bind(wxEVT_TEXT, [=](wxCommandEvent& e){
+    Bind(wxEVT_TEXT, [=, this](wxCommandEvent& e){
         e.Skip();
         HighlightText();
     });
@@ -892,7 +892,7 @@ void AnyTranslatableTextCtrl::HighlightText()
 
     if (m_syntax)
     {
-        m_syntax->Highlight(text, [=](int a, int b, SyntaxHighlighter::TextKind kind){
+        m_syntax->Highlight(text, [=, this](int a, int b, SyntaxHighlighter::TextKind kind){
             [layout addTemporaryAttributes:m_attrs->For(kind) forCharacterRange:NSMakeRange(a, b-a)];
         });
     }
@@ -930,7 +930,7 @@ void AnyTranslatableTextCtrl::HighlightText()
 
         if (m_syntax)
         {
-            m_syntax->Highlight(text, [=](int a, int b, SyntaxHighlighter::TextKind kind){
+            m_syntax->Highlight(text, [=, this](int a, int b, SyntaxHighlighter::TextKind kind){
                 SetStyle(a, b, m_attrs->For(kind));
             });
         }
@@ -981,7 +981,7 @@ void TranslationTextCtrl::OnText(wxCommandEvent& e)
         {
           #ifdef __WXGTK__
             // GTK+ doesn't like modifying the content in the "changed" signal:
-            CallAfter([=]{
+            CallAfter([=, this]{
                 Replace(pos - 1, pos, "\\n\n");
                 HighlightText();
             });
