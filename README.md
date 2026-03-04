@@ -68,7 +68,7 @@ symlinks and so you'll need to enabled [Developer Mode](https://msdn.microsoft.c
 
     git config --global core.symlinks true
 
-After checkout, use the `Poedit.sln` solution to build everything. To build the installer, open `win32/poedit.iss` in Inno Setup and compile the project.
+After checkout, use the `Poedit.slnx` solution to build everything. To build the installer, open `win32/poedit.iss` in Inno Setup and compile the project.
 
 
  ### Installing from Git repository

@@ -51,14 +51,14 @@
 
   <Target Name="Build">
     <MSBuild
-      Projects="..\Poedit.sln"
+      Projects="..\Poedit.slnx"
       Properties="Configuration=$(Configuration)"
       />
   </Target>
 
   <Target Name="Clean">
     <MSBuild
-      Projects="..\Poedit.sln"
+      Projects="..\Poedit.slnx"
       Properties="Configuration=$(Configuration)"
       Targets="Clean"
       />
