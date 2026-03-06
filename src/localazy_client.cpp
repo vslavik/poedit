@@ -378,7 +378,7 @@ dispatch::future<CloudAccountClient::ProjectDetails> LocalazyClient::GetProjectD
 
                        // there's only one "file" in Localazy projects:
                        ProjectFile f;
-                       f.title = _("All strings");
+                       f.title = str::to_wstring(_("All strings"));
                        prj.at("url").get_to(f.description);
                        details.files.push_back(f);
 
