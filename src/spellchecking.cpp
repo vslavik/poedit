@@ -64,6 +64,27 @@ inline std::string SpellcheckCode(const Language& lang)
 template<typename TFunc>
 auto DoWithExpandedLanguages(const Language& lang, TFunc&& lambda)
 {
+#if defined(__WXGTK__) || defined(__WXOSX__)
+    if (lang.Code() == "sr@latin" || lang.Code() == "sr_RS@latin")
+    {
+    #ifdef __WXOSX__
+        // This has to be done before normal match, because OSX will match "sr" (Cyrillic) from
+        // Dictionaries.app otherwise; it matches hunspell too, so let's try it there too
+        return lambda("sr-Latn");
+    #else
+        // Linux hunspell for Serbian is a mess. Let's try a few variants observed in the field.
+        if (auto res = lambda("sr_Latn")) // upstream
+            return res;
+        if (auto res = lambda("sr_Latn")) // upstream
+            return res;
+        if (auto res = lambda("sr_Latn_RS")) // Debian/Ubuntu
+            return res;
+        if (auto res = lambda("sh_YU")) // Fedora/RedHat as of 2026, yes for real
+            return res;
+    #endif
+    }
+#endif
+
     if (auto res = lambda(SpellcheckCode(lang)))
         return res;
 
