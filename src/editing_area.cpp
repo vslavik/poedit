@@ -347,9 +347,10 @@ protected:
 class EditingArea::CharCounter : public SecondaryLabel
 {
 public:
-    CharCounter(wxWindow *parent, Mode mode) : SecondaryLabel(parent, "MMMM | MMMM"), m_mode(mode)
+    CharCounter(wxWindow *parent, Mode mode)
+        : SecondaryLabel(parent, "MMMM | MMMM", wxALIGN_RIGHT | wxST_NO_AUTORESIZE),
+          m_mode(mode)
     {
-        SetWindowStyleFlag(wxALIGN_RIGHT | wxST_NO_AUTORESIZE);
 
         switch (mode)
         {

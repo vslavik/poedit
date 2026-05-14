@@ -143,7 +143,7 @@ public:
 class SecondaryLabel : public wxStaticText
 {
 public:
-    SecondaryLabel(wxWindow *parent, const wxString& label);
+    SecondaryLabel(wxWindow *parent, const wxString& label, long style = 0);
 
     static wxColour GetTextColor() { return ExplanationLabel::GetTextColor(); }
 };

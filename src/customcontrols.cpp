@@ -306,8 +306,8 @@ ExplanationLabel::ExplanationLabel(wxWindow *parent, const wxString& label)
 }
 
 
-SecondaryLabel::SecondaryLabel(wxWindow *parent, const wxString& label)
-    : wxStaticText(parent, wxID_ANY, label)
+SecondaryLabel::SecondaryLabel(wxWindow *parent, const wxString& label, long style)
+    : wxStaticText(parent, wxID_ANY, label, wxDefaultPosition, wxDefaultSize, style)
 {
 #if defined(__WXOSX__) || defined(__WXGTK__)
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
