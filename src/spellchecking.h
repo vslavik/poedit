@@ -48,7 +48,7 @@ inline bool IsSpellcheckingAvailable()
 
 #ifdef __WXOSX__
 // Set the global spellchecking language
-bool SetSpellcheckerLang(const wxString& lang);
+bool SetSpellcheckerLang(const Language& lang);
 #endif
 
 // Does any initialization needed to be able to use spellchecker with the control later.

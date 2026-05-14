@@ -70,6 +70,9 @@ public:
     /// Minimizes the subtags, e.g. returns cs for cs-CZ, but en-GB for en-GB
     Language MinimizeSubtags() const;
 
+    /// Adds likely subtags, but doesn't add script unless it was explicitly specified
+    Language AddRelevantLikelySubtags() const;
+
     /// Returns name of the locale suitable for ICU
     std::string IcuLocaleName() const { return m_icuLocale; }
 

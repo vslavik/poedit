@@ -836,7 +836,7 @@ void PoeditFrame::InitSpellchecker()
 #ifdef __WXOSX__
     if (enabled)
     {
-        if ( !SetSpellcheckerLang(lang.LangAndCountry()) )
+        if ( !SetSpellcheckerLang(lang) )
         {
             enabled = false;
             report_problem = true;

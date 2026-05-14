@@ -45,6 +45,47 @@
 
 #include "edapp.h"
 
+namespace
+{
+
+inline std::string SpellcheckCode(const Language& lang)
+{
+#ifdef __WXOSX__
+    return lang.LanguageTag();
+#else
+    return lang.Code();
+#endif
+}
+
+// Run the provided code with not only the original language, but spellchecking-relevant
+// variants too. On some platforms (Linux/hunspell most notably) base language may be unavailable
+// and a full locale required, for example.
+// The function takes std::string language code, not Language, for practical reasons
+template<typename TFunc>
+auto DoWithExpandedLanguages(const Language& lang, TFunc&& lambda)
+{
+    if (auto res = lambda(SpellcheckCode(lang)))
+        return res;
+
+    auto lmin = lang.MinimizeSubtags();
+    if (auto res = lambda(SpellcheckCode(lmin)))
+        return res;
+
+    if (!lmin.Country().empty() && lmin.Variant().empty())
+    {
+        // try the base language, because minimization won't collapse e.g. de_AT
+        lmin = Language::FromLanguageTag(lmin.Lang());
+        if (auto res = lambda(SpellcheckCode(lmin)))
+            return res;
+    }
+
+    // try expansion because e.g. hunspell has cs_CZ, nl_NL etc. dicts, but not cs, nl
+    auto lmax = lmin.AddRelevantLikelySubtags();
+    return lambda(SpellcheckCode(lmax));
+}
+
+} // anonymous namespace
+
 
 #ifdef __WXGTK__
 
@@ -63,7 +104,9 @@ bool InitTextCtrlSpellchecker(CustomizedTextCtrl *text, bool enable, const Langu
             gtk_spell_checker_attach(spell, textview);
         }
 
-        return gtk_spell_checker_set_language(spell, lang.Code().c_str(), nullptr);
+        return DoWithExpandedLanguages(lang, [=](const std::string& lang){
+            return gtk_spell_checker_set_language(spell, lang.c_str(), nullptr);
+        });
     }
     else
     {
@@ -76,12 +119,13 @@ bool InitTextCtrlSpellchecker(CustomizedTextCtrl *text, bool enable, const Langu
 #endif // __WXGTK__
 
 #ifdef __WXOSX__
-bool SetSpellcheckerLang(const wxString& lang)
+bool SetSpellcheckerLang(const Language& lang)
 {
-    NSString *nslang = str::to_NS(lang);
     NSSpellChecker *sc = [NSSpellChecker sharedSpellChecker];
     [sc setAutomaticallyIdentifiesLanguages:NO];
-    return [sc setLanguage: nslang];
+    return DoWithExpandedLanguages(lang, [=](const std::string& lang){
+        return [sc setLanguage: str::to_NS(lang)];
+    });
 }
 
 bool InitTextCtrlSpellchecker(CustomizedTextCtrl *text, bool enable, const Language& /*lang*/)

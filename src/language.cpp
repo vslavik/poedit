@@ -392,6 +392,43 @@ Language Language::MinimizeSubtags() const
     return Language::FromLanguageTag(tag);
 }
 
+Language Language::AddRelevantLikelySubtags() const
+{
+    if (m_icuLocale.empty())
+        return *this;
+
+    char originalScript[ULOC_SCRIPT_CAPACITY] = {};
+    UErrorCode status = U_ZERO_ERROR;
+    uloc_getScript(m_icuLocale.c_str(), originalScript, std::size(originalScript), &status);
+    if (U_FAILURE(status))
+        return *this;
+
+    char expanded[512];
+    status = U_ZERO_ERROR;
+    uloc_addLikelySubtags(m_icuLocale.c_str(), expanded, 512, &status);
+    if (U_FAILURE(status))
+        return *this;
+
+    char expandedScript[ULOC_SCRIPT_CAPACITY] = {};
+    if (*originalScript == '\0')
+    {
+        status = U_ZERO_ERROR;
+        uloc_getScript(expanded, expandedScript, std::size(expandedScript), &status);
+    }
+
+    char tagBuffer[512];
+    status = U_ZERO_ERROR;
+    uloc_toLanguageTag(expanded, tagBuffer, 512, /*strict=*/1, &status);
+    if (U_FAILURE(status))
+        return *this;
+
+    std::string tag(tagBuffer);
+    if (*expandedScript)
+        boost::replace_all(tag, "-" + std::string(expandedScript), "");
+
+    return Language::FromLanguageTag(tag);
+}
+
 Language Language::TryParse(const std::wstring& s)
 {
     if (s.empty())
