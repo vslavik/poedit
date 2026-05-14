@@ -89,7 +89,7 @@ AS_IF([test "x$with_cpprest" != "xno"],
                           #if CPPREST_VERSION < 201008
                             #error "cpprest >= 2.10.8 required"
                           #endif
-                          web::http::client::http_client c(U("https://poedit.net"));
+                          web::http::client::http_client c(U("https://poedit.com"));
                       ])],
                       [have_cpprest=yes])
                   LIBS="$old_LIBS"

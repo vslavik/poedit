@@ -1,5 +1,5 @@
 /*
- *  This file is part of Poedit (https://poedit.net)
+ *  This file is part of Poedit (https://poedit.com)
  *
  *  Copyright (C) 2024-2026 Vaclav Slavik
  *
@@ -153,9 +153,9 @@ public:
     void InitAndStart()
     {
         if (Config::CheckForBetaUpdates())
-            win_sparkle_set_appcast_url("https://poedit.net/updates_v2/win/appcast/beta");
+            win_sparkle_set_appcast_url("https://poedit.com/updates_v2/win/appcast/beta");
         else
-            win_sparkle_set_appcast_url("https://poedit.net/updates_v2/win/appcast");
+            win_sparkle_set_appcast_url("https://poedit.com/updates_v2/win/appcast");
 
         win_sparkle_set_can_shutdown_callback(&impl::WinSparkle_CanShutdown);
         win_sparkle_set_shutdown_request_callback(&impl::WinSparkle_Shutdown);
@@ -196,9 +196,9 @@ private:
     void SetupAppcastURL()
     {
         if (Config::CheckForBetaUpdates())
-            win_sparkle_set_appcast_url("https://poedit.net/updates_v2/win/appcast/beta");
+            win_sparkle_set_appcast_url("https://poedit.com/updates_v2/win/appcast/beta");
         else
-            win_sparkle_set_appcast_url("https://poedit.net/updates_v2/win/appcast");
+            win_sparkle_set_appcast_url("https://poedit.com/updates_v2/win/appcast");
     }
 
     // WinSparkle callbacks:

@@ -1,5 +1,5 @@
 /*
- *  This file is part of Poedit (https://poedit.net)
+ *  This file is part of Poedit (https://poedit.com)
  *
  *  Copyright (C) 2000-2026 Vaclav Slavik
  *
@@ -404,7 +404,7 @@ public:
         auto explain = new ExplanationLabel(this, explainTxt);
         sizer->Add(explain, wxSizerFlags().Expand().Border(wxLEFT, UnderCheckboxIndent()));
 
-        auto learnMore = new LearnMoreLink(this, "https://poedit.net/help/translation-memory");
+        auto learnMore = new LearnMoreLink(this, "https://poedit.com/help/translation-memory");
         sizer->AddSpacer(PX(3));
         sizer->Add(learnMore, wxSizerFlags().Border(wxLEFT, UnderCheckboxIndent()));
 

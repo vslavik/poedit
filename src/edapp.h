@@ -1,5 +1,5 @@
 /*
- *  This file is part of Poedit (https://poedit.net)
+ *  This file is part of Poedit (https://poedit.com)
  *
  *  Copyright (C) 1999-2026 Vaclav Slavik
  *
@@ -85,7 +85,7 @@ class PoeditApp : public wxApp, public MenusManager
 
         bool OnExceptionInMainLoop() override;
 
-        // Open page on poedit.net in the browser
+        // Open page on poedit.com in the browser
         void OpenPoeditWeb(const wxString& path);
 
 #ifdef __WXOSX__

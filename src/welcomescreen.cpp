@@ -1,5 +1,5 @@
 /*
- *  This file is part of Poedit (https://poedit.net)
+ *  This file is part of Poedit (https://poedit.com)
  *
  *  Copyright (C) 2013-2026 Vaclav Slavik
  *
@@ -292,7 +292,7 @@ WelcomeWindow::WelcomeWindow()
                        _("Translate cloud project"),
                        _("Collaborate with other people online.")),
                wxSizerFlags().Border(wxTOP, PX(2)).Expand());
-    auto learnCloud = new LearnMoreLink(this, "https://poedit.net/cloud-sync", _("How does cloud sync work?"));
+    auto learnCloud = new LearnMoreLink(this, "https://poedit.com/cloud-sync/", _("How does cloud sync work?"));
     leftsizer->Add(learnCloud, wxSizerFlags().Left().Border(wxLEFT, MACOS_OR_OTHER(PX(18), PX(8))));
 #endif // HAVE_HTTP_CLIENT
 

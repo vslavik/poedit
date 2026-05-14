@@ -1,5 +1,5 @@
 /*
- *  This file is part of Poedit (https://poedit.net)
+ *  This file is part of Poedit (https://poedit.com)
  *
  *  Copyright (C) 1999-2026 Vaclav Slavik
  *
@@ -648,7 +648,7 @@ void PoeditApp::SetupOTALanguageUpdate(wxTranslations *trans, const Language& la
     if (!etag.empty())
         hdrs.emplace_back("If-None-Match", etag);
 
-    http_client::download_from_anywhere("https://ota.poedit.net/i18n/" + version + "/" + str::to_utf8(langMO) + "/poedit-ota.mo.gz", hdrs)
+    http_client::download_from_anywhere("https://ota.poedit.com/i18n/" + version + "/" + str::to_utf8(langMO) + "/poedit-ota.mo.gz", hdrs)
     .then_on_main([=](downloaded_file f)
     {
         TempOutputFileFor temp(mofile);
@@ -1224,7 +1224,7 @@ void PoeditApp::OnAbout(wxCommandEvent&)
 #endif
     about.SetCopyright(L"Copyright \u00a9 1999-2026 Václav Slavík");
 #ifdef __WXGTK__ // other ports would show non-native about dlg
-    about.SetWebSite("https://poedit.net");
+    about.SetWebSite("https://poedit.com");
     about.SetIcon(wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, wxSize(128, 128)));
 #endif
 
@@ -1339,7 +1339,7 @@ void PoeditApp::OpenPoeditWeb(const wxString& path)
 {
     wxLaunchDefaultBrowser
     (
-        wxString::Format("https://poedit.net%s?fromVersion=%s",
+        wxString::Format("https://poedit.com%s?fromVersion=%s",
                          path,
                          GetAppVersion())
     );

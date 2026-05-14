@@ -1,7 +1,7 @@
 Where to Look for Help
 ======================
 
-Please follow the instructions at https://poedit.net/support when asking for support. 
+Please follow the instructions at https://poedit.com/support/ when asking for support. 
 
 The GitHub issue tracker is intended for reporting and managing *bugs* (i.e. something is wrong with Poedit),
 not for e.g. asking questions — use help@poedit.net for the latter.

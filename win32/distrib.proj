@@ -21,7 +21,7 @@
     <MsvcLibpathX86>"$(VCToolsInstallDir)\lib\x86"</MsvcLibpathX86>
     <SignTool Condition="'$(SignTool)' == ''"></SignTool>
     <SignToolTimestamp Condition="'$(SignToolTimestamp)' == ''">http://timestamp.digicert.com</SignToolTimestamp>
-    <SignToolFlags Condition="'$(SignToolFlags)' == ''">-fd sha256 -td sha256 -tr $(SignToolTimestamp) -d Poedit -du https://poedit.net</SignToolFlags>
+    <SignToolFlags Condition="'$(SignToolFlags)' == ''">-fd sha256 -td sha256 -tr $(SignToolTimestamp) -d Poedit -du https://poedit.com</SignToolFlags>
     <InnoCC>..\packages\Tools.InnoSetup.6.7.0\tools\ISCC.exe</InnoCC>
     <InnoSignToolArgs Condition="'$(SignTool)' != ''">/dSIGNTOOL=default /Sdefault="$(SignTool) $(SignToolFlags) $f"</InnoSignToolArgs>
     <InnoFlags>/dCONFIG=$(Configuration) $(InnoSignToolArgs)</InnoFlags>

@@ -15,7 +15,7 @@ of the solution used, see GNU gettext documentation.
 ## Installation
 
 Easily-installable prebuilt binaries for Windows and macOS are available from
-https://poedit.net/download
+https://poedit.com/download/
 
 Official binaries for Linux are available as a Snap at https://snapcraft.io/poedit.
 Most Linux distributions also include native Poedit packages.
@@ -116,5 +116,5 @@ from there, email me for a copy of the sources.
 
 ## Links
 
-1. [Poedit's website](https://poedit.net/)
+1. [Poedit's website](https://poedit.com/)
 2. [GNU gettext](http://www.gnu.org/software/gettext/)

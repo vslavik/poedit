@@ -1,5 +1,5 @@
 ﻿;
-;   This file is part of Poedit (https://poedit.net)
+;   This file is part of Poedit (https://poedit.com)
 ;
 ;   Copyright (C) 1999-2026 Vaclav Slavik
 ;
@@ -71,8 +71,8 @@ VersionInfoVersion={#VERSION_WIN}
 VersionInfoTextVersion={#VERSION}
 AppCopyright=Copyright © 1999-2026 Vaclav Slavik
 AppPublisher=Vaclav Slavik
-AppSupportURL=https://poedit.net/support
-AppUpdatesURL=https://poedit.net/download
+AppSupportURL=https://poedit.com/support/
+AppUpdatesURL=https://poedit.com/download/
 AppVersion={#VERSION}
 AppContact=help@poedit.net
 UninstallDisplayIcon={app}\Poedit.exe
@@ -80,7 +80,7 @@ UninstallDisplayName=Poedit
 MinVersion=10.0.18362
 WizardSmallImageFile=artwork\windows\installer_wizard_image.bmp
 WizardStyle=modern
-AppPublisherURL=https://poedit.net/
+AppPublisherURL=https://poedit.com/
 DisableProgramGroupPage=true
 
 RestartApplications=yes

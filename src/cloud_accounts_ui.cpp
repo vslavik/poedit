@@ -1,5 +1,5 @@
 /*
- *  This file is part of Poedit (https://poedit.net)
+ *  This file is part of Poedit (https://poedit.com)
  *
  *  Copyright (C) 2023-2026 Vaclav Slavik
  *
@@ -82,7 +82,7 @@ AccountsPanel::AccountsPanel(wxWindow *parent, int flags) : wxPanel(parent, wxID
     topsizer->Add(new ExplanationLabel(this, _("Connect Poedit with supported cloud localization platforms to seamlessly sync translations managed on them.")),
                   wxSizerFlags().Expand().Border(wxBOTTOM, PX(2)));
 
-    auto learn = new LearnMoreLink(this, "https://poedit.net/cloud-sync", _("How does cloud sync work?"));
+    auto learn = new LearnMoreLink(this, "https://poedit.com/cloud-sync/", _("How does cloud sync work?"));
     topsizer->Add(learn, wxSizerFlags().Left());
     topsizer->AddSpacer(2 * PXDefaultBorder);
 
