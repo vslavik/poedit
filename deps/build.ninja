@@ -4,7 +4,11 @@ include $
     build.vars.ninja
 rule download
   command = curl $
-      -L -o $out $
+      --fail $
+      --location $
+      --retry 5 $
+      --retry-all-errors $
+      -o $out $
       $url && $
       test $
       "$sha256" = $

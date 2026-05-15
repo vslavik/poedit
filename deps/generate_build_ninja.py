@@ -102,7 +102,7 @@ with open('build.ninja', 'w') as buildfile:
     n.rule('download',
            description='Downloading $url...',
            pool='console',
-           command='curl -L -o $out $url && test "$sha256" = `shasum -a256 $out | cut -f1 -d" "`')
+           command='curl --fail --location --retry 5 --retry-all-errors -o $out $url && test "$sha256" = `shasum -a256 $out | cut -f1 -d" "`')
 
     targets = []
 
