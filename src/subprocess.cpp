@@ -171,7 +171,7 @@ Arguments::Arguments(const wxString& cmdline)
 
 wxString Arguments::pretty_print() const
 {
-    return "[" + boost::join(m_args, ", ") + "]";
+    return L"[" + boost::join(m_args, L", ") + L"]";
 }
 
 
