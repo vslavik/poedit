@@ -35,7 +35,6 @@
 #ifdef __WXMSW__
 #include <wx/dc.h>
 #include <wx/graphics.h>
-#include <wx/scopedptr.h>
 #include <wx/msw/dcclient.h>
 #include <wx/msw/wrapgdip.h>
 #include <wx/msw/uxtheme.h>
@@ -44,6 +43,8 @@
 #ifdef __WXGTK3__
 #include <gtk/gtk.h>
 #endif
+
+#include <memory>
 
 #ifdef __WXOSX__
 
@@ -465,7 +466,7 @@ bool ActionButton::MSWOnDraw(WXDRAWITEMSTRUCT* wxdis)
 
     if (highlighted)
     {
-        wxScopedPtr<wxGraphicsContext> gc(wxGraphicsContext::Create(dc));
+        std::unique_ptr<wxGraphicsContext> gc(wxGraphicsContext::Create(dc));
 
         gc->EnableOffset(false);
         gc->SetPen(*wxTRANSPARENT_PEN);
@@ -609,7 +610,7 @@ bool SwitchButton::MSWOnDraw(WXDRAWITEMSTRUCT *wxdis)
 
     wxRect rect(lpDIS->rcItem.left, lpDIS->rcItem.top, lpDIS->rcItem.right - lpDIS->rcItem.left, lpDIS->rcItem.bottom - lpDIS->rcItem.top);
 
-    wxScopedPtr<wxGraphicsContext> gc(wxGraphicsContext::CreateFromNativeHDC(hdc));
+    std::unique_ptr<wxGraphicsContext> gc(wxGraphicsContext::CreateFromNativeHDC(hdc));
     gc->EnableOffset(false);
 
     if (isRtl)
