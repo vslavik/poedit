@@ -228,7 +228,7 @@ public:
     #else
         auto label = _("Add Comment");
     #endif
-        m_btn = new wxButton(parent, XRCID("menu_comment"), _("Add Comment"));
+        m_btn = new wxButton(parent, XRCID("menu_comment"), label);
         m_innerSizer->AddStretchSpacer();
         m_innerSizer->Add(m_btn, wxSizerFlags().Right());
     }
