@@ -306,7 +306,7 @@ wxWindowPtr<wxMessageDialog> ProgressWindow::CreateErrorDialog(const wxArrayStri
         {
             int leftover = int(errors.size() - maxShown);
             extended += '\n';
-            extended += wxString::Format(wxPLURAL(_(L"…and %d more error"), _(L"…and %d more errors"), leftover), leftover);
+            extended += wxString::Format(wxPLURAL(L"…and %d more error", L"…and %d more errors", leftover), leftover);
         }
     }
 
