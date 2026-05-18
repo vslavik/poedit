@@ -1103,7 +1103,6 @@ void EditingArea::UpdateFromTextCtrl()
     if (!item)
         return;
 
-    wxString key = item->GetString();
     bool newfuzzy = m_fuzzy->GetValue();
 
     const bool oldIsTranslated = item->IsTranslated();

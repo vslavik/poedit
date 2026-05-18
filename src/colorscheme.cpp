@@ -290,7 +290,7 @@ ColorScheme::Mode ColorScheme::GetWindowMode(wxWindow *win)
 
 wxColour ColorScheme::GetBlendedOn(Color color, wxWindow *win, Color bgColor)
 {
-    auto bg = (bgColor != Color::Max) ? Get(bgColor, win) : win->GetBackgroundColour();
+    [[maybe_unused]] auto bg = (bgColor != Color::Max) ? Get(bgColor, win) : win->GetBackgroundColour();
     auto fg = Get(color, win);
 #ifndef __WXOSX__
     if (fg.Alpha() != wxALPHA_OPAQUE)

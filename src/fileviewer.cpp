@@ -298,7 +298,6 @@ void FileViewer::SelectReference(const wxString& ref)
     const wxString fullpath = filename.GetFullPath();
 
     wxTextFile file;
-    wxString data;
 
     if ( !filename.IsFileReadable() || !file.Open(fullpath) )
     {
