@@ -3252,7 +3252,6 @@ void PoeditFrame::OnShowHideSidebar(wxCommandEvent&)
     }
 
     wxConfigBase::Get()->Write("/sidebar_shown", toShow);
-
 }
 
 void PoeditFrame::OnUpdateShowHideSidebar(wxUpdateUIEvent& event)
@@ -3260,6 +3259,9 @@ void PoeditFrame::OnUpdateShowHideSidebar(wxUpdateUIEvent& event)
     event.Enable(m_sidebar != nullptr);
     if (!m_sidebar)
         return;
+
+    if (!event.IsCheckable())
+        return;  // invoked for toolbar, where checked status isn't shown
 
     bool shown = m_sidebarSplitter->IsSplit();
 #ifdef __WXOSX__
