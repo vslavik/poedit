@@ -13,7 +13,7 @@ XGETTEXT_ARGS="-C -F \
               --add-comments=TRANSLATORS \
               --from-code=UTF-8 \
               --package-name=Poedit --package-version=${POEDIT_VERSION} \
-              --msgid-bugs-address=help@poedit.net"
+              --msgid-bugs-address=help@poedit.com"
 
 find src -name "*.cpp" | sort | xargs xgettext ${XGETTEXT_ARGS}       -o $POTFILE
 find src -name "*.h"   | sort | xargs xgettext ${XGETTEXT_ARGS}    -j -o $POTFILE
