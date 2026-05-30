@@ -88,6 +88,8 @@ class PoeditApp : public wxApp, public MenusManager
         // Open page on poedit.com in the browser
         void OpenPoeditWeb(const wxString& path);
 
+        void EmailSupport(const wxString& subject, const wxString& body = "");
+
 #ifdef __WXOSX__
         void OnIdleFixupMenusForMac(wxIdleEvent& event);
         void OSXOnWillFinishLaunching() override;
@@ -124,6 +126,8 @@ class PoeditApp : public wxApp, public MenusManager
         void OnPreferences(wxCommandEvent& event);
         void OnHelp(wxCommandEvent& event);
         void OnGettextManual(wxCommandEvent& event);
+        void OnSupportWebsite(wxCommandEvent& event);
+        void OnSupportEmail(wxCommandEvent& event);
 
         void OnQuit(wxCommandEvent& event);
 		void OnQueryEndSession(wxCloseEvent& event);

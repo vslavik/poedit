@@ -39,6 +39,7 @@
 #include <wx/stdpaths.h>
 #include <wx/filename.h>
 #include <wx/filedlg.h>
+#include <wx/platinfo.h>
 #include <wx/snglinst.h>
 #include <wx/sysopt.h>
 #include <wx/stdpaths.h>
@@ -943,6 +944,8 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
    EVT_MENU           (wxID_PREFERENCES,          PoeditApp::OnPreferences)
    EVT_MENU           (wxID_HELP,                 PoeditApp::OnHelp)
    EVT_MENU           (XRCID("menu_gettext_manual"), PoeditApp::OnGettextManual)
+   EVT_MENU           (XRCID("menu_support_web"), PoeditApp::OnSupportWebsite)
+   EVT_MENU           (XRCID("menu_support_email"), PoeditApp::OnSupportEmail)
 #ifdef HAS_UPDATES_CHECK
    EVT_MENU           (XRCID("menu_check_for_updates"), PoeditApp::OnCheckForUpdates)
    EVT_UPDATE_UI      (XRCID("menu_check_for_updates"), PoeditApp::OnEnableCheckForUpdates)
@@ -1334,6 +1337,15 @@ void PoeditApp::OnGettextManual(wxCommandEvent&)
     OpenPoeditWeb("/help/gnu-gettext");
 }
 
+void PoeditApp::OnSupportWebsite(wxCommandEvent&)
+{
+    OpenPoeditWeb("/support/");
+}
+
+void PoeditApp::OnSupportEmail(wxCommandEvent&)
+{
+    EmailSupport("Help with Poedit");
+}
 
 void PoeditApp::OpenPoeditWeb(const wxString& path)
 {
@@ -1345,8 +1357,76 @@ void PoeditApp::OpenPoeditWeb(const wxString& path)
     );
 }
 
-#ifdef __WXOSX__
 
+namespace
+{
+
+// from https://code.google.com/p/twitcurl/source/browse/trunk/libtwitcurl/urlencode.cpp?r=47
+// TODO: replace
+inline std::string char2hex(char dec)
+{
+    char dig1 = (dec&0xF0)>>4;
+    char dig2 = (dec&0x0F);
+    if ( 0<= dig1 && dig1<= 9) dig1+=48;    //0,48 in ascii
+    if (10<= dig1 && dig1<=15) dig1+=65-10; //A,65 in ascii
+    if ( 0<= dig2 && dig2<= 9) dig2+=48;
+    if (10<= dig2 && dig2<=15) dig2+=65-10;
+
+    std::string r;
+    r.append( &dig1, 1);
+    r.append( &dig2, 1);
+    return r;
+}
+
+std::string urlencode(const char *c)
+{
+    std::string escaped;
+    for ( ; *c; c++ )
+    {
+        const char ci = *c;
+        if ( (48 <= ci && ci <= 57) ||//0-9
+                (65 <= ci && ci <= 90) ||//ABC...XYZ
+                (97 <= ci && ci <= 122) || //abc...xyz
+                (ci=='~' || ci=='-' || ci=='_' || ci=='.')
+                )
+        {
+                escaped.append(1, ci);
+        }
+        else
+        {
+                escaped.append(1, '%');
+                escaped.append(char2hex(ci)); //converts char 255 to string "FF"
+        }
+    }
+    return escaped;
+}
+
+} // anonymous namespace
+
+void PoeditApp::EmailSupport(const wxString& subject, const wxString& body)
+{
+    wxString body2(body);
+    wxString appname("Poedit");
+
+#ifdef __WXOSX__
+    NSString *s = [[NSProcessInfo processInfo] operatingSystemVersionString];
+    wxString osdesc("OS X " + str::to_wx(s));
+#else
+    wxPlatformInfo platform;
+    wxString osdesc = platform.GetOperatingSystemDescription();
+#endif
+
+    body2 += wxString::Format("\n--\n%s %s - %s", appname, GetAppVersion(), osdesc);
+
+    wxLaunchDefaultBrowser(wxString::Format(
+                "mailto:help@poedit.com?subject=%s&body=%s",
+                urlencode(subject.utf8_str()),
+                urlencode(body2.utf8_str())
+            ));
+}
+
+
+#ifdef __WXOSX__
 void PoeditApp::MacOpenFiles(const wxArrayString& names)
 {
     OpenFiles(names, gs_lineToOpen);

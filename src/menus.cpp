@@ -352,7 +352,8 @@ void MenusManager::TweakOSXMenuBar(wxMenuBar *bar)
         SetMacMenuIcon(bar, XRCID("go_next_pluralform"), "chevron.compact.forward");
 
         SetMacMenuIcon(bar, wxID_HELP, "safari");
-        SetMacMenuIcon(bar, XRCID("menu_support"), "envelope");
+        SetMacMenuIcon(bar, XRCID("menu_support_web"), "safari");
+        SetMacMenuIcon(bar, XRCID("menu_support_email"), "envelope");
 
         SetMacMenuIcon(apple, wxID_ABOUT, "info.circle");
         SetMacMenuIcon(apple, wxID_PREFERENCES, "gear");
