@@ -280,22 +280,22 @@ public:
         // on the first line of text.
         const int textPadding = PX(6);
 #if defined(__WXOSX__)
-        const int iconPadding = PX(6);
+        const int iconPadding = PX(5);
 #elif defined(__WXMSW__)
         int iconPadding = 0;
         const auto hidpiFactor = HiDPIScalingFactor();
         if (hidpiFactor < 1.25)
             iconPadding = PX(6);
         else if (hidpiFactor < 1.5)
-            iconPadding = PX(8)+1;
+            iconPadding = PX(8);
         else if (hidpiFactor < 1.75)
-            iconPadding = PX(7)+1;
+            iconPadding = PX(7);
         else if (hidpiFactor < 2.0)
             iconPadding = PX(9);
         else
-            iconPadding = PX(7)+1;
+            iconPadding = PX(7);
 #else
-        const int iconPadding = PX(6);
+        const int iconPadding = PX(5);
 #endif
 
         auto top = new wxBoxSizer(wxHORIZONTAL);
