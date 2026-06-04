@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
-"Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2026-03-10 11:41+0100\n"
-"PO-Revision-Date: 2026-03-05 10:23\n"
+"Report-Msgid-Bugs-To: help@poedit.com\n"
+"POT-Creation-Date: 2026-06-04 11:46+0200\n"
+"PO-Revision-Date: 2026-05-28 11:23\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -87,12 +87,12 @@ msgstr "Forrásfájlok összegyűjtése…"
 #, c-format
 msgid "Extracting translatable strings from %s file…"
 msgid_plural "Extracting translatable strings from %s files…"
-msgstr[0] "Fordítható karakterláncok kinyerése %s fájlból…"
-msgstr[1] "Fordítható karakterláncok kinyerése %s fájlból…"
+msgstr[0] "Fordítható karakterláncok kivonatolása a(z) %s fájlból…"
+msgstr[1] "Fordítható karakterláncok kivonatolása a(z) %s fájlból…"
 
 #: src/cat_update.cpp:269 src/cat_update.cpp:405
 msgid "Failed to load file with extracted translations."
-msgstr "Nem sikerült betölteni a fájlt kibontott fordításokkal."
+msgstr "Nem sikerült betölteni kivonatolt fordításokat tartalmazó fájlt."
 
 #: src/cat_update.cpp:293
 #, c-format
@@ -120,7 +120,7 @@ msgid ""
 "You don’t have permission to read source code files from the location "
 "specified in the file’s Properties."
 msgstr ""
-"Nincs engedélyed a forráskód fájlok olvasására a fájl tulajdonságaiban a "
+"Nincs jogosultsága a forráskódfájlok olvasására a fájl tulajdonságaiban "
 "megadott helyről."
 
 #. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
@@ -139,15 +139,15 @@ msgid ""
 "If you previously denied access to your files, you can allow it in System "
 "Preferences > Security & Privacy > Privacy > Files & Folders."
 msgstr ""
-"Ha korábban megtagadtad a fájlokhoz való hozzáférést, akkor engedélyezheted "
-"a Rendszerbeállítások > Biztonság és adatvédelem > Adatvédelem > Fájlok és "
-"mappák menüben."
+"Ha korábban megtagadta a fájljaihoz való hozzáférést, engedélyezheti azt a "
+"Rendszerbeállítások > Adatvédelem és biztonság > Fájlok és mappák "
+"menüpontban."
 
 #: src/cat_update.cpp:322
 msgid "Failed to extract strings from source code."
-msgstr "Nem sikerült a karakterláncok kinyerése a forráskódból."
+msgstr "Nem sikerült a karakterláncok kivonatolása a forráskódból."
 
-#: src/cat_update.cpp:356 src/edapp.cpp:1101 src/edframe.cpp:928
+#: src/cat_update.cpp:356 src/edapp.cpp:1104 src/edframe.cpp:928
 #: src/edframe.cpp:2531
 #, c-format
 msgid "The file “%s” couldn’t be opened."
@@ -179,7 +179,7 @@ msgstr[1] "A fordítási fájl %s változással frissült."
 
 #: src/cat_update.cpp:424
 msgid "New strings to translate:"
-msgstr "Új karakterláncok fordítása:"
+msgstr "Új lefordítandó karakterláncok:"
 
 #: src/cat_update.cpp:425
 msgid "Removed strings (no longer used):"
@@ -189,8 +189,8 @@ msgstr "Eltávolított karakterláncok (már nincsenek használva):"
 #, c-format
 msgid "%d issue with the source strings was detected."
 msgid_plural "%d issues with the source strings were detected."
-msgstr[0] "%d problémát észleltünk a forrás karakterláncokkal kapcsolatban."
-msgstr[1] "%d problémát észleltünk a forrás karakterláncokkal kapcsolatban."
+msgstr[0] "%d probléma észlelve a forrás-karakterláncokkal."
+msgstr[1] "%d probléma észlelve a forrás-karakterláncokkal."
 
 #: src/cat_update.cpp:540
 msgid "View Details…"
@@ -240,7 +240,7 @@ msgstr "Qt fordítási fájlok"
 
 #: src/catalog.cpp:615
 msgid "All Translation Files"
-msgstr "Minden fordítási fájl"
+msgstr "Összes fordítási fájl"
 
 #: src/catalog.cpp:1183
 msgid "The file is in a format not recognized by Poedit."
@@ -270,7 +270,7 @@ msgstr ""
 #: src/catalog_po.cpp:1335 src/catalog_po.cpp:1344 src/catalog_po.cpp:1401
 #: src/catalog_po.cpp:1432 src/catalog_po.cpp:1630 src/catalog_qt.cpp:341
 #: src/catalog_resx.cpp:209 src/catalog_xliff.cpp:500 src/edframe.cpp:1316
-#: src/prefsdlg.cpp:660
+#: src/prefsdlg.cpp:659
 #, c-format
 msgid "Couldn’t save file %s."
 msgstr "A(z) %s fájl mentése nem sikerült."
@@ -341,7 +341,7 @@ msgstr "Hiba a fájl mentése során"
 #: src/catalog_po.cpp:1706
 #, c-format
 msgid "“%s” is not a valid POT file."
-msgstr "A(z) „%s” nem érvényes POT fájl."
+msgstr "A(z) „%s” nem érvényes POT-fájl."
 
 #: src/catalog_qt.cpp:70
 #, c-format
@@ -412,8 +412,7 @@ msgstr "Fiókok kezelése"
 msgid "Project:"
 msgstr "Projekt:"
 
-#: src/cloud_accounts_ui.cpp:379 src/export_html.cpp:79
-#: src/resources/prefs.xrc:10 src/resources/prefs.xrc:14
+#: src/cloud_accounts_ui.cpp:379 src/export_html.cpp:79 src/prefsdlg.cpp:866
 #: src/resources/properties.xrc:45
 msgid "Language:"
 msgstr "Nyelv:"
@@ -563,62 +562,62 @@ msgstr "További információk"
 msgid "Help"
 msgstr "Súgó"
 
-#: src/edapp.cpp:453 src/resources/menus.xrc:336 src/resources/menus.xrc:441
+#: src/edapp.cpp:454 src/resources/menus.xrc:336 src/resources/menus.xrc:449
 #: src/wx_translatable_strings.h:105
 msgid "&Help"
 msgstr "&Súgó"
 
-#: src/edapp.cpp:730
+#: src/edapp.cpp:731
 msgid "MO files can’t be directly edited in Poedit."
 msgstr "Az MO fájlok nem szerkeszthetők közvetlenül a Poeditben."
 
-#: src/edapp.cpp:731
+#: src/edapp.cpp:732
 msgid "Error opening file"
 msgstr "Hiba a fájl megnyitása során"
 
-#: src/edapp.cpp:733
+#: src/edapp.cpp:734
 msgid ""
 "Please open and edit the corresponding PO file instead. When you save it, "
 "the MO file will be updated as well."
 msgstr ""
-"Kérjük, nyissa meg és szerkessze helyette a megfelelő PO fájlt. Amikor "
-"menti, a MO fájl is frissülni fog."
+"Inkább nyissa meg és szerkessze a megfelelő PO-fájlt. Amikor menti, az MO-"
+"fájl is frissülni fog."
 
-#: src/edapp.cpp:774
+#: src/edapp.cpp:775
 msgid "don’t delete temporary files (for debugging)"
 msgstr "ne törölje az ideiglenes fájlokat (hibakereséshez)"
 
-#: src/edapp.cpp:776
+#: src/edapp.cpp:777
 msgid "handle a poedit:// URI"
 msgstr "egy poedit:// URI kezelése"
 
-#: src/edapp.cpp:778
+#: src/edapp.cpp:779
 msgid "go to item at given line number"
-msgstr "ugrás a tételhez a megadott sorszámnál"
+msgstr "ugorj a megadott sorszámú elemhez"
 
-#: src/edapp.cpp:801
+#: src/edapp.cpp:802
 msgid "Failed to communicate with Poedit process."
 msgstr "Nem sikerült kommunikálni a Poedit folyamattal."
 
-#: src/edapp.cpp:914 src/edapp.cpp:919
+#: src/edapp.cpp:915 src/edapp.cpp:920
 #, c-format
 msgid "Unhandled exception occurred: %s"
 msgstr "Nem kezelt kivétel történt: %s"
 
-#: src/edapp.cpp:1071
+#: src/edapp.cpp:1074
 msgid "Select translation template"
 msgstr "Fordítási sablon kiválasztása"
 
-#: src/edapp.cpp:1102 src/edframe.cpp:929 src/edframe.cpp:2328
+#: src/edapp.cpp:1105 src/edframe.cpp:929 src/edframe.cpp:2328
 #: src/edframe.cpp:2532
 msgid "Invalid file"
 msgstr "Érvénytelen fájl"
 
-#: src/edapp.cpp:1122
+#: src/edapp.cpp:1125
 msgid "Select translation file"
 msgstr "Fordítási fájl kiválasztása"
 
-#: src/edapp.cpp:1223
+#: src/edapp.cpp:1226
 msgid "Poedit is an easy to use translation editor."
 msgstr "A Poedit egy könnyen használható fordításszerkesztő."
 
@@ -648,7 +647,7 @@ msgstr "Poedit"
 msgid ""
 "Spellchecking is disabled, because the dictionary for %s isn’t installed."
 msgstr ""
-"Helyesírás-ellenőrzés le van tiltva, mert a(z) %s szótár nincs telepítve."
+"A helyesírás-ellenőrzés le van tiltva, mert a(z) %s szótár nincs telepítve."
 
 #: src/edframe.cpp:870
 msgid "Install"
@@ -657,7 +656,7 @@ msgstr "Telepítés"
 #: src/edframe.cpp:962 src/edframe.cpp:1137
 #, c-format
 msgid "The file “%s” has been changed by another application."
-msgstr "“%s” fájlt egy másik alkalmazás megváltoztatta."
+msgstr "A(z) „%s” fájlt egy másik alkalmazás megváltoztatta."
 
 #: src/edframe.cpp:963 src/edframe.cpp:967
 msgid "Reload file"
@@ -668,8 +667,8 @@ msgid ""
 "Do you want to reload the file from disk? Your unsaved edits in Poedit will "
 "be lost if you do."
 msgstr ""
-"Újra szeretné tölteni a fájlt a lemezről? Ha betölti, a Poedit programban "
-"elmentett módosításai elvesznek."
+"Újratölti a fájlt a lemezről? Ha ezt teszi, a Poeditben elmentett "
+"módosításai elvesznek."
 
 #: src/edframe.cpp:967
 msgid "Ignore"
@@ -708,7 +707,7 @@ msgid "The changes made by the other application will be lost if you save."
 msgstr ""
 "A más alkalmazás által végrehajtott módosítások elvesznek, ha menti a fájlt."
 
-#: src/edframe.cpp:1142 src/prefsdlg.cpp:673 src/prefsdlg.cpp:971
+#: src/edframe.cpp:1142 src/prefsdlg.cpp:672 src/prefsdlg.cpp:1064
 #: src/wx_translatable_strings.h:94
 msgid "Cancel"
 msgstr "Mégse"
@@ -799,8 +798,8 @@ msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
 msgstr ""
-"A fájl biztonságosan el lett mentve, de lehetséges, hogy nem fog megfelelően "
-"működni."
+"A fájl biztonságosan el lett mentve és MO-fájlra lett fordítva, de "
+"valószínűleg nem fog megfelelően működni."
 
 #: src/edframe.cpp:1898
 msgid ""
@@ -814,7 +813,7 @@ msgid ""
 "The file was compiled into the MO format, but it will probably not work "
 "correctly."
 msgstr ""
-"A fájl át lett fordítva MO formátumra, de lehetséges, hogy nem fog "
+"A fájl biztonságosan MO-fájlra lett fordítva, de valószínűleg nem fog "
 "megfelelően működni."
 
 #: src/edframe.cpp:1911
@@ -851,7 +850,7 @@ msgid ""
 "should review translations of any items marked as needing work and correct "
 "them if necessary."
 msgstr ""
-"A fájl ismétlődő elemeket tartalmazott, amely a PO fájlokban nem "
+"A fájl ismétlődő elemeket tartalmazott, amely a PO-fájlokban nem "
 "engedélyezett, és megakadályozza a fájl használatát. A Poedit kijavította "
 "ezt a problémát, de minden bizonytalannak jelölt fordítási bejegyzés "
 "felülvizsgálata és esetleges javítása szükséges."
@@ -862,11 +861,11 @@ msgstr "A fordítás nyelve nincs beállítva."
 
 #: src/edframe.cpp:2350
 msgid "Set Language"
-msgstr "Nyelv kiválasztása"
+msgstr "Nyelv beállítása"
 
 #: src/edframe.cpp:2350
 msgid "Set language"
-msgstr "Válasszon nyelvet"
+msgstr "Nyelv beállítása"
 
 #. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
 #: src/edframe.cpp:2353 src/edframe.cpp:2369
@@ -883,11 +882,11 @@ msgstr "A fordítás nyelve megegyezik a forrásnyelvvel."
 
 #: src/edframe.cpp:2370
 msgid "Fix Language"
-msgstr "Nyelv kijavítása"
+msgstr "Nyelv javítása"
 
 #: src/edframe.cpp:2370
 msgid "Fix language"
-msgstr "Nyelv kijavítása"
+msgstr "Nyelv javítása"
 
 #: src/edframe.cpp:2387
 msgid ""
@@ -994,11 +993,11 @@ msgstr "Nem sikerült frissíteni a fordítási memóriát: %s"
 #: src/edframe.cpp:2827
 #, c-format
 msgid "The file “%s” couldn’t be saved."
-msgstr "„%s” fájlt nem lehetett elmenteni."
+msgstr "Nem sikerült a(z) „%s” fájl mentése."
 
 #: src/edframe.cpp:2937 src/resources/menus.xrc:252
 msgid "Remove same-as-source translations"
-msgstr "A forrással azonos fordítások eltávolítása"
+msgstr "Forrással azonos fordítások eltávolítása"
 
 #: src/edframe.cpp:2939
 msgid ""
@@ -1084,52 +1083,52 @@ msgstr "Kód előfordulásai"
 msgid "Code occurrences"
 msgstr "Kód előfordulásai"
 
-#: src/edframe.cpp:3268
+#: src/edframe.cpp:3270
 msgid "Hide Sidebar"
 msgstr "Oldalsáv elrejtése"
 
-#: src/edframe.cpp:3270 src/resources/menus.xrc:217
+#: src/edframe.cpp:3272 src/resources/menus.xrc:217
 msgid "Show Sidebar"
 msgstr "Oldalsáv megjelenítése"
 
-#: src/edframe.cpp:3301
+#: src/edframe.cpp:3303
 msgid "Hide Status Bar"
 msgstr "Állapotsor elrejtése"
 
-#: src/edframe.cpp:3303 src/resources/menus.xrc:223
+#: src/edframe.cpp:3305 src/resources/menus.xrc:223
 msgid "Show Status Bar"
 msgstr "Állapotsor megjelenítése"
 
-#: src/editing_area.cpp:357
+#: src/editing_area.cpp:358
 msgid "String length in characters: translation | source"
 msgstr "Karakterlánc hossza: fordítás | forrás"
 
-#: src/editing_area.cpp:360
+#: src/editing_area.cpp:361
 msgid "String length in characters"
 msgstr "Karakterlánc hossza"
 
-#: src/editing_area.cpp:407 src/editing_area.cpp:750 src/edlistctrl.cpp:665
+#: src/editing_area.cpp:408 src/editing_area.cpp:751 src/edlistctrl.cpp:665
 #: src/edlistctrl.cpp:719 src/export_html.cpp:143
 msgid "Source text"
 msgstr "Forrásszöveg"
 
-#: src/editing_area.cpp:429 src/editing_area.cpp:816 src/editing_area.cpp:832
+#: src/editing_area.cpp:430 src/editing_area.cpp:817 src/editing_area.cpp:833
 msgid "Singular"
 msgstr "Egyes szám"
 
-#: src/editing_area.cpp:434 src/editing_area.cpp:837
+#: src/editing_area.cpp:435 src/editing_area.cpp:838
 msgid "Plural"
 msgstr "Többes szám"
 
-#: src/editing_area.cpp:489
+#: src/editing_area.cpp:490
 msgid "Translation"
 msgstr "Fordítás"
 
-#: src/editing_area.cpp:498
+#: src/editing_area.cpp:499
 msgid "Pre-translated"
-msgstr "Előfordított"
+msgstr "Előfordítva"
 
-#: src/editing_area.cpp:521
+#: src/editing_area.cpp:522
 msgid "Needs Work"
 msgstr "Munkát igényel"
 
@@ -1141,86 +1140,86 @@ msgstr "Munkát igényel"
 #. "needs review" implies that somebody else should review the string after
 #. I am done with it (i.e. consider it good), while "needs work" implies I
 #. need to return to it and finish the translation.
-#: src/editing_area.cpp:521
+#: src/editing_area.cpp:522
 msgid "Needs work"
 msgstr "Munkát igényel"
 
-#: src/editing_area.cpp:578
+#: src/editing_area.cpp:579
 msgid ""
 "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
 msgstr ""
-"A POT fájl csak egy sablon és nem  tartalmaz fordításokat.\n"
-"Fordítás készítéséhez hozzon létre egy új PO fájlt a sablon alapján."
-
-#: src/editing_area.cpp:585
-msgid "Create new translation"
-msgstr "Új fordítási projekt létrehozása"
+"A POT-fájl csak egy sablon, és nem tartalmaz fordításokat.\n"
+"Fordítás készítéséhez hozzon létre egy új PO-fájlt a sablon alapján."
 
 #: src/editing_area.cpp:586
-msgid "Make a new translation from this POT file."
-msgstr "Készítsen új fordítást ebből a POT fájlból."
+msgid "Create new translation"
+msgstr "Új fordítás létrehozása"
 
-#: src/editing_area.cpp:618
+#: src/editing_area.cpp:587
+msgid "Make a new translation from this POT file."
+msgstr "Új fordítás készítése ebből a POT-fájlból."
+
+#: src/editing_area.cpp:619
 msgid "Use the Edit menu to perform bulk actions on selected strings."
 msgstr ""
 "A Szerkesztés menü segítségével tömeges műveleteket végezhet a kijelölt "
 "karakterláncokon."
 
 #. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
-#: src/editing_area.cpp:748 src/edlistctrl.cpp:713 src/export_html.cpp:137
+#: src/editing_area.cpp:749 src/edlistctrl.cpp:713 src/export_html.cpp:137
 msgid "Source text ID"
 msgstr "Forrásszöveg-azonosító"
 
-#: src/editing_area.cpp:803
+#: src/editing_area.cpp:804
 msgid "Everything"
 msgstr "Minden"
 
-#: src/editing_area.cpp:808
+#: src/editing_area.cpp:809
 #, c-format
 msgid "Form %i"
 msgstr "%i. alak"
 
-#: src/editing_area.cpp:810
+#: src/editing_area.cpp:811
 #, c-format
 msgid "Form %i (unused)"
-msgstr "Form %i (nem használt)"
+msgstr "%i. alak (nem használt)"
 
-#: src/editing_area.cpp:821
+#: src/editing_area.cpp:822
 msgid "Zero"
 msgstr "Nulla"
 
-#: src/editing_area.cpp:823
+#: src/editing_area.cpp:824
 msgid "One"
 msgstr "Egy"
 
-#: src/editing_area.cpp:825
+#: src/editing_area.cpp:826
 msgid "Two"
 msgstr "Kettő"
 
-#: src/editing_area.cpp:839
+#: src/editing_area.cpp:840
 msgid "Other"
 msgstr "Egyéb"
 
 #. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
-#: src/editing_area.cpp:1018
+#: src/editing_area.cpp:1019
 #, c-format
 msgid "String context: %s"
 msgstr "Karakterlánc szövegösszefüggése: %s"
 
 #. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
-#: src/editing_area.cpp:1025
+#: src/editing_area.cpp:1026
 #, c-format
 msgid "String identifier: %s"
 msgstr "Karakterláncazonosító: %s"
 
-#: src/editing_area.cpp:1033
+#: src/editing_area.cpp:1034
 #, c-format
 msgid "%s Format"
 msgstr "%s formátum"
 
 #. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
-#: src/editing_area.cpp:1033
+#: src/editing_area.cpp:1034
 #, c-format
 msgid "%s format"
 msgstr "%s formátum"
@@ -1228,7 +1227,7 @@ msgstr "%s formátum"
 #: src/edlistctrl.cpp:670 src/edlistctrl.cpp:742 src/export_html.cpp:145
 #, c-format
 msgid "Translation — %s"
-msgstr "Fordítás — %s"
+msgstr "Fordítás – %s"
 
 #: src/edlistctrl.cpp:674
 msgid "ID"
@@ -1254,7 +1253,7 @@ msgstr "Ismeretlen hiba"
 
 #: src/extractors/extractor.cpp:366
 msgid "Failed to merge gettext catalogs."
-msgstr "A gettext katalógusok egyesítése meghiúsult."
+msgstr "Nem sikerült a gettext katalógusok egyesítése."
 
 #: src/fileviewer.cpp:132
 msgid "Open in Editor"
@@ -1280,8 +1279,8 @@ msgstr "Nincs használati információ"
 #, c-format
 msgid "%d code occurrence"
 msgid_plural "%d code occurrences"
-msgstr[0] "%d kód előfordulása"
-msgstr[1] "%d kód előfordulásai"
+msgstr[0] "%d előfordulás a kódban"
+msgstr[1] "%d előfordulás a kódban"
 
 #: src/fileviewer.cpp:290
 msgid "Source code not found"
@@ -1297,11 +1296,11 @@ msgstr ""
 "használják, mert a fájl vagy nem érhető el a hivatkozott helyen, vagy "
 "szimbolikus hivatkozás, amely nem egy valós fájlra mutat."
 
-#: src/fileviewer.cpp:305
+#: src/fileviewer.cpp:304
 msgid "File cannot be opened"
 msgstr "A fájl nem nyitható meg"
 
-#: src/fileviewer.cpp:306
+#: src/fileviewer.cpp:305
 #, c-format
 msgid "Poedit was unable to open the “%s” file."
 msgstr "A Poedit nem tudja megnyitni ezt a fájlt: „%s”."
@@ -1322,7 +1321,7 @@ msgstr "Beállítások"
 
 #: src/findframe.cpp:122
 msgid "Ignore case"
-msgstr "Nem kis-nagybetű érzékeny"
+msgstr "Kis- és nagybetűk azonosak"
 
 #: src/findframe.cpp:123
 msgid "Wrap around"
@@ -1370,13 +1369,13 @@ msgstr "Keresendő karakterlánc"
 
 #: src/findframe.cpp:236
 msgid "Replacement string"
-msgstr "Behelyettesítendő karakterlánc"
+msgstr "Cserekarakterlánc"
 
-#: src/gexecute.cpp:132 src/gexecute.cpp:153 src/gexecute.cpp:202
+#: src/gexecute.cpp:131 src/gexecute.cpp:152 src/gexecute.cpp:201
 msgid "warning: "
 msgstr "figyelmeztetés: "
 
-#: src/gexecute.cpp:203
+#: src/gexecute.cpp:202
 msgid "error: "
 msgstr "hiba: "
 
@@ -1436,7 +1435,7 @@ msgstr "Projekt hozzáadása"
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit – Katalóguskezelő"
 
-#: src/manager.cpp:154 src/prefsdlg.cpp:766
+#: src/manager.cpp:154 src/prefsdlg.cpp:765
 msgid "Edit…"
 msgstr "Szerkesztés…"
 
@@ -1555,7 +1554,7 @@ msgstr "Mégis"
 msgid "Paste and Match Style"
 msgstr "Beillesztés és stílus egyeztetése"
 
-#: src/menus.cpp:231 src/prefsdlg.cpp:971 src/wx_translatable_strings.h:100
+#: src/menus.cpp:231 src/prefsdlg.cpp:1064 src/wx_translatable_strings.h:100
 msgid "Delete"
 msgstr "Törlés"
 
@@ -1585,11 +1584,11 @@ msgstr "Automatikus helyesírás-javítás"
 
 #: src/menus.cpp:250
 msgid "Substitutions"
-msgstr "Cserejavaslatok"
+msgstr "Helyettesítések"
 
 #: src/menus.cpp:252
 msgid "Show Substitutions"
-msgstr "Cserejavaslatok megjelenítése"
+msgstr "Helyettesítések megjelenítése"
 
 #: src/menus.cpp:254
 msgid "Smart Copy/Paste"
@@ -1609,7 +1608,7 @@ msgstr "Intelligens hivatkozások"
 
 #: src/menus.cpp:258
 msgid "Text Replacement"
-msgstr "Szöveg csere"
+msgstr "Csereszöveg"
 
 #: src/menus.cpp:261
 msgid "Transformations"
@@ -1633,7 +1632,7 @@ msgstr "Beszéd"
 
 #: src/menus.cpp:270
 msgid "Start Speaking"
-msgstr "Beszéd kezdése"
+msgstr "Beszéd elindítása"
 
 #: src/menus.cpp:271
 msgid "Stop Speaking"
@@ -1658,7 +1657,7 @@ msgstr "Eszköztár testreszabása…"
 msgid "Enter Full Screen"
 msgstr "Váltás teljes képernyőre"
 
-#: src/menus.cpp:292 src/menus.cpp:379 src/resources/menus.xrc:316
+#: src/menus.cpp:292 src/menus.cpp:380 src/resources/menus.xrc:316
 #: src/resources/menus.xrc:421
 msgid "Window"
 msgstr "Ablak"
@@ -1679,51 +1678,51 @@ msgstr "Üdvözöljük a Poeditben"
 msgid "Bring All to Front"
 msgstr "Összes előrehozása"
 
-#: src/prefsdlg.cpp:169
+#: src/prefsdlg.cpp:168
 msgid "Information about the translator"
 msgstr "Információk a fordítóról"
 
-#: src/prefsdlg.cpp:176
+#: src/prefsdlg.cpp:175
 msgid "Name:"
 msgstr "Név:"
 
-#: src/prefsdlg.cpp:179
+#: src/prefsdlg.cpp:178
 msgid "Your Name"
 msgstr "Az Ön neve"
 
-#: src/prefsdlg.cpp:181
+#: src/prefsdlg.cpp:180
 msgid "Email:"
 msgstr "E-mail:"
 
-#: src/prefsdlg.cpp:184
+#: src/prefsdlg.cpp:183
 msgid "you@example.com"
 msgstr "nev@example.com"
 
-#: src/prefsdlg.cpp:187
+#: src/prefsdlg.cpp:186
 msgid ""
 "Your name and email address are only used to set the Last-Translator header "
 "of GNU gettext files."
 msgstr ""
-"Az Ön neve és e-mail címe csak a GNU gettext fájlok\n"
+"Az Ön neve és e-mail-címe csak a GNU gettext fájlok\n"
 "Last-Translator fejlécének beállítására szolgál."
 
-#: src/prefsdlg.cpp:196
+#: src/prefsdlg.cpp:195
 msgid "Editing"
 msgstr "Szerkesztés"
 
-#: src/prefsdlg.cpp:199
+#: src/prefsdlg.cpp:198
 msgid "Automatically compile MO file when saving"
 msgstr "MO fájl automatikus létrehozása mentéskor"
 
-#: src/prefsdlg.cpp:204
+#: src/prefsdlg.cpp:203
 msgid "Check spelling"
 msgstr "Helyesírás-ellenőrzés"
 
-#: src/prefsdlg.cpp:206
+#: src/prefsdlg.cpp:205
 msgid "Always change focus to text input field"
 msgstr "Mindig a beviteli mező legyen az aktív"
 
-#: src/prefsdlg.cpp:208
+#: src/prefsdlg.cpp:207
 msgid ""
 "Never let the list of strings take focus. If enabled, you must use Ctrl-"
 "arrows for keyboard navigation but you can also type text immediately, "
@@ -1733,55 +1732,55 @@ msgstr ""
 "Ctrl+nyilakat kell használni, de a szöveg azonnal gépelhető anélkül, hogy "
 "előtte Tabot kellene nyomni a fókusz váltásához."
 
-#: src/prefsdlg.cpp:216
+#: src/prefsdlg.cpp:215
 msgid "Appearance"
 msgstr "Megjelenés"
 
-#: src/prefsdlg.cpp:223
+#: src/prefsdlg.cpp:222
 msgid "Use custom list font:"
-msgstr "Egyéni lista betűtípus használata:"
+msgstr "Egyéni listabetűtípus használata:"
 
-#: src/prefsdlg.cpp:226
+#: src/prefsdlg.cpp:225
 msgid "Use custom text fields font:"
-msgstr "Egyéni szövegmező betűtípus használata:"
+msgstr "Egyéni szövegmező-betűtípus használata:"
 
-#: src/prefsdlg.cpp:236
+#: src/prefsdlg.cpp:235
 msgid "Change UI language"
-msgstr "Felület nyelvének változtatása"
+msgstr "Felület nyelvének megváltoztatása"
 
 #. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
-#: src/prefsdlg.cpp:246
+#: src/prefsdlg.cpp:245
 msgid "(requires Windows 8 or newer)"
 msgstr "(Windows 8 vagy újabb szükséges)"
 
-#: src/prefsdlg.cpp:349
+#: src/prefsdlg.cpp:348
 msgid "General"
 msgstr "Általános"
 
-#: src/prefsdlg.cpp:366
+#: src/prefsdlg.cpp:365
 msgid "Use translation memory"
 msgstr "Fordítási memória használata"
 
-#: src/prefsdlg.cpp:376
+#: src/prefsdlg.cpp:375
 msgid "Manage…"
 msgstr "Kezelés…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
-#: src/prefsdlg.cpp:383
+#: src/prefsdlg.cpp:382
 msgid "When updating from sources"
 msgstr "Forrásokból frissítésekor"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
-#: src/prefsdlg.cpp:386
+#: src/prefsdlg.cpp:385
 msgid "fuzzy match within the file"
-msgstr "fuzzy megfelelő a fájlon belül"
+msgstr "bizonytalan egyezés a fájlon belül"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
-#: src/prefsdlg.cpp:388
+#: src/prefsdlg.cpp:387
 msgid "pre-translate from TM"
 msgstr "előfordítás FM-ból"
 
-#: src/prefsdlg.cpp:404
+#: src/prefsdlg.cpp:403
 msgid ""
 "Poedit can attempt to fill in new entries from only previous translations in "
 "the file or from your entire translation memory. Using the TM won’t be very "
@@ -1793,146 +1792,146 @@ msgstr ""
 "igazán hatásos, ha majdnem üres, de ahogy egyre több fordítást ad hozzá, úgy "
 "egyre jobb lesz."
 
-#: src/prefsdlg.cpp:478
+#: src/prefsdlg.cpp:477
 msgid "Stored translations:"
 msgstr "Tárolt fordítások:"
 
-#: src/prefsdlg.cpp:479
+#: src/prefsdlg.cpp:478
 msgid "Database size on disk:"
-msgstr "Adatbázis méret a lemezen:"
+msgstr "Adatbázis mérete a lemezen:"
 
-#: src/prefsdlg.cpp:494
+#: src/prefsdlg.cpp:493
 msgid "Import Translation Files…"
 msgstr "Fordítási fájlok importálása…"
 
-#: src/prefsdlg.cpp:494
+#: src/prefsdlg.cpp:493
 msgid "Import translation files…"
 msgstr "Fordítási fájlok importálása…"
 
-#: src/prefsdlg.cpp:496
+#: src/prefsdlg.cpp:495
 msgid "Import From TMX…"
 msgstr "Importálás TMX fájlból…"
 
-#: src/prefsdlg.cpp:496
+#: src/prefsdlg.cpp:495
 msgid "Import from TMX…"
 msgstr "Importálás TMX fájlból…"
 
-#: src/prefsdlg.cpp:497
+#: src/prefsdlg.cpp:496
 msgid "Export To TMX…"
 msgstr "Exportálás TMX fájlba…"
 
-#: src/prefsdlg.cpp:497
+#: src/prefsdlg.cpp:496
 msgid "Export to TMX…"
 msgstr "Exportálás TMX fájlba…"
 
-#: src/prefsdlg.cpp:500
+#: src/prefsdlg.cpp:499
 msgid "Erase Database…"
 msgstr "Adatbázis törlése…"
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
-#: src/prefsdlg.cpp:500
+#: src/prefsdlg.cpp:499
 msgid "Erase database…"
 msgstr "Adatbázis törlése…"
 
-#: src/prefsdlg.cpp:524
+#: src/prefsdlg.cpp:523
 msgid "Select translation files to import"
-msgstr "Importálandó fordítás fájlok kiválasztása"
+msgstr "Importálandó fordítási fájlok kiválasztása"
 
-#: src/prefsdlg.cpp:557
+#: src/prefsdlg.cpp:556
 msgid "Select TMX files to import"
-msgstr "Válasszon importálandó TMX fájlt"
+msgstr "Válassza ki az importálandó TMX fájlokat"
 
-#: src/prefsdlg.cpp:560 src/prefsdlg.cpp:636
+#: src/prefsdlg.cpp:559 src/prefsdlg.cpp:635
 msgid "TMX Files"
 msgstr "TMX fájlok"
 
-#: src/prefsdlg.cpp:587
+#: src/prefsdlg.cpp:586
 msgid "Importing translations…"
 msgstr "Fordítások importálása…"
 
-#: src/prefsdlg.cpp:588
+#: src/prefsdlg.cpp:587
 msgid "Importing translation memory failed."
 msgstr "A fordítási memória importálása sikertelen."
 
-#: src/prefsdlg.cpp:602
+#: src/prefsdlg.cpp:601
 #, c-format
 msgid "Importing from “%s”…"
 msgstr "Importálás innen: „%s”…"
 
 #. TRANSLATORS: %s is a (formatted) number here
-#: src/prefsdlg.cpp:620
+#: src/prefsdlg.cpp:619
 #, c-format
 msgid "%s translation was imported."
 msgid_plural "%s translations were imported."
 msgstr[0] "%s fordítás lett importálva."
 msgstr[1] "%s fordítás lett importálva."
 
-#: src/prefsdlg.cpp:633
+#: src/prefsdlg.cpp:632
 msgid "Export as…"
 msgstr "Exportálás másként…"
 
-#: src/prefsdlg.cpp:648
+#: src/prefsdlg.cpp:647
 msgid "Exporting translations…"
 msgstr "Fordítások exportálása…"
 
-#: src/prefsdlg.cpp:649
+#: src/prefsdlg.cpp:648
 #, c-format
 msgid "Exporting translation memory to “%s” failed."
 msgstr "Nem sikerült a fordítási memória exportálása ide: „%s”."
 
-#: src/prefsdlg.cpp:667
+#: src/prefsdlg.cpp:666
 msgid "Reset translation memory"
 msgstr "Fordítási memória törlése"
 
-#: src/prefsdlg.cpp:668
+#: src/prefsdlg.cpp:667
 msgid "Are you sure you want to reset the translation memory?"
 msgstr "Biztos, hogy törli a fordítási memóriát?"
 
-#: src/prefsdlg.cpp:669
+#: src/prefsdlg.cpp:668
 msgid ""
 "Resetting the translation memory will irrevocably delete all stored "
 "translations from it. You can’t undo this operation."
 msgstr ""
-"A fordítási memória törlésével visszavonhatatlanul töröl minden benne tárolt "
-"fordítást. Ez a művelet nem vonható vissza."
+"A fordítási memória törlésével véglegesen törli a benne tárolt fordításokat. "
+"Ez a művelet nem vonható vissza."
 
-#: src/prefsdlg.cpp:673
+#: src/prefsdlg.cpp:672
 msgid "Reset"
 msgstr "Törlés"
 
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
-#: src/prefsdlg.cpp:704
+#: src/prefsdlg.cpp:703
 msgid "TM"
 msgstr "FM"
 
-#: src/prefsdlg.cpp:706
+#: src/prefsdlg.cpp:705
 msgid "Translation Memory"
 msgstr "Fordítási memória"
 
-#: src/prefsdlg.cpp:722
+#: src/prefsdlg.cpp:721
 msgid ""
 "Source code extractors are used to find translatable strings in the source "
 "code files and extract them so that they can be translated."
 msgstr ""
-"A forráskód kivonatoló szolgál a lefordítható karakterláncok forráskód "
-"fájlokban való megkeresésére és kivonatolására annak érdekében, hogy le "
-"lehessen őket fordítani."
+"A forráskód-kivonatolók a lefordítható karakterláncok forráskódfájlokban "
+"való megkeresésére és kivonatolására szolgálnak, hogy le lehessen őket "
+"fordítani."
 
-#: src/prefsdlg.cpp:733
+#: src/prefsdlg.cpp:732
 msgid "Custom Extractors:"
 msgstr "Egyéni kivonatolók:"
 
-#: src/prefsdlg.cpp:733
+#: src/prefsdlg.cpp:732
 msgid "Custom extractors:"
 msgstr "Egyéni kivonatolók:"
 
-#: src/prefsdlg.cpp:818
+#: src/prefsdlg.cpp:817
 msgid "GNU gettext"
 msgstr "GNU gettext"
 
-#: src/prefsdlg.cpp:824
+#: src/prefsdlg.cpp:823
 msgid ""
 "Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
 "+, C#, Perl, Python, Java, JavaScript and others)."
@@ -1940,36 +1939,100 @@ msgstr ""
 "Támogatja az összes, GNU gettext eszközök által ismert programozási nyelvet "
 "(PHP, C/C++, C#, Perl, Python, Java, JavaScript és mások)."
 
-#: src/prefsdlg.cpp:856
+#: src/prefsdlg.cpp:856 src/prefsdlg.cpp:862
 msgid "Extractor setup"
 msgstr "Kivonatoló beállítása"
 
-#: src/prefsdlg.cpp:964
+#: src/prefsdlg.cpp:867
+msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
+msgstr ""
+"Kiterjesztések pontosvesszővel elválasztott listája (például *.cpp;*.h):"
+
+#: src/prefsdlg.cpp:872
+msgid "Invocation:"
+msgstr "Végrehajtás:"
+
+#: src/prefsdlg.cpp:875
+msgid "Command to extract translations:"
+msgstr "Fordításkivonatolási parancs:"
+
+#: src/prefsdlg.cpp:878
+msgid ""
+"This is the command used to launch the extractor.\n"
+"%o expands to the name of output file, %K to list\n"
+"of keywords, %F to list of input files,\n"
+"%C to charset flag (see below)."
+msgstr ""
+"Ezzel a paranccsal lesz indítva a kivonatoló.\n"
+"A %o a kimeneti fájl nevét, a %K a kulcsszavak\n"
+"listáját, a %F a bemeneti fájlokat,\n"
+" a %C pedig a karakterkódolást (lásd lejjebb) jelenti."
+
+#: src/prefsdlg.cpp:882
+msgid "An item in keywords list:"
+msgstr "Egy elem a kulcsszavak listájában:"
+
+#: src/prefsdlg.cpp:885
+msgid ""
+"This will be attached to the command line once\n"
+"for each keyword. %k expands to the keyword."
+msgstr ""
+"Ez kulcsszavanként hozzá lesz fűzve a parancssorhoz\n"
+"A %k jelenti a kulcsszót."
+
+#: src/prefsdlg.cpp:887
+msgid "An item in input files list:"
+msgstr "Egy elem a bemeneti fájlok listájában:"
+
+#: src/prefsdlg.cpp:890
+#, c-format
+msgid ""
+"This will be attached to the command line once\n"
+"for each input file. %f expands to the filename."
+msgstr ""
+"Ez bemeneti fájlonként hozzá lesz fűzve a parancssorhoz.\n"
+"A %f jelenti a fájlnevet."
+
+#: src/prefsdlg.cpp:892 src/resources/properties.xrc:115
+msgid "Source code charset:"
+msgstr "Forráskód karakterkódolása:"
+
+#: src/prefsdlg.cpp:895
+#, c-format
+msgid ""
+"This will be attached to the command line\n"
+"only if source code charset was given. %c expands to charset value."
+msgstr ""
+"Ez csak akkor lesz a parancssorhoz fűzve, ha a\n"
+"forráskód karakterkódolása meg lett adva. A %c jelenti a karakterkódolás "
+"értékét."
+
+#: src/prefsdlg.cpp:1057
 msgid "Delete extractor"
 msgstr "Kivonatoló törlése"
 
-#: src/prefsdlg.cpp:965
+#: src/prefsdlg.cpp:1058
 #, c-format
 msgid "Are you sure you want to delete the “%s” extractor?"
 msgstr "Biztos, hogy törli a(z) „%s” kivonatolót?"
 
-#: src/prefsdlg.cpp:1003
+#: src/prefsdlg.cpp:1096
 msgid "Extractors"
 msgstr "Kivonatolók"
 
-#: src/prefsdlg.cpp:1060
+#: src/prefsdlg.cpp:1153
 msgid "Accounts"
 msgstr "Fiókok"
 
-#: src/prefsdlg.cpp:1076
+#: src/prefsdlg.cpp:1169
 msgid "Automatically check for updates"
 msgstr "Frissítések automatikus keresése"
 
-#: src/prefsdlg.cpp:1079
+#: src/prefsdlg.cpp:1172
 msgid "Include beta versions"
 msgstr "Beleértve a béta verziókat is."
 
-#: src/prefsdlg.cpp:1082
+#: src/prefsdlg.cpp:1175
 msgid ""
 "Beta versions contain the latest new features and improvements, but may be a "
 "bit less stable."
@@ -1977,11 +2040,11 @@ msgstr ""
 "A béta verziók a legújabb funkciókat és fejlesztéseket tartalmazzák, de "
 "előfordulhat, hogy egy kicsit kevésbé stabilak."
 
-#: src/prefsdlg.cpp:1110
+#: src/prefsdlg.cpp:1203
 msgid "Updates"
 msgstr "Frissítések"
 
-#: src/prefsdlg.cpp:1124
+#: src/prefsdlg.cpp:1217
 msgid ""
 "These settings affect internal formatting of PO files. Adjust them if you "
 "have specific requirements e.g. because of version control."
@@ -1989,32 +2052,32 @@ msgstr ""
 "Ezek a beállítások befolyásolják a PO fájlok belső formázását. Csak "
 "speciális követelmények, például verziókezelés esetén változtassa meg őket."
 
-#: src/prefsdlg.cpp:1128
+#: src/prefsdlg.cpp:1221
 msgid "Line endings:"
 msgstr "Sorvégek:"
 
-#: src/prefsdlg.cpp:1131
+#: src/prefsdlg.cpp:1224
 msgid "Unix (recommended)"
 msgstr "Unix (javasolt)"
 
-#: src/prefsdlg.cpp:1132
+#: src/prefsdlg.cpp:1225
 msgid "Windows"
 msgstr "Windows"
 
 #. TRANSLATORS: Followed by text control for entering number; wraps text at given width
-#: src/prefsdlg.cpp:1136
+#: src/prefsdlg.cpp:1229
 msgid "Wrap at:"
 msgstr "Szövegszélesség:"
 
-#: src/prefsdlg.cpp:1147
+#: src/prefsdlg.cpp:1240
 msgid "Preserve formatting of existing files"
 msgstr "A meglévő fájlok formázásának megőrzése"
 
-#: src/prefsdlg.cpp:1199
+#: src/prefsdlg.cpp:1292
 msgid "Advanced"
 msgstr "Speciális"
 
-#: src/prefsdlg.cpp:1227
+#: src/prefsdlg.cpp:1320
 msgid "Settings"
 msgstr "Beállítások"
 
@@ -2030,8 +2093,8 @@ msgstr "Előfordítás…"
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
-msgstr[0] "%u sor előfordítva"
-msgstr[1] "%u sor előfordítva"
+msgstr[0] "%u karakterlánc előfordítva"
+msgstr[1] "%u karakterlánc előfordítva"
 
 #: src/pretranslate_ui.cpp:79
 #, c-format
@@ -2050,11 +2113,11 @@ msgstr ""
 
 #: src/pretranslate_ui.cpp:88
 msgid "Exact matches from TM"
-msgstr "Pontos egyezések a TM-ból"
+msgstr "Pontos egyezések az FM-ből"
 
 #: src/pretranslate_ui.cpp:89
 msgid "Approximate matches from TM"
-msgstr "Hozzávetőleges egyezések a TM-ból"
+msgstr "Hozzávetőleges egyezések az FM-ből"
 
 #: src/pretranslate_ui.cpp:93
 msgid "No entries could be pre-translated."
@@ -2062,7 +2125,7 @@ msgstr "Egy bejegyzést sem lehet előfordítani."
 
 #: src/pretranslate_ui.cpp:96
 msgid "All strings were already translated."
-msgstr "Az összes karakterlánc már le van fordítva."
+msgstr "Már az összes karakterlánc le van fordítva."
 
 #: src/pretranslate_ui.cpp:100
 msgid ""
@@ -2070,9 +2133,9 @@ msgid ""
 "is only effective for semi-automatic translations after Poedit learns enough "
 "from files that you translated manually."
 msgstr ""
-"A FM nem tartalmaz a fájl tartalmához hasonló karakterláncokat. Csak azután "
+"Az FM nem tartalmaz a fájl tartalmához hasonló karakterláncokat. Csak azután "
 "lesz alkalmas félautomata fordításokhoz, ha a Poedit eleget tanult a Ön "
-"által kézzel lefordított fájlokból."
+"által kézileg lefordított fájlokból."
 
 #: src/pretranslate_ui.cpp:130
 msgid "Cannot pre-translate without source text."
@@ -2136,8 +2199,8 @@ msgid ""
 "Only enable if you trust the quality of your TM. By default, all matches "
 "from the TM are marked as needing work and should be reviewed before use."
 msgstr ""
-"Csak akkor engedélyezze, ha megbízik a FM minőségében. Alapértelmezés "
-"szerint a FM minden egyezése munkát igénylőként lesz megjelölve, és "
+"Csak akkor engedélyezze, ha megbízik az FM minőségében. Alapértelmezés "
+"szerint az FM minden egyezése munkát igénylőként lesz megjelölve, és "
 "használat előtt ellenőriznie kell."
 
 #: src/pretranslate_ui.cpp:167
@@ -2149,29 +2212,36 @@ msgstr ""
 "lefordítatlan karakterláncok pontos vagy bizonytalan egyezéseit, és kitölti "
 "velük a fordításokat."
 
-#: src/progress_ui.cpp:175 src/wx_translatable_strings.h:151
+#: src/progress_ui.cpp:178 src/wx_translatable_strings.h:151
 msgid "Error: "
 msgstr "Hiba: "
 
-#: src/progress_ui.cpp:179
+#: src/progress_ui.cpp:182
 #, c-format
 msgid "%d error occurred:"
 msgid_plural "%d errors occurred:"
 msgstr[0] "%d hiba történt:"
 msgstr[1] "%d hiba történt:"
 
-#: src/progress_ui.cpp:287
+#: src/progress_ui.cpp:290
 msgid "An error occurred."
 msgstr "Hiba történt."
 
-#: src/progress_ui.cpp:293
+#: src/progress_ui.cpp:296
 #, c-format
 msgid "%d error occurred."
 msgid_plural "%d errors occurred."
 msgstr[0] "%d hiba történt."
 msgstr[1] "%d hiba történt."
 
-#: src/progress_ui.cpp:440
+#: src/progress_ui.cpp:309
+#, c-format
+msgid "…and %d more error"
+msgid_plural "…and %d more errors"
+msgstr[0] "... és további %d hiba"
+msgstr[1] "... és további %d hiba"
+
+#: src/progress_ui.cpp:454
 msgid "Cancelling…"
 msgstr "Megszakítás…"
 
@@ -2210,12 +2280,12 @@ msgstr "Helyettesítő karakter hozzáadása…"
 #. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
 #: src/propertiesdlg.cpp:488
 msgid "Reveal in Finder"
-msgstr "Megjelenítés a Finder-ben"
+msgstr "Megjelenítés a Finderben"
 
 #. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
 #: src/propertiesdlg.cpp:491
 msgid "Show in Explorer"
-msgstr "Megnyitás az Intézőben"
+msgstr "Megjelenítés az Intézőben"
 
 #: src/propertiesdlg.cpp:493
 msgid "Show in Folder"
@@ -2227,11 +2297,11 @@ msgstr "Útvonalak"
 
 #: src/propertiesdlg.cpp:537
 msgid "Excluded paths"
-msgstr "Kizárt elérési utak"
+msgstr "Kizárt útvonalak"
 
 #: src/propertiesdlg.cpp:554
 msgid "Advanced extraction settings"
-msgstr "Speciális kivonatoló beállítások"
+msgstr "Speciális kivonatolási beállítások"
 
 #: src/propertiesdlg.cpp:558
 msgid "Extract notes for translators from:"
@@ -2247,7 +2317,7 @@ msgstr "Összes megjegyzés"
 
 #: src/propertiesdlg.cpp:572
 msgid "Additional xgettext flags:"
-msgstr "Kiegészítő xgettext jelzők:"
+msgstr "További xgettext jelzők:"
 
 #: src/propertiesdlg.cpp:666 src/propertiesdlg.cpp:681
 msgid "Translation Properties"
@@ -2259,11 +2329,11 @@ msgstr "Fordítás tulajdonságai"
 
 #: src/propertiesdlg.cpp:684
 msgid "Sources Paths"
-msgstr "Források útvonalai"
+msgstr "Források elérési útjai"
 
 #: src/propertiesdlg.cpp:684
 msgid "Sources paths"
-msgstr "Források útvonalai"
+msgstr "Források elérési útjai"
 
 #: src/propertiesdlg.cpp:687
 msgid "Sources Keywords"
@@ -2349,7 +2419,7 @@ msgstr "A fordítás végén hiányzik egy sortörés."
 
 #: src/qa_checks.cpp:294
 msgid "The translation ends with a newline, but the source text doesn’t."
-msgstr "A fordítás egy új sorral végződik, de a forrásszöveg nem."
+msgstr "A fordítás sortöréssel végződik, de a forrásszöveg nem."
 
 #: src/qa_checks.cpp:300
 msgid "The translation is missing a space at the end."
@@ -2380,25 +2450,25 @@ msgstr "A fordítás végén „%s” van, ellenben a forrásszöveg végén „
 
 #: src/qa_checks.cpp:534
 msgid "Length difference"
-msgstr ""
+msgstr "Hosszúságkülönbség"
 
 #: src/qa_checks.cpp:550
 #, c-format
 msgid "The translation exceeds maximum length (%d characters)."
-msgstr ""
+msgstr "A fordítás meghaladja a maximális hosszúságot (%d karakter)."
 
 #: src/qa_checks.cpp:557
 #, c-format
 msgid "The translation is below minimum length (%d characters)."
-msgstr ""
+msgstr "A fordítás nem éri el a minimális hosszúságot (%d karakter)."
 
 #: src/qa_checks.cpp:567
 msgid "The translation is much shorter than the source text."
-msgstr ""
+msgstr "A fordítás sokkal rövidebb, mint a forrásszöveg."
 
 #: src/qa_checks.cpp:573
 msgid "The translation is much longer than the source text."
-msgstr ""
+msgstr "A fordítás sokkal hosszabb, mint a forrásszöveg."
 
 #: src/recent_files.cpp:216
 msgid "Cloud"
@@ -2464,11 +2534,11 @@ msgstr "Felhős fordítás megnyitása…"
 
 #: src/resources/menus.xrc:30 src/resources/menus.xrc:368
 msgid "&Start window"
-msgstr "&Kezdő ablak"
+msgstr "&Kezdőablak"
 
 #: src/resources/menus.xrc:31 src/resources/menus.xrc:369
 msgid "&Start Window"
-msgstr "&Kezdő ablak"
+msgstr "&Kezdőablak"
 
 #: src/resources/menus.xrc:35 src/resources/menus.xrc:374
 msgid "Catalogs &manager"
@@ -2505,7 +2575,7 @@ msgstr "Exportálás HTML fájlba…"
 
 #: src/resources/menus.xrc:65 src/resources/menus.xrc:383
 msgid "Check for updates…"
-msgstr "Frissítések ellenőrzése…"
+msgstr "Frissítések keresése…"
 
 #: src/resources/menus.xrc:68 src/resources/menus.xrc:386
 msgid "Settings…"
@@ -2786,76 +2856,26 @@ msgstr "&GNU gettext kézikönyv"
 msgid "&GNU gettext Manual"
 msgstr "&GNU gettext kézikönyv"
 
-#: src/resources/menus.xrc:332 src/resources/menus.xrc:437
+#: src/resources/menus.xrc:332 src/resources/menus.xrc:445
 msgid "&About Poedit"
 msgstr "A Poedit &névjegye"
 
 #: src/resources/menus.xrc:333 src/resources/menus.xrc:334
-#: src/resources/menus.xrc:438 src/resources/menus.xrc:439
+#: src/resources/menus.xrc:446 src/resources/menus.xrc:447
 msgid "&About"
 msgstr "&Névjegy"
 
-#: src/resources/prefs.xrc:26
-msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
-msgstr "Kiterjesztések listája pontosvesszővel elválasztva (pl. *.cpp;*.h):"
+#: src/resources/menus.xrc:437
+msgid "Support"
+msgstr "Támogatás"
 
-#: src/resources/prefs.xrc:41
-msgid "Invocation:"
-msgstr "Végrehajtás:"
+#: src/resources/menus.xrc:440
+msgid "Email &support…"
+msgstr "E-mailes &támogatás…"
 
-#: src/resources/prefs.xrc:45
-msgid "Command to extract translations:"
-msgstr "Fordításkinyerési parancs:"
-
-#: src/resources/prefs.xrc:59
-msgid ""
-"This is the command used to launch the extractor.\n"
-"%o expands to the name of output file, %K to list\n"
-"of keywords, %F to list of input files,\n"
-"%C to charset flag (see below)."
-msgstr ""
-"Ezzel a paranccsal lesz indítva a kivonatoló.\n"
-"A %o a kimeneti fájl nevét, a %K a kulcsszavak\n"
-"listáját, a %F a bemeneti fájlokat,\n"
-" a %C pedig a karakterkódolást (lásd lejjebb) jelenti."
-
-#: src/resources/prefs.xrc:68
-msgid "An item in keywords list:"
-msgstr "Egy elem a kulcsszavak listájában:"
-
-#: src/resources/prefs.xrc:82
-msgid ""
-"This will be attached to the command line once\n"
-"for each keyword. %k expands to the keyword."
-msgstr ""
-"Ez minden kulcsszónál egyszer a parancssor\n"
-"végéhez lesz fűzve. A %k jelenti a kulcsszót."
-
-#: src/resources/prefs.xrc:91
-msgid "An item in input files list:"
-msgstr "Egy elem a bemeneti fájlok listájában:"
-
-#: src/resources/prefs.xrc:105
-#, c-format
-msgid ""
-"This will be attached to the command line once\n"
-"for each input file. %f expands to the filename."
-msgstr ""
-"Ez minden bemeneti fájlnál egyszer a parancssor\n"
-"végéhez lesz fűzve. %f jelenti a fájl nevét."
-
-#: src/resources/prefs.xrc:114 src/resources/properties.xrc:115
-msgid "Source code charset:"
-msgstr "Forráskód karakterkódolás:"
-
-#: src/resources/prefs.xrc:128
-#, c-format
-msgid ""
-"This will be attached to the command line\n"
-"only if source code charset was given. %c expands to charset value."
-msgstr ""
-"Ez csak akkor lesz a parancssorhoz fűzve, ha forráskód\n"
-"karakterkódolás meg lett adva. %c jelenti a karakterkódolás értékét."
+#: src/resources/menus.xrc:441
+msgid "Email &Support…"
+msgstr "E-mailes &támogatás…"
 
 #: src/resources/properties.xrc:10
 msgid "Project name and version:"
@@ -2895,7 +2915,7 @@ msgstr "Speciális kivonatolási beállítások…"
 
 #: src/resources/properties.xrc:150
 msgid "Extract text from source files in the following directories:"
-msgstr "Szövegek kinyerése a következő könyvtárakban lévő forrásfájlokból:"
+msgstr "Szövegek kivonatolása a következő könyvtárakban lévő forrásfájlokból:"
 
 #: src/resources/properties.xrc:159
 msgid "Base path:"
@@ -2906,7 +2926,7 @@ msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files:"
 msgstr ""
-"Használja ezeket a kulcsszavakat (függvény neveket) a forrásfájlokban lévő\n"
+"Használja ezeket a kulcsszavakat (függvényneveket) a forrásfájlokban lévő\n"
 "lefordítható szövegek felismeréséhez:"
 
 #: src/resources/properties.xrc:226
@@ -2942,7 +2962,7 @@ msgstr "Megjegyzés"
 msgid "Add comment"
 msgstr "Hozzászólás"
 
-#: src/sidebar.cpp:229 src/sidebar.cpp:231 src/sidebar.cpp:249
+#: src/sidebar.cpp:229 src/sidebar.cpp:249
 msgid "Add Comment"
 msgstr "Hozzászólás"
 
@@ -2995,17 +3015,17 @@ msgstr "A programot nem lehet futtatni: %s"
 
 #: src/tm/tmx_io.cpp:88 src/tm/tmx_io.cpp:104
 msgid "The TMX file is malformed."
-msgstr "A TMX fájl formátuma hibás."
+msgstr "A TMX-fájl formátuma hibás."
 
 #: src/tm/transmem.cpp:87
 #, c-format
 msgid "Translation memory database is corrupted: %s (%d)."
-msgstr "A fordítási memória adatbázis sérült: %s (%d)."
+msgstr "A fordítási memória adatbázisa sérült: %s (%d)."
 
 #: src/tm/transmem.cpp:90
 #, c-format
 msgid "Translation memory error: %s (%d)."
-msgstr "Fordítási memória hiba: %s (%d)."
+msgstr "Fordítási memória hibája: %s (%d)."
 
 #: src/uilang.cpp:235
 msgid "(Use default language)"
@@ -3021,7 +3041,7 @@ msgstr "Válassza ki a kívánt nyelvet"
 
 #: src/uilang.cpp:263
 msgid "You must restart Poedit for this change to take effect."
-msgstr "Újra kell indítania a Poeditet a módosítás életbe léptetéséhez."
+msgstr "A változás érvénybe lépéséhez újra kell indítania a Poeditet."
 
 #: src/utility.cpp:143 src/utility.cpp:153
 msgid "Cannot create temporary directory."
@@ -3052,12 +3072,12 @@ msgid ""
 "The simplest way to fill this file with translations is to update it from a "
 "POT:"
 msgstr ""
-"A fájl fordítással történő kitöltésének legegyszerűbb módja a POT-ról "
+"A fájl fordítással történő kitöltésének legegyszerűbb módja a POT-fájlból "
 "történő frissítés:"
 
 #: src/welcomescreen.cpp:160
 msgid "Update from POT"
-msgstr "Frissítés POT fájlból"
+msgstr "Frissítés POT-fájlból"
 
 #: src/welcomescreen.cpp:161
 msgid "Take translatable strings from an existing POT template."
@@ -3070,11 +3090,11 @@ msgstr "Közvetlenül a forráskódból is kinyerhet lefordítható karakterlán
 
 #: src/welcomescreen.cpp:170
 msgid "Extract from sources"
-msgstr "Kinyerés forrásfájlokból"
+msgstr "Kivonatolás forrásfájlokból"
 
 #: src/welcomescreen.cpp:171
 msgid "Configure source code extraction in Properties."
-msgstr "Forráskódkinyerés beállítása a Tulajdonságokban."
+msgstr "Forráskódkivonatolás beállítása a Tulajdonságokban."
 
 #. TRANSLATORS: This is version information in about dialog, "%s" will be
 #. version number when used
@@ -3089,11 +3109,11 @@ msgstr "Új készítése"
 
 #: src/welcomescreen.cpp:280
 msgid "Create new translation from POT template."
-msgstr "Új fordítás készítése POT sablonból."
+msgstr "Új fordítás létrehozása POT-sablonból."
 
 #: src/welcomescreen.cpp:285
 msgid "Browse files"
-msgstr "Fájlok böngészése"
+msgstr "Fájlok tallózása"
 
 #: src/welcomescreen.cpp:286
 msgid "Open and edit translation files."
@@ -3143,7 +3163,7 @@ msgstr "Hibák keresése a fordításban"
 
 #: src/wx/main_toolbar.cpp:129
 msgid "Validate"
-msgstr "Érvényesítés"
+msgstr "Ellenőrzés"
 
 #: src/wx/main_toolbar.cpp:131
 msgid "Pre-translate strings that don’t have a translation yet"
@@ -3176,7 +3196,7 @@ msgstr "A %s névjegye"
 #: src/wx_translatable_strings.h:49
 #, c-format
 msgid "%s Preferences"
-msgstr "%s beállításai"
+msgstr "A %s beállításai"
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
@@ -3236,7 +3256,7 @@ msgstr "Beállítások…"
 
 #: src/wx_translatable_strings.h:92
 msgid "&Apply"
-msgstr "Alkalmaz"
+msgstr "&Alkalmaz"
 
 #: src/wx_translatable_strings.h:92
 msgid "Apply"
@@ -3244,7 +3264,7 @@ msgstr "Alkalmaz"
 
 #: src/wx_translatable_strings.h:93
 msgid "&Back"
-msgstr "Vissza"
+msgstr "&Vissza"
 
 #: src/wx_translatable_strings.h:93
 msgid "Back"
@@ -3252,7 +3272,7 @@ msgstr "Vissza"
 
 #: src/wx_translatable_strings.h:94
 msgid "&Cancel"
-msgstr "Mégse"
+msgstr "&Mégse"
 
 #: src/wx_translatable_strings.h:95
 msgid "&Clear"
@@ -3352,11 +3372,11 @@ msgstr "Mentés másként"
 
 #: src/wx_translatable_strings.h:117
 msgid "Select &All"
-msgstr "Min&den kijelölése"
+msgstr "Össz&es kijelölése"
 
 #: src/wx_translatable_strings.h:117
 msgid "Select All"
-msgstr "Minden kijelölése"
+msgstr "Összes kijelölése"
 
 #: src/wx_translatable_strings.h:118
 msgid "&Undo"

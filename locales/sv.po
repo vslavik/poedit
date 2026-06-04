@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
-"Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2026-03-10 11:41+0100\n"
-"PO-Revision-Date: 2026-03-05 10:23\n"
+"Report-Msgid-Bugs-To: help@poedit.com\n"
+"POT-Creation-Date: 2026-06-04 11:46+0200\n"
+"PO-Revision-Date: 2026-05-30 10:46\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -31,7 +31,7 @@ msgstr "Visa inte igen"
 
 #: src/cat_update.cpp:99
 msgid "Update Summary"
-msgstr "Uppdatera sammanfattning"
+msgstr "Sammanfattning av uppdatering"
 
 #. TRANSLATORS: Title of window showing summary (added/removed strings, issues) of updating translations from sources or POT file
 #: src/cat_update.cpp:99
@@ -109,7 +109,7 @@ msgid ""
 "found in the location specified in the file’s Properties."
 msgstr ""
 "Översättningar kunde inte uppdateras från källkoden, eftersom ingen kod "
-"hittades i den plats som anges i filens egenskaper."
+"hittades på den plats som anges i filens egenskaper."
 
 #: src/cat_update.cpp:305
 msgid "Permission denied."
@@ -120,7 +120,7 @@ msgid ""
 "You don’t have permission to read source code files from the location "
 "specified in the file’s Properties."
 msgstr ""
-"Du har inte behörighet att läsa källkodfiler från den plats som "
+"Du har inte behörighet att läsa källkodsfiler från den plats som "
 "specificerats i filens egenskaper."
 
 #. TRANSLATORS: The System Settings etc. references macOS 13 Ventura or newer system settings and should be translated EXACTLY as in macOS. If you don't use macOS and can't check, please leave it untranslated.
@@ -147,7 +147,7 @@ msgstr ""
 msgid "Failed to extract strings from source code."
 msgstr "Det gick inte att extrahera strängar från källkoden."
 
-#: src/cat_update.cpp:356 src/edapp.cpp:1101 src/edframe.cpp:928
+#: src/cat_update.cpp:356 src/edapp.cpp:1104 src/edframe.cpp:928
 #: src/edframe.cpp:2531
 #, c-format
 msgid "The file “%s” couldn’t be opened."
@@ -272,7 +272,7 @@ msgstr ""
 #: src/catalog_po.cpp:1335 src/catalog_po.cpp:1344 src/catalog_po.cpp:1401
 #: src/catalog_po.cpp:1432 src/catalog_po.cpp:1630 src/catalog_qt.cpp:341
 #: src/catalog_resx.cpp:209 src/catalog_xliff.cpp:500 src/edframe.cpp:1316
-#: src/prefsdlg.cpp:660
+#: src/prefsdlg.cpp:659
 #, c-format
 msgid "Couldn’t save file %s."
 msgstr "Kunde inte spara filen %s."
@@ -413,8 +413,7 @@ msgstr "Hantera konton"
 msgid "Project:"
 msgstr "Projekt:"
 
-#: src/cloud_accounts_ui.cpp:379 src/export_html.cpp:79
-#: src/resources/prefs.xrc:10 src/resources/prefs.xrc:14
+#: src/cloud_accounts_ui.cpp:379 src/export_html.cpp:79 src/prefsdlg.cpp:866
 #: src/resources/properties.xrc:45
 msgid "Language:"
 msgstr "Språk:"
@@ -520,7 +519,7 @@ msgstr "Logga ut"
 
 #: src/crowdin_gui.cpp:168
 msgid "Learn more about Crowdin"
-msgstr "Lär dig mer om Crowdin"
+msgstr "Läs mer om Crowdin"
 
 #: src/crowdin_gui.cpp:195
 msgid ""
@@ -564,20 +563,20 @@ msgstr "Läs mer"
 msgid "Help"
 msgstr "Hjälp"
 
-#: src/edapp.cpp:453 src/resources/menus.xrc:336 src/resources/menus.xrc:441
+#: src/edapp.cpp:454 src/resources/menus.xrc:336 src/resources/menus.xrc:449
 #: src/wx_translatable_strings.h:105
 msgid "&Help"
 msgstr "&Hjälp"
 
-#: src/edapp.cpp:730
+#: src/edapp.cpp:731
 msgid "MO files can’t be directly edited in Poedit."
 msgstr "MO-filer kan inte öppnas med Poedit."
 
-#: src/edapp.cpp:731
+#: src/edapp.cpp:732
 msgid "Error opening file"
 msgstr "Problem när filen lästes in"
 
-#: src/edapp.cpp:733
+#: src/edapp.cpp:734
 msgid ""
 "Please open and edit the corresponding PO file instead. When you save it, "
 "the MO file will be updated as well."
@@ -585,41 +584,41 @@ msgstr ""
 "Öppna och redigera motsvarande PO-fil i stället. När du sparar den, "
 "uppdateras MO-filen också."
 
-#: src/edapp.cpp:774
+#: src/edapp.cpp:775
 msgid "don’t delete temporary files (for debugging)"
 msgstr "ta inte bort temporära filer (för felsökning)"
 
-#: src/edapp.cpp:776
+#: src/edapp.cpp:777
 msgid "handle a poedit:// URI"
 msgstr "hantera en poedit:// URI"
 
-#: src/edapp.cpp:778
+#: src/edapp.cpp:779
 msgid "go to item at given line number"
 msgstr "gå till post på givet radnummer"
 
-#: src/edapp.cpp:801
+#: src/edapp.cpp:802
 msgid "Failed to communicate with Poedit process."
 msgstr "Misslyckades att kommunicera med Poedit-processen."
 
-#: src/edapp.cpp:914 src/edapp.cpp:919
+#: src/edapp.cpp:915 src/edapp.cpp:920
 #, c-format
 msgid "Unhandled exception occurred: %s"
 msgstr "Ohanterat undantag inträffade: %s"
 
-#: src/edapp.cpp:1071
+#: src/edapp.cpp:1074
 msgid "Select translation template"
 msgstr "Välj översättningsmall"
 
-#: src/edapp.cpp:1102 src/edframe.cpp:929 src/edframe.cpp:2328
+#: src/edapp.cpp:1105 src/edframe.cpp:929 src/edframe.cpp:2328
 #: src/edframe.cpp:2532
 msgid "Invalid file"
 msgstr "Ogiltig fil"
 
-#: src/edapp.cpp:1122
+#: src/edapp.cpp:1125
 msgid "Select translation file"
 msgstr "Välj översättningsfil"
 
-#: src/edapp.cpp:1223
+#: src/edapp.cpp:1226
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit är en lättanvänd översättningsredigerare."
 
@@ -711,7 +710,7 @@ msgstr ""
 "Ändringarna som gjorts av den andra applikationen kommer att gå förlorade om "
 "du sparar."
 
-#: src/edframe.cpp:1142 src/prefsdlg.cpp:673 src/prefsdlg.cpp:971
+#: src/edframe.cpp:1142 src/prefsdlg.cpp:672 src/prefsdlg.cpp:1064
 #: src/wx_translatable_strings.h:94
 msgid "Cancel"
 msgstr "Avbryt"
@@ -1085,52 +1084,52 @@ msgstr "Kodförekomster"
 msgid "Code occurrences"
 msgstr "Kodförekomster"
 
-#: src/edframe.cpp:3268
+#: src/edframe.cpp:3270
 msgid "Hide Sidebar"
 msgstr "Dölj sidofält"
 
-#: src/edframe.cpp:3270 src/resources/menus.xrc:217
+#: src/edframe.cpp:3272 src/resources/menus.xrc:217
 msgid "Show Sidebar"
 msgstr "Visa sidofält"
 
-#: src/edframe.cpp:3301
+#: src/edframe.cpp:3303
 msgid "Hide Status Bar"
 msgstr "Dölj statusfältet"
 
-#: src/edframe.cpp:3303 src/resources/menus.xrc:223
+#: src/edframe.cpp:3305 src/resources/menus.xrc:223
 msgid "Show Status Bar"
 msgstr "Visa statusfältet"
 
-#: src/editing_area.cpp:357
+#: src/editing_area.cpp:358
 msgid "String length in characters: translation | source"
 msgstr "Stränglängd i tecken: översättning | källa"
 
-#: src/editing_area.cpp:360
+#: src/editing_area.cpp:361
 msgid "String length in characters"
 msgstr "Stränglängd i tecken"
 
-#: src/editing_area.cpp:407 src/editing_area.cpp:750 src/edlistctrl.cpp:665
+#: src/editing_area.cpp:408 src/editing_area.cpp:751 src/edlistctrl.cpp:665
 #: src/edlistctrl.cpp:719 src/export_html.cpp:143
 msgid "Source text"
 msgstr "Källtext"
 
-#: src/editing_area.cpp:429 src/editing_area.cpp:816 src/editing_area.cpp:832
+#: src/editing_area.cpp:430 src/editing_area.cpp:817 src/editing_area.cpp:833
 msgid "Singular"
 msgstr "Singular"
 
-#: src/editing_area.cpp:434 src/editing_area.cpp:837
+#: src/editing_area.cpp:435 src/editing_area.cpp:838
 msgid "Plural"
 msgstr "Plural"
 
-#: src/editing_area.cpp:489
+#: src/editing_area.cpp:490
 msgid "Translation"
 msgstr "Översättning"
 
-#: src/editing_area.cpp:498
+#: src/editing_area.cpp:499
 msgid "Pre-translated"
 msgstr "Förhandsöversatt"
 
-#: src/editing_area.cpp:521
+#: src/editing_area.cpp:522
 msgid "Needs Work"
 msgstr "Behöver arbete"
 
@@ -1142,11 +1141,11 @@ msgstr "Behöver arbete"
 #. "needs review" implies that somebody else should review the string after
 #. I am done with it (i.e. consider it good), while "needs work" implies I
 #. need to return to it and finish the translation.
-#: src/editing_area.cpp:521
+#: src/editing_area.cpp:522
 msgid "Needs work"
 msgstr "Behöver arbete"
 
-#: src/editing_area.cpp:578
+#: src/editing_area.cpp:579
 msgid ""
 "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
@@ -1154,72 +1153,72 @@ msgstr ""
 "POT-filer är endast mallar och innehåller inte själv några översättningar.\n"
 "För att göra en översättning, skapa en ny PO-fil baserad på mallen."
 
-#: src/editing_area.cpp:585
+#: src/editing_area.cpp:586
 msgid "Create new translation"
 msgstr "Skapa ny översättning"
 
-#: src/editing_area.cpp:586
+#: src/editing_area.cpp:587
 msgid "Make a new translation from this POT file."
 msgstr "Skapa en ny översättning från denna POT-fil."
 
-#: src/editing_area.cpp:618
+#: src/editing_area.cpp:619
 msgid "Use the Edit menu to perform bulk actions on selected strings."
 msgstr "Använd redigeringsmenyn för att utföra bulkåtgärder på valda strängar."
 
 #. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
-#: src/editing_area.cpp:748 src/edlistctrl.cpp:713 src/export_html.cpp:137
+#: src/editing_area.cpp:749 src/edlistctrl.cpp:713 src/export_html.cpp:137
 msgid "Source text ID"
 msgstr "Källtext-ID"
 
-#: src/editing_area.cpp:803
+#: src/editing_area.cpp:804
 msgid "Everything"
 msgstr "Allt"
 
-#: src/editing_area.cpp:808
+#: src/editing_area.cpp:809
 #, c-format
 msgid "Form %i"
 msgstr "Formulär %i"
 
-#: src/editing_area.cpp:810
+#: src/editing_area.cpp:811
 #, c-format
 msgid "Form %i (unused)"
 msgstr "Formulär %i (Oanvänd)"
 
-#: src/editing_area.cpp:821
+#: src/editing_area.cpp:822
 msgid "Zero"
 msgstr "Noll"
 
-#: src/editing_area.cpp:823
+#: src/editing_area.cpp:824
 msgid "One"
 msgstr "Ett"
 
-#: src/editing_area.cpp:825
+#: src/editing_area.cpp:826
 msgid "Two"
 msgstr "Två"
 
-#: src/editing_area.cpp:839
+#: src/editing_area.cpp:840
 msgid "Other"
 msgstr "Övrigt"
 
 #. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
-#: src/editing_area.cpp:1018
+#: src/editing_area.cpp:1019
 #, c-format
 msgid "String context: %s"
 msgstr "Strängkontext: %s"
 
 #. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
-#: src/editing_area.cpp:1025
+#: src/editing_area.cpp:1026
 #, c-format
 msgid "String identifier: %s"
 msgstr "Strängidentifierare: %s"
 
-#: src/editing_area.cpp:1033
+#: src/editing_area.cpp:1034
 #, c-format
 msgid "%s Format"
 msgstr "%s-format"
 
 #. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
-#: src/editing_area.cpp:1033
+#: src/editing_area.cpp:1034
 #, c-format
 msgid "%s format"
 msgstr "%s-format"
@@ -1295,11 +1294,11 @@ msgstr ""
 "inte är tillgänglig på den refererade platsen eller så är det en symbolisk "
 "referens som inte pekar mot en riktig fil."
 
-#: src/fileviewer.cpp:305
+#: src/fileviewer.cpp:304
 msgid "File cannot be opened"
 msgstr "Filen kan inte öppnas"
 
-#: src/fileviewer.cpp:306
+#: src/fileviewer.cpp:305
 #, c-format
 msgid "Poedit was unable to open the “%s” file."
 msgstr "Poedit kunde inte öppna filen ”%s”."
@@ -1370,11 +1369,11 @@ msgstr "Sträng att hitta"
 msgid "Replacement string"
 msgstr "Ersättningssträng"
 
-#: src/gexecute.cpp:132 src/gexecute.cpp:153 src/gexecute.cpp:202
+#: src/gexecute.cpp:131 src/gexecute.cpp:152 src/gexecute.cpp:201
 msgid "warning: "
 msgstr "varning: "
 
-#: src/gexecute.cpp:203
+#: src/gexecute.cpp:202
 msgid "error: "
 msgstr "fel: "
 
@@ -1434,7 +1433,7 @@ msgstr "Lägg till projekt"
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - Kataloghanterare"
 
-#: src/manager.cpp:154 src/prefsdlg.cpp:766
+#: src/manager.cpp:154 src/prefsdlg.cpp:765
 msgid "Edit…"
 msgstr "Redigera…"
 
@@ -1554,7 +1553,7 @@ msgstr "Gör om"
 msgid "Paste and Match Style"
 msgstr "Klistra in och matcha stil"
 
-#: src/menus.cpp:231 src/prefsdlg.cpp:971 src/wx_translatable_strings.h:100
+#: src/menus.cpp:231 src/prefsdlg.cpp:1064 src/wx_translatable_strings.h:100
 msgid "Delete"
 msgstr "Ta bort"
 
@@ -1657,7 +1656,7 @@ msgstr "Anpassa verktygsfält…"
 msgid "Enter Full Screen"
 msgstr "Gå till helskärm"
 
-#: src/menus.cpp:292 src/menus.cpp:379 src/resources/menus.xrc:316
+#: src/menus.cpp:292 src/menus.cpp:380 src/resources/menus.xrc:316
 #: src/resources/menus.xrc:421
 msgid "Window"
 msgstr "Fönster"
@@ -1678,27 +1677,27 @@ msgstr "Välkommen till Poedit"
 msgid "Bring All to Front"
 msgstr "Lägg alla överst"
 
-#: src/prefsdlg.cpp:169
+#: src/prefsdlg.cpp:168
 msgid "Information about the translator"
 msgstr "Information om översättaren"
 
-#: src/prefsdlg.cpp:176
+#: src/prefsdlg.cpp:175
 msgid "Name:"
 msgstr "Namn:"
 
-#: src/prefsdlg.cpp:179
+#: src/prefsdlg.cpp:178
 msgid "Your Name"
 msgstr "Ditt namn"
 
-#: src/prefsdlg.cpp:181
+#: src/prefsdlg.cpp:180
 msgid "Email:"
 msgstr "E-post:"
 
-#: src/prefsdlg.cpp:184
+#: src/prefsdlg.cpp:183
 msgid "you@example.com"
 msgstr "du@exempel.se"
 
-#: src/prefsdlg.cpp:187
+#: src/prefsdlg.cpp:186
 msgid ""
 "Your name and email address are only used to set the Last-Translator header "
 "of GNU gettext files."
@@ -1706,23 +1705,23 @@ msgstr ""
 "Ditt namn och e-postadress används endast för att ställa in i sista-"
 "översättare huvudet på GNU gettext-filer."
 
-#: src/prefsdlg.cpp:196
+#: src/prefsdlg.cpp:195
 msgid "Editing"
 msgstr "Redigering"
 
-#: src/prefsdlg.cpp:199
+#: src/prefsdlg.cpp:198
 msgid "Automatically compile MO file when saving"
 msgstr "Kompilera MO-fil automatiskt när du sparar"
 
-#: src/prefsdlg.cpp:204
+#: src/prefsdlg.cpp:203
 msgid "Check spelling"
 msgstr "Kontrollera stavning"
 
-#: src/prefsdlg.cpp:206
+#: src/prefsdlg.cpp:205
 msgid "Always change focus to text input field"
 msgstr "Ändra alltid fokus till textinmatningsfältet"
 
-#: src/prefsdlg.cpp:208
+#: src/prefsdlg.cpp:207
 msgid ""
 "Never let the list of strings take focus. If enabled, you must use Ctrl-"
 "arrows for keyboard navigation but you can also type text immediately, "
@@ -1732,55 +1731,55 @@ msgstr ""
 "använda Ctrl-pilar för tangentbordsnavigering men du kan också skriva text "
 "direkt, utan att behöva trycka Tab för att byta fokus."
 
-#: src/prefsdlg.cpp:216
+#: src/prefsdlg.cpp:215
 msgid "Appearance"
 msgstr "Utseende"
 
-#: src/prefsdlg.cpp:223
+#: src/prefsdlg.cpp:222
 msgid "Use custom list font:"
 msgstr "Använd anpassat typsnitt i lista:"
 
-#: src/prefsdlg.cpp:226
+#: src/prefsdlg.cpp:225
 msgid "Use custom text fields font:"
 msgstr "Använd anpassat typsnitt i textfält:"
 
-#: src/prefsdlg.cpp:236
+#: src/prefsdlg.cpp:235
 msgid "Change UI language"
 msgstr "Ändra språk för gränssnittet"
 
 #. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
-#: src/prefsdlg.cpp:246
+#: src/prefsdlg.cpp:245
 msgid "(requires Windows 8 or newer)"
 msgstr "(kräver Windows 8 eller nyare)"
 
-#: src/prefsdlg.cpp:349
+#: src/prefsdlg.cpp:348
 msgid "General"
 msgstr "Allmänt"
 
-#: src/prefsdlg.cpp:366
+#: src/prefsdlg.cpp:365
 msgid "Use translation memory"
 msgstr "Använda översättningsminne"
 
-#: src/prefsdlg.cpp:376
+#: src/prefsdlg.cpp:375
 msgid "Manage…"
 msgstr "Hantera…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
-#: src/prefsdlg.cpp:383
+#: src/prefsdlg.cpp:382
 msgid "When updating from sources"
 msgstr "Vid uppdatering från källor"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
-#: src/prefsdlg.cpp:386
+#: src/prefsdlg.cpp:385
 msgid "fuzzy match within the file"
 msgstr "ungefärlig träff i filen"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
-#: src/prefsdlg.cpp:388
+#: src/prefsdlg.cpp:387
 msgid "pre-translate from TM"
 msgstr "förhandsöversätt från TM"
 
-#: src/prefsdlg.cpp:404
+#: src/prefsdlg.cpp:403
 msgid ""
 "Poedit can attempt to fill in new entries from only previous translations in "
 "the file or from your entire translation memory. Using the TM won’t be very "
@@ -1792,102 +1791,102 @@ msgstr ""
 "det är nästan tomt, men det kommer bli bättre allt eftersom du lägger till "
 "fler översättningar till det."
 
-#: src/prefsdlg.cpp:478
+#: src/prefsdlg.cpp:477
 msgid "Stored translations:"
 msgstr "Lagrade översättningar:"
 
-#: src/prefsdlg.cpp:479
+#: src/prefsdlg.cpp:478
 msgid "Database size on disk:"
 msgstr "Databasstorlek på disk:"
 
-#: src/prefsdlg.cpp:494
+#: src/prefsdlg.cpp:493
 msgid "Import Translation Files…"
 msgstr "Importera översättningsfiler…"
 
-#: src/prefsdlg.cpp:494
+#: src/prefsdlg.cpp:493
 msgid "Import translation files…"
 msgstr "Importera översättningsfiler…"
 
-#: src/prefsdlg.cpp:496
+#: src/prefsdlg.cpp:495
 msgid "Import From TMX…"
 msgstr "Importera från TMX…"
 
-#: src/prefsdlg.cpp:496
+#: src/prefsdlg.cpp:495
 msgid "Import from TMX…"
 msgstr "Importera från TMX…"
 
-#: src/prefsdlg.cpp:497
+#: src/prefsdlg.cpp:496
 msgid "Export To TMX…"
 msgstr "Exportera till TMX…"
 
-#: src/prefsdlg.cpp:497
+#: src/prefsdlg.cpp:496
 msgid "Export to TMX…"
 msgstr "Exportera till TMX…"
 
-#: src/prefsdlg.cpp:500
+#: src/prefsdlg.cpp:499
 msgid "Erase Database…"
 msgstr "Radera databas…"
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
-#: src/prefsdlg.cpp:500
+#: src/prefsdlg.cpp:499
 msgid "Erase database…"
 msgstr "Radera databas…"
 
-#: src/prefsdlg.cpp:524
+#: src/prefsdlg.cpp:523
 msgid "Select translation files to import"
 msgstr "Välj översättningsfiler att importera"
 
-#: src/prefsdlg.cpp:557
+#: src/prefsdlg.cpp:556
 msgid "Select TMX files to import"
 msgstr "Välj TMX-fil som ska importeras"
 
-#: src/prefsdlg.cpp:560 src/prefsdlg.cpp:636
+#: src/prefsdlg.cpp:559 src/prefsdlg.cpp:635
 msgid "TMX Files"
 msgstr "TMX-filer"
 
-#: src/prefsdlg.cpp:587
+#: src/prefsdlg.cpp:586
 msgid "Importing translations…"
 msgstr "Importerar översättningar…"
 
-#: src/prefsdlg.cpp:588
+#: src/prefsdlg.cpp:587
 msgid "Importing translation memory failed."
 msgstr "Import av översättningsminne misslyckades."
 
-#: src/prefsdlg.cpp:602
+#: src/prefsdlg.cpp:601
 #, c-format
 msgid "Importing from “%s”…"
 msgstr "Importerar från ”%s”…"
 
 #. TRANSLATORS: %s is a (formatted) number here
-#: src/prefsdlg.cpp:620
+#: src/prefsdlg.cpp:619
 #, c-format
 msgid "%s translation was imported."
 msgid_plural "%s translations were imported."
 msgstr[0] "%s översättning importerades."
 msgstr[1] "%s översättningar importerades."
 
-#: src/prefsdlg.cpp:633
+#: src/prefsdlg.cpp:632
 msgid "Export as…"
 msgstr "Exportera som…"
 
-#: src/prefsdlg.cpp:648
+#: src/prefsdlg.cpp:647
 msgid "Exporting translations…"
 msgstr "Exporterar översättningar…"
 
-#: src/prefsdlg.cpp:649
+#: src/prefsdlg.cpp:648
 #, c-format
 msgid "Exporting translation memory to “%s” failed."
 msgstr "Export av översättningsminne till ”%s” misslyckades."
 
-#: src/prefsdlg.cpp:667
+#: src/prefsdlg.cpp:666
 msgid "Reset translation memory"
 msgstr "Återställ översättningsminne"
 
-#: src/prefsdlg.cpp:668
+#: src/prefsdlg.cpp:667
 msgid "Are you sure you want to reset the translation memory?"
 msgstr "Är du säker på att du vill återställa översättningsminnet?"
 
-#: src/prefsdlg.cpp:669
+#: src/prefsdlg.cpp:668
 msgid ""
 "Resetting the translation memory will irrevocably delete all stored "
 "translations from it. You can’t undo this operation."
@@ -1895,22 +1894,22 @@ msgstr ""
 "Rensa översättningsminnet kommer oåterkalleligt ta bort alla lagrade "
 "översättningar från den. Du kan inte ångra åtgärden."
 
-#: src/prefsdlg.cpp:673
+#: src/prefsdlg.cpp:672
 msgid "Reset"
 msgstr "Återställ"
 
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
-#: src/prefsdlg.cpp:704
+#: src/prefsdlg.cpp:703
 msgid "TM"
 msgstr "TM"
 
-#: src/prefsdlg.cpp:706
+#: src/prefsdlg.cpp:705
 msgid "Translation Memory"
 msgstr "Översättningsminne (TM)"
 
-#: src/prefsdlg.cpp:722
+#: src/prefsdlg.cpp:721
 msgid ""
 "Source code extractors are used to find translatable strings in the source "
 "code files and extract them so that they can be translated."
@@ -1918,19 +1917,19 @@ msgstr ""
 "Källkodsextrahering används för att hitta översättbara strängar i "
 "källkodsfiler och packa upp dem så att de kan översättas."
 
-#: src/prefsdlg.cpp:733
+#: src/prefsdlg.cpp:732
 msgid "Custom Extractors:"
 msgstr "Anpassade extraherare:"
 
-#: src/prefsdlg.cpp:733
+#: src/prefsdlg.cpp:732
 msgid "Custom extractors:"
 msgstr "Anpassade extraherare:"
 
-#: src/prefsdlg.cpp:818
+#: src/prefsdlg.cpp:817
 msgid "GNU gettext"
 msgstr "GNU gettext"
 
-#: src/prefsdlg.cpp:824
+#: src/prefsdlg.cpp:823
 msgid ""
 "Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
 "+, C#, Perl, Python, Java, JavaScript and others)."
@@ -1938,36 +1937,99 @@ msgstr ""
 "Stöder alla programmeringsspråk som känns igen av GNU gettext-verktyg (PHP, "
 "C/C++, C#, Perl, Python, Java, JavaScript och andra)."
 
-#: src/prefsdlg.cpp:856
+#: src/prefsdlg.cpp:856 src/prefsdlg.cpp:862
 msgid "Extractor setup"
 msgstr "Konfigurera extraherare"
 
-#: src/prefsdlg.cpp:964
+#: src/prefsdlg.cpp:867
+msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
+msgstr "Lista över tillägg avgränsas med semikolon (t.ex. *.cpp;*.h):"
+
+#: src/prefsdlg.cpp:872
+msgid "Invocation:"
+msgstr "Anrop:"
+
+#: src/prefsdlg.cpp:875
+msgid "Command to extract translations:"
+msgstr "Kommando för att extrahera översättningar:"
+
+#: src/prefsdlg.cpp:878
+msgid ""
+"This is the command used to launch the extractor.\n"
+"%o expands to the name of output file, %K to list\n"
+"of keywords, %F to list of input files,\n"
+"%C to charset flag (see below)."
+msgstr ""
+"Detta är kommandot som används för att starta extraheraren.\n"
+"%o expanderar till namnet på utmatningsfilen, %K till listan\n"
+"av sökord, %F till listan över inmatningsfiler,\n"
+"%C till teckenuppsättningsflaggan (se nedan)."
+
+#: src/prefsdlg.cpp:882
+msgid "An item in keywords list:"
+msgstr "En post i sökordslistan:"
+
+#: src/prefsdlg.cpp:885
+msgid ""
+"This will be attached to the command line once\n"
+"for each keyword. %k expands to the keyword."
+msgstr ""
+"Detta kommer att bifogas till kommandoraden en\n"
+"gång för varje sökord. %k expanderar till sökordet."
+
+#: src/prefsdlg.cpp:887
+msgid "An item in input files list:"
+msgstr "En post i inmatningslistan:"
+
+#: src/prefsdlg.cpp:890
+#, c-format
+msgid ""
+"This will be attached to the command line once\n"
+"for each input file. %f expands to the filename."
+msgstr ""
+"Detta kommer att bifogas till kommandoraden en gång\n"
+"för varje inmatningsfil. %f expanderar till filnamnet."
+
+#: src/prefsdlg.cpp:892 src/resources/properties.xrc:115
+msgid "Source code charset:"
+msgstr "Källkod teckenuppsättning:"
+
+#: src/prefsdlg.cpp:895
+#, c-format
+msgid ""
+"This will be attached to the command line\n"
+"only if source code charset was given. %c expands to charset value."
+msgstr ""
+"Detta kommer att bifogas till kommandoraden\n"
+"endast om källkodsteckenuppsättningen har angetts. %c expanderar till "
+"teckenuppsättningsvärdet."
+
+#: src/prefsdlg.cpp:1057
 msgid "Delete extractor"
 msgstr "Ta bort extraherare"
 
-#: src/prefsdlg.cpp:965
+#: src/prefsdlg.cpp:1058
 #, c-format
 msgid "Are you sure you want to delete the “%s” extractor?"
 msgstr "Är du säker på att du vill ta bort extraheraren \"%s\"?"
 
-#: src/prefsdlg.cpp:1003
+#: src/prefsdlg.cpp:1096
 msgid "Extractors"
 msgstr "Extraherare"
 
-#: src/prefsdlg.cpp:1060
+#: src/prefsdlg.cpp:1153
 msgid "Accounts"
 msgstr "Konton"
 
-#: src/prefsdlg.cpp:1076
+#: src/prefsdlg.cpp:1169
 msgid "Automatically check for updates"
 msgstr "Sök efter uppdateringar automatiskt"
 
-#: src/prefsdlg.cpp:1079
+#: src/prefsdlg.cpp:1172
 msgid "Include beta versions"
 msgstr "Inkludera betaversioner"
 
-#: src/prefsdlg.cpp:1082
+#: src/prefsdlg.cpp:1175
 msgid ""
 "Beta versions contain the latest new features and improvements, but may be a "
 "bit less stable."
@@ -1975,11 +2037,11 @@ msgstr ""
 "Betaversioner innehåller de senaste nya funktionerna och förbättringarna, "
 "men kan vara lite mindre stabila."
 
-#: src/prefsdlg.cpp:1110
+#: src/prefsdlg.cpp:1203
 msgid "Updates"
 msgstr "Uppdateringar"
 
-#: src/prefsdlg.cpp:1124
+#: src/prefsdlg.cpp:1217
 msgid ""
 "These settings affect internal formatting of PO files. Adjust them if you "
 "have specific requirements e.g. because of version control."
@@ -1987,32 +2049,32 @@ msgstr ""
 "Dessa inställningar påverkar den interna formateringen av PO-filer. Justera "
 "dem om du har särskilda önskemål t.ex. på grund av versionskontroll."
 
-#: src/prefsdlg.cpp:1128
+#: src/prefsdlg.cpp:1221
 msgid "Line endings:"
 msgstr "Radslut:"
 
-#: src/prefsdlg.cpp:1131
+#: src/prefsdlg.cpp:1224
 msgid "Unix (recommended)"
 msgstr "Unix (rekommenderas)"
 
-#: src/prefsdlg.cpp:1132
+#: src/prefsdlg.cpp:1225
 msgid "Windows"
 msgstr "Windows"
 
 #. TRANSLATORS: Followed by text control for entering number; wraps text at given width
-#: src/prefsdlg.cpp:1136
+#: src/prefsdlg.cpp:1229
 msgid "Wrap at:"
 msgstr "Radbryt efter:"
 
-#: src/prefsdlg.cpp:1147
+#: src/prefsdlg.cpp:1240
 msgid "Preserve formatting of existing files"
 msgstr "Bevara formateringen av befintliga filer"
 
-#: src/prefsdlg.cpp:1199
+#: src/prefsdlg.cpp:1292
 msgid "Advanced"
 msgstr "Avancerat"
 
-#: src/prefsdlg.cpp:1227
+#: src/prefsdlg.cpp:1320
 msgid "Settings"
 msgstr "Inställningar"
 
@@ -2147,29 +2209,36 @@ msgstr ""
 "träffar för oöversatta strängar i översättningsminnet och fyller i dessa "
 "översättningar."
 
-#: src/progress_ui.cpp:175 src/wx_translatable_strings.h:151
+#: src/progress_ui.cpp:178 src/wx_translatable_strings.h:151
 msgid "Error: "
 msgstr "Fel: "
 
-#: src/progress_ui.cpp:179
+#: src/progress_ui.cpp:182
 #, c-format
 msgid "%d error occurred:"
 msgid_plural "%d errors occurred:"
 msgstr[0] "%d fel uppstod:"
 msgstr[1] "%d fel uppstod:"
 
-#: src/progress_ui.cpp:287
+#: src/progress_ui.cpp:290
 msgid "An error occurred."
 msgstr "Ett fel uppstod."
 
-#: src/progress_ui.cpp:293
+#: src/progress_ui.cpp:296
 #, c-format
 msgid "%d error occurred."
 msgid_plural "%d errors occurred."
 msgstr[0] "%d fel uppstod."
 msgstr[1] "%d fel uppstod."
 
-#: src/progress_ui.cpp:440
+#: src/progress_ui.cpp:309
+#, c-format
+msgid "…and %d more error"
+msgid_plural "…and %d more errors"
+msgstr[0] "…och %d fler fel"
+msgstr[1] "…och %d fel till"
+
+#: src/progress_ui.cpp:454
 msgid "Cancelling…"
 msgstr "Avbryter…"
 
@@ -2379,25 +2448,25 @@ msgstr ""
 
 #: src/qa_checks.cpp:534
 msgid "Length difference"
-msgstr ""
+msgstr "Längdskillnad"
 
 #: src/qa_checks.cpp:550
 #, c-format
 msgid "The translation exceeds maximum length (%d characters)."
-msgstr ""
+msgstr "Översättningen överskrider maximal längd (%d tecken)."
 
 #: src/qa_checks.cpp:557
 #, c-format
 msgid "The translation is below minimum length (%d characters)."
-msgstr ""
+msgstr "Översättningen är kortare än minimilängden (%d tecken)."
 
 #: src/qa_checks.cpp:567
 msgid "The translation is much shorter than the source text."
-msgstr ""
+msgstr "Översättningen är mycket kortare än källtexten."
 
 #: src/qa_checks.cpp:573
 msgid "The translation is much longer than the source text."
-msgstr ""
+msgstr "Översättningen är mycket längre än källtexten."
 
 #: src/recent_files.cpp:216
 msgid "Cloud"
@@ -2785,77 +2854,26 @@ msgstr "&GNU gettext-handbok"
 msgid "&GNU gettext Manual"
 msgstr "&GNU gettext-handbok"
 
-#: src/resources/menus.xrc:332 src/resources/menus.xrc:437
+#: src/resources/menus.xrc:332 src/resources/menus.xrc:445
 msgid "&About Poedit"
 msgstr "&Om Poedit"
 
 #: src/resources/menus.xrc:333 src/resources/menus.xrc:334
-#: src/resources/menus.xrc:438 src/resources/menus.xrc:439
+#: src/resources/menus.xrc:446 src/resources/menus.xrc:447
 msgid "&About"
 msgstr "&Om"
 
-#: src/resources/prefs.xrc:26
-msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
-msgstr "Lista över tillägg avgränsas med semikolon (t.ex. *.cpp;*.h):"
+#: src/resources/menus.xrc:437
+msgid "Support"
+msgstr "Support"
 
-#: src/resources/prefs.xrc:41
-msgid "Invocation:"
-msgstr "Anrop:"
+#: src/resources/menus.xrc:440
+msgid "Email &support…"
+msgstr "Support via e-po&st…"
 
-#: src/resources/prefs.xrc:45
-msgid "Command to extract translations:"
-msgstr "Kommando för att extrahera översättningar:"
-
-#: src/resources/prefs.xrc:59
-msgid ""
-"This is the command used to launch the extractor.\n"
-"%o expands to the name of output file, %K to list\n"
-"of keywords, %F to list of input files,\n"
-"%C to charset flag (see below)."
-msgstr ""
-"Detta är kommandot som används för att starta extraheraren.\n"
-"%o expanderar till namnet på utmatningsfilen, %K till listan\n"
-"av sökord, %F till listan över inmatningsfiler,\n"
-"%C till teckenuppsättningsflaggan (se nedan)."
-
-#: src/resources/prefs.xrc:68
-msgid "An item in keywords list:"
-msgstr "En post i sökordslistan:"
-
-#: src/resources/prefs.xrc:82
-msgid ""
-"This will be attached to the command line once\n"
-"for each keyword. %k expands to the keyword."
-msgstr ""
-"Detta kommer att bifogas till kommandoraden en\n"
-"gång för varje sökord. %k expanderar till sökordet."
-
-#: src/resources/prefs.xrc:91
-msgid "An item in input files list:"
-msgstr "En post i inmatningslistan:"
-
-#: src/resources/prefs.xrc:105
-#, c-format
-msgid ""
-"This will be attached to the command line once\n"
-"for each input file. %f expands to the filename."
-msgstr ""
-"Detta kommer att bifogas till kommandoraden en gång\n"
-"för varje inmatningsfil. %f expanderar till filnamnet."
-
-#: src/resources/prefs.xrc:114 src/resources/properties.xrc:115
-msgid "Source code charset:"
-msgstr "Källkod teckenuppsättning:"
-
-#: src/resources/prefs.xrc:128
-#, c-format
-msgid ""
-"This will be attached to the command line\n"
-"only if source code charset was given. %c expands to charset value."
-msgstr ""
-"Detta kommer att bifogas till kommandoraden\n"
-"endast om källkodsteckenuppsättningen har angetts. %c expanderar till "
-"teckenuppsättningsvärdet."
+#: src/resources/menus.xrc:441
+msgid "Email &Support…"
+msgstr "Support via e-po&st…"
 
 #: src/resources/properties.xrc:10
 msgid "Project name and version:"
@@ -2879,7 +2897,7 @@ msgstr "Använd anpassat uttryck"
 
 #: src/resources/properties.xrc:89
 msgid "Learn about plural forms"
-msgstr "Lär dig mer om pluralformer"
+msgstr "Läs mer om pluralformer"
 
 #: src/resources/properties.xrc:103
 msgid "Charset:"
@@ -2916,7 +2934,7 @@ msgstr "Använda också standardsökord för språk som stöds"
 
 #: src/resources/properties.xrc:233
 msgid "Learn about gettext keywords"
-msgstr "Lär dig mer om gettext-sökord"
+msgstr "Läs mer om gettext-sökord"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
 #: src/sidebar.cpp:135
@@ -2943,7 +2961,7 @@ msgstr "Kommentar"
 msgid "Add comment"
 msgstr "Lägg till kommentar"
 
-#: src/sidebar.cpp:229 src/sidebar.cpp:231 src/sidebar.cpp:249
+#: src/sidebar.cpp:229 src/sidebar.cpp:249
 msgid "Add Comment"
 msgstr "Lägg till kommentar"
 

@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
-"Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2026-03-10 11:41+0100\n"
-"PO-Revision-Date: 2026-03-06 10:20\n"
+"Report-Msgid-Bugs-To: help@poedit.com\n"
+"POT-Creation-Date: 2026-06-04 11:46+0200\n"
+"PO-Revision-Date: 2026-05-20 11:14\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -140,7 +140,7 @@ msgstr ""
 msgid "Failed to extract strings from source code."
 msgstr "从源代码提取字符串失败。"
 
-#: src/cat_update.cpp:356 src/edapp.cpp:1101 src/edframe.cpp:928
+#: src/cat_update.cpp:356 src/edapp.cpp:1104 src/edframe.cpp:928
 #: src/edframe.cpp:2531
 #, c-format
 msgid "The file “%s” couldn’t be opened."
@@ -261,7 +261,7 @@ msgstr ""
 #: src/catalog_po.cpp:1335 src/catalog_po.cpp:1344 src/catalog_po.cpp:1401
 #: src/catalog_po.cpp:1432 src/catalog_po.cpp:1630 src/catalog_qt.cpp:341
 #: src/catalog_resx.cpp:209 src/catalog_xliff.cpp:500 src/edframe.cpp:1316
-#: src/prefsdlg.cpp:660
+#: src/prefsdlg.cpp:659
 #, c-format
 msgid "Couldn’t save file %s."
 msgstr "无法保存文件 %s。"
@@ -393,8 +393,7 @@ msgstr "管理账户"
 msgid "Project:"
 msgstr "项目："
 
-#: src/cloud_accounts_ui.cpp:379 src/export_html.cpp:79
-#: src/resources/prefs.xrc:10 src/resources/prefs.xrc:14
+#: src/cloud_accounts_ui.cpp:379 src/export_html.cpp:79 src/prefsdlg.cpp:866
 #: src/resources/properties.xrc:45
 msgid "Language:"
 msgstr "语言："
@@ -543,60 +542,60 @@ msgstr "了解更多"
 msgid "Help"
 msgstr "帮助"
 
-#: src/edapp.cpp:453 src/resources/menus.xrc:336 src/resources/menus.xrc:441
+#: src/edapp.cpp:454 src/resources/menus.xrc:336 src/resources/menus.xrc:449
 #: src/wx_translatable_strings.h:105
 msgid "&Help"
 msgstr "帮助(&H)"
 
-#: src/edapp.cpp:730
+#: src/edapp.cpp:731
 msgid "MO files can’t be directly edited in Poedit."
 msgstr "MO 文件无法在 Poedit 中直接编辑。"
 
-#: src/edapp.cpp:731
+#: src/edapp.cpp:732
 msgid "Error opening file"
 msgstr "打开文件时出错"
 
-#: src/edapp.cpp:733
+#: src/edapp.cpp:734
 msgid ""
 "Please open and edit the corresponding PO file instead. When you save it, "
 "the MO file will be updated as well."
 msgstr "请打开并编辑对应的 PO 文件。当你保存它时，MO 文件也将被更新。"
 
-#: src/edapp.cpp:774
+#: src/edapp.cpp:775
 msgid "don’t delete temporary files (for debugging)"
 msgstr "不删除临时文件（用于调试）"
 
-#: src/edapp.cpp:776
+#: src/edapp.cpp:777
 msgid "handle a poedit:// URI"
 msgstr "处理 poedit:// URI"
 
-#: src/edapp.cpp:778
+#: src/edapp.cpp:779
 msgid "go to item at given line number"
 msgstr "跳转到给定行号项目"
 
-#: src/edapp.cpp:801
+#: src/edapp.cpp:802
 msgid "Failed to communicate with Poedit process."
 msgstr "无法与 Poedit 的进程通信。"
 
-#: src/edapp.cpp:914 src/edapp.cpp:919
+#: src/edapp.cpp:915 src/edapp.cpp:920
 #, c-format
 msgid "Unhandled exception occurred: %s"
 msgstr "发生了不能处理的异常：%s"
 
-#: src/edapp.cpp:1071
+#: src/edapp.cpp:1074
 msgid "Select translation template"
 msgstr "选择翻译模板"
 
-#: src/edapp.cpp:1102 src/edframe.cpp:929 src/edframe.cpp:2328
+#: src/edapp.cpp:1105 src/edframe.cpp:929 src/edframe.cpp:2328
 #: src/edframe.cpp:2532
 msgid "Invalid file"
 msgstr "无效文件"
 
-#: src/edapp.cpp:1122
+#: src/edapp.cpp:1125
 msgid "Select translation file"
 msgstr "选择翻译文件"
 
-#: src/edapp.cpp:1223
+#: src/edapp.cpp:1226
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit 是一个易于使用的翻译编辑器。"
 
@@ -684,7 +683,7 @@ msgstr "不保存"
 msgid "The changes made by the other application will be lost if you save."
 msgstr "如果您保存，另一个应用程序所作的更改将丢失。"
 
-#: src/edframe.cpp:1142 src/prefsdlg.cpp:673 src/prefsdlg.cpp:971
+#: src/edframe.cpp:1142 src/prefsdlg.cpp:672 src/prefsdlg.cpp:1064
 #: src/wx_translatable_strings.h:94
 msgid "Cancel"
 msgstr "取消"
@@ -1036,52 +1035,52 @@ msgstr "代码出现位置"
 msgid "Code occurrences"
 msgstr "代码出现位置"
 
-#: src/edframe.cpp:3268
+#: src/edframe.cpp:3270
 msgid "Hide Sidebar"
 msgstr "隐藏侧边栏"
 
-#: src/edframe.cpp:3270 src/resources/menus.xrc:217
+#: src/edframe.cpp:3272 src/resources/menus.xrc:217
 msgid "Show Sidebar"
 msgstr "显示侧边栏"
 
-#: src/edframe.cpp:3301
+#: src/edframe.cpp:3303
 msgid "Hide Status Bar"
 msgstr "隐藏状态栏"
 
-#: src/edframe.cpp:3303 src/resources/menus.xrc:223
+#: src/edframe.cpp:3305 src/resources/menus.xrc:223
 msgid "Show Status Bar"
 msgstr "显示状态栏"
 
-#: src/editing_area.cpp:357
+#: src/editing_area.cpp:358
 msgid "String length in characters: translation | source"
 msgstr "字符串长度：翻译 | 原文"
 
-#: src/editing_area.cpp:360
+#: src/editing_area.cpp:361
 msgid "String length in characters"
 msgstr "字符串长度（字符）"
 
-#: src/editing_area.cpp:407 src/editing_area.cpp:750 src/edlistctrl.cpp:665
+#: src/editing_area.cpp:408 src/editing_area.cpp:751 src/edlistctrl.cpp:665
 #: src/edlistctrl.cpp:719 src/export_html.cpp:143
 msgid "Source text"
 msgstr "源文本"
 
-#: src/editing_area.cpp:429 src/editing_area.cpp:816 src/editing_area.cpp:832
+#: src/editing_area.cpp:430 src/editing_area.cpp:817 src/editing_area.cpp:833
 msgid "Singular"
 msgstr "单数"
 
-#: src/editing_area.cpp:434 src/editing_area.cpp:837
+#: src/editing_area.cpp:435 src/editing_area.cpp:838
 msgid "Plural"
 msgstr "复数"
 
-#: src/editing_area.cpp:489
+#: src/editing_area.cpp:490
 msgid "Translation"
 msgstr "翻译"
 
-#: src/editing_area.cpp:498
+#: src/editing_area.cpp:499
 msgid "Pre-translated"
 msgstr "已预翻译"
 
-#: src/editing_area.cpp:521
+#: src/editing_area.cpp:522
 msgid "Needs Work"
 msgstr "需要处理"
 
@@ -1093,11 +1092,11 @@ msgstr "需要处理"
 #. "needs review" implies that somebody else should review the string after
 #. I am done with it (i.e. consider it good), while "needs work" implies I
 #. need to return to it and finish the translation.
-#: src/editing_area.cpp:521
+#: src/editing_area.cpp:522
 msgid "Needs work"
 msgstr "需要处理"
 
-#: src/editing_area.cpp:578
+#: src/editing_area.cpp:579
 msgid ""
 "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
@@ -1105,72 +1104,72 @@ msgstr ""
 "POT 文件只是模板，不包含任何翻译内容。\n"
 "若要制作一个翻译，请基于模板创建一个新的 PO 文件。"
 
-#: src/editing_area.cpp:585
+#: src/editing_area.cpp:586
 msgid "Create new translation"
 msgstr "创建新的翻译"
 
-#: src/editing_area.cpp:586
+#: src/editing_area.cpp:587
 msgid "Make a new translation from this POT file."
 msgstr "利用此 POT 文件创建新翻译"
 
-#: src/editing_area.cpp:618
+#: src/editing_area.cpp:619
 msgid "Use the Edit menu to perform bulk actions on selected strings."
 msgstr "使用编辑菜单对所选字符串执行批量操作。"
 
 #. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
-#: src/editing_area.cpp:748 src/edlistctrl.cpp:713 src/export_html.cpp:137
+#: src/editing_area.cpp:749 src/edlistctrl.cpp:713 src/export_html.cpp:137
 msgid "Source text ID"
 msgstr "源文本 ID"
 
-#: src/editing_area.cpp:803
+#: src/editing_area.cpp:804
 msgid "Everything"
 msgstr "一切"
 
-#: src/editing_area.cpp:808
+#: src/editing_area.cpp:809
 #, c-format
 msgid "Form %i"
 msgstr "表格 %i"
 
-#: src/editing_area.cpp:810
+#: src/editing_area.cpp:811
 #, c-format
 msgid "Form %i (unused)"
 msgstr "来自 %i (未使用)"
 
-#: src/editing_area.cpp:821
+#: src/editing_area.cpp:822
 msgid "Zero"
 msgstr "零"
 
-#: src/editing_area.cpp:823
+#: src/editing_area.cpp:824
 msgid "One"
 msgstr "一"
 
-#: src/editing_area.cpp:825
+#: src/editing_area.cpp:826
 msgid "Two"
 msgstr "二"
 
-#: src/editing_area.cpp:839
+#: src/editing_area.cpp:840
 msgid "Other"
 msgstr "其他"
 
 #. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
-#: src/editing_area.cpp:1018
+#: src/editing_area.cpp:1019
 #, c-format
 msgid "String context: %s"
 msgstr "字符串上下文：%s"
 
 #. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
-#: src/editing_area.cpp:1025
+#: src/editing_area.cpp:1026
 #, c-format
 msgid "String identifier: %s"
 msgstr "字符串标识符：%s"
 
-#: src/editing_area.cpp:1033
+#: src/editing_area.cpp:1034
 #, c-format
 msgid "%s Format"
 msgstr "%s 格式"
 
 #. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
-#: src/editing_area.cpp:1033
+#: src/editing_area.cpp:1034
 #, c-format
 msgid "%s format"
 msgstr "%s 格式"
@@ -1243,11 +1242,11 @@ msgstr ""
 "Poedit 无法显示字符串所用的源码，因为相应的文件未存在于引用位置或其是未指向实"
 "际文件的符号引用。"
 
-#: src/fileviewer.cpp:305
+#: src/fileviewer.cpp:304
 msgid "File cannot be opened"
 msgstr "无法打开文件"
 
-#: src/fileviewer.cpp:306
+#: src/fileviewer.cpp:305
 #, c-format
 msgid "Poedit was unable to open the “%s” file."
 msgstr "Poedit 无法打开 “%s” 文件。"
@@ -1318,11 +1317,11 @@ msgstr "要查找的字符串"
 msgid "Replacement string"
 msgstr "替换字符串"
 
-#: src/gexecute.cpp:132 src/gexecute.cpp:153 src/gexecute.cpp:202
+#: src/gexecute.cpp:131 src/gexecute.cpp:152 src/gexecute.cpp:201
 msgid "warning: "
 msgstr "警告: "
 
-#: src/gexecute.cpp:203
+#: src/gexecute.cpp:202
 msgid "error: "
 msgstr "错误: "
 
@@ -1381,7 +1380,7 @@ msgstr "添加项目"
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - 编目管理器"
 
-#: src/manager.cpp:154 src/prefsdlg.cpp:766
+#: src/manager.cpp:154 src/prefsdlg.cpp:765
 msgid "Edit…"
 msgstr "编辑…"
 
@@ -1500,7 +1499,7 @@ msgstr "重做"
 msgid "Paste and Match Style"
 msgstr "粘贴并匹配样式"
 
-#: src/menus.cpp:231 src/prefsdlg.cpp:971 src/wx_translatable_strings.h:100
+#: src/menus.cpp:231 src/prefsdlg.cpp:1064 src/wx_translatable_strings.h:100
 msgid "Delete"
 msgstr "删除"
 
@@ -1603,7 +1602,7 @@ msgstr "自定义工具栏…"
 msgid "Enter Full Screen"
 msgstr "进入全屏模式"
 
-#: src/menus.cpp:292 src/menus.cpp:379 src/resources/menus.xrc:316
+#: src/menus.cpp:292 src/menus.cpp:380 src/resources/menus.xrc:316
 #: src/resources/menus.xrc:421
 msgid "Window"
 msgstr "窗口"
@@ -1624,49 +1623,49 @@ msgstr "欢迎使用 Poedit"
 msgid "Bring All to Front"
 msgstr "全部带到最前方"
 
-#: src/prefsdlg.cpp:169
+#: src/prefsdlg.cpp:168
 msgid "Information about the translator"
 msgstr "关于翻译者的信息"
 
-#: src/prefsdlg.cpp:176
+#: src/prefsdlg.cpp:175
 msgid "Name:"
 msgstr "名称："
 
-#: src/prefsdlg.cpp:179
+#: src/prefsdlg.cpp:178
 msgid "Your Name"
 msgstr "你的名字"
 
-#: src/prefsdlg.cpp:181
+#: src/prefsdlg.cpp:180
 msgid "Email:"
 msgstr "邮箱："
 
-#: src/prefsdlg.cpp:184
+#: src/prefsdlg.cpp:183
 msgid "you@example.com"
 msgstr "you@example.com"
 
-#: src/prefsdlg.cpp:187
+#: src/prefsdlg.cpp:186
 msgid ""
 "Your name and email address are only used to set the Last-Translator header "
 "of GNU gettext files."
 msgstr "您的姓名和邮箱地址仅用于设置 GNU gettext 文件的 Last-Translator 标头。"
 
-#: src/prefsdlg.cpp:196
+#: src/prefsdlg.cpp:195
 msgid "Editing"
 msgstr "编辑"
 
-#: src/prefsdlg.cpp:199
+#: src/prefsdlg.cpp:198
 msgid "Automatically compile MO file when saving"
 msgstr "在保存时自动编译 MO 文件"
 
-#: src/prefsdlg.cpp:204
+#: src/prefsdlg.cpp:203
 msgid "Check spelling"
 msgstr "检查拼写"
 
-#: src/prefsdlg.cpp:206
+#: src/prefsdlg.cpp:205
 msgid "Always change focus to text input field"
 msgstr "总是将焦点移动到文本输入字段"
 
-#: src/prefsdlg.cpp:208
+#: src/prefsdlg.cpp:207
 msgid ""
 "Never let the list of strings take focus. If enabled, you must use Ctrl-"
 "arrows for keyboard navigation but you can also type text immediately, "
@@ -1675,55 +1674,55 @@ msgstr ""
 "从不让字串列表取得焦点。如果启用，您必须使用 “Ctrl-方向键” 进行键盘导航，但您"
 "也可以立即输入文本，不用按 Tab 改变焦点。"
 
-#: src/prefsdlg.cpp:216
+#: src/prefsdlg.cpp:215
 msgid "Appearance"
 msgstr "外观"
 
-#: src/prefsdlg.cpp:223
+#: src/prefsdlg.cpp:222
 msgid "Use custom list font:"
 msgstr "使用自定义的列表字体："
 
-#: src/prefsdlg.cpp:226
+#: src/prefsdlg.cpp:225
 msgid "Use custom text fields font:"
 msgstr "使用自定义的编辑区字体："
 
-#: src/prefsdlg.cpp:236
+#: src/prefsdlg.cpp:235
 msgid "Change UI language"
 msgstr "更改用户界面语言"
 
 #. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
-#: src/prefsdlg.cpp:246
+#: src/prefsdlg.cpp:245
 msgid "(requires Windows 8 or newer)"
 msgstr "（需要 Windows 8 或更高版本）"
 
-#: src/prefsdlg.cpp:349
+#: src/prefsdlg.cpp:348
 msgid "General"
 msgstr "常规"
 
-#: src/prefsdlg.cpp:366
+#: src/prefsdlg.cpp:365
 msgid "Use translation memory"
 msgstr "使用翻译记忆"
 
-#: src/prefsdlg.cpp:376
+#: src/prefsdlg.cpp:375
 msgid "Manage…"
 msgstr "管理…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
-#: src/prefsdlg.cpp:383
+#: src/prefsdlg.cpp:382
 msgid "When updating from sources"
 msgstr "当从源文更新时"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
-#: src/prefsdlg.cpp:386
+#: src/prefsdlg.cpp:385
 msgid "fuzzy match within the file"
 msgstr "在文件内模糊匹配"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
-#: src/prefsdlg.cpp:388
+#: src/prefsdlg.cpp:387
 msgid "pre-translate from TM"
 msgstr "根据翻译记忆预翻译"
 
-#: src/prefsdlg.cpp:404
+#: src/prefsdlg.cpp:403
 msgid ""
 "Poedit can attempt to fill in new entries from only previous translations in "
 "the file or from your entire translation memory. Using the TM won’t be very "
@@ -1733,122 +1732,122 @@ msgstr ""
 "Poedit 可以根据以前的翻译文件或你的翻译记忆库来尝试填写新条目。接近空的翻译记"
 "忆库不会很有效，但如果你为它添加了更多的翻译，它也会变得更好。"
 
-#: src/prefsdlg.cpp:478
+#: src/prefsdlg.cpp:477
 msgid "Stored translations:"
 msgstr "存储翻译："
 
-#: src/prefsdlg.cpp:479
+#: src/prefsdlg.cpp:478
 msgid "Database size on disk:"
 msgstr "磁盘上数据文件的大小："
 
-#: src/prefsdlg.cpp:494
+#: src/prefsdlg.cpp:493
 msgid "Import Translation Files…"
 msgstr "导入译文文件…"
 
-#: src/prefsdlg.cpp:494
+#: src/prefsdlg.cpp:493
 msgid "Import translation files…"
 msgstr "导入译文文件…"
 
-#: src/prefsdlg.cpp:496
+#: src/prefsdlg.cpp:495
 msgid "Import From TMX…"
 msgstr "导入 TMX…"
 
-#: src/prefsdlg.cpp:496
+#: src/prefsdlg.cpp:495
 msgid "Import from TMX…"
 msgstr "导入 TMX…"
 
-#: src/prefsdlg.cpp:497
+#: src/prefsdlg.cpp:496
 msgid "Export To TMX…"
 msgstr "导出 TMX…"
 
-#: src/prefsdlg.cpp:497
+#: src/prefsdlg.cpp:496
 msgid "Export to TMX…"
 msgstr "导出 TMX…"
 
-#: src/prefsdlg.cpp:500
+#: src/prefsdlg.cpp:499
 msgid "Erase Database…"
 msgstr "清空数据库…"
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
-#: src/prefsdlg.cpp:500
+#: src/prefsdlg.cpp:499
 msgid "Erase database…"
 msgstr "清空数据库…"
 
-#: src/prefsdlg.cpp:524
+#: src/prefsdlg.cpp:523
 msgid "Select translation files to import"
 msgstr "选择需要导入的翻译文件"
 
-#: src/prefsdlg.cpp:557
+#: src/prefsdlg.cpp:556
 msgid "Select TMX files to import"
 msgstr "选择要导出的 TMX 文件"
 
-#: src/prefsdlg.cpp:560 src/prefsdlg.cpp:636
+#: src/prefsdlg.cpp:559 src/prefsdlg.cpp:635
 msgid "TMX Files"
 msgstr "TMX 文件"
 
-#: src/prefsdlg.cpp:587
+#: src/prefsdlg.cpp:586
 msgid "Importing translations…"
 msgstr "正在导入翻译…"
 
-#: src/prefsdlg.cpp:588
+#: src/prefsdlg.cpp:587
 msgid "Importing translation memory failed."
 msgstr "导入翻译记忆失败。"
 
-#: src/prefsdlg.cpp:602
+#: src/prefsdlg.cpp:601
 #, c-format
 msgid "Importing from “%s”…"
 msgstr "正在从“%s”导入…"
 
 #. TRANSLATORS: %s is a (formatted) number here
-#: src/prefsdlg.cpp:620
+#: src/prefsdlg.cpp:619
 #, c-format
 msgid "%s translation was imported."
 msgid_plural "%s translations were imported."
 msgstr[0] "导入了 %s 个翻译。"
 
-#: src/prefsdlg.cpp:633
+#: src/prefsdlg.cpp:632
 msgid "Export as…"
 msgstr "导出为…"
 
-#: src/prefsdlg.cpp:648
+#: src/prefsdlg.cpp:647
 msgid "Exporting translations…"
 msgstr "正在导出译文…"
 
-#: src/prefsdlg.cpp:649
+#: src/prefsdlg.cpp:648
 #, c-format
 msgid "Exporting translation memory to “%s” failed."
 msgstr "导出翻译记忆 “%s” 失败。"
 
-#: src/prefsdlg.cpp:667
+#: src/prefsdlg.cpp:666
 msgid "Reset translation memory"
 msgstr "重置翻译记忆库"
 
-#: src/prefsdlg.cpp:668
+#: src/prefsdlg.cpp:667
 msgid "Are you sure you want to reset the translation memory?"
 msgstr "你确定你要重置翻译记忆库吗？"
 
-#: src/prefsdlg.cpp:669
+#: src/prefsdlg.cpp:668
 msgid ""
 "Resetting the translation memory will irrevocably delete all stored "
 "translations from it. You can’t undo this operation."
 msgstr "重置翻译记忆库将无可挽回地删除其中存储的所有翻译。你无法撤消此操作。"
 
-#: src/prefsdlg.cpp:673
+#: src/prefsdlg.cpp:672
 msgid "Reset"
 msgstr "重置"
 
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
-#: src/prefsdlg.cpp:704
+#: src/prefsdlg.cpp:703
 msgid "TM"
 msgstr "翻译记忆"
 
-#: src/prefsdlg.cpp:706
+#: src/prefsdlg.cpp:705
 msgid "Translation Memory"
 msgstr "翻译记忆"
 
-#: src/prefsdlg.cpp:722
+#: src/prefsdlg.cpp:721
 msgid ""
 "Source code extractors are used to find translatable strings in the source "
 "code files and extract them so that they can be translated."
@@ -1856,19 +1855,19 @@ msgstr ""
 "源代码提取器用于在源代码文件中找到可翻译字符串和提取它们，以便它们可以被翻"
 "译。"
 
-#: src/prefsdlg.cpp:733
+#: src/prefsdlg.cpp:732
 msgid "Custom Extractors:"
 msgstr "自定义提取器："
 
-#: src/prefsdlg.cpp:733
+#: src/prefsdlg.cpp:732
 msgid "Custom extractors:"
 msgstr "自定义提取器："
 
-#: src/prefsdlg.cpp:818
+#: src/prefsdlg.cpp:817
 msgid "GNU gettext"
 msgstr "GNU gettext"
 
-#: src/prefsdlg.cpp:824
+#: src/prefsdlg.cpp:823
 msgid ""
 "Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
 "+, C#, Perl, Python, Java, JavaScript and others)."
@@ -1876,46 +1875,109 @@ msgstr ""
 "支持 GNU gettext 工具可识别的所有编程语言（PHP、C/C++、C#、Perl、Python、"
 "Java、JavaScript 等）。"
 
-#: src/prefsdlg.cpp:856
+#: src/prefsdlg.cpp:856 src/prefsdlg.cpp:862
 msgid "Extractor setup"
 msgstr "提取器安装"
 
-#: src/prefsdlg.cpp:964
+#: src/prefsdlg.cpp:867
+msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
+msgstr "用分号分隔的扩展名列表（例如 *.cpp;*.h）："
+
+#: src/prefsdlg.cpp:872
+msgid "Invocation:"
+msgstr "调用："
+
+#: src/prefsdlg.cpp:875
+msgid "Command to extract translations:"
+msgstr "提取翻译的命令："
+
+#: src/prefsdlg.cpp:878
+msgid ""
+"This is the command used to launch the extractor.\n"
+"%o expands to the name of output file, %K to list\n"
+"of keywords, %F to list of input files,\n"
+"%C to charset flag (see below)."
+msgstr ""
+"这是用来启动提取器的命令。\n"
+"%o 提取到输出文件的名称，%K \n"
+"关键字的列表，%F \n"
+"输入文件的列表，%C \n"
+"字符集标记（见下面）。"
+
+#: src/prefsdlg.cpp:882
+msgid "An item in keywords list:"
+msgstr "在关键字列表中的项："
+
+#: src/prefsdlg.cpp:885
+msgid ""
+"This will be attached to the command line once\n"
+"for each keyword. %k expands to the keyword."
+msgstr ""
+"对于每个关键字，这将被附加到命令行一次。\n"
+"%k 展开成关键字。"
+
+#: src/prefsdlg.cpp:887
+msgid "An item in input files list:"
+msgstr "在输入文件列表中的项："
+
+#: src/prefsdlg.cpp:890
+#, c-format
+msgid ""
+"This will be attached to the command line once\n"
+"for each input file. %f expands to the filename."
+msgstr ""
+"对于每个输入文件，这将被附加到命令行一次。\n"
+"%f 展开成文件名。"
+
+#: src/prefsdlg.cpp:892 src/resources/properties.xrc:115
+msgid "Source code charset:"
+msgstr "源代码字符集："
+
+#: src/prefsdlg.cpp:895
+#, c-format
+msgid ""
+"This will be attached to the command line\n"
+"only if source code charset was given. %c expands to charset value."
+msgstr ""
+"仅在指定了源代码字符集时，这才被附加到命令行。\n"
+"%c 展开成字符集值。"
+
+#: src/prefsdlg.cpp:1057
 msgid "Delete extractor"
 msgstr "删除提取器"
 
-#: src/prefsdlg.cpp:965
+#: src/prefsdlg.cpp:1058
 #, c-format
 msgid "Are you sure you want to delete the “%s” extractor?"
 msgstr "您确定要删除“%s”提取器吗？"
 
-#: src/prefsdlg.cpp:1003
+#: src/prefsdlg.cpp:1096
 msgid "Extractors"
 msgstr "提取器"
 
-#: src/prefsdlg.cpp:1060
+#: src/prefsdlg.cpp:1153
 msgid "Accounts"
 msgstr "账号"
 
-#: src/prefsdlg.cpp:1076
+#: src/prefsdlg.cpp:1169
 msgid "Automatically check for updates"
 msgstr "自动检查更新"
 
-#: src/prefsdlg.cpp:1079
+#: src/prefsdlg.cpp:1172
 msgid "Include beta versions"
 msgstr "包括测试版本"
 
-#: src/prefsdlg.cpp:1082
+#: src/prefsdlg.cpp:1175
 msgid ""
 "Beta versions contain the latest new features and improvements, but may be a "
 "bit less stable."
 msgstr "测试版包含最新功能和改进，但可能有点不太稳定。"
 
-#: src/prefsdlg.cpp:1110
+#: src/prefsdlg.cpp:1203
 msgid "Updates"
 msgstr "更新"
 
-#: src/prefsdlg.cpp:1124
+#: src/prefsdlg.cpp:1217
 msgid ""
 "These settings affect internal formatting of PO files. Adjust them if you "
 "have specific requirements e.g. because of version control."
@@ -1923,32 +1985,32 @@ msgstr ""
 "这些设置会影响 PO 文件的内部格式。如果你有特定的要求例如版本控制时，调整它"
 "们。"
 
-#: src/prefsdlg.cpp:1128
+#: src/prefsdlg.cpp:1221
 msgid "Line endings:"
 msgstr "行尾风格："
 
-#: src/prefsdlg.cpp:1131
+#: src/prefsdlg.cpp:1224
 msgid "Unix (recommended)"
 msgstr "Unix（推荐）"
 
-#: src/prefsdlg.cpp:1132
+#: src/prefsdlg.cpp:1225
 msgid "Windows"
 msgstr "Windows"
 
 #. TRANSLATORS: Followed by text control for entering number; wraps text at given width
-#: src/prefsdlg.cpp:1136
+#: src/prefsdlg.cpp:1229
 msgid "Wrap at:"
 msgstr "换行在："
 
-#: src/prefsdlg.cpp:1147
+#: src/prefsdlg.cpp:1240
 msgid "Preserve formatting of existing files"
 msgstr "保留现有文件的格式"
 
-#: src/prefsdlg.cpp:1199
+#: src/prefsdlg.cpp:1292
 msgid "Advanced"
 msgstr "高级"
 
-#: src/prefsdlg.cpp:1227
+#: src/prefsdlg.cpp:1320
 msgid "Settings"
 msgstr "设置"
 
@@ -2070,27 +2132,33 @@ msgid ""
 msgstr ""
 "预翻译自动在翻译记忆库中查找未翻译字符串的精确或模糊匹配项，并将其填入翻译。"
 
-#: src/progress_ui.cpp:175 src/wx_translatable_strings.h:151
+#: src/progress_ui.cpp:178 src/wx_translatable_strings.h:151
 msgid "Error: "
 msgstr "错误: "
 
-#: src/progress_ui.cpp:179
+#: src/progress_ui.cpp:182
 #, c-format
 msgid "%d error occurred:"
 msgid_plural "%d errors occurred:"
 msgstr[0] "发生 %d 个错误："
 
-#: src/progress_ui.cpp:287
+#: src/progress_ui.cpp:290
 msgid "An error occurred."
 msgstr "发生一个错误。"
 
-#: src/progress_ui.cpp:293
+#: src/progress_ui.cpp:296
 #, c-format
 msgid "%d error occurred."
 msgid_plural "%d errors occurred."
 msgstr[0] "发生 %d 个错误。"
 
-#: src/progress_ui.cpp:440
+#: src/progress_ui.cpp:309
+#, c-format
+msgid "…and %d more error"
+msgid_plural "…and %d more errors"
+msgstr[0] "…以及另外 %d 个错误"
+
+#: src/progress_ui.cpp:454
 msgid "Cancelling…"
 msgstr "正在取消…"
 
@@ -2705,77 +2773,26 @@ msgstr "GNU gettext 手册(&G)"
 msgid "&GNU gettext Manual"
 msgstr "GNU gettext 手册(&G)"
 
-#: src/resources/menus.xrc:332 src/resources/menus.xrc:437
+#: src/resources/menus.xrc:332 src/resources/menus.xrc:445
 msgid "&About Poedit"
 msgstr "关于 Poedit (&A)"
 
 #: src/resources/menus.xrc:333 src/resources/menus.xrc:334
-#: src/resources/menus.xrc:438 src/resources/menus.xrc:439
+#: src/resources/menus.xrc:446 src/resources/menus.xrc:447
 msgid "&About"
 msgstr "关于(&A)"
 
-#: src/resources/prefs.xrc:26
-msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
-msgstr "用分号分隔的扩展名列表（例如 *.cpp;*.h）："
+#: src/resources/menus.xrc:437
+msgid "Support"
+msgstr "支持"
 
-#: src/resources/prefs.xrc:41
-msgid "Invocation:"
-msgstr "调用："
+#: src/resources/menus.xrc:440
+msgid "Email &support…"
+msgstr "邮件支持(&S)…"
 
-#: src/resources/prefs.xrc:45
-msgid "Command to extract translations:"
-msgstr "提取翻译的命令："
-
-#: src/resources/prefs.xrc:59
-msgid ""
-"This is the command used to launch the extractor.\n"
-"%o expands to the name of output file, %K to list\n"
-"of keywords, %F to list of input files,\n"
-"%C to charset flag (see below)."
-msgstr ""
-"这是用来启动提取器的命令。\n"
-"%o 提取到输出文件的名称，%K \n"
-"关键字的列表，%F \n"
-"输入文件的列表，%C \n"
-"字符集标记（见下面）。"
-
-#: src/resources/prefs.xrc:68
-msgid "An item in keywords list:"
-msgstr "在关键字列表中的项："
-
-#: src/resources/prefs.xrc:82
-msgid ""
-"This will be attached to the command line once\n"
-"for each keyword. %k expands to the keyword."
-msgstr ""
-"对于每个关键字，这将被附加到命令行一次。\n"
-"%k 展开成关键字。"
-
-#: src/resources/prefs.xrc:91
-msgid "An item in input files list:"
-msgstr "在输入文件列表中的项："
-
-#: src/resources/prefs.xrc:105
-#, c-format
-msgid ""
-"This will be attached to the command line once\n"
-"for each input file. %f expands to the filename."
-msgstr ""
-"对于每个输入文件，这将被附加到命令行一次。\n"
-"%f 展开成文件名。"
-
-#: src/resources/prefs.xrc:114 src/resources/properties.xrc:115
-msgid "Source code charset:"
-msgstr "源代码字符集："
-
-#: src/resources/prefs.xrc:128
-#, c-format
-msgid ""
-"This will be attached to the command line\n"
-"only if source code charset was given. %c expands to charset value."
-msgstr ""
-"仅在指定了源代码字符集时，这才被附加到命令行。\n"
-"%c 展开成字符集值。"
+#: src/resources/menus.xrc:441
+msgid "Email &Support…"
+msgstr "邮件支持(&S)…"
 
 #: src/resources/properties.xrc:10
 msgid "Project name and version:"
@@ -2858,7 +2875,7 @@ msgstr "注释"
 msgid "Add comment"
 msgstr "添加注释"
 
-#: src/sidebar.cpp:229 src/sidebar.cpp:231 src/sidebar.cpp:249
+#: src/sidebar.cpp:229 src/sidebar.cpp:249
 msgid "Add Comment"
 msgstr "添加注释"
 
