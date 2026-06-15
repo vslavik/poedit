@@ -289,6 +289,11 @@ wxString GetGettextBinariesPath()
     return GetGettextPackagePath() + "/bin";
 }
 
+wxString GetGettextDatadirPath()
+{
+    return GetGettextPackagePath() + "/share";
+}
+
 #endif // __WXOSX__ || __WXMSW__
 
 

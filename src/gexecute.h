@@ -74,7 +74,7 @@ struct ParsedGettextErrors
 
 #if defined(__WXOSX__) || defined(__WXMSW__)
 
-extern wxString GetGettextPackagePath();
+extern wxString GetGettextDatadirPath();
 extern wxString GetGettextBinariesPath();
 
 inline wxString GetGettextBinaryPath(const wxString& program)

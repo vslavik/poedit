@@ -543,9 +543,9 @@ void PoeditApp::SetupLanguage()
 {
 #if defined(__WXMSW__)
     wxFileTranslationsLoader::AddCatalogLookupPathPrefix(wxStandardPaths::Get().GetResourcesDir() + "\\Translations");
-    wxFileTranslationsLoader::AddCatalogLookupPathPrefix(GetGettextPackagePath() + "/share/locale");
+    wxFileTranslationsLoader::AddCatalogLookupPathPrefix(GetGettextDatadirPath() + "/locale");
 #elif defined(__WXOSX__)
-    wxFileTranslationsLoader::AddCatalogLookupPathPrefix(GetGettextPackagePath() + "/share/locale");
+    wxFileTranslationsLoader::AddCatalogLookupPathPrefix(GetGettextDatadirPath() + "/locale");
 #else // UNIX
     wxFileTranslationsLoader::AddCatalogLookupPathPrefix(wxStandardPaths::Get().GetInstallPrefix() + "/share/locale");
 #endif
