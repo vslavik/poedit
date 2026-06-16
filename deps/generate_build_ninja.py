@@ -5,10 +5,6 @@ from collections import OrderedDict
 from glob import glob
 from ninja_syntax import Writer
 
-GETTEXT_VERSION = "0.26"  # use of " important for Xcode build!
-GETTEXT_TARBALL = 'gettext-%s.tar.xz' % GETTEXT_VERSION
-GETTEXT_SHA256 = 'd1fb86e260cfe7da6031f94d2e44c0da55903dbae0a2fa0fae78c91ae1b56f00'
-
 _exclusion_list = [
     '.DS_Store',
     '.git',
@@ -105,69 +101,5 @@ with open('build.ninja', 'w') as buildfile:
            command='curl --fail --location --retry 5 --retry-all-errors -o $out $url && test "$sha256" = `shasum -a256 $out | cut -f1 -d" "`')
 
     targets = []
-
-    n.build(['$builddir/%s' % GETTEXT_TARBALL],
-            'download',
-            variables={
-                'url': 'https://ftpmirror.gnu.org/gnu/gettext/%s' % GETTEXT_TARBALL,
-                'sha256': GETTEXT_SHA256,
-            })
-
-    targets.append(gen_configure(n, 'gettext',
-                                 tarball=GETTEXT_TARBALL,
-                                 patches=glob('gettext/*.patch'),
-                                 configure='./configure',
-                                 flags=[
-                                     '--prefix=/',
-                                     'CC=$cc',
-                                     'CXX=$cxx',
-                                     # GNU gettext checks against and won't use macOS-provided iconv(), see here:
-                                     # https://mail.gnu.org/archive/html/bug-gnulib/2024-05/msg00375.html
-                                     # They are not wrong about it being POSIX-broken, but it doesn't seem to
-                                     # materially affect Poedit's use (conversions of catalogs are avoided and
-                                     # other contexts are OK with this particular issue). And as this is a
-                                     # runtime difference, we've been using "bad" iconv() implementation
-                                     # for over a year, so...
-                                     'am_cv_func_iconv_works=yes',
-                                     # On macOS 10.15 Vista, mere use of CFLocale or CFPreferences from command line
-                                     # executables, as done by gettext tools, triggers UAC prompts if the hosting app
-                                     # happens to be in e.g. ~/Desktop or ~/Downloads. As we don't care for these
-                                     # capabilities in gettext tools anyway, just disable them as the lesser evil.
-                                     'gt_cv_func_CFPreferencesCopyAppValue=no',
-                                     'gt_cv_func_CFLocaleCopyPreferredLanguages=no',
-                                     'CFLAGS="$cflags"',
-                                     'CXXFLAGS="$cxxflags"',
-                                     'LDFLAGS="$ldflags"',
-                                     '--config-cache',
-                                     '--with-libiconv-prefix=$SDKROOT/usr',
-                                     '--with-libxml2-prefix=$SDKROOT/usr',
-                                     '--disable-static',
-                                     '--disable-java',
-                                     '--disable-csharp',
-                                     '--disable-rpath',
-                                     '--disable-dependency-tracking',
-                                     '--enable-silent-rules',
-                                     '--enable-relocatable',
-                                 ],
-                                 build_commands=[
-                                     # Prevent automake regeneration:
-                                     'touch `find . -name aclocal.m4`',
-                                     'touch `find . -name configure`',
-                                     'touch `find . -name config.h.in`',
-                                     'touch `find . -name Makefile.in`',
-                                     'touch `find . -name *.1`',
-                                     'touch `find . -name *.3`',
-                                     'find . -name *.html -exec touch {} \\;',
-                                     # Prevent running msgfmt:
-                                     'touch `find . -name *.gmo`',
-                                 ] + default_build_commands + [
-                                     # delete unwanted stuff
-                                     'rm -f $destdir/bin/{autopoint,envsubst,gettext*,ngettext,recode-sr-latin}',
-                                     # fix dylib references to work
-                                     '"$top_srcdir/../macos/fixup-dylib-deps.sh" /lib @rpath $destdir/lib $destdir/bin/*',
-                                     # strip executables
-                                     'strip -S -u -r $destdir/bin/{msgfmt,msgmerge,msgunfmt,msgcat,xgettext}',
-                                     'strip -S -x $destdir/lib/lib*.*.dylib',
-                                 ]))
 
     n.default(targets)

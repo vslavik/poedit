@@ -16,8 +16,7 @@ if [ "$2" = clean ] ; then
 fi
 
 # Include Homebrew binaries on PATH if not there yet:
-# Also make sure that GNU sed and recent version of GNU make are used, as
-# GNU gettext requires that for compilation:
+# Also make sure that GNU sed and recent version of GNU make are used if available.
 
 add_homebrew_paths() {
     for root in /opt/homebrew /usr/local; do
@@ -31,39 +30,17 @@ add_homebrew_paths() {
     return 0
 }
 
-add_homebrew_paths gnu-sed make bison curl
+add_homebrew_paths gnu-sed curl
+
+# add gettext from our Swift package
+PATH="${BUILD_DIR%/Build/*}/SourcePackages/artifacts/gettext-tools/GettextTools/bin:$PATH"
+
 export PATH
 
 # ...but prevent Homebrew libraries from being used
 unset PKG_CONFIG_PATH
 export PKG_CONFIG_LIBDIR=$SDKROOT/usr/lib/pkgconfig:$SDKROOT/usr/share/pkgconfig
 
-
-# Check that the tools have appropriate versions:
-if ! make --version 2>/dev/null | grep -q 'GNU Make'; then
-    echo "Error: GNU make required (brew install make)." >&2
-    exit 1
-fi
-if make --version | head -n1 | grep -q 'GNU Make 3\.'; then
-    echo "Error: GNU make >= 4 required (brew install make)." >&2
-    exit 1
-fi
-
-if ! sed --version 2>/dev/null | grep -q 'GNU sed'; then
-    echo "Error: GNU sed required (brew install gnu-sed)." >&2
-    exit 1
-fi
-
-if yacc --version | head -n1 | grep -q 'GNU Bison 2\.'; then
-    echo "Error: GNU bison >= 3 required (brew install bison)." >&2
-    exit 1
-fi
-
-# Fake Java binaries so that gettext configure script doesn't invoke the system ones:
-mkdir -p "$DEPS_BUILD_DIR/helpers"
-touch "$DEPS_BUILD_DIR"/helpers/{java,javac}
-chmod +x "$DEPS_BUILD_DIR"/helpers/{java,javac}
-PATH="$DEPS_BUILD_DIR/helpers:$PATH"
 
 
 CCACHE_PREFIX=$(brew --prefix ccache)

@@ -6,20 +6,6 @@
 	objectVersion = 55;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		B27115F8170830A800B936D5 /* deps.gettext */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = B27115F9170830A800B936D5 /* Build configuration list for PBXAggregateTarget "deps.gettext" */;
-			buildPhases = (
-				B2C129D921C6CBAF004364B2 /* Ninja Build */,
-			);
-			dependencies = (
-			);
-			name = deps.gettext;
-			productName = deps.gettext;
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		080D4EBEC110DFD5DE99914C /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 820F3D877353561CFF660576 /* Quartz.framework */; };
 		0C1409B0135C562587776FC7 /* MainToolbar.mm in Sources */ = {isa = PBXBuildFile; fileRef = CE7FDF345D6043DCDCCD296D /* MainToolbar.mm */; };
@@ -35,12 +21,13 @@
 		485D22B7D4F845A01E137564 /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A60B0E72939BB1B6692FAD8 /* UniformTypeIdentifiers.framework */; };
 		49C128E5C885E14E7D3748EE /* errors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B273818B2BD5027E005F24DA /* errors.cpp */; };
 		49CB09B8277DDFCE6533BE41 /* progress_ui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B0077CCD746D870A816B2E0 /* progress_ui.cpp */; };
-		4C5A07AB3F036AF03E13D7B1 /* QuicklookThumbnails.appex in Copy Gettext bundle and extensions */ = {isa = PBXBuildFile; fileRef = 2E49B156226EE8BCE26F9F19 /* QuicklookThumbnails.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4CE77399F2643B317B7428BB /* libwx_osx_base_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B7E8191AD94194007FC4EB /* libwx_osx_base_static.a */; };
 		4D523D5AA258DB41902CCEFF /* Poedit.icon in Resources */ = {isa = PBXBuildFile; fileRef = FD4F3AA7A4405E8036FF3EA1 /* Poedit.icon */; };
+		5322D657EC0AA68319B4FD48 /* QuicklookThumbnails.appex in Copy extensions */ = {isa = PBXBuildFile; fileRef = 2E49B156226EE8BCE26F9F19 /* QuicklookThumbnails.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5DFE3ACE144F8005096FFA2C /* configuration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B201EBDF1DCF755900FFB541 /* configuration.cpp */; };
 		6A5AC29259B3BC2A37D22597 /* uilang.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C13766ECFA88FF598316DBA /* uilang.cpp */; };
 		70FEA36B68430750C1326C6F /* catalog_xcloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BA775F29C57EB5164B2B792 /* catalog_xcloc.cpp */; };
+		78E76258A080CA4AC819825B /* QuicklookPreview.appex in Copy extensions */ = {isa = PBXBuildFile; fileRef = F99D32BE79516DF3871487AD /* QuicklookPreview.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		796E87D980AB0659930E8540 /* catalog_json.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B260089229AE694D00349A0E /* catalog_json.cpp */; };
 		7A7175DB2942BF59C950E93F /* subprocess.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 740C80154CE061778D7E5155 /* subprocess.cpp */; };
 		7EC322151430D2F26AE64498 /* catalog_xcloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BA775F29C57EB5164B2B792 /* catalog_xcloc.cpp */; };
@@ -57,7 +44,6 @@
 		B2083D131A87D17D00150BBF /* libcld2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2083D121A87D17D00150BBF /* libcld2.a */; };
 		B209005E19CAD64400D6382E /* SuggestionTMTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = B209005D19CAD64400D6382E /* SuggestionTMTemplate.png */; };
 		B209006019CAD64A00D6382E /* SuggestionErrorTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = B209005F19CAD64A00D6382E /* SuggestionErrorTemplate.png */; };
-		B20960F319928C8500A2EB13 /* GettextToolsDummy.c in Sources */ = {isa = PBXBuildFile; fileRef = B20960F219928C8500A2EB13 /* GettextToolsDummy.c */; };
 		B2097D622A8F7BDE00956506 /* cloud_accounts.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2097D612A8F7BDE00956506 /* cloud_accounts.cpp */; };
 		B20D903F2A4C664D002B1BD2 /* AccountLocalazy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B20D903C2A4C664D002B1BD2 /* AccountLocalazy@2x.png */; };
 		B20D90412A4C664D002B1BD2 /* AccountLocalazy.png in Resources */ = {isa = PBXBuildFile; fileRef = B20D903E2A4C664D002B1BD2 /* AccountLocalazy.png */; };
@@ -145,12 +131,12 @@
 		B29AE89617103992008D1F8A /* properties.xrc in Resources */ = {isa = PBXBuildFile; fileRef = B27EB0631709DA4A009C1328 /* properties.xrc */; };
 		B2A012B321BEE4C5008051FD /* SuggestionTMTemplate@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E7F16F1E04534A005FA992 /* SuggestionTMTemplate@2x.png */; };
 		B2A3637C1E4B9DC800E96253 /* pretranslate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2A3637A1E4B9DC800E96253 /* pretranslate.cpp */; };
+		B2B22CF42FF03C50001970CF /* GettextTools in Frameworks */ = {isa = PBXBuildFile; productRef = 8F94F4A2AB61E1759C0B3501 /* GettextTools */; };
 		B2B5A3652A4B31870045FC33 /* AccountCrowdin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2B5A3622A4B31870045FC33 /* AccountCrowdin@2x.png */; };
 		B2B5A3662A4B31870045FC33 /* AccountCrowdin.png in Resources */ = {isa = PBXBuildFile; fileRef = B2B5A3632A4B31870045FC33 /* AccountCrowdin.png */; };
 		B2B6065525F100F3006186A9 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B6065425F100F3006186A9 /* WebKit.framework */; };
 		B2B735F82A5865320037A0DA /* LocalazyLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = B2B735F62A5865320037A0DA /* LocalazyLogo.png */; };
 		B2B735F92A5865320037A0DA /* LocalazyLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2B735F72A5865320037A0DA /* LocalazyLogo@2x.png */; };
-		B2B7D472170DD93E00ED0AFE /* GettextTools.bundle in Copy Gettext bundle and extensions */ = {isa = PBXBuildFile; fileRef = B248B2DE170D765100EBA58E /* GettextTools.bundle */; };
 		B2B7E81A1AD94194007FC4EB /* libwx_osx_base_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B7E8191AD94194007FC4EB /* libwx_osx_base_static.a */; };
 		B2BC21802E43B929009A221D /* catalog_qt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2BC217F2E43B929009A221D /* catalog_qt.cpp */; };
 		B2BC21812E43B929009A221D /* catalog_qt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2BC217F2E43B929009A221D /* catalog_qt.cpp */; };
@@ -193,13 +179,11 @@
 		B2E91E3E2AC73DCA0042EF10 /* libexpat.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E91E3D2AC73DCA0042EF10 /* libexpat.tbd */; };
 		B2E91E402AC73E2D0042EF10 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E91E3F2AC73E2D0042EF10 /* libz.tbd */; };
 		B2F25F0D199E327C00127FF9 /* spellchecking.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F25F0C199E327C00127FF9 /* spellchecking.cpp */; };
-		B2F287C0170DCC63004C1F41 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B248B2DF170D765100EBA58E /* CoreFoundation.framework */; };
 		B2F3C2912B891644008E0593 /* app_updates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F3C28F2B891644008E0593 /* app_updates.cpp */; };
 		B2FE296B1AC85FFF005588E4 /* keytar_mac.cc in Sources */ = {isa = PBXBuildFile; fileRef = B2FE29691AC85FFF005588E4 /* keytar_mac.cc */; };
 		B8E98168860C06B0F4D3D1C8 /* pretranslate_ui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A45BD39DED9301D1BDBB8 /* pretranslate_ui.cpp */; };
 		BF1EDE1EB234996AAD0D9164 /* catalog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CAC16F629D30018AF7E /* catalog.cpp */; };
 		CE84DDEAB7912A33832B960D /* ThumbnailProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E3E2780DE9804824D0B5FF4 /* ThumbnailProvider.m */; };
-		F9A6A70A2A290ADC67FF625D /* QuicklookPreview.appex in Copy Gettext bundle and extensions */ = {isa = PBXBuildFile; fileRef = F99D32BE79516DF3871487AD /* QuicklookPreview.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FAFD3DBF94A0EBA28531C6B2 /* catalog_po.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2BC828920A1F0DC007652D6 /* catalog_po.cpp */; };
 /* End PBXBuildFile section */
 
@@ -211,47 +195,12 @@
 			remoteGlobalIDString = DACF10FC779DD2159DD15360;
 			remoteInfo = QuicklookPreview;
 		};
-		8EFDC7FF37976839D2741E63 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B27115F8170830A800B936D5;
-			remoteInfo = deps.gettext;
-		};
-		B248B2EB170D772800EBA58E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B27115F8170830A800B936D5;
-			remoteInfo = ant_external_deps;
-		};
-		B248B2ED170D773000EBA58E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B248B2DD170D765100EBA58E;
-			remoteInfo = GettextTools;
-		};
 		B2CE6D271AD00897007E6863 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = B2CE6D191ACFCD95007E6863;
 			remoteInfo = QuicklookLegacy;
-		};
-		B2D0B1112BFD08DD00527A5A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B27115F8170830A800B936D5;
-			remoteInfo = deps.gettext;
-		};
-		B2D0B1132BFD08EC00527A5A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B27115F8170830A800B936D5;
-			remoteInfo = deps.gettext;
 		};
 		EC09D16707DD1DC43C44FD90 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -263,6 +212,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		26DB53449D3B237F7291E745 /* Copy extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				78E76258A080CA4AC819825B /* QuicklookPreview.appex in Copy extensions */,
+				5322D657EC0AA68319B4FD48 /* QuicklookThumbnails.appex in Copy extensions */,
+			);
+			name = "Copy extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B23D1F72181446EF00E6B212 /* Copy Auxiliary Binaries */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -271,19 +232,6 @@
 			files = (
 			);
 			name = "Copy Auxiliary Binaries";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B2B7D470170DD91C00ED0AFE /* Copy Gettext bundle and extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				B2B7D472170DD93E00ED0AFE /* GettextTools.bundle in Copy Gettext bundle and extensions */,
-				F9A6A70A2A290ADC67FF625D /* QuicklookPreview.appex in Copy Gettext bundle and extensions */,
-				4C5A07AB3F036AF03E13D7B1 /* QuicklookThumbnails.appex in Copy Gettext bundle and extensions */,
-			);
-			name = "Copy Gettext bundle and extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B2CE6D2A1AD0096C007E6863 /* Copy Quicklook plugin */ = {
@@ -380,7 +328,6 @@
 		B2083D121A87D17D00150BBF /* libcld2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcld2.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B209005D19CAD64400D6382E /* SuggestionTMTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SuggestionTMTemplate.png; sourceTree = "<group>"; };
 		B209005F19CAD64A00D6382E /* SuggestionErrorTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SuggestionErrorTemplate.png; sourceTree = "<group>"; };
-		B20960F219928C8500A2EB13 /* GettextToolsDummy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = GettextToolsDummy.c; path = macos/GettextToolsDummy.c; sourceTree = SOURCE_ROOT; };
 		B2097D612A8F7BDE00956506 /* cloud_accounts.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cloud_accounts.cpp; sourceTree = "<group>"; };
 		B20D903C2A4C664D002B1BD2 /* AccountLocalazy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AccountLocalazy@2x.png"; sourceTree = "<group>"; };
 		B20D903E2A4C664D002B1BD2 /* AccountLocalazy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AccountLocalazy.png; sourceTree = "<group>"; };
@@ -437,9 +384,7 @@
 		B238F674261237C4002D6845 /* filemonitor.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = filemonitor.cpp; sourceTree = "<group>"; };
 		B240FFC519C6E32900777AFE /* suggestions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = suggestions.h; path = tm/suggestions.h; sourceTree = "<group>"; };
 		B240FFC619C6F1A600777AFE /* suggestions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = suggestions.cpp; path = tm/suggestions.cpp; sourceTree = "<group>"; };
-		B248B2DE170D765100EBA58E /* GettextTools.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GettextTools.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		B248B2DF170D765100EBA58E /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		B248B2E3170D765100EBA58E /* GettextTools-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GettextTools-Info.plist"; path = "macos/GettextTools-Info.plist"; sourceTree = SOURCE_ROOT; };
 		B24ACD5B16F6201F00399242 /* Poedit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Poedit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B24ACD5E16F6201F00399242 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		B24ACD6116F6201F00399242 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -536,7 +481,7 @@
 		B28F1CC116F629D30018AF7E /* fileviewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fileviewer.h; sourceTree = "<group>"; };
 		B28F1CC216F629D30018AF7E /* findframe.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = findframe.cpp; sourceTree = "<group>"; };
 		B28F1CC316F629D30018AF7E /* findframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = findframe.h; sourceTree = "<group>"; };
-		B28F1CC416F629D30018AF7E /* gexecute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gexecute.cpp; sourceTree = "<group>"; };
+		B28F1CC416F629D30018AF7E /* gexecute.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = gexecute.cpp; sourceTree = "<group>"; };
 		B28F1CC516F629D30018AF7E /* gexecute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gexecute.h; sourceTree = "<group>"; };
 		B28F1CCA16F629D30018AF7E /* manager.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = manager.cpp; sourceTree = "<group>"; };
 		B28F1CCB16F629D30018AF7E /* manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = manager.h; sourceTree = "<group>"; };
@@ -731,18 +676,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B248B2DB170D765100EBA58E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B2F287C0170DCC63004C1F41 /* CoreFoundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B24ACD5816F6201F00399242 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B22CF42FF03C50001970CF /* GettextTools in Frameworks */,
 				B28DF74F2B8625C6008B1948 /* Sparkle in Frameworks */,
 				B228A1531AD94FF6006B0BBC /* libwx_osx_base_static.a in Frameworks */,
 				B2567977170763B700C52BC5 /* libwx_osx_cocoa_static.a in Frameworks */,
@@ -984,20 +922,10 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		B248B2E1170D765100EBA58E /* GettextTools */ = {
-			isa = PBXGroup;
-			children = (
-				B248B2E3170D765100EBA58E /* GettextTools-Info.plist */,
-				B20960F219928C8500A2EB13 /* GettextToolsDummy.c */,
-			);
-			name = GettextTools;
-			sourceTree = SOURCE_ROOT;
-		};
 		B24ACD5216F6201F00399242 = {
 			isa = PBXGroup;
 			children = (
 				B24ACD6416F6201F00399242 /* Poedit */,
-				B248B2E1170D765100EBA58E /* GettextTools */,
 				B2CE6D1B1ACFCD95007E6863 /* Quicklook */,
 				B24ACD5D16F6201F00399242 /* Frameworks */,
 				B24ACD5C16F6201F00399242 /* Products */,
@@ -1008,7 +936,6 @@
 			isa = PBXGroup;
 			children = (
 				B24ACD5B16F6201F00399242 /* Poedit.app */,
-				B248B2DE170D765100EBA58E /* GettextTools.bundle */,
 				B2CE6D1A1ACFCD95007E6863 /* PoeditQuicklook.qlgenerator */,
 				F99D32BE79516DF3871487AD /* QuicklookPreview.appex */,
 				2E49B156226EE8BCE26F9F19 /* QuicklookThumbnails.appex */,
@@ -1177,25 +1104,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B248B2DD170D765100EBA58E /* GettextTools */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B248B2EA170D765100EBA58E /* Build configuration list for PBXNativeTarget "GettextTools" */;
-			buildPhases = (
-				B248B2DA170D765100EBA58E /* Sources */,
-				B248B2DB170D765100EBA58E /* Frameworks */,
-				B2F287C6170DCF06004C1F41 /* Copy Gettext binaries, data files & translations */,
-				B2CC62E217DB7F670097461B /* Set bundle versions from deps/gettext */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B248B2EC170D772800EBA58E /* PBXTargetDependency */,
-			);
-			name = GettextTools;
-			productName = GettextTools;
-			productReference = B248B2DE170D765100EBA58E /* GettextTools.bundle */;
-			productType = "com.apple.product-type.bundle";
-		};
 		B24ACD5A16F6201F00399242 /* Poedit */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B24ACD7B16F6201F00399242 /* Build configuration list for PBXNativeTarget "Poedit" */;
@@ -1205,18 +1113,16 @@
 				B24ACD5916F6201F00399242 /* Resources */,
 				B2E836D81709EB0700F31559 /* Copy Private Frameworks */,
 				B23D1F72181446EF00E6B212 /* Copy Auxiliary Binaries */,
-				B2B7D470170DD91C00ED0AFE /* Copy Gettext bundle and extensions */,
-				B2D0B1102BFCFEF400527A5A /* Codesign Gettext bundle */,
 				1F75370E7D76220D09E8681C /* Fixup & codesign Sparkle.framework */,
 				B2CE6D2A1AD0096C007E6863 /* Copy Quicklook plugin */,
-				B2CC62E117DB7E2D0097461B /* Set CFBundleVersion from git */,
 				B2E83707170C96DB00F31559 /* Copy PO Translations */,
+				26DB53449D3B237F7291E745 /* Copy extensions */,
+				8F2D2C449071E412318DD896 /* Codesign GettextTools.framework */,
+				B2CC62E117DB7E2D0097461B /* Set CFBundleVersion from git */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				B2D0B1142BFD08EC00527A5A /* PBXTargetDependency */,
-				B248B2EE170D773000EBA58E /* PBXTargetDependency */,
 				B2CE6D281AD00897007E6863 /* PBXTargetDependency */,
 				5CC1088472F5E1C4090E7322 /* PBXTargetDependency */,
 				97C3E60537A82618F8A681B6 /* PBXTargetDependency */,
@@ -1224,6 +1130,7 @@
 			name = Poedit;
 			packageProductDependencies = (
 				B28DF74E2B8625C6008B1948 /* Sparkle */,
+				8F94F4A2AB61E1759C0B3501 /* GettextTools */,
 			);
 			productName = Poedit;
 			productReference = B24ACD5B16F6201F00399242 /* Poedit.app */;
@@ -1242,7 +1149,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				B2D0B1122BFD08DD00527A5A /* PBXTargetDependency */,
 			);
 			name = QuicklookLegacy;
 			productName = QuicklookLegacy;
@@ -1262,7 +1168,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				D965D72DE821F72D121003FC /* PBXTargetDependency */,
 			);
 			name = QuicklookPreview;
 			productName = QuicklookPreview;
@@ -1366,14 +1271,13 @@
 			mainGroup = B24ACD5216F6201F00399242;
 			packageReferences = (
 				B28DF74D2B8625C6008B1948 /* XCRemoteSwiftPackageReference "Sparkle" */,
+				B081E9E4133ACAFFE309D237 /* XCRemoteSwiftPackageReference "gettext-tools" */,
 			);
 			productRefGroup = B24ACD5C16F6201F00399242 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				B24ACD5A16F6201F00399242 /* Poedit */,
-				B27115F8170830A800B936D5 /* deps.gettext */,
-				B248B2DD170D765100EBA58E /* GettextTools */,
 				DACF10FC779DD2159DD15360 /* QuicklookPreview */,
 				E565794DDC17A6420FCB9A4F /* QuicklookThumbnails */,
 				B2CE6D191ACFCD95007E6863 /* QuicklookLegacy */,
@@ -1474,6 +1378,27 @@
 			shellPath = /bin/sh;
 			shellScript = "rm -rf \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"/Sparkle.framework/XPCServices \\\n       \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"/Sparkle.framework/Versions/*/XPCServices\nscripts/macos-sign-bundle.sh \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sparkle.framework\"\n\ntouch ${DERIVED_FILE_DIR}/codesign.sparkle.done\n";
 		};
+		8F2D2C449071E412318DD896 /* Codesign GettextTools.framework */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(TARGET_BUILD_DIR)/$(FRAMEWORKS_FOLDER_PATH)/GettextTools.framework",
+			);
+			name = "Codesign GettextTools.framework";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(FRAMEWORKS_FOLDER_PATH)/GettextTools.framework",
+				"$(DERIVED_FILE_DIR)/codesign.gettext.done",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = "/bin/sh -e";
+			shellScript = "scripts/macos-sign-bundle.sh \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GettextTools.framework\"\n";
+		};
 		B25CC3CE2BC8247900BED2FD /* Copy PO Translations */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1493,26 +1418,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = "/bin/sh -e";
-			shellScript = "export PATH=\"${DEPS_BUILD_DIR}/gettext/bin:$PATH\"\necho \"${DERIVED_FILES_DIR}/copy-translations.done : \" \"${SRCROOT}\"/locales/*.po* \"${SRCROOT}/macos/copy-translations.sh\" >${DERIVED_FILES_DIR}/copy-translations.d\nmacos/copy-translations.sh quicklook \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ntouch \"${DERIVED_FILE_DIR}/copy-translations.done\"\n";
-		};
-		B2C129D921C6CBAF004364B2 /* Ninja Build */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Ninja Build";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd deps && ./build_deps.sh gettext\n";
+			shellScript = "export PATH=\"${BUILD_DIR%/Build/*}/SourcePackages/artifacts/gettext-tools/GettextTools/bin:$PATH\"\n\necho \"${DERIVED_FILES_DIR}/copy-translations.done : \" \"${SRCROOT}\"/locales/*.po* \"${SRCROOT}/macos/copy-translations.sh\" >${DERIVED_FILES_DIR}/copy-translations.d\nmacos/copy-translations.sh quicklook \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ntouch \"${DERIVED_FILE_DIR}/copy-translations.done\"\n";
 		};
 		B2C49AB62C95D72200EA47BD /* Set CFBundleVersion from git */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1554,25 +1460,6 @@
 			shellPath = /bin/sh;
 			shellScript = "APP_INFO_PLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\nDSYM_INFO_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\nBUILD_NUMBER=`git rev-list HEAD --count`\nif [ -f \"$APP_INFO_PLIST\" ] ; then\n    oldversion=`/usr/libexec/PlistBuddy -c \"Print :CFBundleVersion\" \"$APP_INFO_PLIST\"`\nfi\n\nif [ \"$BUILD_NUMBER\" != \"$oldversion\" ] ; then\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$APP_INFO_PLIST\"\n    if [ -f \"$DSYM_INFO_PLIST\" ] ; then\n        /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$DSYM_INFO_PLIST\"\n    fi\n    touch ${DERIVED_FILE_DIR}/.updated.info.plist\nfi\n";
 		};
-		B2CC62E217DB7F670097461B /* Set bundle versions from deps/gettext */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
-			);
-			name = "Set bundle versions from deps/gettext";
-			outputPaths = (
-				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
-				"$(DERIVED_FILE_DIR)/.updated.info.plist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "VERSION_NUMBER=`sed -n 's/GETTEXT_VERSION = \"\\([0-9.]*\\)\".*/\\1/p' deps/generate_build_ninja.py`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n";
-		};
 		B2CE6D291AD008F6007E6863 /* Set CFBundleVersion from git */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1590,27 +1477,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "APP_INFO_PLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\nDSYM_INFO_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\nBUILD_NUMBER=`git rev-list HEAD --count`\nif [ -f \"$APP_INFO_PLIST\" ] ; then\n    oldversion=`/usr/libexec/PlistBuddy -c \"Print :CFBundleVersion\" \"$APP_INFO_PLIST\"`\nfi\n\nif [ \"$BUILD_NUMBER\" != \"$oldversion\" ] ; then\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$APP_INFO_PLIST\"\n    if [ -f \"$DSYM_INFO_PLIST\" ] ; then\n        /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"$DSYM_INFO_PLIST\"\n    fi\n    touch ${DERIVED_FILE_DIR}/.updated.info.plist\nfi\n";
-		};
-		B2D0B1102BFCFEF400527A5A /* Codesign Gettext bundle */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(TARGET_BUILD_DIR)/$(PLUGINS_FOLDER_PATH)/GettextTools.bundle",
-			);
-			name = "Codesign Gettext bundle";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(TARGET_BUILD_DIR)/$(PLUGINS_FOLDER_PATH)/GettextTools.bundle",
-				"$(DERIVED_FILE_DIR)/codesign.gettext.done",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = "/bin/sh -e";
-			shellScript = "scripts/macos-sign-bundle.sh \"${TARGET_BUILD_DIR}/${PLUGINS_FOLDER_PATH}/GettextTools.bundle\"\n";
 		};
 		B2E83707170C96DB00F31559 /* Copy PO Translations */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1630,23 +1496,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = "/bin/sh -e";
-			shellScript = "export PATH=\"${DEPS_BUILD_DIR}/gettext/bin:$PATH\"\necho \"${DERIVED_FILES_DIR}/copy-translations.done : \" \"${SRCROOT}\"/locales/*.po* \"${SRCROOT}\"/deps/wx/locale/*.po \"${SRCROOT}/macos/copy-translations.sh\" >${DERIVED_FILES_DIR}/copy-translations.d\nmacos/copy-translations.sh app \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ntouch \"${DERIVED_FILE_DIR}/copy-translations.done\"\n";
-		};
-		B2F287C6170DCF06004C1F41 /* Copy Gettext binaries, data files & translations */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			dependencyFile = "$(DERIVED_FILES_DIR)/copy-binaries.d";
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Gettext binaries, data files & translations";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/copy-binaries.done",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "mkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gettext\"\n\nfor i in ${GETTEXT_BINARIES}; do\n  cp -a ${DEPS_BUILD_DIR}/gettext/bin/$i \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\ndone\ncp -a ${DEPS_BUILD_DIR}/gettext/lib/lib*.*.dylib \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"\n\nrm -rf \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"/*\ncp -a ${DEPS_BUILD_DIR}/gettext/share/gettext-* \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\ncp -a ${DEPS_BUILD_DIR}/gettext/share/gettext/styles \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gettext/\"\ncp -a ${DEPS_BUILD_DIR}/gettext/share/locale \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\n\n(cd \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\" && rm -f locale && ln -s ../../Resources/locale .)\n(cd \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\" && rm -f gettext* && ln -s ../../Resources/gettext* .)\n\necho \"${DERIVED_FILE_DIR}/copy-binaries.done\" \" : \" ${DEPS_BUILD_DIR}/gettext/bin/* ${DEPS_BUILD_DIR}/gettext/lib/lib*.*.dylib >${DERIVED_FILE_DIR}/copy-binaries.d\ntouch \"${DERIVED_FILE_DIR}/copy-binaries.done\"\n";
+			shellScript = "export PATH=\"${BUILD_DIR%/Build/*}/SourcePackages/artifacts/gettext-tools/GettextTools/bin:$PATH\"\n\necho \"${DERIVED_FILES_DIR}/copy-translations.done : \" \"${SRCROOT}\"/locales/*.po* \"${SRCROOT}\"/deps/wx/locale/*.po \"${SRCROOT}/macos/copy-translations.sh\" >${DERIVED_FILES_DIR}/copy-translations.d\nmacos/copy-translations.sh app \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ntouch \"${DERIVED_FILE_DIR}/copy-translations.done\"\n";
 		};
 		B606314D22A00F2ADAF38FD8 /* Copy PO Translations */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1667,7 +1517,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = "/bin/sh -e";
-			shellScript = "export PATH=\"${DEPS_BUILD_DIR}/gettext/bin:$PATH\"\necho \"${DERIVED_FILES_DIR}/copy-translations.done : \" \"${SRCROOT}\"/locales/*.po* \"${SRCROOT}/macos/copy-translations.sh\" >${DERIVED_FILES_DIR}/copy-translations.d\nmacos/copy-translations.sh quicklook \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ntouch \"${DERIVED_FILE_DIR}/copy-translations.done\"\n";
+			shellScript = "export PATH=\"${BUILD_DIR%/Build/*}/SourcePackages/artifacts/gettext-tools/GettextTools/bin:$PATH\"\n\necho \"${DERIVED_FILES_DIR}/copy-translations.done : \" \"${SRCROOT}\"/locales/*.po* \"${SRCROOT}/macos/copy-translations.sh\" >${DERIVED_FILES_DIR}/copy-translations.d\nmacos/copy-translations.sh quicklook \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ntouch \"${DERIVED_FILE_DIR}/copy-translations.done\"\n";
 		};
 		D8204AEBDE4347A0ED2B890E /* Set CFBundleVersion from git */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1699,14 +1549,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE84DDEAB7912A33832B960D /* ThumbnailProvider.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B248B2DA170D765100EBA58E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B20960F319928C8500A2EB13 /* GettextToolsDummy.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1852,36 +1694,10 @@
 			target = E565794DDC17A6420FCB9A4F /* QuicklookThumbnails */;
 			targetProxy = EC09D16707DD1DC43C44FD90 /* PBXContainerItemProxy */;
 		};
-		B248B2EC170D772800EBA58E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B27115F8170830A800B936D5 /* deps.gettext */;
-			targetProxy = B248B2EB170D772800EBA58E /* PBXContainerItemProxy */;
-		};
-		B248B2EE170D773000EBA58E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B248B2DD170D765100EBA58E /* GettextTools */;
-			targetProxy = B248B2ED170D773000EBA58E /* PBXContainerItemProxy */;
-		};
 		B2CE6D281AD00897007E6863 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B2CE6D191ACFCD95007E6863 /* QuicklookLegacy */;
 			targetProxy = B2CE6D271AD00897007E6863 /* PBXContainerItemProxy */;
-		};
-		B2D0B1122BFD08DD00527A5A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B27115F8170830A800B936D5 /* deps.gettext */;
-			targetProxy = B2D0B1112BFD08DD00527A5A /* PBXContainerItemProxy */;
-		};
-		B2D0B1142BFD08EC00527A5A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B27115F8170830A800B936D5 /* deps.gettext */;
-			targetProxy = B2D0B1132BFD08EC00527A5A /* PBXContainerItemProxy */;
-		};
-		D965D72DE821F72D121003FC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = deps.gettext;
-			target = B27115F8170830A800B936D5 /* deps.gettext */;
-			targetProxy = 8EFDC7FF37976839D2741E63 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2192,58 +2008,6 @@
 			};
 			name = Release;
 		};
-		B248B2E8170D765100EBA58E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "";
-				COMBINE_HIDPI_IMAGES = YES;
-				DEAD_CODE_STRIPPING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				GCC_PREFIX_HEADER = "";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "macos/GettextTools-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				LIBRARY_SEARCH_PATHS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = net.poedit.Poedit.GettextTools;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
-		B248B2E9170D765100EBA58E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "";
-				COMBINE_HIDPI_IMAGES = YES;
-				DEAD_CODE_STRIPPING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				GCC_PREFIX_HEADER = "";
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "macos/GettextTools-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				LIBRARY_SEARCH_PATHS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = net.poedit.Poedit.GettextTools;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
-		};
 		B24ACD7916F6201F00399242 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B2FD1DD72BA8B8450024BA78 /* poedit.xcconfig */;
@@ -2441,33 +2205,6 @@
 			};
 			name = Release;
 		};
-		B27115FA170830A800B936D5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				DEAD_CODE_STRIPPING = YES;
-				DEBUGGING_SYMBOLS = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		B27115FB170830A800B936D5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				DEAD_CODE_STRIPPING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		B2CE6D241ACFCD95007E6863 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2598,15 +2335,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B248B2EA170D765100EBA58E /* Build configuration list for PBXNativeTarget "GettextTools" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B248B2E8170D765100EBA58E /* Debug */,
-				B248B2E9170D765100EBA58E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		B24ACD5616F6201F00399242 /* Build configuration list for PBXProject "Poedit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2625,15 +2353,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B27115F9170830A800B936D5 /* Build configuration list for PBXAggregateTarget "deps.gettext" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B27115FA170830A800B936D5 /* Debug */,
-				B27115FB170830A800B936D5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		B2CE6D261ACFCD95007E6863 /* Build configuration list for PBXNativeTarget "QuicklookLegacy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2646,6 +2365,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		582257C0BA939C710FC8A2A7 /* XCRemoteSwiftPackageReference "gettext-tools" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/poedit/gettext-tools";
+			requirement = {
+				branch = macos;
+				kind = branch;
+			};
+		};
+		B081E9E4133ACAFFE309D237 /* XCRemoteSwiftPackageReference "gettext-tools" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/poedit/gettext-tools";
+			requirement = {
+				branch = macos;
+				kind = branch;
+			};
+		};
 		B28DF74D2B8625C6008B1948 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sparkle-project/Sparkle";
@@ -2657,6 +2392,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8F94F4A2AB61E1759C0B3501 /* GettextTools */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 582257C0BA939C710FC8A2A7 /* XCRemoteSwiftPackageReference "gettext-tools" */;
+			productName = GettextTools;
+		};
 		B28DF74E2B8625C6008B1948 /* Sparkle */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B28DF74D2B8625C6008B1948 /* XCRemoteSwiftPackageReference "Sparkle" */;

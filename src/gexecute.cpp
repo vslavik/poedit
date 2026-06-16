@@ -37,6 +37,10 @@
 #include <regex>
 #include <boost/algorithm/string.hpp>
 
+#ifdef __WXOSX__
+#include <GettextTools/GettextTools.h>
+#endif
+
 #include "concurrency.h"
 #include "gexecute.h"
 #include "errors.h"
@@ -272,7 +276,25 @@ ParsedGettextErrors parse_gettext_stderr(const subprocess::Output& output, const
 }
 
 
-#if defined(__WXOSX__) || defined(__WXMSW__)
+#if defined(__WXOSX__)
+
+#ifndef MACOS_BUILD_WITHOUT_APPKIT
+wxString GetGettextBinariesPath()
+{
+    return str::to_wx(GettextToolsBindirPath());
+}
+
+wxString GetGettextDatadirPath()
+{
+    return str::to_wx(GettextToolsDatadirPath());
+}
+
+#else
+wxString GetGettextBinariesPath() { return ""; }
+wxString GetGettextDatadirPath() { return ""; }
+#endif
+
+#elif defined(__WXMSW__)
 
 wxString GetGettextPackagePath()
 {
