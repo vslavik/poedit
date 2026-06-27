@@ -86,6 +86,9 @@ wxString FixBrokenSearchPathValue(wxString p)
 // Detect whether source strings are just IDs instead of actual text
 bool DetectUseOfSymbolicIDs(Catalog& cat)
 {
+    if (cat.empty())
+        return false;
+
     // Employ a simple heuristic: IDs won't contain whitespace.
     // This is not enough as is, because some (notably Asian) languages don't use
     // whitespace, so also check for use of ASCII characters only. Typical non-symbolic
