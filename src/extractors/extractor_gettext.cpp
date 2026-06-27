@@ -151,6 +151,12 @@ public:
             cmdline += " --no-git";
         }
 
+        if (check_gettext_version(1, 0))
+        {
+            // These check do more harm than good and annoy users, so supress them
+            cmdline += " --no-check=url --no-check=email";
+        }
+
         auto additional = GetAdditionalFlags();
         if (!additional.empty())
             cmdline += " " + additional;
