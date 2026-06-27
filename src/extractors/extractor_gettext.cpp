@@ -212,6 +212,10 @@ public:
             RegisterExtension("ts"); // TypeScript
             RegisterExtension("tsx"); // TypeScript JSX
         }
+        if (check_gettext_version(1, 0))
+        {
+            RegisterExtension("ml"); // OCaml
+        }
     }
 
     wxString GetId() const override { return "gettext"; }
