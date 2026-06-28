@@ -55,11 +55,6 @@ You need a full git checkout to build on macOS; see below for details.
 After checkout, use the `Poedit.xcworkspace` workspace and the latest version of
 Xcode to build Poedit.
 
-There are some additional dependencies on tools not included with macOS.
-They can be installed with Homebrew and `macos/Brewfile`:
-
-    brew bundle --file=macos/Brewfile
-
 
 ### Windows using Visual Studio
 
