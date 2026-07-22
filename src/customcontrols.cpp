@@ -620,7 +620,18 @@ void AvatarIcon::OnPaint(wxPaintEvent&)
 
     // mark out jagged, pixelated clipping due to low-resolution wxRegion:
     auto outline = GetBackgroundColour();
-    outline = outline.ChangeLightness(ColorScheme::GetAppMode() == ColorScheme::Light ? 98 : 110);
+    if (outline.GetAlpha() == wxALPHA_TRANSPARENT)
+    {
+        // this happens on macOS
+        for (auto parent = GetParent(); parent; parent = parent->GetParent())
+        {
+            outline = parent->GetBackgroundColour();
+            if (outline.GetAlpha() != wxALPHA_TRANSPARENT)
+                break;
+        }
+    }
+
+    outline = outline.ChangeLightness(ColorScheme::GetAppMode() == ColorScheme::Light ? 90 : 120);
     gc->SetPen(wxPen(outline, PX(2)));
     gc->DrawEllipse(r.x + 0.5, r.y + 0.5, r.width, r.height);
 }
