@@ -142,6 +142,9 @@ NSMenuItem *AddNativeItem(NSMenu *menu, int pos, const wxString& text, SEL ac, N
 
 void SetMacMenuIcon(wxMenuItem *item, const char *symbol)
 {
+    if (@available(macOS 27, *))
+        return; // Apple came to their senses, no icons in menus
+
     if (@available(macOS 26, *))
     {
         NSString *name = str::to_NS(symbol);
@@ -302,8 +305,12 @@ void MenusManager::TweakOSXMenuBar(wxMenuBar *bar)
         [NSApp setWindowsMenu:windowMenu];
         m_nativeMacData->windowMenu = windowMenu;
     }
-    
-    if (@available(macOS 26.0, *))
+
+    if (@available(macOS 27, *))
+    {
+        // Apple came to their senses, no icons in menus
+    }
+    else if (@available(macOS 26.0, *))
     {
         SetMacMenuIcon(bar, XRCID("show_sidebar"), "poedit.sidebar");
         SetMacMenuIcon(bar, XRCID("menu_validate"), "poedit.validate");
@@ -323,10 +330,10 @@ void MenusManager::TweakOSXMenuBar(wxMenuBar *bar)
         SetMacMenuIcon(bar, XRCID("menu_fuzzy"), "exclamationmark.circle");
         SetMacMenuIcon(bar, XRCID("menu_comment"), "bubble");
         SetMacMenuIcon(bar, XRCID("menu_suggestions"), "list.dash");
-        
+
         SetMacMenuIcon(bar, XRCID("menu_ids"), "textformat.numbers");
         SetMacMenuIcon(bar, XRCID("menu_warnings"), "exclamationmark.triangle");
-        
+
         SetMacMenuIcon(bar, XRCID("sort_by_order"), "list.number");
         SetMacMenuIcon(bar, XRCID("sort_by_source"), "text.alignleft");
         SetMacMenuIcon(bar, XRCID("sort_by_translation"), "text.alignright");
@@ -334,7 +341,7 @@ void MenusManager::TweakOSXMenuBar(wxMenuBar *bar)
         SetMacMenuIcon(bar, XRCID("sort_group_by_context"), "rectangle.stack");
         SetMacMenuIcon(bar, XRCID("sort_errors_first"), "exclamationmark.octagon");
         SetMacMenuIcon(bar, XRCID("sort_untrans_first"), "square.dashed");
-        
+
         SetMacMenuIcon(bar, XRCID("show_suggestions"), "list.dash");
         SetMacMenuIcon(bar, XRCID("menu_references"), "curlybraces");
 

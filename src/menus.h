@@ -77,6 +77,9 @@ void SetMacMenuIcon(wxMenuItem *item, const char *symbol);
 template<typename T>
 inline void SetMacMenuIcon(T *bar, int itemId, const char *symbol)
 {
+    if (__builtin_available(macOS 27.0, *))
+        return; // Apple came to their senses, no icons in menus
+
     if (__builtin_available(macOS 26.0, *))
     {
         auto item = bar->FindItem(itemId);
