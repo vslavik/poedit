@@ -68,6 +68,21 @@ inline std::vector<CloudAccountClient*> GetSignedInAccounts()
     return all;
 }
 
+class AccountsSimplebook : public wxSimplebook
+{
+public:
+    AccountsSimplebook(wxWindow* parent)
+    {
+        SetBackgroundStyle(wxBG_STYLE_ERASE);
+        Create(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | BORDER_LISTLIKE);
+    }
+
+    bool HasTransparentBackground() override
+    {
+        return false;
+    }
+};
+
 } // anonymous namespace
 
 
@@ -92,7 +107,7 @@ AccountsPanel::AccountsPanel(wxWindow *parent, int flags) : wxPanel(parent, wxID
     m_list = new IconAndSubtitleListCtrl(this, _("Account"), BORDER_LIST);
     sizer->Add(m_list, wxSizerFlags().Expand().Border(wxRIGHT, PX(10)));
 
-    m_panelsBook = new wxSimplebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | BORDER_LISTLIKE);
+    m_panelsBook = new AccountsSimplebook(this);
     SetupListlikeBorder(m_panelsBook);
 
     ColorScheme::SetupWindowColors(m_panelsBook, [=]
