@@ -34,6 +34,7 @@
 
 #include <wx/string.h>
 
+#include "concurrency.h"
 #include "gexecute.h"
 #include "utility.h"
 
@@ -114,7 +115,8 @@ public:
 
         May throw ExtractionException.
      */
-    static FilesList CollectAllFiles(const SourceCodeSpec& sources);
+    static FilesList CollectAllFiles(const SourceCodeSpec& sources,
+                                     dispatch::cancellation_token_ptr cancellation);
 
 
     /**
@@ -123,7 +125,8 @@ public:
      */
     static ExtractionOutput ExtractWithAll(TempDirectory& tmpdir,
                                            const SourceCodeSpec& sourceSpec,
-                                           const std::vector<wxString>& files);
+                                           const std::vector<wxString>& files,
+                                           dispatch::cancellation_token_ptr cancellation);
 
     // Extractor helpers:
 

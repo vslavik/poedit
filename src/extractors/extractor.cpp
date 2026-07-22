@@ -94,8 +94,11 @@ inline bool IsVCSDir(const wxString& d)
 
 
 int FindInDir(const wxString& basepath, const wxString& dirname, const PathsToMatch& excludedPaths,
-              Extractor::FilesList& output)
+              Extractor::FilesList& output,
+              dispatch::cancellation_token_ptr cancellation)
 {
+    cancellation->throw_if_cancelled();
+
     if (dirname.empty())
         return 0;
 
@@ -113,6 +116,8 @@ int FindInDir(const wxString& basepath, const wxString& dirname, const PathsToMa
     cont = dir.GetFirst(&iter, wxEmptyString, wxDIR_FILES);
     while (cont)
     {
+        cancellation->throw_if_cancelled();
+
         const wxString filename = iter;
         const wxString fullpath = (dirname == ".") ? filename : dirname + "/" + filename;
         cont = dir.GetNext(&iter);
@@ -134,6 +139,8 @@ int FindInDir(const wxString& basepath, const wxString& dirname, const PathsToMa
     cont = dir.GetFirst(&iter, wxEmptyString, wxDIR_DIRS);
     while (cont)
     {
+        cancellation->throw_if_cancelled();
+
         const wxString filename = iter;
         const wxString fullpath = (dirname == ".") ? filename : dirname + "/" + filename;
         cont = dir.GetNext(&iter);
@@ -145,7 +152,7 @@ int FindInDir(const wxString& basepath, const wxString& dirname, const PathsToMa
             continue;
 
         CheckReadPermissions(basepath, fullpath);
-        found += FindInDir(basepath, fullpath, excludedPaths, output);
+        found += FindInDir(basepath, fullpath, excludedPaths, output, cancellation);
     }
 
     return found;
@@ -154,7 +161,8 @@ int FindInDir(const wxString& basepath, const wxString& dirname, const PathsToMa
 } // anonymous namespace
 
 
-Extractor::FilesList Extractor::CollectAllFiles(const SourceCodeSpec& sources)
+Extractor::FilesList Extractor::CollectAllFiles(const SourceCodeSpec& sources,
+                                                dispatch::cancellation_token_ptr cancellation)
 {
     // TODO: Only collect files with recognized extensions
 
@@ -167,6 +175,8 @@ Extractor::FilesList Extractor::CollectAllFiles(const SourceCodeSpec& sources)
 
     for (auto& path: sources.SearchPaths)
     {
+        cancellation->throw_if_cancelled();
+
         if (wxFileName::FileExists(basepath + path))
         {
             if (excludedPaths.MatchesFile(path))
@@ -180,7 +190,7 @@ Extractor::FilesList Extractor::CollectAllFiles(const SourceCodeSpec& sources)
         }
         else if (wxFileName::DirExists(basepath + path))
         {
-            if (!FindInDir(basepath, path, excludedPaths, output))
+            if (!FindInDir(basepath, path, excludedPaths, output, cancellation))
             {
                 wxLogTrace("poedit.extractor", "no files found in '%s'", path);
             }
@@ -205,7 +215,8 @@ Extractor::FilesList Extractor::CollectAllFiles(const SourceCodeSpec& sources)
 
 ExtractionOutput Extractor::ExtractWithAll(TempDirectory& tmpdir,
                                            const SourceCodeSpec& sourceSpec,
-                                           const std::vector<wxString>& files_)
+                                           const std::vector<wxString>& files_,
+                                           dispatch::cancellation_token_ptr cancellation)
 {
     auto files = files_;
     wxLogTrace("poedit.extractor", "extracting from %d files", (int)files.size());
@@ -214,6 +225,8 @@ ExtractionOutput Extractor::ExtractWithAll(TempDirectory& tmpdir,
 
     for (auto ex: CreateAllExtractors(sourceSpec))
     {
+        cancellation->throw_if_cancelled();
+
         const auto ex_files = ex->FilterFiles(files);
         if (ex_files.empty())
             continue;

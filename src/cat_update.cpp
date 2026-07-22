@@ -221,7 +221,7 @@ struct InterimResults
 };
 
 
-InterimResults ExtractPOTFromSources(CatalogPtr catalog)
+InterimResults ExtractPOTFromSources(CatalogPtr catalog, dispatch::cancellation_token_ptr cancellation)
 {
     auto po = std::dynamic_pointer_cast<POCatalog>(catalog);
     if (!po)
@@ -237,7 +237,7 @@ InterimResults ExtractPOTFromSources(CatalogPtr catalog)
     }
 
     InterimResults output;
-    auto files = Extractor::CollectAllFiles(*spec);
+    auto files = Extractor::CollectAllFiles(*spec, cancellation);
 
     progress.message
     (
@@ -254,7 +254,7 @@ InterimResults ExtractPOTFromSources(CatalogPtr catalog)
     if (!files.empty())
     {
         TempDirectory tmpdir;
-        auto result = Extractor::ExtractWithAll(tmpdir, *spec, files);
+        auto result = Extractor::ExtractWithAll(tmpdir, *spec, files, cancellation);
         if (!result)
             BOOST_THROW_EXCEPTION(ExtractionException(ExtractionError::Unspecified));
 
@@ -279,11 +279,11 @@ InterimResults ExtractPOTFromSources(CatalogPtr catalog)
 }
 
 
-InterimResults ExtractPOTFromSourcesWithExplanatoryErrors(CatalogPtr catalog)
+InterimResults ExtractPOTFromSourcesWithExplanatoryErrors(CatalogPtr catalog, dispatch::cancellation_token_ptr cancellation)
 {
     try
     {
-        return ExtractPOTFromSources(catalog);
+        return ExtractPOTFromSources(catalog, cancellation);
     }
     catch (ExtractionException& e)
     {
@@ -381,7 +381,7 @@ dispatch::future<CatalogPtr> DoPerformUpdateWithUI(wxWindow *parent,
 
         {
             Progress subtask(1, p, timeCostObtainPOT);
-            data = funcObtainPOT();
+            data = funcObtainPOT(cancellation);
         }
 
         cancellation->throw_if_cancelled();
@@ -446,7 +446,8 @@ MergeResult PerformUpdateFromSourcesSimple(CatalogPtr catalog)
     InterimResults data;
     {
         Progress subtask(1, p, 90);
-        data = ExtractPOTFromSources(catalog);
+        auto dummy_cancellation = std::make_shared<dispatch::cancellation_token>();
+        data = ExtractPOTFromSources(catalog, dummy_cancellation);
         if (!data.reference)
             return {};
     }
@@ -465,7 +466,7 @@ PerformUpdateFromSourcesWithUI(wxWindow *parent, CatalogPtr catalog)
 {
     return DoPerformUpdateWithUI(parent, catalog,
                                  90,
-                                 [=]{ return ExtractPOTFromSourcesWithExplanatoryErrors(catalog); });
+                                 [=](dispatch::cancellation_token_ptr token){ return ExtractPOTFromSourcesWithExplanatoryErrors(catalog, token); });
 }
 
 
@@ -474,7 +475,7 @@ PerformUpdateFromReferenceWithUI(wxWindow *parent, CatalogPtr catalog, const wxS
 {
     return DoPerformUpdateWithUI(parent, catalog,
                                  50,
-                                 [=]{ return LoadReferenceFile(reference_file); });
+                                 [=](dispatch::cancellation_token_ptr /*unused*/){ return LoadReferenceFile(reference_file); });
 }
 
 
