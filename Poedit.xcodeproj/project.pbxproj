@@ -131,7 +131,7 @@
 		B29AE89617103992008D1F8A /* properties.xrc in Resources */ = {isa = PBXBuildFile; fileRef = B27EB0631709DA4A009C1328 /* properties.xrc */; };
 		B2A012B321BEE4C5008051FD /* SuggestionTMTemplate@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E7F16F1E04534A005FA992 /* SuggestionTMTemplate@2x.png */; };
 		B2A3637C1E4B9DC800E96253 /* pretranslate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2A3637A1E4B9DC800E96253 /* pretranslate.cpp */; };
-		B2B22CF42FF03C50001970CF /* GettextTools in Frameworks */ = {isa = PBXBuildFile; productRef = 8F94F4A2AB61E1759C0B3501 /* GettextTools */; };
+		B21EA7442FE146E200C5F12C /* GettextTools in Frameworks */ = {isa = PBXBuildFile; productRef = B21EA7432FE146E200C5F12C /* GettextTools */; };
 		B2B5A3652A4B31870045FC33 /* AccountCrowdin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2B5A3622A4B31870045FC33 /* AccountCrowdin@2x.png */; };
 		B2B5A3662A4B31870045FC33 /* AccountCrowdin.png in Resources */ = {isa = PBXBuildFile; fileRef = B2B5A3632A4B31870045FC33 /* AccountCrowdin.png */; };
 		B2B6065525F100F3006186A9 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B6065425F100F3006186A9 /* WebKit.framework */; };
@@ -680,7 +680,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2B22CF42FF03C50001970CF /* GettextTools in Frameworks */,
+				B21EA7442FE146E200C5F12C /* GettextTools in Frameworks */,
 				B28DF74F2B8625C6008B1948 /* Sparkle in Frameworks */,
 				B228A1531AD94FF6006B0BBC /* libwx_osx_base_static.a in Frameworks */,
 				B2567977170763B700C52BC5 /* libwx_osx_cocoa_static.a in Frameworks */,
@@ -1130,7 +1130,7 @@
 			name = Poedit;
 			packageProductDependencies = (
 				B28DF74E2B8625C6008B1948 /* Sparkle */,
-				8F94F4A2AB61E1759C0B3501 /* GettextTools */,
+				B21EA7432FE146E200C5F12C /* GettextTools */,
 			);
 			productName = Poedit;
 			productReference = B24ACD5B16F6201F00399242 /* Poedit.app */;
@@ -1271,7 +1271,7 @@
 			mainGroup = B24ACD5216F6201F00399242;
 			packageReferences = (
 				B28DF74D2B8625C6008B1948 /* XCRemoteSwiftPackageReference "Sparkle" */,
-				B081E9E4133ACAFFE309D237 /* XCRemoteSwiftPackageReference "gettext-tools" */,
+				B21EA7422FE146E200C5F12C /* XCRemoteSwiftPackageReference "gettext-tools" */,
 			);
 			productRefGroup = B24ACD5C16F6201F00399242 /* Products */;
 			projectDirPath = "";
@@ -2361,20 +2361,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		582257C0BA939C710FC8A2A7 /* XCRemoteSwiftPackageReference "gettext-tools" */ = {
+		B21EA7422FE146E200C5F12C /* XCRemoteSwiftPackageReference "gettext-tools" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/poedit/gettext-tools";
 			requirement = {
-				branch = "";
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-		B081E9E4133ACAFFE309D237 /* XCRemoteSwiftPackageReference "gettext-tools" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/poedit/gettext-tools";
-			requirement = {
-				branch = "";
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;
 			};
@@ -2390,9 +2380,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		8F94F4A2AB61E1759C0B3501 /* GettextTools */ = {
+		B21EA7432FE146E200C5F12C /* GettextTools */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 582257C0BA939C710FC8A2A7 /* XCRemoteSwiftPackageReference "gettext-tools" */;
+			package = B21EA7422FE146E200C5F12C /* XCRemoteSwiftPackageReference "gettext-tools" */;
 			productName = GettextTools;
 		};
 		B28DF74E2B8625C6008B1948 /* Sparkle */ = {
