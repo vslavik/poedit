@@ -38,7 +38,7 @@
 #define APP_ID           "{68EB2C37-083A-4303-B5D8-41FA67E50B8F}"
 
 #ifndef CRT_REDIST
-#define CRT_REDIST       GetEnv("VCToolsRedistDir") + "\x64\Microsoft.VC143.CRT"
+#define CRT_REDIST       GetEnv("VCToolsRedistDir") + "\x64\Microsoft.VC145.CRT"
 #endif
 
 [Setup]
