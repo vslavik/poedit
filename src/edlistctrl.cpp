@@ -304,26 +304,6 @@ void PoeditListCtrl::Model::UpdateSort()
 }
 
 
-wxString PoeditListCtrl::Model::GetColumnType(unsigned int col) const
-{
-    switch (col)
-    {
-        case Col_ID:
-            return "string";
-
-        case Col_Icon:
-            return "wxIcon";
-
-        case Col_Source:
-        case Col_Translation:
-            return "string";
-
-        default:
-            return "null";
-    }
-}
-
-
 void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsigned col) const
 {
 #if defined(__WXGTK__)
@@ -335,12 +315,22 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
     if (!m_catalog || m_frozen)
     {
 #if defined(__WXGTK__)
-        auto type = GetColumnType(col);
-        if (type == "string")
-            variant = "";
-        else if (type == "wxIcon")
-            NULL_ICON(variant);
-        else
+        switch (col)
+        {
+            case Col_ID:
+            case Col_Source:
+            case Col_Translation:
+                variant = "";
+                break;
+
+            case Col_Icon:
+                NULL_ICON(variant);
+                break;
+
+            default:
+                variant = wxNullVariant;
+                break;
+        }
 #else
         variant = wxNullVariant;
 #endif

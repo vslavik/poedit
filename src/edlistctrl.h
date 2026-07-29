@@ -246,9 +246,6 @@ class PoeditListCtrl : public wxDataViewCtrl
             void SetCatalog(CatalogPtr catalog);
             void UpdateSort();
 
-            unsigned int GetColumnCount() const override { return Col_Max; }
-            wxString GetColumnType( unsigned int col ) const override;
-
             void GetValueByRow(wxVariant& variant, unsigned row, unsigned col) const override;
             bool SetValueByRow(const wxVariant&, unsigned, unsigned) override;
             bool GetAttrByRow(unsigned row, unsigned col, wxDataViewItemAttr& attr) const override;
