@@ -40,10 +40,7 @@
 
 #include <boost/throw_exception.hpp>
 
-#include <cpprest/asyncrt_utils.h>
-#include <cpprest/http_client.h>
-#include <cpprest/http_msg.h>
-#include <cpprest/filestream.h>
+#include "wrap_cpprestsdk.h"
 
 #include <regex>
 

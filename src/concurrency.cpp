@@ -32,7 +32,7 @@
 #if defined(HAVE_HTTP_CLIENT)
   #include "http_client.h"
   #ifndef __WXOSX__
-    #include <cpprest/http_msg.h>
+    #include "wrap_cpprestsdk.h"
   #endif
 #endif
 

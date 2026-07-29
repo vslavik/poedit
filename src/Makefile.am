@@ -85,6 +85,7 @@ poedit_SOURCES = \
                  version.h \
                  welcomescreen.cpp welcomescreen.h \
                  pugixml.h \
+                 wrap_cpprestsdk.h \
                  $(ACCOUNTS_SUPPORT_SRC)
 nodist_poedit_SOURCES = compiled_xrc.cpp
 
