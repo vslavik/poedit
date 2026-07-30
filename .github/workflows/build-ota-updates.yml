@@ -11,11 +11,11 @@ jobs:
     name: Build OTA translations
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - name: Install GNU gettext
       run: sudo apt-get install gettext
     - name: Install uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v9.0.0
       with:
         cache-dependency-glob: "scripts/check-translations.py"
     - name: Install Crowdin CLI
@@ -27,7 +27,7 @@ jobs:
         rm crowdin.yaml
     - name: Build OTA updates
       run: scripts/build-ota-translations.sh
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v7
       with:
         name: ota-update
         path: ota-update.tar
