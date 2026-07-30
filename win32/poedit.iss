@@ -48,6 +48,7 @@ OutputDir=win32
 AppName=Poedit
 AppVerName=Poedit {#VERSION}
 
+SetupArchitecture=x64
 ArchitecturesInstallIn64BitMode=x64compatible
 ArchitecturesAllowed=x64compatible
 
@@ -61,6 +62,7 @@ LicenseFile=COPYING
 InfoAfterFile=
 SolidCompression=true
 Compression=lzma2/ultra64
+LZMANumBlockThreads=4
 FlatComponentsList=true
 ShowLanguageDialog=no
 DisableWelcomePage=true

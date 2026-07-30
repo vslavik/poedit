@@ -22,7 +22,7 @@
     <SignTool Condition="'$(SignTool)' == ''"></SignTool>
     <SignToolTimestamp Condition="'$(SignToolTimestamp)' == ''">http://timestamp.digicert.com</SignToolTimestamp>
     <SignToolFlags Condition="'$(SignToolFlags)' == ''">-fd sha256 -td sha256 -tr $(SignToolTimestamp) -du https://poedit.com</SignToolFlags>
-    <InnoCC>..\packages\Tools.InnoSetup.6.7.0\tools\ISCC.exe</InnoCC>
+    <InnoCC>..\packages\Tools.InnoSetup.7.0.2\tools\ISCC.exe</InnoCC>
     <InnoSignToolArgs Condition="'$(SignTool)' != ''">/dSIGNTOOL=default /Sdefault="$(SignTool) $(SignToolFlags) $f"</InnoSignToolArgs>
     <InnoFlags>/dCONFIG=$(Configuration) $(InnoSignToolArgs)</InnoFlags>
   </PropertyGroup>
@@ -65,10 +65,10 @@
   </Target>
   
   <Target Name="UninstHelper" Inputs="uninst-helper.c" Outputs="uninst-helper.dll">
-    <!-- the helper needs to be compiled as 32bit: -->
+    <!-- The helper must match the installer's x64 architecture. -->
     <PropertyGroup>
       <HelperCompileCmd>
-        call "$(VCINSTALLDIR)\Auxiliary\Build\vcvarsall.bat" x64_x86 || exit /b 666
+        call "$(VCINSTALLDIR)\Auxiliary\Build\vcvarsall.bat" x64 || exit /b 666
         cl /LD /O1 /MT /W3 uninst-helper.c || exit /b 666
       </HelperCompileCmd>
     </PropertyGroup>

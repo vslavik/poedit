@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef _M_IX86 
-#error This file must be compiled for 32bit x86 target
+#ifndef _M_X64
+#error This file must be compiled for 64bit x64 target
 #endif
 
 // This DLL is used by the uninstaller to remove Poedit's 32bit version during upgrades.
