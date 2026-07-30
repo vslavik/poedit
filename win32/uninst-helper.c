@@ -50,9 +50,9 @@ __declspec(dllexport) int SafelyUninstall32BitVersion(LPCWSTR uninstallerExe)
 
 	// rename the HKCU\Software\Vaclav Slavik\Poedit key to *.backup:
 	HKEY key = 0;
-	if (SUCCEEDED(RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Vaclav Slavik\\Poedit", 0, KEY_ALL_ACCESS, &key)))
+	if (RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Vaclav Slavik\\Poedit", 0, KEY_ALL_ACCESS, &key) == ERROR_SUCCESS)
 	{
-		if (FAILED(RegRenameKey(key, NULL, L"Poedit.backup")))
+		if (RegRenameKey(key, NULL, L"Poedit.backup") != ERROR_SUCCESS)
 		{
 			RegCloseKey(key);
 			key = 0;
