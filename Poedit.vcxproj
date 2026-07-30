@@ -22,13 +22,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -70,7 +70,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <AdditionalDependencies>icu.lib;rpcrt4.lib;advapi32.lib;shlwapi.lib;ws2_32.lib;comctl32.lib;Winhttp.lib;wininet.lib;httpapi.lib;bcrypt.lib;crypt32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>mCtrl.dll</DelayLoadDLLs>
     </Link>
@@ -270,6 +270,7 @@
     <ClInclude Include="src\version.h" />
     <ClInclude Include="src\welcomescreen.h" />
     <ClInclude Include="src\windows\win10_menubar.h" />
+    <ClInclude Include="src\wrap_cpprestsdk.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="locales\win\windows_strings.rc" />

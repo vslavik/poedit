@@ -24,7 +24,7 @@
     <SccProvider>
     </SccProvider>
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <WinRTProject>false</WinRTProject>
     <TargetXP>false</TargetXP>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
@@ -58,6 +58,7 @@
     <ClCompile>
       <PreprocessorDefinitions>CPPREST_EXCLUDE_WEBSOCKETS=1;CPPREST_EXCLUDE_COMPRESSION=1;CPPREST_EXCLUDE_BROTLI=1;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;_NO_ASYNCRTIMP;_NO_PPLXIMP;WIN32;UNICODE;_UNICODE;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(CasablancaIncludeDir);$(CasablancaSrcDir)\pch;$(WebsocketppIncludeDir);..\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>$(ProjectDir)compat\cpprestsdk_vs2026.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <AdditionalOptions>-Zm300 /bigobj %(AdditionalOptions)</AdditionalOptions>

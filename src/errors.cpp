@@ -28,7 +28,7 @@
 #include <wx/translation.h>
 
 #if defined(HAVE_HTTP_CLIENT) && !defined(__WXOSX__)
-#include <cpprest/http_client.h>
+#include "wrap_cpprestsdk.h"
 #include <boost/algorithm/string.hpp>
 #endif
 
