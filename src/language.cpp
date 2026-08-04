@@ -66,7 +66,7 @@ const std::wregex RE_LANG_CODE(L"([a-z]){2,3}(_([A-Z]{2}|[0-9]{3}))?(@[a-z]+)?")
 const std::wregex RE_LANG_CODE_PERMISSIVE(L"([a-zA-Z]){2,3}([_-]([a-zA-Z]{2}|[0-9]{3}))?(@[a-zA-Z]+)?");
 
 // approximate match for BCP 47 language tags
-const std::wregex RE_LANG_CODE_BCP47(LR"(^[a-zA-Z]{2,3}(-[A-Z][a-z]{3})?(-([A-Z]{2}|\d{3}))?$)");
+const std::wregex RE_LANG_CODE_BCP47(LR"(^[a-zA-Z]{2,3}(-[a-zA-Z]{4})?(-([a-zA-Z]{2}|\d{3}))?$)");
 
 // try some normalizations: s/-/_/, case adjustments
 void TryNormalize(std::wstring& s)
@@ -284,10 +284,11 @@ std::string DoGetLanguageTag(const Language& lang)
     if (!c.empty())
         tag += "-" + c;
 
-    if (!v.empty())
+    if (!v.empty() && v.size() <= 8)
     {
         // Encode variant that wasn't special-handled as a private use subtag, see
-        // https://tools.ietf.org/html/rfc5646#section-2.2.7 (e.g. "de-DE-x-formal")
+        // https://tools.ietf.org/html/rfc5646#section-2.2.7 (e.g. "de-DE-x-formal").
+        // Private-use subtags are limited to 8 characters.
         tag += "-x-" + v;
     }
 
