@@ -506,8 +506,9 @@ Language Language::FromLanguageTag(const std::string& tag)
 
     status = U_ZERO_ERROR;
     char b_lang[ULOC_LANG_CAPACITY];
-    if (uloc_getLanguage(locale, b_lang, std::size(b_lang), &status))
-        lang.m_code = b_lang;
+    if (!uloc_getLanguage(locale, b_lang, std::size(b_lang), &status))
+        return Language();
+    lang.m_code = b_lang;
 
     status = U_ZERO_ERROR;
     char b_country[ULOC_COUNTRY_CAPACITY];
