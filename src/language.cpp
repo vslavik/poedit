@@ -315,7 +315,7 @@ void Language::Init(const std::string& code)
 
         char locale[512];
         UErrorCode status = U_ZERO_ERROR;
-        uloc_forLanguageTag(m_tag.c_str(), locale, 512, NULL, &status);
+        uloc_forLanguageTag(m_tag.c_str(), locale, std::size(locale), NULL, &status);
         if (U_SUCCESS(status))
             m_icuLocale = locale;
 
@@ -378,12 +378,12 @@ Language Language::MinimizeSubtags() const
 
     char minimized[512];
     UErrorCode status = U_ZERO_ERROR;
-    uloc_minimizeSubtags(m_icuLocale.c_str(), minimized, 512, &status);
+    uloc_minimizeSubtags(m_icuLocale.c_str(), minimized, std::size(minimized), &status);
     if (U_FAILURE(status))
         return *this;
 
     char tag[512];
-    uloc_toLanguageTag(minimized, tag, 512, /*strict=*/1, &status);
+    uloc_toLanguageTag(minimized, tag, std::size(tag), /*strict=*/1, &status);
     if (U_FAILURE(status))
         return *this;
 
@@ -406,7 +406,7 @@ Language Language::AddRelevantLikelySubtags() const
 
     char expanded[512];
     status = U_ZERO_ERROR;
-    uloc_addLikelySubtags(m_icuLocale.c_str(), expanded, 512, &status);
+    uloc_addLikelySubtags(m_icuLocale.c_str(), expanded, std::size(expanded), &status);
     if (U_FAILURE(status))
         return *this;
 
@@ -419,7 +419,7 @@ Language Language::AddRelevantLikelySubtags() const
 
     char tagBuffer[512];
     status = U_ZERO_ERROR;
-    uloc_toLanguageTag(expanded, tagBuffer, 512, /*strict=*/1, &status);
+    uloc_toLanguageTag(expanded, tagBuffer, std::size(tagBuffer), /*strict=*/1, &status);
     if (U_FAILURE(status))
         return *this;
 
@@ -497,7 +497,7 @@ Language Language::FromLanguageTag(const std::string& tag)
 
     char locale[ULOC_FULLNAME_CAPACITY];
     UErrorCode status = U_ZERO_ERROR;
-    auto len = uloc_forLanguageTag(tag.c_str(), locale, 512, NULL, &status);
+    auto len = uloc_forLanguageTag(tag.c_str(), locale, std::size(locale), NULL, &status);
     if (U_FAILURE(status) || !len)
         return Language();
 
