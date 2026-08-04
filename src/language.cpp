@@ -806,7 +806,7 @@ Language Language::TryDetectFromText(const char *buffer, size_t len, Language pr
 }
 
 
-PluralFormsExpr::PluralFormsExpr() : m_calcCreated(true)
+PluralFormsExpr::PluralFormsExpr() : m_nplurals(2), m_calcCreated(true)
 {
 }
 
@@ -828,10 +828,17 @@ unsigned PluralFormsExpr::nplurals() const
     if (pos == 0)
     {
         auto end = m_expr.find(';', pos);
+        if (end == std::string::npos)
+        {
+            m_nplurals = 2; // default to 2 if parsing failed
+            return m_nplurals;
+        }
 
         unsigned value;
         auto [ptr, ec] = std::from_chars(m_expr.data() + 9, m_expr.data() + end, value);
-        if (ec == std::errc{})
+        // Avoid malformed headers causing unreasonable numbers of plural controls.
+        // Max known language has 6 plural forms per CLDR (Arabic), so 10 is a safe ceiling.
+        if (ec == std::errc{} && ptr == m_expr.data() + end && value >= 1 && value <= 10)
             m_nplurals = static_cast<int>(value);
         else
             m_nplurals = 2; // default to 2 if parsing failed
