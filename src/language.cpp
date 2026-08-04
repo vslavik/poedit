@@ -496,9 +496,10 @@ Language Language::FromLanguageTag(const std::string& tag)
         return Language(); // invalid
 
     char locale[ULOC_FULLNAME_CAPACITY];
+    int32_t parsedLength = 0;
     UErrorCode status = U_ZERO_ERROR;
-    auto len = uloc_forLanguageTag(tag.c_str(), locale, std::size(locale), NULL, &status);
-    if (U_FAILURE(status) || !len)
+    auto len = uloc_forLanguageTag(tag.c_str(), locale, std::size(locale), &parsedLength, &status);
+    if (U_FAILURE(status) || !len || static_cast<size_t>(parsedLength) != tag.size())
         return Language();
 
     Language lang;
@@ -674,7 +675,9 @@ Language Language::TryGuessFromFilename(const wxString& filename, wxString *wild
     //  - suffix (foo.cs_CZ.po, wordpressTheme-cs_CZ.po)
     //  - directory name (cs_CZ, cs.lproj, cs/LC_MESSAGES)
     std::wstring name = fn.GetName().ToStdWstring();
-    Language lang = Language::TryParseWithValidation(name);
+    Language lang;
+    if (Language::IsPlausibleCode(name))
+        lang = Language::TryParseWithValidation(name);
     if (lang.IsValid())
     {
         if (wildcard)
