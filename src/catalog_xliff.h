@@ -50,6 +50,15 @@ public:
     XLIFFReadException(const wxString& what);
 };
 
+enum XLIFFVersion : unsigned char
+{
+    XLIFF_1_0,
+    XLIFF_1_1,
+    XLIFF_1_2,
+    XLIFF_2_0,
+    XLIFF_2_1,
+    XLIFF_2_2
+};
 
 // Metadata concerning XLIFF representation in Poedit, e.g. for placeholders
 struct XLIFFStringMetadata
@@ -118,9 +127,12 @@ public:
     pugi::xml_node GetXMLRoot() const { return m_doc.child("xliff"); }
     std::string GetXPathValue(const char* xpath) const;
 
+
+    bool CheckVersion(XLIFFVersion version) const { return m_version >= version; }
+
 protected:
-    XLIFFCatalog(pugi::xml_document&& doc)
-        : Catalog(Type::XLIFF), m_doc(std::move(doc)) {}
+    XLIFFCatalog(pugi::xml_document&& doc, XLIFFVersion version)
+        : Catalog(Type::XLIFF), m_doc(std::move(doc)), m_version(version) {}
 
     struct InstanceCreatorImpl
     {
@@ -135,6 +147,7 @@ protected:
 protected:
     std::mutex m_documentMutex;
     pugi::xml_document m_doc;
+    XLIFFVersion m_version;
     Language m_language;
 
     friend class XLIFFCatalogItem;
@@ -144,24 +157,21 @@ protected:
 class XLIFF1Catalog : public XLIFFCatalog
 {
 public:
-    XLIFF1Catalog(pugi::xml_document&& doc, int subversion)
-        : XLIFFCatalog(std::move(doc)),
-          m_subversion(subversion)
+    XLIFF1Catalog(pugi::xml_document&& doc, XLIFFVersion version) : XLIFFCatalog(std::move(doc), version)
     {}
 
     void SetLanguage(Language lang) override;
 
 protected:
     void Parse(pugi::xml_node root) override;
-
-    int m_subversion;
 };
 
 
 class XLIFF2Catalog : public XLIFFCatalog
 {
 public:
-    XLIFF2Catalog(pugi::xml_document&& doc) : XLIFFCatalog(std::move(doc)) {}
+    XLIFF2Catalog(pugi::xml_document&& doc, XLIFFVersion version) : XLIFFCatalog(std::move(doc), version)
+    {}
 
     void SetLanguage(Language lang) override;
 

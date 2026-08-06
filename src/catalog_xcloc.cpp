@@ -66,7 +66,7 @@ std::shared_ptr<XLIFFCatalog> XCLOCCatalog::Open(const wxString& filename)
             if (xliff_version != "1.2")
                 return nullptr;
 
-            auto c = std::make_shared<XCLOCCatalog>(std::move(doc), /*subversion=*/2);
+            auto c = std::make_shared<XCLOCCatalog>(std::move(doc), XLIFF_1_2);
             c->m_originalFilename = filename;
             c->m_embeddedXLIFFFilename = embedded_xliff;
             return c;

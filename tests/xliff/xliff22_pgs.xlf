@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.2" xmlns:pgs="urn:oasis:names:tc:xliff:pgs:1.0" version="2.2" srcLang="en" trgLang="cs">
+  <file id="f1">
+    <!-- Adapted from the Plural example in XLIFF 2.2, section 4.9.6.1. -->
+    <unit id="seg1" pgs:switch="plural:file_count">
+      <segment id="files_deleted_0" pgs:case="0">
+        <source>You deleted no file.</source>
+      </segment>
+      <segment id="files_deleted_1" pgs:case="1">
+        <source>You deleted one file.</source>
+      </segment>
+      <segment id="files_deleted_other" pgs:case="other">
+        <source>You deleted <ph id="1" disp="file_count"/> files.</source>
+      </segment>
+    </unit>
+
+    <!-- Adapted from the combined Gender and Plural example in section 4.9.6.4. -->
+    <unit id="party_invitation" pgs:switch="gender:host_gender plural:guest_count">
+      <segment id="party_feminine_0" pgs:case="feminine 0">
+        <source><ph id="1" disp="host_name"/> invited no guests to her party.</source>
+      </segment>
+      <segment id="party_feminine_1" pgs:case="feminine 1">
+        <source><ph id="1" disp="host_name"/> invited one guest to her party.</source>
+      </segment>
+      <segment id="party_feminine_other" pgs:case="feminine other">
+        <source><ph id="1" disp="host_name"/> invited <ph id="2" disp="guest_count"/> guests to her party.</source>
+      </segment>
+      <segment id="party_masculine_0" pgs:case="masculine 0">
+        <source><ph id="1" disp="host_name"/> invited no guests to his party.</source>
+      </segment>
+      <segment id="party_masculine_1" pgs:case="masculine 1">
+        <source><ph id="1" disp="host_name"/> invited one guest to his party.</source>
+      </segment>
+      <segment id="party_masculine_other" pgs:case="masculine other">
+        <source><ph id="1" disp="host_name"/> invited <ph id="2" disp="guest_count"/> guests to his party.</source>
+      </segment>
+      <segment id="party_other_0" pgs:case="other 0">
+        <source><ph id="1" disp="host_name"/> invited no guests to their party.</source>
+      </segment>
+      <segment id="party_other_1" pgs:case="other 1">
+        <source><ph id="1" disp="host_name"/> invited one guest to their party.</source>
+      </segment>
+      <segment id="party_other_other" pgs:case="other other">
+        <source><ph id="1" disp="host_name"/> invited <ph id="2" disp="guest_count"/> guests to their party.</source>
+      </segment>
+    </unit>
+  </file>
+</xliff>

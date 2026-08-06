@@ -463,13 +463,17 @@ std::shared_ptr<XLIFFCatalog> XLIFFCatalog::Open(const wxString& filename)
         std::shared_ptr<XLIFFCatalog> CreateFromDoc(pugi::xml_document&& doc, const std::string& xliff_version) override
         {
             if (xliff_version == "1.0")
-                return std::make_shared<XLIFF1Catalog>(std::move(doc), 0);
+                return std::make_shared<XLIFF1Catalog>(std::move(doc), XLIFF_1_0);
             else if (xliff_version == "1.1")
-                return std::make_shared<XLIFF1Catalog>(std::move(doc), 1);
+                return std::make_shared<XLIFF1Catalog>(std::move(doc), XLIFF_1_1);
             else if (xliff_version == "1.2")
-                return std::make_shared<XLIFF1Catalog>(std::move(doc), 2);
-            else if (xliff_version == "2.0" || xliff_version == "2.1")
-                return std::make_shared<XLIFF2Catalog>(std::move(doc));
+                return std::make_shared<XLIFF1Catalog>(std::move(doc), XLIFF_1_2);
+            else if (xliff_version == "2.0")
+                return std::make_shared<XLIFF2Catalog>(std::move(doc), XLIFF_2_0);
+            else if (xliff_version == "2.1")
+                return std::make_shared<XLIFF2Catalog>(std::move(doc), XLIFF_2_1);
+            else if (xliff_version == "2.2")
+                return std::make_shared<XLIFF2Catalog>(std::move(doc), XLIFF_2_2);
             else
                 return nullptr;
         }
@@ -728,10 +732,10 @@ void XLIFF1Catalog::Parse(pugi::xml_node root)
             if (strcmp(node.attribute("translate").value(), "no") == 0)
                 continue;
 
-            if (m_subversion == 0)
-                m_items.push_back(std::make_shared<XLIFF10CatalogItem>(*this, ++id, node));
-            else
+            if (CheckVersion(XLIFF_1_1))
                 m_items.push_back(std::make_shared<XLIFF12CatalogItem>(*this, ++id, node));
+            else
+                m_items.push_back(std::make_shared<XLIFF10CatalogItem>(*this, ++id, node));
         }
     }
 }
@@ -763,6 +767,17 @@ public:
         m_metadata = std::move(extractor.metadata);
 
         m_string = str::to_wx(extractor.extractedText);
+
+        if (owner.CheckVersion(XLIFF_2_2))
+        {
+            auto pgsCase = node.attribute("pgs:case");
+            if (pgsCase)
+            {
+                auto pgsSwitch = unit().attribute("pgs:switch");
+                if (pgsSwitch)
+                    SetContext(str::to_wx(pgsSwitch.value()) + L" → " + str::to_wx(pgsCase.value()));
+            }
+        }
 
         std::string id = unit().attribute("name").value();
         if (id.empty())
