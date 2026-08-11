@@ -161,17 +161,12 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
             return mode == Dark ? sRGB(80, 80, 80) : sRGB(204, 204, 204);
         case Color::SidebarBlockSeparator:
             return mode == Dark ? sRGB(80, 80, 80, 0.8) : sRGB(204, 204, 204, 0.8);
-        case Color::EditingThickSeparator:
-            return mode == Dark ? sRGB(46, 47, 50) : sRGB(240, 240, 240);
 
         // Backgrounds:
 
+        case Color::EditingThickSeparator:
         case Color::SidebarBackground:
-            #ifdef __WXOSX__
-            return mode == Dark ? sRGB(46, 47, 50) : sRGB(240, 240, 240); // same as EditingThickSeparator
-            #else
-            return mode == Dark ? sRGB(45, 42, 41) : "#edf0f4";
-            #endif
+            return mode == Dark ? sRGB(46, 47, 50) : sRGB(248, 248, 248);
 
         case Color::EditingBackground:
             #ifdef __WXOSX__
