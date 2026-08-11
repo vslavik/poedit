@@ -51,9 +51,9 @@ dist_uiicons_DATA = \
 		poedit-status-cat-no.png \
 		poedit-status-cat-ok.png \
 		StatusError.png \
-		StatusErrorBlack.png \
+		StatusErrorTemplate.png \
 		StatusWarning.png \
-		StatusWarningBlack.png \
+		StatusWarningTemplate.png \
 		window-close.png
 
 update-icon-cache:

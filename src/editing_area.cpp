@@ -312,8 +312,8 @@ public:
     IssueLabel(wxWindow *parent)
         : TagLabel(parent, Color::TagErrorLineFg, Color::TagErrorLineBg, WinID::TranslationIssueText)
     {
-        m_iconError = wxArtProvider::GetBitmap("StatusErrorBlack");
-        m_iconWarning = wxArtProvider::GetBitmap("StatusWarningBlack");
+        m_iconError = wxArtProvider::GetBitmap("StatusErrorTemplate");
+        m_iconWarning = wxArtProvider::GetBitmap("StatusWarningTemplate");
         SetIcon(m_iconError);
     }
 
