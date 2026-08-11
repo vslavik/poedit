@@ -108,9 +108,13 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
             return mode == Light ? "#a1a1a1" : wxSystemSettings::GetColour(wxSYS_COLOUR_LISTBOXTEXT).ChangeLightness(50);
             #endif
         case Color::ItemFuzzy:
-            return mode == Dark ? sRGB(253, 178, 72) : sRGB(230, 134, 0);
+            #ifdef __WXOSX__
+            return wxColour([NSColor systemOrangeColor]);
+            #else
+            return mode == Dark ? sRGB(255, 146, 48) : sRGB(255, 141, 40);
+            #endif
         case Color::ItemError:
-            return sRGB(225, 77, 49);
+            return sRGB(255, 56, 60);
         case Color::ErrorText:
             return *wxRED;
 
@@ -178,7 +182,7 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
 
         // Fuzzy toggle:
         case Color::FuzzySwitch:
-            return mode == Dark ? sRGB(253, 178, 72) : sRGB(244, 143, 0);
+            return DoGet(Color::ItemFuzzy, mode);
         case Color::FuzzySwitchInactive:
             #ifdef __WXGTK__
             return mode == Dark ? sRGB(163, 163, 163) : sRGB(87, 87, 87);
