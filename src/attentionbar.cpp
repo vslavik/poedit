@@ -75,10 +75,13 @@ AttentionBar::AttentionBar(wxWindow *parent)
     auto btnClose = new wxBitmapButton
                     (
                         this, wxID_CLOSE,
-                        wxArtProvider::GetBitmap("window-close", wxART_MENU),
+                        wxArtProvider::GetBitmap("DismissTemplate"),
                         wxDefaultPosition, wxDefaultSize,
                         wxNO_BORDER
                     );
+    auto hoverImage = wxArtProvider::GetBitmap("DismissHoverTemplate");
+    btnClose->SetBitmapPressed(hoverImage);
+    btnClose->SetBitmapHover(hoverImage);
     btnClose->SetToolTip(_("Hide this notification message"));
 
 #if defined(__WXOSX__) || defined(__WXMSW__)
