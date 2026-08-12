@@ -151,6 +151,21 @@ void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list, CatalogPtr catal
         resultsDlg->ShowWindowModalThenDo([resultsDlg](int){});
         return;
     }
+    else if (!catalog->GetLanguage().IsValid())
+    {
+        wxWindowPtr<wxMessageDialog> resultsDlg(
+            new wxMessageDialog
+                (
+                    window,
+                    _("Cannot pre-translate to unknown language."),
+                    _("Pre-translate"),
+                    wxOK | wxICON_ERROR
+                )
+        );
+        resultsDlg->SetExtendedMessage(_(L"Set the translation language in translation properties before pre-translating this file."));
+        resultsDlg->ShowWindowModalThenDo([resultsDlg](int){});
+        return;
+    }
 
     wxWindowPtr<wxDialog> dlg(new wxDialog(window, wxID_ANY, _("Pre-translate"), wxDefaultPosition, wxSize(MSW_OR_OTHER(PX(550), PX(600)), -1)));
 

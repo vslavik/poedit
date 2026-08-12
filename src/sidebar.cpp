@@ -886,6 +886,11 @@ void SuggestionsSidebarBlock::UpdateSuggestionsForItem(CatalogItemPtr item)
         SetMessage("SuggestionErrorTemplate", _(L"Translation suggestions require that source text’s language is known. Poedit couldn’t detect it in this file."));
         return;
     }
+    else if (!m_parent->GetCatalog()->GetLanguage().IsValid())
+    {
+        SetMessage("SuggestionErrorTemplate", _(L"Translation suggestions require a translation language. Set it in translation properties to use suggestions."));
+        return;
+    }
 
     auto srclang = m_parent->GetCurrentSourceLanguage();
     auto lang = m_parent->GetCurrentLanguage();
