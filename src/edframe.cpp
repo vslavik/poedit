@@ -1513,6 +1513,7 @@ void PoeditFrame::EditCatalogProperties()
                     m_modified = true;
                     UpdateEditingUIAfterChange();
 
+                    UpdateTitle();
                     UpdateTextLanguage();
                     // trigger resorting and language header update:
                     NotifyCatalogChanged(m_catalog);
