@@ -73,8 +73,7 @@ jobs:
       run: git fetch --deepen=100000 --filter=blob:none origin ${{ github.ref }}
     - uses: maxim-lobanov/setup-xcode@v1
       with:
-        # see a7fdeb1b and https://mastodon.social/@siracusa/115491845898322390
-        xcode-version: '~26.0.0'
+        xcode-version: '26'
     - uses: sersoft-gmbh/xcodebuild-action@v4
       with:
         workspace: Poedit.xcworkspace
