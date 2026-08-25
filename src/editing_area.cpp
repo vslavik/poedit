@@ -351,16 +351,7 @@ public:
         : SecondaryLabel(parent, "MMMM | MMMM", wxALIGN_RIGHT | wxST_NO_AUTORESIZE),
           m_mode(mode)
     {
-
-        switch (mode)
-        {
-            case Editing:
-                SetToolTip(_("String length in characters: translation | source"));
-                break;
-            case POT:
-                SetToolTip(_("String length in characters"));
-                break;
-        }
+        SetToolTip(_("String length in characters"));
     }
 
     void UpdateSourceLength(int i) { m_source = i; UpdateText(); }
@@ -369,10 +360,24 @@ public:
 private:
     void UpdateText()
     {
-        if (m_mode == Editing)
-            SetLabel(wxString::Format("%d | %d", m_translation, m_source));
-        else
-            SetLabel(wxString::Format("%d", m_source));
+        switch (m_mode)
+        {
+            case Editing:
+                SetLabel(wxString::Format("%d | %d", m_translation, m_source));
+                SetToolTip
+                (
+                    // TRANSLATORS: This is tooltip showing length of source string
+                    wxString::Format(_("Source text: %d characters"), m_source) +
+                    "\n" +
+                    // TRANSLATORS: This is tooltip showing length of translation string
+                    wxString::Format(_("Translation: %d characters"), m_translation)
+                );
+                break;
+            case POT:
+                SetLabel(wxString::Format("%d", m_source));
+                // tooltip already set in constructor
+                break;
+        }
     }
 
     Mode m_mode;
