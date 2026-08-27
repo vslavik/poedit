@@ -228,20 +228,23 @@ public:
         UpdateColor();
     }
 
-    void SetIcon(const wxBitmap& icon)
+    void SetColorAndIcon(Color fg, Color bg, const wxString& icon)
     {
+        SetColor(fg, bg);
+
         auto sizer = GetSizer();
-        if (icon.IsOk())
+        if (!icon.empty())
         {
             if (!m_icon)
             {
-                m_icon = new wxStaticBitmap(this, wxID_ANY, icon);
+                m_icon = new StaticBitmap(this, icon);
 #ifdef __WXMSW__
                 ColorScheme::SetupWindowColors(m_icon, [=]{ m_icon->SetBackgroundColour(m_bg); });
 #endif
                 sizer->Insert(1, m_icon, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
             }
-            m_icon->SetBitmap(icon);
+            m_icon->SetBitmapName(icon);
+            m_icon->SetContentTintColor(fg);
             sizer->Show(m_icon);
         }
         else
@@ -302,7 +305,7 @@ protected:
     Color m_fgSym, m_bgSym;
     wxColour m_fg, m_bg;
     wxStaticText *m_label;
-    wxStaticBitmap *m_icon;
+    StaticBitmap *m_icon;
 };
 
 
@@ -312,9 +315,7 @@ public:
     IssueLabel(wxWindow *parent)
         : TagLabel(parent, Color::TagErrorLineFg, Color::TagErrorLineBg, WinID::TranslationIssueText)
     {
-        m_iconError = wxArtProvider::GetBitmap("StatusErrorTemplate");
-        m_iconWarning = wxArtProvider::GetBitmap("StatusWarningTemplate");
-        SetIcon(m_iconError);
+        SetColorAndIcon(Color::TagErrorLineFg, Color::TagErrorLineBg, "StatusErrorTemplate");
     }
 
     std::shared_ptr<CatalogItem::Issue> GetIssue() const { return m_issue; }
@@ -325,12 +326,10 @@ public:
         switch (issue->severity)
         {
             case CatalogItem::Issue::Error:
-                SetIcon(m_iconError);
-                SetColor(Color::TagErrorLineFg, Color::TagErrorLineBg);
+                SetColorAndIcon(Color::TagErrorLineFg, Color::TagErrorLineBg, "StatusErrorTemplate");
                 break;
             case CatalogItem::Issue::Warning:
-                SetIcon(m_iconWarning);
-                SetColor(Color::TagWarningLineFg, Color::TagWarningLineBg);
+                SetColorAndIcon(Color::TagWarningLineFg, Color::TagWarningLineBg, "StatusWarningTemplate");
                 break;
         }
         SetLabel(issue->message);
@@ -340,7 +339,6 @@ public:
 protected:
 
     std::shared_ptr<CatalogItem::Issue> m_issue;
-    wxBitmap m_iconError, m_iconWarning;
 };
 
 

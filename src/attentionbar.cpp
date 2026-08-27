@@ -199,8 +199,12 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
     switch ( msg.m_kind )
     {
         case AttentionMessage::Error:
+            showIcon = true;
+            m_icon->SetContentTintColor(Color::AttentionErrorFg);
+            break;
         case AttentionMessage::Warning:
             showIcon = true;
+            m_icon->SetContentTintColor(Color::AttentionWarningFg);
             break;
         case AttentionMessage::Question:
             showIcon = false;
