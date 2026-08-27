@@ -40,15 +40,12 @@
 #include <wx/statbmp.h>
 #include <wx/config.h>
 #include <wx/dcclient.h>
+#include <wx/graphics.h>
 #include <wx/wupdlock.h>
 
-#ifdef __WXOSX__
-    #define SMALL_BORDER   PX(7)
-    #define BUTTONS_SPACE PX(10)
-#else
-    #define SMALL_BORDER   PX(3)
-    #define BUTTONS_SPACE  PX(5)
-#endif
+#define BUTTONS_SPACE  PX(4)
+#define PADDING        PX(12)
+
 
 BEGIN_EVENT_TABLE(AttentionBar, wxPanel)
     EVT_BUTTON(wxID_CLOSE, AttentionBar::OnClose)
@@ -59,14 +56,7 @@ AttentionBar::AttentionBar(wxWindow *parent)
     : wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
               wxTAB_TRAVERSAL | wxBORDER_NONE)
 {
-#ifdef __WXOSX__
-    NSView *view = GetHandle();
-    view.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
-#endif
-
-#ifdef __WXMSW__
-    m_icon = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap);
-#endif
+    m_icon = new StaticBitmap(this, "SuggestionErrorTemplate");
     m_label = new AutoWrappingText(this, wxID_ANY, "");
     m_explanation = new ExplanationLabel(this, "");
     m_buttons = new wxBoxSizer(wxHORIZONTAL);
@@ -86,6 +76,11 @@ AttentionBar::AttentionBar(wxWindow *parent)
 
 #if defined(__WXOSX__) || defined(__WXMSW__)
     wxFont boldFont = m_label->GetFont();
+#ifdef __WXOSX__
+    boldFont.SetPointSize(12);
+#else
+    boldFont.SetFractionalPointSize(boldFont.GetFractionalPointSize() + 0.5);
+#endif
     boldFont.SetWeight(MSW_OR_OTHER(wxFONTWEIGHT_BOLD, wxFONTWEIGHT_SEMIBOLD));
     m_label->SetFont(boldFont);
 #endif
@@ -93,30 +88,23 @@ AttentionBar::AttentionBar(wxWindow *parent)
     Bind(wxEVT_PAINT, &AttentionBar::OnPaint, this);
 
     wxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
-    sizer->AddSpacer(PXDefaultBorder);
-#ifdef __WXMSW__
-    sizer->Add(m_icon, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
-#endif
+    sizer->Add(m_icon, wxSizerFlags().Center().Border(wxLEFT|wxTOP|wxBOTTOM, PADDING));
 
     auto labelSizer = new wxBoxSizer(wxVERTICAL);
     labelSizer->Add(m_label, wxSizerFlags().Expand());
     labelSizer->AddSpacer(PX(1));
     labelSizer->Add(m_explanation, wxSizerFlags().Expand().Border(wxRIGHT, PX(4)));
-    sizer->Add(labelSizer, wxSizerFlags(1).Center().PXDoubleBorder(wxALL));
-    sizer->AddSpacer(PX(20));
+    sizer->Add(labelSizer, wxSizerFlags(1).Center().Border(wxTOP|wxBOTTOM|wxLEFT, PADDING));
+    sizer->AddSpacer(4 * PADDING);
     auto allButtonsSizer = new wxBoxSizer(wxHORIZONTAL);
     auto buttonsAndCheckboxSizer = new wxBoxSizer(wxVERTICAL);
     sizer->Add(buttonsAndCheckboxSizer, wxSizerFlags().Center().Border(wxTOP, PX(1)));
     buttonsAndCheckboxSizer->Add(allButtonsSizer, wxSizerFlags().Expand());
     buttonsAndCheckboxSizer->Add(m_checkbox, wxSizerFlags().Left().Border(wxTOP, PX(4)));
     allButtonsSizer->Add(m_buttons);
-    allButtonsSizer->AddStretchSpacer();
-    allButtonsSizer->AddSpacer(SMALL_BORDER);
+    allButtonsSizer->AddSpacer(PADDING - BUTTONS_SPACE);
     allButtonsSizer->Add(btnClose, wxSizerFlags().Center().Border(wxTOP, PX(1)));
-    allButtonsSizer->AddSpacer(SMALL_BORDER);
-#ifdef __WXMSW__
-    sizer->AddSpacer(PX(4));
-#endif
+    allButtonsSizer->AddSpacer(PADDING);
 
     SetSizer(sizer);
 
@@ -125,21 +113,7 @@ AttentionBar::AttentionBar(wxWindow *parent)
 
     ColorScheme::SetupWindowColors(this, [=]
     {
-        UpdateBgColor();
-
-    #ifndef __WXOSX__
-        // The background is light even in dark mode, so we can't use system label colors in it:
-        if (ColorScheme::GetAppMode() == ColorScheme::Light)
-        {
-            m_label->SetForegroundColour(ColorScheme::Get(Color::Label));
-            m_explanation->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
-        }
-        else
-        {
-            m_label->SetForegroundColour(*wxBLACK);
-            m_explanation->SetForegroundColour(*wxBLACK);
-        }
-    #endif
+        UpdateColors();
 
     #ifdef __WXMSW__
         btnClose->SetBackgroundColour(GetBackgroundColour());
@@ -151,30 +125,49 @@ AttentionBar::AttentionBar(wxWindow *parent)
 void AttentionBar::OnPaint(wxPaintEvent&)
 {
     wxPaintDC dc(this);
+    std::unique_ptr<wxGraphicsContext> gc(wxGraphicsContext::Create(dc));
 
-    auto bg = GetBackgroundColour().ChangeLightness(90);
-    dc.SetBrush(bg);
-    dc.SetPen(bg);
+    wxColour fg;
+    switch (m_currentKind)
+    {
+        case AttentionMessage::Error:
+            fg = ColorScheme::Get(Color::AttentionErrorFg);
+            break;
+        case AttentionMessage::Warning:
+            fg = ColorScheme::Get(Color::AttentionWarningFg);
+            break;
+        case AttentionMessage::Question:
+            fg = ColorScheme::Get(Color::AttentionQuestionFg);
+            break;
+    }
+
+    wxColour clr(fg.Red(), fg.Green(), fg.Blue(), 51);
+
+    gc->SetBrush(clr);
+    gc->SetPen(clr);
 
     wxRect rect(GetSize());
-    dc.DrawRectangle(0, rect.height - PX(1), rect.width, PX(1));
+    gc->DrawRectangle(0, rect.height - PX(1), rect.width, PX(1));
 }
 
 
-void AttentionBar::UpdateBgColor()
+void AttentionBar::UpdateColors()
 {
-    wxColour bg;
+    wxColour fg, bg;
 
     switch (m_currentKind)
     {
+        case AttentionMessage::Error:
+            fg = ColorScheme::Get(Color::AttentionErrorFg);
+            bg = ColorScheme::Get(Color::AttentionErrorBg);
+            break;
         case AttentionMessage::Warning:
-            bg = ColorScheme::Get(Color::AttentionWarningBackground);
+            fg = ColorScheme::Get(Color::AttentionWarningFg);
+            bg = ColorScheme::Get(Color::AttentionWarningBg);
             break;
         case AttentionMessage::Question:
-            bg = ColorScheme::Get(Color::AttentionQuestionBackground);
-            break;
-        case AttentionMessage::Error:
-            bg = ColorScheme::Get(Color::AttentionErrorBackground);
+            fg = ColorScheme::Get(Color::AttentionQuestionFg);
+            bg = ColorScheme::Get(Color::AttentionQuestionBg);
             break;
     }
 
@@ -184,6 +177,13 @@ void AttentionBar::UpdateBgColor()
     for (auto w : GetChildren())
         w->SetBackgroundColour(bg);
 #endif
+
+    // We're fighting ExplanationLabel's own colorscheme change handling:
+    // delay the change so that it overrides it
+    CallAfter([=]{
+        m_label->SetForegroundColour(fg);
+        m_explanation->SetForegroundColour(fg);
+    });
 }
 
 
@@ -193,24 +193,20 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
         return;
 
     m_currentKind = msg.m_kind;
-    UpdateBgColor();
+    UpdateColors();
 
-    wxString iconName;
+    bool showIcon = false;
     switch ( msg.m_kind )
     {
+        case AttentionMessage::Error:
         case AttentionMessage::Warning:
-            iconName = wxART_WARNING;
+            showIcon = true;
             break;
         case AttentionMessage::Question:
-            iconName = wxART_QUESTION;
-            break;
-        case AttentionMessage::Error:
-            iconName = wxART_ERROR;
+            showIcon = false;
             break;
     }
-#ifdef __WXMSW__
-    m_icon->SetBitmap(wxArtProvider::GetBitmap(iconName, wxART_MENU, wxSize(PX(16), PX(16))));
-#endif
+    m_icon->GetContainingSizer()->Show(m_icon, showIcon);
 
     m_label->SetAndWrapLabel(msg.m_text);
     m_explanation->SetAndWrapLabel(msg.m_explanation);

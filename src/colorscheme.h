@@ -76,9 +76,12 @@ enum class Color : size_t
     SyntaxMarkup,
     SyntaxFormat,
 
-    AttentionWarningBackground,
-    AttentionQuestionBackground,
-    AttentionErrorBackground,
+    AttentionErrorFg,
+    AttentionErrorBg,
+    AttentionWarningFg,
+    AttentionWarningBg,
+    AttentionQuestionFg,
+    AttentionQuestionBg,
 
     TranslucentButton,
 
