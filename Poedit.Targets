@@ -22,9 +22,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <WindowsArtworkFiles Include="artwork\windows\*.png" />
     <DataFiles Include="src\resources\*.xrc" />
-    <DataFiles Include="artwork\*.png" />
-    <DataFiles Include="artwork\windows\*.png" />
+    <!-- Both artwork directories are flattened into Resources. Prefer the
+         Windows variant instead of copying two same-named files in turn. -->
+    <DataFiles Include="artwork\*.png"
+               Exclude="@(WindowsArtworkFiles->'artwork\%(Filename)%(Extension)')" />
+    <DataFiles Include="@(WindowsArtworkFiles)" />
     <DataFiles Include="artwork\windows\*.ico" />
   </ItemGroup>
 
@@ -64,13 +68,14 @@
     </Target>
     
 
-  <Target Name="CopyDataFiles" BeforeTargets="ClCompile">
+  <Target Name="CopyDataFiles" BeforeTargets="ClCompile"
+          Inputs="@(DataFiles)"
+          Outputs="@(DataFiles->'$(ResourcesOutDir)%(Filename)%(Extension)')">
     <Message Importance="High" Text="Copying resources to $(ResourcesOutDir)" />
     <MakeDir Directories="$(ResourcesOutDir)" />
     <Copy
       SourceFiles="@(DataFiles)"
       DestinationFolder="$(ResourcesOutDir)"
-      SkipUnchangedFiles="true"
     />
   </Target>
 
