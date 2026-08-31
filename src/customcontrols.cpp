@@ -41,6 +41,7 @@
 #include <wx/dcclient.h>
 #include <wx/graphics.h>
 #include <wx/menu.h>
+#include <wx/rawbmp.h>
 #include <wx/renderer.h>
 #include <wx/settings.h>
 #include <wx/sizer.h>
@@ -510,22 +511,87 @@ StaticBitmap::StaticBitmap(wxWindow *parent, const wxString& bitmapName)
                      bitmapName.empty() ? wxNullBitmap : wxArtProvider::GetBitmap(bitmapName)),
       m_bitmapName(bitmapName)
 {
-#ifndef __WXOSX__
-    // refresh template icons on theme change (macOS handles automatically):
-    if (bitmapName.ends_with("Template"))
+    // refresh template icons on theme change
+    // (macOS handles automatically, but not for tint color):
+    ColorScheme::SetupWindowColors(this, [=]
     {
-        ColorScheme::SetupWindowColors(this, [=]
-        {
-            SetBitmap(wxArtProvider::GetBitmap(m_bitmapName));
-        });
-    }
-#endif
+        UpdateBitmap();
+    });
 }
 
 void StaticBitmap::SetBitmapName(const wxString& bitmapName)
 {
+    if (m_bitmapName == bitmapName)
+        return;
+
     m_bitmapName = bitmapName;
-    SetBitmap(wxArtProvider::GetBitmap(m_bitmapName));
+    UpdateBitmap();
+}
+
+void StaticBitmap::SetContentTintColor(Color color)
+{
+    if (m_contentTint == color)
+        return;
+
+    m_contentTint = color;
+    UpdateBitmap();
+}
+
+void StaticBitmap::UpdateBitmap()
+{
+    wxBitmap bmp;
+
+    if (m_contentTint != Color::Max && m_bitmapName.ends_with("Template"))
+    {
+#ifdef __WXMSW__
+        bmp = wxArtProvider::GetBitmap(m_bitmapName + "@opaque");
+#else
+        bmp = wxArtProvider::GetBitmap(m_bitmapName);
+#endif
+
+        wxColor clr = ColorScheme::Get(m_contentTint, this);
+
+#ifdef __WXOSX__
+        NSImageView *native = (NSImageView*)GetHandle();
+        native.contentTintColor = clr.OSXGetNSColor();
+#else // !__WXOSX__
+        bmp.UnShare();
+
+        const auto red = clr.Red();
+        const auto green = clr.Green();
+        const auto blue = clr.Blue();
+#ifdef __WXGTK__
+        const int alpha = 255;
+#endif
+
+        wxAlphaPixelData data(bmp);
+        if (data)
+        {
+            wxAlphaPixelData::Iterator p(data);
+            for (int y = 0; y < data.GetHeight(); ++y)
+            {
+                wxAlphaPixelData::Iterator rowStart = p;
+                for (int x = 0; x < data.GetWidth(); ++x, ++p)
+                {
+#ifndef __WXGTK__
+                    const auto alpha = p.Alpha();
+#endif
+                    p.Red() = red * alpha / 255;
+                    p.Green() = green * alpha / 255;
+                    p.Blue() = blue * alpha / 255;
+                }
+                p = rowStart;
+                p.OffsetY(data, 1);
+            }
+        }
+#endif // !__WXOSX__
+    }
+    else
+    {
+        bmp = wxArtProvider::GetBitmap(m_bitmapName);
+    }
+
+    SetBitmap(bmp);
 }
 
 

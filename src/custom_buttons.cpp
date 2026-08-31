@@ -622,20 +622,20 @@ bool SwitchButton::MSWOnDraw(WXDRAWITEMSTRUCT *wxdis)
     if (toggled)
     {
         gc->SetBrush(m_clrOn);
-        gc->SetPen(wxPen(m_clrOn.ChangeLightness(95), PX(2)));
+        gc->SetPen(wxPen(m_clrOn.ChangeLightness(95), PX(1)));
     }
     else
     {
         gc->SetBrush(GetBackgroundColour());
-        gc->SetPen(wxPen(m_clrOffLabel, PX(2)));
+        gc->SetPen(wxPen(m_clrOffLabel.ChangeLightness(125), PX(1)));
     }
 
     wxRect switchRect(rect.GetRight() - PX(42), 0, PX(42), wxMin(PX(22), rect.GetHeight()));
     switchRect.CenterIn(rect, wxVERTICAL);
-    switchRect.Deflate(PX(2));
+    switchRect.Deflate(PX(1));
 
-    double radius = (switchRect.height - 1) / 2.0;
-    gc->DrawRoundedRectangle(switchRect.x + 0.5, switchRect.y + 0.5, switchRect.width - 1, switchRect.height - 1, radius);
+    double radius = switchRect.height / 2.0 + 0.5;
+    gc->DrawRoundedRectangle(switchRect.x, switchRect.y, switchRect.width, switchRect.height, radius);
 
     if (toggled)
     {
@@ -734,7 +734,7 @@ wxAccStatus SwitchButton::accessible::GetState(int childId, long* state)
 
 @interface POTranslucentButton : NSButton
 
-@property TranslucentButton *parent;
+@property wxWindow *parent;
 
 @end
 

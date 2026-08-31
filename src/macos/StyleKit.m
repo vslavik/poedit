@@ -43,14 +43,20 @@
     CGFloat radius = 4;
     if (@available(macOS 26, *))
         radius = 6.5;
-        
-    //// General Declarations
-    CGContextRef context = NSGraphicsContext.currentContext.CGContext;
+
+    NSAppearanceName appearanceName = [[NSApp effectiveAppearance] bestMatchFromAppearancesWithNames:@[NSAppearanceNameAqua, NSAppearanceNameDarkAqua]];
+    BOOL dark = [appearanceName isEqualToString:NSAppearanceNameDarkAqua];
 
     //// Color Declarations
-    NSColor* white = [NSColor colorWithCalibratedRed: 1 green: 1 blue: 1 alpha: 1];
-    NSColor* pressedTranslucent = [NSColor colorWithCalibratedRed: 0 green: 0 blue: 0 alpha: 0.157];
-    NSColor* strokeColor = [NSColor colorWithCalibratedRed: 0 green: 0 blue: 0 alpha: 0.118];
+    NSColor* baseColor = dark
+        ? [NSColor colorWithCalibratedWhite:1.0 alpha:0.3]
+        : [NSColor colorWithCalibratedWhite:1.0 alpha:0.85];
+
+    NSColor* pressedTranslucent = [NSColor colorWithCalibratedWhite:1.0 alpha:0.4];
+
+    NSColor* translucentButtonColor = pressed ? pressedTranslucent : baseColor;
+
+    NSColor* strokeColor = [NSColor colorWithCalibratedRed: 0 green: 0 blue: 0 alpha: 0.118 * 0.6];
     NSColor* strokeColor2 = [NSColor colorWithCalibratedRed: 0 green: 0 blue: 0 alpha: 0.071];
 
     //// Shadow Declarations
@@ -67,10 +73,6 @@
         [translucentButtonShadow setShadowBlurRadius: 1];
     }
 
-    //// Variable Declarations
-    NSColor* translucentButtonColor = pressed ? pressedTranslucent : white;
-
-
     //// Subframes
     NSRect group2 = NSMakeRect(NSMinX(frame) + 0.75, NSMinY(frame) + 1.75, NSWidth(frame) - 1.5, NSHeight(frame) - 3.5);
 
@@ -79,11 +81,6 @@
     {
         //// Group 3
         {
-            [NSGraphicsContext saveGraphicsState];
-            CGContextSetAlpha(context, 0.7);
-            CGContextBeginTransparencyLayer(context, NULL);
-
-
             //// Rectangle Drawing
             NSBezierPath* rectanglePath = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(NSMinX(group2) + floor(NSWidth(group2) * 0.00000 + 0.5), NSMinY(group2) + floor(NSHeight(group2) * 0.00000 + 0.5), floor(NSWidth(group2) * 1.00000) - floor(NSWidth(group2) * 0.00000 + 0.5) + 0.5, floor(NSHeight(group2) * 1.00000) - floor(NSHeight(group2) * 0.00000 + 0.5) + 0.5) xRadius: radius yRadius: radius];
             [NSGraphicsContext saveGraphicsState];
@@ -100,10 +97,6 @@
             [strokeColor setStroke];
             [rectangle2Path setLineWidth: 0.5];
             [rectangle2Path stroke];
-
-
-            CGContextEndTransparencyLayer(context);
-            [NSGraphicsContext restoreGraphicsState];
         }
 
 
@@ -120,7 +113,7 @@
     NSMutableParagraphStyle* textStyle = [NSMutableParagraphStyle new];
     textStyle.alignment = NSTextAlignmentCenter;
 
-    NSDictionary* textFontAttributes = @{NSFontAttributeName: [NSFont systemFontOfSize: NSFont.smallSystemFontSize], NSForegroundColorAttributeName: NSColor.blackColor, NSParagraphStyleAttributeName: textStyle};
+    NSDictionary* textFontAttributes = @{NSFontAttributeName: [NSFont systemFontOfSize: NSFont.smallSystemFontSize], NSForegroundColorAttributeName: NSColor.labelColor, NSParagraphStyleAttributeName: textStyle};
 
     CGFloat textTextHeight = NSHeight([label boundingRectWithSize: textRect.size options: NSStringDrawingUsesLineFragmentOrigin attributes: textFontAttributes]);
     NSRect textTextRect = NSMakeRect(NSMinX(textRect), NSMinY(textRect) + (NSHeight(textRect) - textTextHeight) / 2, NSWidth(textRect), textTextHeight);

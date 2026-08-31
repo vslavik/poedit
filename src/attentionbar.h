@@ -37,6 +37,7 @@ class WXDLLIMPEXP_FWD_CORE wxStaticText;
 class WXDLLIMPEXP_FWD_CORE wxStaticBitmap;
 class WXDLLIMPEXP_FWD_CORE wxSizer;
 class AutoWrappingText;
+class StaticBitmap;
 
 /// Message to be displayed in AttentionBar
 class AttentionMessage
@@ -141,7 +142,7 @@ public:
     void HideMessage();
 
 private:
-    void UpdateBgColor();
+    void UpdateColors();
 
     void OnClose(wxCommandEvent& event);
     void OnAction(wxCommandEvent& event);
@@ -149,9 +150,7 @@ private:
 
 private:
     AttentionMessage::Kind m_currentKind = AttentionMessage::Question;
-#ifdef __WXMSW__
-    wxStaticBitmap *m_icon;
-#endif
+    StaticBitmap *m_icon;
     AutoWrappingText *m_label;
     AutoWrappingText *m_explanation;
     wxCheckBox *m_checkbox;

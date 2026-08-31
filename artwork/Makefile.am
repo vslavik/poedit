@@ -40,6 +40,8 @@ dist_uiicons_DATA = \
 		CrowdinLogo.png \
 		CrowdinLogoDark.png \
 		LocalazyLogo.png \
+		DismissTemplate.png \
+		DismissHoverTemplate.png \
 		DownvoteTemplate.png \
 		EmptyMultiSelectionTemplate.png \
 		ExtractorsGNUgettext.png \
@@ -51,10 +53,9 @@ dist_uiicons_DATA = \
 		poedit-status-cat-no.png \
 		poedit-status-cat-ok.png \
 		StatusError.png \
-		StatusErrorBlack.png \
+		StatusErrorTemplate.png \
 		StatusWarning.png \
-		StatusWarningBlack.png \
-		window-close.png
+		StatusWarningTemplate.png
 
 update-icon-cache:
 	test -z $(DESTDIR) && which gtk-update-icon-cache >/dev/null && gtk-update-icon-cache -f -t $(iconsdir) || true

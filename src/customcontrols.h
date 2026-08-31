@@ -233,8 +233,15 @@ public:
 
     void SetBitmapName(const wxString& bitmapName);
 
+    /// Set tinting color, applied to template images
+    void SetContentTintColor(Color color);
+
+protected:
+    void UpdateBitmap();
+
 private:
     wxString m_bitmapName;
+    Color m_contentTint = Color::Max;
 };
 
 

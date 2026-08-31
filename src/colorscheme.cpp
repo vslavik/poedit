@@ -108,9 +108,13 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
             return mode == Light ? "#a1a1a1" : wxSystemSettings::GetColour(wxSYS_COLOUR_LISTBOXTEXT).ChangeLightness(50);
             #endif
         case Color::ItemFuzzy:
-            return mode == Dark ? sRGB(253, 178, 72) : sRGB(230, 134, 0);
+            #ifdef __WXOSX__
+            return wxColour([NSColor systemOrangeColor]);
+            #else
+            return mode == Dark ? sRGB(255, 146, 48) : sRGB(255, 141, 40);
+            #endif
         case Color::ItemError:
-            return sRGB(225, 77, 49);
+            return sRGB(255, 56, 60);
         case Color::ErrorText:
             return *wxRED;
 
@@ -137,13 +141,14 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
         case Color::TagSecondaryBg:
             return mode == Dark ? sRGB(255, 255, 255, 0.5) : sRGB(0, 0, 0, 0.10);
         case Color::TagErrorLineBg:
-            return sRGB(241, 134, 135);
+            return DoGet(Color::AttentionErrorBg, mode);
         case Color::TagWarningLineBg:
-            return mode == Dark ? sRGB(198, 171, 113) : sRGB(253, 235, 176);
+            return DoGet(Color::AttentionWarningBg, mode);
         case Color::TagErrorLineFg:
-            return sRGB(0, 0, 0, 0.8);
-        case Color::TagSecondaryFg:
+            return DoGet(Color::AttentionErrorFg, mode);
         case Color::TagWarningLineFg:
+            return DoGet(Color::AttentionWarningFg, mode);
+        case Color::TagSecondaryFg:
             return sRGB(0, 0, 0, 0.9);
 
 
@@ -157,17 +162,12 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
             return mode == Dark ? sRGB(80, 80, 80) : sRGB(204, 204, 204);
         case Color::SidebarBlockSeparator:
             return mode == Dark ? sRGB(80, 80, 80, 0.8) : sRGB(204, 204, 204, 0.8);
-        case Color::EditingThickSeparator:
-            return mode == Dark ? sRGB(46, 47, 50) : sRGB(240, 240, 240);
 
         // Backgrounds:
 
+        case Color::EditingThickSeparator:
         case Color::SidebarBackground:
-            #ifdef __WXOSX__
-            return mode == Dark ? sRGB(46, 47, 50) : sRGB(240, 240, 240); // same as EditingThickSeparator
-            #else
-            return mode == Dark ? sRGB(45, 42, 41) : "#edf0f4";
-            #endif
+            return mode == Dark ? sRGB(46, 47, 50) : sRGB(248, 248, 248);
 
         case Color::EditingBackground:
             #ifdef __WXOSX__
@@ -178,7 +178,7 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
 
         // Fuzzy toggle:
         case Color::FuzzySwitch:
-            return mode == Dark ? sRGB(253, 178, 72) : sRGB(244, 143, 0);
+            return DoGet(Color::ItemFuzzy, mode);
         case Color::FuzzySwitchInactive:
             #ifdef __WXGTK__
             return mode == Dark ? sRGB(163, 163, 163) : sRGB(87, 87, 87);
@@ -201,22 +201,19 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
 
         // Attention bar:
 
-#ifdef __WXGTK__
-        // FIXME: use system colors
-        case Color::AttentionWarningBackground:
-            return sRGB(250, 173, 61);
-        case Color::AttentionQuestionBackground:
-            return sRGB(138, 173, 212);
-        case Color::AttentionErrorBackground:
-            return sRGB(237, 54, 54);
-#else
-        case Color::AttentionWarningBackground:
-            return mode == Dark ? sRGB(254, 224, 132) : sRGB(254, 228, 149);
-        case Color::AttentionQuestionBackground:
-            return sRGB(199, 244, 156);
-        case Color::AttentionErrorBackground:
-            return sRGB(241, 103, 104);
-#endif
+        case Color::AttentionErrorBg:
+            return mode == Dark ? sRGB(125, 46, 48) : sRGB(255, 222, 223);
+        case Color::AttentionWarningBg:
+            return mode == Dark ? sRGB(118, 89, 27) : sRGB(255, 240, 190);
+        case Color::AttentionQuestionBg:
+            return mode == Dark ? sRGB(37, 81, 119) : sRGB(219, 245, 255);
+
+        case Color::AttentionErrorFg:
+            return mode == Dark ? sRGB(255, 255, 255) : sRGB(186, 0, 23);
+        case Color::AttentionWarningFg:
+            return mode == Dark ? sRGB(255, 255, 255) : sRGB(167, 81, 0);
+        case Color::AttentionQuestionFg:
+            return mode == Dark ? sRGB(255, 255, 255) : sRGB(0, 114, 202);
 
         // Buttons:
 
