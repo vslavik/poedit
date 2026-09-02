@@ -5,11 +5,11 @@
 
 ## About
 
-This program is a simple translation editor for PO and XLIFF files. It also
-serves as a GUI frontend to more GNU gettext utilities (win32 version
-is part of the distribution) and catalogs editor/source code parser. It helps
-with translating applications into another language. For details on principles
-of the solution used, see GNU gettext documentation.
+This program is a simple translation editor for gettext (PO files), XLIFF, Qt,
+JSON and more. It also serves as a GUI frontend to more GNU gettext utilities
+(win32 version is part of the distribution) and catalogs editor/source code
+parser. It helps with translating applications into another language. For
+details on principles of the solution used, see GNU gettext documentation.
 
 
 ## Installation
