@@ -78,7 +78,7 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
             #ifdef __WXOSX__
             return wxColour([NSColor secondaryLabelColor]);
             #elif defined(__WXGTK__)
-            return wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT);
+            return wxSystemSettings::GetColour(wxSYS_COLOUR_GRAYTEXT);
             #else
             return wxSystemSettings::GetColour(wxSYS_COLOUR_GRAYTEXT);
             #endif
