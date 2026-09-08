@@ -626,26 +626,46 @@ void PoeditApp::SetupOTALanguageUpdate(wxTranslations *trans, const Language& la
         return;
 
     auto version = str::to_utf8(GetMajorAppVersion());
+    auto dir = GetCacheDir("OTA");
+    auto appVersionChanged = Config::OTATranslationAppVersion() != version;
+    if (appVersionChanged)
+    {
+        if (wxFileName::DirExists(dir))
+            wxFileName::Rmdir(dir, wxPATH_RMDIR_RECURSIVE);
+
+        // Remove the cache location used by older versions (pre-3.10).
+        auto legacyDir = GetCacheDir("Translations");
+        if (wxFileName::DirExists(legacyDir))
+            wxFileName::Rmdir(legacyDir, wxPATH_RMDIR_RECURSIVE);
+
+        Config::OTATranslationAppVersion(version);
+    }
+
+    dir += "/Translations";
 
     // use downloaded OTA translations:
-    auto dir = GetCacheDir("Translations") + "/" + version;
     wxFileTranslationsLoader::AddCatalogLookupPathPrefix(dir);
     trans->AddCatalog("poedit-ota");
 
     // ..and update them (but at most once a day):
     auto lastCheck = Config::OTATranslationLastCheck();
     auto now = time(NULL);
-    if (now < lastCheck + 24*60*60)
+    if (!appVersionChanged && now < lastCheck + 24*60*60)
         return;
+
     Config::OTATranslationLastCheck(now);
 
     wxFileName mofile(dir + "/" + langMO + "/poedit-ota.mo");
+    wxFileName etagfile(mofile.GetFullPath() + ".etag");
     wxFileName::Mkdir(mofile.GetPath(), wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
 
     http_client::headers hdrs;
     std::string etag;
     if (mofile.FileExists())
-        etag = Config::OTATranslationEtag();
+    {
+        std::ifstream input(etagfile.GetFullPath().fn_str(), std::ios_base::binary);
+        std::getline(input, etag);
+    }
     if (!etag.empty())
         hdrs.emplace_back("If-None-Match", etag);
 
@@ -668,7 +688,9 @@ void PoeditApp::SetupOTALanguageUpdate(wxTranslations *trans, const Language& la
         output_file.close();
 
         temp.Commit();
-        Config::OTATranslationEtag(f.etag());
+
+        std::ofstream etag_output(etagfile.GetFullPath().fn_str(), std::ios_base::binary);
+        etag_output << f.etag();
 
         // re-add the catalog to force reloading updated file
         trans->AddCatalog("poedit-ota");

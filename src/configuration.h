@@ -79,8 +79,8 @@ public:
     static time_t OTATranslationLastCheck() { return Read("/ota/last_check", (long)0); }
     static void OTATranslationLastCheck(time_t when) { Write("/ota/last_check", (long)when); }
 
-    static std::string OTATranslationEtag() { return Read("/ota/etag", std::string()); }
-    static void OTATranslationEtag(const std::string& etag) { Write("/ota/etag", etag); }
+    static std::string OTATranslationAppVersion() { return Read("/ota/app_version", std::string()); }
+    static void OTATranslationAppVersion(const std::string& version) { Write("/ota/app_version", version); }
 
 private:
     template<typename T>
