@@ -623,7 +623,9 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent&)
                 {
                     Catalog::ValidationResults validation_results;
                     Catalog::CompilationStatus mo_status;
-                    merged.updated_catalog->Save(f, false, validation_results, mo_status);
+                    merged.updated_catalog->Save(f, true, validation_results, mo_status);
+                    if (mo_status == Catalog::CompilationStatus::Error)
+                        wxLogError(_(L"Couldn’t compile file %s into the MO format."), f.c_str());
                 }
              }
         },
