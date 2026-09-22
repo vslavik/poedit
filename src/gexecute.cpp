@@ -37,7 +37,7 @@
 #include <regex>
 #include <boost/algorithm/string.hpp>
 
-#ifdef __WXOSX__
+#if defined(__WXOSX__) && !defined(MACOS_BUILD_WITHOUT_APPKIT)
 #include <GettextTools/GettextTools.h>
 #endif
 
