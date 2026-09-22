@@ -533,7 +533,19 @@ class LengthMismatch : public QACheck
 public:
     QA_METADATA("length", _("Length difference"))
 
-    LengthMismatch(Language /*lang*/) {}
+    LengthMismatch(Language lang)
+    {
+        const auto language = lang.Lang();
+
+        // Character counts aren't comparable enough for Chinese, while Japanese and Korean
+        // need a more conservative threshold than other languages.
+        if (language == "zh")
+            m_heuristicMultiplier = 0;
+        else if (language == "ja" || language == "ko")
+            m_heuristicMultiplier = 5;
+        else
+            m_heuristicMultiplier = 3;
+    }
 
     bool CheckString(CatalogItemPtr item, const wxString& source, const wxString& translation) override
     {
@@ -559,16 +571,19 @@ public:
         }
 
         // Additional heuristic-based length checks:
+        if (m_heuristicMultiplier == 0)
+            return false;
+
         if (sourceLength < 50 && translationLength < 50)
             return false;
 
-        if (sourceLength >= translationLength * 3)
+        if (sourceLength >= translationLength * m_heuristicMultiplier)
         {
             item->SetIssue(CatalogItem::Issue::Warning, _(L"The translation is much shorter than the source text."));
             return true;
         }
 
-        if (translationLength >= sourceLength * 3)
+        if (translationLength >= sourceLength * m_heuristicMultiplier)
         {
             item->SetIssue(CatalogItem::Issue::Warning, _(L"The translation is much longer than the source text."));
             return true;
@@ -576,6 +591,9 @@ public:
 
         return false;
     }
+
+private:
+    int m_heuristicMultiplier;
 };
 
 
