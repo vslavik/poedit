@@ -579,7 +579,7 @@ auto future_base<T, FutureType>::catch_all(F&& continuation) -> future<void>
 
 /// Create ready future, i.e. with directly set value
 template<typename T>
-auto make_ready_future(T&& value) -> future<T>
+auto make_ready_future(T&& value) -> future<std::decay_t<T>>
 {
   return boost::make_ready_future(std::forward<T>(value));
 }
