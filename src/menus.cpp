@@ -140,10 +140,13 @@ NSMenuItem *AddNativeItem(NSMenu *menu, int pos, const wxString& text, SEL ac, N
 } // anonymous namespace
 
 
-void SetMacMenuIcon(wxMenuItem *item, const char *symbol)
+void SetMacMenuIcon(wxMenuItem *item, const char *symbol, IconRule rule)
 {
     if (@available(macOS 27, *))
-        return; // Apple came to their senses, no icons in menus
+    {
+        if (rule == IconRule::Tahoe)
+            return; // Apple came to their senses, no icons in menus
+    }
 
     if (@available(macOS 26, *))
     {
@@ -180,10 +183,7 @@ void MenusManager::TweakOSXMenuBar(wxMenuBar *bar)
     {
         wxMenuItem *prefsItem = bar->FindItem(wxID_PREFERENCES);
         if (prefsItem)
-        {
             prefsItem->SetItemLabel(_(L"&Preferences…") + "\tCtrl+,");
-            SetMacMenuIcon(prefsItem, "gear");
-        }
     }
 
     wxMenu *fileMenu = nullptr;
@@ -306,12 +306,17 @@ void MenusManager::TweakOSXMenuBar(wxMenuBar *bar)
         m_nativeMacData->windowMenu = windowMenu;
     }
 
-    if (@available(macOS 27, *))
+    if (@available(macOS 26.0, *))
     {
-        // Apple came to their senses, no icons in menus
-    }
-    else if (@available(macOS 26.0, *))
-    {
+        // a few icons should be set on newer versions too:
+        SetMacMenuIcon(apple, wxID_PREFERENCES, "gear", IconRule::TahoeOrNewer);
+
+        if (@available(macOS 27, *))
+        {
+            // but other than that, Apple came to their senses, no icons in menus
+           // return;
+        }
+    
         SetMacMenuIcon(bar, XRCID("show_sidebar"), "poedit.sidebar");
         SetMacMenuIcon(bar, XRCID("menu_validate"), "poedit.validate");
         SetMacMenuIcon(bar, XRCID("menu_pretranslate"), "poedit.pretranslate");
@@ -363,7 +368,6 @@ void MenusManager::TweakOSXMenuBar(wxMenuBar *bar)
         SetMacMenuIcon(bar, XRCID("menu_support_email"), "envelope");
 
         SetMacMenuIcon(apple, wxID_ABOUT, "info.circle");
-        SetMacMenuIcon(apple, wxID_PREFERENCES, "gear");
         SetMacMenuIcon(apple, XRCID("menu_manager"), "archivebox");
     }
 }

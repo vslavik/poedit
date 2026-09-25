@@ -70,21 +70,30 @@ private:
 
 // Various menu-related helpers:
 
+enum class IconRule
+{
+    Tahoe,
+    TahoeOrNewer
+};
+
 #ifdef __WXOSX__
 
-void SetMacMenuIcon(wxMenuItem *item, const char *symbol);
+void SetMacMenuIcon(wxMenuItem *item, const char *symbol, IconRule rule = IconRule::Tahoe);
 
 template<typename T>
-inline void SetMacMenuIcon(T *bar, int itemId, const char *symbol)
+inline void SetMacMenuIcon(T *bar, int itemId, const char *symbol, IconRule rule = IconRule::Tahoe)
 {
     if (__builtin_available(macOS 27.0, *))
-        return; // Apple came to their senses, no icons in menus
+    {
+        if (rule == IconRule::Tahoe)
+            return; // Apple came to their senses, no icons in menus
+    }
 
     if (__builtin_available(macOS 26.0, *))
     {
         auto item = bar->FindItem(itemId);
         if (item)
-            SetMacMenuIcon(item, symbol);
+            SetMacMenuIcon(item, symbol, rule);
     }
 }
 
@@ -93,8 +102,8 @@ inline void SetMacMenuIcon(wxMenu& menu, int itemId, const char *symbol)
 
 #else
 
-inline void SetMacMenuIcon(wxMenuItem *, const char *) {}
-template<typename T> inline void SetMacMenuIcon(T *, int, const char *) {}
+inline void SetMacMenuIcon(wxMenuItem *, const char *, IconRule = IconRule::Tahoe) {}
+template<typename T> inline void SetMacMenuIcon(T *, int, const char *, IconRule = IconRule::Tahoe) {}
 
 #endif
 
