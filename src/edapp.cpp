@@ -584,6 +584,18 @@ void PoeditApp::SetupLanguage()
         m_locale.reset(new wxLocale());
         if (!m_locale->Init(language, wxLOCALE_DONT_LOAD_DEFAULT))
             m_locale.reset();
+
+#ifdef __WXOSX__
+        if (@available(macOS 27.2, *))
+        {
+        }
+        else if (@available(macOS 27.0, *))
+        {
+            // workaround for a bug in NSAlert fixed in 27.2, see https://developer.apple.com/forums/thread/844971
+            // and https://github.com/wxWidgets/wxWidgets/issues/26977
+            wxSetlocale(LC_NUMERIC, "C");
+        }
+#endif
     }
 
     trans->SetLanguage(uilang.LanguageTag());
