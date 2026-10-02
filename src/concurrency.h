@@ -490,7 +490,7 @@ public:
                                  try
                                  {
                                      cch::touch_arg(x);
-                                     detail::call_and_unwrap_if_future(f);
+                                     return detail::call_and_unwrap_if_future(f);
                                  }
                                  RETHROW_WITH_BOOST_EXCEPTION_PTR_SUPPORT();
                              });
