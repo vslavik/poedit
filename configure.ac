@@ -179,7 +179,6 @@ PKG_CHECK_MODULES([ICU], [icu-uc icu-i18n >= 54],
             AC_MSG_ERROR([missing ICU library])
         ])
 
-
 dnl we need GtkSpell and GTK+ >= 2 for this, check if we're compatible
 AC_MSG_CHECKING([if wxWidgets toolkit uses GTK+ 3])
 AC_COMPILE_IFELSE(
