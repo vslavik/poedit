@@ -91,9 +91,14 @@ AttentionBar::AttentionBar(wxWindow *parent)
     sizer->Add(m_icon, wxSizerFlags().Center().Border(wxLEFT|wxTOP|wxBOTTOM, PADDING));
 
     auto labelSizer = new wxBoxSizer(wxVERTICAL);
+#ifdef __WXOSX__
+    labelSizer->AddSpacer(PX(1)); // workaround for AutowrappingText sizing hack
+#endif
     labelSizer->Add(m_label, wxSizerFlags().Expand());
+    labelSizer->Add(m_explanation, wxSizerFlags().Expand().Border(wxTOP, PX(1)));
+#ifdef __WXMSW__
     labelSizer->AddSpacer(PX(1));
-    labelSizer->Add(m_explanation, wxSizerFlags().Expand().Border(wxRIGHT, PX(4)));
+#endif
     sizer->Add(labelSizer, wxSizerFlags(1).Center().Border(wxTOP|wxBOTTOM|wxLEFT, PADDING));
     sizer->AddSpacer(4 * PADDING);
     auto allButtonsSizer = new wxBoxSizer(wxHORIZONTAL);
