@@ -28,6 +28,8 @@
 #include "str_helpers.h"
 #include "version.h"
 
+#include <wx/translation.h>
+
 
 class http_client::impl
 {
@@ -206,6 +208,10 @@ private:
             else
                 desc = str::to_utf8([NSHTTPURLResponse localizedStringForStatusCode:status_code]);
         }
+
+        // Do this before on_error_response(), which may intentionally clear the message.
+        if (desc.empty())
+            desc = str::to_utf8(_("Unknown error"));
 
         try
         {

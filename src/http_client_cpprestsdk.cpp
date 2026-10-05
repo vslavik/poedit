@@ -44,6 +44,8 @@
 
 #include <regex>
 
+#include <wx/translation.h>
+
 
 #ifdef _WIN32
     #include <windows.h>
@@ -262,6 +264,10 @@ private:
         }
         if (msg.empty())
             msg = str::to_utf8(r.reason_phrase());
+        // The reason phrase may be absent (e.g. with HTTP/2).
+        // Do this before on_error_response(), which may intentionally clear the message.
+        if (msg.empty())
+            msg = str::to_utf8(wxString::Format(_("HTTP error %d"), status_code));
         m_owner.on_error_response(status_code, msg);
         BOOST_THROW_EXCEPTION(http_response_error(status_code, msg));
     }
