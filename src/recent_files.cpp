@@ -47,6 +47,11 @@
 #include <wx/weakref.h>
 #include <wx/xrc/xmlres.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/wrapwin.h>
+#include <Shlwapi.h>
+#endif
+
 #include <memory>
 #include <mutex>
 #include <map>
@@ -422,7 +427,7 @@ protected:
             files.reserve(m_fileHistory.size());
             for (auto& f : m_fileHistory)
             {
-                if (wxFileName::FileExists(f))
+                if (ShouldIncludeFile(f))
                     files.emplace_back(f);
             }
             return files;
@@ -444,6 +449,17 @@ protected:
         }
 
     protected:
+        static bool ShouldIncludeFile(const wxString& filename)
+        {
+#ifdef __WXMSW__
+            // Checking existence on an unavailable network path can block for a long time, so we
+            // optimistically assume it is OK and include it.
+            if (PathIsNetworkPath(filename.fn_str()))
+                return true;
+#endif
+            return wxFileName::FileExists(filename);
+        }
+
         void DoAddFile(wxMenu* menu, int n, const wxFileName& fn, bool showFullPath)
         {
             auto menuEntry = bidi::platform_mark_direction(
