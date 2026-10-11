@@ -1128,6 +1128,12 @@ void Catalog::PostCreation()
 
 // Catalog file creation factories:
 
+void Catalog::RequireFileExists(const wxString& filename)
+{
+    if (!wxFileName::FileExists(filename))
+        BOOST_THROW_EXCEPTION(FileNotFoundException(filename));
+}
+
 CatalogPtr Catalog::Create(Type type)
 {
     switch (type)
@@ -1154,6 +1160,10 @@ CatalogPtr Catalog::Create(const wxString& filename, int flags)
     wxString ext;
     wxFileName::SplitPath(filename, nullptr, nullptr, nullptr, &ext);
     ext.MakeLower();
+
+    // XCLOC checks its bundle directory and contents in its own loader.
+    if (!XCLOCCatalog::CanLoadFile(ext))
+        RequireFileExists(filename);
 
     CatalogPtr cat;
     if (POCatalog::CanLoadFile(ext))

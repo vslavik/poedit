@@ -56,6 +56,9 @@ void XCLOCCatalog::SetLanguage(Language)
 
 std::shared_ptr<XLIFFCatalog> XCLOCCatalog::Open(const wxString& filename)
 {
+    if (!wxFileName::DirExists(filename))
+        BOOST_THROW_EXCEPTION(FileNotFoundException(filename));
+
     struct Creator : public InstanceCreatorImpl
     {
         Creator(const wxString& filename_) : filename(filename_) {}
@@ -87,7 +90,9 @@ std::shared_ptr<XLIFFCatalog> XCLOCCatalog::Open(const wxString& filename)
     if (!dir.GetFirst(&c.embedded_xliff, "*.xliff", wxDIR_FILES))
         BOOST_THROW_EXCEPTION(Exception(_("Unexpectedly missing content in the XCLOC file.")));
 
-    return OpenImpl(dir.GetNameWithSep() + c.embedded_xliff, c);
+    const auto xliff_file = dir.GetNameWithSep() + c.embedded_xliff;
+    RequireFileExists(xliff_file);
+    return OpenImpl(xliff_file, c);
 }
 
 

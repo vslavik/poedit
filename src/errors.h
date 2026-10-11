@@ -56,6 +56,14 @@ private:
 };
 
 
+/// The requested file (or document bundle) doesn't exist.
+class FileNotFoundException : public Exception
+{
+public:
+    explicit FileNotFoundException(const wxString& filename);
+};
+
+
 namespace errors::detail
 {
 

@@ -624,6 +624,9 @@ class Catalog
     protected:
         Catalog(Type type);
 
+        /// Throw FileNotFoundException if the file doesn't exist.
+        static void RequireFileExists(const wxString& filename);
+
         /// Perform post-creation processing to e.g. fixup issues, detect missing language etc.
         virtual void PostCreation();
 

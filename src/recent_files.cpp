@@ -342,11 +342,6 @@ public:
         menu->Bind(wxEVT_MENU, [=](wxCommandEvent& e)
         {
             auto f = GetRecentFiles()[e.GetId() - wxID_FILE1].GetFullPath();
-            if (!wxFileExists(f))
-            {
-                wxLogError(_(L"File “%s” doesn’t exist."), f.c_str());
-                return;
-            }
 
             wxCommandEvent event(EVT_OPEN_RECENT_FILE);
             event.SetEventObject(menu);
