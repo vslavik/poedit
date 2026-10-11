@@ -86,8 +86,9 @@ class RecentFilesCtrl : public IconAndSubtitleListCtrl
 public:
     RecentFilesCtrl(wxWindow *parent);
 
-private:
     void RefreshContent();
+
+private:
     void OnActivate(wxDataViewEvent& event);
 
     struct data;

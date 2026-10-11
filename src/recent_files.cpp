@@ -395,6 +395,13 @@ public:
         }
     }
 
+    void UseCtrl(RecentFilesCtrl *ctrl)
+    {
+        // There's only ever at most one RecentFilesCtrl in the app (its welcome window),
+        // so we can just store a weak reference to it.
+        m_ctrl = ctrl;
+    }
+
     file_icons_ptr GetIconsCache() const { return m_icons_cache; }
 
 protected:
@@ -425,6 +432,9 @@ protected:
     {
         // Update all menus with visible history:
         m_menus.for_all([=](wxMenu *menu){ RebuildMenu(menu); });
+
+        if (m_ctrl)
+            m_ctrl->RefreshContent();
 
         // Save the changes to persistent storage:
         wxConfigBase *cfg = wxConfig::Get();
@@ -525,6 +535,7 @@ private:
     file_icons_ptr m_icons_cache;
     MyHistory m_history;
     menus_tracker<wxMenu> m_menus;
+    wxWeakRef<RecentFilesCtrl> m_ctrl;
 };
 
 #endif // !__WXOSX__
@@ -623,7 +634,9 @@ RecentFilesCtrl::RecentFilesCtrl(wxWindow *parent)
         SetBackgroundColour(ColorScheme::Get(Color::SidebarBackground));
     });
 
-    m_data->icons_cache = RecentFiles::Get().m_impl->GetIconsCache();
+    auto& impl = RecentFiles::Get().m_impl;
+    m_data->icons_cache = impl->GetIconsCache();
+    impl->UseCtrl(this);
 #endif
 
     Bind(wxEVT_DATAVIEW_ITEM_ACTIVATED, &RecentFilesCtrl::OnActivate, this);
