@@ -36,6 +36,7 @@
 #import <AppKit/NSDocumentController.h>
 #endif
 
+#include <wx/clntdata.h>
 #include <wx/config.h>
 #include <wx/filehistory.h>
 #include <wx/filename.h>
@@ -339,16 +340,7 @@ public:
 
         RebuildMenu(menu);
 
-        menu->Bind(wxEVT_MENU, [=](wxCommandEvent& e)
-        {
-            auto f = GetRecentFiles()[e.GetId() - wxID_FILE1].GetFullPath();
-
-            wxCommandEvent event(EVT_OPEN_RECENT_FILE);
-            event.SetEventObject(menu);
-            event.SetString(f);
-            menu->GetWindow()->ProcessWindowEvent(event);
-        },
-        wxID_FILE1, wxID_FILE9);
+        menu->Bind(wxEVT_MENU, &impl::OnOpenRecentFile, this, wxID_FILE1, wxID_FILE9);
 
         menu->Bind(wxEVT_MENU, [=](wxCommandEvent&)
         {
@@ -381,6 +373,11 @@ public:
     file_icons_ptr GetIconsCache() const { return m_icons_cache; }
 
 protected:
+    struct MenuData : wxClientData
+    {
+        std::vector<wxFileName> files;
+    };
+
     void RebuildMenu(wxMenu *menu)
     {
         // clear the menu entirely:
@@ -441,6 +438,12 @@ protected:
 
             for (size_t i = 0; i < files.size(); ++i)
                 DoAddFile(menu, i, files[i], nameUses[files[i].GetFullName()] > 1);
+
+            // GetRecentFiles() filters unavailable files on each run and so its returned array
+            // may change if files disappear. Keep a copy to index into in OnOpenRecentFile() reliably.
+            auto data = new MenuData;
+            data->files = std::move(files);
+            menu->SetClientObject(data);
         }
 
     protected:
@@ -475,6 +478,23 @@ protected:
     };
 
 private:
+    void OnOpenRecentFile(wxCommandEvent& e)
+    {
+        auto menu = static_cast<wxMenu*>(e.GetEventObject());
+
+        const auto& files = static_cast<MenuData*>(menu->GetClientObject())->files;
+        auto index = e.GetId() - wxID_FILE1;
+        if (index < 0 || index >= (int)files.size())
+            return;
+
+        auto f = files[index].GetFullPath();
+
+        wxCommandEvent event(EVT_OPEN_RECENT_FILE);
+        event.SetEventObject(menu);
+        event.SetString(f);
+        menu->GetWindow()->ProcessWindowEvent(event);
+    }
+
     wxWindowIDRef m_idClear = wxWindow::NewControlId();
 
     file_icons_ptr m_icons_cache;
