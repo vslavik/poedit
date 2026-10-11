@@ -922,6 +922,9 @@ CatalogPtr PoeditFrame::PreOpenFileWithErrorsUI(const wxString& filename, wxWind
         // Detail: “It may have been moved or deleted, or its location may be unavailable.”
         wxMessageDialog dlg(parent, e.What(), _("Invalid file"), wxOK | wxICON_ERROR);
         dlg.ShowModal();
+
+        RecentFiles::Get().RemoveFile(filename);
+
         return nullptr;
     }
     catch (...)

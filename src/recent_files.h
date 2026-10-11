@@ -58,6 +58,9 @@ public:
     /// Record a file as being recently edited.
     void NoteRecentFile(const wxFileName& fn);
 
+    /// Remove a file from history if present.
+    void RemoveFile(const wxFileName& fn);
+
     std::vector<wxFileName> GetRecentFiles();
 
 #ifdef __WXOSX__

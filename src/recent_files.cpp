@@ -260,6 +260,11 @@ public:
         [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:url];
     }
 
+    void RemoveFile(const wxFileName&)
+    {
+        // Not needed on macOS: AppKit filters missing files out of the native recent menu.
+    }
+
     std::vector<wxFileName> GetRecentFiles()
     {
         std::vector<wxFileName> f;
@@ -368,6 +373,26 @@ public:
             m_history.RemoveFileFromHistory(0);
 
         UpdateAfterChange();
+    }
+
+    void RemoveFile(wxFileName fn)
+    {
+        // Match wxFileHistory's normalization, avoiding filesystem access for long path names.
+        const int flags = wxPATH_NORM_DOTS | wxPATH_NORM_TILDE | wxPATH_NORM_CASE | wxPATH_NORM_ABSOLUTE;
+        fn.Normalize(flags);
+        const auto filename = fn.GetFullPath();
+
+        for (size_t i = 0; i < m_history.GetCount(); ++i)
+        {
+            wxFileName entry(m_history.GetHistoryFile(i));
+            entry.Normalize(flags);
+            if (entry.GetFullPath() != filename)
+                continue;
+
+            m_history.RemoveFileFromHistory(i);
+            UpdateAfterChange();
+            return;
+        }
     }
 
     file_icons_ptr GetIconsCache() const { return m_icons_cache; }
@@ -543,6 +568,11 @@ void RecentFiles::UseMenu(wxMenuItem *menu)
 void RecentFiles::NoteRecentFile(const wxFileName& fn)
 {
     m_impl->NoteRecentFile(fn);
+}
+
+void RecentFiles::RemoveFile(const wxFileName& fn)
+{
+    m_impl->RemoveFile(fn);
 }
 
 std::vector<wxFileName> RecentFiles::GetRecentFiles()
