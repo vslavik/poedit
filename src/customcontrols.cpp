@@ -716,7 +716,7 @@ public:
             flags |= wxCONTROL_SELECTED;
 
         rect.height /= 2;
-        for (auto& line: wxSplit(m_text, '\n'))
+        for (auto& line: wxSplit(m_text, '\n', '\0'))
         {
             wxItemMarkupText markup(line);
             markup.Render(GetView(), *dc, rect, flags, GetEllipsizeMode());

@@ -25,12 +25,18 @@
 
 #include "errors.h"
 
+#include <wx/filename.h>
 #include <wx/translation.h>
 
 #if defined(HAVE_HTTP_CLIENT) && !defined(__WXOSX__)
 #include "wrap_cpprestsdk.h"
 #include <boost/algorithm/string.hpp>
 #endif
+
+FileNotFoundException::FileNotFoundException(const wxString& filename)
+    : Exception(wxString::Format(_(L"File “%s” doesn’t exist."), wxFileName(filename).GetFullName()))
+{}
+
 
 namespace
 {

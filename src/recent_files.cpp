@@ -36,6 +36,7 @@
 #import <AppKit/NSDocumentController.h>
 #endif
 
+#include <wx/clntdata.h>
 #include <wx/config.h>
 #include <wx/filehistory.h>
 #include <wx/filename.h>
@@ -46,6 +47,11 @@
 #include <wx/settings.h>
 #include <wx/weakref.h>
 #include <wx/xrc/xmlres.h>
+
+#ifdef __WXMSW__
+#include <wx/msw/wrapwin.h>
+#include <Shlwapi.h>
+#endif
 
 #include <memory>
 #include <mutex>
@@ -254,6 +260,11 @@ public:
         [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:url];
     }
 
+    void RemoveFile(const wxFileName&)
+    {
+        // Not needed on macOS: AppKit filters missing files out of the native recent menu.
+    }
+
     std::vector<wxFileName> GetRecentFiles()
     {
         std::vector<wxFileName> f;
@@ -334,21 +345,7 @@ public:
 
         RebuildMenu(menu);
 
-        menu->Bind(wxEVT_MENU, [=](wxCommandEvent& e)
-        {
-            auto f = GetRecentFiles()[e.GetId() - wxID_FILE1].GetFullPath();
-            if (!wxFileExists(f))
-            {
-                wxLogError(_(L"File “%s” doesn’t exist."), f.c_str());
-                return;
-            }
-
-            wxCommandEvent event(EVT_OPEN_RECENT_FILE);
-            event.SetEventObject(menu);
-            event.SetString(f);
-            menu->GetWindow()->ProcessWindowEvent(event);
-        },
-        wxID_FILE1, wxID_FILE9);
+        menu->Bind(wxEVT_MENU, &impl::OnOpenRecentFile, this, wxID_FILE1, wxID_FILE9);
 
         menu->Bind(wxEVT_MENU, [=](wxCommandEvent&)
         {
@@ -378,9 +375,41 @@ public:
         UpdateAfterChange();
     }
 
+    void RemoveFile(wxFileName fn)
+    {
+        // Match wxFileHistory's normalization, avoiding filesystem access for long path names.
+        const int flags = wxPATH_NORM_DOTS | wxPATH_NORM_TILDE | wxPATH_NORM_CASE | wxPATH_NORM_ABSOLUTE;
+        fn.Normalize(flags);
+        const auto filename = fn.GetFullPath();
+
+        for (size_t i = 0; i < m_history.GetCount(); ++i)
+        {
+            wxFileName entry(m_history.GetHistoryFile(i));
+            entry.Normalize(flags);
+            if (entry.GetFullPath() != filename)
+                continue;
+
+            m_history.RemoveFileFromHistory(i);
+            UpdateAfterChange();
+            return;
+        }
+    }
+
+    void UseCtrl(RecentFilesCtrl *ctrl)
+    {
+        // There's only ever at most one RecentFilesCtrl in the app (its welcome window),
+        // so we can just store a weak reference to it.
+        m_ctrl = ctrl;
+    }
+
     file_icons_ptr GetIconsCache() const { return m_icons_cache; }
 
 protected:
+    struct MenuData : wxClientData
+    {
+        std::vector<wxFileName> files;
+    };
+
     void RebuildMenu(wxMenu *menu)
     {
         // clear the menu entirely:
@@ -404,6 +433,9 @@ protected:
         // Update all menus with visible history:
         m_menus.for_all([=](wxMenu *menu){ RebuildMenu(menu); });
 
+        if (m_ctrl)
+            m_ctrl->RefreshContent();
+
         // Save the changes to persistent storage:
         wxConfigBase *cfg = wxConfig::Get();
         cfg->SetPath("/");
@@ -422,7 +454,7 @@ protected:
             files.reserve(m_fileHistory.size());
             for (auto& f : m_fileHistory)
             {
-                if (wxFileName::FileExists(f))
+                if (ShouldIncludeFile(f))
                     files.emplace_back(f);
             }
             return files;
@@ -441,9 +473,26 @@ protected:
 
             for (size_t i = 0; i < files.size(); ++i)
                 DoAddFile(menu, i, files[i], nameUses[files[i].GetFullName()] > 1);
+
+            // GetRecentFiles() filters unavailable files on each run and so its returned array
+            // may change if files disappear. Keep a copy to index into in OnOpenRecentFile() reliably.
+            auto data = new MenuData;
+            data->files = std::move(files);
+            menu->SetClientObject(data);
         }
 
     protected:
+        static bool ShouldIncludeFile(const wxString& filename)
+        {
+#ifdef __WXMSW__
+            // Checking existence on an unavailable network path can block for a long time, so we
+            // optimistically assume it is OK and include it.
+            if (PathIsNetworkPath(filename.fn_str()))
+                return true;
+#endif
+            return wxFileName::FileExists(filename);
+        }
+
         void DoAddFile(wxMenu* menu, int n, const wxFileName& fn, bool showFullPath)
         {
             auto menuEntry = bidi::platform_mark_direction(
@@ -464,11 +513,29 @@ protected:
     };
 
 private:
+    void OnOpenRecentFile(wxCommandEvent& e)
+    {
+        auto menu = static_cast<wxMenu*>(e.GetEventObject());
+
+        const auto& files = static_cast<MenuData*>(menu->GetClientObject())->files;
+        auto index = e.GetId() - wxID_FILE1;
+        if (index < 0 || index >= (int)files.size())
+            return;
+
+        auto f = files[index].GetFullPath();
+
+        wxCommandEvent event(EVT_OPEN_RECENT_FILE);
+        event.SetEventObject(menu);
+        event.SetString(f);
+        menu->GetWindow()->ProcessWindowEvent(event);
+    }
+
     wxWindowIDRef m_idClear = wxWindow::NewControlId();
 
     file_icons_ptr m_icons_cache;
     MyHistory m_history;
     menus_tracker<wxMenu> m_menus;
+    wxWeakRef<RecentFilesCtrl> m_ctrl;
 };
 
 #endif // !__WXOSX__
@@ -512,6 +579,11 @@ void RecentFiles::UseMenu(wxMenuItem *menu)
 void RecentFiles::NoteRecentFile(const wxFileName& fn)
 {
     m_impl->NoteRecentFile(fn);
+}
+
+void RecentFiles::RemoveFile(const wxFileName& fn)
+{
+    m_impl->RemoveFile(fn);
 }
 
 std::vector<wxFileName> RecentFiles::GetRecentFiles()
@@ -562,7 +634,9 @@ RecentFilesCtrl::RecentFilesCtrl(wxWindow *parent)
         SetBackgroundColour(ColorScheme::Get(Color::SidebarBackground));
     });
 
-    m_data->icons_cache = RecentFiles::Get().m_impl->GetIconsCache();
+    auto& impl = RecentFiles::Get().m_impl;
+    m_data->icons_cache = impl->GetIconsCache();
+    impl->UseCtrl(this);
 #endif
 
     Bind(wxEVT_DATAVIEW_ITEM_ACTIVATED, &RecentFilesCtrl::OnActivate, this);

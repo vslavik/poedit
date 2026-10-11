@@ -433,12 +433,6 @@ public:
             return false;
         }
 
-        if ( !f.FileExists() )
-        {
-            wxLogError(_(L"File “%s” doesn’t exist."), f.GetFullPath().c_str());
-            return false;
-        }
-
         m_win->OpenFile(f.GetFullPath());
 
         return true;
@@ -919,6 +913,19 @@ CatalogPtr PoeditFrame::PreOpenFileWithErrorsUI(const wxString& filename, wxWind
     try
     {
         return Catalog::Create(filename);
+    }
+    catch (const FileNotFoundException& e)
+    {
+        // TODO: Use better dialog text, e.g.
+        // Title: “File not found”
+        // Main message: “The file “foo.po” couldn’t be found.” (filename only)
+        // Detail: “It may have been moved or deleted, or its location may be unavailable.”
+        wxMessageDialog dlg(parent, e.What(), _("Invalid file"), wxOK | wxICON_ERROR);
+        dlg.ShowModal();
+
+        RecentFiles::Get().RemoveFile(filename);
+
+        return nullptr;
     }
     catch (...)
     {
