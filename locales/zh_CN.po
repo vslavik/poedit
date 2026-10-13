@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.com\n"
-"POT-Creation-Date: 2026-06-04 11:46+0200\n"
-"PO-Revision-Date: 2026-05-20 11:14\n"
+"POT-Creation-Date: 2026-10-13 16:18+0200\n"
+"PO-Revision-Date: 2026-10-10 15:50\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -17,15 +17,15 @@ msgstr ""
 "X-Crowdin-File: /locales/poedit.pot\n"
 "X-Crowdin-File-ID: 3\n"
 
-#: src/attentionbar.cpp:82
+#: src/attentionbar.cpp:75
 msgid "Hide this notification message"
 msgstr "隐藏这条消息"
 
-#: src/attentionbar.cpp:297
+#: src/attentionbar.cpp:305
 msgid "Don’t Show Again"
 msgstr "不再显示"
 
-#: src/attentionbar.cpp:297
+#: src/attentionbar.cpp:305
 msgid "Don’t show again"
 msgstr "不再显示"
 
@@ -48,8 +48,8 @@ msgid "Issues"
 msgstr "问题"
 
 #. TRANSLATORS: Column header in the list of issues where rows are filename:line:text of issue
-#: src/cat_update.cpp:165 src/cloud_accounts_ui.cpp:265 src/manager.cpp:392
-#: src/recent_files.cpp:586 src/wx_translatable_strings.h:104
+#: src/cat_update.cpp:165 src/cloud_accounts_ui.cpp:280 src/manager.cpp:392
+#: src/recent_files.cpp:620 src/wx_translatable_strings.h:104
 msgid "File"
 msgstr "文件"
 
@@ -98,11 +98,11 @@ msgstr "无法加载提取翻译的文件。"
 msgid "In: %s"
 msgstr "在: %s"
 
-#: src/cat_update.cpp:300 src/edframe.cpp:1607
+#: src/cat_update.cpp:300 src/edframe.cpp:1615
 msgid "Source code not available."
 msgstr "源代码不可用。"
 
-#: src/cat_update.cpp:301 src/edframe.cpp:1611
+#: src/cat_update.cpp:301 src/edframe.cpp:1619
 msgid ""
 "Translations couldn’t be updated from the source code, because no code was "
 "found in the location specified in the file’s Properties."
@@ -140,8 +140,8 @@ msgstr ""
 msgid "Failed to extract strings from source code."
 msgstr "从源代码提取字符串失败。"
 
-#: src/cat_update.cpp:356 src/edapp.cpp:1104 src/edframe.cpp:928
-#: src/edframe.cpp:2531
+#: src/cat_update.cpp:356 src/edapp.cpp:1138 src/edframe.cpp:935
+#: src/edframe.cpp:2539
 #, c-format
 msgid "The file “%s” couldn’t be opened."
 msgstr "无法打开文件“%s”。"
@@ -154,7 +154,7 @@ msgstr "正在更新翻译"
 msgid "Determining differences…"
 msgstr "正在测定差异…"
 
-#: src/cat_update.cpp:402 src/cat_update.cpp:455
+#: src/cat_update.cpp:402 src/cat_update.cpp:456
 msgid "Merging differences…"
 msgstr "正在合并差异…"
 
@@ -177,63 +177,63 @@ msgstr "需翻译的新字符串："
 msgid "Removed strings (no longer used):"
 msgstr "已移除字符串（不再使用）："
 
-#: src/cat_update.cpp:513
+#: src/cat_update.cpp:514
 #, c-format
 msgid "%d issue with the source strings was detected."
 msgid_plural "%d issues with the source strings were detected."
 msgstr[0] "检测到源字符串的 %d 个问题。"
 
-#: src/cat_update.cpp:540
+#: src/cat_update.cpp:541
 msgid "View Details…"
 msgstr "查看详情…"
 
-#: src/cat_update.cpp:540
+#: src/cat_update.cpp:541
 msgid "View details…"
 msgstr "查看详情…"
 
-#: src/catalog.cpp:127
+#: src/catalog.cpp:130
 #, c-format
 msgid "Malformed header: “%s”"
 msgstr "格式错误的标头：“%s”"
 
-#: src/catalog.cpp:591
+#: src/catalog.cpp:594
 msgid "PO Translation Files"
 msgstr "PO 翻译文件"
 
-#: src/catalog.cpp:593
+#: src/catalog.cpp:596
 msgid "POT Translation Templates"
 msgstr "POT 翻译模板"
 
-#: src/catalog.cpp:595
+#: src/catalog.cpp:598
 msgid "XLIFF Translation Files"
 msgstr "XLIFF 翻译文件"
 
-#: src/catalog.cpp:597
+#: src/catalog.cpp:600
 msgid "Xcode Localization Catalog"
 msgstr "Xcode 本地化编目"
 
-#: src/catalog.cpp:599
+#: src/catalog.cpp:602
 msgid "JSON Translation Files"
 msgstr "JSON 翻译文件"
 
 #. TRANSLATORS: "Flutter" is proper noun, name of a developer tool
-#: src/catalog.cpp:602
+#: src/catalog.cpp:605
 msgid "Flutter Translation Files"
 msgstr "Flutter 翻译文件"
 
-#: src/catalog.cpp:604
+#: src/catalog.cpp:607
 msgid "RESX Resource Files"
 msgstr "RESX 资源文件"
 
-#: src/catalog.cpp:606
+#: src/catalog.cpp:609
 msgid "Qt Translation Files"
 msgstr "Qt 翻译文件"
 
-#: src/catalog.cpp:615
+#: src/catalog.cpp:618
 msgid "All Translation Files"
 msgstr "所有翻译文件"
 
-#: src/catalog.cpp:1183
+#: src/catalog.cpp:1196
 msgid "The file is in a format not recognized by Poedit."
 msgstr "Poedit 无法识别该文件的格式。"
 
@@ -248,7 +248,7 @@ msgid "Reading file content failed with the following error: %s"
 msgstr "读取文件内容失败，错误：%s"
 
 #: src/catalog_json.cpp:152 src/catalog_po.cpp:1143 src/catalog_qt.cpp:329
-#: src/catalog_resx.cpp:198 src/catalog_xliff.cpp:489
+#: src/catalog_resx.cpp:198 src/catalog_xliff.cpp:493
 #, c-format
 msgid ""
 "File “%s” is read-only and cannot be saved.\n"
@@ -260,7 +260,7 @@ msgstr ""
 #: src/catalog_json.cpp:166 src/catalog_po.cpp:1179 src/catalog_po.cpp:1261
 #: src/catalog_po.cpp:1335 src/catalog_po.cpp:1344 src/catalog_po.cpp:1401
 #: src/catalog_po.cpp:1432 src/catalog_po.cpp:1630 src/catalog_qt.cpp:341
-#: src/catalog_resx.cpp:209 src/catalog_xliff.cpp:500 src/edframe.cpp:1316
+#: src/catalog_resx.cpp:209 src/catalog_xliff.cpp:504 src/edframe.cpp:1323
 #: src/prefsdlg.cpp:659
 #, c-format
 msgid "Couldn’t save file %s."
@@ -317,7 +317,7 @@ msgstr ""
 "\n"
 "文件已改用 UTF-8 编码保存，相关设置也已相应更新。"
 
-#: src/catalog_po.cpp:1551 src/edframe.cpp:2828
+#: src/catalog_po.cpp:1551 src/edframe.cpp:2836
 msgid "Error saving file"
 msgstr "保存文件时发生错误"
 
@@ -340,11 +340,11 @@ msgstr "文件格式不正确。"
 msgid "Error while loading RESX file: %s"
 msgstr "加载 RESX 文件时出错：%s"
 
-#: src/catalog_xcloc.cpp:85 src/catalog_xcloc.cpp:88
+#: src/catalog_xcloc.cpp:88 src/catalog_xcloc.cpp:91
 msgid "Unexpectedly missing content in the XCLOC file."
 msgstr "XCLOC 文件中缺失内容。"
 
-#: src/catalog_xcloc.cpp:99
+#: src/catalog_xcloc.cpp:104
 msgid "Saving in a different location is not supported for XCLOC files."
 msgstr "XCLOC 文件不支持在不同位置保存。"
 
@@ -359,63 +359,63 @@ msgid "unsupported version (%s)"
 msgstr "不支持的版本 (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
-#: src/catalog_xliff.cpp:619 src/catalog_xliff.cpp:833
+#: src/catalog_xliff.cpp:623 src/catalog_xliff.cpp:848
 msgid "Broken markup in translation string."
 msgstr "翻译文件中的标记不正确。"
 
-#: src/cloud_accounts_ui.cpp:82
+#: src/cloud_accounts_ui.cpp:97
 msgid ""
 "Connect Poedit with supported cloud localization platforms to seamlessly "
 "sync translations managed on them."
 msgstr "将 Poedit 与支持的云端本地化平台连接，以无缝同步翻译。"
 
-#: src/cloud_accounts_ui.cpp:85 src/welcomescreen.cpp:295
+#: src/cloud_accounts_ui.cpp:100 src/welcomescreen.cpp:295
 msgid "How does cloud sync work?"
 msgstr "云同步如何工作？"
 
-#: src/cloud_accounts_ui.cpp:92
+#: src/cloud_accounts_ui.cpp:107
 msgid "Account"
 msgstr "账户"
 
-#: src/cloud_accounts_ui.cpp:163
+#: src/cloud_accounts_ui.cpp:178
 msgid "(not signed in)"
 msgstr "（未登录）"
 
-#: src/cloud_accounts_ui.cpp:355
+#: src/cloud_accounts_ui.cpp:370
 msgid "Open cloud translation"
 msgstr "打开云翻译"
 
-#: src/cloud_accounts_ui.cpp:366
+#: src/cloud_accounts_ui.cpp:381
 msgid "Manage accounts"
 msgstr "管理账户"
 
-#: src/cloud_accounts_ui.cpp:375 src/export_html.cpp:77
+#: src/cloud_accounts_ui.cpp:390 src/export_html.cpp:77
 msgid "Project:"
 msgstr "项目："
 
-#: src/cloud_accounts_ui.cpp:379 src/export_html.cpp:79 src/prefsdlg.cpp:866
+#: src/cloud_accounts_ui.cpp:394 src/export_html.cpp:79 src/prefsdlg.cpp:866
 #: src/resources/properties.xrc:45
 msgid "Language:"
 msgstr "语言："
 
-#: src/cloud_accounts_ui.cpp:428
+#: src/cloud_accounts_ui.cpp:443
 msgid "Sign in to Cloud Account"
 msgstr "登录云账户"
 
-#: src/cloud_accounts_ui.cpp:428
+#: src/cloud_accounts_ui.cpp:443
 msgid "Sign in to cloud account"
 msgstr "登录云账户"
 
-#: src/cloud_accounts_ui.cpp:519
+#: src/cloud_accounts_ui.cpp:534
 msgid "No translation projects listed in your account."
 msgstr "您的账户中没有列出翻译项目。"
 
-#: src/cloud_accounts_ui.cpp:628 src/crowdin_gui.cpp:407
+#: src/cloud_accounts_ui.cpp:643 src/crowdin_gui.cpp:407
 msgid "Downloading latest translations…"
 msgstr "正在下载最新的翻译…"
 
 #. TRANSLATORS: "%s" is a name of online service, e.g. "Crowdin" or "Localazy"
-#: src/cloud_accounts_ui.cpp:724
+#: src/cloud_accounts_ui.cpp:739
 #, c-format
 msgid "Sign in to %s"
 msgstr "登录至 %s"
@@ -440,7 +440,7 @@ msgstr "上传翻译到 %s 失败。"
 msgid "Syncing error"
 msgstr "同步出错"
 
-#: src/commentdlg.cpp:39 src/edframe.cpp:3042 src/sidebar.cpp:247
+#: src/commentdlg.cpp:39 src/edframe.cpp:3050 src/sidebar.cpp:247
 msgid "Edit comment"
 msgstr "编辑注释"
 
@@ -530,15 +530,15 @@ msgstr "与 Crowdin 同步失败。"
 msgid "Crowdin error"
 msgstr "Crowdin 错误"
 
-#: src/customcontrols.cpp:283 src/wx_translatable_strings.h:98
+#: src/customcontrols.cpp:284 src/wx_translatable_strings.h:98
 msgid "&Copy"
 msgstr "复制(&C)"
 
-#: src/customcontrols.cpp:327
+#: src/customcontrols.cpp:324
 msgid "Learn more"
 msgstr "了解更多"
 
-#: src/customcontrols.cpp:381 src/wx_translatable_strings.h:105
+#: src/customcontrols.cpp:378 src/wx_translatable_strings.h:105
 msgid "Help"
 msgstr "帮助"
 
@@ -547,55 +547,55 @@ msgstr "帮助"
 msgid "&Help"
 msgstr "帮助(&H)"
 
-#: src/edapp.cpp:731
+#: src/edapp.cpp:765
 msgid "MO files can’t be directly edited in Poedit."
 msgstr "MO 文件无法在 Poedit 中直接编辑。"
 
-#: src/edapp.cpp:732
+#: src/edapp.cpp:766
 msgid "Error opening file"
 msgstr "打开文件时出错"
 
-#: src/edapp.cpp:734
+#: src/edapp.cpp:768
 msgid ""
 "Please open and edit the corresponding PO file instead. When you save it, "
 "the MO file will be updated as well."
 msgstr "请打开并编辑对应的 PO 文件。当你保存它时，MO 文件也将被更新。"
 
-#: src/edapp.cpp:775
+#: src/edapp.cpp:809
 msgid "don’t delete temporary files (for debugging)"
 msgstr "不删除临时文件（用于调试）"
 
-#: src/edapp.cpp:777
+#: src/edapp.cpp:811
 msgid "handle a poedit:// URI"
 msgstr "处理 poedit:// URI"
 
-#: src/edapp.cpp:779
+#: src/edapp.cpp:813
 msgid "go to item at given line number"
 msgstr "跳转到给定行号项目"
 
-#: src/edapp.cpp:802
+#: src/edapp.cpp:836
 msgid "Failed to communicate with Poedit process."
 msgstr "无法与 Poedit 的进程通信。"
 
-#: src/edapp.cpp:915 src/edapp.cpp:920
+#: src/edapp.cpp:949 src/edapp.cpp:954
 #, c-format
 msgid "Unhandled exception occurred: %s"
 msgstr "发生了不能处理的异常：%s"
 
-#: src/edapp.cpp:1074
+#: src/edapp.cpp:1108
 msgid "Select translation template"
 msgstr "选择翻译模板"
 
-#: src/edapp.cpp:1105 src/edframe.cpp:929 src/edframe.cpp:2328
-#: src/edframe.cpp:2532
+#: src/edapp.cpp:1139 src/edframe.cpp:923 src/edframe.cpp:936
+#: src/edframe.cpp:2336 src/edframe.cpp:2540
 msgid "Invalid file"
 msgstr "无效文件"
 
-#: src/edapp.cpp:1125
+#: src/edapp.cpp:1159
 msgid "Select translation file"
 msgstr "选择翻译文件"
 
-#: src/edapp.cpp:1226
+#: src/edapp.cpp:1260
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit 是一个易于使用的翻译编辑器。"
 
@@ -608,38 +608,33 @@ msgstr "您不能拖放一个以上的文件到 Poedit 窗口。"
 msgid "File “%s” is not a translation file."
 msgstr "文件“%s”不是一个翻译文件。"
 
-#: src/edframe.cpp:438 src/recent_files.cpp:380
-#, c-format
-msgid "File “%s” doesn’t exist."
-msgstr "文件“%s”不存在。"
-
-#: src/edframe.cpp:455
+#: src/edframe.cpp:449
 msgid "Poedit"
 msgstr "Poedit"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: src/edframe.cpp:866
+#: src/edframe.cpp:860
 #, c-format
 msgid ""
 "Spellchecking is disabled, because the dictionary for %s isn’t installed."
 msgstr "拼写检查被禁用，因为 %s 的字典没有安装。"
 
-#: src/edframe.cpp:870
+#: src/edframe.cpp:864
 msgid "Install"
 msgstr "安装"
 
-#: src/edframe.cpp:962 src/edframe.cpp:1137
+#: src/edframe.cpp:969 src/edframe.cpp:1144
 #, c-format
 msgid "The file “%s” has been changed by another application."
 msgstr "文件“%s”已被另一个应用程序更改。"
 
-#: src/edframe.cpp:963 src/edframe.cpp:967
+#: src/edframe.cpp:970 src/edframe.cpp:974
 msgid "Reload file"
 msgstr "重新载入文件"
 
-#: src/edframe.cpp:966
+#: src/edframe.cpp:973
 msgid ""
 "Do you want to reload the file from disk? Your unsaved edits in Poedit will "
 "be lost if you do."
@@ -647,169 +642,169 @@ msgstr ""
 "你想要从磁盘上重新载入文件吗？如果你这样做，你在 Poedit 中未保存的编辑将会丢"
 "失。"
 
-#: src/edframe.cpp:967
+#: src/edframe.cpp:974
 msgid "Ignore"
 msgstr "忽略"
 
-#: src/edframe.cpp:967
+#: src/edframe.cpp:974
 msgid "Reload File"
 msgstr "重新载入文件"
 
-#: src/edframe.cpp:1071
+#: src/edframe.cpp:1078
 msgid "The file has been modified. Do you want to save changes?"
 msgstr "文件已修改。您要保存更改？"
 
-#: src/edframe.cpp:1072
+#: src/edframe.cpp:1079
 msgid "Save changes"
 msgstr "保存更改"
 
-#: src/edframe.cpp:1075
+#: src/edframe.cpp:1082
 msgid "Your changes will be lost if you don’t save them."
 msgstr "如果您不保存，您的更改将丢失。"
 
-#: src/edframe.cpp:1078 src/edframe.cpp:1138 src/wx_translatable_strings.h:115
+#: src/edframe.cpp:1085 src/edframe.cpp:1145 src/wx_translatable_strings.h:115
 msgid "Save"
 msgstr "保存"
 
-#: src/edframe.cpp:1080
+#: src/edframe.cpp:1087
 msgid "Do&n’t save"
 msgstr "不保存(&N)"
 
-#: src/edframe.cpp:1082
+#: src/edframe.cpp:1089
 msgid "Don’t Save"
 msgstr "不保存"
 
-#: src/edframe.cpp:1141
+#: src/edframe.cpp:1148
 msgid "The changes made by the other application will be lost if you save."
 msgstr "如果您保存，另一个应用程序所作的更改将丢失。"
 
-#: src/edframe.cpp:1142 src/prefsdlg.cpp:672 src/prefsdlg.cpp:1064
+#: src/edframe.cpp:1149 src/prefsdlg.cpp:672 src/prefsdlg.cpp:1064
 #: src/wx_translatable_strings.h:94
 msgid "Cancel"
 msgstr "取消"
 
-#: src/edframe.cpp:1142
+#: src/edframe.cpp:1149
 msgid "Save Anyway"
 msgstr "仍然保存"
 
-#: src/edframe.cpp:1142
+#: src/edframe.cpp:1149
 msgid "Save anyway"
 msgstr "仍然保存"
 
-#: src/edframe.cpp:1195
+#: src/edframe.cpp:1202
 msgid "Save as…"
 msgstr "另存为…"
 
-#: src/edframe.cpp:1244
+#: src/edframe.cpp:1251
 msgid "Compile to…"
 msgstr "编译到…"
 
-#: src/edframe.cpp:1247
+#: src/edframe.cpp:1254
 msgid "Compiled Translation Files"
 msgstr "已编译的翻译文件"
 
-#: src/edframe.cpp:1288
+#: src/edframe.cpp:1295
 msgid "Export to HTML…"
 msgstr "导出到 HTML…"
 
-#: src/edframe.cpp:1291
+#: src/edframe.cpp:1298
 msgid "HTML Files"
 msgstr "HTML 文件"
 
-#: src/edframe.cpp:1306
+#: src/edframe.cpp:1313
 msgid "Exporting to HTML"
 msgstr "正在导出到 HTML"
 
-#: src/edframe.cpp:1608
+#: src/edframe.cpp:1616
 msgid "Updating failed"
 msgstr "更新失败"
 
-#: src/edframe.cpp:1673
+#: src/edframe.cpp:1681
 msgid "Open reference file"
 msgstr "打开参考文件"
 
-#: src/edframe.cpp:1707 src/resources/menus.xrc:238
+#: src/edframe.cpp:1715 src/resources/menus.xrc:238
 msgid "Update from &POT File…"
 msgstr "从 POT 文件更新(&P)…"
 
-#: src/edframe.cpp:1707 src/resources/menus.xrc:237
+#: src/edframe.cpp:1715 src/resources/menus.xrc:237
 msgid "Update from &POT file…"
 msgstr "从 POT 文件更新(&P)…"
 
-#: src/edframe.cpp:1790 src/resources/menus.xrc:53
+#: src/edframe.cpp:1798 src/resources/menus.xrc:53
 msgid "Sync with Crowdin"
 msgstr "与 Crowdin 同步"
 
 #. TRANSLATORS: this is the menu action to upload to server/cloud; %s is hostname or service (Crowdin, ftp.foo.com etc.)
-#: src/edframe.cpp:1795
+#: src/edframe.cpp:1803
 #, c-format
 msgid "Upload to %s"
 msgstr "上传到 %s"
 
-#: src/edframe.cpp:1875
+#: src/edframe.cpp:1883
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "在翻译中发现了 %d 个问题。"
 
-#: src/edframe.cpp:1880 src/edframe.cpp:1926
+#: src/edframe.cpp:1888 src/edframe.cpp:1934
 msgid "Validation results"
 msgstr "验证结果"
 
-#: src/edframe.cpp:1883
+#: src/edframe.cpp:1891
 msgid ""
 "Entries with errors were marked in red in the list. Details of the error "
 "will be shown when you select such an entry."
 msgstr ""
 "有错误的条目在列表中被标记为红色。您选择这样的条目时将显示错误的详细信息。"
 
-#: src/edframe.cpp:1892
+#: src/edframe.cpp:1900
 msgid "The file was saved safely."
 msgstr "文件已被安全地保存。"
 
-#: src/edframe.cpp:1895
+#: src/edframe.cpp:1903
 msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
 msgstr "文件已安全地保存，并编译成 MO 格式的文件，但它可能无法正常工作。"
 
-#: src/edframe.cpp:1898
+#: src/edframe.cpp:1906
 msgid ""
 "The file was saved safely, but it cannot be compiled into the MO format and "
 "used."
 msgstr "文件已安全地保存，但它无法被编译成 MO 格式并使用。"
 
-#: src/edframe.cpp:1907
+#: src/edframe.cpp:1915
 msgid ""
 "The file was compiled into the MO format, but it will probably not work "
 "correctly."
 msgstr "文件被编译成 MO 格式，但它可能无法正常工作。"
 
-#: src/edframe.cpp:1911
+#: src/edframe.cpp:1919
 msgid "The file cannot be compiled into the MO format and used."
 msgstr "文件无法编译成 MO 格式并使用。"
 
-#: src/edframe.cpp:1925
+#: src/edframe.cpp:1933
 msgid "No problems with the translation found."
 msgstr "翻译中未发现问题。"
 
-#: src/edframe.cpp:1935
+#: src/edframe.cpp:1943
 #, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
 msgid_plural ""
 "The translation is ready for use, but %d entries are not translated yet."
 msgstr[0] "翻译可以使用了，不过还有 %d 个条目没有被翻译。"
 
-#: src/edframe.cpp:1940
+#: src/edframe.cpp:1948
 msgid "The translation is ready for use."
 msgstr "翻译可以使用了。"
 
-#: src/edframe.cpp:2327
+#: src/edframe.cpp:2335
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr "Poedit 自动修复了“%s”文件中的无效内容。"
 
-#: src/edframe.cpp:2332
+#: src/edframe.cpp:2340
 msgid ""
 "The file contained duplicate items, which is not allowed in PO files and "
 "would prevent the file from being used. Poedit fixed the issue, but you "
@@ -819,20 +814,20 @@ msgstr ""
 "该文件中包含重复的项目，这是不允许的，并且影响了该文件被使用。Poedit 修复了该"
 "问题，但您应该审阅任何已被标记为“需要处理”的翻译和纠正它们（如有必要）。"
 
-#: src/edframe.cpp:2348
+#: src/edframe.cpp:2356
 msgid "Language of the translation isn’t set."
 msgstr "翻译语言未设置。"
 
-#: src/edframe.cpp:2350
+#: src/edframe.cpp:2358
 msgid "Set Language"
 msgstr "设置语言"
 
-#: src/edframe.cpp:2350
+#: src/edframe.cpp:2358
 msgid "Set language"
 msgstr "选择语言"
 
 #. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-#: src/edframe.cpp:2353 src/edframe.cpp:2369
+#: src/edframe.cpp:2361 src/edframe.cpp:2377
 msgid ""
 "Suggestions are not available if the translation language is not set "
 "correctly. Other features, such as plural forms, may be affected as well."
@@ -840,66 +835,66 @@ msgstr ""
 "如果翻译语言设置不正确，建议将不可用。其他特性（例如复数形式）也可能受到影"
 "响。"
 
-#: src/edframe.cpp:2367
+#: src/edframe.cpp:2375
 msgid "Language of the translation is the same as source language."
 msgstr "翻译语言与源语言相同。"
 
-#: src/edframe.cpp:2370
+#: src/edframe.cpp:2378
 msgid "Fix Language"
 msgstr "修复语言"
 
-#: src/edframe.cpp:2370
+#: src/edframe.cpp:2378
 msgid "Fix language"
 msgstr "修复语言"
 
-#: src/edframe.cpp:2387
+#: src/edframe.cpp:2395
 msgid ""
 "This file has entries with plural forms, but doesn’t have Plural-Forms "
 "header configured."
 msgstr "此文件包含具有复数形式的条目，但未配置 Plural-Forms 标头。"
 
-#: src/edframe.cpp:2391
+#: src/edframe.cpp:2399
 msgid ""
 "Entries in this file have different plural forms count from what the file’s "
 "Plural-Forms header says"
 msgstr ""
 "此文件中的条目具有的复数形式数量与文件 Plural-Forms 标头所声明的数量不符。"
 
-#: src/edframe.cpp:2400
+#: src/edframe.cpp:2408
 msgid "Required header Plural-Forms is missing."
 msgstr "缺少必需的 Plural-Forms 标头。"
 
-#: src/edframe.cpp:2404
+#: src/edframe.cpp:2412
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "Plural-Forms 标头语法错误（“%s”）。"
 
-#: src/edframe.cpp:2416
+#: src/edframe.cpp:2424
 msgid "Fix the Header"
 msgstr "修复标头"
 
-#: src/edframe.cpp:2416
+#: src/edframe.cpp:2424
 msgid "Fix the header"
 msgstr "修复标头"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: src/edframe.cpp:2434
+#: src/edframe.cpp:2442
 #, c-format
 msgid "Plural forms expression used by the file is unusual for %s."
 msgstr "该文件中所使用的复数形式对于 %s 是不同寻常的。"
 
 #. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
-#: src/edframe.cpp:2439
+#: src/edframe.cpp:2447
 msgid "Review"
 msgstr "检查"
 
-#: src/edframe.cpp:2503
+#: src/edframe.cpp:2511
 msgid "Would you like to use English for source text?"
 msgstr "是否要使用英文作为源文本？"
 
-#: src/edframe.cpp:2505
+#: src/edframe.cpp:2513
 #, c-format
 msgid ""
 "This file uses string IDs instead of source text. Poedit can load English "
@@ -908,82 +903,82 @@ msgstr ""
 "此文件采用了字符串 ID 而非源文本。Poedit 可以为您从“%s”文件加载英文文本。"
 
 #. TRANSLATORS: Shown as action button when asking if the user wants to replace string IDs with English text; "load" as in "load from file"
-#: src/edframe.cpp:2507
+#: src/edframe.cpp:2515
 msgid "Load English"
 msgstr "加载英文"
 
-#: src/edframe.cpp:2625 src/export_html.cpp:103
+#: src/edframe.cpp:2633 src/export_html.cpp:103
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
 msgstr "已翻译：%d 共计 %d (%d %%)"
 
-#: src/edframe.cpp:2629 src/export_html.cpp:105
+#: src/edframe.cpp:2637 src/export_html.cpp:105
 #, c-format
 msgid "Remaining: %d"
 msgstr "剩余：%d"
 
-#: src/edframe.cpp:2634
+#: src/edframe.cpp:2642
 #, c-format
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "%d 错误"
 
-#: src/edframe.cpp:2639 src/export_html.cpp:117
+#: src/edframe.cpp:2647 src/export_html.cpp:117
 #, c-format
 msgid "%d entry"
 msgid_plural "%d entries"
 msgstr[0] "%d 条目"
 
-#: src/edframe.cpp:2672
+#: src/edframe.cpp:2680
 msgid " (unsaved)"
 msgstr " （未保存）"
 
-#: src/edframe.cpp:2710
+#: src/edframe.cpp:2718
 msgid " (modified)"
 msgstr " （已修改）"
 
-#: src/edframe.cpp:2795 src/edframe.cpp:2799
+#: src/edframe.cpp:2803 src/edframe.cpp:2807
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "更新翻译记忆库失败： %s "
 
-#: src/edframe.cpp:2827
+#: src/edframe.cpp:2835
 #, c-format
 msgid "The file “%s” couldn’t be saved."
 msgstr "无法打开文件“%s”。"
 
-#: src/edframe.cpp:2937 src/resources/menus.xrc:252
+#: src/edframe.cpp:2945 src/resources/menus.xrc:252
 msgid "Remove same-as-source translations"
 msgstr "移除相同源文的翻译"
 
-#: src/edframe.cpp:2939
+#: src/edframe.cpp:2947
 msgid ""
 "Do you want to remove all translations that are identical to the source text?"
 msgstr "确定移除所有与源文本相同的翻译吗？"
 
-#: src/edframe.cpp:2940
+#: src/edframe.cpp:2948
 msgid ""
 "This action will delete any translations that match the source text exactly. "
 "This cannot be undone."
 msgstr "此操作将移除与源文本完全匹配的所有翻译。该操作不可逆。"
 
-#: src/edframe.cpp:2944 src/edframe.cpp:2971
+#: src/edframe.cpp:2952 src/edframe.cpp:2979
 msgid "Keep"
 msgstr "保持"
 
-#: src/edframe.cpp:2944
+#: src/edframe.cpp:2952
 msgid "Remove"
 msgstr "移除"
 
-#: src/edframe.cpp:2963
+#: src/edframe.cpp:2971
 msgid "Purge deleted translations"
 msgstr "清除已删除的翻译"
 
-#: src/edframe.cpp:2965
+#: src/edframe.cpp:2973
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr "您确定要移除所有不再使用的翻译吗？"
 
-#: src/edframe.cpp:2967
+#: src/edframe.cpp:2975
 msgid ""
 "If you continue with purging, all translations marked as deleted will be "
 "permanently removed. You will have to translate them again if they are added "
@@ -992,95 +987,103 @@ msgstr ""
 "如果您继续清除，则所有被标记为已删除的翻译都将被永久移除。如果未来它们被添加"
 "回来，您必须再翻译一遍。"
 
-#: src/edframe.cpp:2971
+#: src/edframe.cpp:2979
 msgid "Purge"
 msgstr "清除"
 
-#: src/edframe.cpp:3028 src/resources/menus.xrc:103
+#: src/edframe.cpp:3036 src/resources/menus.xrc:103
 msgid "Copy from Source Text"
 msgstr "复制源文本"
 
-#: src/edframe.cpp:3028 src/resources/menus.xrc:102
+#: src/edframe.cpp:3036 src/resources/menus.xrc:102
 msgid "Copy from source text"
 msgstr "复制源文本"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
-#: src/edframe.cpp:3029 src/edframe.cpp:3036 src/edframe.cpp:3043
+#: src/edframe.cpp:3037 src/edframe.cpp:3044 src/edframe.cpp:3051
 #: src/sidebar.cpp:361 src/sidebar.cpp:731 src/sidebar.cpp:756
 #: src/sidebar.cpp:758 src/wx_translatable_strings.h:123
 msgctxt "keyboard key"
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
-#: src/edframe.cpp:3035 src/resources/menus.xrc:98
+#: src/edframe.cpp:3043 src/resources/menus.xrc:98
 msgid "Clear Translation"
 msgstr "清除翻译"
 
-#: src/edframe.cpp:3035 src/resources/menus.xrc:97
+#: src/edframe.cpp:3043 src/resources/menus.xrc:97
 msgid "Clear translation"
 msgstr "清除翻译"
 
-#: src/edframe.cpp:3042 src/sidebar.cpp:250
+#: src/edframe.cpp:3050 src/sidebar.cpp:250
 msgid "Edit Comment"
 msgstr "编辑注释"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
-#: src/edframe.cpp:3051 src/fileviewer.cpp:100
+#: src/edframe.cpp:3059 src/fileviewer.cpp:100
 msgid "Code Occurrences"
 msgstr "代码出现位置"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
-#: src/edframe.cpp:3051
+#: src/edframe.cpp:3059
 msgid "Code occurrences"
 msgstr "代码出现位置"
 
-#: src/edframe.cpp:3270
+#: src/edframe.cpp:3278
 msgid "Hide Sidebar"
 msgstr "隐藏侧边栏"
 
-#: src/edframe.cpp:3272 src/resources/menus.xrc:217
+#: src/edframe.cpp:3280 src/resources/menus.xrc:217
 msgid "Show Sidebar"
 msgstr "显示侧边栏"
 
-#: src/edframe.cpp:3303
+#: src/edframe.cpp:3311
 msgid "Hide Status Bar"
 msgstr "隐藏状态栏"
 
-#: src/edframe.cpp:3305 src/resources/menus.xrc:223
+#: src/edframe.cpp:3313 src/resources/menus.xrc:223
 msgid "Show Status Bar"
 msgstr "显示状态栏"
 
-#: src/editing_area.cpp:358
-msgid "String length in characters: translation | source"
-msgstr "字符串长度：翻译 | 原文"
-
-#: src/editing_area.cpp:361
+#: src/editing_area.cpp:352
 msgid "String length in characters"
 msgstr "字符串长度（字符）"
 
-#: src/editing_area.cpp:408 src/editing_area.cpp:751 src/edlistctrl.cpp:665
-#: src/edlistctrl.cpp:719 src/export_html.cpp:143
+#. TRANSLATORS: This is tooltip showing length of source string
+#: src/editing_area.cpp:368
+#, c-format
+msgid "Source text: %d characters"
+msgstr "源文本：%d 个字符"
+
+#. TRANSLATORS: This is tooltip showing length of translation string
+#: src/editing_area.cpp:371
+#, c-format
+msgid "Translation: %d characters"
+msgstr "译文：%d 个字符"
+
+#: src/editing_area.cpp:411 src/editing_area.cpp:754 src/edlistctrl.cpp:655
+#: src/edlistctrl.cpp:709 src/export_html.cpp:143
 msgid "Source text"
 msgstr "源文本"
 
-#: src/editing_area.cpp:430 src/editing_area.cpp:817 src/editing_area.cpp:833
+#: src/editing_area.cpp:433 src/editing_area.cpp:820 src/editing_area.cpp:836
 msgid "Singular"
 msgstr "单数"
 
-#: src/editing_area.cpp:435 src/editing_area.cpp:838
+#: src/editing_area.cpp:438 src/editing_area.cpp:841
 msgid "Plural"
 msgstr "复数"
 
-#: src/editing_area.cpp:490
+#: src/editing_area.cpp:493
 msgid "Translation"
 msgstr "翻译"
 
-#: src/editing_area.cpp:499
+#: src/editing_area.cpp:502
 msgid "Pre-translated"
 msgstr "已预翻译"
 
-#: src/editing_area.cpp:522
+#: src/editing_area.cpp:525
 msgid "Needs Work"
 msgstr "需要处理"
 
@@ -1092,11 +1095,11 @@ msgstr "需要处理"
 #. "needs review" implies that somebody else should review the string after
 #. I am done with it (i.e. consider it good), while "needs work" implies I
 #. need to return to it and finish the translation.
-#: src/editing_area.cpp:522
+#: src/editing_area.cpp:525
 msgid "Needs work"
 msgstr "需要处理"
 
-#: src/editing_area.cpp:579
+#: src/editing_area.cpp:582
 msgid ""
 "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
@@ -1104,104 +1107,109 @@ msgstr ""
 "POT 文件只是模板，不包含任何翻译内容。\n"
 "若要制作一个翻译，请基于模板创建一个新的 PO 文件。"
 
-#: src/editing_area.cpp:586
+#: src/editing_area.cpp:589
 msgid "Create new translation"
 msgstr "创建新的翻译"
 
-#: src/editing_area.cpp:587
+#: src/editing_area.cpp:590
 msgid "Make a new translation from this POT file."
 msgstr "利用此 POT 文件创建新翻译"
 
-#: src/editing_area.cpp:619
+#: src/editing_area.cpp:622
 msgid "Use the Edit menu to perform bulk actions on selected strings."
 msgstr "使用编辑菜单对所选字符串执行批量操作。"
 
 #. TRANSLATORS: Refers to symbolic ID of source text, i.e. when something like "button.label" is used instead of English text
-#: src/editing_area.cpp:749 src/edlistctrl.cpp:713 src/export_html.cpp:137
+#: src/editing_area.cpp:752 src/edlistctrl.cpp:703 src/export_html.cpp:137
 msgid "Source text ID"
 msgstr "源文本 ID"
 
-#: src/editing_area.cpp:804
+#: src/editing_area.cpp:807
 msgid "Everything"
 msgstr "一切"
 
-#: src/editing_area.cpp:809
+#: src/editing_area.cpp:812
 #, c-format
 msgid "Form %i"
 msgstr "表格 %i"
 
-#: src/editing_area.cpp:811
+#: src/editing_area.cpp:814
 #, c-format
 msgid "Form %i (unused)"
 msgstr "来自 %i (未使用)"
 
-#: src/editing_area.cpp:822
+#: src/editing_area.cpp:825
 msgid "Zero"
 msgstr "零"
 
-#: src/editing_area.cpp:824
+#: src/editing_area.cpp:827
 msgid "One"
 msgstr "一"
 
-#: src/editing_area.cpp:826
+#: src/editing_area.cpp:829
 msgid "Two"
 msgstr "二"
 
-#: src/editing_area.cpp:840
+#: src/editing_area.cpp:843
 msgid "Other"
 msgstr "其他"
 
 #. TRANSLATORS: Tooltip on message context tag in the editing area, '%s' is the context text
-#: src/editing_area.cpp:1019
+#: src/editing_area.cpp:1022
 #, c-format
 msgid "String context: %s"
 msgstr "字符串上下文：%s"
 
 #. TRANSLATORS: Tooltip on string ID tag in the editing area, '%s' contains the ID
-#: src/editing_area.cpp:1026
+#: src/editing_area.cpp:1029
 #, c-format
 msgid "String identifier: %s"
 msgstr "字符串标识符：%s"
 
-#: src/editing_area.cpp:1034
+#: src/editing_area.cpp:1037
 #, c-format
 msgid "%s Format"
 msgstr "%s 格式"
 
 #. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
-#: src/editing_area.cpp:1034
+#: src/editing_area.cpp:1037
 #, c-format
 msgid "%s format"
 msgstr "%s 格式"
 
-#: src/edlistctrl.cpp:670 src/edlistctrl.cpp:742 src/export_html.cpp:145
+#: src/edlistctrl.cpp:660 src/edlistctrl.cpp:732 src/export_html.cpp:145
 #, c-format
 msgid "Translation — %s"
 msgstr "翻译 — %s"
 
-#: src/edlistctrl.cpp:674
+#: src/edlistctrl.cpp:664
 msgid "ID"
 msgstr "ID"
 
-#: src/edlistctrl.cpp:718 src/export_html.cpp:142
+#: src/edlistctrl.cpp:708 src/export_html.cpp:142
 #, c-format
 msgid "Source text — %s"
 msgstr "源文本 — %s"
 
-#: src/edlistctrl.cpp:741 src/export_html.cpp:146
+#: src/edlistctrl.cpp:731 src/export_html.cpp:146
 msgid "unknown language"
 msgstr "未知语言"
 
-#: src/errors.cpp:84
+#: src/errors.cpp:37
+#, c-format
+msgid "File “%s” doesn’t exist."
+msgstr "文件“%s”不存在。"
+
+#: src/errors.cpp:90
 #, c-format
 msgid "Network error: %s (%d)"
 msgstr "网络错误：%s (%d)"
 
-#: src/errors.cpp:93
+#: src/errors.cpp:99
 msgid "Unknown error"
 msgstr "未知错误"
 
-#: src/extractors/extractor.cpp:366
+#: src/extractors/extractor.cpp:379
 msgid "Failed to merge gettext catalogs."
 msgstr "无法合并 gettext 编目。"
 
@@ -1317,13 +1325,18 @@ msgstr "要查找的字符串"
 msgid "Replacement string"
 msgstr "替换字符串"
 
-#: src/gexecute.cpp:131 src/gexecute.cpp:152 src/gexecute.cpp:201
+#: src/gexecute.cpp:135 src/gexecute.cpp:156 src/gexecute.cpp:205
 msgid "warning: "
 msgstr "警告: "
 
-#: src/gexecute.cpp:202
+#: src/gexecute.cpp:206
 msgid "error: "
 msgstr "错误: "
+
+#: src/http_client_cpprestsdk.cpp:270
+#, c-format
+msgid "HTTP error %d"
+msgstr ""
 
 #. TRANSLATORS: placeholder/hint in language controls
 #: src/languagectrl.cpp:138
@@ -1470,156 +1483,161 @@ msgstr "从源代码对项目中的所有文件执行更新。"
 msgid "Updating project catalogs"
 msgstr "正在更新项目目录"
 
-#: src/menus.cpp:166
+#: src/manager.cpp:628
+#, c-format
+msgid "Couldn’t compile file %s into the MO format."
+msgstr "无法将文件 %s 编译为 MO 格式。"
+
+#: src/menus.cpp:172
 msgid "Check for Updates…"
 msgstr "检查更新…"
 
-#: src/menus.cpp:168
+#: src/menus.cpp:174
 msgid "Catalogs Manager"
 msgstr "编目管理器"
 
-#: src/menus.cpp:181
+#: src/menus.cpp:186
 msgid "&Preferences…"
 msgstr "首选项(&P)…"
 
-#: src/menus.cpp:198 src/resources/menus.xrc:84 src/resources/menus.xrc:402
+#: src/menus.cpp:201 src/resources/menus.xrc:84 src/resources/menus.xrc:402
 #: src/wx_translatable_strings.h:102
 msgid "&Edit"
 msgstr "编辑(&E)"
 
-#: src/menus.cpp:218 src/wx_translatable_strings.h:118
+#: src/menus.cpp:221 src/wx_translatable_strings.h:118
 msgid "Undo"
 msgstr "撤销"
 
-#: src/menus.cpp:219 src/wx_translatable_strings.h:113
+#: src/menus.cpp:222 src/wx_translatable_strings.h:113
 msgid "Redo"
 msgstr "重做"
 
-#: src/menus.cpp:228
+#: src/menus.cpp:231
 msgid "Paste and Match Style"
 msgstr "粘贴并匹配样式"
 
-#: src/menus.cpp:231 src/prefsdlg.cpp:1064 src/wx_translatable_strings.h:100
+#: src/menus.cpp:234 src/prefsdlg.cpp:1064 src/wx_translatable_strings.h:100
 msgid "Delete"
 msgstr "删除"
 
-#: src/menus.cpp:240
+#: src/menus.cpp:243
 msgid "Spelling and Grammar"
 msgstr "拼写和语法"
 
-#: src/menus.cpp:242
+#: src/menus.cpp:245
 msgid "Show Spelling and Grammar"
 msgstr "显示拼写和语法"
 
-#: src/menus.cpp:243
+#: src/menus.cpp:246
 msgid "Check Document Now"
 msgstr "立即检查文档"
 
-#: src/menus.cpp:245
+#: src/menus.cpp:248
 msgid "Check Spelling While Typing"
 msgstr "在输入时检查拼写"
 
-#: src/menus.cpp:246
+#: src/menus.cpp:249
 msgid "Check Grammar With Spelling"
 msgstr "检查拼写和语法"
 
-#: src/menus.cpp:247
+#: src/menus.cpp:250
 msgid "Correct Spelling Automatically"
 msgstr "自动更正拼写错误"
 
-#: src/menus.cpp:250
+#: src/menus.cpp:253
 msgid "Substitutions"
 msgstr "替换"
 
-#: src/menus.cpp:252
+#: src/menus.cpp:255
 msgid "Show Substitutions"
 msgstr "显示替换项目"
 
-#: src/menus.cpp:254
+#: src/menus.cpp:257
 msgid "Smart Copy/Paste"
 msgstr "智能复制/粘贴"
 
-#: src/menus.cpp:255
+#: src/menus.cpp:258
 msgid "Smart Quotes"
 msgstr "智能引号"
 
-#: src/menus.cpp:256
+#: src/menus.cpp:259
 msgid "Smart Dashes"
 msgstr "智能短划线"
 
-#: src/menus.cpp:257
+#: src/menus.cpp:260
 msgid "Smart Links"
 msgstr "智能链接"
 
-#: src/menus.cpp:258
+#: src/menus.cpp:261
 msgid "Text Replacement"
 msgstr "文本替换"
 
-#: src/menus.cpp:261
+#: src/menus.cpp:264
 msgid "Transformations"
 msgstr "转换"
 
-#: src/menus.cpp:263
+#: src/menus.cpp:266
 msgid "Make Upper Case"
 msgstr "转为大写"
 
-#: src/menus.cpp:264
+#: src/menus.cpp:267
 msgid "Make Lower Case"
 msgstr "转为小写"
 
-#: src/menus.cpp:265
+#: src/menus.cpp:268
 msgid "Capitalize"
 msgstr "大写"
 
-#: src/menus.cpp:268
+#: src/menus.cpp:271
 msgid "Speech"
 msgstr "朗读"
 
-#: src/menus.cpp:270
+#: src/menus.cpp:273
 msgid "Start Speaking"
 msgstr "开始朗读"
 
-#: src/menus.cpp:271
+#: src/menus.cpp:274
 msgid "Stop Speaking"
 msgstr "停止朗读"
 
-#: src/menus.cpp:274 src/resources/menus.xrc:166 src/resources/menus.xrc:412
+#: src/menus.cpp:277 src/resources/menus.xrc:166 src/resources/menus.xrc:412
 msgid "&View"
 msgstr "查看(&V)"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
-#: src/menus.cpp:279
+#: src/menus.cpp:282
 msgid "Show Toolbar"
 msgstr "显示工具栏"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
-#: src/menus.cpp:282
+#: src/menus.cpp:285
 msgid "Customize Toolbar…"
 msgstr "自定义工具栏…"
 
 #. TRANSLATORS: This must be the same as OS X's translation of this View menu item
-#: src/menus.cpp:285
+#: src/menus.cpp:288
 msgid "Enter Full Screen"
 msgstr "进入全屏模式"
 
-#: src/menus.cpp:292 src/menus.cpp:380 src/resources/menus.xrc:316
+#: src/menus.cpp:295 src/menus.cpp:391 src/resources/menus.xrc:316
 #: src/resources/menus.xrc:421
 msgid "Window"
 msgstr "窗口"
 
-#: src/menus.cpp:293
+#: src/menus.cpp:296
 msgid "Minimize"
 msgstr "最小化"
 
-#: src/menus.cpp:294
+#: src/menus.cpp:297
 msgid "Zoom"
 msgstr "缩放"
 
-#: src/menus.cpp:296 src/welcomescreen.cpp:220 src/welcomescreen.cpp:269
+#: src/menus.cpp:299 src/welcomescreen.cpp:220 src/welcomescreen.cpp:269
 msgid "Welcome to Poedit"
 msgstr "欢迎使用 Poedit"
 
-#: src/menus.cpp:301
+#: src/menus.cpp:304
 msgid "Bring All to Front"
 msgstr "全部带到最前方"
 
@@ -2080,8 +2098,9 @@ msgstr "无法在没有源文本时预翻译。"
 #. experience). "Pre-translate" nicely expresses that it's only the step done
 #. *before* actual translation.
 #: src/pretranslate_ui.cpp:131 src/pretranslate_ui.cpp:146
-#: src/pretranslate_ui.cpp:155 src/pretranslate_ui.cpp:165
-#: src/pretranslate_ui.cpp:191 src/wx/main_toolbar.cpp:131
+#: src/pretranslate_ui.cpp:161 src/pretranslate_ui.cpp:170
+#: src/pretranslate_ui.cpp:180 src/pretranslate_ui.cpp:206
+#: src/wx/main_toolbar.cpp:131
 msgid "Pre-translate"
 msgstr "预翻译"
 
@@ -2101,11 +2120,21 @@ msgid ""
 "couldn’t detect it in this file."
 msgstr "预翻译需要了解源文本的语言。Poedit 在此文件中没有检测到。"
 
-#: src/pretranslate_ui.cpp:159
+#: src/pretranslate_ui.cpp:160
+msgid "Cannot pre-translate to unknown language."
+msgstr "无法预翻译为未知语言。"
+
+#: src/pretranslate_ui.cpp:165
+msgid ""
+"Set the translation language in translation properties before pre-"
+"translating this file."
+msgstr "在预翻译此文件之前，请先在翻译属性中设置翻译语言。"
+
+#: src/pretranslate_ui.cpp:174
 msgid "Only fill in exact matches"
 msgstr "仅填补完全匹配的项"
 
-#: src/pretranslate_ui.cpp:160
+#: src/pretranslate_ui.cpp:175
 msgid ""
 "By default, inaccurate results are also included, but marked as needing "
 "work. Check this option to only include perfect matches."
@@ -2113,11 +2142,11 @@ msgstr ""
 "默认设置下，会包含不准确的结果，但标记为需要处理。选中此选项则只包含精确匹配"
 "的项。"
 
-#: src/pretranslate_ui.cpp:161
+#: src/pretranslate_ui.cpp:176
 msgid "Don’t mark exact matches as needing work"
 msgstr "不将精确匹配标为需要处理"
 
-#: src/pretranslate_ui.cpp:162
+#: src/pretranslate_ui.cpp:177
 msgid ""
 "Only enable if you trust the quality of your TM. By default, all matches "
 "from the TM are marked as needing work and should be reviewed before use."
@@ -2125,7 +2154,7 @@ msgstr ""
 "仅在您信任你的翻译记忆的质量时启用。默认情况下，从翻译记忆匹配的所有条目被标"
 "记为模糊，在使用前应加以审查。"
 
-#: src/pretranslate_ui.cpp:167
+#: src/pretranslate_ui.cpp:182
 msgid ""
 "Pre-translation automatically finds exact or fuzzy matches for untranslated "
 "strings in the translation memory and fills in their translations."
@@ -2369,33 +2398,33 @@ msgstr "翻译以“%s”结尾，但是源文本是“%s”。"
 msgid "Length difference"
 msgstr "长度差异"
 
-#: src/qa_checks.cpp:550
+#: src/qa_checks.cpp:562
 #, c-format
 msgid "The translation exceeds maximum length (%d characters)."
 msgstr "译文超过最大长度（%d 个字符）。"
 
-#: src/qa_checks.cpp:557
+#: src/qa_checks.cpp:569
 #, c-format
 msgid "The translation is below minimum length (%d characters)."
 msgstr "译文低于最小长度（%d 个字符）。"
 
-#: src/qa_checks.cpp:567
+#: src/qa_checks.cpp:582
 msgid "The translation is much shorter than the source text."
 msgstr "译文比源文本短很多。"
 
-#: src/qa_checks.cpp:573
+#: src/qa_checks.cpp:588
 msgid "The translation is much longer than the source text."
 msgstr "译文比源文本长很多。"
 
-#: src/recent_files.cpp:216
+#: src/recent_files.cpp:222
 msgid "Cloud"
 msgstr "云"
 
-#: src/recent_files.cpp:435
+#: src/recent_files.cpp:426
 msgid "Clear Menu"
 msgstr "清除菜单"
 
-#: src/recent_files.cpp:435
+#: src/recent_files.cpp:426
 msgid "Clear menu"
 msgstr "清除菜单"
 
@@ -2916,6 +2945,12 @@ msgid ""
 "Translation suggestions require that source text’s language is known. Poedit "
 "couldn’t detect it in this file."
 msgstr "翻译建议需要了解源文本的语言。Poedit 在此文件中没有检测到。"
+
+#: src/sidebar.cpp:891
+msgid ""
+"Translation suggestions require a translation language. Set it in "
+"translation properties to use suggestions."
+msgstr "翻译建议需要指定翻译语言，请在翻译属性中设置翻译语言以使用建议。"
 
 #: src/subprocess.cpp:219 src/subprocess.cpp:251
 #, c-format
