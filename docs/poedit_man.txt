@@ -3,17 +3,19 @@ POEDIT(1)
 
 NAME
 ----
-poedit - gettext catalogs editor
+poedit - translation editor
 
 SYNOPSIS
 --------
-*poedit* [*-h*] [*--verbose*] [_FILE_...]
+*poedit* [*-h* | *--help*] [*--verbose*] [*--line*=_NUMBER_] [_FILE_...]
 
 DESCRIPTION
 -----------
-Poedit is GUI editor for GNU gettext translation files.
+Poedit is a graphical editor for translation files in many formats. It helps
+translate applications, websites, and WordPress themes and plugins into
+other languages.
 
-When launched with one or more files as argument, it loads and opens them for
+When launched with one or more files as arguments, it opens them for
 editing.
 
 OPTIONS
@@ -23,6 +25,19 @@ OPTIONS
 
 *--verbose*::
         Print verbose logging information.
+
+*--line*=_NUMBER_::
+        Go to the translation entry at the specified line in the PO file.
+
+SUPPORTED FORMATS
+-----------------
+* GNU gettext catalogs (.po) and templates (.pot)
+* XLIFF (.xlf, .xliff)
+* Qt Linguist (.ts)
+* JSON (.json)
+* Flutter (.arb)
+* .NET resources (.resx)
+* Xcode localization catalogs (.xcloc)
 
 RESOURCES
 ---------

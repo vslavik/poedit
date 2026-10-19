@@ -28,15 +28,17 @@
 .  LINKSTYLE blue R < >
 .\}
 .SH "NAME"
-poedit \- gettext catalogs editor
+poedit \- translation editor
 .SH "SYNOPSIS"
 .sp
-\fBpoedit\fP [\fB\-h\fP] [\fB\-\-verbose\fP] [\fIFILE\fP.\|.\|.]
+\fBpoedit\fP [\fB\-h\fP | \fB\-\-help\fP] [\fB\-\-verbose\fP] [\fB\-\-line\fP=\fINUMBER\fP] [\fIFILE\fP.\|.\|.]
 .SH "DESCRIPTION"
 .sp
-Poedit is GUI editor for GNU gettext translation files.
+Poedit is a graphical editor for translation files in many formats. It helps
+translate applications, websites, and WordPress themes and plugins into
+other languages.
 .sp
-When launched with one or more files as argument, it loads and opens them for
+When launched with one or more files as arguments, it opens them for
 editing.
 .SH "OPTIONS"
 .sp
@@ -49,10 +51,93 @@ Display usage information and exit.
 .RS 4
 Print verbose logging information.
 .RE
+.sp
+\fB\-\-line\fP=\fINUMBER\fP
+.RS 4
+Go to the translation entry at the specified line in the PO file.
+.RE
+.SH "SUPPORTED FORMATS"
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.  sp -1
+.  IP \(bu 2.3
+.\}
+GNU gettext catalogs (.po) and templates (.pot)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.  sp -1
+.  IP \(bu 2.3
+.\}
+XLIFF (.xlf, .xliff)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.  sp -1
+.  IP \(bu 2.3
+.\}
+Qt Linguist (.ts)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.  sp -1
+.  IP \(bu 2.3
+.\}
+JSON (.json)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.  sp -1
+.  IP \(bu 2.3
+.\}
+Flutter (.arb)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.  sp -1
+.  IP \(bu 2.3
+.\}
+\&.NET resources (.resx)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.  sp -1
+.  IP \(bu 2.3
+.\}
+Xcode localization catalogs (.xcloc)
+.RE
 .SH "RESOURCES"
 .sp
 Web site: https://poedit.com/
-.SH "AUTHOR"
+.SH "AUTHORS"
 .sp
 Written by Vaclav Slavik \c
 .MTO "help\(atpoedit.com" "" ""
