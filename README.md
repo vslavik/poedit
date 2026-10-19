@@ -87,10 +87,8 @@ repository, some generated files are not present. You have to run the
 `./bootstrap` script to create them. After that, continue according to the
 instructions above.
 
-The `./bootstrap` script requires some additional tools to be installed:
-
- * AsciiDoc, xsltproc and xmlto to generate the manual page
- * gettext tools to create `.mo` files
+The `./bootstrap` script requires some additional tools to be installed,
+namely gettext tools to create `.mo` files.
 
 On macOS and Windows, bootstrapping is not needed.
 
