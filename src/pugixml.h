@@ -84,6 +84,18 @@ inline void remove_all_children(xml_node node)
 }
 
 
+/// Replace the contents with empty text, serialized as <name></name>.
+inline void clear_content_with_explicit_end_tag(xml_node node)
+{
+    remove_all_children(node);
+    node.text() = "";
+    // pugixml 1.16 collapses a single empty PCDATA child, but two empty
+    // PCDATA children still force an explicit end tag without emitting text.
+    // Unlike format_no_empty_element_tags, this doesn't expand unrelated tags.
+    node.append_child(node_pcdata);
+}
+
+
 inline bool has_multiple_text_children(xml_node node)
 {
     bool alreadyFoundOne = false;

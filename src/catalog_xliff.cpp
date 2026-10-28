@@ -625,10 +625,9 @@ public:
         }
         else // no translation
         {
-            remove_all_children(target);
             // Ensure the node is shown as <target></target> rather than <target/>.
             // The spec is unclear in this regard and the former is more expected.
-            target.text() = "";
+            clear_content_with_explicit_end_tag(target);
         }
 
         Impl_UpdateTargetState(target, !trans.empty(), m_isFuzzy);
@@ -852,10 +851,9 @@ public:
         {
             m_node.remove_attribute("state");
             m_node.remove_attribute("subState");
-            remove_all_children(target);
             // Ensure the node is shown as <target></target> rather than <target/>.
             // The spec is unclear in this regard and the former is more expected.
-            target.text() = "";
+            clear_content_with_explicit_end_tag(target);
         }
     }
 
