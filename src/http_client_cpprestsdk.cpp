@@ -302,6 +302,7 @@ private:
     static http::client::http_client_config get_client_config()
     {
         http::client::http_client_config c;
+        c.set_timeout(std::chrono::seconds(60));
 
     #ifdef _WIN32
         // prepare WinHttp configuration:
