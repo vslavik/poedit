@@ -55,8 +55,10 @@ ArchitecturesAllowed=x64compatible
 ChangesAssociations=true
 AlwaysShowComponentsList=false
 SourceDir=..
-DefaultDirName={commonpf}\Poedit
+DefaultDirName={autopf}\Poedit
 DefaultGroupName=Poedit
+PrivilegesRequired=admin
+PrivilegesRequiredOverridesAllowed=dialog
 AllowNoIcons=true
 LicenseFile=COPYING
 InfoAfterFile=
@@ -117,12 +119,12 @@ Source: "{#BINDIR}\GettextTools\share\*"; DestDir: "{app}\GettextTools\share"; F
 Type: filesandordirs; Name: {group}\*;
 
 [Registry]
-; Install global settings:
-Root: "HKLM"; Subkey: "Software\Vaclav Slavik\Poedit\WinSparkle"; ValueType: string; ValueName: "CheckForUpdates"; ValueData: "1"; Flags: noerror
+; Install default settings:
+Root: "HKA"; Subkey: "Software\Vaclav Slavik\Poedit\WinSparkle"; ValueType: string; ValueName: "CheckForUpdates"; ValueData: "1"; Flags: noerror
 
 ; Uninstall Poedit settings on uninstall:
-Root: "HKLM"; Subkey: "Software\Vaclav Slavik\Poedit"; Flags: noerror uninsdeletekey
-Root: "HKLM"; Subkey: "Software\Vaclav Slavik"; Flags: noerror uninsdeletekeyifempty
+Root: "HKLM"; Subkey: "Software\Vaclav Slavik\Poedit"; Flags: noerror uninsdeletekey; Check: IsAdminInstallMode
+Root: "HKLM"; Subkey: "Software\Vaclav Slavik"; Flags: noerror uninsdeletekeyifempty; Check: IsAdminInstallMode
 
 ; Associate files with Poedit:
 Root: "HKA"; Subkey: "Software\Classes\.po"; ValueType: string; ValueData: "Poedit.PO"; Flags: noerror
@@ -182,7 +184,7 @@ Root: "HKA"; Subkey: "Software\Classes\poedit\DefaultIcon"; ValueType: "string";
 Root: "HKA"; Subkey: "Software\Classes\poedit\shell\open\command"; ValueType: "string"; ValueData: """{app}\Poedit.exe"" --handle-poedit-uri ""%1"""; Flags: uninsdeletekey noerror
 
 [Icons]
-Name: {commonprograms}\Poedit; Filename: {app}\Poedit.exe; WorkingDir: {app}; IconIndex: 0; Comment: Translation editor.
+Name: {autoprograms}\Poedit; Filename: {app}\Poedit.exe; WorkingDir: {app}; IconIndex: 0; Comment: Translation editor.
 
 [Run]
 Filename: {app}\Poedit.exe; WorkingDir: {app}; Description: {cm:OpenAfterInstall}; Flags: postinstall nowait skipifsilent runasoriginaluser
@@ -253,7 +255,8 @@ function Find32bitUninstallerPath(): String;
 var
   uninst: String;
 begin
-  if (not RegKeyExists(HKCU64, UninstallKey)) and (not RegKeyExists(HKLM64, UninstallKey)) and RegKeyExists(HKLM32, UninstallKey) then begin
+  // Only migrate machine-wide 32-bit installations during administrative installs.
+  if IsAdminInstallMode and (not RegKeyExists(HKCU64, UninstallKey)) and (not RegKeyExists(HKLM64, UninstallKey)) and RegKeyExists(HKLM32, UninstallKey) then begin
     RegQueryStringValue(HKLM32, UninstallKey, 'UninstallString', uninst);
     Result := RemoveQuotes(uninst);
   end
